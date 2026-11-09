@@ -3,20 +3,16 @@
 //Effects are mostly temporary visual effects like sparks, smoke, as well as decals, etc...
 /obj/effect
 	icon = 'icons/effects/effects.dmi'
+	abstract_type = /obj/effect
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	move_resist = INFINITY
 	obj_flags = NONE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	uses_integrity = FALSE
 
-/obj/effect/attackby(obj/item/weapon, mob/user, params)
-	if(SEND_SIGNAL(weapon, COMSIG_ITEM_ATTACK_EFFECT, src, user, params) & COMPONENT_NO_AFTERATTACK)
+/obj/effect/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+	if(SEND_SIGNAL(weapon, COMSIG_ITEM_ATTACK_EFFECT, src, user, modifiers, attack_modifiers) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
-
-	// I'm not sure why these are snowflaked to early return but they are
-	if(istype(weapon, /obj/item/mop) || istype(weapon, /obj/item/soap))
-		return
-
 	return ..()
 
 /obj/effect/attack_generic(mob/user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration)
@@ -50,7 +46,7 @@
 /obj/effect/abstract
 	resistance_flags = parent_type::resistance_flags | SHUTTLE_CRUSH_PROOF
 
-/obj/effect/abstract/singularity_pull()
+/obj/effect/abstract/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/abstract/singularity_act()
@@ -59,7 +55,7 @@
 /obj/effect/abstract/has_gravity(turf/gravity_turf)
 	return FALSE
 
-/obj/effect/dummy/singularity_pull()
+/obj/effect/dummy/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/dummy/singularity_act()

@@ -1,7 +1,7 @@
 /obj/machinery/power/apc/proc/get_malf_status(mob/living/silicon/ai/malf)
 	if(!istype(malf) || !malf.malf_picker)
 		return APC_AI_NO_MALF
-	if(malfai != (malf.parent || malf))
+	if(malfai != malf)
 		return APC_AI_NO_HACK
 	if(occupier == malf)
 		return APC_AI_HACK_SHUNT_HERE
@@ -12,14 +12,14 @@
 /obj/machinery/power/apc/proc/malfhack(mob/living/silicon/ai/malf)
 	if(!istype(malf))
 		return
-	if(get_malf_status(malf) != 1)
+	if(get_malf_status(malf) != APC_AI_NO_HACK)
 		return
 	if(malf.malfhacking)
 		to_chat(malf, span_warning("You are already hacking an APC!"))
 		return
 	to_chat(malf, span_notice("Beginning override of APC systems. This takes some time, and you cannot perform other actions during the process."))
 	malf.malfhack = src
-	malf.malfhacking = addtimer(CALLBACK(malf, TYPE_PROC_REF(/mob/living/silicon/ai/, malfhacked), src), 600, TIMER_STOPPABLE)
+	malf.malfhacking = addtimer(CALLBACK(malf, TYPE_PROC_REF(/mob/living/silicon/ai/, malfhacked), src), 30 SECONDS + 10*malf.hacked_apcs.len SECONDS, TIMER_STOPPABLE)
 
 	var/atom/movable/screen/alert/hackingapc/hacking_apc
 	hacking_apc = malf.throw_alert(ALERT_HACKING_APC, /atom/movable/screen/alert/hackingapc)
@@ -36,19 +36,22 @@
 		return
 	if(!is_station_level(z))
 		return
+	INVOKE_ASYNC(src, PROC_REF(malfshunt), malf)
+
+/obj/machinery/power/apc/proc/malfshunt(mob/living/silicon/ai/malf)
+	var/confirm = tgui_alert(malf, "Are you sure that you want to shunt? This will take you out of your core!", "Shunt to [name]?", list("Yes", "No"))
+	if(confirm != "Yes")
+		return
 	malf.ShutOffDoomsdayDevice()
-	occupier = new /mob/living/silicon/ai(src, malf.laws.copy_lawset(), malf) //DEAR GOD WHY? //IKR????
-	occupier.adjustOxyLoss(malf.getOxyLoss())
+	occupier = malf
+	if (isturf(malf.loc)) // create a deactivated AI core if the AI isn't coming from an emergency mech shunt
+		malf.create_core_link(new /obj/structure/ai_core(malf.loc, CORE_STATE_FINISHED, malf.make_mmi()))
+	malf.forceMove(src) // move INTO the APC, not to its tile
 	if(!findtext(occupier.name, "APC Copy"))
 		occupier.name = "[malf.name] APC Copy"
-	if(malf.parent)
-		occupier.parent = malf.parent
-	else
-		occupier.parent = malf
 	malf.shunted = TRUE
 	occupier.eyeobj.name = "[occupier.name] (AI Eye)"
-	if(malf.parent)
-		qdel(malf)
+	occupier.eyeobj.forceMove(src.loc)
 	for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
 		disk_pinpointers.switch_mode_to(TRACK_MALF_AI) //Pinpointer will track the shunted AI
 	var/datum/action/innate/core_return/return_action = new
@@ -58,23 +61,27 @@
 /obj/machinery/power/apc/proc/malfvacate(forced)
 	if(!occupier)
 		return
-	if(occupier.parent && occupier.parent.stat != DEAD)
-		occupier.mind.transfer_to(occupier.parent)
-		occupier.parent.shunted = FALSE
-		occupier.parent.setOxyLoss(occupier.getOxyLoss())
-		occupier.parent.cancel_camera()
-		qdel(occupier)
-		return
-	to_chat(occupier, span_danger("Primary core damaged, unable to return core processes."))
+	SEND_SIGNAL(occupier, COMSIG_SILICON_AI_VACATE_APC, occupier)
+	SEND_SIGNAL(src, COMSIG_SILICON_AI_VACATE_APC, occupier)
 	if(forced)
 		occupier.forceMove(drop_location())
 		INVOKE_ASYNC(occupier, TYPE_PROC_REF(/mob/living, death))
 		occupier.gib(DROP_ALL_REMAINS)
+		occupier = null
+		return
 
 	if(!occupier.nuking) //Pinpointers go back to tracking the nuke disk, as long as the AI (somehow) isn't mid-nuking.
 		for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)
 			disk_pinpointers.switch_mode_to(TRACK_NUKE_DISK)
 			disk_pinpointers.alert = FALSE
+
+	if(occupier.linked_core)
+		occupier.shunted = FALSE
+		occupier.resolve_core_link()
+		occupier = null
+	else
+		stack_trace("An AI: [occupier] has vacated an APC with no linked core and without being gibbed.")
+
 
 /obj/machinery/power/apc/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	. = ..()
@@ -89,13 +96,13 @@
 	if(!occupier.mind || !occupier.client)
 		to_chat(user, span_warning("[occupier] is either inactive or destroyed!"))
 		return FALSE
-	if(!occupier.parent.stat)
+	if(occupier.linked_core) //if they have an active linked_core, they can't be transferred from an APC
 		to_chat(user, span_warning("[occupier] is refusing all attempts at transfer!") )
 		return FALSE
 	if(transfer_in_progress)
 		to_chat(user, span_warning("There's already a transfer in progress!"))
 		return FALSE
-	if(interaction != AI_TRANS_TO_CARD || occupier.stat)
+	if(interaction != AI_TRANS_TO_CARD || IS_UNCONSCIOUS_OR_CRIT(occupier))
 		return FALSE
 	var/turf/user_turf = get_turf(user)
 	if(!user_turf)
@@ -103,10 +110,10 @@
 	transfer_in_progress = TRUE
 	user.visible_message(span_notice("[user] slots [card] into [src]..."), span_notice("Transfer process initiated. Sending request for AI approval..."))
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	SEND_SOUND(occupier, sound('sound/misc/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
+	SEND_SOUND(occupier, sound('sound/announcer/notice/notice2.ogg')) //To alert the AI that someone's trying to card them if they're tabbed out
 	if(tgui_alert(occupier, "[user] is attempting to transfer you to \a [card.name]. Do you consent to this?", "APC Transfer", list("Yes - Transfer Me", "No - Keep Me Here")) == "No - Keep Me Here")
 		to_chat(user, span_danger("AI denied transfer request. Process terminated."))
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 		transfer_in_progress = FALSE
 		return FALSE
 	if(user.loc != user_turf)
@@ -127,7 +134,7 @@
 	to_chat(occupier, span_notice("Transfer complete! You've been stored in [user]'s [card.name]."))
 	occupier.forceMove(card)
 	card.AI = occupier
-	occupier.parent.shunted = FALSE
+	occupier.shunted = FALSE
 	occupier.cancel_camera()
 	occupier = null
 	transfer_in_progress = FALSE

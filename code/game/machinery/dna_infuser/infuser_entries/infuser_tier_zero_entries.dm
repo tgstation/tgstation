@@ -17,12 +17,12 @@
 		"this is a bad idea",
 	)
 	output_organs = list(
-		/obj/item/organ/internal/appendix/fly,
-		/obj/item/organ/internal/eyes/fly,
-		/obj/item/organ/internal/heart/fly,
-		/obj/item/organ/internal/lungs/fly,
-		/obj/item/organ/internal/stomach/fly,
-		/obj/item/organ/internal/tongue/fly,
+		/obj/item/organ/appendix/fly,
+		/obj/item/organ/eyes/fly,
+		/obj/item/organ/heart/fly,
+		/obj/item/organ/lungs/fly,
+		/obj/item/organ/stomach/fly,
+		/obj/item/organ/tongue/fly,
 	)
 	infusion_desc = "fly-like"
 	tier = DNA_MUTANT_TIER_ZERO
@@ -41,7 +41,7 @@
 		/mob/living/basic/pet/fox,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/ears/fox,
+		/obj/item/organ/ears/fox,
 	)
 	infusion_desc = "inexcusable"
 	tier = DNA_MUTANT_TIER_ZERO
@@ -61,12 +61,36 @@
 		/mob/living/basic/mothroach,
 	)
 	output_organs = list(
-		/obj/item/organ/external/antennae,
-		/obj/item/organ/external/wings/moth,
-		/obj/item/organ/internal/eyes/moth,
-		/obj/item/organ/internal/tongue/moth,
+		/obj/item/organ/antennae,
+		/obj/item/organ/wings/moth,
+		/obj/item/organ/eyes/moth,
+		/obj/item/organ/tongue/moth,
 	)
 	infusion_desc = "fluffy"
+	tier = DNA_MUTANT_TIER_ZERO
+
+/datum/infuser_entry/lizard
+	name = "Lizard"
+	infuse_mob_name = "lacertilia"
+	desc = "Turns out infusing most humanoids with lizard DNA creates features remarkably similar to those of lizardpeople. What a strange coincidence."
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
+	qualities = list(
+		"long tails",
+		"decorative horns",
+		"aesthetic snouts",
+		"not much honestly",
+	)
+	input_obj_or_mob = list(
+		/mob/living/basic/lizard,
+	)
+	output_organs = list(
+		/obj/item/organ/horns,
+		/obj/item/organ/frills,
+		/obj/item/organ/snout,
+		/obj/item/organ/tail/lizard,
+		/obj/item/organ/tongue/lizard,
+	)
+	infusion_desc = "scaly"
 	tier = DNA_MUTANT_TIER_ZERO
 
 /datum/infuser_entry/felinid
@@ -75,14 +99,67 @@
 	desc = "EVERYONE CALM DOWN! I'm not implying anything with this entry. Are we really so surprised that felinids are humans with mixed feline DNA?"
 	threshold_desc = DNA_INFUSION_NO_THRESHOLD
 	qualities = list(
-		"oh, let me guess, you're a big fan of those japanese tourist bots",
+		"oh, let me guess, you're a big fan of those Japanese tourist bots",
 	)
 	input_obj_or_mob = list(
 		/mob/living/basic/pet/cat,
 	)
 	output_organs = list(
-		/obj/item/organ/internal/ears/cat,
-		/obj/item/organ/external/tail/cat,
+		/obj/item/organ/ears/cat,
+		/obj/item/organ/tail/cat,
 	)
 	infusion_desc = "domestic"
 	tier = DNA_MUTANT_TIER_ZERO
+
+/datum/infuser_entry/penguin
+	name = "Penguin"
+	infuse_mob_name = "penguin"
+	desc = "Honestly, there wasn't much to gleam from a penguin's DNA, other than they walk funny."
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
+	qualities = list(
+		"you waddle when you walk",
+	)
+	input_obj_or_mob = list(
+		/mob/living/basic/pet/penguin,
+	)
+	output_organs = list(
+		/obj/item/organ/ears/penguin,
+	)
+	infusion_desc = "waddly"
+	tier = DNA_MUTANT_TIER_ZERO
+
+/datum/infuser_entry/plants
+	name = "Plant"
+	infuse_mob_name = "plant hybrid"
+	desc = "Hydroponics research has long been interested in splicing human DNA into plant DNA, creating podpeople. \
+		Many scientists didn't want to let those hippies get the leg up on them, so they attempted the opposite - to pretty uninteresting results."
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
+	qualities = list(
+		"gives you neat hair",
+		"not much else, honestly",
+	)
+	input_obj_or_mob = list(
+		/obj/item/food/grown,
+		/obj/item/grown,
+	)
+	output_organs = list(
+		/obj/item/organ/appendix/pod,
+		/obj/item/organ/brain/pod,
+		/obj/item/organ/ears/pod,
+		/obj/item/organ/eyes/pod,
+		/obj/item/organ/heart/pod,
+		/obj/item/organ/liver/pod,
+		/obj/item/organ/lungs/pod,
+		/obj/item/organ/pod_hair,
+		/obj/item/organ/stomach/pod,
+		/obj/item/organ/tongue/pod,
+	)
+	infusion_desc = "botanical"
+	tier = DNA_MUTANT_TIER_ZERO
+
+/datum/infuser_entry/plants/get_output_organs(mob/living/carbon/human/target, atom/movable/infused_from)
+	// Prioritize pod hair since it's the only thing that matters here
+	if(!target.get_organ_by_type(/obj/item/organ/pod_hair))
+		return list(/obj/item/organ/pod_hair)
+
+	return ..()

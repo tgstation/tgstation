@@ -7,14 +7,14 @@
 	name = "decoration material spawner"
 	icon_state = "tile"
 	loot = list(
-		/obj/item/stack/sheet/sandblock{amount = 30} = 25,
+		/obj/item/stack/ore/glass/thirty = 25,
 		/obj/item/stack/sheet/mineral/wood{amount = 30} = 25,
 		/obj/item/stack/sheet/bronze/thirty = 20,
 		/obj/item/stack/tile/noslip{amount = 20} = 10,
 		/obj/item/stack/sheet/plastic{amount = 30} = 10,
-		/obj/item/stack/tile/pod{amount = 20} = 4,
-		/obj/item/stack/tile/pod/light{amount = 20} = 3,
-		/obj/item/stack/tile/pod/dark{amount = 20} = 3,
+		/obj/item/stack/tile/mineral/plastitanium/pod{amount = 20} = 4,
+		/obj/item/stack/tile/mineral/plastitanium/pod/light{amount = 20} = 3,
+		/obj/item/stack/tile/mineral/plastitanium/pod/dark{amount = 20} = 3,
 	)
 
 /obj/effect/spawner/random/decoration/carpet
@@ -114,6 +114,26 @@
 		/obj/item/flashlight/glowstick/pink,
 	)
 
+/obj/effect/spawner/random/decoration/glowstick/on
+	name = "random colored glowstick (on)"
+	icon_state = "glowstick"
+	loot = list(
+		/obj/item/flashlight/glowstick,
+		/obj/item/flashlight/glowstick/red,
+		/obj/item/flashlight/glowstick/blue,
+		/obj/item/flashlight/glowstick/cyan,
+		/obj/item/flashlight/glowstick/orange,
+		/obj/item/flashlight/glowstick/yellow,
+		/obj/item/flashlight/glowstick/pink,
+	)
+
+/obj/effect/spawner/random/decoration/glowstick/on/make_item(spawn_loc, type_path_to_make)
+	. = ..()
+
+	var/obj/item/flashlight/glowstick = .
+
+	glowstick.set_light_on(TRUE)
+
 /obj/effect/spawner/random/decoration/paint
 	name = "paint spawner"
 	icon_state = "paint"
@@ -124,9 +144,9 @@
 	name = "random flower spawner"
 	icon_state = "flower"
 	loot = list(
-		/obj/item/food/grown/poppy,
-		/obj/item/food/grown/harebell,
-		/obj/item/food/grown/trumpet,
-		/obj/item/food/grown/sunflower,
-		/obj/item/food/grown/rose,
+		/obj/item/food/grown/flower/poppy,
+		/obj/item/food/grown/flower/harebell,
+		/obj/item/food/grown/flower/trumpet,
+		/obj/item/food/grown/flower/sunflower,
+		/obj/item/food/grown/flower/rose,
 	)

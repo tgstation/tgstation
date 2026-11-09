@@ -38,11 +38,11 @@
 /datum/instrument/fun/mothscream
 	name = "Moth Scream"
 	id = "mothscream"
-	real_samples = list("60"='sound/voice/moth/scream_moth.ogg')
+	real_samples = list("60"='sound/mobs/humanoids/moth/scream_moth.ogg')
 	admin_only = TRUE
 
 /datum/instrument/fun/bilehorn
 	name = "Bilehorn"
 	id = "bilehorn"
-	real_samples = list("60"='sound/creatures/bileworm/bileworm_spit.ogg')
+	real_samples = list("60"='sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg')
 	admin_only = TRUE

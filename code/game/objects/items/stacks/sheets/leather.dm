@@ -3,26 +3,68 @@
 	desc = "Something went wrong."
 	icon_state = "sheet-hide"
 	inhand_icon_state = null
+	worn_icon_state = null
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/animalhide
+	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/skin_drop.ogg'
+	abstract_type = /obj/item/stack/sheet/animalhide
 
-/obj/item/stack/sheet/animalhide/human
+/// Subtype of skin to be dropped by carbon mobs as a result of being butchered, potentially inheriting their body color
+/obj/item/stack/sheet/animalhide/carbon
+	abstract_type = /obj/item/stack/sheet/animalhide/carbon
+	/// Color of our skin, if we were created from a mob being butchered
+	var/skin_color = null
+	/// Should we recolor our sprite and prevent merging of stacks of different skin colors?
+	var/uses_skin_color = FALSE
+
+/obj/item/stack/sheet/animalhide/carbon/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt, new_skin_color)
+	. = ..()
+	if (!skin_color)
+		set_skin_color(new_skin_color || get_random_skin_color())
+
+/obj/item/stack/sheet/animalhide/carbon/can_merge(obj/item/stack/sheet/animalhide/carbon/check, inhand)
+	. = ..()
+	if (!. || !uses_skin_color)
+		return
+	return check.skin_color == skin_color // segregation, in my human butcher shop? how queer!
+
+/obj/item/stack/sheet/animalhide/carbon/proc/set_skin_color(new_skin_color)
+	skin_color = new_skin_color
+	if (skin_color && uses_skin_color)
+		add_atom_colour(skin_color, FIXED_COLOUR_PRIORITY)
+	else
+		remove_atom_colour(FIXED_COLOUR_PRIORITY)
+
+/obj/item/stack/sheet/animalhide/carbon/split_stack(amount)
+	var/obj/item/stack/sheet/animalhide/carbon/new_stack = ..()
+	if (!new_stack)
+		return
+	new_stack.set_skin_color(skin_color)
+	return new_stack
+
+/// Select a random skin color to spawn
+/obj/item/stack/sheet/animalhide/carbon/proc/get_random_skin_color()
+	return null
+
+/obj/item/stack/sheet/animalhide/carbon/human
 	name = "human skin"
 	desc = "The by-product of human farming."
 	singular_name = "human skin piece"
 	novariants = FALSE
-	merge_type = /obj/item/stack/sheet/animalhide/human
+	merge_type = /obj/item/stack/sheet/animalhide/carbon/human
 
 GLOBAL_LIST_INIT(human_recipes, list( \
-	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("human skin hat", /obj/item/clothing/head/fedora/human_leather, 1, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("human skin carpet", /obj/item/stack/tile/carpet/human, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("human skin hat", /obj/item/clothing/head/fedora/human_leather, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
 	))
 
-/obj/item/stack/sheet/animalhide/human/get_main_recipes()
+/obj/item/stack/sheet/animalhide/carbon/human/get_main_recipes()
 	. = ..()
 	. += GLOB.human_recipes
 
-/obj/item/stack/sheet/animalhide/human/five
+/obj/item/stack/sheet/animalhide/carbon/human/five
 	amount = 5
 
 /obj/item/stack/sheet/animalhide/generic
@@ -54,10 +96,18 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 /obj/item/stack/sheet/animalhide/mothroach/five
 	amount = 5
 
+GLOBAL_LIST_INIT(mothroach_recipes, list( \
+	new/datum/stack_recipe("moth fur carpet", /obj/item/stack/tile/carpet/moth, 1, 4, 20, category = CAT_TILES), \
+	))
+
+/obj/item/stack/sheet/animalhide/mothroach/get_main_recipes()
+	. = ..()
+	. += GLOB.mothroach_recipes
+
 GLOBAL_LIST_INIT(gondola_recipes, list ( \
-	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("gondola bedsheet", /obj/item/bedsheet/gondola, 1, check_density = FALSE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("gondola bedsheet", /obj/item/bedsheet/gondola, 1, crafting_flags = NONE, category = CAT_FURNITURE), \
 	))
 
 /obj/item/stack/sheet/animalhide/gondola
@@ -73,7 +123,7 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	. += GLOB.gondola_recipes
 
 GLOBAL_LIST_INIT(corgi_recipes, list ( \
-	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
 	))
 
 /obj/item/stack/sheet/animalhide/corgi/get_main_recipes()
@@ -91,48 +141,60 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 /obj/item/stack/sheet/animalhide/cat/five
 	amount = 5
 
-/obj/item/stack/sheet/animalhide/monkey
+/obj/item/stack/sheet/animalhide/carbon/monkey
 	name = "monkey hide"
 	desc = "The by-product of monkey farming."
 	singular_name = "monkey hide piece"
 	icon_state = "sheet-monkey"
 	inhand_icon_state = null
-	merge_type = /obj/item/stack/sheet/animalhide/monkey
+	merge_type = /obj/item/stack/sheet/animalhide/carbon/monkey
 
 GLOBAL_LIST_INIT(monkey_recipes, list ( \
-	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/costume/monkeysuit, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/costume/monkeysuit, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
 	))
 
-/obj/item/stack/sheet/animalhide/monkey/get_main_recipes()
+/obj/item/stack/sheet/animalhide/carbon/monkey/get_main_recipes()
 	. = ..()
 	. += GLOB.monkey_recipes
 
-/obj/item/stack/sheet/animalhide/monkey/five
+/obj/item/stack/sheet/animalhide/carbon/monkey/five
 	amount = 5
 
-/obj/item/stack/sheet/animalhide/lizard
+/obj/item/stack/sheet/animalhide/carbon/lizard
 	name = "lizard skin"
 	desc = "Sssssss..."
 	singular_name = "lizard skin piece"
 	icon_state = "sheet-lizard"
 	inhand_icon_state = null
-	merge_type = /obj/item/stack/sheet/animalhide/lizard
+	merge_type = /obj/item/stack/sheet/animalhide/carbon/lizard
+	uses_skin_color = TRUE
 
-/obj/item/stack/sheet/animalhide/lizard/five
+/obj/item/stack/sheet/animalhide/carbon/lizard/get_random_skin_color()
+	return sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]")
+
+/obj/item/stack/sheet/animalhide/carbon/lizard/five
 	amount = 5
 
+GLOBAL_LIST_INIT(lizard_recipes, list( \
+	new/datum/stack_recipe("lizard scale carpet", /obj/item/stack/tile/carpet/lizard, 1, 4, 20, category = CAT_TILES), \
+	))
+
+/obj/item/stack/sheet/animalhide/carbon/lizard/get_main_recipes()
+	. = ..()
+	. += GLOB.lizard_recipes
+
 /obj/item/stack/sheet/animalhide/xeno
-	name = "alien hide"
+	name = "alien chitin"
+	singular_name = "alien chitin piece"
 	desc = "The skin of a terrible creature."
-	singular_name = "alien hide piece"
 	icon_state = "sheet-xeno"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/xeno
 
 GLOBAL_LIST_INIT(xeno_recipes, list ( \
-	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/costume/xenos, 1, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/costume/xenos, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("alien helmet", /obj/item/clothing/head/costume/xenos, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/costume/xenos, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
 	))
 
 /obj/item/stack/sheet/animalhide/xeno/get_main_recipes()
@@ -144,18 +206,25 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/carp
 	name = "carp scales"
-	desc = "The scaly skin of a space carp. It looks quite beatiful when detached from the foul creature who once wore it."
+	desc = "The scaly skin of a space carp. It looks quite beautiful when detached from the foul creature who once wore it."
 	singular_name = "carp scale"
 	icon_state = "sheet-carp"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/carp
 
+/obj/item/stack/sheet/animalhide/carp/fish
+	name = "fish scales"
+	desc = "The scales of a fish, or fish person. It reminds you about the importance of sharing."
+	singular_name = "fish scale"
+
 GLOBAL_LIST_INIT(carp_recipes, list ( \
-	new/datum/stack_recipe("carp costume", /obj/item/clothing/suit/hooded/carp_costume, 4, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("carp mask", /obj/item/clothing/mask/gas/carp, 1, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("carpskin chair", /obj/structure/chair/comfy/carp, 2, check_density = FALSE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("carpskin suit", /obj/item/clothing/under/suit/carpskin, 3, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("carpskin fedora", /obj/item/clothing/head/fedora/carpskin, 2, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carp scale carpet", /obj/item/stack/tile/carpet/carp, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("carp costume", /obj/item/clothing/suit/hooded/carp_costume, 4, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carp mask", /obj/item/clothing/mask/gas/carp, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carpskin chair", /obj/structure/chair/comfy/carp, 2, crafting_flags = NONE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("carpskin suit", /obj/item/clothing/under/suit/carpskin, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carpskin fedora", /obj/item/clothing/head/fedora/carpskin, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("carpskin fishing bag", /obj/item/storage/bag/fishing/carpskin, 3, crafting_flags = NONE, category = CAT_CONTAINERS), \
 	))
 
 /obj/item/stack/sheet/animalhide/carp/get_main_recipes()
@@ -164,16 +233,6 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 
 /obj/item/stack/sheet/animalhide/carp/five
 	amount = 5
-
-//don't see anywhere else to put these, maybe together they could be used to make the xenos suit?
-/obj/item/stack/sheet/xenochitin
-	name = "alien chitin"
-	desc = "A piece of the hide of a terrible creature."
-	singular_name = "alien hide piece"
-	icon = 'icons/mob/nonhuman-player/alien.dmi'
-	icon_state = "chitin"
-	novariants = TRUE
-	merge_type = /obj/item/stack/sheet/xenochitin
 
 /obj/item/xenos_claw
 	name = "alien claw"
@@ -189,37 +248,45 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	desc = "The by-product of mob grinding."
 	singular_name = "leather piece"
 	icon_state = "sheet-leather"
+	worn_icon_state = null
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/leather
+	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/skin_drop.ogg'
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
-	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, check_density = FALSE, category = CAT_CONTAINERS), \
-	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2, check_density = FALSE, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("basketball", /obj/item/toy/basketball, 20, check_density = FALSE, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("baseball", /obj/item/toy/beach_ball/baseball, 3, check_density = FALSE, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("saddle", /obj/item/goliath_saddle, 5, check_density = FALSE, category = CAT_EQUIPMENT), \
-	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("cowboy boots", /obj/item/clothing/shoes/cowboy, 2, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("botany gloves", /obj/item/clothing/gloves/botanic_leather, 3, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("leather satchel", /obj/item/storage/backpack/satchel/leather, 5, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("sheriff vest", /obj/item/clothing/accessory/vest_sheriff, 4, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7, check_density = FALSE, category = CAT_CLOTHING), \
-	new/datum/stack_recipe("biker jacket", /obj/item/clothing/suit/jacket/leather/biker, 7, check_density = FALSE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, crafting_flags = NONE, category = CAT_CONTAINERS), \
+	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("basketball", /obj/item/toy/basketball, 20, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("baseball", /obj/item/toy/beach_ball/baseball, 3, crafting_flags = NONE, category = CAT_ENTERTAINMENT), \
+	new/datum/stack_recipe("saddle", /obj/item/goliath_saddle, 5, crafting_flags = NONE, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("cowboy boots", /obj/item/clothing/shoes/cowboy, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("botany gloves", /obj/item/clothing/gloves/botanic_leather, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("leather satchel", /obj/item/storage/backpack/satchel/leather, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("sheriff vest", /obj/item/clothing/accessory/vest_sheriff, 4, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("biker jacket", /obj/item/clothing/suit/jacket/leather/biker, 7, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe_list("belts", list( \
-		new/datum/stack_recipe("tool belt", /obj/item/storage/belt/utility, 4, check_density = FALSE, category = CAT_CONTAINERS), \
-		new/datum/stack_recipe("botanical belt", /obj/item/storage/belt/plant, 2, check_density = FALSE, category = CAT_CONTAINERS), \
-		new/datum/stack_recipe("janitorial belt", /obj/item/storage/belt/janitor, 2, check_density = FALSE, category = CAT_CONTAINERS), \
-		new/datum/stack_recipe("medical belt", /obj/item/storage/belt/medical, 2, check_density = FALSE, category = CAT_CONTAINERS), \
-		new/datum/stack_recipe("security belt", /obj/item/storage/belt/security, 2, check_density = FALSE, category = CAT_CONTAINERS), \
-		new/datum/stack_recipe("shoulder holster", /obj/item/storage/belt/holster, 3, check_density = FALSE, category = CAT_CONTAINERS), \
-		new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5, check_density = FALSE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("tool belt", /obj/item/storage/belt/utility, 4, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("botanical belt", /obj/item/storage/belt/plant, 2, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("janitorial belt", /obj/item/storage/belt/janitor, 2, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("medical belt", /obj/item/storage/belt/medical, 2, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("security belt", /obj/item/storage/belt/security, 2, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("shoulder holster", /obj/item/storage/belt/holster, 3, crafting_flags = NONE, category = CAT_CONTAINERS), \
+		new/datum/stack_recipe("bandolier", /obj/item/storage/belt/bandolier, 5, crafting_flags = NONE, category = CAT_CONTAINERS), \
 	)),
 	new/datum/stack_recipe_list("cowboy hats", list( \
-		new/datum/stack_recipe("sheriff hat", /obj/item/clothing/head/cowboy/brown, 2, check_density = FALSE, category = CAT_CLOTHING), \
-		new/datum/stack_recipe("desperado hat", /obj/item/clothing/head/cowboy/black, 2, check_density = FALSE, category = CAT_CLOTHING), \
-		new/datum/stack_recipe("ten-gallon hat", /obj/item/clothing/head/cowboy/white, 2, check_density = FALSE, category = CAT_CLOTHING), \
-		new/datum/stack_recipe("deputy hat", /obj/item/clothing/head/cowboy/red, 2, check_density = FALSE, category = CAT_CLOTHING), \
-		new/datum/stack_recipe("drifter hat", /obj/item/clothing/head/cowboy/grey, 2, check_density = FALSE, category = CAT_CLOTHING), \
+		new/datum/stack_recipe("sheriff hat", /obj/item/clothing/head/cowboy/brown, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+		new/datum/stack_recipe("desperado hat", /obj/item/clothing/head/cowboy/black, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+		new/datum/stack_recipe("ten-gallon hat", /obj/item/clothing/head/cowboy/white, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+		new/datum/stack_recipe("deputy hat", /obj/item/clothing/head/cowboy/red, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+		new/datum/stack_recipe("drifter hat", /obj/item/clothing/head/cowboy/grey, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+	)),
+	new/datum/stack_recipe_list("sword sheaths", list( \
+		new/datum/stack_recipe("katana sheath", /obj/item/storage/belt/sheath/katana/empty, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
+		new/datum/stack_recipe("hanzo katana sheath", /obj/item/storage/belt/sheath/hanzo_katana/empty, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
+		new/datum/stack_recipe("toy katana sheath", /obj/item/storage/belt/sheath/katana/toy/empty, 3, crafting_flags = NONE, category = CAT_CLOTHING), \
 	)),
 ))
 
@@ -241,35 +308,60 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	icon_state = "sinew"
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/sinew
+	drop_sound = 'sound/effects/meatslap.ogg'
+	pickup_sound = 'sound/effects/meatslap.ogg'
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	/// Trophy crafting recipe for this type of sinew
+	var/trophy_type = /datum/crafting_recipe/crusher_trophy/watcher_wing
 
 /obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
-
 	// As bone and sinew have just a little too many recipes for this, we'll just split them up.
 	// Sinew slapcrafting will mostly-sinew recipes, and bones will have mostly-bones recipes.
-	var/static/list/slapcraft_recipe_list = list(\
-		/datum/crafting_recipe/goliathcloak, /datum/crafting_recipe/skilt, /datum/crafting_recipe/drakecloak,\
-		)
-
-	AddComponent(
-		/datum/component/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
+	var/list/slapcraft_recipe_list = list(
+		/datum/crafting_recipe/goliathcloak,
+		/datum/crafting_recipe/skilt,
+		/datum/crafting_recipe/drakecloak,
 	)
+	if (trophy_type)
+		slapcraft_recipe_list += trophy_type
+	AddElement(
+		/datum/element/slapcrafting,\
+		slapcraft_recipes = string_list(slapcraft_recipe_list),\
+	)
+
+/obj/item/stack/sheet/sinew/icewing
+	name = "icewing watcher sinew"
+	desc = "Ice-cold filaments which presumably came from an icewing watcher's wings."
+	singular_name = "icewing watcher sinew"
+	icon_state = "sinew_icewing"
+	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/sinew/icewing
+	trophy_type = /datum/crafting_recipe/crusher_trophy/icewing_watcher_wing
+
+/obj/item/stack/sheet/sinew/magmawing
+	name = "magmawing watcher sinew"
+	desc = "Fiery filaments which presumably came from a magmawing watcher's wings."
+	singular_name = "magmawing watcher sinew"
+	icon_state = "sinew_magmawing"
+	novariants = TRUE
+	merge_type = /obj/item/stack/sheet/sinew/magmawing
+	trophy_type = /datum/crafting_recipe/crusher_trophy/magmawing_watcher_wing
 
 /obj/item/stack/sheet/sinew/wolf
 	name = "wolf sinew"
 	desc = "Long stringy filaments which came from the insides of a wolf."
 	singular_name = "wolf sinew"
 	merge_type = /obj/item/stack/sheet/sinew/wolf
+	trophy_type = null
 
 GLOBAL_LIST_INIT(sinew_recipes, list ( \
-	new/datum/stack_recipe("sinew restraints", /obj/item/restraints/handcuffs/cable/sinew, 1, check_density = FALSE, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("sinew restraints", /obj/item/restraints/handcuffs/cable/sinew, 1, crafting_flags = NONE, category = CAT_EQUIPMENT), \
 ))
 
 /obj/item/stack/sheet/sinew/get_main_recipes()
 	. = ..()
 	. += GLOB.sinew_recipes
-
 
 /*Plates*/
 /obj/item/stack/sheet/animalhide/goliath_hide
@@ -281,7 +373,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	max_amount = 6
 	novariants = FALSE
 	item_flags = NOBLUDGEON
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	merge_type = /obj/item/stack/sheet/animalhide/goliath_hide
@@ -292,6 +384,14 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon_state = "polar_bear_hide"
 	singular_name = "polar bear hide"
 	merge_type = /obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide
+
+GLOBAL_LIST_INIT(polar_bear_recipes, list( \
+	new/datum/stack_recipe("polar bear fur carpet", /obj/item/stack/tile/carpet/polar_bear, 1, 4, 20, category = CAT_TILES), \
+	))
+
+/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide/get_main_recipes()
+	. = ..()
+	. += GLOB.polar_bear_recipes
 
 /obj/item/stack/sheet/animalhide/ashdrake
 	name = "ash drake hide"
@@ -311,23 +411,41 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/drakecloak)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
-//Step one - dehairing.
+/obj/item/stack/sheet/animalhide/bear
+	name = "bear hide"
+	desc = "Fuzzy pelts from a bear. Imagine how warm you could be, wrapped up in a coat of this stuff."
+	icon_state = "bear_hide" //change
+	singular_name = "bear pelt"
+	merge_type = /obj/item/stack/sheet/animalhide/bear
+	novariants = FALSE
 
-/obj/item/stack/sheet/animalhide/attackby(obj/item/W, mob/user, params)
-	if(W.get_sharpness())
-		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
-		user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
-		if(do_after(user, 5 SECONDS, target = src))
-			to_chat(user, span_notice("You cut the hair from [src.name]."))
-			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), amount)
-			use(amount)
-	else
+GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
+	new/datum/stack_recipe(" bear fur carpet", /obj/item/stack/tile/carpet/bear, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("bear costume", /obj/item/clothing/suit/costume/bear_suit, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("bear hat", /obj/item/clothing/head/costume/bearpelt, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+))
+
+/obj/item/stack/sheet/animalhide/bear/get_main_recipes()
+	. = ..()
+	. += GLOB.bear_pelt_recipes
+
+//Step one - dehairing.
+/obj/item/stack/sheet/animalhide/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness())
 		return ..()
+	playsound(loc, 'sound/items/weapons/slice.ogg', 50, TRUE, -1)
+	user.visible_message(span_notice("[user] starts cutting hair off \the [src]."), span_notice("You start cutting the hair off \the [src]..."), span_hear("You hear the sound of a knife rubbing against flesh."))
+	if(!do_after(user, 5 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You cut the hair from [src.name]."))
+	new /obj/item/stack/sheet/hairlesshide(user.drop_location(), amount)
+	use(amount)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/sheet/animalhide/examine(mob/user)
 	. = ..()
@@ -340,8 +458,11 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	desc = "This hide was stripped of its hair, but still needs washing and tanning."
 	singular_name = "hairless hide piece"
 	icon_state = "sheet-hairlesshide"
+	worn_icon_state = null
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/hairlesshide
+	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/skin_drop.ogg'
 
 /obj/item/stack/sheet/hairlesshide/examine(mob/user)
 	. = ..()
@@ -353,8 +474,11 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	desc = "This hide has been cleaned but still needs to be dried."
 	singular_name = "wet hide piece"
 	icon_state = "sheet-wetleather"
+	worn_icon_state = null
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/wethide
+	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/skin_drop.ogg'
 	/// Reduced when exposed to high temperatures
 	var/wetness = 30
 	/// Kelvin to start drying

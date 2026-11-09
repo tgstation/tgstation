@@ -17,7 +17,7 @@
 	interaction_flags_machine = INTERACT_MACHINE_OPEN
 	circuit = /obj/item/circuitboard/machine/crossing_signal
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
-	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	subsystem_type = /datum/controller/subsystem/processing/transport
 	light_color = LIGHT_COLOR_BABY_BLUE
 	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
 	var/signal_state = XING_STATE_MALF
@@ -40,8 +40,8 @@
 	* Red: decent chance of getting hit, but if you're quick it's a decent gamble.
 	* Amber: slow people may be in danger.
 	*/
-	var/amber_distance_threshold = AMBER_THRESHOLD_NORMAL
-	var/red_distance_threshold = RED_THRESHOLD_NORMAL
+	var/amber_distance_threshold = XING_THRESHOLD_AMBER
+	var/red_distance_threshold = XING_THRESHOLD_RED
 
 /** Crossing signal subtypes
  *
@@ -103,8 +103,7 @@
 
 /obj/machinery/transport/crossing_signal/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
-	RegisterSignal(SStransport, COMSIG_COMMS_STATUS, PROC_REF(comms_change))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(wake_up))
 	SStransport.crossing_signals += src
 	register_context()
 
@@ -118,15 +117,11 @@
 	SStransport.crossing_signals -= src
 	. = ..()
 
-/obj/machinery/transport/crossing_signal/attackby(obj/item/weapon, mob/living/user, params)
-	if(!user.combat_mode)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
-			return
+/obj/machinery/transport/crossing_signal/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-		if(default_deconstruction_crowbar(weapon))
-			return
-
-	return ..()
+/obj/machinery/transport/crossing_signal/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/transport/crossing_signal/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -150,8 +145,8 @@
 			. += span_notice("The orange [EXAMINE_HINT("remote warning")] light is on.")
 			. += span_notice("The status display reads: Check track sensor.")
 		if(TRANSPORT_REMOTE_FAULT)
-			. += span_notice("The blue [EXAMINE_HINT("remote fault")] light is on.")
-			. += span_notice("The status display reads: Check tram controller.")
+			. += span_notice("The blue [EXAMINE_HINT("telecoms failure")] light is on.")
+			. += span_notice("The status display reads: Check telecommunications network.")
 		if(TRANSPORT_LOCAL_FAULT)
 			. += span_notice("The red [EXAMINE_HINT("local fault")] light is on.")
 			. += span_notice("The status display reads: Repair required.")
@@ -180,20 +175,19 @@
 	find_uplink()
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/transport/crossing_signal/attackby_secondary(obj/item/weapon, mob/user, params)
-	. = ..()
+/obj/machinery/transport/crossing_signal/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		return NONE
+	switch(sign_dir)
+		if(INBOUND)
+			sign_dir = OUTBOUND
+		if(OUTBOUND)
+			sign_dir = INBOUND
 
-	if(weapon.tool_behaviour == TOOL_WRENCH && panel_open)
-		switch(sign_dir)
-			if(INBOUND)
-				sign_dir = OUTBOUND
-			if(OUTBOUND)
-				sign_dir = INBOUND
+	to_chat(user, span_notice("You flip directions on [src]."))
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
-		to_chat(user, span_notice("You flip directions on [src]."))
-		update_appearance()
-
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/transport/crossing_signal/proc/link_sensor()
 	sensor_ref = WEAKREF(find_closest_valid_sensor())
@@ -203,34 +197,18 @@
 	sensor_ref = null
 	if(operating_status < TRANSPORT_REMOTE_WARNING)
 		operating_status = TRANSPORT_REMOTE_WARNING
-		degraded_response()
 	update_appearance()
 
 /obj/machinery/transport/crossing_signal/proc/wake_sensor()
-	if(operating_status > TRANSPORT_REMOTE_WARNING)
-		degraded_response()
-		return
-
 	var/obj/machinery/transport/guideway_sensor/linked_sensor = sensor_ref?.resolve()
 	if(isnull(linked_sensor))
 		operating_status = TRANSPORT_REMOTE_WARNING
-		degraded_response()
 
 	else if(linked_sensor.trigger_sensor())
 		operating_status = TRANSPORT_SYSTEM_NORMAL
-		normal_response()
 
 	else
 		operating_status = TRANSPORT_REMOTE_WARNING
-		degraded_response()
-
-/obj/machinery/transport/crossing_signal/proc/normal_response()
-	amber_distance_threshold = AMBER_THRESHOLD_NORMAL
-	red_distance_threshold = RED_THRESHOLD_NORMAL
-
-/obj/machinery/transport/crossing_signal/proc/degraded_response()
-	amber_distance_threshold = AMBER_THRESHOLD_DEGRADED
-	red_distance_threshold = RED_THRESHOLD_DEGRADED
 
 /obj/machinery/transport/crossing_signal/proc/clear_uplink()
 	inbound = null
@@ -262,10 +240,10 @@
 		operating_status = TRANSPORT_REMOTE_FAULT
 	else
 		operating_status = TRANSPORT_SYSTEM_NORMAL
+		if(isnull(linked_sensor))
+			link_sensor()
+		wake_sensor()
 
-	if(isnull(linked_sensor))
-		link_sensor()
-	wake_sensor()
 	update_operating()
 
 /obj/machinery/transport/crossing_signal/on_set_machine_stat()
@@ -291,13 +269,11 @@
 	if(updated_controller.specific_transport_id != configured_transport_id)
 		return
 
-	switch(new_status)
-		if(TRUE)
-			if(operating_status == TRANSPORT_REMOTE_FAULT)
-				operating_status = TRANSPORT_SYSTEM_NORMAL
-		if(FALSE)
-			if(operating_status == TRANSPORT_SYSTEM_NORMAL)
-				operating_status = TRANSPORT_REMOTE_FAULT
+	if(new_status)
+		if(operating_status == TRANSPORT_REMOTE_FAULT)
+			operating_status = TRANSPORT_SYSTEM_NORMAL
+	else if(operating_status == TRANSPORT_SYSTEM_NORMAL)
+		operating_status = TRANSPORT_REMOTE_FAULT
 
 /**
  * Update processing state.
@@ -316,20 +292,25 @@
 	end_processing()
 
 /obj/machinery/transport/crossing_signal/process()
-
+	// idle aspect is green or blue depending on the signal status
+	// degraded signal operating conditions of any type show blue
+	var/idle_aspect = operating_status == TRANSPORT_SYSTEM_NORMAL ? XING_STATE_GREEN : XING_STATE_MALF
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
+	if(tram.controller_status & COMM_ERROR)
+		idle_aspect = XING_STATE_MALF
 
-	// Check for stopped states.
-	if(!tram || !tram.controller_operational || !is_operational || !inbound || !outbound)
+	// Check for stopped states. Will kill the process since tram starting up will restart process.
+	if(!tram || !tram.controller_operational || !tram.controller_active || !is_operational || !inbound || !outbound)
 		// Tram missing, we lost power, or something isn't right
-		// Throw the error message (blue)
-		set_signal_state(XING_STATE_MALF, force = !is_operational)
+		// Set idle and stop processing, since the tram won't be moving
+		set_signal_state(idle_aspect, force = !is_operational)
 		return PROCESS_KILL
 
 	var/obj/structure/transport/linear/tram_part = tram.return_closest_platform_to(src)
 
+	// The structure is gone, so we're done here.
 	if(QDELETED(tram_part))
-		set_signal_state(XING_STATE_MALF, force = !is_operational)
+		set_signal_state(idle_aspect, force = !is_operational)
 		return PROCESS_KILL
 
 	// Everything will be based on position and travel direction
@@ -347,41 +328,32 @@
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
 	// How far away are we? negative if already passed.
-	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + (DEFAULT_TRAM_LENGTH * 0.5)))
-
-	// Check for stopped state.
-	// Will kill the process since tram starting up will restart process.
-	if(!tram.controller_active)
-		set_signal_state(XING_STATE_GREEN)
-		return PROCESS_KILL
+	var/approach_distance = tram_velocity_sign * (signal_pos - (tram_pos + DEFAULT_TRAM_MIDPOINT))
 
 	// Check if tram is driving away from us.
-	if(approach_distance < 0)
+	if(approach_distance < -abs(DEFAULT_TRAM_MIDPOINT))
 		// driving away. Green. In fact, in order to reverse, it'll have to stop, so let's go ahead and kill.
-		set_signal_state(XING_STATE_GREEN)
+		set_signal_state(idle_aspect)
 		return PROCESS_KILL
 
 	// Check the tram's terminus station.
 	// INBOUND 1 < 2 < 3
 	// OUTBOUND 1 > 2 > 3
 	if(tram.travel_direction & WEST && inbound < tram.destination_platform.platform_code)
-		set_signal_state(XING_STATE_GREEN)
+		set_signal_state(idle_aspect)
 		return PROCESS_KILL
 	if(tram.travel_direction & EAST && outbound > tram.destination_platform.platform_code)
-		set_signal_state(XING_STATE_GREEN)
+		set_signal_state(idle_aspect)
 		return PROCESS_KILL
 
 	// Finally the interesting part where it's ACTUALLY approaching
-	if(approach_distance <= red_distance_threshold)
-		if(operating_status != TRANSPORT_SYSTEM_NORMAL)
-			set_signal_state(XING_STATE_MALF)
-		else
-			set_signal_state(XING_STATE_RED)
+	if(approach_distance <= red_distance_threshold && operating_status == TRANSPORT_SYSTEM_NORMAL)
+		set_signal_state(XING_STATE_RED)
 		return
-	if(approach_distance <= amber_distance_threshold)
+	if(approach_distance <= amber_distance_threshold && operating_status == TRANSPORT_SYSTEM_NORMAL)
 		set_signal_state(XING_STATE_AMBER)
 		return
-	set_signal_state(XING_STATE_GREEN)
+	set_signal_state(idle_aspect)
 
 /**
  * Set the signal state and update appearance.
@@ -495,6 +467,7 @@
 	icon_state = "sensor-base"
 	desc = "Uses an infrared beam to detect passing trams. Works when paired with a sensor on the other side of the track."
 	layer = TRAM_RAIL_LAYER
+	plane = FLOOR_PLANE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/guideway_sensor
 	/// Sensors work in a married pair
@@ -509,7 +482,7 @@
 /obj/machinery/transport/guideway_sensor/post_machine_initialize()
 	. = ..()
 	pair_sensor()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(wake_up))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(wake_up))
 
 /obj/machinery/transport/guideway_sensor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -538,15 +511,11 @@
 			. += span_notice("The red [EXAMINE_HINT("local fault")] light is on.")
 			. += span_notice("The status display reads: Repair required.")
 
-/obj/machinery/transport/guideway_sensor/attackby(obj/item/weapon, mob/living/user, params)
-	if (!user.combat_mode)
-		if(default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
-			return
+/obj/machinery/transport/guideway_sensor/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-		if(default_deconstruction_crowbar(weapon))
-			return
-
-	return ..()
+/obj/machinery/transport/guideway_sensor/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/transport/guideway_sensor/proc/pair_sensor()
 	set_machine_stat(machine_stat | MAINT)
@@ -581,7 +550,7 @@
 	new_partner.paired_sensor = WEAKREF(src)
 	new_partner.set_machine_stat(machine_stat & ~MAINT)
 	new_partner.update_appearance()
-	playsound(src, 'sound/machines/synth_yes.ogg', 75, vary = FALSE, use_reverb = TRUE)
+	playsound(src, 'sound/machines/synth/synth_yes.ogg', 75, vary = FALSE, use_reverb = TRUE)
 
 /obj/machinery/transport/guideway_sensor/Destroy()
 	SStransport.sensors -= src
@@ -590,7 +559,7 @@
 		divorcee.set_machine_stat(machine_stat & ~MAINT)
 		divorcee.paired_sensor = null
 		divorcee.update_appearance()
-		playsound(src, 'sound/machines/synth_no.ogg', 75, vary = FALSE, use_reverb = TRUE)
+		playsound(src, 'sound/machines/synth/synth_no.ogg', 75, vary = FALSE, use_reverb = TRUE)
 		paired_sensor = null
 	. = ..()
 
@@ -677,9 +646,14 @@
 	var/list/obj/machinery/transport/guideway_sensor/sensor_candidates = list()
 
 	for(var/obj/machinery/transport/guideway_sensor/sensor in SStransport.sensors)
-		if(sensor.z == src.z)
-			if((sensor.x == src.x && sensor.dir & NORTH|SOUTH) || (sensor.y == src.y && sensor.dir & EAST|WEST))
-				sensor_candidates += sensor
+		if(sensor.z != src.z)
+			continue
+		if(sensor.x != src.x && !(sensor.dir & (NORTH|SOUTH)))
+			continue
+		if(sensor.y != src.y && !(sensor.dir & (EAST|WEST)))
+			continue
+
+		sensor_candidates += sensor
 
 	var/obj/machinery/transport/guideway_sensor/selected_sensor = get_closest_atom(/obj/machinery/transport/guideway_sensor, sensor_candidates, src)
 	var/sensor_distance = get_dist(src, selected_sensor)

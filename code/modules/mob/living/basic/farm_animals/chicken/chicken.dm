@@ -31,6 +31,8 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	maxHealth = 15
 	pass_flags = PASSTABLE | PASSMOB
 	mob_size = MOB_SIZE_SMALL
+	held_lh = 'icons/mob/inhands/pets_held_lh.dmi'
+	held_rh = 'icons/mob/inhands/pets_held_rh.dmi'
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	ai_controller = /datum/ai_controller/basic_controller/chicken
@@ -38,15 +40,30 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 	///boolean deciding whether eggs laid by this chicken can hatch into chicks
 	var/fertile = TRUE
 
+/datum/emote/chicken
+	abstract_type = /datum/emote/chicken
+	mob_type_allowed_typecache = /mob/living/basic/chicken
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/chicken/cluck
+	key = "cluck"
+	key_third_person = "clucks"
+	message = "clucks happily!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/chicken/bagawk.ogg'
+
 /mob/living/basic/chicken/Initialize(mapload)
 	. = ..()
 	GLOB.chicken_count++
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/pet_bonus, "clucks happily!")
+	AddElement(/datum/element/pet_bonus, "cluck")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/animal_variety, "chicken", pick("brown", "black", "white"), modify_pixels = TRUE)
+	AddElement(/datum/element/can_be_held)
+
 	AddComponent(\
 		/datum/component/egg_layer,\
 		/obj/item/food/egg/organic,\
@@ -77,17 +94,18 @@ GLOBAL_VAR_INIT(chicken_count, 0)
 		)
 
 /datum/ai_controller/basic_controller/chicken
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/chicken/chicken.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("Cluck!", "BWAAAAARK BWAK BWAK BWAK!", "Bwaak bwak."),
+			BB_EMOTE_HEAR = list("clucks.", "croons."),
+			BB_EMOTE_SEE = list("pecks at the ground.", "flaps her wings viciously."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/chicken/clucks.ogg', 'sound/mobs/non-humanoids/chicken/bagawk.ogg'),
+			BB_SPEAK_CHANCE = 15,
+		),
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/random_speech/chicken,
-	)
 

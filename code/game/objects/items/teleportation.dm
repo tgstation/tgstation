@@ -12,7 +12,7 @@
  */
 /obj/item/locator
 	name = "bluespace locator"
-	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
+	desc = "A handheld device that locks onto the unique bluespace resonance of tracking implants, providing real-time directional and positional data."
 	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "locator"
 	var/temp = null
@@ -23,7 +23,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 	var/tracking_range = 35
 
 /obj/item/locator/ui_interact(mob/user, datum/tgui/ui)
@@ -34,61 +34,35 @@
 
 /obj/item/locator/ui_data(mob/user)
 	var/list/data = list()
-
 	data["trackingrange"] = tracking_range;
 
-	// Get our current turf location.
-	var/turf/sr = get_turf(src)
+	var/turf/current_turf = get_turf(src) // Get our current turf location.
+	if(!current_turf)
+		return data
 
-	if (sr)
-		// Check every teleport beacon.
-		var/list/tele_beacons = list()
-		for(var/obj/item/beacon/W in GLOB.teleportbeacons)
+	var/list/track_implants = list()
+	for(var/obj/item/implant/tracking/tracking_implant in GLOB.tracked_implants)
+		if(!tracking_implant.imp_in || !isliving(tracking_implant.imp_in))
+			continue
 
-			// Get the tracking beacon's turf location.
-			var/turf/tr = get_turf(W)
-
-			// Make sure it's on a turf and that its Z-level matches the tracker's Z-level
-			if (tr && tr.z == sr.z)
-				// Get the distance between the beacon's turf and our turf
-				var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-
-				// If the target is too far away, skip over this beacon.
-				if(distance > tracking_range)
-					continue
-
-				var/beacon_name
-
-				if(W.renamed)
-					beacon_name = W.name
-				else
-					var/area/A = get_area(W)
-					beacon_name = A.name
-
-				var/D = dir2text(get_dir(sr, tr))
-				tele_beacons += list(list(name = beacon_name, direction = D, distance = distance))
-
-		data["telebeacons"] = tele_beacons
-
-		var/list/track_implants = list()
-
-		for (var/obj/item/implant/beacon/tracking_beacon in GLOB.tracked_implants)
-			if (!tracking_beacon.imp_in || !isliving(tracking_beacon.loc))
-				continue
-			else
-				var/mob/living/living_mob = tracking_beacon.loc
-				if (living_mob.stat == DEAD)
-					if (living_mob.timeofdeath + tracking_beacon.lifespan_postmortem < world.time)
-						continue
-			var/turf/tr = get_turf(tracking_beacon)
-			var/distance = max(abs(tr.x - sr.x), abs(tr.y - sr.y))
-
-			if(distance > tracking_range)
+		var/mob/living/tracked_mob = tracking_implant.imp_in
+		if(tracked_mob.stat == DEAD)
+			if(tracked_mob.timeofdeath + tracking_implant.lifespan_postmortem < world.time)
 				continue
 
-			var/D = dir2text(get_dir(sr, tr))
-			track_implants += list(list(name = tracking_beacon.imp_in.name, direction = D, distance = distance))
-		data["trackimplants"] = track_implants
+		var/turf/implant_turf = get_turf(tracking_implant)
+		if(!implant_turf  || implant_turf.z != current_turf.z)
+			continue
+
+		var/distance = max(abs(implant_turf.x - current_turf.x), abs(implant_turf.y - current_turf.y)) // get Chebyshev distance
+		if(distance > tracking_range)
+			continue
+
+		var/implant_direction = dir2text(get_dir(current_turf, implant_turf))
+		track_implants += list(list(name = tracking_implant.imp_in.name, direction = implant_direction, distance = distance))
+
+	data["trackimplants"] = track_implants
+
 	return data
 
 #define PORTAL_LOCATION_DANGEROUS "portal_location_dangerous"
@@ -110,11 +84,18 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3
 	throw_range = 5
-	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	armor_type = /datum/armor/item_hand_tele
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	var/list/active_portal_pairs
+	sound_vary = TRUE
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
+	///List of portal pairs created by this hand tele
+	var/list/active_portal_pairs = list()
+	///Maximum concurrent active portal pairs allowed
 	var/max_portal_pairs = 3
+	///Whether this can be used to teleport to and from away levels
+	var/away_restricted = TRUE
 
 	/**
 	 * Represents the last place we teleported to, for making quick portals.
@@ -130,27 +111,24 @@
 	fire = 100
 	acid = 100
 
-/obj/item/hand_tele/Initialize(mapload)
-	. = ..()
-	active_portal_pairs = list()
-
-/obj/item/hand_tele/pre_attack(atom/target, mob/user, params)
-	if(try_dispel_portal(target, user))
-		return TRUE
-	return ..()
-
+///Checks if the targeted portal was created by us, then causes it to expire, removing it
 /obj/item/hand_tele/proc/try_dispel_portal(atom/target, mob/user)
 	if(is_parent_of_portal(target))
-		qdel(target)
-		to_chat(user, span_notice("You dispel [target] with \the [src]!"))
+		to_chat(user, span_notice("You dispel [target] with [src]!"))
+		var/obj/effect/portal/portal = target
+		portal.expire()
 		return TRUE
 	return FALSE
 
-/obj/item/hand_tele/afterattack(atom/target, mob/user)
-	try_dispel_portal(target, user)
-	. = ..()
+/obj/item/hand_tele/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(try_dispel_portal(interacting_with, user))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-/obj/item/hand_tele/pre_attack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+/obj/item/hand_tele/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom(interacting_with, user, modifiers)
+
+/obj/item/hand_tele/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	var/portal_location = last_portal_location
 
 	if (isweakref(portal_location))
@@ -159,11 +137,13 @@
 
 	if (isnull(portal_location))
 		to_chat(user, span_warning("[src] flashes briefly. No target is locked in."))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
 
 	try_create_portal_to(user, portal_location)
+	return ITEM_INTERACT_SUCCESS
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/item/hand_tele/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	return interact_with_atom_secondary(interacting_with, user, modifiers)
 
 /obj/item/hand_tele/attack_self(mob/user)
 	if (!can_teleport_notifies(user))
@@ -175,10 +155,19 @@
 		if(!target)
 			computer.target_ref = null
 			continue
-		var/area/computer_area = get_area(target)
-		if(!computer_area || (computer_area.area_flags & NOTELEPORT))
+		if(!check_teleport_valid(user, get_turf(computer), TELEPORT_CHANNEL_BLUESPACE))
 			continue
-		if(computer.power_station?.teleporter_hub && computer.power_station.engaged)
+
+		if(!computer.power_station || !computer.power_station.teleporter_hub)
+			continue
+
+		if((computer.power_station.machine_stat & (NOPOWER|BROKEN|MAINT)) || computer.power_station.panel_open)
+			continue
+
+		if((computer.power_station.teleporter_hub.machine_stat & (NOPOWER|BROKEN|MAINT)) || computer.power_station.teleporter_hub.panel_open)
+			continue
+
+		if(computer.power_station.engaged)
 			locations["[get_area(target)] (Active)"] = computer
 		else
 			locations["[get_area(target)] (Inactive)"] = computer
@@ -188,7 +177,7 @@
 	var/teleport_location_key = tgui_input_list(user, "Teleporter to lock on", "Hand Teleporter", sort_list(locations))
 	if (isnull(teleport_location_key))
 		return
-	if(user.get_active_held_item() != src || user.incapacitated())
+	if(user.get_active_held_item() != src || user.incapacitated)
 		return
 
 	// Not always a datum, but needed for IS_WEAKREF_OF to cast properly.
@@ -219,13 +208,12 @@
 
 	if (teleport_location == PORTAL_LOCATION_DANGEROUS)
 		var/list/dangerous_turfs = list()
-		for(var/turf/dangerous_turf in urange(10, orange=1))
+		for(var/turf/dangerous_turf in urange(10, get_turf(src), TRUE))
 			if(dangerous_turf.x > world.maxx - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.x < PORTAL_DANGEROUS_EDGE_LIMIT)
 				continue //putting them at the edge is dumb
 			if(dangerous_turf.y > world.maxy - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.y < PORTAL_DANGEROUS_EDGE_LIMIT)
 				continue
-			var/area/dangerous_area = dangerous_turf.loc
-			if(dangerous_area.area_flags & NOTELEPORT)
+			if(!check_teleport_valid(src, dangerous_turf))
 				continue
 			dangerous_turfs += dangerous_turf
 
@@ -241,15 +229,14 @@
 		to_chat(user, span_notice("[src] vibrates, then stops. Maybe you should try something else."))
 		return
 
-	var/area/teleport_area = get_area(teleport_target)
-	if (teleport_area.area_flags & NOTELEPORT)
+	if(!check_teleport_valid(src, teleport_target))
 		to_chat(user, span_notice("[src] is malfunctioning."))
 		return
 
 	if (!can_teleport_notifies(user))
 		return
 
-	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target)), 300, 1, null)
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_turf(teleport_target), 300, 1, null)
 	if(LAZYLEN(created) != 2)
 		return
 
@@ -260,6 +247,9 @@
 	RegisterSignal(portal2, COMSIG_QDELETING, PROC_REF(on_portal_destroy))
 
 	try_move_adjacent(portal1, user.dir)
+	if(QDELETED(portal1) || QDELETED(portal2)) //in the event that something managed to delete the portal objects, i.e. something teleported them
+		to_chat(user, span_notice("[src] vibrates, but no portal seems to appear. Maybe you should try something else."))
+		return
 	active_portal_pairs[portal1] = portal2
 
 	investigate_log("was used by [key_name(user)] at [AREACOORD(user)] to create a portal pair with destinations [AREACOORD(portal1)] and [AREACOORD(portal2)].", INVESTIGATE_PORTAL)
@@ -269,15 +259,18 @@
 
 	return TRUE
 
+///Checks for whether creating a portal in our area is allowed or not,
+///returning FALSE when in a NOTELEPORT area, an away mission or when the user is not on a turf.
+///Is, for some reason, separate from the teleport target's check in try_create_portal_to()
 /obj/item/hand_tele/proc/can_teleport_notifies(mob/user)
 	var/turf/current_location = get_turf(user)
-	var/area/current_area = current_location.loc
-	if (!current_location || (current_area.area_flags & NOTELEPORT) || is_away_level(current_location.z) || !isturf(user.loc))
+	if (!current_location || !check_teleport_valid(src, current_location) || !isturf(user.loc) || (away_restricted && is_away_level(current_location.z)))
 		to_chat(user, span_notice("[src] is malfunctioning."))
 		return FALSE
 
 	return TRUE
 
+///Clears last teleport location when the teleporter providing our target location changes its target
 /obj/item/hand_tele/proc/on_teleporter_new_target(datum/source)
 	SIGNAL_HANDLER
 
@@ -285,6 +278,7 @@
 		last_portal_location = null
 		UnregisterSignal(source, COMSIG_TELEPORTER_NEW_TARGET)
 
+///Removes a destroyed portal from active_portal_pairs list
 /obj/item/hand_tele/proc/on_portal_destroy(obj/effect/portal/P)
 	SIGNAL_HANDLER
 
@@ -337,6 +331,8 @@
 	var/maximum_teleport_distance = 8
 	//How far the emergency teleport checks for a safe position
 	var/parallel_teleport_distance = 3
+	// How much blood lost per teleport (out of base 560 blood)
+	var/bleed_amount = 20
 
 /obj/item/syndicate_teleporter/Initialize(mapload)
 	. = ..()
@@ -357,13 +353,13 @@
 	attempt_teleport(user = user, triggered_by_emp = FALSE)
 	return TRUE
 
-/obj/item/syndicate_teleporter/process(seconds_per_tick, times_fired)
+/obj/item/syndicate_teleporter/process(seconds_per_tick)
 	if(SPT_PROB(10, seconds_per_tick) && charges < max_charges)
 		charges++
 		if(ishuman(loc))
 			var/mob/living/carbon/human/holder = loc
 			balloon_alert(holder, "teleporter beeps")
-		playsound(src, 'sound/machines/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
+		playsound(src, 'sound/machines/beep/twobeep.ogg', 10, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
 
 /obj/item/syndicate_teleporter/emp_act(severity)
 	. = ..()
@@ -407,11 +403,9 @@
 	var/teleport_distance = rand(minimum_teleport_distance, maximum_teleport_distance)
 	var/turf/destination = get_teleport_loc(current_location, user, teleport_distance)
 	var/bagholdingcheck = FALSE
-	if(iscarbon(user))
-		var/mob/living/carbon/teleporting_guy = user
-		if(locate(/obj/item/storage/backpack/holding) in teleporting_guy.get_all_gear())
+	for(var/obj/item/check as anything in user.get_all_contents_type(/obj/item))
+		if(HAS_TRAIT(check, TRAIT_BLUESPACE_INTERFERENCE))
 			bagholdingcheck = TRUE
-
 	if(isclosedturf(destination))
 		if(!triggered_by_emp && !bagholdingcheck)
 			panic_teleport(user, destination) //We're in a wall, engage emergency parallel teleport.
@@ -425,16 +419,18 @@
 		charges = max(charges - 1, 0)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(current_location)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
-		make_bloods(current_location, destination, user)
-		playsound(current_location, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		if(make_bloods(current_location, destination, user))
+			new /obj/effect/temp_visual/circle_wave/syndi_teleporter/bloody(destination)
+		else
+			new /obj/effect/temp_visual/circle_wave/syndi_teleporter(destination)
+		playsound(current_location, /datum/sound_effect/portal_enter, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-		playsound(destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(destination, /datum/sound_effect/portal_enter, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/syndicate_teleporter/proc/malfunctioning(mob/guy_teleporting, turf/current_location)
-	var/area/current_area = get_area(current_location)
 	if(!current_location)
 		return TRUE
-	if(current_area.area_flags & NOTELEPORT)
+	if(!check_teleport_valid(src, current_location))
 		return TRUE
 	if(is_away_level(current_location.z))
 		return TRUE
@@ -461,11 +457,14 @@
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 		new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(emergency_destination)
 		balloon_alert(user, "emergency teleport triggered!")
-		if (!HAS_TRAIT(user, TRAIT_NOBLOOD))
-			make_bloods(mobloc, emergency_destination, user)
-		playsound(mobloc, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		if(make_bloods(destination, emergency_destination, user))
+			new /obj/effect/temp_visual/circle_wave/syndi_teleporter/bloody(destination)
+		else
+			new /obj/effect/temp_visual/circle_wave/syndi_teleporter(destination)
+		playsound(mobloc, /datum/sound_effect/portal_enter, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-		playsound(emergency_destination, SFX_SPARKS, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(emergency_destination, /datum/sound_effect/portal_enter, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 25, TRUE)
 	else //We tried to save. We failed. Death time.
 		get_fragged(user, destination)
 
@@ -475,9 +474,9 @@
 	victim.forceMove(destination)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
-	playsound(mobloc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, "sound/magic/disintegrate.ogg", 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(mobloc, /datum/sound_effect/portal_enter, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, /datum/sound_effect/portal_enter, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, 'sound/effects/magic/disintegrate.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(!not_holding_tele)
 		to_chat(victim, span_userdanger("You teleport into [destination], [src] tries to save you, but..."))
 	else
@@ -493,16 +492,45 @@
 		victim.apply_damage(20, BRUTE)
 		victim.Paralyze(6 SECONDS)
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
+		victim.throw_at(get_step_rand(victim), 1, 1, user, spin = TRUE)
 
 ///Bleed and make blood splatters at tele start and end points
 /obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/living/user)
+	if(user.can_bleed(BLOOD_COVER_TURFS) != BLEED_SPLATTER)
+		return FALSE
 	user.add_splatter_floor(old_location)
 	user.add_splatter_floor(new_location)
 	if(!iscarbon(user))
-		return
+		return FALSE
 	var/mob/living/carbon/carbon_user = user
-	carbon_user.bleed(10)
 
+	// always lose a bit
+	carbon_user.bleed(bleed_amount * 0.25)
+	// sometimes lose a lot
+	// average evens out to 10 per teleport, but the randomness spices things up
+	if(prob(25) && bleed_amount)
+		playsound(src, 'sound/effects/wounds/pierce1.ogg', 40, vary = TRUE)
+		visible_message(span_warning("Blood visibly spurts out of [user] as [src] fails to teleport [user.p_their()] body properly!"), \
+			span_boldwarning("Blood visibly spurts out of you as [src] fails to teleport your body properly!"))
+		carbon_user.bleed(bleed_amount * 0.75)
+		carbon_user.spray_blood(pick(GLOB.alldirs), rand(1, 3))
+		return TRUE
+
+	return FALSE
+	// retval used for picking wave type
+
+/// Visual effect spawned when teleporting
+/obj/effect/temp_visual/circle_wave/syndi_teleporter
+	duration = 0.25 SECONDS
+	color = COLOR_SYNDIE_RED
+	max_alpha = 100
+	amount_to_scale = 0.8
+
+/obj/effect/temp_visual/circle_wave/syndi_teleporter/bloody
+	duration = 0.25 SECONDS
+	color = COLOR_VIVID_RED
+	max_alpha = 160
+	amount_to_scale = 1
 
 /obj/item/paper/syndicate_teleporter
 	name = "Teleporter Guide"
@@ -519,13 +547,6 @@
 		<br>
 		Final word of caution: the technology involved is experimental in nature. Although many years of research have allowed us to prevent leaving your organs behind, it simply cannot account for all of the liquid in your body.
 		"}
-
-/obj/item/storage/box/syndie_kit/syndicate_teleporter
-	name = "syndicate teleporter kit"
-
-/obj/item/storage/box/syndie_kit/syndicate_teleporter/PopulateContents()
-	new /obj/item/syndicate_teleporter(src)
-	new /obj/item/paper/syndicate_teleporter(src)
 
 /obj/effect/temp_visual/teleport_abductor/syndi_teleporter
 	duration = 5

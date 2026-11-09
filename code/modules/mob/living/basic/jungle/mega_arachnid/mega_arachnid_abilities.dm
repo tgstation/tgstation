@@ -2,7 +2,7 @@
 /datum/action/cooldown/spell/pointed/projectile/flesh_restraints
 	name = "fleshy restraints"
 	desc = "Launch at your prey to immobilize them."
-	button_icon = 'icons/obj/restraints.dmi'
+	button_icon = 'icons/obj/weapons/restraints.dmi'
 	button_icon_state = "flesh_snare"
 
 	cooldown_time = 6 SECONDS
@@ -43,7 +43,6 @@
 	button_icon_state = "default"
 	desc = "Secrete a slippery acid!"
 	cooldown_time = 15 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	click_to_activate = FALSE
 
 /datum/action/cooldown/mob_cooldown/secrete_acid/Activate(atom/target_atom)

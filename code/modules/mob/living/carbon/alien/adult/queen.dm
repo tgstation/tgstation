@@ -20,6 +20,8 @@
 	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	// that'd be a too cheeky shield bashing strat
 	ADD_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, INNATE_TRAIT)
+	// Lets you spin without falling over
+	ADD_TRAIT(src, TRAIT_STRENGTH, INNATE_TRAIT)
 	AddComponent(/datum/component/seethrough_mob)
 
 /mob/living/carbon/alien/adult/royal/on_lying_down(new_lying_angle)
@@ -33,6 +35,23 @@
 /mob/living/carbon/alien/adult/royal/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE
 
+/mob/living/carbon/alien/adult/royal/get_fire_overlay(stacks, on_fire)
+	var/fire_key = "royal_fire"
+
+	if(!GLOB.fire_appearances[fire_key])
+		var/mutable_appearance/fire = mutable_appearance(
+			'icons/mob/effects/onfire.dmi',
+			"generic_fire",
+			ABOVE_ALL_MOB_LAYER,
+			appearance_flags = RESET_COLOR|KEEP_APART|PIXEL_SCALE,
+		)
+		fire.pixel_x = 16
+		fire.pixel_y = 8
+		fire.transform = fire.transform.Scale(2, 2)
+		GLOB.fire_appearances[fire_key] = fire
+
+	return GLOB.fire_appearances[fire_key]
+
 /mob/living/carbon/alien/adult/royal/queen
 	name = "alien queen"
 	caste = "q"
@@ -43,33 +62,33 @@
 	melee_damage_upper = 50
 	alien_speed = 2
 
+	default_organ_types_by_slot = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain/alien,
+		ORGAN_SLOT_XENO_HIVENODE = /obj/item/organ/alien/hivenode,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue/alien,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes/alien,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver/alien,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach/alien,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = /obj/item/organ/alien/plasmavessel/large/queen,
+		ORGAN_SLOT_XENO_RESINSPINNER = /obj/item/organ/alien/resinspinner,
+		ORGAN_SLOT_XENO_ACIDGLAND = /obj/item/organ/alien/acid,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = /obj/item/organ/alien/neurotoxin,
+		ORGAN_SLOT_XENO_EGGSAC = /obj/item/organ/alien/eggsac,
+		ORGAN_SLOT_EXTERNAL_TAIL = /obj/item/organ/tail/xeno_queen,
+	)
+
 /mob/living/carbon/alien/adult/royal/queen/Initialize(mapload)
-	//there should only be one queen
-	for(var/mob/living/carbon/alien/adult/royal/queen/Q in GLOB.carbon_list)
-		if(Q == src)
-			continue
-		if(Q.stat == DEAD)
-			continue
-		if(Q.client)
-			name = "alien princess ([rand(1, 999)])" //if this is too cutesy feel free to change it/remove it.
-			break
-
-	real_name = src.name
-
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/alien/promote,
-		/datum/action/cooldown/spell/aoe/repulse/xeno,
 	)
 	grant_actions_by_list(innate_actions)
-
+	add_movespeed_mod_immunities(type, /datum/movespeed_modifier/tail_dragger)
 	return ..()
 
-/mob/living/carbon/alien/adult/royal/queen/create_internal_organs()
-	organs += new /obj/item/organ/internal/alien/plasmavessel/large/queen
-	organs += new /obj/item/organ/internal/alien/resinspinner
-	organs += new /obj/item/organ/internal/alien/acid
-	organs += new /obj/item/organ/internal/alien/neurotoxin
-	organs += new /obj/item/organ/internal/alien/eggsac
+/mob/living/carbon/alien/adult/royal/queen/set_name()
+	if(get_alien_type(/mob/living/carbon/alien/adult/royal/queen, ignored = src))
+		name = "alien princess"
 	return ..()
 
 //Queen verbs
@@ -92,12 +111,11 @@
 	/// The promotion only takes plasma when completed, not on activation.
 	var/promotion_plasma_cost = 500
 
-/datum/action/cooldown/alien/promote/set_statpanel_format()
+/datum/action/cooldown/alien/promote/New(Target)
 	. = ..()
-	if(!islist(.))
-		return
-
-	.[PANEL_DISPLAY_STATUS] = "PLASMA - [promotion_plasma_cost]"
+	//not free
+	if(promotion_plasma_cost != 0)
+		name = "[initial(name)] ([promotion_plasma_cost]P)"
 
 /datum/action/cooldown/alien/promote/IsAvailable(feedback = FALSE)
 	. = ..()
@@ -114,14 +132,14 @@
 	return TRUE
 
 /datum/action/cooldown/alien/promote/Activate(atom/target)
-	var/obj/item/queen_promotion/existing_promotion = locate() in owner.held_items
+	var/obj/item/queen_promotion/existing_promotion = owner.is_holding_item_of_type(__IMPLIED_TYPE__)
 	if(existing_promotion)
 		to_chat(owner, span_noticealien("You discard [existing_promotion]."))
 		owner.temporarilyRemoveItemFromInventory(existing_promotion)
 		qdel(existing_promotion)
 		return TRUE
 
-	if(!owner.get_empty_held_indexes())
+	if(!length(owner.get_empty_held_indexes()))
 		to_chat(owner, span_warning("You must have an empty hand before preparing the parasite."))
 		return FALSE
 
@@ -157,7 +175,7 @@
 		to_chat(queen, span_noticealien("You cannot promote a child right now!"))
 		return
 
-	if(to_promote.stat != CONSCIOUS || !to_promote.mind || !to_promote.key)
+	if(IS_UNCONSCIOUS_OR_CRIT(to_promote) || !to_promote.mind || !to_promote.key)
 		return
 
 	queen.adjustPlasma(-promotion.promotion_plasma_cost)
@@ -168,10 +186,9 @@
 		span_noticealien("The queen has granted you a promotion to Praetorian!"),
 	)
 
-	var/mob/living/carbon/alien/adult/royal/praetorian/new_prae = new(to_promote.loc)
-	to_promote.mind.transfer_to(new_prae)
-
-	qdel(to_promote)
+	var/mob/living/carbon/alien/lucky_winner = to_promote
+	var/mob/living/carbon/alien/adult/royal/praetorian/new_prae = new(lucky_winner.loc)
+	lucky_winner.alien_evolve(new_prae)
 	qdel(src)
 	return TRUE
 

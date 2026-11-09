@@ -17,8 +17,8 @@
 	level = 1
 	severity = 1
 	base_message_chance = 100
-	symptom_delay_min = 15
-	symptom_delay_max = 30
+	symptom_delay = 22.5
+	symptom_cure = /datum/reagent/drug/space_drugs
 	threshold_descs = list(
 		"Stage Speed 6" = "Headaches will cause severe pain, that weakens the host.",
 		"Stage Speed 9" = "Headaches become less frequent but far more intense, preventing any action from the host.",
@@ -34,8 +34,7 @@
 	if(A.totalStageSpeed() >= 6) //severe pain
 		power = 2
 	if(A.totalStageSpeed() >= 9) //cluster headaches
-		symptom_delay_min = 30
-		symptom_delay_max = 60
+		symptom_delay = 45
 		power = 3
 
 /datum/symptom/headache/Activate(datum/disease/advance/A)
@@ -43,12 +42,14 @@
 	if(!.)
 		return
 	var/mob/living/M = A.affected_mob
+	if(HAS_TRAIT(M, TRAIT_SOOTHED_HEADACHE))
+		return
 	if(power < 2)
 		if(prob(base_message_chance) || A.stage >= 4)
 			to_chat(M, span_warning("[pick("Your head hurts.", "Your head pounds.")]"))
 	if(power >= 2 && A.stage >= 4)
 		to_chat(M, span_warning("[pick("Your head hurts a lot.", "Your head pounds incessantly.")]"))
-		M.adjustStaminaLoss(25)
+		M.adjust_stamina_loss(25)
 	if(power >= 3 && A.stage >= 5)
 		to_chat(M, span_userdanger("[pick("Your head hurts!", "You feel a burning knife inside your brain!", "A wave of pain fills your head!")]"))
 		M.Stun(35)

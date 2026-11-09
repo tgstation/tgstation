@@ -23,6 +23,7 @@
 	id = "lust"
 	description = "Not exactly what you expected."
 	suffix = "icemoon_surface_lust.dmm"
+	enclosed_for_terrain = TRUE
 
 /datum/map_template/ruin/icemoon/asteroid
 	name = "Ice-Ruin Asteroid Site"
@@ -61,10 +62,16 @@
 	description = "Moffuchi's Family Pizzeria chain has a reputation for providing affordable artisanal meals of questionable edibility. This particular pizzeria seems to have been abandoned for some time."
 	suffix = "icemoon_surface_pizza.dmm"
 
+/datum/map_template/ruin/icemoon/Lodge
+	name = "Ice-Ruin Hunters Lodge"
+	id = "lodge"
+	description = "An old hunting lodge. I wonder if anyone is still home?"
+	suffix = "icemoon_surface_lodge.dmm"
+
 /datum/map_template/ruin/icemoon/frozen_phonebooth
 	name = "Ice-Ruin Frozen Phonebooth"
 	id = "frozen_phonebooth"
-	description = "A venture by nanotrasen to help popularize the use of holopads. This one was sent to a icemoon."
+	description = "A venture by Nanotrasen to help popularize the use of holopads. This one was sent to an ice moon."
 	suffix = "icemoon_surface_phonebooth.dmm"
 
 /datum/map_template/ruin/icemoon/smoking_room
@@ -72,6 +79,21 @@
 	id = "smoking_room"
 	description = "Here lies Charles Morlbaro. He died the way he lived."
 	suffix = "icemoon_surface_smoking_room.dmm"
+
+/datum/map_template/ruin/icemoon/roro
+	name = "Ice-Ruin RoroCo Factory"
+	id = "gloves"
+	description = "A manufacturing and packaging facility producing insulated gloves."
+	suffix = "icemoon_surface_gloves.dmm"
+
+/datum/map_template/ruin/icemoon/shoe_facotry
+	name = "Ice-Ruin Shoe Factory"
+	id = "shoe_factory"
+	description = "An abandoned shoe factory."
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "shoe_factory.dmm"
+	allow_duplicates = FALSE
+	cost = 10
 
 // above and below ground together
 
@@ -82,6 +104,7 @@
 	suffix = "icemoon_surface_mining_site.dmm"
 	always_place = TRUE
 	always_spawn_with = list(/datum/map_template/ruin/icemoon/underground/mining_site_below = PLACE_BELOW)
+	enclosed_for_terrain = TRUE
 
 /datum/map_template/ruin/icemoon/underground/mining_site_below
 	name = "Ice-Ruin Mining Site Underground"
@@ -90,6 +113,7 @@
 	suffix = "icemoon_underground_mining_site.dmm"
 	has_ceiling = FALSE
 	unpickable = TRUE
+	enclosed_for_terrain = TRUE
 
 // below ground only
 
@@ -103,18 +127,21 @@
 	id = "abandonedvillage"
 	description = "Who knows what lies within?"
 	suffix = "icemoon_underground_abandoned_village.dmm"
+	enclosed_for_terrain = TRUE
 
 /datum/map_template/ruin/icemoon/underground/library
 	name = "Ice-Ruin Buried Library"
 	id = "buriedlibrary"
 	description = "A once grand library, now lost to the confines of the Ice Moon."
 	suffix = "icemoon_underground_library.dmm"
+	enclosed_for_terrain = TRUE
 
 /datum/map_template/ruin/icemoon/underground/wrath
 	name = "Ice-Ruin Ruin of Wrath"
 	id = "wrath"
 	description = "You'll fight and fight and just keep fighting."
 	suffix = "icemoon_underground_wrath.dmm"
+	enclosed_for_terrain = TRUE
 
 /datum/map_template/ruin/icemoon/underground/hermit
 	name = "Ice-Ruin Frozen Shack"
@@ -123,10 +150,11 @@
 	suffix = "icemoon_underground_hermit.dmm"
 
 /datum/map_template/ruin/icemoon/underground/lavaland
-	name = "Ice-Ruin Lavaland Site"
+	name = "Ice-Ruin Lavaland Incursion"
 	id = "lavalandsite"
 	description = "I guess we never really left you huh?"
 	suffix = "icemoon_underground_lavaland.dmm"
+	enclosed_for_terrain = TRUE
 
 /datum/map_template/ruin/icemoon/underground/puzzle
 	name = "Ice-Ruin Ancient Puzzle"
@@ -159,12 +187,38 @@
 	id = "mailroom"
 	description = "This is where all of your paychecks went. Signed, the management."
 	suffix = "icemoon_underground_mailroom.dmm"
+	enclosed_for_terrain = TRUE
+
+/datum/map_template/ruin/icemoon/underground/biodome
+	name = "Ice-Ruin Syndicate Bio-Dome"
+	id = "biodome"
+	description = "Unchecked experimentation gone awry."
+	suffix = "icemoon_underground_syndidome.dmm"
 
 /datum/map_template/ruin/icemoon/underground/frozen_comms
 	name = "Ice-Ruin Frozen Communicatons Outpost"
 	id = "frozen_comms"
 	description = "3 Peaks Radio, where the 2000's live forever."
 	suffix = "icemoon_underground_frozen_comms.dmm"
+
+/datum/map_template/ruin/icemoon/underground/comms_agent
+	name = "Ice-Ruin Listening Post"
+	id = "icemoon_comms_agent"
+	description = "Radio signals are being detected and the source is this completely innocent pile of snow."
+	suffix = "icemoon_underground_comms_agent.dmm"
+
+/datum/map_template/ruin/icemoon/underground/syndie_lab
+	name = "Ice-Ruin Syndicate Lab"
+	id = "syndie_lab"
+	description = "A small laboratory and living space for Syndicate agents."
+	suffix = "icemoon_underground_syndielab.dmm"
+	enclosed_for_terrain = TRUE
+
+/datum/map_template/ruin/icemoon/underground/o31
+	name = "Ice-Ruin Outpost 31"
+	id = "o31"
+	description = "Suspiciously dead silent. May or may not contain megafauna"
+	suffix = "icemoon_underground_outpost31.dmm"
 
 //TODO: Bottom-Level ONLY Spawns after Refactoring Related Code
 /datum/map_template/ruin/icemoon/underground/plasma_facility
@@ -179,6 +233,7 @@
 	id = "hotsprings"
 	description = "Just relax and take a dip, nothing will go wrong, I swear!"
 	suffix = "icemoon_underground_hotsprings.dmm"
+	enclosed_for_terrain = TRUE
 
 /datum/map_template/ruin/icemoon/underground/vent
 	name = "Ice-Ruin Icemoon Ore Vent"

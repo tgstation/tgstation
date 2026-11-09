@@ -11,7 +11,7 @@
 	. = ..()
 
 	explosion(target.loc, explosion_cause = src)
-
+	new /obj/effect/temp_visual/bsa_impact(target.loc)
 	var/turf/open/floor/target_turf = get_turf(target)
 	if (istype(target_turf))
 		if (prob(BSA_CHANCE_TO_BREAK_TILE_TO_PLATING))
@@ -22,7 +22,7 @@
 	if (target.health <= 1)
 		target.gib(DROP_BODYPARTS)
 	else
-		target.adjustBruteLoss(min(BSA_MAX_DAMAGE, target.health - 1))
+		target.adjust_brute_loss(min(BSA_MAX_DAMAGE, target.health - 1))
 		target.Paralyze(BSA_PARALYZE_TIME)
 		target.set_stutter(BSA_STUTTER_TIME)
 

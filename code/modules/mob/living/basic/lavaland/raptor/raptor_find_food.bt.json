@@ -1,0 +1,31 @@
+{
+	"dm_type": "/datum/bt_node/subtree/raptor_find_food",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+	"vars": {
+		"observer_abort": "BT_ABORT_SELF",
+		"cooldown_key": "BB_NEXT_EAT_FOOD"
+	},
+	"child": {
+		"type": "parallel",
+		"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+		"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+		"repeat_secondary": false,
+		"finish_on_primary": false,
+		"children": [
+			{
+				"type": "subtree",
+				"subtype": "/datum/bt_node/subtree/find_food"
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/acquire_target",
+				"vars": {
+					"target_key": "BB_RAPTOR_TROUGH_TARGET",
+					"targeting_strategy": "/datum/targeting_strategy/raptor_trough",
+					"target_source": "/datum/target_source/oview_single_type/raptor_trough"
+				}
+			}
+		]
+	}
+}

@@ -9,7 +9,7 @@
 	message_admins("[key_name(invoker)] has replaced the Captain")
 	var/list/former_captains = list()
 	var/list/other_crew = list()
-	SEND_SOUND(world, sound('sound/magic/timeparadox2.ogg'))
+	SEND_SOUND(world, sound('sound/effects/magic/timeparadox2.ogg'))
 
 	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
 		if (!crewmate.mind)
@@ -100,7 +100,7 @@
 	id = /obj/item/card/id/advanced/gold
 	id_trim = /datum/id_trim/job/captain
 	uniform = /obj/item/clothing/under/rank/captain/parade
-	belt = /obj/item/modular_computer/pda/heads/captain
+	belt = /obj/item/modular_computer/pda/crew/heads/captain
 	ears = /obj/item/radio/headset/heads/captain/alt
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/captain

@@ -3,7 +3,7 @@
 	desc = "A real bonefied skeleton, doesn't seem like it wants to socialize."
 	gender = NEUTER
 	icon = 'icons/mob/simple/simple_human.dmi'
-	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID
+	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID|MOB_SKELETAL
 	speak_emote = list("rattles")
 	maxHealth = 40
 	health = 40
@@ -15,7 +15,7 @@
 	unsuitable_heat_damage = 0
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
-	attack_sound = 'sound/weapons/slash.ogg'
+	attack_sound = 'sound/items/weapons/slash.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	faction = list(FACTION_SKELETON)
 	// Going for a sort of pale bluegreen here, shooting for boneish
@@ -50,9 +50,12 @@
 		AddElement(/datum/element/death_drops, loot)
 	AddElement(/datum/element/basic_eating, heal_amt = 50, drinking = TRUE, food_types = good_drinks)
 	AddElement(/datum/element/basic_eating, heal_amt = 0, damage_amount = 25, damage_type = BURN, drinking = TRUE, food_types = bad_drinks)
-	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
+	add_traits(list(TRAIT_SPOOKY_INSTRUMENT_PLAYER, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
 	var/list/foods_list = good_drinks + bad_drinks
 	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(foods_list))
+
+/mob/living/basic/skeleton/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
 
 /mob/living/basic/skeleton/settler
 	name = "undead settler"
@@ -63,7 +66,7 @@
 	melee_damage_upper = 20
 	attack_verb_continuous = "jabs"
 	attack_verb_simple = "jab"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	death_message = "collapses into a pile of bones, its gear falling to the floor!"
 	loot = list(
@@ -86,13 +89,13 @@
 	maxHealth = 150
 	health = 150
 	speed = 2
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0) //trying to simulate actually having armor
+	physiology = list(BRUTE = 0.5, BURN = 0.5, TOX = 0, OXY = 0, STAMINA = 0) //trying to simulate actually having armor
 	obj_damage = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 30
 	attack_verb_continuous = "slices"
 	attack_verb_simple = "slice"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	death_message = "collapses into a pile of bones, its gear clanging as it hits the ground!"
 	loot = list(
@@ -146,7 +149,7 @@
 	melee_damage_upper = 25
 	attack_verb_continuous = "blasts"
 	attack_verb_simple = "blast"
-	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
+	attack_sound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	attack_vis_effect = null
 	loot = list(/obj/effect/decal/remains/plasma, /obj/item/pickaxe/drill/jackhammer)
 	held_item = /obj/item/pickaxe/drill/jackhammer
@@ -161,19 +164,11 @@
 
 /// Skeletons mostly just beat people to death, but they'll also find and drink milk.
 /datum/ai_controller/basic_controller/skeleton
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/skeleton.bt.json"
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-		BB_EMOTE_KEY = "rattles",
 		BB_EMOTE_CHANCE = 20,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/run_emote,
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)

@@ -1,0 +1,63 @@
+{
+	"dm_type": "/datum/bt_node/subtree/move_to_and_hunt",
+	"bindings": {
+		"bvtz06kb": {
+			"label": "hunting_target",
+			"default": "BB_LOW_PRIORITY_HUNTING_TARGET"
+		},
+		"b3y599q4": {
+			"label": "hunting_target",
+			"default": "BB_LOW_PRIORITY_HUNTING_TARGET"
+		},
+		"brrasnah": {
+			"label": "hunting_target",
+			"default": "BB_LOW_PRIORITY_HUNTING_TARGET"
+		},
+		"bqwjf4id": {
+			"label": "hunt_cooldown",
+			"default": "5 SECONDS"
+		},
+		"bm3y5m55": {
+			"label": "cooldown_key",
+			"default": ""
+		},
+		"bd1towgc": {
+			"label": "behavior_combat_mode",
+			"default": "TRUE"
+		},
+		"b3cnse9r": {
+			"label": "always_reset_target",
+			"default": "TRUE"
+		}
+	},
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
+		"key": "$bvtz06kb"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"vars": {
+					"target_key": "$b3y599q4",
+					"required_dist": 1
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/hunt_target/interact_with_target",
+				"vars": {
+					"target_key": "$brrasnah",
+					"always_reset_target": "$b3cnse9r",
+					"hunt_cooldown": "$bqwjf4id",
+					"cooldown_key": "$bm3y5m55",
+					"behavior_combat_mode": "$bd1towgc"
+				}
+			}
+		]
+	}
+}

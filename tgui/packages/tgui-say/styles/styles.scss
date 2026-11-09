@@ -1,0 +1,112 @@
+@use 'sass:color';
+@use './colors.scss';
+
+.window {
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes shine {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.shine {
+  animation: shine 15s linear infinite;
+  position: absolute;
+  inset: 0;
+  background-size: 150% 150%;
+}
+
+.window-lightMode {
+  background-color: colors.$lightMode;
+  border: 2px solid colors.$lightBorder;
+}
+
+/** Window sizes */
+.window-30 {
+  height: 30px;
+}
+
+.window-50 {
+  height: 50px;
+}
+
+.window-70 {
+  height: 70px;
+}
+
+.content {
+  background-color: black;
+  display: grid;
+  font: 'tgfont';
+  grid-template-columns: 4rem 1fr;
+  inset: 2px;
+  overflow: hidden;
+  padding: 2px;
+  position: absolute;
+}
+
+.content-lightMode {
+  background-color: white;
+}
+
+.button {
+  background-color: colors.$button;
+  border-radius: 0.3rem;
+  border: none;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: bold;
+  outline: none;
+  overflow: hidden;
+  padding: 0.1rem;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  &:hover {
+    background-color: color.adjust(
+      colors.$button,
+      $lightness: 10%,
+      $space: hsl
+    );
+  }
+}
+
+.button-lightMode {
+  background-color: colors.$lightBorder;
+  border: none;
+  color: black;
+  &:hover {
+    background-color: colors.$lightHover;
+  }
+}
+
+.textarea {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 1.1rem;
+  margin: 0.1rem 0 0 0.4rem;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: color.scale(
+      colors.$button,
+      $lightness: 20% * colors.$scrollbar-color-multiplier
+    )
+    transparent;
+}
+
+.textarea-large {
+  overflow-y: scroll;
+}

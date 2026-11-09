@@ -10,32 +10,50 @@
 #define CHANNEL_TRAITOR 1016
 #define CHANNEL_CHARGED_SPELL 1015
 #define CHANNEL_ELEVATOR 1014
+#define CHANNEL_ESCAPEMENU 1013
+#define CHANNEL_WEATHER 1012
 //THIS SHOULD ALWAYS BE THE LOWEST ONE!
 //KEEP IT UPDATED
-#define CHANNEL_HIGHEST_AVAILABLE 1013
+#define CHANNEL_HIGHEST_AVAILABLE 1011
 
 #define MAX_INSTRUMENT_CHANNELS (128 * 6)
 
+/* Calculates the volume of a sound based on distance
+ *
+ * https://www.desmos.com/calculator/ing6lxgd0m Update this when changed please
+ *
+ * Arguments:
+ * * volume: The initial volume of the sound being played
+ * * distance: How far away the sound is in tiles from the source
+ * * falloff_distance: Distance at which falloff begins. Sound is at peak volume (in regards to falloff) aslong as it is in this range.
+ * * falloff_exponent: Rate of falloff for the audio. Higher means quicker drop to low volume. Should generally be over 1 to indicate a quick dive to 0 rather than a slow dive.
+ * Returns: The max distance of a sound based on audible volume range
+ */
+#define CALCULATE_SOUND_VOLUME_RATIO(volume, distance, max_distance, falloff_distance, falloff_exponent)\
+	((max(distance - falloff_distance, 0) / (max(max_distance, distance) - falloff_distance)) ** (1 / falloff_exponent))
+
 ///Default range of a sound.
-#define SOUND_RANGE 17
-#define MEDIUM_RANGE_SOUND_EXTRARANGE -5
+#define SOUND_RANGE 15
+#define MEDIUM_RANGE_SOUND_EXTRARANGE -3
 ///default extra range for sounds considered to be quieter
-#define SHORT_RANGE_SOUND_EXTRARANGE -9
+#define SHORT_RANGE_SOUND_EXTRARANGE -7
 ///The range deducted from sound range for things that are considered silent / sneaky
-#define SILENCED_SOUND_EXTRARANGE -11
+#define SILENCED_SOUND_EXTRARANGE -10
 ///Percentage of sound's range where no falloff is applied
-#define SOUND_DEFAULT_FALLOFF_DISTANCE 1 //For a normal sound this would be 1 tile of no falloff
+#define SOUND_DEFAULT_FALLOFF_DISTANCE 0 //Disabled because it doesn't actually have a nice effect, it just makes the jump to fall-off more shocking. maybe delete
 ///The default exponent of sound falloff
-#define SOUND_FALLOFF_EXPONENT 6
+#define SOUND_FALLOFF_EXPONENT 2.5
 
 #define SOUND_MINIMUM_PRESSURE 10
 
 #define INTERACTION_SOUND_RANGE_MODIFIER -3
-#define EQUIP_SOUND_VOLUME 30
+#define LIQUID_SLOSHING_SOUND_VOLUME 10
 #define PICKUP_SOUND_VOLUME 15
 #define DROP_SOUND_VOLUME 20
-#define YEET_SOUND_VOLUME 90
+#define EQUIP_SOUND_VOLUME 30
+#define HALFWAY_SOUND_VOLUME 50
 #define BLOCK_SOUND_VOLUME 70
+#define YEET_SOUND_VOLUME 90
 
 #define AMBIENCE_GENERIC "generic"
 #define AMBIENCE_HOLY "holy"
@@ -137,38 +155,8 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 	ANNOUNCER_SPANOMALIES,
 ))
 
-/// List of all of our sound keys.
-#define SFX_BODYFALL "bodyfall"
-#define SFX_BULLET_MISS "bullet_miss"
-#define SFX_CAN_OPEN "can_open"
-#define SFX_CLOWN_STEP "clown_step"
-#define SFX_DESECRATION "desecration"
-#define SFX_EXPLOSION "explosion"
-#define SFX_EXPLOSION_CREAKING "explosion_creaking"
-#define SFX_HISS "hiss"
-#define SFX_HONKBOT_E "honkbot_e"
-#define SFX_GOOSE "goose"
-#define SFX_HULL_CREAKING "hull_creaking"
-#define SFX_HYPERTORUS_CALM "hypertorus_calm"
-#define SFX_HYPERTORUS_MELTING "hypertorus_melting"
-#define SFX_IM_HERE "im_here"
-#define SFX_LAW "law"
-#define SFX_PAGE_TURN "page_turn"
-#define SFX_PUNCH "punch"
-#define SFX_REVOLVER_SPIN "revolver_spin"
-#define SFX_RICOCHET "ricochet"
-#define SFX_RUSTLE "rustle"
-#define SFX_SHATTER "shatter"
-#define SFX_SM_CALM "sm_calm"
-#define SFX_SM_DELAM "sm_delam"
-#define SFX_SPARKS "sparks"
-#define SFX_SUIT_STEP "suit_step"
-#define SFX_SWING_HIT "swing_hit"
-#define SFX_TERMINAL_TYPE "terminal_type"
-#define SFX_WARPSPEED "warpspeed"
-#define SFX_CRUNCHY_BUSH_WHACK "crunchy_bush_whack"
-#define SFX_TREE_CHOP "tree_chop"
-#define SFX_ROCK_TAP "rock_tap"
-#define SFX_SEAR "sear"
-#define SFX_REEL "reel"
-#define SFX_RATTLE "rattle"
+// Standard is 44.1khz
+#define MIN_EMOTE_PITCH 40000
+#define MAX_EMOTE_PITCH 48000
+// ~0.6 - 1.4 at 0.12
+#define EMOTE_TTS_PITCH_MULTIPLIER 0.12

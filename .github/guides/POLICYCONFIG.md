@@ -3,9 +3,11 @@ Welcome to this short guide to the POLICY config mechanism.
 You are probably reading this guide because you have been informed your antagonist or ghost role needs to support policy configuration.
 
 ## Requirements
+
 It is a requirement of /tg/station development that all ghost roles, antags, minor antags and event mobs of any kind must support the policy system when implemented.
 
 ## What is policy configuration
+
 Policy configuration is a json file that the administrators of a server can edit, which contains a dictionary of keywords -> string message.
 
 The policy text for a specific keyword should be displayed when relevant and appropriate, to allow server administrators to define the broad strokes of policy for some feature or mob.
@@ -27,9 +29,11 @@ This is also accessible to the user if they use `/client/verb/policy()` which wi
 ### Relaying Specific Policy To Players, Example
 
 Here is a simple example taken from the slime pyroclastic event to relay specific policy.
+
 ```DM
 var/policy = get_policy(ROLE_PYROCLASTIC_SLIME)
 if (policy)
 	to_chat(S, policy)
 ```
+
 It's recommended to use a define for your policy keyword to make it easily changeable by a developer

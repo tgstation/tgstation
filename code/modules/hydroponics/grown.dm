@@ -11,10 +11,11 @@
 
 // Base type. Subtypes are found in /grown dir. Lavaland-based subtypes can be found in mining/ash_flora.dm
 /obj/item/food/grown
+	name = "fresh produce" // so recipe text doesn't say 'snack'
 	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "berrypile"
 	worn_icon = 'icons/mob/clothing/head/hydroponics.dmi'
-	name = "fresh produce" // so recipe text doesn't say 'snack'
+	abstract_type = /obj/item/food/grown
 	max_volume = PLANT_REAGENT_VOLUME
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FLAMMABLE
@@ -65,8 +66,6 @@
 		pixel_x = base_pixel_x + rand(-5, 5)
 		pixel_y = base_pixel_y + rand(-5, 5)
 
-	make_dryable()
-
 	// Go through all traits in their genes and call on_new_plant from them.
 	for(var/datum/plant_gene/trait/trait in seed.genes)
 		trait.on_new_plant(src, loc)
@@ -81,13 +80,14 @@
 	reagents.clear_reagents()
 	seed.prepare_result(src)
 	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
+	ADD_TRAIT(src, TRAIT_VALID_DNA_INFUSION, INNATE_TRAIT)
 
 /obj/item/food/grown/Destroy()
 	if(isatom(seed))
 		QDEL_NULL(seed)
 	return ..()
 
-/obj/item/food/grown/proc/make_dryable()
+/obj/item/food/grown/make_dryable()
 	AddElement(/datum/element/dryable, type)
 
 /obj/item/food/grown/make_leave_trash()
@@ -104,11 +104,12 @@
 
 	return new trash_type(location || drop_location())
 
-/obj/item/food/grown/blend_requirements()
-	if(dry_grind && !HAS_TRAIT(src, TRAIT_DRIED))
-		to_chat(usr, span_warning("[src] needs to be dry before it can be ground up!"))
-		return
-	return TRUE
+/obj/item/food/grown/blend_requirements(atom/movable/grinder, mob/living/user)
+	if(!dry_grind || HAS_TRAIT(src, TRAIT_DRIED))
+		return TRUE
+	if (user)
+		to_chat(user, span_warning("[src] needs to be dry before it can be ground up!"))
+	return FALSE
 
 /// Turns the nutriments and vitamins into the distill reagent or fruit wine
 /obj/item/food/grown/proc/ferment()
@@ -118,7 +119,7 @@
 	var/quality_max = DRINK_FANTASTIC
 	var/quality = round(LERP(quality_min, quality_max, purity_above_base))
 	for(var/datum/reagent/reagent in reagents.reagent_list)
-		if(!istype(reagent, /datum/reagent/consumable))
+		if(reagent.type != /datum/reagent/consumable/nutriment && reagent.type != /datum/reagent/consumable/nutriment/vitamin)
 			continue
 		if(distill_reagent)
 			var/data = list()
@@ -139,22 +140,36 @@
 			reagents.add_reagent(/datum/reagent/consumable/ethanol/fruit_wine, reagent.volume, data, added_purity = reagent_purity)
 		reagents.del_reagent(reagent.type)
 
-/obj/item/food/grown/grind(datum/reagents/target_holder, mob/user)
-	if(on_grind() == -1)
-		return FALSE
+/obj/item/food/grown/grind_atom(datum/reagents/target_holder, mob/user)
+	var/list/grind_reagents = grind_results()
+	for(var/datum/reagent/result as anything in grind_reagents)
+		grind_reagents[result] = round(seed.potency)
 
-	var/grind_results_num = LAZYLEN(grind_results)
+	var/grind_results_num = length(grind_reagents)
 	if(grind_results_num)
 		var/average_purity = reagents.get_average_purity()
 		var/total_nutriment_amount = reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, type_check = REAGENT_SUB_TYPE)
 		var/single_reagent_amount = grind_results_num > 1 ? round(total_nutriment_amount / grind_results_num, CHEMICAL_QUANTISATION_LEVEL) : total_nutriment_amount
 		reagents.remove_reagent(/datum/reagent/consumable/nutriment, total_nutriment_amount, include_subtypes = TRUE)
-		for(var/reagent in grind_results)
+		for(var/reagent in grind_reagents)
 			reagents.add_reagent(reagent, single_reagent_amount, added_purity = average_purity)
 
-	if(reagents && target_holder)
-		reagents.trans_to(target_holder, reagents.total_volume, transferred_by = user)
-	return TRUE
+	return reagents?.trans_to(target_holder, reagents.total_volume, transferred_by = user)
+
+/obj/item/food/grown/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	//if we attack with paper and the grown is a mushroom, create a spore print.
+	if(istype(tool, /obj/item/paper) && seed?.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+		qdel(tool)
+		seed.name = "[LOWER_TEXT(seed.plantname)] spore print"
+		seed.desc = "A dusting of [LOWER_TEXT(seed.plantname)] spores have been deposited in a beautiful pattern on the surface of the paper. "
+		seed.icon_state = "spore_print[pick(1,2,3)]"
+		seed.forceMove(drop_location())
+		playsound(user, 'sound/items/paper_flip.ogg', 20)
+		seed = null
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+	else
+		return ..()
 
 #undef BITE_SIZE_POTENCY_MULTIPLIER
 #undef BITE_SIZE_VOLUME_MULTIPLIER

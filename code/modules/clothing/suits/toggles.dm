@@ -11,6 +11,8 @@
 	/// Reference to hood object, if it exists
 	var/obj/item/clothing/head/hooded/hood
 
+	var/auto_deploy_hood_on_outfit_equip = TRUE
+
 /obj/item/clothing/suit/hooded/Initialize(mapload)
 	. = ..()
 	if (!hoodtype)
@@ -27,6 +29,7 @@
 		on_created = CALLBACK(src, PROC_REF(on_hood_created)),\
 		on_deployed = CALLBACK(src, PROC_REF(on_hood_up)),\
 		on_removed = CALLBACK(src, PROC_REF(on_hood_down)),\
+		auto_deploy_on_outfit_equip = auto_deploy_hood_on_outfit_equip,\
 	)
 
 /obj/item/clothing/suit/hooded/Destroy()
@@ -58,9 +61,13 @@
 	return
 
 /obj/item/clothing/suit/toggle
+	abstract_type = /obj/item/clothing/suit/toggle
 	/// The noun that is displayed to the user on toggle. EX: "Toggles the suit's [buttons]".
 	var/toggle_noun = "buttons"
 
 /obj/item/clothing/suit/toggle/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/toggle_icon, toggle_noun)
+
+/obj/item/clothing/head/hooded
+	abstract_type = /obj/item/clothing/head/hooded

@@ -28,7 +28,7 @@
 
 /obj/item/assembly/infra/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 
 /obj/item/assembly/infra/Destroy()
 	QDEL_NULL(active_beam)
@@ -75,7 +75,9 @@
 	return FALSE
 
 /// Used to refresh the beam in whatever context.
-/obj/item/assembly/infra/proc/make_beam()
+/// glide_seed/glide_time (from a predecessor beam's get_last_geometry) make the rebuilt beam glide
+/// from the old position instead of snapping; left as defaults for non-movement refreshes.
+/obj/item/assembly/infra/proc/make_beam(list/glide_seed = null, glide_time = 0)
 	SHOULD_NOT_SLEEP(TRUE)
 
 	if(!isnull(buffer_turf))
@@ -107,28 +109,16 @@
 	var/turf/last_turf = final_turfs[length(final_turfs)]
 	buffer_turf = get_step(last_turf, dir)
 
-	var/beam_target_x = pixel_x
-	var/beam_target_y = pixel_y
-	// The beam by default will go to middle of turf (because items are in the middle of turfs)
-	// So we need to offset it
-	if(dir & NORTH)
-		beam_target_y += 16
-	else if(dir & SOUTH)
-		beam_target_y -= 16
-	if(dir & WEST)
-		beam_target_x -= 16
-	else if(dir & EAST)
-		beam_target_x += 16
-
 	active_beam = start_loc.Beam(
 		BeamTarget = last_turf,
 		beam_type = /obj/effect/ebeam/reacting/infrared,
 		icon = 'icons/effects/beam.dmi',
-		icon_state = "1-full",
-		beam_color = COLOR_RED,
+		icon_state = "infrared",
 		emissive = TRUE,
-		override_target_pixel_x = beam_target_x,
-		override_target_pixel_y = beam_target_y,
+		override_target_pixel_x = pixel_x,
+		override_target_pixel_y = pixel_y,
+		glide_seed = glide_seed,
+		glide_time = glide_time,
 	)
 	RegisterSignal(active_beam, COMSIG_BEAM_ENTERED, PROC_REF(beam_entered))
 	RegisterSignal(active_beam, COMSIG_BEAM_TURFS_CHANGED, PROC_REF(beam_turfs_changed))
@@ -178,7 +168,7 @@
 		message = span_infoplain("[icon2html(src, hearers(holder || src))] *beep* *beep* *beep*"),
 		hearing_distance = hearing_range,
 	)
-	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE, extrarange = hearing_range - SOUND_RANGE + 1, falloff_distance = hearing_range)
+	playsound(src, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE, extrarange = hearing_range - SOUND_RANGE + 1, falloff_distance = hearing_range)
 	COOLDOWN_START(src, next_activate, 3 SECONDS)
 
 /obj/item/assembly/infra/activate()
@@ -258,30 +248,15 @@
 	make_beam()
 
 /obj/item/assembly/infra/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	var/list/glide_seed = active_beam?.get_last_geometry()
 	. = ..()
 	if(loc == old_loc)
 		return
-	make_beam()
 	if(!visible || forced || !movement_dir || !Adjacent(old_loc))
+		make_beam()
 		return
-	// Because the new beam is made in the new loc, it "jumps" from one turf to another
-	// We can do an animate to pretend we're gliding between turfs rather than making a whole new beam
-	var/x_move = 0
-	var/y_move = 0
-	if(movement_dir & NORTH)
-		y_move = -32
-	else if(movement_dir & SOUTH)
-		y_move = 32
-	if(movement_dir & WEST)
-		x_move = 32
-	else if(movement_dir & EAST)
-		x_move = -32
-
-	var/fake_glide_time = round(world.icon_size / glide_size * world.tick_lag, world.tick_lag)
-	for(var/obj/effect/ebeam/beam as anything in active_beam?.elements)
-		var/matrix/base_transform = matrix(beam.transform)
-		beam.transform = beam.transform.Translate(x_move, y_move)
-		animate(beam, transform = base_transform, time = fake_glide_time)
+	var/glide_time = ICON_SIZE_ALL / max(glide_size, MIN_GLIDE_SIZE) * world.tick_lag * GLOB.glide_size_multiplier
+	make_beam(glide_seed, glide_time)
 
 /obj/item/assembly/infra/setDir(newdir)
 	var/prev_dir = dir
@@ -305,7 +280,7 @@
 	data["visible"] = visible
 	return data
 
-/obj/item/assembly/infra/ui_act(action, params)
+/obj/item/assembly/infra/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return .

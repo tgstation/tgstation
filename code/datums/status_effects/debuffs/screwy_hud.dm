@@ -8,6 +8,7 @@
  * accidentally removing another source's hud.
  */
 /datum/status_effect/grouped/screwy_hud
+	id = STATUS_EFFECT_ID_ABSTRACT
 	alert_type = null
 	/// The priority of this screwyhud over other screwyhuds.
 	var/priority = -1
@@ -39,7 +40,7 @@
 		if(other_screwy_hud.priority > priority)
 			return
 
-	source.hud_used.healths.icon_state = override_icon
+	source.hud_used?.screen_objects[HUD_MOB_HEALTH]?.icon_state = override_icon
 	return COMPONENT_OVERRIDE_HEALTH_HUD
 
 /datum/status_effect/grouped/screwy_hud/fake_dead

@@ -8,7 +8,7 @@
 		return
 	for(var/crafting_recipe_type in crafting_recipe_types)
 		user.mind.teach_crafting_recipe(crafting_recipe_type)
-		var/datum/crafting_recipe/recipe = locate(crafting_recipe_type) in GLOB.crafting_recipes + GLOB.cooking_recipes
+		var/datum/crafting_recipe/recipe = GLOB.cooking_recipes_by_typepath[crafting_recipe_type] || GLOB.crafting_recipes_by_typepath[crafting_recipe_type]
 		to_chat(user, span_notice("You learned how to make [recipe.name]."))
 
 /obj/item/book/granter/crafting_recipe/dusting

@@ -23,7 +23,7 @@
 	var/area/old_area = old_turf.loc
 	var/area/new_area = new_turf.loc
 	// If the area gravity has changed, then it's possible that our state has changed, so update
-	if(old_area.has_gravity != new_area.has_gravity)
+	if(old_area.default_gravity != new_area.default_gravity)
 		refresh_gravity()
 
 /mob/living/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -46,7 +46,7 @@
 		return
 
 	update_gravity(gravity_state)
-
+	SEND_SIGNAL(src, COMSIG_LIVING_GRAVITY_CHANGED, gravity_state, old_grav_state)
 	if(gravity_state > STANDARD_GRAVITY)
 		gravity_animate()
 	else if(old_grav_state > STANDARD_GRAVITY)
@@ -73,7 +73,12 @@
 	return ..()
 
 /mob/living/proc/update_move_intent_slowdown()
-	add_movespeed_modifier((move_intent == MOVE_INTENT_WALK)? /datum/movespeed_modifier/config_walk_run/walk : /datum/movespeed_modifier/config_walk_run/run)
+	add_movespeed_modifier(get_move_intent_slowdown())
+
+/mob/living/proc/get_move_intent_slowdown()
+	if(move_intent == MOVE_INTENT_WALK)
+		return /datum/movespeed_modifier/config_walk_run/walk
+	return /datum/movespeed_modifier/config_walk_run/run
 
 /mob/living/proc/update_turf_movespeed(turf/open/turf)
 	if(isopenturf(turf) && !HAS_TRAIT(turf, TRAIT_TURF_IGNORE_SLOWDOWN))
@@ -124,7 +129,7 @@
 	return ..()
 
 /mob/living/can_z_move(direction, turf/start, turf/destination, z_move_flags = ZMOVE_FLIGHT_FLAGS, mob/living/rider)
-	if(z_move_flags & ZMOVE_INCAPACITATED_CHECKS && incapacitated())
+	if(z_move_flags & ZMOVE_INCAPACITATED_CHECKS && incapacitated)
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			to_chat(rider || src, span_warning("[rider ? src : "You"] can't do that right now!"))
 		return FALSE
@@ -153,6 +158,6 @@
 	return ..()
 
 /mob/living/keybind_face_direction(direction)
-	if(stat > SOFT_CRIT)
+	if(!(mobility_flags & MOBILITY_MOVE))
 		return
 	return ..()

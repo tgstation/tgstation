@@ -9,7 +9,12 @@ ADMIN_VERB(generate_wikichem_list, R_DEBUG, "Parse Wikichems", "Parse and genera
 |-
 "}
 
-	var/input_text = tgui_input_text(user, "Input a name of a reagent, or a series of reagents split with a comma (no spaces) to get it's wiki table entry", "Recipe") //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
+	var/input_text = tgui_input_text(
+		user,
+		"Input a name of a reagent, or a series of reagents split with a comma (no spaces) to get its wiki table entry",
+		"Recipe",
+		max_length = MAX_MESSAGE_LEN,
+		) //95% of the time, the reagent type is a lowercase, no spaces / underscored version of the name
 	if(!input_text)
 		to_chat(user, "Input was blank!")
 		return
@@ -17,7 +22,7 @@ ADMIN_VERB(generate_wikichem_list, R_DEBUG, "Parse Wikichems", "Parse and genera
 	var/list/names = splittext("[input_text]", ",")
 
 	for(var/name in names)
-		var/datum/reagent/reagent = find_reagent_object_from_type(get_chem_id(name))
+		var/datum/reagent/reagent = GLOB.chemical_reagents_list[get_chem_id(name)]
 		if(!reagent)
 			to_chat(user, "Could not find [name]. Skipping.")
 			continue
@@ -161,19 +166,16 @@ ADMIN_VERB(generate_wikichem_list, R_DEBUG, "Parse Wikichems", "Parse and genera
 
 	if(length(reagent.addiction_types))
 		outstring += "\n<br><b>Addictions:</b>"
-	for(var/entry in reagent.addiction_types)
-		var/datum/addiction/ref = SSaddiction.all_addictions[entry]
-		switch(reagent.addiction_types[entry])
-			if(-INFINITY to 0)
-				continue
-			if(0 to 5)
-				outstring += "\n<br>Weak [ref.name]"
-			if(5 to 10)
-				outstring += "\n<br>[ref.name]"
-			if(10 to 20)
-				outstring += "\n<br>Strong [ref.name]"
-			if(20 to INFINITY)
-				outstring += "\n<br>Potent [ref.name]"
+	for(var/entry, threshold in reagent.addiction_types)
+		switch(threshold)
+			if(0 to 10)
+				outstring += "\n<br>Potent [GLOB.addictions[entry].name]"
+			if(10 to 30)
+				outstring += "\n<br>Strong [GLOB.addictions[entry].name]"
+			if(30 to 100)
+				outstring += "\n<br>[GLOB.addictions[entry].name]"
+			if(100 to INFINITY)
+				outstring += "\n<br>Weak [GLOB.addictions[entry].name]"
 
 	if(reagent.chemical_flags & REAGENT_DEAD_PROCESS)
 		outstring += "\n<br>Works on the dead"

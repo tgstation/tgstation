@@ -1,9 +1,11 @@
 import {
-  Feature,
-  FeatureChoiced,
-  FeatureChoicedServerData,
+  CheckboxInput,
+  type Feature,
+  type FeatureChoiced,
+  type FeatureChoicedServerData,
   FeatureColorInput,
-  FeatureValueProps,
+  type FeatureToggle,
+  type FeatureValueProps,
 } from './base';
 import { FeatureDropdownInput } from './dropdowns';
 
@@ -50,7 +52,7 @@ export const hair_gradient_color: Feature<string> = {
   component: FeatureColorInput,
 };
 
-export const feature_human_ears: FeatureChoiced = {
+export const feature_cat_ears: FeatureChoiced = {
   name: 'Ears',
   component: (
     props: FeatureValueProps<string, string, FeatureChoicedServerData>,
@@ -59,7 +61,7 @@ export const feature_human_ears: FeatureChoiced = {
   },
 };
 
-export const feature_human_tail: FeatureChoiced = {
+export const feature_cat_tail: FeatureChoiced = {
   name: 'Tail',
   component: (
     props: FeatureValueProps<string, string, FeatureChoicedServerData>,
@@ -122,4 +124,19 @@ export const feature_vampire_status: Feature<string> = {
 export const heterochromatic: Feature<string> = {
   name: 'Heterochromatic (Right Eye) color',
   component: FeatureColorInput,
+};
+
+export const feature_fish_tail_color: Feature<string> = {
+  name: 'Fish tail color',
+  component: FeatureColorInput,
+};
+
+export const feature_cerulean_frills: FeatureToggle = {
+  name: 'Fish frills',
+  component: CheckboxInput,
+};
+
+export const feature_cerulean_snout: FeatureToggle = {
+  name: 'Fish snout',
+  component: CheckboxInput,
 };

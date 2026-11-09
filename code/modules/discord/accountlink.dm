@@ -1,8 +1,5 @@
 // IF you have linked your account, this will trigger a verify of the user
-/client/verb/verify_in_discord()
-	set category = "OOC"
-	set name = "Verify Discord Account"
-	set desc = "Verify your discord account with your BYOND account"
+GAME_VERB_DESC(/client, verify_in_discord, "Verify Discord Account", "Verify your discord account with your BYOND account", "OOC")
 
 	// Safety checks
 	if(!CONFIG_GET(flag/sql_enabled))
@@ -13,6 +10,7 @@
 	var/prefix = CONFIG_GET(string/discordbotcommandprefix)
 	if(!prefix)
 		to_chat(src, span_warning("This feature is disabled."))
+		return
 
 	if(!SSdiscord || !SSdiscord.reverify_cache)
 		to_chat(src, span_warning("Wait for the Discord subsystem to finish initialising"))
@@ -31,7 +29,7 @@
 		message = "Your one time token is: [one_time_token]. Assuming you have the required living minutes in game, you can now verify yourself on Discord by using the command: <span class='code user-select'>[prefix]verify [one_time_token]</span>"
 
 	//Now give them a browse window so they can't miss whatever we told them
-	var/datum/browser/window = new/datum/browser(usr, "discordverification", "Discord Verification")
+	var/datum/browser/window = new /datum/browser(usr, "discordverification", "Discord Verification")
 	window.set_content("<div>[message]</div>")
 	window.open()
 

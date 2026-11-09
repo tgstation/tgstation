@@ -1,4 +1,5 @@
 //All bundles and telecrystals
+
 /datum/uplink_category/bundle
 	name = "Bundles"
 	weight = 10
@@ -18,8 +19,7 @@
 
 /datum/uplink_item/bundles_tc/random/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	var/list/possible_items = list()
-	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
-		var/datum/uplink_item/uplink_item = SStraitor.uplink_items_by_type[item_path]
+	for(var/datum/uplink_item/uplink_item as anything in SStraitor.uplink_items)
 		if(src == uplink_item || !uplink_item.item)
 			continue
 		if(!handler.can_purchase_item(user, uplink_item))
@@ -37,21 +37,12 @@
 	desc = "A telecrystal in its rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
 	item = /obj/item/stack/telecrystal
 	cost = 1
-	// Don't add telecrystals to the purchase_log since
-	// it's just used to buy more items (including itself!)
-	purchase_log_vis = FALSE
+	purchasable_from = NONE
 
-/datum/uplink_item/bundles_tc/telecrystal/five
-	name = "5 Raw Telecrystals"
-	desc = "Five telecrystals in their rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
-	item = /obj/item/stack/telecrystal/five
-	cost = 5
-
-/datum/uplink_item/bundles_tc/telecrystal/twenty
-	name = "20 Raw Telecrystals"
-	desc = "Twenty telecrystals in their rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
-	item = /obj/item/stack/telecrystal/twenty
-	cost = 20
+// Don't add telecrystals to the purchase_log since
+// it's just used to buy more items (including itself!)
+/datum/uplink_item/bundles_tc/telecrystal/log_purchase(atom/spawned_item, datum/uplink_handler/uplink_handler)
+	return
 
 /datum/uplink_item/bundles_tc/bundle_a
 	name = "Syndi-kit Tactical"
@@ -62,7 +53,7 @@
 	item = /obj/item/storage/box/syndicate/bundle_a
 	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 
 /datum/uplink_item/bundles_tc/bundle_b
 	name = "Syndi-kit Special"
@@ -73,34 +64,36 @@
 	item = /obj/item/storage/box/syndicate/bundle_b
 	cost = 20
 	stock_key = UPLINK_SHARED_STOCK_KITS
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
+
+#define TC_VALUE_SURPLUS "%TC_VALUE_SURPLUS%"
 
 /datum/uplink_item/bundles_tc/surplus
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
-			If the rumors are true, it will fill it's contents based on your current reputation. Get on that grind. \
-			Contents are sorted to always be worth 30 TC. The Syndicate will only provide one surplus item per agent."
+			Contents are sorted to always be worth " + TC_VALUE_SURPLUS + " TC. The Syndicate will only provide one surplus item per agent."
 	item = /obj/structure/closet/crate // will be replaced in purchase()
 	cost = 20
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
-	var/crate_tc_value = 30
+	var/crate_tc_value = 40
 	/// crate that will be used for the surplus crate
 	var/crate_type = /obj/structure/closet/crate
+
+/datum/uplink_item/bundles_tc/surplus/New()
+	. = ..()
+	desc = replacetext(desc, TC_VALUE_SURPLUS, crate_tc_value)
 
 /// generates items that can go inside crates, edit this proc to change what items could go inside your specialized crate
 /datum/uplink_item/bundles_tc/surplus/proc/generate_possible_items(mob/user, datum/uplink_handler/handler)
 	var/list/possible_items = list()
-	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
-		var/datum/uplink_item/uplink_item = SStraitor.uplink_items_by_type[item_path]
+	for(var/datum/uplink_item/uplink_item as anything in SStraitor.uplink_items)
 		if(src == uplink_item || !uplink_item.item)
 			continue
 		if(!handler.check_if_restricted(uplink_item))
 			continue
 		if(!uplink_item.surplus)
-			continue
-		if(handler.not_enough_reputation(uplink_item))
 			continue
 		possible_items += uplink_item
 	return possible_items
@@ -135,21 +128,43 @@
 
 	podspawn(list(
 		"target" = get_turf(user),
-		"style" = STYLE_SYNDICATE,
+		"style" = /datum/pod_style/syndicate,
 		"spawn" = surplus_crate,
 	))
-	return source //For log icon
+	return surplus_crate //For log icon
+
+/datum/uplink_item/bundles_tc/surplus/log_purchase(atom/spawned_item, datum/uplink_handler/uplink_handler)
+	. = ..()
+	var/list/entries = list()
+	for(var/obj/item/loot in spawned_item)
+		if(entries[loot.type])
+			var/datum/uplink_purchase_entry/existing_entry = entries[loot.type]
+			existing_entry.amount_purchased += 1
+			continue
+
+		var/datum/uplink_item/original_datum = SStraitor.uplink_items_by_type[loot.type]
+		var/datum/uplink_purchase_entry/custom_entry = new()
+		custom_entry.set_item(loot)
+		custom_entry.base_cost = 0
+		custom_entry.spent_cost = 0
+		custom_entry.amount_purchased = 1
+		custom_entry.name = "Surplus Item: [original_datum?.name || format_text(loot.name)]"
+		custom_entry.desc = "[original_datum?.desc || loot.desc]<br>Obtained via <i>surplus crate</i>."
+		entries[loot.type] = custom_entry
+
+	for(var/entry_type, entry_datum in entries)
+		uplink_handler.purchase_log.log_purchase_custom(entry_datum)
 
 /datum/uplink_item/bundles_tc/surplus/united
 	name = "United Surplus Crate"
 	desc = "A shiny and large crate to be delivered directly to you via Supply Pod. It has an advanced locking mechanism with an anti-tampering protocol. \
 			It is recommended that you only attempt to open it by having another agent purchase a Surplus Crate Key. Unite and fight. \
-			Rumored to contain a valuable assortment of items based on your current reputation, but you never know. Contents are sorted to always be worth 80 TC. \
+			Contents are sorted to always be worth " + TC_VALUE_SURPLUS + " TC. \
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
 	item = /obj/structure/closet/crate/secure/syndicrate
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
-	crate_tc_value = 80
+	crate_tc_value = 100
 	crate_type = /obj/structure/closet/crate/secure/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key
@@ -171,5 +186,7 @@
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
 	item = /obj/item/syndicrate_key
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS | UPLINK_SPY)
+	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
+
+#undef TC_VALUE_SURPLUS

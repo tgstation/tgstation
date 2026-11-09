@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 /**
  * A map of keyed materials to a quantity.
@@ -54,7 +54,7 @@ export type Design = {
   /**
    * A reference to the design's design datum.
    */
-  id: string;
+  path: string;
 
   /**
    * The categories the design should be present in. Subcategories are
@@ -64,7 +64,7 @@ export type Design = {
 
   /**
    * The icon used to represent this design, generated in
-   * /datum/asset/spritesheet/research_designs. **The image within may not be
+   * /datum/asset/spritesheet_batched/research_designs. **The image within may not be
    * 32x32.**
    */
   icon: string;
@@ -123,9 +123,9 @@ export type FabricatorData = {
     jobId: number;
 
     /**
-     * The design ID being printed. Available in `super.designs`.
+     * The design path being printed. Available in `super.designs`.
      */
-    designId: string;
+    designPath: string;
 
     /**
      * If `true`, this design is currently being fabricated, and `timeLeft`

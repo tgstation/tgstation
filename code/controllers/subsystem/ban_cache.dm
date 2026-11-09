@@ -4,8 +4,8 @@ SUBSYSTEM_DEF(ban_cache)
 
 /datum/controller/subsystem/ban_cache
 	name = "Ban Cache"
-	init_order = INIT_ORDER_BAN_CACHE
-	flags = SS_NO_FIRE
+	init_stage = INITSTAGE_LAST
+	ss_flags = SS_NO_FIRE
 	var/query_started = FALSE
 
 /datum/controller/subsystem/ban_cache/Initialize()

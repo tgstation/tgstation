@@ -14,7 +14,7 @@
 	melee_damage_upper = 5
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	combat_mode = TRUE
 	habitable_atmos = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 7.5
@@ -82,6 +82,9 @@
 	var/datum/action/cooldown/spell/teleport/radius_turf/blink/lesser/blink_spell = new(src)
 	blink_spell.Grant(src)
 	ai_controller.set_blackboard_key(BB_WIZARD_BLINK_SPELL, blink_spell)
+
+/mob/living/basic/wizard/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
 
 /// Uses the colors and loadout of the original wizard simplemob
 /mob/living/basic/wizard/classic

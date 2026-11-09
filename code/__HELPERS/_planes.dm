@@ -25,12 +25,12 @@
 
 /// Takes a plane to offset, and the multiplier to use, and well, does the offsetting
 /// Respects a blacklist we use to remove redundant plane masters, such as hud objects
-#define GET_NEW_PLANE(new_value, multiplier) (SSmapping.plane_offset_blacklist?["[new_value]"] ? new_value : (new_value) - (PLANE_RANGE * (multiplier)))
+#define GET_NEW_PLANE(new_value, multiplier) (SSmapping.plane_offset_blacklist?[new_value] ? new_value : (new_value) - (PLANE_RANGE * (multiplier)))
 
 // Now for the more niche things
 
-/// Takes an object, new plane, and multipler, and offsets the plane
-/// This is for cases where you have a multipler precalculated, and just want to use it
+/// Takes an object, new plane, and multiplier, and offsets the plane
+/// This is for cases where you have a multiplier precalculated, and just want to use it
 /// Often an optimization, sometimes a necessity
 #define SET_PLANE_W_SCALAR(thing, new_value, multiplier) (thing.plane = GET_NEW_PLANE(new_value, multiplier))
 
@@ -68,13 +68,13 @@
 /// Takes a z level, gets the lowest plane offset in its "stack"
 #define GET_LOWEST_STACK_OFFSET(z) ((SSmapping.max_plane_offset) ? SSmapping.z_level_to_lowest_plane_offset[z] : 0)
 /// Takes a plane, returns the canonical, unoffset plane it represents
-#define PLANE_TO_TRUE(plane) ((SSmapping.plane_offset_to_true) ? SSmapping.plane_offset_to_true["[plane]"] : plane)
+#define PLANE_TO_TRUE(plane) ((SSmapping.plane_offset_to_true) ? SSmapping.plane_offset_to_true[plane] : plane)
 /// Takes a plane, returns the offset it uses
-#define PLANE_TO_OFFSET(plane) ((SSmapping.plane_to_offset) ? SSmapping.plane_to_offset["[plane]"] : plane)
+#define PLANE_TO_OFFSET(plane) ((SSmapping.plane_to_offset) ? SSmapping.plane_to_offset[plane] : plane)
 /// Takes a plane, returns TRUE if it is of critical priority, FALSE otherwise
-#define PLANE_IS_CRITICAL(plane) ((SSmapping.plane_to_offset) ? !!SSmapping.critical_planes["[plane]"] : FALSE)
+#define PLANE_IS_CRITICAL(plane) ((SSmapping.plane_to_offset) ? !!SSmapping.critical_planes[plane] : FALSE)
 /// Takes a true plane, returns the offset planes that would canonically represent it
-#define TRUE_PLANE_TO_OFFSETS(plane) ((SSmapping.true_to_offset_planes) ? SSmapping.true_to_offset_planes["[plane]"] : list(plane))
+#define TRUE_PLANE_TO_OFFSETS(plane) ((SSmapping.true_to_offset_planes) ? SSmapping.true_to_offset_planes[plane] : list(plane))
 /// Takes a render target and an offset, returns a canonical render target string for it
 #define OFFSET_RENDER_TARGET(render_target, offset) (_OFFSET_RENDER_TARGET(render_target, SSmapping.render_offset_blacklist?["[render_target]"] ? 0 : offset))
 /// Helper macro for the above
@@ -86,3 +86,40 @@
 // This is solvable with lowspec preferences, which would not be hard to implement
 // Player popups will now render their effects, like overlay lights. this is fixable, but I've not gotten to it
 // I think overlay lights can render on the wrong z layer. s fucked
+
+/// Whitelist of planes allowed to use TOPDOWN_LAYER
+GLOBAL_ALIST_INIT(topdown_planes, alist(
+	FLOOR_PLANE = TRUE,
+))
+
+#define IS_TOPDOWN_PLANE(plane) GLOB.topdown_planes[PLANE_TO_TRUE(plane)]
+
+/// Checks if a passed in MA or atom is allowed to have its current plane/layer matchup
+/proc/check_topdown_validity(mutable_appearance/thing_to_check)
+	if(istype(thing_to_check, /atom/movable/screen/plane_master))
+		return
+	if(IS_TOPDOWN_PLANE(thing_to_check.plane))
+		if(thing_to_check.layer - TOPDOWN_LAYER < 0 || thing_to_check.layer >= BACKGROUND_LAYER)
+			stack_trace("[thing_to_check] ([thing_to_check.type]) was expected to have a TOPDOWN_LAYER layer due to its plane, but it DID NOT! layer: ([thing_to_check.layer]) plane: ([thing_to_check.plane])")
+	else if(thing_to_check.layer - TOPDOWN_LAYER >= 0 && thing_to_check.layer < BACKGROUND_LAYER)
+		stack_trace("[thing_to_check] ([thing_to_check.type] is NOT ALLOWED to have a TOPDOWN_LAYER layer due to its plane, but it did! layer: ([thing_to_check.layer]) plane: ([thing_to_check.plane])")
+
+/**
+ * A more complicated form of layer_a > layer_b, taking into account topdown layers
+ *
+ * - If both layers are topdown, checks if layer_a is greater than layer_b
+ * - If neither layer is topdown, checks if layer_a is greater than layer_b
+ * - If layer_a is topdown and layer_b is not, returns FALSE
+ * - If layer_b is topdown and layer_a is not, returns TRUE
+ */
+#define COMPARE_LAYERS(layer_a, layer_b) \
+	((layer_a) >= TOPDOWN_LAYER \
+		? ((layer_b) >= TOPDOWN_LAYER \
+			? ((layer_a) > (layer_b)) \
+			: FALSE \
+		) \
+		: ((layer_b) >= TOPDOWN_LAYER \
+			? TRUE \
+			: ((layer_a) > (layer_b)) \
+		) \
+	)

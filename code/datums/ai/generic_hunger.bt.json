@@ -1,0 +1,43 @@
+{
+	"dm_type": "/datum/bt_node/subtree/generic_hunger",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"key": "bb_food_target"
+	},
+	"child": {
+		"type": "selector",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/consume",
+				"vars": {
+					"target_key": "bb_food_target",
+					"hunger_timer_key": "BB_NEXT_HUNGRY"
+				}
+			},
+			{
+				"type": "sequence",
+				"children": [
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "bb_food_target",
+							"required_dist": 1,
+							"finish_on_arrival": true
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/pick_up",
+						"vars": {
+							"target_key": "bb_food_target",
+							"drop_held": true
+						}
+					}
+				]
+			}
+		]
+	}
+}

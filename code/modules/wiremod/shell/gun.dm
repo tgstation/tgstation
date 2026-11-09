@@ -9,19 +9,20 @@
 	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_gun"
 	ammo_type = list(/obj/item/ammo_casing/energy/wiremod_gun)
-	cell_type = /obj/item/stock_parts/cell/emproof/wiremod_gun
+	cell_type = /obj/item/stock_parts/power_store/cell/emproof/wiremod_gun
 	item_flags = NONE
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 	automatic_charge_overlays = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	gun_flags = NOT_A_REAL_GUN
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/ammo_casing/energy/wiremod_gun
 	projectile_type = /obj/projectile/energy/wiremod_gun
 	harmful = FALSE
 	select_name = "circuit"
-	fire_sound = 'sound/weapons/blaster.ogg'
+	fire_sound = 'sound/items/weapons/blaster.ogg'
 
 /obj/projectile/energy/wiremod_gun
 	name = "scanning beam"
@@ -29,14 +30,16 @@
 	damage = 0
 	range = 7
 
-/obj/item/stock_parts/cell/emproof/wiremod_gun
-	maxcharge = 100
+/obj/item/stock_parts/power_store/cell/emproof/wiremod_gun
+	maxcharge = 0.1 * STANDARD_CELL_CHARGE
 
 /obj/item/gun/energy/wiremod_gun/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/shell, list(
+	var/datum/component/shell/shell = AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/wiremod_gun()
 	), SHELL_CAPACITY_MEDIUM)
+
+	RegisterSignal(shell, COMSIG_SHELL_CIRCUIT_ATTACHED, PROC_REF(on_circuit_attached))
 
 /obj/item/circuit_component/wiremod_gun
 	display_name = "Gun"
@@ -62,13 +65,25 @@
 /obj/item/circuit_component/wiremod_gun/unregister_shell(atom/movable/shell)
 	UnregisterSignal(shell, list(COMSIG_PROJECTILE_ON_HIT, COMSIG_GUN_CHAMBER_PROCESSED))
 
+/obj/item/gun/energy/wiremod_gun/proc/on_circuit_attached(datum/component/shell/source)
+	SIGNAL_HANDLER
+
+	if (istype(source, /datum/component/shell))
+		var/datum/component/shell/comp = source
+		var/obj/item/integrated_circuit/circuit = comp.attached_circuit
+		if (!circuit.cell)
+			return
+		var/transferred = src.cell.give(min(0.1 * STANDARD_CELL_CHARGE, circuit.cell.charge))
+		if (transferred)
+			circuit.cell.use(transferred, force=TRUE)
+
 /**
  * Called when the shell item shoots something
  */
 /obj/item/circuit_component/wiremod_gun/proc/handle_shot(atom/source, mob/firer, atom/target, angle)
 	SIGNAL_HANDLER
 
-	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
+	playsound(source, /datum/sound_effect/terminal_type, 25, FALSE)
 	shooter.set_output(firer)
 	shot.set_output(target)
 	signal.set_output(COMPONENT_SIGNAL)

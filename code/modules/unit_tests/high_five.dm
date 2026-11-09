@@ -12,8 +12,8 @@
 	TEST_ASSERT_NOTNULL(offer_guy.has_status_effect(/datum/status_effect/offering/no_item_received/high_five), \
 		"Offerer doesn't have the high five offer status effect after offering (giving) to takers nearby")
 
-	var/atom/movable/screen/alert/give/highfive/alert_to_click = locate() in flatten_list(take_guy.alerts)
-	var/atom/movable/screen/alert/give/highfive/bystander_alert_we_dont_click = locate() in flatten_list(random_bystander.alerts)
+	var/atom/movable/screen/alert/give/highfive/alert_to_click = locate() in assoc_to_values(take_guy.alerts)
+	var/atom/movable/screen/alert/give/highfive/bystander_alert_we_dont_click = locate() in assoc_to_values(random_bystander.alerts)
 	TEST_ASSERT_NOTNULL(alert_to_click, "Taker had no alert to click to accept the high five offer")
 	TEST_ASSERT_NOTNULL(bystander_alert_we_dont_click, "Bystander had no alert from the high fiver offer")
 

@@ -1,8 +1,7 @@
 /datum/job/doctor
 	title = JOB_MEDICAL_DOCTOR
 	description = "Save lives, run around the station looking for victims, \
-		scan everyone in sight"
-	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
+		scan everyone in sight."
 	faction = FACTION_STATION
 	total_positions = 6
 	spawn_positions = 4
@@ -16,10 +15,11 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED
 
+	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_MEDICAL_DOCTOR
-	bounty_types = CIV_JOB_MED
+	bounty_types = CIV_JOB_MED_VIRO
 	departments_list = list(
 		/datum/job_department/medical,
 		)
@@ -37,6 +37,7 @@
 	)
 	rpg_title = "Cleric"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_STAFF_SNAKE
 
 
 /datum/outfit/job/doctor
@@ -44,12 +45,11 @@
 	jobtype = /datum/job/doctor
 
 	id_trim = /datum/id_trim/job/medical_doctor
-	uniform = /obj/item/clothing/under/rank/medical/scrubs/blue
+	uniform = /obj/item/clothing/under/rank/medical/doctor
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	suit_store = /obj/item/flashlight/pen
-	belt = /obj/item/modular_computer/pda/medical
+	belt = /obj/item/modular_computer/pda/crew/medical
 	ears = /obj/item/radio/headset/headset_med
-	head = /obj/item/clothing/head/utility/surgerycap
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_hand = /obj/item/storage/medkit/surgery
 
@@ -62,14 +62,4 @@
 	chameleon_extras = /obj/item/gun/syringe
 	skillchips = list(/obj/item/skillchip/entrails_reader)
 
-/datum/outfit/job/doctor/mod
-	name = "Medical Doctor (MODsuit)"
-
-	suit_store = /obj/item/tank/internals/oxygen
-	back = /obj/item/mod/control/pre_equipped/medical
-	suit = null
-	head = null
-	uniform = /obj/item/clothing/under/rank/medical/doctor
-	mask = /obj/item/clothing/mask/breath/medical
-	r_pocket = /obj/item/flashlight/pen
-	internals_slot = ITEM_SLOT_SUITSTORE
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/medical

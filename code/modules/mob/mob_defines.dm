@@ -9,6 +9,7 @@
 /mob
 	density = TRUE
 	layer = MOB_LAYER
+	abstract_type = /mob
 	animate_movement = SLIDE_STEPS
 	hud_possible = list(ANTAG_HUD)
 	pressure_resistance = 8
@@ -27,6 +28,8 @@
 	/// We also need to clear this var/do other cleanup in client/Destroy, since that happens before logout
 	/// HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 	var/client/canon_client
+	/// It's like a client, but persists! Persistent clients will stick to a mob until the client in question is logged into a different mob.
+	var/datum/persistent_client/persistent_client
 
 	var/shift_to_open_context_menu = TRUE
 
@@ -63,8 +66,25 @@
 	///Cursor icon used when holding shift over things
 	var/examine_cursor_icon = 'icons/effects/mouse_pointers/examine_pointer.dmi'
 
+	/// Mob bitflags
+	var/mob_flags = NONE
+
 	/// Whether a mob is alive or dead. TODO: Move this to living - Nodrak (2019, still here)
-	var/stat = CONSCIOUS
+	var/stat = STABLE
+
+	/**
+	 * Whether and how a mob is incapacitated
+	 *
+	 * Normally being restrained, agressively grabbed, or in stasis counts as incapacitated
+	 * unless there is a flag being used to check if it's ignored
+	 *
+	 * * bitflags: (see code/__DEFINES/status_effects.dm)
+	 * * INCAPABLE_RESTRAINTS - if our mob is in a restraint (handcuffs)
+	 * * INCAPABLE_STASIS - if our mob is in stasis (stasis bed, etc.)
+	 * * INCAPABLE_GRAB - if our mob is being agressively grabbed
+	 *
+	**/
+	VAR_FINAL/incapacitated = NONE
 
 	/* A bunch of this stuff really needs to go under their own defines instead of being globally attached to mob.
 	A variable should only be globally attached to turfs/objects/whatever, when it is in fact needed as such.
@@ -119,7 +139,9 @@
 	  * `held_items[active_hand_index]` is the actively held item, but please use
 	  * [get_active_held_item()][/mob/proc/get_active_held_item] instead, because OOP
 	  */
-	var/list/held_items = list()
+	VAR_PROTECTED/list/held_items = list()
+	///How many hands this mob has by default, which we divide by to know what y offset to give open inventories.
+	var/default_hand_amount = 2
 
 	//HUD things
 
@@ -134,14 +156,8 @@
 	/// What job does this mob have
 	var/job = null//Living
 
-	/// Can this mob enter shuttles
-	var/move_on_shuttle = 1
-
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH
-
-	/// Can they interact with station electronics
-	var/has_unlimited_silicon_privilege = FALSE
 
 	///Calls relay_move() to whatever this is set to when the mob tries to move
 	var/atom/movable/remote_control
@@ -171,8 +187,11 @@
 	/// On [/mob] so clientless mobs will throw alerts properly.
 	var/list/alerts = list()
 	var/list/screens = list()
-	var/list/client_colours = list()
-	var/hud_type = /datum/hud
+	/// Assoc list of client_colour datum -> source it came from
+	var/list/client_colours
+	/// List of filter names used in the past client color update for cleanup
+	var/list/color_filter_store
+	var/datum/hud/hud_type = /datum/hud
 
 	var/datum/focus //What receives our keyboard inputs. src by default
 
@@ -194,3 +213,10 @@
 	var/active_typing_indicator
 	///the icon currently used for the thinking indicator's bubble
 	var/active_thinking_indicator
+
+	/// A ref of the area we're taking our ambient loop from.
+	var/area/ambience_tracked_area
+
+	/// Sound tokens currently playing for this mob.
+	/// Managed by /datum/sound_token and the soundtoken subsystem
+	var/list/datum/sound_token/sound_tokens

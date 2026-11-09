@@ -44,9 +44,7 @@
 /obj/effect/turf_decal/board_number/seven{
 	dir = 4
 	},
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "p" = (
 /obj/effect/turf_decal/board_letter/c{
@@ -111,9 +109,7 @@
 /obj/effect/turf_decal/board_number/three{
 	dir = 4
 	},
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "B" = (
 /obj/structure/chess/checker/blackman,
@@ -135,9 +131,7 @@
 /obj/effect/turf_decal/board_letter/a{
 	dir = 1
 	},
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "F" = (
 /obj/effect/turf_decal/board_number/five{
@@ -155,14 +149,10 @@
 /obj/effect/turf_decal/board_number/one{
 	dir = 4
 	},
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "J" = (
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "K" = (
 /obj/effect/turf_decal/board_number/three{
@@ -191,9 +181,7 @@
 /obj/effect/turf_decal/board_letter/c{
 	dir = 1
 	},
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "P" = (
 /obj/effect/turf_decal/board_letter/g{
@@ -219,17 +207,13 @@
 /obj/effect/turf_decal/board_letter/g{
 	dir = 1
 	},
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "X" = (
 /obj/effect/turf_decal/board_number/five{
 	dir = 4
 	},
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "Y" = (
 /obj/effect/turf_decal/board_number/eight{
@@ -241,9 +225,7 @@
 /obj/effect/turf_decal/board_letter/e{
 	dir = 1
 	},
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 
 (1,1,1) = {"

@@ -27,7 +27,7 @@
 	// changed to allow Z cropping and that's a mess
 	var/z_offset = SSmapping.station_start
 	var/list/bounds
-	for (var/path in SSmapping.config.GetFullMapPaths())
+	for (var/path in SSmapping.current_map.GetFullMapPaths())
 		var/datum/parsed_map/parsed = load_map(
 			file(path),
 			1,
@@ -50,8 +50,9 @@
 	require_area_resort()
 
 	var/list/generation_turfs = block(
-		locate(bounds[MAP_MINX], bounds[MAP_MINY], SSmapping.station_start),
-		locate(bounds[MAP_MAXX], bounds[MAP_MAXY], z_offset - 1))
+		bounds[MAP_MINX], bounds[MAP_MINY], SSmapping.station_start,
+		bounds[MAP_MAXX], bounds[MAP_MAXY], z_offset - 1
+	)
 	for(var/turf/gen_turf as anything in generation_turfs)
 		atoms += gen_turf
 		for(var/atom in gen_turf)
@@ -63,6 +64,8 @@
 				atmos_machines += atom
 
 	SSatoms.InitializeAtoms(atoms)
+	for(var/turf/gen_turf as anything in generation_turfs)
+		CALCULATE_ADJACENT_TURFS(gen_turf, NORMAL_TURF)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 	GLOB.reloading_map = FALSE

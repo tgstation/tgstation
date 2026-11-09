@@ -1,5 +1,5 @@
 /**
- * Logs a mesage to the mob_tags log, including the mobs tag
+ * Logs a message to the mob_tags log, including the mobs tag
  * Arguments:
  * * text - text to log.
  */
@@ -18,11 +18,10 @@
 
 	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
 	var/smessage_type = num2text(message_type, MAX_BITFLAG_DIGITS)
-	var/datum/player_details/client_details = client?.player_details
 
-	if(!isnull(client_details))
-		if(!islist(client_details.logging[smessage_type]))
-			client_details.logging[smessage_type] = list()
+	if(HAS_CONNECTED_PLAYER(src))
+		if(!islist(persistent_client.logging[smessage_type]))
+			persistent_client.logging[smessage_type] = list()
 
 	if(!islist(logging[smessage_type]))
 		logging[smessage_type] = list()
@@ -47,11 +46,11 @@
 		if(LOG_RADIO_EMOTE)
 			colored_message = "(RADIOEMOTE) [colored_message]"
 
-	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name_and_tag(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
+	var/list/timestamped_message = list("\[[server_timestamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name_and_tag(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 
 	logging[smessage_type] += timestamped_message
 
-	if(client)
-		client.player_details.logging[smessage_type] += timestamped_message
+	if(HAS_CONNECTED_PLAYER(src))
+		persistent_client.logging[smessage_type] += timestamped_message
 
 	..()

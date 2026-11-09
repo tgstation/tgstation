@@ -141,7 +141,7 @@
 		return
 #endif
 
-	var/datum/lighting_object/lighting_object = master_NE?.lighting_object
+	var/atom/movable/lighting_object/lighting_object = master_NE?.lighting_object
 	if (lighting_object && !lighting_object.needs_update)
 		lighting_object.needs_update = TRUE
 		SSlighting.objects_queue += lighting_object
@@ -162,10 +162,6 @@
 		SSlighting.objects_queue += lighting_object
 
 	self_destruct_if_idle()
-
-
-/datum/lighting_corner/dummy/New()
-	return
 
 /datum/lighting_corner/Destroy(force)
 	if (!force)
@@ -201,13 +197,13 @@
 	var/turf/draw_to = master_SW || master_NE || master_SE || master_NW
 	var/mutable_appearance/display = mutable_appearance('icons/turf/debug.dmi', "corner_color", LIGHT_DEBUG_LAYER, draw_to, BALLOON_CHAT_PLANE)
 	if(x > draw_to.x)
-		display.pixel_x = 16
+		display.pixel_w = 16
 	else
-		display.pixel_x = -16
+		display.pixel_w = -16
 	if(y > draw_to.y)
-		display.pixel_y = 16
+		display.pixel_z = 16
 	else
-		display.pixel_y = -16
+		display.pixel_z = -16
 
 	display.color = rgb(cache_r * 255, cache_g * 255, cache_b * 255)
 

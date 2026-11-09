@@ -4,14 +4,48 @@
 	/// The blush overlay to display when the owner is drunk
 	var/datum/bodypart_overlay/simple/emote/blush_overlay
 
-/datum/mood_event/drunk/add_effects(param)
+/datum/mood_event/drunk/add_effects(drunkness)
+	update_change(drunkness)
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/human_owner = owner
 	blush_overlay = human_owner.give_emote_overlay(/datum/bodypart_overlay/simple/emote/blush)
 
+/// Updates the description and value of the moodlet according to the passed drunkness value
+/// (Does not add to or remove from the current level - it will sets it directly to the new value)
+/datum/mood_event/drunk/proc/update_change(drunkness = 0)
+	var/old_mood = mood_change
+	switch(drunkness)
+		if(0 to 30)
+			mood_change = 3
+			description = "Everything just feels better after a drink or two."
+		if(30 to 45)
+			mood_change = 4
+			description = "Is it getting hotter, or is it just me? I need another drink to cool down."
+		if(45 to 60)
+			mood_change = 5
+			description = "Who keeps moving the floor? I'm going to talk to them... after this drink."
+		if(60 to 90)
+			mood_change = 6
+			description = "I'm noooot drunk, you're drunk! In fact... I need another drink!"
+		if(90 to INFINITY)
+			mood_change = 3 // crash out
+			description = "You're my BESSST frien'... You and me agains' th' world, buddy. Le's get another drink."
+	if(HAS_PERSONALITY(owner, /datum/personality/teetotal))
+		mood_change *= -1.5
+		description = "I don't like drinking... It makes me feel horrible."
+	if(HAS_PERSONALITY(owner, /datum/personality/bibulous))
+		mood_change *= 1.5
+	if(old_mood != mood_change)
+		owner.mob_mood.update_mood()
+
 /datum/mood_event/drunk/remove_effects()
 	QDEL_NULL(blush_overlay)
+
+/datum/mood_event/drunk_after
+	mood_change = 2
+	description = "The buzz might be gone, but I still feel good."
+	timeout = 5 MINUTES
 
 /datum/mood_event/wrong_brandy
 	description = "I hate that type of drink."
@@ -52,3 +86,30 @@
 	description = "What a tasty can of Wellcheers! The salty grape flavor is a great pick-me-up."
 	mood_change = 3
 	timeout = 7 MINUTES
+
+/datum/mood_event/sweetcoffee
+	description = "The bitter sweet taste of coffee was not too bad"
+	mood_change = 2
+	timeout = 5 MINUTES
+
+/datum/mood_event/sweettea
+	description = "Let your worries dissolve like sugar in tea."
+	mood_change = 4
+	timeout = 2.5 MINUTES
+
+//rubywise ruin events
+/datum/mood_event/rubywise_unsatisfied
+	description = "How sweet it would be, just a morsel of meat..."
+	mood_change = -3
+	timeout = 10 SECONDS //Enough to be maintained between ticks
+
+/datum/mood_event/rubywise_satisfied
+	description = "An Appetite... SATISFIED."
+	mood_change = 5
+	timeout = 3 MINUTES
+
+//Completed Farstar Amarita communion
+/datum/mood_event/farstar_shared
+	description = "I can feel a sense of appreciation from somewhere very, very far away."
+	mood_change = 3
+	timeout = 10 MINUTES

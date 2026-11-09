@@ -10,14 +10,16 @@
 	density = TRUE
 	anchored = TRUE
 	pass_flags_self = PASSGRILLE | PASSWINDOW
-	obj_flags = CONDUCTS_ELECTRICITY
-	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
+	obj_flags = CONDUCTS_ELECTRICITY | CAN_BE_HIT | IGNORE_DENSITY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	armor_type = /datum/armor/structure_grille
 	max_integrity = 50
 	integrity_failure = 0.4
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
+	/// Whether or not we're disappearing but dramatically
+	var/dramatically_disappearing = FALSE
 
 /datum/armor/structure_grille
 	melee = 50
@@ -29,6 +31,7 @@
 /obj/structure/grille/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	register_context()
 
 /obj/structure/grille/Destroy()
 	update_cable_icons_on_turf(get_turf(src))
@@ -39,24 +42,37 @@
 	update_appearance()
 
 /obj/structure/grille/update_appearance(updates)
-	if(QDELETED(src) || broken)
+	if(QDELETED(src))
 		return
-
 	. = ..()
-	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK)))
+	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & USES_SMOOTHING))
 		QUEUE_SMOOTH(src)
 
 /obj/structure/grille/update_icon_state()
-	icon_state = "[base_icon_state][((atom_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
+	if (broken)
+		icon_state = "broken[base_icon_state]"
+	else
+		icon_state = "[base_icon_state][((atom_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
 	return ..()
 
 /obj/structure/grille/examine(mob/user)
 	. = ..()
-
+	if(resistance_flags & INDESTRUCTIBLE)
+		return
 	if(anchored)
-		. += span_notice("It's secured in place with <b>screws</b>. The rods look like they could be <b>cut</b> through.")
+		. += span_notice("It's secured in place with [EXAMINE_HINT("screws")]. The rods look like they could be [EXAMINE_HINT("cut")] through.")
 	else
-		. += span_notice("The anchoring screws are <i>unscrewed</i>. The rods look like they could be <b>cut</b> through.")
+		. += span_notice("The anchoring screws are [EXAMINE_HINT("unscrewed")]. The rods look like they could be [EXAMINE_HINT("cut")] through.")
+
+/obj/structure/grille/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(held_item?.tool_behaviour == TOOL_WIRECUTTER)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unanchor" : "Anchor"]"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/structure/grille/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)
@@ -88,7 +104,7 @@
 	return FALSE
 
 /obj/structure/grille/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data["[RCD_DESIGN_MODE]"])
+	switch(rcd_data[RCD_DESIGN_MODE])
 		if(RCD_DECONSTRUCT)
 			qdel(src)
 			return TRUE
@@ -102,7 +118,7 @@
 			if(!clear_tile(user))
 				return FALSE
 
-			var/obj/structure/window/window_path = rcd_data["[RCD_DESIGN_PATH]"]
+			var/obj/structure/window/window_path = rcd_data[RCD_DESIGN_PATH]
 			if(!ispath(window_path))
 				CRASH("Invalid window path type in RCD: [window_path]")
 
@@ -194,7 +210,7 @@
 		return TRUE
 	return FALSE
 
-/obj/structure/grille/wirecutter_act(mob/living/user, obj/item/tool)
+/obj/structure/grille/wirecutter_act_secondary(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
 	if(shock(user, 100))
 		return
@@ -215,69 +231,87 @@
 		span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/grille/attackby(obj/item/W, mob/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(W, /obj/item/stack/rods) && broken && do_after(user, 1 SECONDS, target = src))
+/obj/structure/grille/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stack/rods) && broken)
+		if(!do_after(user, 1 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
 		if(shock(user, 90))
-			return
-		var/obj/item/stack/rods/R = W
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stack/rods/grille_to_be = tool
 		user.visible_message(span_notice("[user] rebuilds the broken grille."), \
-			span_notice("You rebuild the broken grille."))
+							span_notice("You rebuild the broken grille."))
 		repair_grille()
-		R.use(1)
-		return TRUE
+		grille_to_be.use(1)
+		return ITEM_INTERACT_SUCCESS
 
 //window placing begin
-	else if(is_glass_sheet(W) || istype(W, /obj/item/stack/sheet/bronze))
-		if (!broken)
-			var/obj/item/stack/ST = W
-			if (ST.get_amount() < 2)
-				to_chat(user, span_warning("You need at least two sheets of glass for that!"))
-				return
-			var/dir_to_set = SOUTHWEST
-			if(!anchored)
-				to_chat(user, span_warning("[src] needs to be fastened to the floor first!"))
-				return
-			for(var/obj/structure/window/WINDOW in loc)
-				to_chat(user, span_warning("There is already a window there!"))
-				return
-			if(!clear_tile(user))
-				return
-			to_chat(user, span_notice("You start placing the window..."))
-			if(do_after(user,20, target = src))
-				if(!src.loc || !anchored) //Grille broken or unanchored while waiting
-					return
-				for(var/obj/structure/window/WINDOW in loc) //Another window already installed on grille
-					return
-				if(!clear_tile(user))
-					return
-				var/obj/structure/window/WD
-				if(istype(W, /obj/item/stack/sheet/plasmarglass))
-					WD = new/obj/structure/window/reinforced/plasma/fulltile(drop_location()) //reinforced plasma window
-				else if(istype(W, /obj/item/stack/sheet/plasmaglass))
-					WD = new/obj/structure/window/plasma/fulltile(drop_location()) //plasma window
-				else if(istype(W, /obj/item/stack/sheet/rglass))
-					WD = new/obj/structure/window/reinforced/fulltile(drop_location()) //reinforced window
-				else if(istype(W, /obj/item/stack/sheet/titaniumglass))
-					WD = new/obj/structure/window/reinforced/shuttle(drop_location())
-				else if(istype(W, /obj/item/stack/sheet/plastitaniumglass))
-					WD = new/obj/structure/window/reinforced/plasma/plastitanium(drop_location())
-				else if(istype(W, /obj/item/stack/sheet/bronze))
-					WD = new/obj/structure/window/bronze/fulltile(drop_location())
-				else
-					WD = new/obj/structure/window/fulltile(drop_location()) //normal window
-				WD.setDir(dir_to_set)
-				WD.set_anchored(FALSE)
-				WD.state = 0
-				ST.use(2)
-				to_chat(user, span_notice("You place [WD] on [src]."))
-			return
+	if(!broken && (is_glass_sheet(tool) || istype(tool, /obj/item/stack/sheet/bronze)))
+		var/obj/item/stack/to_spend = tool
+		if (to_spend.get_amount() < 2)
+			to_chat(user, span_warning("You need at least two sheets of glass for that!"))
+			return ITEM_INTERACT_BLOCKING
+
+		var/dir_to_set = SOUTHWEST
+		if(!anchored)
+			to_chat(user, span_warning("[src] needs to be fastened to the floor first!"))
+			return ITEM_INTERACT_BLOCKING
+
+		for(var/obj/structure/window/competitor in loc)
+			to_chat(user, span_warning("There is already a window there!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!clear_tile(user))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You start placing the window..."))
+		if(!do_after(user, 2 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!src.loc || !anchored) //Grille broken or unanchored while waiting
+			return ITEM_INTERACT_BLOCKING
+
+		for(var/obj/structure/window/competitor in loc) //Another window already installed on grille
+			return ITEM_INTERACT_BLOCKING
+
+		if(!clear_tile(user))
+			return ITEM_INTERACT_BLOCKING
+
+		var/obj/structure/window/building_window
+		if(istype(tool, /obj/item/stack/sheet/plasmarglass))
+			building_window = new/obj/structure/window/reinforced/plasma/fulltile(drop_location()) //reinforced plasma window
+		else if(istype(tool, /obj/item/stack/sheet/plasmaglass))
+			building_window = new/obj/structure/window/plasma/fulltile(drop_location()) //plasma window
+		else if(istype(tool, /obj/item/stack/sheet/rglass))
+			building_window = new/obj/structure/window/reinforced/fulltile(drop_location()) //reinforced window
+		else if(istype(tool, /obj/item/stack/sheet/titaniumglass))
+			building_window = new/obj/structure/window/reinforced/shuttle(drop_location())
+		else if(istype(tool, /obj/item/stack/wall_filling/plastitaniumglass/basic))
+			building_window = new/obj/structure/window/reinforced/plasma/plastitanium/windowfill(drop_location())
+		else if(istype(tool, /obj/item/stack/wall_filling/plastitaniumglass/pod))
+			building_window = new/obj/structure/window/reinforced/shuttle/survival_pod(drop_location())
+		else if(istype(tool, /obj/item/stack/sheet/plastitaniumglass))
+			building_window = new/obj/structure/window/reinforced/plasma/plastitanium(drop_location())
+		else if(istype(tool, /obj/item/stack/sheet/bronze))
+			building_window = new/obj/structure/window/bronze/fulltile(drop_location())
+		else if(istype(tool, /obj/item/stack/sheet/runed_metal))
+			building_window = new/obj/structure/window/cult/fulltile(drop_location())
+		else
+			building_window = new/obj/structure/window/fulltile(drop_location()) //normal window
+		building_window.setDir(dir_to_set)
+		building_window.set_anchored(FALSE)
+		building_window.state = 0
+		if((istype(tool, /obj/item/stack/wall_filling)))
+			to_spend.use(1)
+		else
+			to_spend.use(2)
+		to_chat(user, span_notice("You place [to_spend] on [src]."))
+		return ITEM_INTERACT_SUCCESS
 //window placing end
 
-	else if((W.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 70))
-		return
+	if((tool.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 70))
+		return ITEM_INTERACT_BLOCKING
 
-	return ..()
+	return NONE
 
 /obj/structure/grille/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -285,9 +319,9 @@
 			if(damage_amount)
 				playsound(src, 'sound/effects/grillehit.ogg', 80, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src, 'sound/items/welder.ogg', 80, TRUE)
+			playsound(src, 'sound/items/tools/welder.ogg', 80, TRUE)
 
 
 /obj/structure/grille/atom_deconstruct(disassembled = TRUE)
@@ -296,50 +330,42 @@
 
 /obj/structure/grille/atom_break()
 	. = ..()
-	if(!broken)
-		icon_state = "brokengrille"
-		set_density(FALSE)
-		atom_integrity = 20
-		broken = TRUE
-		rods_amount = 1
-		var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
-		transfer_fingerprints_to(dropped_rods)
+	if(broken)
+		return
+	set_density(FALSE)
+	atom_integrity = 20
+	broken = TRUE
+	rods_amount = 1
+	var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
+	transfer_fingerprints_to(dropped_rods)
+	update_appearance()
 
 /obj/structure/grille/proc/repair_grille()
-	if(broken)
-		icon_state = "grille"
-		set_density(TRUE)
-		atom_integrity = max_integrity
-		broken = FALSE
-		rods_amount = 2
-		return TRUE
-	return FALSE
+	if(!broken)
+		return FALSE
 
-// shock user with probability prb (if all connections & power are working)
-// returns 1 if shocked, 0 otherwise
+	set_density(TRUE)
+	atom_integrity = max_integrity
+	broken = FALSE
+	rods_amount = 2
+	update_appearance()
+	return TRUE
 
-/obj/structure/grille/proc/shock(mob/user, prb)
+/obj/structure/grille/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1)
 	if(!anchored || broken) // anchored/broken grilles are never connected
 		return FALSE
-	if(!prob(prb))
+	var/turf/grill_loc = get_turf(src)
+	if(grill_loc.overfloor_placed)//cant be a floor in the way!
 		return FALSE
-	if(!in_range(src, user))//To prevent TK and mech users from getting shocked
+	var/obj/structure/cable/grill_cable = grill_loc.get_cable_node()
+	if(isnull(grill_cable))
 		return FALSE
-	var/turf/T = get_turf(src)
-	if(T.overfloor_placed)//cant be a floor in the way!
+	shock_source = grill_cable
+	if(!..())
 		return FALSE
-
-	var/obj/structure/cable/cable_node = T.get_cable_node()
-	if(isnull(cable_node))
-		return FALSE
-	if(!electrocute_mob(user, cable_node, src, 1, TRUE))
-		return FALSE
-	if(prob(50)) // Shocking hurts the grille (to weaken monkey powersinks)
+	// Shocking hurts the grille (to weaken monkey powersinks)
+	if(prob(50))
 		take_damage(1, BURN, FIRE, sound_effect = FALSE)
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(3, 1, src)
-	sparks.start()
-
 	return TRUE
 
 /obj/structure/grille/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
@@ -358,13 +384,38 @@
 					return FALSE
 				var/obj/structure/cable/C = T.get_cable_node()
 				if(C)
-					playsound(src, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+					playsound(src, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 					tesla_zap(source = src, zap_range = 3, power = C.newavail() * 0.01, cutoff = 1e3, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN | ZAP_ALLOW_DUPLICATES) //Zap for 1/100 of the amount of power. At a million watts in the grid, it will be as powerful as a tesla revolver shot.
 					C.add_delayedload(C.newavail() * 0.0375) // you can gain up to 3.5 via the 4x upgrades power is halved by the pole so thats 2x then 1X then .5X for 3.5x the 3 bounces shock. // What do you mean by this?
 	return ..()
 
 /obj/structure/grille/get_dumping_location()
 	return null
+
+/obj/structure/grille/proc/temporary_shatter(time_to_go = 0 SECONDS, time_to_return = 4 SECONDS)
+	if(dramatically_disappearing)
+		return
+
+	//disappear in 1 second
+	dramatically_disappearing = TRUE
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, moveToNullspace)), time_to_go) //woosh
+
+	// come back in 1 + 4 seconds
+	addtimer(VARSET_CALLBACK(src, atom_integrity, atom_integrity), time_to_go + time_to_return) //set the health back (icon is updated on move)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, forceMove), loc), time_to_go + time_to_return) //we back boys
+	addtimer(VARSET_CALLBACK(src, dramatically_disappearing, FALSE), time_to_go + time_to_return) //also set the var back
+
+/// Do some very specific checks to see if we *would* get shocked. Returns TRUE if it's shocked
+/obj/structure/grille/proc/is_shocked()
+	var/turf/turf = get_turf(src)
+	var/obj/structure/cable/cable = turf.get_cable_node()
+	var/list/powernet_info = get_powernet_info_from_source(cable)
+
+	if(!powernet_info)
+		return FALSE
+
+	var/datum/powernet/powernet = powernet_info["powernet"]
+	return !!powernet.get_electrocute_damage()
 
 /obj/structure/grille/broken // Pre-broken grilles for map placement
 	icon_state = "brokengrille"

@@ -50,17 +50,19 @@
 		active = FALSE
 		toggleFirepit()
 
-/obj/structure/firepit/attackby(obj/item/W,mob/living/user,params)
-	if(!active)
-		var/msg = W.ignition_effect(src, user)
-		if(msg)
-			active = TRUE
-			visible_message(msg)
-			toggleFirepit()
-		else
-			return ..()
-	else
-		W.fire_act()
+/obj/structure/firepit/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(active)
+		tool.fire_act()
+		return ITEM_INTERACT_SUCCESS
+
+	var/msg = tool.ignition_effect(src, user)
+	if(!msg)
+		return NONE
+
+	visible_message(msg)
+	toggleFirepit()
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/structure/firepit/proc/toggleFirepit()
 	active = !active
@@ -90,7 +92,7 @@
 	name = "lumbermill saw"
 	desc = "Faster then the cartoons!"
 	obj_flags = CAN_BE_HIT | EMAGGED
-	item_recycle_sound = 'sound/weapons/chainsawhit.ogg'
+	item_recycle_sound = 'sound/items/weapons/chainsawhit.ogg'
 
 /obj/machinery/recycler/lumbermill/recycle_item(obj/item/grown/log/L)
 	if(!istype(L))

@@ -1,14 +1,12 @@
 #define ICON_STATE_CHECKED 1 /// this dmi is checked. We don't check this one anymore.
 #define ICON_STATE_NULL 2 /// this dmi has null-named icon_state, allowing it to show a sprite on vv editor.
 
-ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the variables of a datum.", ADMIN_CATEGORY_DEBUG, datum/thing in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", /datum)
+	VERB_ARG_TYPED(thing, VERB_ARG_TYPE_DATUM, VERB_ARG_SOURCE_WORLD, /datum)
 	user.debug_variables(thing)
-// This is kept as a seperate proc because admins are able to show VV to non-admins
+// This is kept as a separate proc because admins are able to show VV to non-admins
 
-/client/proc/debug_variables(datum/thing in world)
-	set category = "Debug"
-	set name = "View Variables"
-	//set src in world
+/client/proc/debug_variables(datum/thing)
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
 	if(!usr.client || !usr.client.holder) //This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
@@ -21,17 +19,19 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 	var/datum/asset/asset_cache_datum = get_asset_datum(/datum/asset/simple/vv)
 	asset_cache_datum.send(usr)
 
-	var/isappearance = isappearance(thing)
-	var/islist = islist(thing) || (!isdatum(thing) && hascall(thing, "Cut")) // Some special lists dont count as lists, but can be detected by if they have list procs
-	if(!islist && !isdatum(thing) && !isappearance)
+	if(isappearance(thing))
+		thing = get_vv_appearance(thing) // this is /mutable_appearance/our_bs_subtype
+	var/islist = islist(thing) || (!isdatum(thing) && hascall(thing, "Cut")) // Some special lists don't count as lists, but can be detected by if they have list procs
+	if(!islist && !isdatum(thing))
 		return
+	var/isalist = isalist(thing) // islist will always be true for alists too
 
 	var/title = ""
 	var/refid = REF(thing)
 	var/icon/sprite
 	var/hash
 
-	var/type = islist? /list : (isappearance ? "/appearance" : thing.type)
+	var/type = islist ? (isalist ? /alist : /list) : thing.type
 	var/no_icon = FALSE
 
 	if(isatom(thing))
@@ -39,7 +39,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 		if(!sprite)
 			no_icon = TRUE
 
-	else if(isimage(thing) || isappearance)
+	else if(isimage(thing))
 		// icon_state=null shows first image even if dmi has no icon_state for null name.
 		// This list remembers which dmi has null icon_state, to determine if icon_state=null should display a sprite
 		// (NOTE: icon_state="" is correct, but saying null is obvious)
@@ -49,11 +49,11 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 		if(icon_filename_text)
 			if(image_object.icon_state)
 				sprite = icon(image_object.icon, image_object.icon_state)
-				
+
 			else // it means: icon_state=""
 				if(!dmi_nullstate_checklist[icon_filename_text])
 					dmi_nullstate_checklist[icon_filename_text] = ICON_STATE_CHECKED
-					if("" in icon_states(image_object.icon))
+					if(icon_exists(image_object.icon, ""))
 						// this dmi has nullstate. We'll allow "icon_state=null" to show image.
 						dmi_nullstate_checklist[icon_filename_text] = ICON_STATE_NULL
 
@@ -69,7 +69,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 	title = "[thing] ([REF(thing)]) = [type]"
 	var/formatted_type = replacetext("[type]", "/", "<wbr>/")
 
-	var/list/header = islist ? list("<b>/list</b>") : (isappearance ? vv_get_header_appearance(thing) : thing.vv_get_header())
+	var/list/header = islist ? (isalist ? list("<b>/alist</b>") : list("<b>/list</b>")) : thing.vv_get_header()
 
 	var/ref_line = "@[copytext(refid, 2, -1)]" // get rid of the brackets, add a @ prefix for copy pasting in asay
 
@@ -89,37 +89,43 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 
 	var/list/dropdownoptions
 	if (islist)
-		dropdownoptions = list(
-			"---",
-			"Add Item" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ADD),
-			"Remove Nulls" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ERASE_NULLS),
-			"Remove Dupes" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ERASE_DUPES),
-			"Set len" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SET_LENGTH),
-			"Shuffle" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SHUFFLE),
-			"Show VV To Player" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_EXPOSE),
-			"---"
+		if(!isalist)
+			dropdownoptions = list(
+				"Add Item" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ADD),
+				"Remove Nulls" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ERASE_NULLS),
+				"Remove Dupes" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_ERASE_DUPES),
+				"Set len" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SET_LENGTH),
+				"Shuffle" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_LIST_SHUFFLE),
+				"Show VV To Player" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_EXPOSE),
+				"---"
+			)
+		else
+			dropdownoptions = list(
+				"Show VV To Player" = VV_HREF_TARGETREF_INTERNAL(refid, VV_HK_EXPOSE),
+				"---"
 			)
 		for(var/i in 1 to length(dropdownoptions))
 			var/name = dropdownoptions[i]
 			var/link = dropdownoptions[name]
-			dropdownoptions[i] = "<option value[link? "='[link]'":""]>[name]</option>"
-	else if(isappearance)
-		dropdownoptions = vv_get_dropdown_appearance(thing)
+			dropdownoptions[i] = "<a style='display:none;' [link? "href='[link]'":""]>[name]</a>"
 	else
 		dropdownoptions = thing.vv_get_dropdown()
 
 	var/list/names = list()
-	if(isappearance)
-		var/static/list/virtual_appearance_vars = build_virtual_appearance_vars()
-		names = virtual_appearance_vars.Copy()
-	else if(!islist)
+	if(!islist)
 		for(var/varname in thing.vars)
 			names += varname
 
 	sleep(1 TICKS)
 
+	var/ui_scale = prefs?.read_preference(/datum/preference/toggle/ui_scale)
+
 	var/list/variable_html = list()
-	if(islist)
+	if(isalist)
+		var/alist/alist_value = thing
+		for(var/key, value in alist_value)
+			variable_html += debug_variable(key, value, 0, alist_value)
+	else if(islist)
 		var/list/list_value = thing
 		for(var/i in 1 to list_value.len)
 			var/key = list_value[i]
@@ -127,10 +133,6 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 			if(IS_NORMAL_LIST(list_value) && IS_VALID_ASSOC_KEY(key))
 				value = list_value[key]
 			variable_html += debug_variable(i, value, 0, list_value)
-	else if(isappearance)
-		names = sort_list(names)
-		for(var/varname in names)
-			variable_html += debug_variable_appearance(varname, thing)
 	else
 		names = sort_list(names)
 		for(var/varname in names)
@@ -143,6 +145,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 		<title>[title]</title>
 		<link rel="stylesheet" type="text/css" href="[SSassets.transport.get_asset_url("view_variables.css")]">
+		[!ui_scale && window_scaling ? "<style>body {zoom: [100 / window_scaling]%;}</style>" : ""]
 	</head>
 	<body onload='selectTextField()' onkeydown='return handle_keydown()' onkeyup='handle_keyup()'>
 		<script type="text/javascript">
@@ -239,6 +242,37 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 				var idx = what.indexOf(':');
 				document.getElementById(what.substr(0, idx)).innerHTML = what.substr(idx + 1);
 			}
+
+			function hideDropdown() {
+				var div = document.getElementById("vvDropdownDiv");
+				var a = div.getElementsByTagName("a");
+				for (i = 0; i < a.length; i++) {
+					a\[i\].style.display = "none";
+				}
+				var input = document.getElementById("vvDropdownInput");
+				input.value = "";
+			}
+
+			function filterDropdown() {
+				var input = document.getElementById("vvDropdownInput");
+				var filter = input.value.toUpperCase();
+				var div = document.getElementById("vvDropdownDiv");
+				var a = div.getElementsByTagName("a");
+				for (i = 0; i < a.length; i++) {
+					txtValue = a\[i\].textContent || a\[i\].innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						a\[i\].style.display = "";
+					} else {
+						a\[i\].style.display = "none";
+					}
+				}
+			}
+
+			function delayHide() {
+				// Unfortunately required for links to work consistently when the input loses focus from a click
+				setTimeout(() => {hideDropdown();}, 150)
+			}
+
 		</script>
 		<div align='center'>
 			<table width='100%'>
@@ -265,16 +299,14 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 					</td>
 					<td width='50%'>
 						<div align='center'>
-							<a id='refresh_link' href='?_src_=vars;
+							<a id='refresh_link' href='byond://?_src_=vars;
 datumrefresh=[refid];[HrefToken()]'>Refresh</a>
-							<form>
-								<select name="file" size="1"
-									onchange="handle_dropdown(this)"
-									onmouseclick="this.focus()">
-									<option value selected>Select option</option>
+							<div class="dropdown-content">
+								<input type="text" placeholder="Select Action" id="vvDropdownInput" onkeyup="filterDropdown()" onselect="filterDropdown()" onfocus="filterDropdown()" onblur="delayHide()">
+								<div id="vvDropdownDiv" class="dropdown-options">
 									[dropdownoptions.Join()]
-								</select>
-							</form>
+								</div>
+							</div>
 						</div>
 					</td>
 				</tr>
@@ -311,7 +343,11 @@ datumrefresh=[refid];[HrefToken()]'>Refresh</a>
 	</body>
 </html>
 "}
-	src << browse(html, "window=variables[refid];size=475x650")
+	var/size_string = "size=475x650";
+	if(ui_scale && window_scaling)
+		size_string = "size=[475 * window_scaling]x[650 * window_scaling]"
+
+	src << browse(html, "window=variables[refid];[size_string]")
 
 /client/proc/vv_update_display(datum/thing, span, content)
 	src << output("[span]:[content]", "variables[REF(thing)].browser:replace_span")

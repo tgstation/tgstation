@@ -10,8 +10,10 @@
 	/// message when you invoke
 	var/invoke_msg
 	var/favor_cost = 0
-	/// does the altar auto-delete the rite
-	var/auto_delete = TRUE
+
+	///Rite flags we use mostly to know when it should be deleted.
+	// RITE_AUTO_DELETE | RITE_ALLOW_MULTIPLE_PERFORMS | RITE_ONE_TIME_USE
+	var/rite_flags = RITE_AUTO_DELETE
 
 /datum/religion_rites/New()
 	. = ..()
@@ -20,9 +22,8 @@
 	LAZYADD(GLOB.religious_sect.active_rites, src)
 
 /datum/religion_rites/Destroy()
-	if(!GLOB?.religious_sect)
-		return
-	LAZYREMOVE(GLOB.religious_sect.active_rites, src)
+	if(GLOB?.religious_sect)
+		LAZYREMOVE(GLOB.religious_sect.active_rites, src)
 	return ..()
 
 /datum/religion_rites/proc/can_afford(mob/living/user)
@@ -61,15 +62,24 @@
 ///Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, atom/religious_tool)
 	SHOULD_CALL_PARENT(TRUE)
-	GLOB.religious_sect.on_riteuse(user,religious_tool)
+	GLOB.religious_sect.on_riteuse(user, religious_tool)
 	return TRUE
 
+///Called if invoke effect returns TRUE, for effects meant to occur only if the rite passes.
+/datum/religion_rites/proc/post_invoke_effects(mob/living/user, atom/religious_tool)
+	SHOULD_CALL_PARENT(TRUE)
+	if(!(rite_flags & RITE_ONE_TIME_USE))
+		return
+	GLOB.religious_sect.rites_list.Remove(src.type)
+
+/datum/religion_rites/proc/refund(percent = 1.0)
+	GLOB.religious_sect.adjust_favor(favor_cost * percent)
 
 /**** Mechanical God ****/
 
 /datum/religion_rites/synthconversion
 	name = "Synthetic Conversion"
-	desc = "Convert a human-esque individual into a (superior) Android. Buckle a human to convert them, otherwise it will convert you."
+	desc = "Convert a humanoid individual into a (superior) android. Buckle a human to convert them, otherwise this rite will convert you."
 	ritual_length = 30 SECONDS
 	ritual_invocations = list("By the inner workings of our god ...",
 						"... We call upon you, in the face of adversity ...",
@@ -120,21 +130,47 @@
 	name = "Receive Blessing"
 	desc = "Receive a blessing from the machine god to further your ascension."
 	ritual_length = 5 SECONDS
-	ritual_invocations =list( "Let your will power our forges.",
-							"...Help us in our great conquest!")
+	ritual_invocations = list(
+		"Let your will power our forges.",
+		"...Help us in our great conquest!",
+	)
 	invoke_msg = "The end of flesh is near!"
 	favor_cost = 2000
 
 /datum/religion_rites/machine_blessing/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
 	var/altar_turf = get_turf(religious_tool)
-	var/blessing = pick(
-		/obj/item/organ/internal/cyberimp/arm/surgery,
-		/obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
-		/obj/item/organ/internal/cyberimp/eyes/hud/medical,
-		/obj/item/organ/internal/cyberimp/mouth/breathing_tube,
-		/obj/item/organ/internal/cyberimp/chest/thrusters,
-		/obj/item/organ/internal/eyes/robotic/glow,
+	var/blessing = pick_weight_recursive(
+		list(
+			// Arms
+			list(
+				/obj/item/organ/cyberimp/arm/toolkit/combat = 1,
+				/obj/item/organ/cyberimp/arm/toolkit/surgery = 1000000,
+				/obj/item/organ/cyberimp/arm/toolkit/toolset = 1500000,
+			) = 15,
+			// Eyes
+			list(
+				/obj/item/organ/cyberimp/eyes/hud/diagnostic = 1,
+				/obj/item/organ/cyberimp/eyes/hud/medical = 1,
+				/obj/item/organ/eyes/robotic/glow = 1,
+				/obj/item/organ/eyes/robotic/shield = 2,
+			) = 15,
+			// Chest
+			list(
+				/obj/item/organ/cyberimp/chest/reviver = 1,
+				/obj/item/organ/cyberimp/chest/thrusters = 2,
+			) = 9,
+			// Brain / Head
+			list(
+				/obj/item/organ/cyberimp/brain/anti_drop = 50,
+				/obj/item/organ/cyberimp/brain/connector = 50,
+				/obj/item/organ/cyberimp/brain/anti_stun = 10,
+			) = 10,
+			// Misc
+			list(
+				/obj/item/organ/cyberimp/mouth/breathing_tube = 1,
+			) = 5,
+		)
 	)
 	new blessing(altar_turf)
 	return TRUE
@@ -165,24 +201,11 @@
 	account.adjust_money(-money_cost, "Church Donation: Rite")
 	. = ..()
 
-/datum/religion_rites/greed/vendatray
-	name = "Purchase Vend-a-tray"
-	desc = "Summons a Vend-a-tray. You can use it to sell items!"
-	invoke_msg = "I need a vend-a-tray to make some more money!"
-	money_cost = 300
-
-/datum/religion_rites/greed/vendatray/invoke_effect(mob/living/user, atom/movable/religious_tool)
-	..()
-	var/altar_turf = get_turf(religious_tool)
-	new /obj/structure/displaycase/forsale(altar_turf)
-	playsound(get_turf(religious_tool), 'sound/effects/cashregister.ogg', 60, TRUE)
-	return TRUE
-
 /datum/religion_rites/greed/custom_vending
 	name = "Purchase Personal Vending Machine"
 	desc = "Summons a custom vending machine. You can use it to sell MANY items!"
 	invoke_msg = "If I get a custom vending machine for my products, I can be RICH!"
-	money_cost = 1000 //quite a step up from vendatray
+	money_cost = 1000
 
 /datum/religion_rites/greed/custom_vending/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()
@@ -198,8 +221,8 @@
 	desc = "Begin your metamorphasis into a being more fit for Maintenance."
 	ritual_length = 10 SECONDS
 	ritual_invocations = list("I abandon the world ...",
-	"... to become one with the deep.",
-	"My form will become twisted ...")
+	"... to become one with the deep ...",
+	"... My form will become twisted ...")
 	invoke_msg = "... but my smile I will keep!"
 	favor_cost = 150 //150u of organic slurry
 
@@ -208,7 +231,7 @@
 		return FALSE
 	//uses HAS_TRAIT_FROM because junkies are also hopelessly addicted
 	if(HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
-		to_chat(user, span_warning("You've already adapted.</b>"))
+		to_chat(user, span_warning("You've already adapted."))
 		return FALSE
 	return ..()
 
@@ -223,8 +246,8 @@
 		var/mob/living/carbon/vomitorium = user
 		vomitorium.vomit(VOMIT_CATEGORY_DEFAULT)
 		var/datum/dna/dna = vomitorium.has_dna()
-		dna?.add_mutation(/datum/mutation/human/stimmed) //some fluff mutations
-		dna?.add_mutation(/datum/mutation/human/strong)
+		dna?.add_mutation(/datum/mutation/stimmed, MUTATION_SOURCE_MAINT_ADAPT) //some fluff mutations
+		dna?.add_mutation(/datum/mutation/strong, MUTATION_SOURCE_MAINT_ADAPT)
 	user.mind.add_addiction_points(/datum/addiction/maintenance_drugs, 1000)//ensure addiction
 
 /datum/religion_rites/adapted_eyes
@@ -240,7 +263,7 @@
 	if(!HAS_TRAIT_FROM(user, TRAIT_HOPELESSLY_ADDICTED, "maint_adaptation"))
 		to_chat(user, span_warning("You need to adapt to maintenance first."))
 		return FALSE
-	var/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/adapted = user.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/night_vision/maintenance_adapted/adapted = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(adapted && istype(adapted))
 		to_chat(user, span_warning("Your eyes are already adapted!"))
 		return FALSE
@@ -248,12 +271,12 @@
 
 /datum/religion_rites/adapted_eyes/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	..()
-	var/obj/item/organ/internal/eyes/oldeyes = user.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/oldeyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	to_chat(user, span_warning("You feel your eyes adapt to the darkness!"))
 	if(oldeyes)
 		oldeyes.Remove(user, special = TRUE)
 		qdel(oldeyes)//eh
-	var/obj/item/organ/internal/eyes/night_vision/maintenance_adapted/neweyes = new
+	var/obj/item/organ/eyes/night_vision/maintenance_adapted/neweyes = new
 	neweyes.Insert(user, special = TRUE)
 
 /datum/religion_rites/adapted_food
@@ -289,7 +312,7 @@
 
 /datum/religion_rites/ritual_totem
 	name = "Create Ritual Totem"
-	desc = "Creates a Ritual Totem, a portable tool for performing rites on the go. Requires wood. Can only be picked up by the holy."
+	desc = "Creates a ritual totem, a portable tool for performing rites on the go. Requires wood. Can only be picked up by the holy."
 	favor_cost = 100
 	invoke_msg = "Padala!!"
 	///the food that will be molded, only one per rite
@@ -299,7 +322,7 @@
 	for(var/obj/item/stack/sheet/mineral/wood/could_totem in get_turf(religious_tool))
 		converted = could_totem //totemify this o great one
 		return ..()
-	to_chat(user, span_warning("You need at least 1 wood to do this!"))
+	to_chat(user, span_warning("You need a piece of wood to do this!"))
 	return FALSE
 
 /datum/religion_rites/ritual_totem/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -382,7 +405,7 @@
 
 /datum/religion_rites/ceremonial_weapon
 	name = "Forge Ceremonial Gear"
-	desc = "Turn some material into ceremonial gear. Ceremonial blades are weak outside of sparring, and are quite heavy to lug around."
+	desc = "Turn some material into ceremonial gear. Ceremonial blades are weak outside of sparring and quite heavy to lug around."
 	ritual_length = 10 SECONDS
 	invoke_msg = "Weapons in your name! Battles with your blood!"
 	favor_cost = 0
@@ -390,14 +413,24 @@
 	var/obj/item/stack/sheet/converted
 
 /datum/religion_rites/ceremonial_weapon/perform_rite(mob/living/user, atom/religious_tool)
+	var/not_rigid = null
+	var/datum/material_requirement/requirement = SSmaterials.requirements[/datum/material_requirement/rigid_material]
 	for(var/obj/item/stack/sheet/could_blade in get_turf(religious_tool))
-		if(!(GET_MATERIAL_REF(could_blade.material_type) in SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL]))
+		var/datum/material/blade_mat = SSmaterials.get_material(could_blade.material_type)
+		if(!blade_mat)
+			continue
+		if(!requirement.valid_material(blade_mat))
+			not_rigid = blade_mat
 			continue
 		if(could_blade.amount < 5)
 			continue
 		converted = could_blade
 		return ..()
-	to_chat(user, span_warning("You need at least 5 sheets of a material that can be made into items!"))
+	// We've found a material but it wasn't solid enough.
+	if(not_rigid)
+		to_chat(user, span_warning("[not_rigid] is not suitable for being made into gear!"))
+	else
+		to_chat(user, span_warning("You need at least five sheets of a rigid material to make gear!"))
 	return FALSE
 
 /datum/religion_rites/ceremonial_weapon/invoke_effect(mob/living/user, atom/movable/religious_tool)
@@ -413,7 +446,7 @@
 	if(!used_for_blade.use(5))//use 5 of the material
 		return
 	var/obj/item/ceremonial_blade/blade = new(altar_turf)
-	blade.set_custom_materials(list(GET_MATERIAL_REF(material_used) = SHEET_MATERIAL_AMOUNT * 5))
+	blade.set_custom_materials(list(SSmaterials.get_material(material_used) = SHEET_MATERIAL_AMOUNT * 5))
 	return TRUE
 
 /datum/religion_rites/unbreakable

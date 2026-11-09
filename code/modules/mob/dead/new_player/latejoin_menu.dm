@@ -51,8 +51,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 			if(SHUTTLE_ESCAPE)
 				data["shuttle_status"] = "The station has been evacuated."
 			if(SHUTTLE_CALL, SHUTTLE_DOCKED, SHUTTLE_IGNITING, SHUTTLE_ESCAPE)
-				if(!SSshuttle.canRecall())
-					data["shuttle_status"] = "The station is currently undergoing evacuation procedures."
+				data["shuttle_status"] = "The station is currently undergoing evacuation procedures."
 
 	for(var/datum/job/prioritized_job in SSjob.prioritized_jobs)
 		if(prioritized_job.current_positions >= prioritized_job.total_positions)
@@ -77,6 +76,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 				"prioritized" = (job_datum in SSjob.prioritized_jobs),
 				"used_slots" = job_datum.current_positions,
 				"open_slots" = job_datum.total_positions < 0 ? "∞" : job_datum.total_positions,
+				"jobIcon" = job_datum.tgui_icon,
 			)
 
 			if(job_availability != JOB_AVAILABLE)

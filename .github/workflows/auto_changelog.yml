@@ -10,15 +10,29 @@ permissions:
   contents: write
 jobs:
   auto_changelog:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: github.event.pull_request.merged == true
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Run auto changelog
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const { processAutoChangelog } = await import('${{ github.workspace }}/tools/pull_request_hooks/autoChangelog.js')
-          await processAutoChangelog({ github, context })
-        github-token: ${{ secrets.COMFY_ORANGE_PAT || secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Generate App Token
+        id: app-token-generation
+        uses: actions/create-github-app-token@v3.3.0
+        if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
+        with:
+          client-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+        env:
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+          APP_ID: ${{ secrets.APP_ID }}
+
+      - name: Run auto changelog
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const { processAutoChangelog } = await import('${{ github.workspace }}/tools/pull_request_hooks/autoChangelog.js')
+            await processAutoChangelog({ github, context })
+          github-token: ${{ steps.app-token-generation.outputs.token || secrets.GITHUB_TOKEN }}

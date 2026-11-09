@@ -53,7 +53,7 @@
 		cybernetic augments by Synthman Co. to you in this rare exclusive offer! With this letter, you are being gifted a \
 		special limited edition choice NTSDA-certified grade-A cybernetic implant, FREE OF CHARGE! Build up your body to \
 		GREATNESS with Synthman's new exclusive line of cybernetic products! Become greater, stronger, and BETTER today!"
-	var/obj/item/organ/internal/heart/cybernetic/sample
+	var/obj/item/organ/heart/cybernetic/sample
 
 /obj/item/paper/pamphlet/cybernetics/Initialize(mapload)
 	. = ..()

@@ -1,0 +1,1 @@
+/mob/living/simple_animal/hostile/dark_wizard : /mob/living/basic/dark_wizard{@OLD}

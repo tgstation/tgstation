@@ -5,24 +5,23 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	desc = "A machine used for recycling dead monkeys into monkey cubes."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	icon_state = "grinder"
+	base_icon_state = "grinder"
 	layer = BELOW_OBJ_LAYER
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/monkey_recycler
+
 	var/stored_matter = 0
 	var/cube_production = 0.2
-	var/list/connected = list() //Keeps track of connected xenobio consoles, for deletion in /Destroy()
 
 /obj/machinery/monkey_recycler/Initialize(mapload)
 	. = ..()
 	if (mapload)
 		GLOB.monkey_recyclers += src
+	add_overlay("grinder_monkey")
 
 /obj/machinery/monkey_recycler/Destroy()
 	GLOB.monkey_recyclers -= src
-	for(var/thing in connected)
-		var/obj/machinery/computer/camera_advanced/xenobio/console = thing
-		console.connected_recycler = null
-	connected.Cut()
 	return ..()
 
 /obj/machinery/monkey_recycler/RefreshParts() //Ranges from 0.2 to 0.8 per monkey recycled
@@ -44,22 +43,17 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 		power_change()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))
-		return
+/obj/machinery/monkey_recycler/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-	if(default_pry_open(O, close_after_pry = TRUE))
-		return
+/obj/machinery/monkey_recycler/crowbar_act(mob/living/user, obj/item/tool)
+	return default_pry_open(user, tool, close_after_pry = TRUE, deconstruct_on_fail = TRUE)
 
-	if(default_deconstruction_crowbar(O))
-		return
+/obj/machinery/monkey_recycler/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]_open" : base_icon_state
 
-	if(machine_stat) //NOPOWER etc
-		return
-	else
-		return ..()
-
-/obj/machinery/monkey_recycler/MouseDrop_T(mob/living/target, mob/living/user)
+/obj/machinery/monkey_recycler/mouse_drop_receive(mob/living/target, mob/living/user, params)
 	if(!istype(target))
 		return
 	if(ismonkey(target))
@@ -68,7 +62,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 /obj/machinery/monkey_recycler/proc/stuff_monkey_in(mob/living/carbon/human/target, mob/living/user)
 	if(!istype(target))
 		return
-	if(target.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(target))
 		to_chat(user, span_warning("The monkey is struggling far too much to put it in the recycler."))
 		return
 	if(target.buckled || target.has_buckled_mobs())
@@ -88,7 +82,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	if(stored_matter >= 1)
 		to_chat(user, span_notice("The machine hisses loudly as it condenses the ground monkey meat. After a moment, it dispenses a brand new monkey cube."))
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
-		for(var/i in 1 to FLOOR(stored_matter, 1))
+		for(var/i in 1 to floor(stored_matter))
 			new /obj/item/food/monkeycube(src.loc)
 			stored_matter--
 		to_chat(user, span_notice("The machine's display flashes that it has [stored_matter] monkeys worth of material left."))

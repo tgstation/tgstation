@@ -7,15 +7,14 @@
 	button_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "finger_guns"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED|AB_CHECK_INCAPACITATED
-	panel = "Mime"
 	sound = null
 
 	school = SCHOOL_MIME
 	cooldown_time = 30 SECONDS
 
-	invocation = ""
-	invocation_type = INVOCATION_EMOTE
+	invocation = span_notice("<b>%CASTER</b> fires %PRONOUN_their finger gun!")
 	invocation_self_message = span_danger("You fire your finger gun!")
+	invocation_type = INVOCATION_EMOTE
 
 	spell_requirements = SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_MIME_VOW
 	antimagic_flags = NONE
@@ -33,7 +32,7 @@
 			return FALSE
 
 		var/mob/living/carbon/human/human_invoker = invoker
-		if(human_invoker.incapacitated())
+		if(human_invoker.incapacitated)
 			if(feedback)
 				to_chat(human_invoker, span_warning("You can't properly point your fingers while incapacitated."))
 			return FALSE
@@ -43,10 +42,3 @@
 			return FALSE
 
 	return ..()
-
-/datum/action/cooldown/spell/pointed/projectile/finger_guns/before_cast(atom/cast_on)
-	. = ..()
-	if(isnull(owner))
-		invocation = initial(invocation)
-	else
-		invocation = span_notice("<b>[owner]</b> fires [owner.p_their()] finger gun!")

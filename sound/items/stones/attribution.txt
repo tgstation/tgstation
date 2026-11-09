@@ -1,0 +1,7 @@
+{
+stone_drop1.ogg - https://freesound.org/people/kernschall/sounds/425035/ , license: CC BY 4.0
+stone_drop2.ogg - https://freesound.org/people/kernschall/sounds/425035/ , license: CC BY 4.0
+stone_drop3.og - https://freesound.org/people/Benboncan/sounds/74445/ , license: CC BY 4.0
+stone_pick_up1.ogg - https://freesound.org/people/kernschall/sounds/425035/ , license: CC BY 4.0
+stone_pick_up2.ogg - https://freesound.org/people/Benboncan/sounds/74445/ , license: CC BY 4.0
+} edited by sadboysuss

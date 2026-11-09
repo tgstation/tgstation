@@ -19,9 +19,10 @@
 	pixel_y = 16
 	pixel_z = -48
 	anchored = TRUE
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_ATTACK_PAW
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	/// How many prior grand rituals have been completed?
 	var/potency = 0
 	/// Time to take per invocation of rune.
@@ -78,6 +79,7 @@
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
 	announce_rune()
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
 /// I cast Summon Security
 /obj/effect/grand_rune/proc/announce_rune()
@@ -147,7 +149,7 @@
 			haunt_color = spell_colour, \
 			haunt_duration = 10 SECONDS, \
 			aggro_radius = 0, \
-			spawn_message = span_revenwarning("[sacrifice] begins to float and twirl into the air as it becomes enveloped in otherworldy energies..."), \
+			spawn_message = span_revenwarning("[sacrifice] begins to float and twirl into the air as it becomes enveloped in otherworldly energies..."), \
 		)
 		addtimer(CALLBACK(sacrifice, TYPE_PROC_REF(/obj/item/food/cheese/wheel, consume_cheese)), 10 SECONDS)
 	cheese_sacrificed += length(cheese_to_haunt)
@@ -162,7 +164,7 @@
 		on_invocation_complete(user)
 		return
 	flick("[icon_state]_flash", src)
-	playsound(src,'sound/magic/staff_animation.ogg', 75, TRUE)
+	playsound(src,'sound/effects/magic/staff_animation.ogg', 75, TRUE)
 	INVOKE_ASYNC(src, PROC_REF(invoke_rune), user)
 
 /// Add special effects for casting a spell, basically you glow and hover in the air.
@@ -181,7 +183,7 @@
 /// Called when you actually finish the damn thing
 /obj/effect/grand_rune/proc/on_invocation_complete(mob/living/user)
 	is_in_use = FALSE
-	playsound(src,'sound/magic/staff_change.ogg', 75, TRUE)
+	playsound(src,'sound/effects/magic/staff_change.ogg', 75, TRUE)
 	INVOKE_ASYNC(src, PROC_REF(summon_round_event), user) // Running the event sleeps
 	trigger_side_effects()
 	tear_reality()
@@ -251,9 +253,9 @@
 	var/location_sanity = 0
 	// Copied from the influences manager, but we don't want to obey the cap on influences per heretic.
 	while(created < to_create && location_sanity < 100)
-		var/turf/chosen_location = get_safe_random_station_turf()
+		var/turf/chosen_location = get_safe_random_station_turf_equal_weight()
 
-		// We don't want them close to each other - at least 1 tile of seperation
+		// We don't want them close to each other - at least 1 tile of separation
 		var/list/nearby_things = range(1, chosen_location)
 		var/obj/effect/heretic_influence/what_if_i_have_one = locate() in nearby_things
 		var/obj/effect/visible_heretic_influence/what_if_i_had_one_but_its_used = locate() in nearby_things
@@ -338,10 +340,17 @@
 	var/pick = show_radial_menu(user, user, options, require_near = TRUE, tooltips = TRUE)
 	if (!pick)
 		return
+	var/datum/grand_finale/picked_finale = picks_to_instances[pick]
+	if (istype(picked_finale))
+		var/round_time_passed = world.time - SSticker.round_start_time
+		if(picked_finale.minimum_time >= round_time_passed)
+			to_chat(user, span_warning("The chosen grand finale will only be available in <b>[DisplayTimeText(picked_finale.minimum_time - round_time_passed)]</b>!"))
+			to_chat(user, span_warning("Be patient, or select another option."))
+			return
 	chosen_effect = TRUE
 	if (pick == PICK_NOTHING)
 		return
-	finale_effect = picks_to_instances[pick]
+	finale_effect = picked_finale
 	invoke_time = get_invoke_time()
 	if (finale_effect.glow_colour)
 		spell_colour = finale_effect.glow_colour
@@ -393,7 +402,7 @@
 	mergeable_decal = FALSE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clean_type = CLEAN_TYPE_HARD_DECAL
-	layer = SIGIL_LAYER
+	layer = RUNE_LAYER
 
 /obj/effect/decal/cleanable/grand_remains/cheese
 	name = "cheese soot marks"

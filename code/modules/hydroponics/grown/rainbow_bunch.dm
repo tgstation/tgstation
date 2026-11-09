@@ -1,11 +1,11 @@
 /obj/item/seeds/rainbow_bunch
-	name = "pack of rainbow bunch seeds"
+	name = "rainbow bunch seed pack"
 	desc = "A pack of seeds that'll grow into a beautiful bush of various colored flowers."
 	icon_state = "seed-rainbowbunch"
 	species = "rainbowbunch"
 	plantname = "Rainbow Flowers"
 	icon_harvest = "rainbowbunch-harvest"
-	product = /obj/item/food/grown/rainbow_flower
+	product = /obj/item/food/grown/flower/rainbow_flower
 	lifespan = 25
 	endurance = 10
 	maturation = 6
@@ -19,11 +19,10 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/preserved)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 
-/obj/item/food/grown/rainbow_flower
+/obj/item/food/grown/flower/rainbow_flower
 	seed = /obj/item/seeds/rainbow_bunch
 	name = "rainbow flower"
 	desc = "A beautiful flower capable of being used for most dyeing processes."
-	icon_state = "map_flower"
 	slot_flags = ITEM_SLOT_HEAD
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	force = 0
@@ -34,10 +33,13 @@
 	attack_verb_continuous = list("pompfs")
 	attack_verb_simple = list("pompf")
 	greyscale_colors = COLOR_BLACK //only here for unit testing. overriden in initialize()
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/food/grown/flower/rainbow_flower"
+	post_init_icon_state = "map_flower"
 	greyscale_config = /datum/greyscale_config/flower_simple
 	greyscale_config_worn = /datum/greyscale_config/flower_simple_worn
 
-/obj/item/food/grown/rainbow_flower/Initialize(mapload)
+/obj/item/food/grown/flower/rainbow_flower/Initialize(mapload)
 	. = ..()
 	if(greyscale_colors != initial(greyscale_colors))
 		return

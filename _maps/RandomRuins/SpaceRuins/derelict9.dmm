@@ -20,7 +20,7 @@
 /area/ruin/space)
 "j" = (
 /obj/structure/closet/crate/secure/loot,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav)
 "l" = (
 /turf/template_noop,
@@ -50,22 +50,22 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing/beret_or_rabbitears,
 /obj/effect/spawner/random/clothing/mafia_outfit,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav)
 "x" = (
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/ruin/space/has_grav)
 "B" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing/funny_hats,
 /obj/effect/spawner/random/clothing/gloves,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav)
 "C" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing/mafia_outfit,
 /obj/effect/spawner/random/clothing/pirate_or_bandana,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav)
 "E" = (
 /obj/structure/mineral_door/wood,
@@ -74,7 +74,7 @@
 "G" = (
 /obj/structure/safe,
 /obj/item/clothing/head/collectable/petehat,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/space/has_grav)
 "I" = (
 /obj/machinery/porta_turret/syndicate/pod,
@@ -99,7 +99,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space)
 "Q" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/space/has_grav)
 "S" = (
 /obj/item/flashlight/lantern,
@@ -112,17 +112,17 @@
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
 /obj/effect/spawner/random/clothing/lizardboots,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav)
 "X" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/clothing/twentyfive_percent_cyborg_mask,
 /obj/effect/spawner/random/clothing/costume,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/space/has_grav)
 "Y" = (
 /obj/machinery/light/dim/directional/north,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/ruin/space/has_grav)
 "Z" = (
 /turf/closed/indestructible/fakedoor,

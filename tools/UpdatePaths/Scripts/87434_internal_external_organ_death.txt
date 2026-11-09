@@ -1,0 +1,2 @@
+/obj/item/organ/internal/@SUBTYPES : /obj/item/organ/@SUBTYPES{@OLD}
+/obj/item/organ/external/@SUBTYPES : /obj/item/organ/@SUBTYPES{@OLD}

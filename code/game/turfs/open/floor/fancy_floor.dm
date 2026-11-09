@@ -9,15 +9,15 @@
  */
 
 /turf/open/floor/wood
-	desc = "Stylish dark wood."
+	desc = "Stylish wood."
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
 	footstep = FOOTSTEP_WOOD
-	turf_flags = NO_RUST
 	barefootstep = FOOTSTEP_WOOD_BAREFOOT
 	clawfootstep = FOOTSTEP_WOOD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/wood/broken_states()
 	return list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
@@ -31,18 +31,18 @@
 		return TRUE
 	return pry_tile(I, user) ? TRUE : FALSE
 
-/turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
-	if(T.turf_type == type)
+/turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/newtile, mob/user, list/modifiers)
+	if(newtile.turf_type == type)
 		return
-	var/obj/item/tool = user.is_holding_item_of_type(/obj/item/screwdriver)
+	var/obj/item/tool = user.is_holding_tool_quality(TOOL_SCREWDRIVER)
 	if(!tool)
-		tool = user.is_holding_item_of_type(/obj/item/crowbar)
+		tool = user.is_holding_tool_quality(TOOL_CROWBAR)
 	if(!tool)
 		return
-	var/turf/open/floor/plating/P = pry_tile(tool, user, TRUE)
-	if(!istype(P))
+	var/turf/open/floor/plating/bare_floor = pry_tile(tool, user, TRUE)
+	if(!istype(bare_floor))
 		return
-	P.attackby(T, user, params)
+	bare_floor.base_item_interaction(user, newtile, modifiers)
 
 /turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
 	C.play_tool_sound(src, 80)
@@ -69,7 +69,7 @@
 
 //Used in Snowcabin.dm
 /turf/open/floor/wood/freezing
-	temperature = 180
+	temperature = ICEBOX_MIN_TEMPERATURE
 
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -116,6 +116,13 @@
 /turf/open/floor/bamboo/broken_states()
 	return list("bamboodamaged")
 
+/turf/open/floor/bamboo/planks
+	desc = "A floor tile made from cut bamboo pieces."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "bamboo"
+	floor_tile = /obj/item/stack/tile/bamboo/planks
+	smoothing_flags = NONE
+
 /turf/open/floor/bamboo/tatami
 	desc = "A traditional Japanese floor mat."
 	icon = 'icons/turf/floors/floor_variations.dmi'
@@ -148,7 +155,8 @@
 	barefootstep = FOOTSTEP_GRASS
 	clawfootstep = FOOTSTEP_GRASS
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/grass/broken_states()
 	return list("[initial(icon_state)]_damaged")
@@ -159,8 +167,16 @@
 	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass, 2, worm_chance = 50, \
 		action_text = "uproot", action_text_third_person = "uproots")
 
+/turf/open/floor/grass/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/open/floor/grass/proc/spawniconchange()
 	icon_state = "grass[rand(0,3)]"
+
+/turf/open/floor/grass/norandomicon
+
+/turf/open/floor/grass/norandomicon/spawniconchange()
+	return
 
 /turf/open/floor/grass/lavaland
 	name = "dead grass patch"
@@ -185,6 +201,22 @@
 /turf/open/floor/grass/fairy/spawniconchange()
 	icon_state = "fairygrass[rand(0,3)]"
 
+/turf/open/floor/hay
+	name = "hay"
+	desc = "HOW hungry?"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "hay"
+	base_icon_state = "hay"
+	floor_tile = /obj/item/stack/tile/hay
+	flags_1 = NONE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	tiled_turf = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
+
 /turf/open/floor/fake_snow
 	gender = PLURAL
 	name = "snow"
@@ -196,14 +228,15 @@
 	floor_tile = null
 	initial_gas_mix = FROZEN_ATMOS
 	bullet_bounce_sound = null
-	tiled_dirt = FALSE
-
+	tiled_turf = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 	slowdown = 1.5
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
 
 /turf/open/floor/fake_snow/Initialize(mapload)
 	. = ..()
@@ -212,7 +245,7 @@
 /turf/open/floor/fake_snow/broken_states()
 	return list("snow_dug")
 
-/turf/open/floor/fake_snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+/turf/open/floor/fake_snow/try_replace_tile(obj/item/stack/tile/T, mob/user, list/modifiers)
 	return
 
 /turf/open/floor/fake_snow/crowbar_act(mob/living/user, obj/item/I)
@@ -230,14 +263,18 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/fakebasalt/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass/basalt, 2, worm_chance = 0)
 	if(prob(15))
 		icon_state = "basalt[rand(0, 12)]"
-		set_basalt_light(src)
+		switch(icon_state)
+			if("basalt1", "basalt2", "basalt3")
+				set_light(BASALT_LIGHT_RANGE_BRIGHT, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA)
+			if("basalt5", "basalt9")
+				set_light(BASALT_LIGHT_RANGE_DIM, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA)
 
 /turf/open/floor/carpet
 	name = "carpet"
@@ -255,7 +292,8 @@
 	barefootstep = FOOTSTEP_CARPET_BAREFOOT
 	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
+	rust_resistance = RUST_RESISTANCE_BASIC
 
 /turf/open/floor/carpet/examine(mob/user)
 	. = ..()
@@ -270,11 +308,11 @@
 	if(!. || !(updates & UPDATE_SMOOTHING))
 		return
 	if(!broken && !burnt)
-		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		if(smoothing_flags & USES_SMOOTHING)
 			QUEUE_SMOOTH(src)
 	else
 		make_plating()
-		if(smoothing_flags & (SMOOTH_CORNERS|SMOOTH_BITMASK))
+		if(smoothing_flags & USES_SMOOTHING)
 			QUEUE_SMOOTH_NEIGHBORS(src)
 
 /turf/open/floor/carpet/lone
@@ -390,6 +428,62 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_DONK
 	canSmoothWith = SMOOTH_GROUP_CARPET_DONK
 
+/turf/open/floor/carpet/bear
+	name = "bear fur carpet"
+	desc = "Bear fur stretched out into a carpet for you to walk on."
+	icon = 'icons/turf/floors/carpet_bear.dmi'
+	icon_state = "carpet_bear-255"
+	base_icon_state = "carpet_bear"
+	floor_tile = /obj/item/stack/tile/carpet/bear
+
+/turf/open/floor/carpet/polar_bear
+	name = "polar bear fur carpet"
+	desc = "Polar bear fur stretched out into a carpet for you to walk on."
+	icon = 'icons/turf/floors/carpet_bearpolar.dmi'
+	icon_state = "carpet_bearpolar-255"
+	base_icon_state = "carpet_bearpolar"
+	floor_tile = /obj/item/stack/tile/carpet/polar_bear
+
+/turf/open/floor/carpet/moth
+	name = "moth carpet"
+	desc = "Moth fur stretched out into a carpet for you to walk on."
+	icon = 'icons/turf/floors/carpet_moth.dmi'
+	icon_state = "carpet_moth-255"
+	base_icon_state = "carpet_moth"
+	floor_tile = /obj/item/stack/tile/carpet/moth
+
+/turf/open/floor/carpet/goliath
+	name = "goliath hide carpet"
+	desc = "Goliath hide plates woven together with watcher sinew to make something aproximating a carpet."
+	icon = 'icons/turf/floors/carpet_goliath.dmi'
+	icon_state = "carpet_goliath-255"
+	base_icon_state = "carpet_goliath"
+	floor_tile = /obj/item/stack/tile/carpet/goliath
+
+/turf/open/floor/carpet/carp
+	name = "carp scales carpet"
+	desc = "Carpet made with carp scales. A carp carpet. Carp carp carp."
+	icon = 'icons/turf/floors/carpet_carp.dmi'
+	icon_state = "carpet_carp-255"
+	base_icon_state = "carpet_carp"
+	floor_tile = /obj/item/stack/tile/carpet/carp
+
+/turf/open/floor/carpet/lizard
+	name = "lizard scales"
+	desc = "Carpet made with lizard scales. Lizards were most likely harmed making this."
+	icon = 'icons/turf/floors/carpet_lizard.dmi'
+	icon_state = "carpet_lizard-255"
+	base_icon_state = "carpet_lizard"
+	floor_tile = /obj/item/stack/tile/carpet/lizard
+
+/turf/open/floor/carpet/human
+	name = "human flesh carpet"
+	desc = "Carpet made from flayed human skin. Fresh and moist."
+	icon = 'icons/turf/floors/carpet_skin.dmi'
+	icon_state = "carpet_skin-255"
+	base_icon_state = "carpet_skin"
+	floor_tile = /obj/item/stack/tile/carpet/human
+
 //*****Airless versions of all of the above.*****
 /turf/open/floor/carpet/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -462,7 +556,7 @@
 
 /turf/open/floor/carpet/neon
 	name = "neon carpet"
-	desc = "A rubbery pad inset with a phsophorescent pattern."
+	desc = "A rubbery pad inset with a phosphorescent pattern."
 	icon = 'icons/turf/floors/carpet_black.dmi'
 	icon_state = "carpet_black-255"
 	base_icon_state = "carpet_black"
@@ -482,7 +576,7 @@
 /turf/open/floor/carpet/neon/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, null, null, alpha, neon_color, smoothing_junction)
-	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, GLOB.emissive_color, smoothing_junction)
+	AddElement(/datum/element/decal, neon_icon || icon, neon_icon_state || base_icon_state, dir, EMISSIVE_PLANE, null, emissive_alpha, null, smoothing_junction)
 
 /turf/open/floor/carpet/neon/simple
 	name = "simple neon carpet"
@@ -841,7 +935,7 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_TURF_CHASM
 	canSmoothWith = SMOOTH_GROUP_TURF_CHASM
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 
 /turf/open/floor/fakepit/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	underlay_appearance.icon = 'icons/turf/floors.dmi'
@@ -865,8 +959,9 @@
 	icon = 'icons/turf/space.dmi'
 	icon_state = "space"
 	floor_tile = /obj/item/stack/tile/fakespace
+	layer = SPACE_LAYER
 	plane = PLANE_SPACE
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	damaged_dmi = 'icons/turf/space.dmi'
 
 /turf/open/floor/fakespace/broken_states()

@@ -1,4 +1,3 @@
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -7,7 +6,9 @@ import {
   LabeledList,
   Section,
   Stack,
-} from '../../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import {
   CONSOLE_MODE_ENZYMES,
@@ -27,7 +28,7 @@ export const DnaConsole = (props) => {
   const { consoleMode } = data.view;
 
   return (
-    <Window title="DNA Console" width={539} height={710}>
+    <Window title="DNA Console" width={550} height={710}>
       {!!isPulsing && (
         <Dimmer fontSize="14px" textAlign="center">
           <Icon mr={1} name="spinner" spin />
@@ -36,7 +37,7 @@ export const DnaConsole = (props) => {
           {timeToPulse}s
         </Dimmer>
       )}
-      <Window.Content>
+      <Window.Content scrollable>
         <Stack fill vertical>
           <Stack.Item>
             <DnaScanner />

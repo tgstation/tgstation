@@ -1,5 +1,6 @@
 /obj/item/circuitboard/computer
 	name = "Generic"
+	abstract_type = /obj/item/circuitboard/computer
 	name_extension = "(Computer Board)"
 
 /obj/item/circuitboard/computer/examine()
@@ -8,16 +9,6 @@
 		. += span_info("there's a small, blinking light!")
 
 //Command
-
-/obj/item/circuitboard/computer/aiupload
-	name = "AI Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/ai
-
-/obj/item/circuitboard/computer/borgupload
-	name = "Cyborg Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/borg
 
 /obj/item/circuitboard/computer/bsa_control
 	name = "Bluespace Artillery Controls"
@@ -44,6 +35,20 @@
 	name = "Atmospheric Alert"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/atmos_alert
+	var/station_only = FALSE
+
+/obj/item/circuitboard/computer/atmos_alert/station_only
+	station_only = TRUE
+
+/obj/item/circuitboard/computer/atmos_alert/examine(mob/user)
+	. = ..()
+	. += span_info("The board is configured to [station_only ? "track all station and mining alarms" : "track alarms on the same z-level"].")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+
+/obj/item/circuitboard/computer/atmos_alert/multitool_act(mob/living/user)
+	station_only = !station_only
+	balloon_alert(user, "tracking set to [station_only ? "station" : "z-level"]")
+	return TRUE
 
 /obj/item/circuitboard/computer/atmos_control
 	name = "Atmospheric Control"
@@ -208,6 +213,11 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/message_monitor
 
+/obj/item/circuitboard/computer/modular_shield_console
+	name = "Modular Shield Generator Console"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/computer/modular_shield
+
 /obj/item/circuitboard/computer/powermonitor
 	name = "Power Monitor"  //name fixed 250810
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -223,7 +233,7 @@
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/power/solar_control
 
-/obj/item/circuitboard/computer/stationalert
+/obj/item/circuitboard/computer/station_alert
 	name = "Station Alerts"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/station_alert
@@ -293,6 +303,50 @@
 	name = "Slot Machine"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/slot_machine
+	desc = "You can change the theme using a screwdriver."
+	/// List of pickable slot machines
+	var/static/list/slot_themes = list(
+		"Default" = /obj/machinery/computer/slot_machine,
+		"Command" = /obj/machinery/computer/slot_machine/command,
+		"Security" = /obj/machinery/computer/slot_machine/security,
+		"Medical" = /obj/machinery/computer/slot_machine/medical,
+		"Engineering" = /obj/machinery/computer/slot_machine/engineering,
+		"Cargo" = /obj/machinery/computer/slot_machine/cargo,
+		"Service" = /obj/machinery/computer/slot_machine/service,
+		"Science" = /obj/machinery/computer/slot_machine/science,
+		"Clown" = /obj/machinery/computer/slot_machine/clown,
+		"Mime" = /obj/machinery/computer/slot_machine/mime,
+	)
+
+/obj/item/circuitboard/computer/slot_machine/examine(mob/user)
+	. = ..()
+	var/current_theme = "Unknown"
+	for(var/theme_name in slot_themes)
+		if(slot_themes[theme_name] == build_path)
+			current_theme = theme_name
+			break
+	. += span_info("[src] is set to the [current_theme] theme. You can use a screwdriver to reconfigure it.")
+
+/obj/item/circuitboard/computer/slot_machine/screwdriver_act(mob/living/user, obj/item/tool)
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "board mode is broken!")
+		return FALSE
+
+	var/choice = tgui_input_list(user, "Choose a slot machine theme", "Theme Selection", slot_themes)
+	if(isnull(choice))
+		return ITEM_INTERACT_BLOCKING
+	build_path = slot_themes[choice]
+	to_chat(user, span_notice("You set the board to the [choice] theme."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/circuitboard/computer/slot_machine/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+
+	obj_flags |= EMAGGED
+	build_path = /obj/machinery/computer/slot_machine/syndicate
+	balloon_alert(user, "illegal slot machine loaded")
+	return TRUE
 
 /obj/item/circuitboard/computer/swfdoor
 	name = "Magix"
@@ -303,7 +357,8 @@
 	name = "Syndicate Shuttle"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/computer/shuttle/syndicate
-	var/challenge = FALSE
+	/// If operatives declared war this will be the time challenge was started
+	var/challenge_start_time
 	var/moved = FALSE
 
 /obj/item/circuitboard/computer/syndicate_shuttle/Initialize(mapload)
@@ -336,20 +391,29 @@
 /obj/item/circuitboard/computer/tram_controls
 	name = "Tram Controls"
 	build_path = /obj/machinery/computer/tram_controls
-	var/split_mode = FALSE
-
-/obj/item/circuitboard/computer/tram_controls/split
-	split_mode = TRUE
+	var/install_type = NORMAL_WINDOW
+	var/specific_transport_id = TRAMSTATION_LINE_1
 
 /obj/item/circuitboard/computer/tram_controls/examine(mob/user)
 	. = ..()
-	. += span_info("The board is configured for [split_mode ? "split window" : "normal window"].")
-	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+	. += span_info("The board is configured for tram ID [specific_transport_id] and a [install_type] installation.")
+	. += span_notice("The tram ID can be changed with a [EXAMINE_HINT("multitool")]. The installation mode can be changed with a [EXAMINE_HINT("screwdriver")].")
+
+/obj/item/circuitboard/computer/tram_controls/screwdriver_act(mob/living/user)
+	var/selected_install_type = tgui_input_list(user, "Window mounted or standalone?", "Off the rails", list(NORMAL_WINDOW, SPLIT_WINDOW, STANDALONE))
+	if(isnull(selected_install_type))
+		return NONE
+	install_type = selected_install_type
+	to_chat(user, span_notice("[src] is now aligned in installation mode [install_type]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/circuitboard/computer/tram_controls/multitool_act(mob/living/user)
-	split_mode = !split_mode
-	to_chat(user, span_notice("[src] positioning set to [split_mode ? "split window" : "normal window"]."))
-	return TRUE
+	var/selected_transport_id = tgui_input_list(user, "Which tram?", "Off the rails", SStransport.debug_tram_list)
+	if(isnull(selected_transport_id))
+		return NONE
+	specific_transport_id = selected_transport_id
+	to_chat(user, span_notice("[src] is now programmed to control [specific_transport_id]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/circuitboard/computer/terminal
 	name = "Terminal"
@@ -377,6 +441,11 @@
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 	build_path = /obj/machinery/computer/pandemic
 
+/obj/item/circuitboard/computer/experimental_cloner
+	name = "Experimental Cloner Control Console"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/computer/experimental_cloner
+
 //Science
 
 /obj/item/circuitboard/computer/aifixer
@@ -403,6 +472,57 @@
 	name = "R&D Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/rdconsole
+	req_access = list(ACCESS_RESEARCH) // Research access is required to toggle the lock.
+
+	var/silence_announcements = FALSE
+	var/locked = TRUE
+
+// An unlocked subtype of the board for mapping.
+/obj/item/circuitboard/computer/rdconsole/unlocked
+	locked = FALSE
+
+/obj/item/circuitboard/computer/rdconsole/examine(mob/user)
+	. = ..()
+	. += span_info("The board is configured to [silence_announcements ? "silence" : "announce"] researched nodes on radio.")
+	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+	. += span_notice("The board is [locked ? "locked" : "unlocked"], and can be [locked ? "unlocked" : "locked"] with an ID that has research access.")
+
+/obj/item/circuitboard/computer/rdconsole/multitool_act(mob/living/user)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		balloon_alert(user, "board mode is broken!")
+		return
+	silence_announcements = !silence_announcements
+	balloon_alert(user, "announcements [silence_announcements ? "enabled" : "disabled"]")
+
+/obj/item/circuitboard/computer/rdconsole/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if (locked)
+		locked = FALSE
+		to_chat(user, span_notice("You magnetically trigger the locking mechanism, causing it to unlock."))
+
+	if (obj_flags & EMAGGED)
+		return FALSE
+
+	obj_flags |= EMAGGED
+	silence_announcements = FALSE
+	to_chat(user, span_notice("You overload the node announcement chip, forcing every node to be announced on the common channel."))
+	return TRUE
+
+/obj/item/circuitboard/computer/rdconsole/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (user.combat_mode || !isidcard(tool))
+		return NONE
+	if (!check_access(tool))
+		balloon_alert(user, "no access!")
+		return ITEM_INTERACT_BLOCKING
+	locked = !locked
+	balloon_alert(user, locked ? "locked" : "unlocked")
+	user.visible_message(
+		span_notice("\The [user] unlock[user.p_s()] \the [src] with \the [tool]."),
+		span_notice("You unlock \the [src] with \the [tool]."),
+		span_hear("You hear a soft beep."),
+	)
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control"
@@ -418,6 +538,7 @@
 	name = "Robotics Control"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/computer/robotics
+	custom_materials = list(/datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/computer/teleporter
 	name = "Teleporter"
@@ -432,7 +553,7 @@
 /obj/item/circuitboard/computer/scan_consolenew
 	name = "DNA Console"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
-	build_path = /obj/machinery/computer/scan_consolenew
+	build_path = /obj/machinery/computer/dna_console
 
 /obj/item/circuitboard/computer/mechpad
 	name = "Mecha Orbital Pad Console"
@@ -599,3 +720,24 @@
 /obj/item/circuitboard/computer/exodrone_console
 	name = "Exploration Drone Control Console"
 	build_path = /obj/machinery/computer/exodrone_control_console
+
+/obj/item/circuitboard/computer/shuttle
+	var/shuttle_id
+
+/obj/item/circuitboard/computer/shuttle/configure_machine(obj/machinery/machine)
+	var/obj/docking_port/mobile/custom/shuttle = shuttle_id ? SSshuttle.getShuttle(shuttle_id) : SSshuttle.get_containing_shuttle(machine)
+	if(!shuttle)
+		var/on_shuttle_frame = HAS_TRAIT((get_turf(machine)), TRAIT_SHUTTLE_CONSTRUCTION_TURF)
+		machine.say(on_shuttle_frame ? "Console will automatically link on shuttle completion." : "No shuttle available for linking.")
+	else if(!istype(shuttle))
+		machine.say("Cannot link to this kind of shuttle!")
+	else
+		machine.connect_to_shuttle(TRUE, shuttle)
+
+/obj/item/circuitboard/computer/shuttle/flight_control
+	name = "Shuttle Flight Control"
+	build_path = /obj/machinery/computer/shuttle/custom_shuttle
+
+/obj/item/circuitboard/computer/shuttle/docker
+	name = "Shuttle Navigation Computer"
+	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/custom

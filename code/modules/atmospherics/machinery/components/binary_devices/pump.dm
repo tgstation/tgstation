@@ -12,21 +12,20 @@
 
 /obj/machinery/atmospherics/components/binary/pump
 	icon_state = "pump_map-3"
-	name = "gas pump"
+	name = "pressure pump"
 	desc = "A pump that moves gas by pressure."
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "pump"
 	vent_movement = NONE
+	light_mask_on = TRUE
 	///Pressure that the pump will reach when on
 	var/target_pressure = ONE_ATMOSPHERE
 
 /obj/machinery/atmospherics/components/binary/pump/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/atmos_pump,
-	))
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/atmos_pump), only_root_path = TRUE))
 	register_context()
 
 /obj/machinery/atmospherics/components/binary/pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -35,13 +34,13 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Maximize target pressure"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/pump/CtrlClick(mob/user)
-	if(can_interact(user))
+/obj/machinery/atmospherics/components/binary/pump/click_ctrl(mob/user)
+	if(is_operational)
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
-	return ..()
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
 
 /obj/machinery/atmospherics/components/binary/pump/click_alt(mob/user)
 	if(target_pressure == MAX_OUTPUT_PRESSURE)
@@ -50,7 +49,7 @@
 	target_pressure = MAX_OUTPUT_PRESSURE
 	investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
 	balloon_alert(user, "pressure output set to [target_pressure] kPa")
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/pump/update_icon_nopipes()
@@ -60,10 +59,11 @@
 	if(!on || !is_operational)
 		return
 
-	var/datum/gas_mixture/air1 = airs[1]
-	var/datum/gas_mixture/air2 = airs[2]
+	var/datum/gas_mixture/input_air = airs[1]
+	var/datum/gas_mixture/output_air = airs[2]
+	var/datum/gas_mixture/output_pipenet_air = parents[2].air
 
-	if(air1.pump_gas_to(air2, target_pressure))
+	if(input_air.pump_gas_to(output_air, target_pressure, output_pipenet_air = output_pipenet_air))
 		update_parents()
 
 /obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, datum/tgui/ui)
@@ -79,7 +79,7 @@
 	data["max_pressure"] = round(MAX_OUTPUT_PRESSURE)
 	return data
 
-/obj/machinery/atmospherics/components/binary/pump/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/pump/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -99,7 +99,7 @@
 			if(.)
 				target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
 	. = ..()
@@ -126,6 +126,10 @@
 /obj/machinery/atmospherics/components/binary/pump/on/layer4
 	piping_layer = 4
 	icon_state= "pump_on_map-4"
+
+/obj/machinery/atmospherics/components/binary/pump/on/layer5
+	piping_layer = 5
+	icon_state = "pump_on_map-5"
 
 /obj/item/circuit_component/atmos_pump
 	display_name = "Atmospheric Binary Pump"
@@ -170,7 +174,7 @@
 	input_temperature = add_output_port("Input Temperature", PORT_TYPE_NUMBER)
 	output_temperature = add_output_port("Output Temperature", PORT_TYPE_NUMBER)
 
-	is_active = add_output_port("Active", PORT_TYPE_NUMBER)
+	is_active = add_output_port("Active", PORT_TYPE_BOOLEAN)
 	turned_on = add_output_port("Turned On", PORT_TYPE_SIGNAL)
 	turned_off = add_output_port("Turned Off", PORT_TYPE_SIGNAL)
 
@@ -207,14 +211,13 @@
 	if(!connected_pump)
 		return
 	connected_pump.set_on(TRUE)
-	connected_pump.update_appearance()
 
 /obj/item/circuit_component/atmos_pump/proc/set_pump_off()
 	CIRCUIT_TRIGGER
 	if(!connected_pump)
 		return
 	connected_pump.set_on(FALSE)
-	connected_pump.update_appearance()
+	connected_pump.update_appearance(UPDATE_ICON)
 
 /obj/item/circuit_component/atmos_pump/proc/request_pump_data()
 	CIRCUIT_TRIGGER

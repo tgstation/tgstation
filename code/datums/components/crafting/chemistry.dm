@@ -6,7 +6,7 @@
 		/datum/reagent/fuel = 20,
 		/obj/item/stack/cable_coil = 15,
 		/obj/item/assembly/timer = 1,
-		/obj/item/pipe/quaternary/pipe = 1,
+		/obj/item/pipe = 1,
 	)
 	time = 6 SECONDS
 	category = CAT_CHEMISTRY
@@ -15,10 +15,9 @@
 	name = "Molotov"
 	result = /obj/item/reagent_containers/cup/glass/bottle/molotov
 	reqs = list(
-		/obj/item/reagent_containers/cup/rag = 1,
+		/obj/item/rag = 1,
 		/obj/item/reagent_containers/cup/glass/bottle = 1,
 	)
-	parts = list(/obj/item/reagent_containers/cup/glass/bottle = 1)
 	time = 4 SECONDS
 	category = CAT_CHEMISTRY
 
@@ -30,7 +29,6 @@
 		/obj/item/grenade/c4 = 1,
 		/obj/item/grenade/chem_grenade = 2
 	)
-	parts = list(/obj/item/stock_parts/matter_bin = 1, /obj/item/grenade/chem_grenade = 2)
 	time = 3 SECONDS
 	category = CAT_CHEMISTRY
 
@@ -42,9 +40,9 @@
 		/obj/item/gibtonite = 1,
 		/obj/item/grenade/chem_grenade = 2,
 	)
-	parts = list(/obj/item/stock_parts/matter_bin = 1, /obj/item/grenade/chem_grenade = 2)
 	time = 5 SECONDS
 	category = CAT_CHEMISTRY
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY //there are two ways to make a chem bombcore. We go with the first one for mats check
 
 /datum/crafting_recipe/alcohol_burner
 	name = "Burner (Ethanol)"
@@ -119,6 +117,20 @@
 		/obj/item/stack/sheet/glass = 1,
 	)
 	category = CAT_CHEMISTRY
+	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED | CRAFT_SKIP_MATERIALS_PARITY
+
+/datum/crafting_recipe/chem_separator
+	name = "chemical separator"
+	result = /obj/structure/chem_separator
+	tool_behaviors = list(TOOL_WELDER)
+	time = 5 SECONDS
+	reqs = list(
+		/obj/item/stack/sheet/mineral/wood = 1,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/burner = 1,
+		/obj/item/thermometer = 1,
+	)
+	category = CAT_CHEMISTRY
 
 /datum/crafting_recipe/improvised_chem_heater
 	name = "Improvised chem heater"
@@ -134,15 +146,6 @@
 	)
 	machinery = list(/obj/machinery/space_heater = CRAFTING_MACHINERY_CONSUME)
 	category = CAT_CHEMISTRY
-
-/datum/crafting_recipe/improvised_chem_heater/on_craft_completion(mob/user, atom/result)
-	var/obj/item/stock_parts/cell/cell = locate(/obj/item/stock_parts/cell) in range(1)
-	if(!cell)
-		return
-	var/obj/machinery/space_heater/improvised_chem_heater/heater = result
-	var/turf/turf = get_turf(cell)
-	heater.forceMove(turf)
-	heater.attackby(cell, user) //puts it into the heater
 
 /datum/crafting_recipe/improvised_coolant
 	name = "Improvised cooling spray"

@@ -6,6 +6,30 @@
 	name = "skeleton"
 	mob_species = /datum/species/skeleton
 
+/obj/effect/mob_spawn/corpse/human/skeleton/cerulean
+	name = "cerulean skeleton"
+
+/obj/effect/mob_spawn/corpse/human/skeleton/cerulean/special(mob/living/carbon/human/spawned, mob/mob_possessor, apply_prefs)
+	. = ..()
+	for(var/zone in GLOB.leg_zones)
+		spawned.dna.species.bodypart_overrides -= zone
+	spawned.dna.features[FEATURE_TAIL_FISH_COLOR] = "#fee5ca"
+	spawned.dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
+	spawned.dna.species.mutant_organs[/obj/item/organ/tail/fish/cerulean/skeletal] = /datum/sprite_accessory/tails/fish/cerulean/skeleton::name
+	spawned.dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
+	spawned.dna.species.regenerate_organs(spawned, excluded_zones = GLOB.arm_zones)
+
+/obj/effect/mob_spawn/corpse/human/cerulean
+	mob_species = /datum/species/human/cerulean
+
+/obj/effect/mob_spawn/corpse/human/cerulean/special(mob/living/carbon/human/spawned, mob/mob_possessor, apply_prefs)
+	. = ..()
+	spawned.dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
+	spawned.dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
+	var/obj/item/organ/lungs/fish = new
+	fish.Insert(spawned, TRUE, DELETE_IF_REPLACED)
+	spawned.dna.species.regenerate_organs(spawned, excluded_zones = GLOB.arm_zones)
+
 /obj/effect/mob_spawn/corpse/human/zombie
 	mob_species = /datum/species/zombie
 

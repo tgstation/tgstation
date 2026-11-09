@@ -14,3 +14,5 @@
 #define BB_TIME_TO_GIVE_UP_ON_VENT_PATHING "BB_seconds_until_we_give_up_on_vent_pathing"
 /// The timer ID of the timer that makes us give up on vent pathing.
 #define BB_GIVE_UP_ON_VENT_PATHING_TIMER_ID "BB_give_up_on_vent_pathing_timer_id"
+/// The world.time when we entered a vent. Null when not in one.
+#define BB_VENT_ENTRY_TIME "BB_vent_entry_time"

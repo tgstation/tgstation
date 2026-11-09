@@ -12,7 +12,7 @@
 	/// Does the target crush and flatten whoever it falls on
 	var/crushes_people = FALSE
 	/// What sound is played when the target falls onto a mob
-	var/impact_sound = 'sound/magic/clockwork/fellowship_armory.ogg' //CLANG
+	var/impact_sound = 'sound/effects/magic/clockwork/fellowship_armory.ogg' //CLANG
 
 /datum/element/falling_hazard/Attach(datum/target, damage, wound_bonus, hardhat_safety, crushes, impact_sound)
 	. = ..()
@@ -52,16 +52,16 @@
 		if(crushes_people)
 			poor_target.Knockdown(0.25 SECONDS * fall_damage) // For a piano, that would be 15 seconds
 
-		playsound(poor_target, 'sound/weapons/parry.ogg', 50, TRUE) // You PARRIED the falling object with your EPIC hardhat
+		playsound(poor_target, 'sound/items/weapons/parry.ogg', 50, TRUE) // You PARRIED the falling object with your EPIC hardhat
 		return
 
 	var/obj/item/bodypart/target_head = poor_target.get_bodypart(BODY_ZONE_HEAD)
 
 	// This does more damage the more levels the falling object has fallen
 	if(!crushes_people && target_head)
-		poor_target.apply_damage(fall_damage * levels, def_zone = BODY_ZONE_HEAD, forced = TRUE, wound_bonus = fall_wound_bonus)
+		poor_target.apply_damage(fall_damage * levels, def_zone = BODY_ZONE_HEAD, wound_bonus = fall_wound_bonus)
 	else
-		poor_target.apply_damage(fall_damage * levels, forced = TRUE, spread_damage = TRUE, wound_bonus = fall_wound_bonus)
+		poor_target.apply_damage(fall_damage * levels, spread_damage = TRUE, wound_bonus = fall_wound_bonus)
 
 	poor_target.visible_message(
 		span_userdanger("[source] falls on [poor_target], [crushes_people ? "crushing [poor_target.p_them()]" : "hitting [poor_target.p_them()]"] [target_head ? "on the head!" : "!"]"),

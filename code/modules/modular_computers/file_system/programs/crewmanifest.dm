@@ -1,15 +1,13 @@
 /datum/computer_file/program/crew_manifest
 	filename = "plexagoncrew"
 	filedesc = "Plexagon Crew List"
-	downloader_category = PROGRAM_CATEGORY_SECURITY
+	downloader_category = PROGRAM_CATEGORY_DEVICE
 	program_open_overlay = "id"
 	extended_desc = "Program for viewing and printing the current crew manifest"
-	download_access = list(ACCESS_SECURITY, ACCESS_COMMAND)
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
-	size = 4
+	size = 0
 	tgui_id = "NtosCrewManifest"
 	program_icon = "clipboard-list"
-	detomatix_resistance = DETOMATIX_RESIST_MAJOR
 
 /datum/computer_file/program/crew_manifest/ui_static_data(mob/user)
 	var/list/data = list()
@@ -25,7 +23,7 @@
 								<br>
 								[GLOB.manifest ? GLOB.manifest.get_html(0) : ""]
 								"}
-				if(!computer.print_text(contents, "crew manifest ([station_time_timestamp()])"))
+				if(!computer.print_text(contents, "crew manifest ([round_timestamp()])"))
 					to_chat(usr, span_notice("Printer is out of paper."))
 					return
 				else

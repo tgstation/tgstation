@@ -76,7 +76,7 @@
 	if(prob(100 - toast_prob))
 		if(prob(25))
 			do_sparks(1, FALSE, source)
-			playsound(parent, SFX_SPARKS, 40, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(parent, /datum/sound_effect/sparks, 40, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			source.audible_message(span_danger("[parent] makes an electric crackle..."))
 		return FALSE
 
@@ -95,7 +95,7 @@
 		tram_velocity_sign = tram.travel_direction & EAST ? 1 : -1
 
 	// How far away are we? negative if already passed.
-	var/approach_distance = tram_velocity_sign * (plate_pos - (tram_pos + (DEFAULT_TRAM_LENGTH * 0.5)))
+	var/approach_distance = tram_velocity_sign * (plate_pos - (tram_pos + DEFAULT_TRAM_MIDPOINT))
 
 	// Check if our victim is in the active path of the tram.
 	if(!tram.controller_active)
@@ -106,12 +106,12 @@
 		return FALSE
 	if((tram.travel_direction & EAST) && outbound > tram.destination_platform.platform_code)
 		return FALSE
-	if(approach_distance >= AMBER_THRESHOLD_DEGRADED)
+	if(approach_distance >= XING_THRESHOLD_AMBER)
 		return FALSE
 
 	// Finally the interesting part where they ACTUALLY get hit!
 	do_sparks(4, FALSE, source)
-	playsound(parent, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(parent, /datum/sound_effect/sparks, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	source.audible_message(span_danger("[parent] makes a loud electric crackle!"))
 	to_chat(future_tram_victim, span_userdanger("You hear a loud electric crackle!"))
 	future_tram_victim.electrocute_act(15, parent, 1)

@@ -1,11 +1,22 @@
-//This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
+/// Placeholder to check against the SAVE_DATA_EMPTY and SAVE_DATA_OBSOLETE values.
+/// _Any_ generated save data version will be zero or a positive integer, so it's only necessary to check against this value for anything negative (error states).
+#define SAVE_DATA_NO_ERROR 0
+/// Typically signifies an empty list, where the savefile is not loaded or the character is new. Will just trigger a regeneration.
+#define SAVE_DATA_EMPTY -1
+/// The save data is below the accepted minimum and should be reset.
+#define SAVE_DATA_OBSOLETE -2
+
+/// This is the lowest supported version, anything below this is completely obsolete and the entire savefile will be wiped.
 #define SAVEFILE_VERSION_MIN 32
 
-//This is the current version, anything below this will attempt to update (if it's not obsolete)
-// You do not need to raise this if you are adding new values that have sane defaults.
-// Only raise this value when changing the meaning/format/name/layout of an existing value
-// where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 44
+/// This is the current version, anything below this will attempt to update (if it's not obsolete)
+/// You do not need to raise this if you are adding new values that have sane defaults.
+/// Only raise this value when changing the meaning/format/name/layout of an existing value
+/// where you would want the updater procs below to run
+#define SAVEFILE_VERSION_MAX 54
+
+#define IS_DATA_OBSOLETE(version) (version == SAVE_DATA_OBSOLETE)
+#define SHOULD_UPDATE_DATA(version) (version >= SAVE_DATA_NO_ERROR && version < SAVEFILE_VERSION_MAX)
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -23,14 +34,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	Failing all that, the standard sanity checks are performed. They simply check the data is suitable, reverting to
 	initial() values if necessary.
 */
-/datum/preferences/proc/save_data_needs_update(list/save_data)
-	if(!save_data) // empty list, either savefile isnt loaded or its a new char
-		return -1
-	if(save_data["version"] < SAVEFILE_VERSION_MIN)
-		return -2
-	if(save_data["version"] < SAVEFILE_VERSION_MAX)
-		return save_data["version"]
-	return -1
+/datum/preferences/proc/check_savedata_version(list/save_data)
+	if(!save_data)
+		return SAVE_DATA_EMPTY
+	var/save_version = save_data["version"]
+
+	if(save_version < SAVEFILE_VERSION_MIN)
+		return SAVE_DATA_OBSOLETE
+	if(save_version < SAVEFILE_VERSION_MAX)
+		return save_version
+	return SAVE_DATA_EMPTY
 
 //should these procs get fairly long
 //just increase SAVEFILE_VERSION_MIN so it's not as far behind
@@ -94,7 +107,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if (current_version < 44)
 		update_tts_blip_prefs()
 
+	if(current_version < 53)
+		if("swap_hands" in key_bindings)
+			var/keys = key_bindings["swap_hands"]
+			key_bindings -= "swap_hands"
+			key_bindings["swap_hands_row"] = keys
+
 /datum/preferences/proc/update_character(current_version, list/save_data)
+	if(current_version < 54)
+		migrate_legacy_loadout_items(save_data)
+
 	if (current_version < 41)
 		migrate_character_to_tgui_prefs_menu()
 
@@ -103,6 +125,57 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if (current_version < 43)
 		migrate_legacy_sound_toggles(savefile)
+
+	if (current_version < 45)
+		migrate_quirk_to_loadout(
+			quirk_to_migrate = "Pride Pin",
+			new_typepath = /obj/item/clothing/accessory/pride,
+			data_to_migrate = list(INFO_RESKIN = save_data?["pride_pin"]),
+		)
+	if (current_version < 46)
+		migrate_boolean_sound_prefs_to_default_volume()
+	if (current_version < 47)
+		migrate_boolean_sound_prefs_to_default_volume_v2()
+	if (current_version < 48)
+		migrate_quirk_to_loadout(
+			quirk_to_migrate = "Colorist",
+			new_typepath = /obj/item/dyespray,
+		)
+	if(current_version < 49)
+		migrate_quirk_to_loadout(
+			quirk_to_migrate = "Cyborg Pre-screened dogtag",
+			new_typepath = /obj/item/clothing/accessory/dogtag/borg_ready,
+		)
+	if(current_version < 50)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Extrovert",
+			new_typepath = /datum/personality/extrovert,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Introvert",
+			new_typepath = /datum/personality/introvert,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Bad Touch",
+			new_typepath = /datum/personality/aloof,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Apathetic",
+			new_typepath = /datum/personality/apathetic,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Snob",
+			new_typepath = /datum/personality/snob,
+		)
+		migrate_quirk_to_personality(
+			quirk_to_migrate = "Spiritual",
+			new_typepath = /datum/personality/spiritual,
+		)
+	if(current_version < 51)
+		migrate_felinid_feature_keys(save_data)
+
+	if(current_version < 52)
+		migrate_gendered_nonbinary_physique(save_data)
 
 /// checks through keybindings for outdated unbound keys and updates them
 /datum/preferences/proc/check_keybindings()
@@ -120,14 +193,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		if(parent.hotkeys)
 			for(var/hotkeytobind in kb.hotkey_keys)
-				if(hotkeytobind == "Unbound")
+				if(hotkeytobind == UNBOUND_KEY)
 					addedbind = TRUE
 				else if(!length(binds_by_key[hotkeytobind])) //Only bind to the key if nothing else is bound
 					key_bindings[kb.name] |= hotkeytobind
 					addedbind = TRUE
 		else
 			for(var/classickeytobind in kb.classic_keys)
-				if(classickeytobind == "Unbound")
+				if(classickeytobind == UNBOUND_KEY)
 					addedbind = TRUE
 				else if(!length(binds_by_key[classickeytobind])) //Only bind to the key if nothing else is bound
 					key_bindings[kb.name] |= classickeytobind
@@ -135,13 +208,13 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 		if(!addedbind)
 			notadded += kb
-	save_preferences() //Save the players pref so that new keys that were set to Unbound as default are permanently stored
+	save_preferences() //Save the players pref so that new keys that were set to UNBOUND_KEY as default are permanently stored
 	if(length(notadded))
 		addtimer(CALLBACK(src, PROC_REF(announce_conflict), notadded), 5 SECONDS)
 
 /datum/preferences/proc/announce_conflict(list/notadded)
 	to_chat(parent, "<span class='warningplain'><b><u>Keybinding Conflict</u></b></span>\n\
-					<span class='warningplain'><b>There are new <a href='?src=[REF(src)];open_keybindings=1'>keybindings</a> that default to keys you've already bound. The new ones will be unbound.</b></span>")
+					<span class='warningplain'><b>There are new <a href='byond://?src=[REF(src)];open_keybindings=1'>keybindings</a> that default to keys you've already bound. The new ones will be unbound.</b></span>")
 	for(var/item in notadded)
 		var/datum/keybinding/conflicted = item
 		to_chat(parent, span_danger("[conflicted.category]: [conflicted.full_name] needs updating"))
@@ -164,9 +237,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			stack_trace("Failed to load the savefile for [parent] after manually calling load_savefile; something is very wrong.")
 			return FALSE
 
-	var/needs_update = save_data_needs_update(savefile.get_entry())
-	if(load_and_save && (needs_update == -2)) //fatal, can't load any data
-		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
+	var/data_validity_integer = check_savedata_version(savefile.get_entry())
+	if(load_and_save && IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
+		var/bacpath = PREFS_BACKUP_PATH(path) //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
@@ -181,6 +254,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	chat_toggles = savefile.get_entry("chat_toggles", chat_toggles)
 	toggles = savefile.get_entry("toggles", toggles)
 	ignoring = savefile.get_entry("ignoring", ignoring)
+	job_assigned_profiles = savefile.get_entry("job_assigned_profiles")
 
 	// OOC commendations
 	hearted_until = savefile.get_entry("hearted_until", hearted_until)
@@ -200,15 +274,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	key_bindings = savefile.get_entry("key_bindings", key_bindings)
 
 	//try to fix any outdated data if necessary
-	if(needs_update >= 0)
-		var/bacpath = "[path].updatebac" //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
+	if(SHOULD_UPDATE_DATA(data_validity_integer))
+		var/bacpath = PREFS_BACKUP_PATH(path) //todo: if the savefile version is higher then the server, check the backup, and give the player a prompt to load the backup
 		if (fexists(bacpath))
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(savefile.path, bacpath) //byond helpfully lets you use a savefile for the first arg.
-		update_preferences(needs_update, savefile) //needs_update = savefile_version if we need an update (positive integer)
+		update_preferences(data_validity_integer, savefile)
 
 	check_keybindings() // this apparently fails every time and overwrites any unloaded prefs with the default values, so don't load anything after this line or it won't actually save
-	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
 
 	//Sanitize
 	lastchangelog = sanitize_text(lastchangelog, initial(lastchangelog))
@@ -217,8 +290,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	be_special = sanitize_be_special(SANITIZE_LIST(be_special))
 	key_bindings = sanitize_keybindings(key_bindings)
 	favorite_outfits = SANITIZE_LIST(favorite_outfits)
+	job_assigned_profiles = SANITIZE_LIST(job_assigned_profiles)
 
-	if(needs_update >= 0) //save the updated version
+	key_bindings_by_key = get_key_bindings_by_key(key_bindings)
+
+	if(SHOULD_UPDATE_DATA(data_validity_integer)) //save the updated version
 		var/old_default_slot = default_slot
 		var/old_max_save_slots = max_save_slots
 
@@ -241,6 +317,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 /datum/preferences/proc/save_preferences()
 	if(!savefile)
 		CRASH("Attempted to save the preferences of [parent] without a savefile. This should have been handled by load_preferences()")
+	if(path == DEV_PREFS_PATH)
+		// Don't save over dev preferences
+		return TRUE
+
 	savefile.set_entry("version", SAVEFILE_VERSION_MAX) //updates (or failing that the sanity checks) will ensure data is not invalid at load. Assume up-to-date
 
 	for (var/preference_type in GLOB.preference_entries)
@@ -265,32 +345,41 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	savefile.set_entry("key_bindings", key_bindings)
 	savefile.set_entry("hearted_until", (hearted_until > world.realtime ? hearted_until : null))
 	savefile.set_entry("favorite_outfits", favorite_outfits)
+	savefile.set_entry("job_assigned_profiles", job_assigned_profiles)
 	savefile.save()
 	return TRUE
 
-/datum/preferences/proc/load_character(slot)
+/datum/preferences/proc/load_character(slot = default_slot)
 	SHOULD_NOT_SLEEP(TRUE)
-	if(!slot)
-		slot = default_slot
 	slot = sanitize_integer(slot, 1, max_save_slots, initial(default_slot))
+	var/original_default_slot = default_slot
 	if(slot != default_slot)
 		default_slot = slot
 		savefile.set_entry("default_slot", slot)
 
 	var/tree_key = "character[slot]"
 	var/list/save_data = savefile.get_entry(tree_key)
-	var/needs_update = save_data_needs_update(save_data)
-	if(needs_update == -2) //fatal, can't load any data
+	if(isnull(save_data)) // This is the case where we have a new character slot being switched to
+		for (var/datum/preference/preference as anything in get_preferences_in_priority_order()) // clear the cache in this case
+			if (preference.savefile_identifier != PREFERENCE_CHARACTER)
+				continue
+			value_cache -= preference.type
+		return FALSE
+
+	var/data_validity_integer = check_savedata_version(save_data)
+	if(IS_DATA_OBSOLETE(data_validity_integer)) //fatal, can't load any data
+		default_slot = original_default_slot
+		savefile.set_entry("default_slot", original_default_slot)
 		return FALSE
 
 	// Read everything into cache
-	for (var/preference_type in GLOB.preference_entries)
-		var/datum/preference/preference = GLOB.preference_entries[preference_type]
+	// Uses priority order as some values may rely on others for creating default values
+	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (preference.savefile_identifier != PREFERENCE_CHARACTER)
 			continue
 
-		value_cache -= preference_type
-		read_preference(preference_type)
+		value_cache -= preference.type
+		read_preference(preference.type)
 
 	//Character
 	randomise = save_data?["randomise"]
@@ -303,8 +392,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
-	if(needs_update >= 0)
-		update_character(needs_update, save_data) //needs_update == savefile_version if we need an update (positive integer)
+	if(SHOULD_UPDATE_DATA(data_validity_integer))
+		update_character(data_validity_integer, save_data)
 
 	//Sanitize
 	randomise = SANITIZE_LIST(randomise)
@@ -312,12 +401,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	all_quirks = SANITIZE_LIST(all_quirks)
 
 	//Validate job prefs
-	for(var/j in job_preferences)
-		if(job_preferences[j] != JP_LOW && job_preferences[j] != JP_MEDIUM && job_preferences[j] != JP_HIGH)
-			job_preferences -= j
+	for(var/job, priority in job_preferences)
+		if(priority != JP_LOW && priority != JP_MEDIUM && priority != JP_HIGH)
+			job_preferences -= job
 
 	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
 	validate_quirks()
+
+	if(isnewplayer(parent?.mob))
+		var/mob/dead/new_player/lobbyguy = parent?.mob
+		lobbyguy.update_ready_report()
 
 	return TRUE
 
@@ -361,11 +454,52 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	return TRUE
 
+/datum/preferences/proc/switch_to_slot(new_slot)
+	if(new_slot == default_slot) // sanity check, nothing to do here.
+		return
+	// SAFETY: `load_character` performs sanitization on the slot number
+	if (!load_character(new_slot))
+		tainted_character_profiles = TRUE
+		randomise_appearance_prefs()
+		all_quirks = list()
+		recently_updated_keys |= /datum/preference/name/real_name
+		save_character()
+
+	for (var/datum/preference_middleware/preference_middleware as anything in middleware)
+		preference_middleware.on_new_character(usr)
+
+	character_preview_view.update_body()
+
+/datum/preferences/proc/remove_current_slot()
+	PRIVATE_PROC(TRUE)
+
+	var/closest_slot
+	for (var/other_slot in default_slot - 1 to 1 step -1)
+		var/save_data = savefile.get_entry("character[other_slot]")
+		if (!isnull(save_data))
+			closest_slot = other_slot
+			break
+
+	if (isnull(closest_slot))
+		for (var/other_slot in default_slot + 1 to max_save_slots)
+			var/save_data = savefile.get_entry("character[other_slot]")
+			if (!isnull(save_data))
+				closest_slot = other_slot
+				break
+
+	if (isnull(closest_slot))
+		stack_trace("remove_current_slot() being called when there are no slots to go to, the client should prevent this")
+		return
+
+	savefile.remove_entry("character[default_slot]")
+	tainted_character_profiles = TRUE
+	switch_to_slot(closest_slot)
+
 /datum/preferences/proc/sanitize_be_special(list/input_be_special)
 	var/list/output = list()
 
 	for (var/role in input_be_special)
-		if (role in GLOB.special_roles)
+		if (role in get_all_antag_flags())
 			output += role
 
 	return output.len == input_be_special.len ? input_be_special : output
@@ -379,3 +513,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 #undef SAVEFILE_VERSION_MAX
 #undef SAVEFILE_VERSION_MIN
+#undef SAVE_DATA_NO_ERROR
+#undef SAVE_DATA_EMPTY
+#undef SAVE_DATA_OBSOLETE
+#undef IS_DATA_OBSOLETE
+#undef SHOULD_UPDATE_DATA

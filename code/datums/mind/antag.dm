@@ -30,17 +30,21 @@
 /datum/mind/proc/remove_antag_datum(datum_type)
 	if(!datum_type)
 		return
-	var/datum/antagonist/A = has_antag_datum(datum_type)
-	if(A)
-		A.on_removal()
-		current.log_message("has lost antag datum [A.name]([A.type]).", LOG_GAME)
-		return TRUE
+	var/datum/antagonist/antag = has_antag_datum(datum_type)
+	if(isnull(antag))
+		return
+
+	antag.on_removal()
+	qdel(antag)
+	current?.log_message("has lost antag datum [antag] ([antag.type]).", LOG_GAME)
+	return TRUE
 
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
-	for(var/a in antag_datums)
-		var/datum/antagonist/A = a
-		A.on_removal()
-	current.log_message("has lost all antag datums.", LOG_GAME)
+	for(var/datum/antagonist/antag as anything in antag_datums)
+		antag.on_removal()
+		qdel(antag)
+
+	current?.log_message("has lost all antag datums.", LOG_GAME)
 
 /datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)
 	if(!datum_type)
@@ -60,38 +64,9 @@
 			return TRUE
 	return FALSE
 
-/*
-	Removes antag type's references from a mind.
-	objectives, uplinks, powers etc are all handled.
-*/
-
-/datum/mind/proc/remove_changeling()
-	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
-	if(C)
-		remove_antag_datum(/datum/antagonist/changeling)
-		special_role = null
-
-/datum/mind/proc/remove_traitor()
-	remove_antag_datum(/datum/antagonist/traitor)
-
-/datum/mind/proc/remove_nukeop()
-	var/datum/antagonist/nukeop/nuke = has_antag_datum(/datum/antagonist/nukeop,TRUE)
-	if(nuke)
-		remove_antag_datum(nuke.type)
-		special_role = null
-
-/datum/mind/proc/remove_wizard()
-	remove_antag_datum(/datum/antagonist/wizard)
-	special_role = null
-
-/datum/mind/proc/remove_rev()
-	var/datum/antagonist/rev/rev = has_antag_datum(/datum/antagonist/rev)
-	if(rev)
-		remove_antag_datum(rev.type)
-		special_role = null
-
-
 /datum/mind/proc/remove_antag_equip()
+	if(!current)
+		return
 	var/list/Mob_Contents = current.get_contents()
 	for(var/obj/item/I in Mob_Contents)
 		var/datum/component/uplink/O = I.GetComponent(/datum/component/uplink) //Todo make this reset signal
@@ -140,18 +115,21 @@
  * * antag_datum: the antag datum of the uplink owner, for storing it in antag memory. optional!
  */
 /datum/mind/proc/give_uplink(silent = FALSE, datum/antagonist/antag_datum)
-	if(isnull(current))
+	if(!isliving(current))
 		return
 	var/mob/living/carbon/human/traitor_mob = current
 	if (!istype(traitor_mob))
-		return
+		var/datum/status_effect/shapechange_mob/shapeshift = current.has_status_effect(/datum/status_effect/shapechange_mob)
+		if (!ishuman(shapeshift?.caster_mob))
+			return
+		traitor_mob = shapeshift.caster_mob
 
 	var/obj/item/uplink_loc
-	var/uplink_spawn_location = traitor_mob.client?.prefs?.read_preference(/datum/preference/choiced/uplink_location)
+	var/uplink_spawn_location = current.client?.prefs?.read_preference(/datum/preference/choiced/uplink_location)
 	var/cant_speak = (HAS_TRAIT(traitor_mob, TRAIT_MUTE) || is_mime_job(assigned_role))
 	if(uplink_spawn_location == UPLINK_RADIO && cant_speak)
 		if(!silent)
-			to_chat(traitor_mob, span_warning("You have been deemed ineligible for a radio uplink. Supplying standard uplink instead."))
+			to_chat(current, span_warning("You have been deemed ineligible for a radio uplink. Supplying standard uplink instead."))
 		uplink_spawn_location = UPLINK_PDA
 
 	if(uplink_spawn_location != UPLINK_IMPLANT)
@@ -163,7 +141,7 @@
 		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob)
 		new_implant.implant(traitor_mob, null, silent = TRUE)
 		if(!silent)
-			to_chat(traitor_mob, span_boldnotice("Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."))
+			to_chat(current, span_boldnotice("Your Syndicate Uplink has been cunningly implanted in you, for a small TC fee. Simply trigger the uplink to access it."))
 		add_memory(/datum/memory/key/traitor_uplink/implant, uplink_loc = "implant")
 		return new_implant
 
@@ -173,7 +151,7 @@
 	if(!new_uplink)
 		CRASH("Uplink creation failed.")
 	new_uplink.setup_unlock_code()
-	new_uplink.uplink_handler.owner = traitor_mob.mind
+	new_uplink.uplink_handler.owner = src
 	new_uplink.uplink_handler.assigned_role = traitor_mob.mind.assigned_role.title
 	new_uplink.uplink_handler.assigned_species = traitor_mob.dna.species.id
 
@@ -193,7 +171,7 @@
 
 	new_uplink.unlock_text = unlock_text
 	if(!silent)
-		to_chat(traitor_mob, span_boldnotice(unlock_text))
+		to_chat(current, span_boldnotice(unlock_text))
 	if(antag_datum)
 		antag_datum.antag_memory += new_uplink.unlock_note + "<br>"
 	return .
@@ -204,26 +182,28 @@
 		add_antag_datum(/datum/antagonist/cult)
 
 	else if(IS_REVOLUTIONARY(creator))
-		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
+		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev, TRUE)
 		converter.add_revolutionary(src, stun = FALSE, mute = FALSE)
 
 	else if(IS_NUKE_OP(creator))
 		var/datum/antagonist/nukeop/converter = creator.mind.has_antag_datum(/datum/antagonist/nukeop,TRUE)
 		var/datum/antagonist/nukeop/N = new()
 		N.send_to_spawnpoint = FALSE
+		N.give_bonus_tc = FALSE
 		N.nukeop_outfit = null
 		add_antag_datum(N,converter.nuke_team)
 
-
 	enslaved_to = WEAKREF(creator)
 
-	current.faction |= creator.faction
-	creator.faction |= "[REF(current)]"
+	SEND_SIGNAL(current, COMSIG_MOB_ENSLAVED_TO, creator)
+
+	current.add_faction(creator.get_faction())
+	current.add_ally(current)
 
 	current.log_message("has been enslaved to [key_name(creator)].", LOG_GAME)
 	log_admin("[key_name(current)] has been enslaved to [key_name(creator)].")
 
-	if(creator.mind?.special_role)
+	if(creator.is_antag())
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
 		to_chat(current, span_userdanger("Despite your creator's current allegiances, your true master remains [creator.real_name]. If their loyalties change, so do yours. This will never change unless your creator's body is destroyed."))
 
@@ -270,32 +250,11 @@
 /datum/mind/proc/take_uplink()
 	qdel(find_syndicate_uplink())
 
-/datum/mind/proc/make_traitor()
-	if(!(has_antag_datum(/datum/antagonist/traitor)))
-		add_antag_datum(/datum/antagonist/traitor)
-
-/datum/mind/proc/make_changeling()
-	var/datum/antagonist/changeling/C = has_antag_datum(/datum/antagonist/changeling)
-	if(!C)
-		C = add_antag_datum(/datum/antagonist/changeling)
-		special_role = ROLE_CHANGELING
-	return C
-
-
 /datum/mind/proc/make_wizard()
 	if(has_antag_datum(/datum/antagonist/wizard))
 		return
-	set_assigned_role(SSjob.GetJobType(/datum/job/space_wizard))
-	special_role = ROLE_WIZARD
+	set_assigned_role(SSjob.get_job_type(/datum/job/space_wizard))
 	add_antag_datum(/datum/antagonist/wizard)
-
-
-/datum/mind/proc/make_rev()
-	var/datum/antagonist/rev/head/head = new()
-	head.give_flash = TRUE
-	head.give_hud = TRUE
-	add_antag_datum(head)
-	special_role = ROLE_REV_HEAD
 
 /// Sets our can_hijack to the fastest speed our antag datums allow.
 /datum/mind/proc/get_hijack_speed()

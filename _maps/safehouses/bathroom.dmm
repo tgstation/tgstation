@@ -27,7 +27,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/blacklight/directional/east,
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "v" = (
 /obj/machinery/light/small/blacklight/directional/east,
@@ -68,7 +68,7 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/turf/open/floor/bitrunning_transport,
+/turf/open/indestructible/bitrunning_transport,
 /area/virtual_domain/safehouse)
 "M" = (
 /obj/effect/decal/cleanable/dirt,

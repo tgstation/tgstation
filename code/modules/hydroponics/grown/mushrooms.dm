@@ -1,8 +1,6 @@
 /obj/item/food/grown/mushroom
 	name = "mushroom"
-	// This is a prototype that should never be spawned
-	// but we'll default it to SOME seed if it does end up spawning just so we don't runtime horribly
-	seed = /obj/item/seeds/chanter
+	abstract_type = /obj/item/food/grown/mushroom
 	bite_consumption_mod = 3
 	foodtypes = VEGETABLES
 	wine_power = 40
@@ -11,7 +9,7 @@
 
 // Reishi
 /obj/item/seeds/reishi
-	name = "pack of reishi mycelium"
+	name = "reishi mycelium pack"
 	desc = "This mycelium grows into something medicinal and relaxing."
 	icon_state = "mycelium-reishi"
 	species = "reishi"
@@ -38,7 +36,7 @@
 
 // Fly Amanita
 /obj/item/seeds/amanita
-	name = "pack of fly amanita mycelium"
+	name = "fly amanita mycelium pack"
 	desc = "This mycelium grows into something horrible."
 	icon_state = "mycelium-amanita"
 	species = "amanita"
@@ -65,7 +63,7 @@
 
 // Destroying Angel
 /obj/item/seeds/angel
-	name = "pack of destroying angel mycelium"
+	name = "destroying angel mycelium pack"
 	desc = "This mycelium grows into something devastating."
 	icon_state = "mycelium-angel"
 	species = "angel"
@@ -93,7 +91,7 @@
 
 // Liberty Cap
 /obj/item/seeds/liberty
-	name = "pack of liberty-cap mycelium"
+	name = "liberty-cap mycelium pack"
 	desc = "This mycelium grows into liberty-cap mushrooms."
 	icon_state = "mycelium-liberty"
 	species = "liberty"
@@ -119,7 +117,7 @@
 
 // Plump Helmet
 /obj/item/seeds/plump
-	name = "pack of plump-helmet mycelium"
+	name = "plump-helmet mycelium pack"
 	desc = "This mycelium grows into helmets... maybe."
 	icon_state = "mycelium-plump"
 	species = "plump"
@@ -145,7 +143,7 @@
 
 // Walking Mushroom
 /obj/item/seeds/plump/walkingmushroom
-	name = "pack of walking mushroom mycelium"
+	name = "walking mushroom mycelium pack"
 	desc = "This mycelium will grow into huge stuff!"
 	icon_state = "mycelium-walkingmushroom"
 	species = "walkingmushroom"
@@ -171,7 +169,7 @@
 
 // Chanterelle
 /obj/item/seeds/chanter
-	name = "pack of chanterelle mycelium"
+	name = "chanterelle mycelium pack"
 	desc = "This mycelium grows into chanterelle mushrooms."
 	icon_state = "mycelium-chanter"
 	species = "chanter"
@@ -197,9 +195,25 @@
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty!"
 	icon_state = "chanterelle"
 
+/obj/item/food/grown/mushroom/chanterelle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/kitchen/spoon))
+		return NONE
+
+	if(seed.potency < 95)
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You hollow out the chanterelle with [tool]."))
+	remove_item_from_storage(user)
+	if(seed.resistance_flags & FIRE_PROOF)
+		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle/fireproof())
+	else
+		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle())
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
 //Jupiter Cup
 /obj/item/seeds/chanter/jupitercup
-	name = "pack of jupiter cup mycelium"
+	name = "jupiter cup mycelium pack"
 	desc = "This mycelium grows into jupiter cups. Zeus would be envious at the power at your fingertips."
 	icon_state = "mycelium-jupitercup"
 	species = "jupitercup"
@@ -210,7 +224,12 @@
 	endurance = 8
 	yield = 4
 	growthstages = 2
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/preset/liquidelectricity, /datum/plant_gene/trait/carnivory/jupitercup)
+	genes = list(
+		/datum/plant_gene/reagent/preset/liquidelectricity,
+		/datum/plant_gene/trait/carnivory/jupitercup,
+		/datum/plant_gene/trait/cell_charge,
+		/datum/plant_gene/trait/plant_type/fungal_metabolism,
+	)
 	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 	mutatelist = null
@@ -224,7 +243,7 @@
 
 // Glowshroom
 /obj/item/seeds/glowshroom
-	name = "pack of glowshroom mycelium"
+	name = "glowshroom mycelium pack"
 	desc = "This mycelium -glows- into mushrooms!"
 	icon_state = "mycelium-glowshroom"
 	species = "glowshroom"
@@ -279,14 +298,18 @@
 
 // Glowcap
 /obj/item/seeds/glowshroom/glowcap
-	name = "pack of glowcap mycelium"
+	name = "glowcap mycelium pack"
 	desc = "This mycelium -powers- into mushrooms!"
 	icon_state = "mycelium-glowcap"
 	species = "glowcap"
 	icon_harvest = "glowcap-harvest"
 	plantname = "Glowcaps"
 	product = /obj/item/food/grown/mushroom/glowshroom/glowcap
-	genes = list(/datum/plant_gene/trait/glow/red, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
+	genes = list(
+		/datum/plant_gene/trait/glow/red,
+		/datum/plant_gene/trait/cell_charge,
+		/datum/plant_gene/trait/plant_type/fungal_metabolism,
+	)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/teslium = 0.1, /datum/reagent/consumable/nutriment = 0.04)
 	rarity = 30
@@ -303,7 +326,7 @@
 
 //Shadowshroom
 /obj/item/seeds/glowshroom/shadowshroom
-	name = "pack of shadowshroom mycelium"
+	name = "shadowshroom mycelium pack"
 	desc = "This mycelium will grow into something shadowy."
 	icon_state = "mycelium-shadowshroom"
 	species = "shadowshroom"
@@ -332,7 +355,7 @@
 		investigate_log("was planted by [key_name(user)] at [AREACOORD(user)]", INVESTIGATE_BOTANY)
 
 /obj/item/seeds/odious_puffball
-	name = "pack of odious pullball spores"
+	name = "odious pullball spore pack"
 	desc = "These spores reek! Disgusting."
 	icon_state = "seed-odiouspuffball"
 	species = "odiouspuffball"

@@ -11,6 +11,7 @@
 	is_editable = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/warning, 32)
+MAPPING_DIAGONAL_HELPERS(/obj/structure/sign/warning, 32)
 
 /obj/structure/sign/warning/secure_area
 	name = "\improper SECURE AREA sign"
@@ -18,6 +19,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/warning, 32)
 	desc = "A warning sign which reads 'SECURE AREA'."
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/warning/secure_area, 32)
+MAPPING_DIAGONAL_HELPERS(/obj/structure/sign/warning/secure_area, 32)
 
 /obj/structure/sign/warning/docking
 	name = "\improper KEEP CLEAR: DOCKING AREA sign"
@@ -199,7 +201,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/warning/gas_mask, 32)
 /obj/structure/sign/warning/chem_diamond
 	name = "\improper REACTIVE CHEMICALS sign"
 	sign_change_name = "Warning - Hazardous Chemicals sign"
-	desc = "A sign that warns of potentially reactive chemicals nearby, be they explosive, flamable, or acidic."
+	desc = "A sign that warns of potentially reactive chemicals nearby, be they explosive, flammable, or acidic."
 	icon_state = "chemdiamond"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/warning/chem_diamond, 32)

@@ -42,23 +42,30 @@
 		return
 	. = ..()
 
-/datum/wires/explosive/chem_grenade/attach_assembly(color, obj/item/assembly/S)
-	if(istype(S,/obj/item/assembly/timer))
-		var/obj/item/grenade/chem_grenade/G = holder
-		var/obj/item/assembly/timer/T = S
-		G.det_time = T.saved_time*10
-	else if(istype(S,/obj/item/assembly/prox_sensor))
-		var/obj/item/assembly/prox_sensor/sensor = S
-		var/obj/item/grenade/chem_grenade/grenade = holder
+/datum/wires/explosive/chem_grenade/attach_assembly(color, obj/item/assembly/assembly)
+	fingerprint = assembly.fingerprintslast
+	var/obj/item/grenade/chem_grenade/grenade = holder
+	if(!assembly.secured)
+		assembly.toggle_secure()
+
+	if(istype(assembly, /obj/item/assembly/timer))
+		var/obj/item/assembly/timer/timer = assembly
+		grenade.det_time = timer.saved_time SECONDS
+		return ..()
+
+	if(istype(assembly, /obj/item/assembly/prox_sensor))
+		var/obj/item/assembly/prox_sensor/sensor = assembly
 		grenade.landminemode = sensor
 		sensor.proximity_monitor.set_ignore_if_not_on_turf(FALSE)
-	else if(istype(S,/obj/item/assembly/health))
-		var/obj/item/assembly/health/sensor = S
-		if(!sensor.secured)
-			sensor.toggle_secure()
-		if(!sensor.scanning)
-			sensor.toggle_scan()
-	fingerprint = S.fingerprintslast
+		sensor.time = grenade.det_time * 0.1
+		return ..()
+
+	if(!istype(assembly, /obj/item/assembly/health))
+		return ..()
+
+	var/obj/item/assembly/health/sensor = assembly
+	if(!sensor.scanning)
+		sensor.toggle_scan()
 	return ..()
 
 /datum/wires/explosive/chem_grenade/explode()
@@ -71,8 +78,7 @@
 	if(!grenade.dud_flags)
 		message_admins(message)
 	log_game(message)
-	var/mob/M = get_mob_by_ckey(fingerprint)
-	grenade.log_grenade(M) //Used in arm_grenade() too but this one conveys where the mob who triggered the bomb is
+	grenade.log_grenade(get_mob_by_ckey(fingerprint)) //Used in arm_grenade() too but this one conveys where the mob who triggered the bomb is
 	if(grenade.landminemode)
 		grenade.detonate() ///already armed
 	else
@@ -80,22 +86,24 @@
 
 
 /datum/wires/explosive/chem_grenade/detach_assembly(color)
-	var/obj/item/assembly/S = get_attached(color)
-	if(S && istype(S))
-		assemblies -= color
-		S.connected = null
-		S.holder = null
-		S.forceMove(holder.drop_location())
-		var/obj/item/grenade/chem_grenade/G = holder
-		G.landminemode = null
-		return S
+	var/obj/item/assembly/assembly = get_attached(color)
+	if(!istype(assembly))
+		return
+
+	var/obj/item/grenade/chem_grenade/grenade = holder
+	assemblies -= color
+	assembly.connected = null
+	assembly.holder = null
+	assembly.forceMove(holder.drop_location())
+	grenade.landminemode = null
+	return assembly
 
 /datum/wires/explosive/c4 // Also includes X4
 	holder_type = /obj/item/grenade/c4
 
 /datum/wires/explosive/c4/explode()
-	var/obj/item/grenade/c4/P = holder
-	P.detonate()
+	var/obj/item/grenade/c4/bomb = holder
+	bomb.detonate()
 
 /datum/wires/explosive/pizza
 	holder_type = /obj/item/pizzabox
@@ -110,37 +118,38 @@
 /datum/wires/explosive/pizza/interactable(mob/user)
 	if(!..())
 		return FALSE
-	var/obj/item/pizzabox/P = holder
-	if(P.open && P.bomb)
+	var/obj/item/pizzabox/pizza_bomb = holder
+	if(pizza_bomb.open && pizza_bomb.bomb)
 		return TRUE
 
 /datum/wires/explosive/pizza/get_status()
-	var/obj/item/pizzabox/P = holder
+	var/obj/item/pizzabox/pizza_bomb = holder
 	var/list/status = list()
-	status += "The red light is [P.bomb_active ? "on" : "off"]."
-	status += "The green light is [P.bomb_defused ? "on": "off"]."
+	status += "The red light is [pizza_bomb.bomb_active ? "on" : "off"]."
+	status += "The green light is [pizza_bomb.bomb_defused ? "on": "off"]."
 	return status
 
 /datum/wires/explosive/pizza/on_pulse(wire)
-	var/obj/item/pizzabox/P = holder
-	switch(wire)
-		if(WIRE_DISARM) // Pulse to toggle
-			P.bomb_defused = !P.bomb_defused
-		else // Boom
-			explode()
+	var/obj/item/pizzabox/pizza_bomb = holder
+	if(wire == WIRE_DISARM) // Pulse to toggle
+		pizza_bomb.bomb_defused = !pizza_bomb.bomb_defused
+	else // Boom
+		explode()
 
 /datum/wires/explosive/pizza/on_cut(wire, mend, source)
-	var/obj/item/pizzabox/P = holder
-	switch(wire)
-		if(WIRE_DISARM) // Disarm and untrap the box.
-			if(!mend)
-				P.bomb_defused = TRUE
-		else
-			if(!mend && !P.bomb_defused)
-				if (!isnull(source))
-					log_combat(source, holder, "cut the detonation wire for")
-				explode()
+	if (mend)
+		return
+
+	var/obj/item/pizzabox/pizza_bomb = holder
+	if(wire == WIRE_DISARM) // Disarm and untrap the box.
+		pizza_bomb.bomb_defused = TRUE
+		return
+
+	if(!pizza_bomb.bomb_defused)
+		if (!isnull(source))
+			log_combat(source, holder, "cut the detonation wire for")
+		explode()
 
 /datum/wires/explosive/pizza/explode()
-	var/obj/item/pizzabox/P = holder
-	P.bomb.detonate()
+	var/obj/item/pizzabox/pizza_bomb = holder
+	pizza_bomb.bomb.detonate()

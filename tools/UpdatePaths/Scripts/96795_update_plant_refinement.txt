@@ -1,0 +1,7 @@
+/obj/item/food/grown/watermelon : /obj/item/food/grown/melonlike/watermelon{@OLD}
+/obj/item/food/grown/holymelon : /obj/item/food/grown/melonlike/holymelon{@OLD}
+/obj/item/food/grown/barrelmelon : /obj/item/food/grown/melonlike/barrelmelon{@OLD}
+
+/obj/item/food/grown/carrot : /obj/item/food/grown/carrotlike/carrot{@OLD}
+/obj/item/food/grown/parsnip : /obj/item/food/grown/carrotlike/parsnip{@OLD}
+/obj/item/food/grown/cahnroot : /obj/item/food/grown/carrotlike/cahnroot{@OLD}

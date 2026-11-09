@@ -1,54 +1,60 @@
 /mob/living/silicon/robot/examine(mob/user)
-	. = list("<span class='info'>This is [icon2html(src, user)] <EM>[src]</EM>!")
+	. = list()
 	if(desc)
 		. += "[desc]"
 
 	var/model_name = model ? "\improper [model.name]" : "\improper Default"
-	. += "\nIt is currently \a \"[span_bold("[model_name]")]\"-type cyborg.\n"
+	. += "[p_Theyre()] currently <b>\a [model_name]-type</b> cyborg."
 
 	var/obj/act_module = get_active_held_item()
 	if(act_module)
-		. += "It is holding [icon2html(act_module, user)] \a [act_module]."
-	. += get_status_effect_examinations()
-	if (getBruteLoss())
-		if (getBruteLoss() < maxHealth*0.5)
-			. += span_warning("It looks slightly dented.")
+		. += "[p_Theyre()] holding [icon2html(act_module, user)] \a [act_module]."
+	. += get_status_effect_examinations(user)
+	if (get_brute_loss())
+		if (get_brute_loss() < maxHealth*0.5)
+			. += span_warning("[p_They()] look[p_s()] slightly dented.")
 		else
-			. += span_warning("<B>It looks severely dented!</B>")
-	if (getFireLoss() || getToxLoss())
-		var/overall_fireloss = getFireLoss() + getToxLoss()
+			. += span_boldwarning("[p_They()] look[p_s()] severely dented!")
+	if (get_fire_loss() || get_tox_loss())
+		var/overall_fireloss = get_fire_loss() + get_tox_loss()
 		if (overall_fireloss < maxHealth * 0.5)
-			. += span_warning("It looks slightly charred.")
+			. += span_warning("[p_They()] look[p_s()] slightly charred.")
 		else
-			. += span_warning("<B>It looks severely burnt and heat-warped!</B>")
+			. += span_boldwarning("[p_They()] look[p_s()] severely burnt and heat-warped!")
 	if (health < -maxHealth*0.5)
-		. += span_warning("It looks barely operational.")
+		. += span_warning("[p_They()] look[p_s()] barely operational.")
 	if (fire_stacks < 0)
-		. += span_warning("It's covered in water.")
+		. += span_warning("[p_Theyre()] covered in water.")
 	else if (fire_stacks > 0)
-		. += span_warning("It's coated in something flammable.")
+		. += span_warning("[p_Theyre()] coated in something flammable.")
 
 	if(opened)
-		. += span_warning("Its cover is open and the power cell is [cell ? "installed" : "missing"].")
+		. += span_warning("[p_Their()] cover is open and the power cell is [cell ? "installed" : "missing"].")
 	else
-		. += "Its cover is closed[locked ? "" : ", and looks unlocked"]."
+		var/cover_message = "[p_Their()] cover is closed"
+		if(locked)
+			if(user == src)
+				cover_message += ", though <a href='byond://?src=[REF(src)];unlock_self=1'>you may unlock it</a>"
+		else
+			cover_message += ", and looks unlocked"
+		. += span_notice("[cover_message].")
 
 	if(cell && cell.charge <= 0)
-		. += span_warning("Its battery indicator is blinking red!")
+		. += span_warning("[p_Their()] battery indicator is blinking red!")
+
+	if(IS_UNCONSCIOUS_AND_ALIVE(src))
+		. += span_warning("[p_They()] do[p_es()]n't seem to be responding.")
 
 	switch(stat)
-		if(CONSCIOUS)
+		if(STABLE)
 			if(shell)
-				. += "It appears to be an [deployed ? "active" : "empty"] AI shell."
+				. += "[p_They()] appear[p_s()] to be an [deployed ? "active" : "empty"] AI shell."
 			else if(!client)
-				. += "It appears to be in stand-by mode." //afk
-		if(SOFT_CRIT, UNCONSCIOUS, HARD_CRIT)
-			. += span_warning("It doesn't seem to be responding.")
+				. += "[p_They()] appear[p_s()] to be in stand-by mode." //afk
 		if(DEAD)
-			. += span_deadsay("It looks like its system is corrupted and requires a reset.")
-	. += "</span>"
+			. += span_deadsay("[p_They()] look[p_s()] like its system is corrupted and requires a reset.")
 
 	. += ..()
 
-/mob/living/silicon/robot/get_examine_string(mob/user, thats = FALSE)
-	return null
+/mob/living/silicon/robot/examine_descriptor(mob/user)
+	return "cyborg"

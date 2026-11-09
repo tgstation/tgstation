@@ -11,10 +11,11 @@
 	VAR_FINAL/on = FALSE
 	/// A reference to the current soup pot overtop
 	VAR_FINAL/obj/item/container
-	/// A particle holder for the smoke that comes out of the soup while a container is cooking.
-	VAR_FINAL/obj/effect/abstract/particle_holder/soup_smoke
 	/// Typepath of particles to use for the particle holder.
 	VAR_FINAL/particle_type = /particles/smoke/steam/mild
+	/// Ref to our looping sound played when cooking
+	VAR_FINAL/datum/looping_sound/soup/soup_sound
+
 	/// The color of the flames around the burner.
 	var/flame_color = "#006eff"
 	/// Container's pixel x when placed on the stove
@@ -36,13 +37,19 @@
 		spawn_container.forceMove(parent)
 		add_container(spawn_container)
 
+	soup_sound = new(parent)
+
+/datum/component/stove/Destroy(force)
+	STOP_PROCESSING(SSmachines, src)
+	QDEL_NULL(soup_sound)
+	return ..()
+
 /datum/component/stove/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_attack_hand_secondary))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ROBOT_SECONDARY, PROC_REF(on_attack_robot_secondary))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlay_update))
-	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstructed))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_MACHINERY_REFRESH_PARTS, PROC_REF(on_refresh_parts))
@@ -51,15 +58,17 @@
 	real_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/stove/UnregisterFromParent()
-	if(!QDELING(parent))
-		var/obj/machinery/real_parent = parent
+	var/obj/machinery/real_parent = parent
+	if(container && !QDELING(parent))
 		container.forceMove(real_parent.drop_location())
+	container = null
 
-	QDEL_NULL(soup_smoke)
+	if (particle_type)
+		real_parent.remove_shared_particles("[particle_type]_stove_[container_x]")
 
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
-		COMSIG_OBJ_DECONSTRUCT,
+		COMSIG_ATOM_ATTACK_ROBOT_SECONDARY,
 		COMSIG_ATOM_EXITED,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
@@ -123,7 +132,7 @@
 
 	real_parent.balloon_alert_to_viewers("burners [on ? "on" : "off"]")
 	playsound(real_parent, 'sound/machines/click.ogg', 30, TRUE)
-	playsound(real_parent, on ? 'sound/items/welderactivate.ogg' : 'sound/items/welderdeactivate.ogg', 15, TRUE)
+	playsound(real_parent, on ? 'sound/items/tools/welderactivate.ogg' : 'sound/items/tools/welderdeactivate.ogg', 15, TRUE)
 
 /datum/component/stove/proc/on_attackby(obj/machinery/source, obj/item/attacking_item, mob/user, params)
 	SIGNAL_HANDLER
@@ -153,11 +162,6 @@
 
 	if(gone == container)
 		remove_container()
-
-/datum/component/stove/proc/on_deconstructed(obj/machinery/source)
-	SIGNAL_HANDLER
-
-	container.forceMove(source.drop_location())
 
 /datum/component/stove/proc/on_overlay_update(obj/machinery/source, list/overlays)
 	SIGNAL_HANDLER
@@ -209,7 +213,7 @@
 /datum/component/stove/proc/add_container(obj/item/new_container, mob/user)
 	var/obj/real_parent = parent
 	real_parent.vis_contents += new_container
-	new_container.flags_1 |= IS_ONTOP_1
+	ADD_TRAIT(new_container, TRAIT_SKIP_BASIC_REACH_CHECK, REF(src))
 	new_container.vis_flags |= VIS_INHERIT_PLANE
 
 	container = new_container
@@ -222,7 +226,7 @@
 
 /datum/component/stove/proc/remove_container()
 	var/obj/real_parent = parent
-	container.flags_1 &= ~IS_ONTOP_1
+	REMOVE_TRAIT(container, TRAIT_SKIP_BASIC_REACH_CHECK, REF(src))
 	container.vis_flags &= ~VIS_INHERIT_PLANE
 	real_parent.vis_contents -= container
 
@@ -235,10 +239,11 @@
 	update_smoke_type()
 	real_parent.update_appearance(UPDATE_OVERLAYS)
 
-/datum/component/stove/proc/update_smoke_type(datum/source, new_temp, old_temp)
+/datum/component/stove/proc/update_smoke_type(datum/source, ...)
 	SIGNAL_HANDLER
 
 	var/existing_temp = container?.reagents.chem_temp || 0
+	var/old_type = particle_type
 	if(existing_temp >= SOUP_BURN_TEMP)
 		particle_type = /particles/smoke/steam/bad
 	else if(existing_temp >= WATER_BOILING_POINT)
@@ -246,18 +251,22 @@
 	else
 		particle_type = null
 
-	update_smoke()
+	update_smoke(old_type)
 
-/datum/component/stove/proc/update_smoke()
-	if(on && container?.reagents.total_volume > 0)
-		// Don't override existing particles, wasteful
-		if(isnull(soup_smoke) || soup_smoke.particles.type != particle_type)
-			QDEL_NULL(soup_smoke)
-			if(isnull(particle_type))
-				return
-			// this gets badly murdered by sidemap
-			soup_smoke = new(parent, particle_type)
-			soup_smoke.set_particle_position(list(container_x, round(world.icon_size * 0.66), 0))
+/datum/component/stove/proc/update_smoke(old_type = null)
+	var/obj/obj_parent = parent
+
+	if (old_type)
+		obj_parent.remove_shared_particles("[old_type]_stove_[container_x]")
+
+	if(!on || !container?.reagents.total_volume)
+		soup_sound?.stop()
+		if (!isnull(particle_type))
+			obj_parent.remove_shared_particles("[particle_type]_stove_[container_x]")
 		return
 
-	QDEL_NULL(soup_smoke)
+	soup_sound.start()
+	if(isnull(particle_type))
+		return
+	var/obj/effect/abstract/shared_particle_holder/soup_smoke = obj_parent.add_shared_particles(particle_type, "[particle_type]_stove_[container_x]")
+	soup_smoke.particles.position = list(container_x, round(ICON_SIZE_Y * 0.66), 0)

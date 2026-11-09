@@ -1,9 +1,6 @@
 /// from /atom/movable/screen/alert/bitrunning/qserver_domain_complete
 #define COMSIG_BITRUNNER_ALERT_SEVER "bitrunner_alert_sever"
 
-/// from /obj/effect/bitrunning/loot_signal: (points)
-#define COMSIG_BITRUNNER_GOAL_POINT "bitrunner_goal_point"
-
 // Netpods
 
 /// from /obj/machinery/netpod/sever_connection()
@@ -41,6 +38,21 @@
 /// from /obj/machienry/quantum_server/station_spawn()
 #define COMSIG_BITRUNNER_STATION_SPAWN "bitrunner_station_spawn"
 
+/// from /obj/machinery/quantum_server/stock_gear(): (mob/living/carbon/human/avatar, domain_flags)
+#define COMSIG_BITRUNNER_STOCKING_GEAR "bitrunner_stocking_gear"
+
 // Ladder
+
 /// from /obj/structure/hololadder/disconnect()
 #define COMSIG_BITRUNNER_LADDER_SEVER "bitrunner_ladder_sever"
+
+/// Sent when a server console is emagged
+#define COMSIG_BITRUNNER_SERVER_EMAGGED "bitrunner_server_emagged"
+
+// Spawners
+
+/// from /obj/effect/mob_spawn/ghost_role/human/virtual_domain/proc/artificial_spawn() : (mob/living/runner)
+#define COMSIG_BITRUNNER_SPAWNED "bitrunner_spawned"
+
+/// from /obj/effect/landmark/bitrunning/mob_segment/proc/spawn_mobs() : (list/mob/living)
+#define COMSIG_BITRUNNING_MOB_SEGMENT_SPAWNED "bitrunner_mob_segment_spawned"

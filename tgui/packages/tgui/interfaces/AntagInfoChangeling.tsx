@@ -1,8 +1,4 @@
-import { BooleanLike } from 'common/react';
-import { multiline } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   Dimmer,
@@ -10,10 +6,13 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import {
-  Objective,
+  type Objective,
   ObjectivePrintout,
   ReplaceObjectivesButton,
 } from './common/Objectives';
@@ -65,6 +64,7 @@ type Info = {
   memories: Memory[];
   objectives: Objective[];
   can_change_objective: BooleanLike;
+  absorbed_dna: number;
 };
 
 export const AntagInfoChangeling = (props) => {
@@ -82,15 +82,13 @@ export const AntagInfoChangeling = (props) => {
           <Stack.Item grow={4}>
             <AbilitiesSection />
           </Stack.Item>
-          <Stack.Item>
-            <HivemindSection />
-          </Stack.Item>
+          <BetrayalWarning />
           <Stack.Item grow={3}>
             <Stack fill>
-              <Stack.Item grow basis={0}>
+              <Stack.Item grow>
                 <MemoriesSection />
               </Stack.Item>
-              <Stack.Item grow basis={0}>
+              <Stack.Item grow>
                 <VictimPatternsSection />
               </Stack.Item>
             </Stack>
@@ -101,39 +99,31 @@ export const AntagInfoChangeling = (props) => {
   );
 };
 
-const HivemindSection = (props) => {
-  const { act, data } = useBackend<Info>();
-  const { true_name } = data;
-  return (
-    <Section fill title="Hivemind">
-      <Stack vertical fill>
-        <Stack.Item textColor="label">
-          All Changelings, regardless of origin, are linked together by the{' '}
-          <span style={hivemindstyle}>hivemind</span>. You may communicate to
-          other Changelings under your mental alias,{' '}
-          <span style={hivemindstyle}>{true_name}</span>, by starting a message
-          with <span style={hivemindstyle}>:g</span>. Work together, and you
-          will bring the station to new heights of terror.
-        </Stack.Item>
-        <Stack.Item>
-          <NoticeBox danger>
-            Other Changelings are strong allies, but some Changelings may betray
-            you. Changelings grow in power greatly by absorbing their kind, and
-            getting absorbed by another Changeling will leave you as a{' '}
-            <span style={fallenstyle}>Fallen Changeling</span>. There is no
-            greater humiliation.
-          </NoticeBox>
-        </Stack.Item>
-      </Stack>
-    </Section>
-  );
-};
-
 const IntroductionSection = (props) => {
   const { act, data } = useBackend<Info>();
-  const { true_name, hive_name, objectives, can_change_objective } = data;
+  const {
+    true_name,
+    hive_name,
+    objectives,
+    can_change_objective,
+    absorbed_dna,
+  } = data;
   return (
-    <Section fill title="Intro" style={{ overflowY: 'auto' }}>
+    <Section
+      fill
+      title="Intro"
+      style={{ overflowY: 'auto' }}
+      buttons={
+        <Button
+          icon="dna"
+          tooltipPosition="left"
+          tooltip={`Absorbed DNA`}
+          color="purple"
+        >
+          {absorbed_dna}
+        </Button>
+      }
+    >
       <Stack vertical fill>
         <Stack.Item fontSize="25px">
           You are {true_name} from the
@@ -156,14 +146,15 @@ const IntroductionSection = (props) => {
   );
 };
 
-const AbilitiesSection = (props) => {
-  const { data } = useBackend<Info>();
+const AbilitiesSection = () => {
+  const { act, data } = useBackend<Info>();
+  const { true_name } = data;
   return (
     <Section fill title="Abilities">
       <Stack fill>
-        <Stack.Item basis={0} grow>
+        <Stack.Item grow>
           <Stack fill vertical>
-            <Stack.Item basis={0} textColor="label" grow>
+            <Stack.Item textColor="label" grow>
               Your
               <span style={absorbstyle}>&ensp;Absorb DNA</span> ability allows
               you to steal the DNA and memories of a victim. The
@@ -172,7 +163,7 @@ const AbilitiesSection = (props) => {
               grant you their memories or speech patterns.
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item basis={0} textColor="label" grow>
+            <Stack.Item textColor="label" grow>
               Your
               <span style={revivestyle}>&ensp;Reviving Stasis</span> ability
               allows you to revive. It means nothing short of a complete body
@@ -182,9 +173,9 @@ const AbilitiesSection = (props) => {
           </Stack>
         </Stack.Item>
         <Stack.Divider />
-        <Stack.Item basis={0} grow>
+        <Stack.Item grow>
           <Stack fill vertical>
-            <Stack.Item basis={0} textColor="label" grow>
+            <Stack.Item textColor="label" grow>
               Your
               <span style={transformstyle}>&ensp;Transform</span> ability allows
               you to change into the form of those you have collected DNA from,
@@ -192,7 +183,7 @@ const AbilitiesSection = (props) => {
               the clothing they were wearing for every slot you have open.
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item basis={0} textColor="label" grow>
+            <Stack.Item textColor="label" grow>
               The
               <span style={storestyle}>&ensp;Cellular Emporium</span> is where
               you purchase more abilities beyond your starting kit. You have 10
@@ -201,8 +192,43 @@ const AbilitiesSection = (props) => {
             </Stack.Item>
           </Stack>
         </Stack.Item>
+        <Stack.Divider />
+        <Stack.Item grow>
+          <Stack fill vertical>
+            <Stack.Item textColor="label" grow>
+              All abilities require using{' '}
+              <span style={hivemindstyle}>chemicals</span>, you can see how much
+              you have with the HUD on the left side of the screen. You may also
+              hover your cursor over it to see the maximum amount of chemicals
+              you can hold. This number can increase by
+              <span style={absorbstyle}>&ensp;absorbing</span> other
+              Changelings.
+            </Stack.Item>
+            <Stack.Divider />
+            <Stack.Item textColor="label" grow>
+              All Changelings, regardless of origin, are linked together by the{' '}
+              <span style={hivemindstyle}>hivemind</span>. You may communicate
+              to other Changelings under your mental alias,{' '}
+              <span style={hivemindstyle}>{true_name}</span>, by starting a
+              message with <span style={hivemindstyle}>:g</span>. Work together,
+              and you will bring the station to new heights of terror.
+            </Stack.Item>
+          </Stack>
+        </Stack.Item>
       </Stack>
     </Section>
+  );
+};
+
+const BetrayalWarning = (props) => {
+  return (
+    <NoticeBox danger>
+      Other Changelings are strong allies, but some Changelings may betray you.
+      Changelings grow in power greatly by absorbing their kind, and getting
+      absorbed by another Changeling will leave you as a{' '}
+      <span style={fallenstyle}>Fallen Changeling</span>. There is no greater
+      humiliation.
+    </NoticeBox>
   );
 };
 
@@ -227,7 +253,7 @@ const MemoriesSection = (props) => {
         <Button
           icon="info"
           tooltipPosition="left"
-          tooltip={multiline`
+          tooltip={`
             Absorbing targets allows
             you to collect their memories. They should
             help you impersonate your target!

@@ -1,9 +1,9 @@
 import { useState } from 'react';
+import { Button, ProgressBar, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Button, ProgressBar, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
-import { SupermatterContent, SupermatterData } from './Supermatter';
+import { SupermatterContent, type SupermatterData } from './Supermatter';
 
 type NtosSupermatterData = SupermatterData & { focus_uid?: number };
 
@@ -40,7 +40,7 @@ export const NtosSupermatter = (props) => {
             <Table>
               {sm_data.map((sm) => (
                 <Table.Row key={sm.uid}>
-                  <Table.Cell>{sm.uid + '. ' + sm.area_name}</Table.Cell>
+                  <Table.Cell>{`${sm.uid}. ${sm.area_name}`}</Table.Cell>
                   <Table.Cell collapsing color="label">
                     Integrity:
                   </Table.Cell>

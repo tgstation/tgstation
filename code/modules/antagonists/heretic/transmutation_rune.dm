@@ -1,12 +1,14 @@
 /// The heretic's rune, which they use to complete transmutation rituals.
 /obj/effect/heretic_rune
 	name = "transmutation rune"
-	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid."
-	icon_state = ""
+	desc = "A flowing circle of shapes and runes is etched into the floor, filled with a thick black tar-like fluid. This one looks pretty small."
+	icon = 'icons/obj/antags/cult/rune.dmi'
+	icon_state = "main1"
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	///Used mainly for summoning ritual to prevent spamming the rune to create millions of monsters.
 	var/is_in_use = FALSE
 
@@ -15,6 +17,7 @@
 	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", silicon_image)
+	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
 
 /obj/effect/heretic_rune/examine(mob/user)
 	. = ..()
@@ -49,19 +52,56 @@
 /obj/effect/heretic_rune/proc/try_rituals(mob/living/user)
 	is_in_use = TRUE
 
-	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	var/list/rituals = heretic_datum.get_rituals()
 	if(!length(rituals))
 		loc.balloon_alert(user, "no rituals available!")
 		is_in_use = FALSE
 		return
 
-	var/chosen = tgui_input_list(user, "Chose a ritual to attempt.", "Chose a Ritual", rituals)
-	if(!chosen || !istype(rituals[chosen], /datum/heretic_knowledge) || QDELETED(src) || QDELETED(user) || QDELETED(heretic_datum))
+	var/list/ritual_radial = list()
+	var/list/ritual_to_name = list()
+	for(var/datum/heretic_knowledge/ritual as anything in rituals)
+		var/ritual_info = ""
+		var/list/ritual_requirements = list()
+		for(var/req_type, req_amount in ritual.required_atoms)
+			if(islist(req_type))
+				var/list/req_type_list = req_type
+				var/list/req_text_list = list()
+				for(var/atom/possible_type as anything in req_type_list)
+					req_text_list += ritual.parse_required_item(possible_type, req_amount)
+				ritual_requirements += english_list(req_text_list, and_text = " or ")
+
+			else
+				ritual_requirements += ritual.parse_required_item(req_type, req_amount)
+
+		var/list/extra_requirements = ritual.get_extra_requirements()
+		if(length(extra_requirements))
+			ritual_requirements += extra_requirements
+
+		if(length(ritual_requirements))
+			ritual_info = "Requires: [english_list(ritual_requirements)]"
+
+		var/list/ritual_icon_info = heretic_datum.get_icon_of_knowledge(ritual.type)
+		var/icon/ritual_icon = icon(ritual_icon_info["icon"], ritual_icon_info["state"], ritual_icon_info["dir"], ritual_icon_info["frame"])
+		var/image/ritual_background = image(icon = 'icons/ui_icons/antags/heretic/knowledge.dmi', icon_state = heretic_datum.researched_knowledge[ritual.type][HKT_UI_BGR])
+
+		var/image/ritual_image = image(ritual_icon)
+		ritual_image.underlays += ritual_background
+
+		var/datum/radial_menu_choice/choice = new()
+		choice.name = ritual.name
+		choice.info = ritual_info
+		choice.image = ritual_image
+		ritual_radial[ritual.name] = choice
+		ritual_to_name[ritual.name] = ritual
+
+	var/chosen = show_radial_menu(user, loc, ritual_radial, radius = 48, require_near = TRUE)
+	if(!chosen || !istype(ritual_to_name[chosen], /datum/heretic_knowledge) || QDELETED(src) || QDELETED(user) || QDELETED(heretic_datum))
 		is_in_use = FALSE
 		return
 
-	do_ritual(user, rituals[chosen])
+	do_ritual(user, ritual_to_name[chosen])
 	is_in_use = FALSE
 
 /**
@@ -103,6 +143,8 @@
 	if(!ritual.recipe_snowflake_check(user, atoms_in_range, selected_atoms, loc))
 		return FALSE
 
+	var/list/stack_reqs = list()
+
 	// Now go through all our nearby atoms and see which are good for our ritual.
 	for(var/atom/nearby_atom as anything in atoms_in_range)
 		// Go through all of our required atoms
@@ -112,7 +154,7 @@
 				continue
 			// If req_type is a list of types, check all of them for one match.
 			if(islist(req_type))
-				if(!(is_type_in_list(nearby_atom, req_type)))
+				if(!is_type_in_list(nearby_atom, req_type))
 					continue
 			else if(!istype(nearby_atom, req_type))
 				continue
@@ -120,53 +162,65 @@
 			if(length(banned_atom_types))
 				if(nearby_atom.type in banned_atom_types)
 					continue
-			// This item is a valid type. Add it to our selected atoms list.
-			selected_atoms |= nearby_atom
 			// If it's a stack, we gotta see if it has more than one inside,
 			// as our requirements may want more than one item of a stack
+			// It's also important that we split the required amount from the stack and add that
+			// to the selected_atoms AFTERWARD so we don't change anything if the reqs aren't met.
 			if(isstack(nearby_atom))
 				var/obj/item/stack/picked_stack = nearby_atom
-				requirements_list[req_type] -= picked_stack.amount // Can go negative, but doesn't matter. Negative = fulfilled
+				if(!stack_reqs[req_type])
+					stack_reqs[req_type] = requirements_list[req_type]
+				requirements_list[req_type] -= min(picked_stack.amount, requirements_list[req_type])
 
 			// Otherwise, just add the mark down the item as fulfilled x1
 			else
 				requirements_list[req_type]--
+				// This item is a valid type. Add it to our selected atoms list.
+				selected_atoms |= nearby_atom
 
 	// All of the atoms have been checked, let's see if the ritual was successful
 	var/list/what_are_we_missing = list()
-	for(var/req_type in requirements_list)
-		var/number_of_things = requirements_list[req_type]
+	for(var/req_type, fulfilled_amount in requirements_list)
 		// <= 0 means it's fulfilled, skip
-		if(number_of_things <= 0)
+		if(fulfilled_amount <= 0)
 			continue
 
 		// > 0 means it's unfilfilled - the ritual has failed, we should tell them why
 		// Lets format the thing they're missing and put it into our list
-		var/formatted_thing = "[number_of_things] "
 		if(islist(req_type))
-			var/list/req_type_list = req_type
 			var/list/req_text_list = list()
-			for(var/atom/possible_type as anything in req_type_list)
-				req_text_list += ritual.parse_required_item(possible_type)
-			formatted_thing += english_list(req_text_list, and_text = "or")
+			for(var/possible_type, needed_amount in req_type)
+				req_text_list += ritual.parse_required_item(possible_type, fulfilled_amount)
+			what_are_we_missing += english_list(req_text_list, and_text = " or ")
 
 		else
-			formatted_thing = ritual.parse_required_item(req_type)
-
-		what_are_we_missing += formatted_thing
+			what_are_we_missing += ritual.parse_required_item(req_type, fulfilled_amount)
 
 	if(length(what_are_we_missing))
 		// Let them know it screwed up
 		loc.balloon_alert(user, "ritual failed, missing components!")
 		// Then let them know what they're missing
-		to_chat(user, span_hierophant_warning("You are missing [english_list(what_are_we_missing)] in order to complete the ritual \"[ritual.name]\"."))
+		to_chat(user, span_mansus("You are missing [english_list(what_are_we_missing)] in order to complete the ritual \"[ritual.name]\"."))
 		return FALSE
+
+	//Everything's good, proceed and collect from the available stacks what's needed if needed.
+	if(length(stack_reqs))
+		for(var/obj/item/stack/nearby_stack in atoms_in_range)
+			for(var/stack_path in stack_reqs)
+				if(!istype(nearby_stack, stack_path) && (!islist(stack_path) || !is_type_in_list(nearby_stack, stack_path)))
+					continue
+				var/amount_to_give = min(nearby_stack.amount, stack_reqs[stack_path])
+				var/obj/item/stack/our_stack = locate(nearby_stack.merge_type) in selected_atoms
+				if(!our_stack)
+					our_stack = nearby_stack.split_stack(amount = amount_to_give)
+					selected_atoms |= our_stack
+				else
+					nearby_stack.merge(our_stack, limit = our_stack.amount + amount_to_give)
 
 	// If we made it here, the ritual had all necessary components, and we can try to cast it.
 	// This doesn't necessarily mean the ritual will succeed, but it's valid!
 	// Do the animations and associated feedback.
-	flick("[icon_state]_active", src)
-	playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10)
+	ritual_animation()
 
 	// - We temporarily make all of our chosen atoms invisible, as some rituals may sleep,
 	// and we don't want people to be able to run off with ritual items.
@@ -184,12 +238,17 @@
 
 	if(ritual_result)
 		ritual.cleanup_atoms(selected_atoms)
+		SSblackbox.record_feedback("tally", "heretic_ritual_completed", 1, ritual.type)
 
 	// Clean up done, re-appear anything that hasn't been deleted.
 	for(var/atom/to_appear as anything in initial_selected_atoms)
 		if(QDELETED(to_appear))
 			continue
 		to_appear.RemoveInvisibility(type)
+		// Stacks are split off into nullspace and need to be brought back
+		if (isstack(to_appear) && isnull(to_appear.loc))
+			var/obj/item/stack/as_stack = to_appear
+			as_stack.forceMove(loc)
 
 	// And finally, give some user feedback
 	// No feedback is given on failure here -
@@ -199,6 +258,9 @@
 
 	return ritual_result
 
+/obj/effect/heretic_rune/proc/ritual_animation()
+	flick("[icon_state]_active", src)
+	playsound(src, 'sound/effects/magic/castsummon.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 10, ignore_walls = FALSE)
 
 /// A 3x3 heretic rune. The kind heretics actually draw in game.
 /obj/effect/heretic_rune/big
@@ -221,8 +283,8 @@
 	pixel_x = -30
 	pixel_y = 18
 	pixel_z = -48
-	plane = GAME_PLANE
-	layer = SIGIL_LAYER
+	plane = FLOOR_PLANE
+	layer = RUNE_LAYER
 	greyscale_config = /datum/greyscale_config/heretic_rune
 	/// We only set this state after setting the colour, otherwise the animation doesn't colour correctly
 	var/animation_state = "transmutation_rune_draw"

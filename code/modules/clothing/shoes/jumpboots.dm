@@ -1,12 +1,12 @@
 /obj/item/clothing/shoes/bhop
 	name = "jump boots"
-	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
-	icon_state = "jetboots"
+	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid forward movement."
+	icon_state = "jumpboots"
 	inhand_icon_state = null
 	resistance_flags = FIRE_PROOF
 	actions_types = list(/datum/action/item_action/bhop)
 	armor_type = /datum/armor/shoes_bhop
-	strip_delay = 30
+	strip_delay = 3 SECONDS
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash
@@ -36,6 +36,7 @@
 		user.visible_message(span_warning("[usr] dashes forward into the air!"))
 		recharging_time = world.time + recharging_rate
 	else
+		REMOVE_TRAIT(user, TRAIT_MOVE_FLOATING, LEAPING_TRAIT)
 		to_chat(user, span_warning("Something prevents you from dashing forward!"))
 
 /obj/item/clothing/shoes/bhop/rocket
@@ -46,3 +47,19 @@
 	actions_types = list(/datum/action/item_action/bhop/brocket)
 	jumpdistance = 20 //great for throwing yourself into walls and people at high speeds
 	jumpspeed = 5
+
+// Has the rocket boot's dodge action, in addition to sustained flight while activated.
+/obj/item/clothing/shoes/bhop/rocket/jet
+	name = "jet boots"
+	desc = "Top of the line rocket boots, featuring a precise enough flight mechanism that can enable flight!"
+	icon_state = "jetboots"
+	actions_types = list(/datum/action/item_action/bhop, /datum/action/item_action/toggle_flight)
+	/// Are the jet boots currently flying?
+	var/flight_active = FALSE
+
+/obj/item/clothing/shoes/bhop/rocket/jet/update_icon_state()
+	if(flight_active)
+		icon_state = "jetboots_active"
+	else
+		icon_state = "jetboots"
+	return ..()

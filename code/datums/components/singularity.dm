@@ -286,7 +286,7 @@
 			if (STAGE_ONE)
 				steps = 1
 			if (STAGE_TWO)
-				steps = 3//Yes this is right
+				steps = 2
 			if (STAGE_THREE)
 				steps = 3
 			if (STAGE_FOUR)
@@ -373,7 +373,7 @@
 	for(var/mob/living/target as anything in GLOB.mob_living_list)
 		if(target.z != atom_parent.z)
 			continue
-		if(target.status_effects & GODMODE)
+		if(HAS_TRAIT(target, TRAIT_GODMODE))
 			continue
 		var/distance_from_target = get_dist(target, atom_parent)
 		if(distance_from_target < closest_distance)

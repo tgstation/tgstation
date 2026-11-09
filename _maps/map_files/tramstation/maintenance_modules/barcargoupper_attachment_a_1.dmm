@@ -117,7 +117,7 @@
 /obj/item/food/grown/banana,
 /obj/item/food/grown/banana,
 /obj/item/food/grown/banana,
-/obj/item/food/grown/sunflower,
+/obj/item/food/grown/flower/sunflower,
 /turf/open/floor/iron/white,
 /area/station/maintenance/department/cargo)
 "T" = (

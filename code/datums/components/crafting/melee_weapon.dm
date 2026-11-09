@@ -33,17 +33,61 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
+/datum/crafting_recipe/stunsword
+	name = "\improper NT-20 'Excalibur' Stunsword"
+	result = /obj/item/melee/baton/security/stunsword
+	reqs = list(
+		/obj/item/claymore = 1,
+		/obj/item/melee/baton/security = 1
+	)
+	blacklist = list(
+		/obj/item/claymore/cutlass,
+		/obj/item/claymore/cutlass/old,
+		/obj/item/claymore/carrot,
+		/obj/item/claymore/shortsword,
+		/obj/item/claymore/highlander,
+		/obj/item/claymore/weak,
+		/obj/item/claymore/weak/ceremonial,
+		/obj/item/claymore/highlander/robot
+	)
+	tool_behaviors = list(TOOL_WELDER)
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/stunswordalt
+	name = "\improper NT-20 'Excalibur' Stunsword"
+	result = /obj/item/melee/baton/security/stunsword
+	reqs = list(
+		/obj/item/katana = 1,
+		/obj/item/melee/baton/security = 1,
+	)
+	tool_behaviors = list(TOOL_WELDER)
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/stunswordalt2
+	name = "\improper NT-20 'Excalibur' Stunsword"
+	result = /obj/item/melee/baton/security/stunsword
+	reqs = list(
+		/obj/item/melee/sabre = 1,
+		/obj/item/melee/baton/telescopic/contractor_baton = 1,
+	)
+	tool_behaviors = list(TOOL_WELDER)
+	crafting_flags = parent_type::crafting_flags | CRAFT_SKIP_MATERIALS_PARITY
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
 /datum/crafting_recipe/tailclub
 	name = "Tail Club"
 	result = /obj/item/tailclub
 	reqs = list(
-		/obj/item/organ/external/tail/lizard = 1,
+		/obj/item/organ/tail/lizard = 1,
 		/obj/item/stack/sheet/iron = 1,
 	)
-	blacklist = list(/obj/item/organ/external/tail/lizard/fake)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
-
 
 /datum/crafting_recipe/balloon_mallet
 	name = "Balloon Mallet"
@@ -55,18 +99,16 @@
 	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/balloon_mallet/check_requirements(mob/user, list/collected_requirements)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
-		return TRUE
+	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
 
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip
 	reqs = list(
-		/obj/item/organ/external/tail/lizard = 1,
+		/obj/item/organ/tail/lizard = 1,
 		/obj/item/stack/cable_coil = 1,
 	)
-	blacklist = list(/obj/item/organ/external/tail/lizard/fake)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
@@ -74,7 +116,7 @@
 	name = "Cat O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip/kitty
 	reqs = list(
-		/obj/item/organ/external/tail/cat = 1,
+		/obj/item/organ/tail/cat = 1,
 		/obj/item/stack/cable_coil = 1,
 	)
 	time = 4 SECONDS
@@ -92,6 +134,19 @@
 	time = 5 SECONDS
 	category = CAT_WEAPON_MELEE
 
+/datum/crafting_recipe/chainsaw/dual
+	name = "Double-ended chainsaw spear"
+	result = /obj/item/chainsaw/dual
+	reqs = list(
+		/datum/reagent/consumable/ethanol/beer = 20,
+		/obj/item/restraints/handcuffs/cable = 2,
+		/obj/item/chainsaw = 2,
+		/obj/item/stack/rods = 4,
+		/obj/item/stack/medical/wrap/sticky_tape = 2,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_MELEE
+
 /datum/crafting_recipe/spear
 	name = "Spear"
 	result = /obj/item/spear
@@ -100,8 +155,17 @@
 		/obj/item/shard = 1,
 		/obj/item/stack/rods = 1,
 	)
-	parts = list(/obj/item/shard = 1)
 	time = 4 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/wireprod
+	name = "Wireprod assembly"
+	result = /obj/item/wireprod
+	reqs = list(
+		/obj/item/restraints/handcuffs/cable = 1,
+		/obj/item/stack/rods = 1,
+	)
+	time = 2 SECONDS
 	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/toysword
@@ -144,7 +208,6 @@
 /datum/crafting_recipe/house_edge
 	name = "House Edge"
 	result = /obj/item/house_edge
-	always_available = FALSE
 	tool_behaviors = list(TOOL_WRENCH, TOOL_SCREWDRIVER, TOOL_WELDER)
 	reqs = list(
 		/obj/item/v8_engine = 1,
@@ -157,6 +220,7 @@
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_MELEE
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 /datum/crafting_recipe/giant_wrench
 	name = "Big Slappy"
@@ -171,3 +235,131 @@
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/singulo_hammer
+	name = "Singularity Hammer"
+	result = /obj/item/singularityhammer
+	reqs = list(
+		/obj/item/assembly/signaler/anomaly/pyro = 1,
+		/obj/item/assembly/signaler/anomaly/grav = 1,
+		/obj/item/assembly/signaler/anomaly/flux = 1,
+		/obj/item/assembly/signaler/anomaly/bluespace = 1,
+		/obj/item/assembly/signaler/anomaly/vortex = 1,
+		/obj/item/assembly/signaler/anomaly/bioscrambler = 1,
+		/obj/item/assembly/signaler/anomaly/hallucination = 1,
+		/obj/item/assembly/signaler/anomaly/dimensional = 1,
+		/obj/item/assembly/signaler/anomaly/ectoplasm = 1,
+	)
+	machinery = list(
+		/obj/machinery/power/supermatter_crystal = CRAFTING_MACHINERY_CONSUME,
+	)
+	time = 10 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/bambostaff
+	name = "Bamboo Bo Staff"
+	result = /obj/item/bambostaff
+	reqs = list(
+		/obj/item/stack/sheet/mineral/bamboo = 4,
+		/obj/item/grown/log/steel = 2,
+	)
+	time = 8 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/sm_sword
+	name = "Supermatter Sword"
+	result = /obj/item/melee/supermatter_sword
+	reqs = list(
+		/obj/item/assembly/signaler/anomaly/vortex = (MAX_CORES_VORTEX - 1),
+	)
+	machinery = list(
+		/obj/machinery/power/supermatter_crystal/small = CRAFTING_MACHINERY_CONSUME,
+	)
+	time = 120 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/dragonator_spear_untreated
+	name = "Untreated Giant-Killer Spear"
+	result = /obj/item/spear/dragonator_untreated
+	reqs = list(
+		/obj/item/stack/sheet/plasteel = 15,
+		/obj/item/stack/sheet/mineral/titanium = 5,
+		/obj/item/knife = 7,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_MELEE
+
+// Crusher trophies
+/datum/crafting_recipe/crusher_trophy
+	abstract_type = /datum/crafting_recipe/crusher_trophy
+	tool_paths = list(/obj/item/kinetic_crusher)
+	time = 5 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/crusher_trophy/watcher_wing
+	name = "Watcher Wing Trophy"
+	result = /obj/item/crusher_trophy/watcher_wing
+	reqs = list(
+		/obj/item/stack/sheet/sinew = 5,
+		/obj/item/stack/ore/diamond = 6,
+		/obj/item/stack/sheet/bone = 5,
+	)
+
+/datum/crafting_recipe/crusher_trophy/icewing_watcher_wing
+	name = "Icewing Watcher Wing Trophy"
+	result = /obj/item/crusher_trophy/ice_wing
+	reqs = list(
+		/obj/item/stack/sheet/sinew/icewing = 3,
+		/obj/item/stack/ore/diamond = 5,
+		/obj/item/stack/sheet/bone = 3,
+	)
+
+/datum/crafting_recipe/crusher_trophy/magmawing_watcher_wing
+	name = "Magmawing Watcher Wing Trophy"
+	result = /obj/item/crusher_trophy/magma_wing
+	reqs = list(
+		/obj/item/stack/sheet/sinew/magmawing = 3,
+		/obj/item/stack/ore/diamond = 2,
+		/obj/item/stack/sheet/bone = 3,
+	)
+
+/datum/crafting_recipe/crusher_trophy/goliath_tentacle
+	name = "Goliath Tentacle Trophy"
+	result = /obj/item/crusher_trophy/goliath_tentacle
+	reqs = list(
+		/obj/item/stack/sheet/animalhide/goliath_hide = 3,
+		/obj/item/stack/sheet/bone = 6,
+	)
+
+/datum/crafting_recipe/crusher_trophy/legion_skull
+	name = "Legion Skull Trophy"
+	result = /obj/item/crusher_trophy/legion_skull
+	reqs = list(
+		/obj/item/organ/monster_core/regenerative_core/legion = 3, // Good sink for expired cores
+		/obj/item/stack/sheet/bone = 4,
+	)
+
+/datum/crafting_recipe/crusher_trophy/lobster_claw
+	name = "Lobster Claw Trophy"
+	result = /obj/item/crusher_trophy/lobster_claw
+	reqs = list(
+		/obj/item/organ/monster_core/rush_gland = 2,
+		/obj/item/stack/sheet/bone = 4,
+		/obj/item/food/meat/slab/rawcrab = 2,
+	)
+
+/datum/crafting_recipe/crusher_trophy/brimdemon_fang
+	name = "Brimdemon Fang Trophy"
+	result = /obj/item/crusher_trophy/brimdemon_fang
+	reqs = list(
+		/obj/item/organ/monster_core/brimdust_sac = 2,
+		/datum/reagent/brimdust = 45,
+	)
+
+/datum/crafting_recipe/crusher_trophy/bileworm_spewlet
+	name = "Bileworm Spewlet Trophy"
+	result = /obj/item/crusher_trophy/bileworm_spewlet
+	reqs = list(
+		/obj/item/stack/sheet/animalhide/bileworm = 3,
+		/obj/item/stack/ore/gold = 8,
+	)

@@ -5,19 +5,19 @@
 	base_icon_state = "securecrate"
 	secure = TRUE
 	locked = TRUE
-	max_integrity = 500
+	max_integrity = 300
 	armor_type = /datum/armor/crate_secure
-	damage_deflection = 25
+	damage_deflection = 10
 
 	var/tamperproof = 0
 
 /datum/armor/crate_secure
-	melee = 30
-	bullet = 50
-	laser = 50
-	energy = 100
-	fire = 80
-	acid = 80
+	melee = 15
+	bullet = 25
+	laser = 25
+	energy = 50
+	fire = 40
+	acid = 40
 
 /obj/structure/closet/crate/secure/Initialize(mapload)
 	. = ..()
@@ -111,6 +111,7 @@
 	icon_state = "atmos_secure"
 	base_icon_state = "atmos_secure"
 
+
 /obj/structure/closet/crate/secure/science
 	name = "secure science crate"
 	desc = "A crate with a lock on it, painted in the scheme of the station's scientists."
@@ -122,51 +123,133 @@
 	icon_state = "robo_secure"
 	base_icon_state = "robo_secure"
 
-/obj/structure/closet/crate/secure/owned
-	name = "private crate"
-	desc = "A crate cover designed to only open for who purchased its contents."
-	icon_state = "privatecrate"
-	base_icon_state = "privatecrate"
-	///Account of the person buying the crate if private purchasing.
-	var/datum/bank_account/buyer_account
-	///Department of the person buying the crate if buying via the NIRN app.
-	var/datum/bank_account/department/department_account
-	///Is the secure crate opened or closed?
-	var/privacy_lock = TRUE
-	///Is the crate being bought by a person, or a budget card?
-	var/department_purchase = FALSE
+/obj/structure/closet/crate/secure/trashcart
+	desc = "A heavy, metal trashcart with wheels. It has an electronic lock on it."
+	name = "secure trash cart"
+	max_integrity = 250
+	damage_deflection = 10
+	icon_state = "securetrashcart"
+	base_icon_state = "securetrashcart"
+	weld_z = 5
+	paint_jobs = null
+	req_access = list(ACCESS_JANITOR)
 
-/obj/structure/closet/crate/secure/owned/examine(mob/user)
+/obj/structure/closet/crate/secure/trashcart/filled
+
+/obj/structure/closet/crate/secure/trashcart/filled/PopulateContents()
 	. = ..()
-	. += span_notice("It's locked with a privacy lock, and can only be unlocked by the buyer's ID.")
+	for(var/i in 1 to rand(8,12))
+		new /obj/effect/spawner/random/trash/deluxe_garbage(src)
+		if(prob(35))
+			new /obj/effect/spawner/random/trash/garbage(src)
+	for(var/i in 1 to rand(4,6))
+		if(prob(30))
+			new /obj/item/storage/bag/trash/filled(src)
 
-/obj/structure/closet/crate/secure/owned/Initialize(mapload, datum/bank_account/_buyer_account)
+/obj/structure/closet/crate/secure/freezer/interdyne
+	name = "\improper Interdyne freezer"
+	desc = "This is an Interdyne Pharmaceuticals branded freezer. May or may not contain fresh organs."
+	icon_state = "interdynefreezer"
+	base_icon_state = "interdynefreezer"
+	req_access = list(ACCESS_SYNDICATE)
+
+/obj/structure/closet/crate/secure/freezer/interdyne/blood
+	name = "\improper Interdyne blood freezer"
+	desc = "This is an Interdyne Pharmaceuticals branded freezer. It's made to contain fresh, high-quality blood."
+
+/obj/structure/closet/crate/secure/freezer/interdyne/blood/PopulateContents()
 	. = ..()
-	buyer_account = _buyer_account
-	if(IS_DEPARTMENTAL_ACCOUNT(buyer_account))
-		department_purchase = TRUE
-		department_account = buyer_account
+	for(var/i in 1 to 13)
+		new /obj/item/reagent_containers/blood/random(src)
 
-/obj/structure/closet/crate/secure/owned/togglelock(mob/living/user, silent)
-	if(privacy_lock)
-		if(!broken)
-			var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-			if(id_card)
-				if(id_card.registered_account)
-					if(id_card.registered_account == buyer_account || (department_purchase && (id_card.registered_account?.account_job?.paycheck_department) == (department_account.department_id)))
-						if(iscarbon(user))
-							add_fingerprint(user)
-						locked = !locked
-						user.visible_message(span_notice("[user] unlocks [src]'s privacy lock."),
-										span_notice("You unlock [src]'s privacy lock."))
-						privacy_lock = FALSE
-						update_appearance()
-					else if(!silent)
-						to_chat(user, span_warning("Bank account does not match with buyer!"))
-				else if(!silent)
-					to_chat(user, span_warning("No linked bank account detected!"))
-			else if(!silent)
-				to_chat(user, span_warning("No ID detected!"))
-		else if(!silent)
-			to_chat(user, span_warning("[src] is broken!"))
-	else ..()
+/obj/structure/closet/crate/secure/freezer/donk
+	name = "\improper Donk Co. fridge"
+	desc = "A Donk Co. brand fridge, keeps your donkpockets and foam ammunition fresh!"
+	icon_state = "donkcocrate_secure"
+	base_icon_state = "donkcocrate_secure"
+	req_access = list(ACCESS_SYNDICATE)
+
+/obj/structure/closet/crate/secure/syndicate
+	name = "\improper Syndicate crate"
+	desc = "A secure crate with the Syndicate's branding on it."
+	icon_state = "syndicrate"
+	base_icon_state = "syndicrate"
+	req_access = list(ACCESS_SYNDICATE)
+
+/obj/structure/closet/crate/secure/syndicate/interdyne
+	name = "\improper Interdyne crate"
+	desc = "Crate belonging to Interdyne Pharmaceutics. Hopefully doesn't have bioweapons inside..."
+	icon_state = "interdynecrate"
+	base_icon_state = "interdynecrate"
+
+/obj/structure/closet/crate/secure/syndicate/tiger
+	name = "\improper Tiger Co-Op crate"
+	icon_state = "tigercrate"
+	base_icon_state = "tigercrate"
+
+/obj/structure/closet/crate/secure/syndicate/self
+	name = "\improper S.E.L.F. crate"
+	desc = "A secure crate locked from the inside with a scanning panel above it and holographic display of lock's status. Sentient Engine Liberation Front engineers are quite the show-offs."
+	icon_state = "selfcrate_secure"
+	base_icon_state = "selfcrate_secure"
+
+/obj/structure/closet/crate/secure/syndicate/mi13
+	name = "mysterious secure crate"
+	desc = "A secure crate. Lacks any obvious logos or even codes for where it arrived from, but looks like taken straight from a spy movie."
+	icon_state = "mithirteencrate"
+	base_icon_state = "mithirteencrate"
+	open_sound_volume = 15
+	close_sound_volume = 20
+
+/obj/structure/closet/crate/secure/syndicate/arc
+	name = "\improper Animal Rights Consortium crate"
+	icon_state = "arccrate"
+	base_icon_state = "arccrate"
+
+/obj/structure/closet/crate/secure/syndicate/cybersun
+	name = "\improper Cybersun crate"
+
+/obj/structure/closet/crate/secure/syndicate/cybersun/dawn
+	desc = "A secure crate from Cybersun Industries. It has distinct orange-green colouring, probably of some departament or division, but you cannot tell what is it."
+	icon_state = "cyber_dawncrate"
+	base_icon_state = "cyber_dawncrate"
+
+/obj/structure/closet/crate/secure/syndicate/cybersun/noon
+	desc = "A secure crate from Cybersun Industries. It has distinct yellow-orange colouring, probably of some departament or division, but you cannot tell what is it."
+	icon_state = "cyber_nooncrate"
+	base_icon_state = "cyber_nooncrate"
+
+/obj/structure/closet/crate/secure/syndicate/cybersun/dusk
+	desc = "A secure crate from Cybersun Industries. It has distinct purple-green colouring, probably of some departament or division, but you cannot tell what is it."
+	icon_state = "cyber_duskcrate"
+	base_icon_state = "cyber_duskcrate"
+
+/obj/structure/closet/crate/secure/syndicate/cybersun/night
+	desc = "A secure crate from Cybersun Industries. This one blatantly adorns syndicate colours. You can only guess it contains equipment for syndicate operatives."
+	icon_state = "cyber_nightcrate"
+	base_icon_state = "cyber_nightcrate"
+
+/obj/structure/closet/crate/secure/syndicate/wafflecorp
+	name = "\improper Waffle corp. crate"
+	desc = "A very outdated model and design of shipment crate with a modern lock strapped on it, how befitting of its brand owner, Waffle Corporation. Golden lettering written in cursive by the logo reads 'bringing you consecutively top five world-wide rated* breakfast since 2055. A much smaller fine print, also in cursive, clarifies: '*in years 2099-2126'... It's year 2563 now, however."
+	icon_state = "wafflecrate"
+	base_icon_state = "wafflecrate"
+
+/obj/structure/closet/crate/secure/syndicate/gorlex
+	name = "\improper Gorlex Marauders crate"
+	icon_state = "gorlexcrate"
+	base_icon_state = "gorlexcrate"
+
+/obj/structure/closet/crate/secure/syndicate/gorlex/weapons
+	desc = "A secure weapons crate of Gorlex Marauders."
+	name = "weapons crate"
+	icon_state = "gorlex_weaponcrate"
+	base_icon_state = "gorlex_weaponcrate"
+
+/obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
+	desc = "A beaten up weapon crate with Gorlex Marauders branding. Its lock looks broken."
+	name = "damaged weapons crate"
+	secure = FALSE
+	locked = FALSE
+	max_integrity = 400
+	damage_deflection = 15

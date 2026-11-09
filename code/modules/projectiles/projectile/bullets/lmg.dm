@@ -12,6 +12,7 @@
 
 /obj/projectile/bullet/incendiary/fnx99
 	damage = 20
+	fireblast_radius = 3
 
 // Turrets
 
@@ -44,12 +45,12 @@
 	sharpness = SHARP_EDGED
 	weak_against_armour = TRUE
 	wound_bonus = -40
-	bare_wound_bonus = 30
+	exposed_wound_bonus = 30
 	wound_falloff_tile = -8
 
 /obj/projectile/bullet/incendiary/a7mm
 	name = "7mm incendiary bullet"
-	damage = 15
+	damage = 25
 	fire_stacks = 3
 
 /obj/projectile/bullet/a7mm/match

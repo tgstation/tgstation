@@ -1,26 +1,12 @@
 /obj/item/clothing/glasses/hud
+	gender = NEUTER
 	name = "HUD"
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
-	var/hud_type = null
-
-	// NOTE: Just because you have a HUD display doesn't mean you should be able to interact with stuff on examine, that's where the associated trait (TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD, etc) is necessary. 
-
-/obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
-	..()
-	if(!(slot & ITEM_SLOT_EYES))
-		return
-	if(hud_type)
-		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
-		our_hud.show_to(user)
-
-/obj/item/clothing/glasses/hud/dropped(mob/living/carbon/human/user)
-	..()
-	if(!istype(user) || user.glasses != src)
-		return
-	if(hud_type)
-		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
-		our_hud.hide_from(user)
+	actions_types = list(/datum/action/item_action/toggle_wearable_hud)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	/// Whether the HUD info is on or off
+	var/display_active = TRUE
 
 /obj/item/clothing/glasses/hud/emp_act(severity)
 	. = ..()
@@ -51,13 +37,35 @@
 			user.say("WHY IS THERE A BAR ON MY HEAD?!!")
 	return OXYLOSS
 
+/obj/item/clothing/glasses/hud/equipped(mob/living/user, slot)
+	. = ..()
+	display_active = TRUE
+
+/obj/item/clothing/glasses/hud/proc/toggle_hud_display(mob/living/carbon/eye_owner)
+	if(display_active)
+		display_active = FALSE
+		for(var/hud_trait in clothing_traits)
+			REMOVE_CLOTHING_TRAIT(eye_owner, hud_trait)
+		balloon_alert(eye_owner, "hud disabled")
+		return
+
+	display_active = TRUE
+	for(var/hud_trait in clothing_traits)
+		ADD_CLOTHING_TRAIT(eye_owner, hud_trait)
+	balloon_alert(eye_owner, "hud enabled")
+
 /obj/item/clothing/glasses/hud/health
 	name = "health scanner HUD"
 	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status."
 	icon_state = "healthhud"
-	hud_type = DATA_HUD_MEDICAL_ADVANCED
 	clothing_traits = list(TRAIT_MEDICAL_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
+
+/obj/item/clothing/glasses/hud/medsechud
+	name = "health scanner security HUD"
+	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their health status, ID status and security records."
+	icon_state = "medsechud"
+	clothing_traits = list(TRAIT_MEDICAL_HUD, TRAIT_SECURITY_HUD)
 
 /obj/item/clothing/glasses/hud/health/night
 	name = "night vision health scanner HUD"
@@ -67,35 +75,44 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = GLASSESCOVERSEYES
 	// Blue green, dark
-	color_cutoffs = list(5, 15, 30)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(20, 20, 45)
+	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+	actions_types = list(/datum/action/item_action/toggle_nv)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 3.5)
+
+/obj/item/clothing/glasses/hud/health/night/update_icon_state()
+	. = ..()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/hud/health/night/meson
 	name = "night vision meson health scanner HUD"
 	desc = "Truly combat ready."
-	vision_flags = SEE_TURFS
+	clothing_traits = list(TRAIT_MEDICAL_HUD, TRAIT_MESON_VISION)
 
 /obj/item/clothing/glasses/hud/health/night/science
 	name = "night vision medical science scanner HUD"
-	desc = "An clandestine medical science heads-up display that allows operatives to find \
-		dying captains and the perfect poison to finish them off in complete darkness."
-	clothing_traits = list(TRAIT_REAGENT_SCANNER)
+	desc = "A clandestine medical science heads-up display that allows operatives to find \
+		both dying captains and the perfect poison to finish them off, all in complete darkness."
+	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_MEDICAL_HUD)
 
 /obj/item/clothing/glasses/hud/health/sunglasses
+	gender = PLURAL
 	name = "medical HUDSunglasses"
 	desc = "Sunglasses with a medical HUD."
 	icon_state = "sunhudmed"
+	inhand_icon_state = "sunhudmed"
 	flash_protect = FLASH_PROTECTION_FLASH
 	flags_cover = GLASSESCOVERSEYES
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/blue
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.55)
 
 /obj/item/clothing/glasses/hud/health/sunglasses/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunmedremoval)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -103,7 +120,6 @@
 	name = "diagnostic HUD"
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
 	icon_state = "diagnostichud"
-	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
 	clothing_traits = list(TRAIT_DIAGNOSTIC_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
@@ -115,10 +131,17 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = GLASSESCOVERSEYES
 	// Pale yellow
-	color_cutoffs = list(30, 20, 5)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(25, 15, 5)
+	glass_colour_type = /datum/client_colour/glass_colour/lightyellow
+	actions_types = list(/datum/action/item_action/toggle_nv)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 3)
+
+/obj/item/clothing/glasses/hud/diagnostic/night/update_icon_state()
+	. = ..()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/hud/diagnostic/sunglasses
+	gender = PLURAL
 	name = "diagnostic sunglasses"
 	desc = "Sunglasses with a diagnostic HUD."
 	icon_state = "sunhuddiag"
@@ -126,13 +149,14 @@
 	flash_protect = FLASH_PROTECTION_FLASH
 	flags_cover = GLASSESCOVERSEYES
 	tint = 1
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.55)
 
 /obj/item/clothing/glasses/hud/diagnostic/sunglasses/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsundiagremoval)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -140,7 +164,6 @@
 	name = "security HUD"
 	desc = "A heads-up display that scans the humanoids in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
-	hud_type = DATA_HUD_SECURITY_ADVANCED
 	clothing_traits = list(TRAIT_SECURITY_HUD)
 	glass_colour_type = /datum/client_colour/glass_colour/red
 
@@ -163,20 +186,23 @@
 	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/hud/security/sunglasses
+	gender = PLURAL
 	name = "security HUDSunglasses"
 	desc = "Sunglasses with a security HUD."
 	icon_state = "sunhudsec"
+	inhand_icon_state = "sunhudsec"
 	flash_protect = FLASH_PROTECTION_FLASH
 	flags_cover = GLASSESCOVERSEYES
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.55)
 
 /obj/item/clothing/glasses/hud/security/sunglasses/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/hudsunsecremoval)
 
-	AddComponent(
-		/datum/component/slapcrafting,\
+	AddElement(
+		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
@@ -187,10 +213,17 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = GLASSESCOVERSEYES
 	// Red with a tint of green
-	color_cutoffs = list(35, 5, 5)
-	glass_colour_type = /datum/client_colour/glass_colour/green
+	color_cutoffs = list(40, 15, 10)
+	glass_colour_type = /datum/client_colour/glass_colour/lightred
+	actions_types = list(/datum/action/item_action/toggle_nv)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3.5)
+
+/obj/item/clothing/glasses/hud/security/night/update_icon_state()
+	. = ..()
+	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars
+	gender = PLURAL
 	name = "\improper HUD gar glasses"
 	desc = "GAR glasses with a HUD."
 	icon_state = "gar_sec"
@@ -201,7 +234,7 @@
 	throw_speed = 4
 	attack_verb_continuous = list("slices")
 	attack_verb_simple = list("slice")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	sharpness = SHARP_EDGED
 
 /obj/item/clothing/glasses/hud/security/sunglasses/gars/giga
@@ -224,20 +257,14 @@
 	if (wearer.glasses != src)
 		return
 
-	if (hud_type)
-		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
-		our_hud.hide_from(user)
-
-	if (hud_type == DATA_HUD_MEDICAL_ADVANCED)
-		hud_type = null
-	else if (hud_type == DATA_HUD_SECURITY_ADVANCED)
-		hud_type = DATA_HUD_MEDICAL_ADVANCED
+	if (TRAIT_MEDICAL_HUD in clothing_traits)
+		detach_clothing_traits(TRAIT_MEDICAL_HUD)
+	else if (TRAIT_SECURITY_HUD in clothing_traits)
+		detach_clothing_traits(TRAIT_MEDICAL_HUD)
+		attach_clothing_traits(TRAIT_SECURITY_HUD)
 	else
-		hud_type = DATA_HUD_SECURITY_ADVANCED
-
-	if (hud_type)
-		var/datum/atom_hud/our_hud = GLOB.huds[hud_type]
-		our_hud.show_to(user)
+		detach_clothing_traits(TRAIT_MEDICAL_HUD)
+		attach_clothing_traits(TRAIT_SECURITY_HUD)
 
 /datum/action/item_action/switch_hud
 	name = "Switch HUD"
@@ -246,27 +273,31 @@
 	name = "thermal HUD scanner"
 	desc = "Thermal imaging HUD in the shape of glasses."
 	icon_state = "thermal"
-	hud_type = DATA_HUD_SECURITY_ADVANCED
-	vision_flags = SEE_MOBS
 	color_cutoffs = list(25, 8, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/red
+	clothing_traits = list(TRAIT_THERMAL_VISION, TRAIT_SECURITY_HUD)
+	var/current_hud = TRAIT_SECURITY_HUD
 
 /obj/item/clothing/glasses/hud/toggle/thermal/attack_self(mob/user)
-	..()
-	switch (hud_type)
-		if (DATA_HUD_MEDICAL_ADVANCED)
+	. = ..()
+	detach_clothing_traits(current_hud)
+	switch (current_hud)
+		if (TRAIT_MEDICAL_HUD)
+			current_hud = TRAIT_MESON_VISION
 			icon_state = "meson"
 			color_cutoffs = list(5, 15, 5)
-			change_glass_color(user, /datum/client_colour/glass_colour/green)
-		if (DATA_HUD_SECURITY_ADVANCED)
+			change_glass_color(/datum/client_colour/glass_colour/green)
+		if (TRAIT_MESON_VISION)
+			current_hud = TRAIT_SECURITY_HUD
 			icon_state = "thermal"
 			color_cutoffs = list(25, 8, 5)
-			change_glass_color(user, /datum/client_colour/glass_colour/red)
+			change_glass_color(/datum/client_colour/glass_colour/red)
 		else
+			current_hud = TRAIT_MEDICAL_HUD
 			icon_state = "purple"
 			color_cutoffs = list(15, 0, 25)
-			change_glass_color(user, /datum/client_colour/glass_colour/purple)
-	user.update_sight()
+			change_glass_color(/datum/client_colour/glass_colour/purple)
+	attach_clothing_traits(current_hud)
 	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)
@@ -276,6 +307,7 @@
 	thermal_overload()
 
 /obj/item/clothing/glasses/hud/spacecop
+	gender = PLURAL
 	name = "police aviators"
 	desc = "For thinking you look cool while brutalizing protestors and minorities."
 	icon_state = "bigsunglasses"
@@ -286,6 +318,7 @@
 
 
 /obj/item/clothing/glasses/hud/spacecop/hidden // for the undercover cop
+	gender = PLURAL
 	name = "sunglasses"
 	desc = "These sunglasses are special, and let you view potential criminals."
 	icon_state = "sun"

@@ -1,0 +1,13 @@
+help: Use a floor subtype instead of editing icon_state.
+
+/turf/open/floor:
+  banned_variables:
+    - icon_state
+
+/turf/open/misc/asteroid:
+  banned_variables:
+    - icon_state
+
+/turf/open/indestructible:
+  banned_variables:
+    - icon_state

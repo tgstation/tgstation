@@ -2,8 +2,6 @@
 #define MAX_ITEMS_PER_RATING 10
 /// How many items are converted per cycle, per rating point of the manipulator used.
 #define PROCESSED_ITEMS_PER_RATING 5
-/// Starting purity of reagents made in biogenerator
-#define BIOGEN_REAGENT_PURITY 0.3
 
 /obj/machinery/biogenerator
 	name = "biogenerator"
@@ -28,8 +26,8 @@
 	var/processed_items_per_cycle = 5
 	/// The maximum amount of items the biogenerator can hold for biomass conversion purposes.
 	var/max_items = 20
-	/// The current amount of items that can be converted into biomass that the biogenerator is holding.
-	var/current_item_count = 0
+	/// Cached amount of items currently in the biogenerator, for use in UI so we don't have to loop over contents every second while its open
+	var/content_count_cache = 0
 	/// The maximum amount of biomass that will affect the visuals of the biogenerator.
 	var/max_visual_biomass = 5000
 	/// The maximum amount of reagents that the biogenerator can output to a container at once.
@@ -51,8 +49,7 @@
 
 /obj/machinery/biogenerator/Initialize(mapload)
 	. = ..()
-	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator])
-		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator] = new /datum/techweb/autounlocking/biogenerator
+	GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator] ||= new /datum/techweb/autounlocking/biogenerator()
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator]
 	soundloop = new(src, processing)
 	if(mapload)
@@ -75,7 +72,7 @@
 		if(!tool.tool_start_check(user, amount=2))
 			return TRUE
 		user.visible_message(
-			span_notice("[user.name] starts to cut the [name] free from the floor."),
+			span_notice("[user.name] starts to cut \the [src] free from the floor."),
 			span_notice("You start to cut [src] free from the floor..."),
 			span_hear("You hear welding."),
 		)
@@ -90,7 +87,7 @@
 	if(!tool.tool_start_check(user, amount=2))
 		return TRUE
 	user.visible_message(
-		span_notice("[user.name] starts to weld the [name] to the floor."),
+		span_notice("[user.name] starts to weld \the [src] to the floor."),
 		span_notice("You start to weld [src] to the floor..."),
 		span_hear("You hear welding."),
 	)
@@ -157,7 +154,7 @@
 		. += span_notice(" - Productivity at <b>[productivity * 100]%</b>.")
 		. += span_notice(" - Converting <b>[processed_items_per_cycle]</b> pieces of food per cycle.")
 		. += span_notice(" - Matter consumption at <b>[1 / efficiency * 100]</b>%.")
-		. += span_notice(" - Internal biomass converter capacity at <b>[max_items]</b> pieces of food, and currently holding <b>[current_item_count]</b>.")
+		. += span_notice(" - Internal biomass converter capacity at <b>[max_items]</b> pieces of food, and currently holding <b>[get_content_count()] piece\s</b>.")
 
 	if(welded_down)
 		. += span_info("It's moored firmly to the floor. You can unsecure its moorings with a <b>welder</b>.")
@@ -197,86 +194,83 @@
 	. += emissive_appearance(icon, "[icon_state]_o_screen", src)
 
 /obj/machinery/biogenerator/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	switch(default_unfasten_wrench(user, tool))
+		if(SUCCESSFUL_UNFASTEN)
+			return ITEM_INTERACT_SUCCESS
+		if(FAILED_UNFASTEN)
+			return ITEM_INTERACT_BLOCKING
+	return NONE
 
-/obj/machinery/biogenerator/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(user.combat_mode)
-		return ..()
+/obj/machinery/biogenerator/screwdriver_act(mob/living/user, obj/item/tool)
+	. = default_deconstruction_screwdriver(user, tool)
+	if(processing)
+		stop_process(FALSE)
 
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, attacking_item))
-		if(processing)
-			stop_process(FALSE)
+	if(beaker)
+		beaker.forceMove(drop_location())
+		beaker = null
 
-		if(beaker)
-			beaker.forceMove(drop_location())
-			beaker = null
+	return .
 
-		update_appearance(UPDATE_ICON)
+/obj/machinery/biogenerator/crowbar_act(mob/living/user, obj/item/tool)
+	. = default_deconstruction_crowbar(user, tool)
+	if(!(. & ITEM_INTERACT_SUCCESS))
 		return
-
 	var/turf/drop_location = drop_location()
-	if(default_deconstruction_crowbar(attacking_item))
-		if(biomass > 0)
-			drop_location.visible_message(span_warning("Biomass spills from \the [src]'s biomass tank!"))
-			playsound(drop_location, 'sound/effects/slosh.ogg', 25, vary = TRUE)
-			new /obj/effect/decal/cleanable/greenglow(drop_location)
+	if(biomass > 0)
+		drop_location.visible_message(span_warning("Biomass spills from \the [src]'s biomass tank!"))
+		playsound(drop_location, 'sound/effects/slosh.ogg', 25, vary = TRUE)
+		new /obj/effect/decal/cleanable/greenglow(drop_location)
 
-		return
+/obj/machinery/biogenerator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return NONE
 
-	if(istype(attacking_item, /obj/item/reagent_containers/cup))
+	if(istype(tool, /obj/item/reagent_containers/cup))
 		if(panel_open)
-			to_chat(user, span_warning("Close the maintenance panel first."))
-		else
-			insert_beaker(user, attacking_item)
+			to_chat(user, span_warning("Close the maintenance panel first!"))
+			return ITEM_INTERACT_BLOCKING
 
-		return TRUE
+		insert_beaker(user, tool)
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(attacking_item, /obj/item/storage/bag))
-		if(current_item_count >= max_items)
+	var/content_count = get_content_count()
+	if(istype(tool, /obj/item/storage/bag))
+		if(content_count >= max_items)
 			to_chat(user, span_warning("\The [src] is already full! Activate it to free up some space."))
-			return TRUE
+			return ITEM_INTERACT_FAILURE
 
-		var/obj/item/storage/bag/bag = attacking_item
-
+		var/obj/item/storage/bag/bag = tool
 		for(var/obj/item/food/item in bag.contents)
-			if(current_item_count >= max_items)
+			if(content_count >= max_items)
 				break
+			bag.atom_storage.attempt_remove(item, src)
 
-			if(bag.atom_storage.attempt_remove(item, src))
-				current_item_count++
-
+		content_count = get_content_count() // Refresh the cache for UI
 		if(bag.contents.len == 0)
 			to_chat(user, span_info("You empty \the [bag] into \the [src]."))
-
-		else if (current_item_count >= max_items)
+		else if (content_count >= max_items)
 			to_chat(user, span_info("You fill \the [src] from \the [bag] to its capacity."))
-
 		else
 			to_chat(user, span_info("You fill \the [src] from \the [bag]."))
+		return ITEM_INTERACT_SUCCESS
 
-		return TRUE //no afterattack
+	if(istype(tool, /obj/item/food))
+		if(content_count >= max_items)
+			to_chat(user, span_warning("\The [src] is already full! Activate it to free up some space."))
+			return ITEM_INTERACT_FAILURE
 
-	else if(istype(attacking_item, /obj/item/food))
-		if(current_item_count >= max_items)
-			to_chat(user, span_warning("\The [src] is full! Activate it."))
+		if(user.transferItemToLoc(tool, src))
+			to_chat(user, span_info("You insert \the [tool] in \the [src]"))
+			get_content_count() // Refresh the cache for UI
+		return ITEM_INTERACT_SUCCESS
 
-		else
-			if(user.transferItemToLoc(attacking_item, src))
-				current_item_count++
-				to_chat(user, span_info("You insert \the [attacking_item] in \the [src]"))
-
-		return TRUE //no afterattack
-
-	else
-		to_chat(user, span_warning("You cannot put \the [attacking_item] in \the [src]!"))
-
+	to_chat(user, span_warning("You cannot put \the [tool] in \the [src]!"))
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/biogenerator/click_alt(mob/living/user)
 	eject_beaker(user)
 	return CLICK_ACTION_SUCCESS
-
 
 /// Activates biomass processing and converts all inserted food products into biomass
 /obj/machinery/biogenerator/proc/start_process()
@@ -296,7 +290,6 @@
 	soundloop.start()
 	update_appearance()
 
-
 /obj/machinery/biogenerator/process(seconds_per_tick)
 	if(!processing)
 		return
@@ -305,7 +298,7 @@
 		stop_process()
 		return
 
-	if(!current_item_count)
+	if(!get_content_count())
 		stop_process()
 		return
 
@@ -317,23 +310,24 @@
 
 		if(food_to_convert.flags_1 & HOLOGRAM_1)
 			qdel(food_to_convert)
-			current_item_count = max(current_item_count - 1, 0)
-			continue
-
-		convert_to_biomass(food_to_convert)
+		else
+			convert_to_biomass(food_to_convert)
 
 	use_energy(active_power_usage * seconds_per_tick)
 
-	if(!current_item_count)
+	if(!get_content_count())
 		stop_process(FALSE)
 
 	update_appearance()
 
-
+/obj/machinery/biogenerator/proc/get_content_count()
+	content_count_cache = 0
+	for (var/obj/item/food/food in contents)
+		content_count_cache += 1
+	return content_count_cache
 
 /**
- * Simple helper proc that converts the given food item into biomass for the generator,
- * while also handling removing it and modifying the `current_item_count`.
+ * Simple helper proc that converts the given food item into biomass for the generator, while also handling removing it
  *
  * Arguments:
  * * food_to_convert - The food item that will be converted into biomass and
@@ -341,10 +335,8 @@
  */
 /obj/machinery/biogenerator/proc/convert_to_biomass(obj/item/food/food_to_convert)
 	var/nutriments = ROUND_UP(food_to_convert.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, type_check = REAGENT_PARENT_TYPE))
-	qdel(food_to_convert)
-	current_item_count = max(current_item_count - 1, 0)
 	biomass += nutriments * productivity
-
+	qdel(food_to_convert)
 
 /**
  * Simple helper to handle stopping the process of the biogenerator.
@@ -363,10 +355,10 @@
 
 
 /obj/machinery/biogenerator/proc/use_biomass(list/materials, amount = 1, remove_biomass = TRUE)
-	if(materials.len != 1 || materials[1] != GET_MATERIAL_REF(/datum/material/biomass))
+	if(materials.len != 1 || materials[1] != SSmaterials.get_material(/datum/material/biomass))
 		return FALSE
 
-	var/cost = materials[GET_MATERIAL_REF(/datum/material/biomass)] * amount / efficiency
+	var/cost = materials[SSmaterials.get_material(/datum/material/biomass)] * amount / efficiency
 	if (cost > biomass)
 		return FALSE
 
@@ -396,13 +388,12 @@
 		if(!use_biomass(design.materials, amount))
 			return FALSE
 
+		var/drop_location = drop_location()
 		if(istype(design.build_path, /obj/item/stack/sheet))
-			new design.build_path(drop_location(), amount)
-
+			design.create_result(drop_location, amount = amount)
 		else
-			var/drop_location = drop_location()
 			for(var/i in 1 to amount)
-				new design.build_path(drop_location)
+				design.create_result(drop_location)
 
 	return TRUE
 
@@ -444,15 +435,17 @@
 	if(!can_interact(user))
 		return
 
+	var/obj/item/ejected_beaker = beaker
+
 	if(user.put_in_hands(beaker))
 		if(!silent)
-			to_chat(user, span_notice("You eject [beaker] from [src]."))
+			to_chat(user, span_notice("You eject [ejected_beaker] from [src]."))
 
 	else
 		if(!silent)
-			to_chat(user, span_notice("You eject [beaker] from [src] onto the ground."))
+			to_chat(user, span_notice("You eject [ejected_beaker] from [src] onto the ground."))
 
-		beaker.forceMove(drop_location())
+		ejected_beaker.forceMove(drop_location())
 
 	beaker = null
 	update_appearance(UPDATE_ICON)
@@ -467,7 +460,7 @@
 
 /obj/machinery/biogenerator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/research_designs),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
 
 
@@ -485,7 +478,7 @@
 	data["processing"] = processing
 	data["max_output"] = max_output
 	data["efficiency"] = efficiency
-	data["can_process"] = !!current_item_count
+	data["can_process"] = !!content_count_cache
 
 	if(beaker)
 		data["beakerCurrentVolume"] = round(beaker.reagents.total_volume, 0.01)
@@ -500,35 +493,35 @@
 	data["categories"] = list()
 	data["max_visual_biomass"] = max_visual_biomass
 
-	var/categories = show_categories.Copy()
+	var/list/categories = show_categories.Copy()
 	for(var/category in categories)
 		categories[category] = list()
 
-	for(var/design_id in stored_research.researched_designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+	for(var/design_path in stored_research.researched_designs)
+		var/datum/design/design = SSresearch.techweb_designs[design_path]
 		for(var/category in categories)
 			if(category in design.category)
 				categories[category] += design
 
-	for(var/category in categories)
+	for(var/category, category_designs in categories)
 		var/list/cat = list(
 			"name" = category,
 			"items" = (category == selected_cat ? list() : null))
 
-		for(var/item in categories[category])
-			var/datum/design/design = item
+		for(var/datum/design/design as anything in category_designs)
 			cat["items"] += list(list(
-				"id" = design.id,
+				"path" = design.type,
 				"name" = design.name,
-				"is_reagent" = design.make_reagent != null,
-				"cost" = design.materials[GET_MATERIAL_REF(/datum/material/biomass)] / efficiency,
+				"icon" = design.asset_id,
+				"is_reagent" = !isnull(design.make_reagent),
+				"cost" = design.materials[SSmaterials.get_material(/datum/material/biomass)] / efficiency,
 			))
 		data["categories"] += list(cat)
 
 	return data
 
 
-/obj/machinery/biogenerator/ui_act(action, list/params)
+/obj/machinery/biogenerator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -543,24 +536,23 @@
 			return TRUE
 
 		if("create")
+			var/design_path = text2path(params["design_path"])
+			if(!design_path)
+				return
+
+			if(!stored_research.researched_designs[design_path])
+				return
+
+			var/datum/design/design = SSresearch.techweb_designs[design_path]
+			if(!istype(design))
+				stack_trace("Invalid design ID passed into biogenerator ui_act()")
+				return
+
 			var/amount = text2num(params["amount"])
 			if(!amount)
 				return
-
-			var/id = params["id"]
-			if(!stored_research.researched_designs.Find(id))
-				stack_trace("ID did not map to a researched datum [id]")
-				return
-
-			var/datum/design/design = SSresearch.techweb_design_by_id(id)
 			amount = clamp(amount, 1, (design.make_reagent && beaker ? beaker.reagents.maximum_volume - beaker.reagents.total_volume : max_output))
-
-			if(design && !istype(design, /datum/design/error_design))
-				create_product(design, amount)
-
-			else
-				stack_trace("ID could not be turned into a valid techweb design datum [id]")
-				return
+			create_product(design, amount)
 
 			return TRUE
 
@@ -571,4 +563,3 @@
 
 #undef MAX_ITEMS_PER_RATING
 #undef PROCESSED_ITEMS_PER_RATING
-#undef BIOGEN_REAGENT_PURITY

@@ -48,11 +48,8 @@
 	return OXYLOSS
 
 /obj/item/hand_labeler/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-	if(!mode) //if it's off, give up.
-		return .
+	if(!mode)
+		return NONE
 	if(!apply_label(interacting_with, user, modifiers))
 		return ITEM_INTERACT_BLOCKING
 	return ITEM_INTERACT_SUCCESS
@@ -116,8 +113,12 @@
 	labels_left = initial(labels_left) //Yes, it's capped at its initial value
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/hand_labeler/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
-	return !mode
+/obj/item/hand_labeler/examine()
+	. = ..()
+	if(labels_left > 0)
+		. += span_notice("It looks like it could label [labels_left] more thing\s.")
+	else
+		. += span_notice("It's out of labels.")
 
 /obj/item/hand_labeler/borg
 	name = "cyborg-hand labeler"
@@ -158,6 +159,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	item_flags = NOBLUDGEON
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 
 /// The label item applied when labelling something
 /obj/item/label
@@ -214,7 +216,7 @@
 
 	return ..()
 
-/obj/item/label/proc/stick_to_atom(atom/applying_to, stick_px = world.icon_size / 2, stick_py = world.icon_size / 2)
+/obj/item/label/proc/stick_to_atom(atom/applying_to, stick_px = ICON_SIZE_X / 2, stick_py = ICON_SIZE_Y / 2)
 	applying_to.AddComponent( \
 		/datum/component/sticker, \
 		stickering_atom = src, \
@@ -290,7 +292,7 @@
 		playsound(sticking_to, 'sound/items/handling/component_pickup.ogg', 20, TRUE)
 		sticking_to.balloon_alert(user, "label renamed")
 	else
-		playsound(sticking_to, 'sound/items/poster_ripped.ogg', 20, TRUE)
+		playsound(sticking_to, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
 		sticking_to.balloon_alert(user, "label removed")
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS

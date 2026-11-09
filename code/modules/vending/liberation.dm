@@ -35,6 +35,7 @@
 	) //U S A
 	armor_type = /datum/armor/vending_liberationstation
 	resistance_flags = FIRE_PROOF
+	refill_canister = /obj/item/vending_refill/liberation
 	default_price = PAYCHECK_COMMAND * 2.5
 	extra_price = PAYCHECK_COMMAND * 2.5
 	payment_department = ACCOUNT_SEC
@@ -47,3 +48,7 @@
 	energy = 100
 	fire = 100
 	acid = 50
+
+/obj/item/vending_refill/liberation
+	machine_name = "Liberation Station"
+	icon_state = "refill_patriot"

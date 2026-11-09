@@ -1,0 +1,178 @@
+{
+	"dm_type": "/datum/bt_node/subtree/generic_mook_behavior",
+	"bindings": {
+		"b1kiiayf": {
+			"label": "Idle Behavior",
+			"default": "/datum/bt_node/subtree"
+		},
+		"b0ymbjo1": {
+			"label": "Targetting Behavior",
+			"default": "/datum/bt_node/subtree"
+		},
+		"bk7ixti3": {
+			"label": "High Priority Behavior",
+			"default": "/datum/bt_node/subtree"
+		}
+	},
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"invert": true,
+				"key": "BB_HOME_VILLAGE"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_village"
+			}
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree",
+			"override_id": "SUBPLAN_ID_PET_COMMAND"
+		},
+		{
+			"type": "subtree",
+			"subtype": "/datum/bt_node/subtree/escape_captivity"
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/pawn_same_z_as_key",
+							"vars": {
+								"key": "BB_HOME_VILLAGE"
+							},
+							"child": {
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/pawn_farther_than_from_key",
+								"vars": {
+									"anchor_key": "BB_HOME_VILLAGE",
+									"distance_key": "BB_MAXIMUM_DISTANCE_TO_VILLAGE"
+								},
+								"child": {
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/mook_has_flee_reason",
+									"vars": {
+										"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+									},
+									"child": {
+										"type": "sequence",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/clear_key",
+												"vars": {
+													"key": "BB_INJURED_MOOK"
+												}
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+												"vars": {
+													"ability_key": "BB_MOOK_JUMP_ABILITY"
+												}
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/clear_key",
+												"vars": {
+													"key": "BB_TARGET_MINERAL_WALL"
+												}
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/clear_key",
+												"vars": {
+													"key": "BB_MOOK_MUSIC_AUDIENCE"
+												}
+											}
+										]
+									}
+								}
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "$bk7ixti3"
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_set",
+							"vars": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_CURRENT_TARGET"
+							},
+							"child": {
+								"type": "parallel",
+								"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+								"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+								"repeat_secondary": true,
+								"finish_on_primary": true,
+								"children": [
+									{
+										"type": "subplan",
+										"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+										"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+										"children": [
+											{
+												"type": "selector",
+												"children": [
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability",
+														"vars": {
+															"ability_key": "BB_MOOK_LEAP_ABILITY",
+															"target_key": "BB_CURRENT_TARGET"
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET",
+															"targeting_strategy": "BB_TARGETING_STRATEGY",
+															"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+														}
+													}
+												]
+											}
+										]
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"required_dist": 1,
+											"finish_on_arrival": false
+										}
+									}
+								]
+							}
+						},
+						{
+							"type": "subtree",
+							"subtype": "$b1kiiayf"
+						}
+					]
+				},
+				{
+					"type": "subtree",
+					"subtype": "$b0ymbjo1"
+				}
+			]
+		}
+	]
+}

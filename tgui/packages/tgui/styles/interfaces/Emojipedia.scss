@@ -1,7 +1,4 @@
 .emojipedia16x16 {
   transform-origin: center;
-  margin: 0.5em;
-  &:hover {
-    transform: scale(1.5);
-  }
+  margin: var(--space-m);
 }

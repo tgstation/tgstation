@@ -1,3 +1,81 @@
+/datum/atom_skin/cap
+	abstract_type = /datum/atom_skin/cap
+	var/soft_type
+
+/datum/atom_skin/cap/apply(atom/apply_to, mob/user)
+	. = ..()
+	if(!istype(apply_to, /obj/item/clothing/head/soft))
+		return
+
+	var/obj/item/clothing/head/soft/soft_cap = apply_to
+	soft_cap.soft_type = soft_type
+
+/datum/atom_skin/cap/brown
+	preview_name = "Brown"
+	new_name = "brown cap"
+	new_icon_state = "cargosoft"
+	soft_type = "cargo"
+
+/datum/atom_skin/cap/red
+	preview_name = "Red"
+	new_name = "red cap"
+	new_icon_state = "redsoft"
+	soft_type = "red"
+
+/datum/atom_skin/cap/blue
+	preview_name = "Blue"
+	new_name = "blue cap"
+	new_icon_state = "bluesoft"
+	soft_type = "blue"
+
+/datum/atom_skin/cap/green
+	preview_name = "Green"
+	new_name = "green cap"
+	new_icon_state = "greensoft"
+	soft_type = "green"
+
+/datum/atom_skin/cap/yellow
+	preview_name = "Yellow"
+	new_name = "yellow cap"
+	new_icon_state = "yellowsoft"
+	soft_type = "yellow"
+
+/datum/atom_skin/cap/grey
+	preview_name = "Grey"
+	new_name = "grey cap"
+	new_icon_state = "greysoft"
+	soft_type = "grey"
+
+/datum/atom_skin/cap/orange
+	preview_name = "Orange"
+	new_name = "orange cap"
+	new_icon_state = "orangesoft"
+	soft_type = "orange"
+
+/datum/atom_skin/cap/white
+	preview_name = "White"
+	new_name = "white cap"
+	new_icon_state = "mimesoft"
+	soft_type = "mime"
+
+/datum/atom_skin/cap/purple
+	preview_name = "Purple"
+	new_name = "purple cap"
+	new_icon_state = "purplesoft"
+	soft_type = "purple"
+
+/datum/atom_skin/cap/black
+	preview_name = "Black"
+	new_name = "black cap"
+	new_icon_state = "blacksoft"
+	soft_type = "black"
+
+/datum/atom_skin/cap/rainbow
+	preview_name = "Rainbow"
+	new_name = "rainbow cap"
+	new_icon_state = "rainbowsoft"
+	soft_type = "rainbow"
+
 /obj/item/clothing/head/soft
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteful brown colour."
@@ -6,6 +84,7 @@
 	icon_state = "cargosoft"
 	inhand_icon_state = "greyscale_softcap" //todo wip
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	item_flags = CAN_BE_OVERSLOT
 	/// For setting icon archetype
 	var/soft_type = "cargo"
 	/// If there is a suffix to append
@@ -17,12 +96,11 @@
 
 /obj/item/clothing/head/soft/dropped()
 	icon_state = "[soft_type][soft_suffix]"
+	worn_icon_state = icon_state
 	flipped = FALSE
 	..()
 
-/obj/item/clothing/head/soft/verb/flipcap()
-	set category = "Object"
-	set name = "Flip cap"
+GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 
 	flip(usr)
 
@@ -33,7 +111,7 @@
 
 
 /obj/item/clothing/head/soft/proc/flip(mob/user)
-	if(!user.incapacitated())
+	if(!user.incapacitated)
 		flipped = !flipped
 		if(flipped)
 			icon_state = "[soft_type][soft_suffix]_flipped"
@@ -41,8 +119,9 @@
 		else
 			icon_state = "[soft_type][soft_suffix]"
 			to_chat(user, span_notice("You flip the hat back in normal position."))
+		worn_icon_state = icon_state
 		update_icon()
-		usr.update_worn_head() //so our mob-overlays update
+		user.update_worn_head()
 
 /obj/item/clothing/head/soft/examine(mob/user)
 	. = ..()
@@ -82,15 +161,6 @@
 	icon_state = "greysoft"
 	soft_type = "grey"
 	dog_fashion = null
-
-/* A grey baseball cap that grants TRAIT_JOLLY when it's on your head.
- * Used for testing that gaining and losing the JOLLY trait behaves properly.
- * Also a perfectly valid weird admin reward.
- */
-/obj/item/clothing/head/soft/grey/jolly
-	name = "jolly grey cap"
-	desc = "It's a baseball hat in a sublime grey colour. Why, wearing this alone would boost a person's spirits!"
-	clothing_traits = list(TRAIT_JOLLY)
 
 /obj/item/clothing/head/soft/orange
 	name = "orange cap"
@@ -134,7 +204,7 @@
 	icon_state = "secsoft"
 	soft_type = "sec"
 	armor_type = /datum/armor/cosmetic_sec
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	dog_fashion = null
 
 /obj/item/clothing/head/soft/veteran
@@ -143,7 +213,7 @@
 	icon_state = "veteransoft"
 	soft_type = "veteran"
 	armor_type = /datum/armor/cosmetic_sec
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 	dog_fashion = null
 
 /obj/item/clothing/head/soft/paramedic
@@ -169,12 +239,16 @@
 	clothing_flags = SNUG_FIT
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 	dog_fashion = null
+	clothing_traits = list(TRAIT_SCARY_FISHERMAN) //Fish, carps, lobstrosities and frogs fear me.
 
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean")) //you asked for this.
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
+	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 
 #define PROPHAT_MOOD "prophat"
+#define PROPHAT_SUICIDE_TIME (10 SECONDS)
 
 /obj/item/clothing/head/soft/propeller_hat
 	name = "propeller hat"
@@ -203,11 +277,43 @@
 	. = ..()
 	if(slot & ITEM_SLOT_HEAD)
 		user.add_mood_event(PROPHAT_MOOD, /datum/mood_event/prophat)
+		RegisterSignal(user, COMSIG_LIVING_SUICIDE_ACT, PROC_REF(on_suicide_act))
 
 /obj/item/clothing/head/soft/propeller_hat/dropped(mob/living/user)
 	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_SUICIDE_ACT)
 	user.clear_mood_event(PROPHAT_MOOD)
 	active = FALSE
 	update_icon()
 
+/obj/item/clothing/head/soft/propeller_hat/proc/on_suicide_act(mob/living/source)
+	SIGNAL_HANDLER
+	if(source.get_active_held_item())
+		return NONE
+
+	return suicide_act(source)
+
+/obj/item/clothing/head/soft/propeller_hat/suicide_act(mob/living/user)
+	if(!isturf(user.loc))
+		user.visible_message(span_suicide("[user] starts spinning [src] as fast as possible! \
+			It looks like [user.p_theyre()] trying to fly off into the sunset... yet the sky is out of reach for [user.p_them()]..."))
+		return SHAME
+
+	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
+	user.add_traits(list(TRAIT_GODMODE, TRAIT_FORCED_STANDING, TRAIT_UNDENSE, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
+	user.move_resist = INFINITY
+	user.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	user.set_suicide(TRUE)
+	user.visible_message(span_suicide("[user] starts spinning [src] as fast as possible! \
+		It looks like [user.p_theyre()] trying to fly off into the sunset!"))
+	playsound(src, 'sound/effects/whirthunk.ogg', 75)
+	animate(user, PROPHAT_SUICIDE_TIME, pixel_z = 256, alpha = 0)
+	QDEL_IN(user, PROPHAT_SUICIDE_TIME)
+	// drop objects that will get flagged by tsa before we board
+	for(var/obj/item/should_keep in user.get_all_contents())
+		if(should_keep.resistance_flags & INDESTRUCTIBLE)
+			should_keep.forceMove(user.drop_location())
+	return MANUAL_SUICIDE
+
+#undef PROPHAT_SUICIDE_TIME
 #undef PROPHAT_MOOD

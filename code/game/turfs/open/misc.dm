@@ -3,7 +3,7 @@
 /// Please do not bloat this. Love you <3
 /turf/open/misc
 	name = "coder/mapper fucked up"
-	desc = "report on github please"
+	desc = "report on GitHub please"
 
 	flags_1 = NO_SCREENTIPS_1 | CAN_BE_DIRTY_1
 	turf_flags = IS_SOLID | NO_RUST
@@ -17,21 +17,22 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN
 	canSmoothWith = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_OPEN_FLOOR
 
-	thermal_conductivity = 0.04
-	heat_capacity = 10000
-	tiled_dirt = TRUE
+	thermal_conductivity = 0.02
+	heat_capacity = 20000
+	tiled_turf = TRUE
 
-/turf/open/misc/attackby(obj/item/W, mob/user, params)
+/turf/open/misc/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(.)
-		return TRUE
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
 
-	if(istype(W, /obj/item/stack/rods))
-		build_with_rods(W, user)
-		return TRUE
-	else if(istype(W, /obj/item/stack/tile/iron))
-		build_with_floor_tiles(W, user)
-		return TRUE
+	if(istype(tool, /obj/item/stack/rods))
+		build_with_rods(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(ismetaltile(tool))
+		build_with_floor_tiles(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
 /turf/open/misc/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -42,7 +43,7 @@
 	if(target == src)
 		ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 		return TRUE
-	if(severity < EXPLODE_DEVASTATE && is_shielded())
+	if(is_explosion_shielded(severity))
 		return FALSE
 
 	if(target)
@@ -68,9 +69,13 @@
 
 	return TRUE
 
-/turf/open/misc/is_shielded()
-	for(var/obj/structure/A in contents)
-		return TRUE
+/turf/open/misc/is_explosion_shielded(severity)
+	if(severity >= EXPLODE_DEVASTATE)
+		return FALSE
+	for(var/obj/blocker in src)
+		if(blocker.density)
+			return TRUE
+	return FALSE
 
 /turf/open/misc/blob_act(obj/structure/blob/B)
 	return
@@ -84,8 +89,8 @@
 	return FALSE
 
 /turf/open/misc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
-		if(rcd_data["[RCD_DESIGN_PATH]"] != /turf/open/floor/plating/rcd)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_TURF)
+		if(rcd_data[RCD_DESIGN_PATH] != /turf/open/floor/plating/rcd)
 			return FALSE
 
 		place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)

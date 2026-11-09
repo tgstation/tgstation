@@ -7,59 +7,55 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey
 	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.4 SECONDS
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/generic_resist,
-		/datum/ai_planning_subtree/monkey_combat,
-		/datum/ai_planning_subtree/generic_hunger,
-		/datum/ai_planning_subtree/generic_play_instrument,
-		/datum/ai_planning_subtree/monkey_shenanigans,
-	)
+	behavior_tree_json = "code/datums/ai/monkey/monkey.bt.json"
 	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/monkey,
 		BB_MONKEY_AGGRESSIVE = FALSE,
 		BB_MONKEY_BEST_FORCE_FOUND = 0,
 		BB_MONKEY_ENEMIES = list(),
 		BB_MONKEY_BLACKLISTITEMS = list(),
-		BB_MONKEY_PICKUPTARGET = null,
 		BB_MONKEY_PICKPOCKETING = FALSE,
 		BB_MONKEY_DISPOSING = FALSE,
-		BB_MONKEY_TARGET_DISPOSAL = null,
-		BB_MONKEY_CURRENT_ATTACK_TARGET = null,
 		BB_MONKEY_GUN_NEURONS_ACTIVATED = FALSE,
 		BB_MONKEY_GUN_WORKED = TRUE,
 		BB_SONG_LINES = MONKEY_SONG,
-		BB_RESISTING = FALSE,
+		BB_MONKEY_GIVE_CHANCE = 5,
+		BB_MONKEY_PICKUP_IS_PICKPOCKET = null,
+		BB_MONKEY_IDLE_COMMON_EMOTES = list("screech", "roar"),
+		BB_MONKEY_IDLE_RARE_EMOTES = list("scratch", "jump", "roll", "tail"),
 	)
-	idle_behavior = /datum/idle_behavior/idle_monkey
 
-/datum/ai_controller/monkey/process(seconds_per_tick)
+/datum/targeting_strategy/basic/monkey
+	custom_faction_check = TRUE
 
-	var/mob/living/living_pawn = src.pawn
-
-	if(!length(living_pawn.do_afters) && living_pawn.ai_controller.blackboard[BB_RESISTING])
-		living_pawn.ai_controller.set_blackboard_key(BB_RESISTING, FALSE)
-
-	if(living_pawn.ai_controller.blackboard[BB_RESISTING])
-		return
-
-	. = ..()
+/datum/targeting_strategy/basic/monkey/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
+	// if they wronged us, all bets are off
+	if(controller.blackboard[BB_MONKEY_ENEMIES][the_target])
+		return FALSE
+	// target was forcibly set, all bets are off again
+	if(controller.blackboard[BB_CURRENT_TARGET] == the_target)
+		return FALSE
+	return ..()
 
 /datum/ai_controller/monkey/New(atom/new_pawn)
 	var/static/list/control_examine = list(
-		ORGAN_SLOT_EYES = span_monkey("eyes have a primal look in them."),
+		ORGAN_SLOT_EYES = span_monkey("%PRONOUN_They stare%PRONOUN_s around with wild, primal eyes."),
 	)
 	AddElement(/datum/element/ai_control_examine, control_examine)
 	return ..()
 
-/datum/ai_controller/monkey/pun_pun
-	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/generic_resist,
-		/datum/ai_planning_subtree/monkey_combat,
-		/datum/ai_planning_subtree/generic_hunger,
-		/datum/ai_planning_subtree/generic_play_instrument,
-		/datum/ai_planning_subtree/punpun_shenanigans,
-	)
-	idle_behavior = /datum/idle_behavior/idle_monkey/pun_pun
+/datum/ai_controller/monkey/pun_pun/TryPossessPawn(atom/new_pawn)
+	. = ..()
+	if(. & AI_CONTROLLER_INCOMPATIBLE)
+		return
+	pawn = new_pawn
+	set_blackboard_key(BB_IGNORE_DRINKS, TRUE)
+	set_blackboard_key(BB_MONKEY_TAMED, TRUE)
+	set_blackboard_key(BB_MONKEY_GIVE_CHANCE, 30)
+	set_blackboard_key(BB_MONKEY_PRESS_TYPEPATH, /obj/structure/desk_bell)
+	override_blackboard_key(BB_MONKEY_IDLE_COMMON_EMOTES, list("tunesing", "dance", "bow"))
+	override_blackboard_key(BB_MONKEY_IDLE_RARE_EMOTES, list("clear", "sign", "tail"))
+	set_trip_mode(mode = FALSE)
 
 /datum/ai_controller/monkey/angry
 
@@ -80,7 +76,7 @@ have ways of interacting with a specific mob and control it.
 		living_pawn.AddElement(/datum/element/relay_attackers)
 	RegisterSignal(new_pawn, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 	RegisterSignal(new_pawn, COMSIG_LIVING_START_PULL, PROC_REF(on_startpulling))
-	RegisterSignal(new_pawn, COMSIG_LIVING_TRY_SYRINGE, PROC_REF(on_try_syringe))
+	RegisterSignals(new_pawn, list(COMSIG_LIVING_TRY_SYRINGE_INJECT, COMSIG_LIVING_TRY_SYRINGE_WITHDRAW), PROC_REF(on_try_syringe))
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(on_attempt_cuff))
 	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, PROC_REF(update_movespeed))
 
@@ -92,7 +88,8 @@ have ways of interacting with a specific mob and control it.
 	UnregisterSignal(pawn, list(
 		COMSIG_ATOM_WAS_ATTACKED,
 		COMSIG_LIVING_START_PULL,
-		COMSIG_LIVING_TRY_SYRINGE,
+		COMSIG_LIVING_TRY_SYRINGE_INJECT,
+		COMSIG_LIVING_TRY_SYRINGE_WITHDRAW,
 		COMSIG_CARBON_CUFF_ATTEMPTED,
 		COMSIG_MOB_MOVESPEED_UPDATED,
 	))
@@ -103,63 +100,31 @@ have ways of interacting with a specific mob and control it.
 	. = ..()
 	set_trip_mode(mode = TRUE)
 
-/datum/ai_controller/monkey/able_to_run()
+/datum/ai_controller/monkey/on_stat_changed(mob/living/source, new_stat)
+	. = ..()
+	update_able_to_run()
+
+/datum/ai_controller/monkey/setup_able_to_run()
+	. = ..()
+	RegisterSignal(pawn, COMSIG_MOB_INCAPACITATE_CHANGED, PROC_REF(update_able_to_run))
+
+/datum/ai_controller/monkey/clear_able_to_run()
+	UnregisterSignal(pawn, list(COMSIG_MOB_INCAPACITATE_CHANGED, COMSIG_MOB_STATCHANGE))
+	return ..()
+
+/datum/ai_controller/monkey/get_able_to_run()
 	var/mob/living/living_pawn = pawn
 
-	if(living_pawn.incapacitated(IGNORE_RESTRAINTS | IGNORE_GRAB | IGNORE_STASIS) || living_pawn.stat > CONSCIOUS)
-		return FALSE
+	if(INCAPACITATED_IGNORING(living_pawn, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS|INCAPABLE_GRAB))
+		return AI_UNABLE_TO_RUN
 	return ..()
 
 /datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
-	var/mob/living/carbon/regressed_monkey = pawn
+	var/mob/living/regressed_monkey = pawn
 	var/brain = regressed_monkey.get_organ_slot(ORGAN_SLOT_BRAIN)
-	if(istype(brain, /obj/item/organ/internal/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
-		var/obj/item/organ/internal/brain/primate/monkeybrain = brain
+	if(istype(brain, /obj/item/organ/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
+		var/obj/item/organ/brain/primate/monkeybrain = brain
 		monkeybrain.tripping = mode
-
-///re-used behavior pattern by monkeys for finding a weapon
-/datum/ai_controller/monkey/proc/TryFindWeapon()
-	var/mob/living/living_pawn = pawn
-
-	if(!(locate(/obj/item) in living_pawn.held_items))
-		set_blackboard_key(BB_MONKEY_BEST_FORCE_FOUND, 0)
-
-	if(blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED] && (locate(/obj/item/gun) in living_pawn.held_items))
-		// We have a gun, what could we possibly want?
-		return FALSE
-
-	var/obj/item/weapon
-	var/list/nearby_items = list()
-	for(var/obj/item/item in oview(2, living_pawn))
-		nearby_items += item
-
-	for(var/obj/item/item in living_pawn.held_items) // If we've got some garbage in out hands thats going to stop us from effectivly attacking, we should get rid of it.
-		if(item.force < 2)
-			living_pawn.dropItemToGround(item)
-
-	weapon = GetBestWeapon(src, nearby_items, living_pawn.held_items)
-
-	var/pickpocket = FALSE
-	for(var/mob/living/carbon/human/human in oview(5, living_pawn))
-		var/obj/item/held_weapon = GetBestWeapon(src, human.held_items + weapon, living_pawn.held_items)
-		if(held_weapon == weapon) // It's just the same one, not a held one
-			continue
-		pickpocket = TRUE
-		weapon = held_weapon
-
-	if(!weapon || (weapon in living_pawn.held_items))
-		return FALSE
-
-	if(weapon.force < 2) // our bite does 2 damage on avarage, no point in settling for anything less
-		return FALSE
-
-	set_blackboard_key(BB_MONKEY_PICKUPTARGET, weapon)
-	set_movement_target(type, weapon)
-	if(pickpocket)
-		queue_behavior(/datum/ai_behavior/monkey_equip/pickpocket)
-	else
-		queue_behavior(/datum/ai_behavior/monkey_equip/ground)
-	return TRUE
 
 ///Reactive events to being hit
 /datum/ai_controller/monkey/proc/retaliate(mob/living/living_mob)
@@ -177,7 +142,7 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/on_startpulling(datum/source, atom/movable/puller, state, force)
 	SIGNAL_HANDLER
 	var/mob/living/living_pawn = pawn
-	if(!IS_DEAD_OR_INCAP(living_pawn) && prob(MONKEY_PULL_AGGRO_PROB)) // nuh uh you don't pull me!
+	if(!living_pawn.incapacitated && prob(MONKEY_PULL_AGGRO_PROB)) // nuh uh you don't pull me!
 		retaliate(living_pawn.pulledby)
 		return TRUE
 

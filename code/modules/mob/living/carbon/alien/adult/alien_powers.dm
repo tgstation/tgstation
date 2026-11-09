@@ -8,16 +8,20 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/alien
 	name = "Alien Power"
-	panel = "Alien"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "spell_default"
 	check_flags = AB_CHECK_IMMOBILE | AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
-	melee_cooldown_time = 0 SECONDS
 
 	/// How much plasma this action uses.
 	var/plasma_cost = 0
+
+/datum/action/cooldown/alien/New(Target)
+	. = ..()
+	//not free
+	if(plasma_cost != 0)
+		name = "[initial(name)] ([plasma_cost]P)"
 
 /datum/action/cooldown/alien/IsAvailable(feedback = FALSE)
 	. = ..()
@@ -50,13 +54,6 @@ Doesn't work on other aliens/AI.*/
 		unset_click_ability(owner, refund_cooldown = FALSE)
 
 	return TRUE
-
-/datum/action/cooldown/alien/set_statpanel_format()
-	. = ..()
-	if(!islist(.))
-		return
-
-	.[PANEL_DISPLAY_STATUS] = "PLASMA - [plasma_cost]"
 
 /datum/action/cooldown/alien/make_structure
 	/// The type of structure the action makes on use
@@ -135,7 +132,7 @@ Doesn't work on other aliens/AI.*/
 	if(!chosen_recipient)
 		return FALSE
 
-	var/to_whisper = tgui_input_text(owner, title = "Alien Whisper")
+	var/to_whisper = tgui_input_text(owner, title = "Alien Whisper", max_length = MAX_MESSAGE_LEN)
 	if(QDELETED(chosen_recipient) || QDELETED(src) || QDELETED(owner) || !IsAvailable(feedback = TRUE) || !to_whisper)
 		return FALSE
 	if(chosen_recipient.can_block_magic(MAGIC_RESISTANCE_MIND, charge_cost = 0))
@@ -226,7 +223,7 @@ Doesn't work on other aliens/AI.*/
 	if(get_dist(owner, target) > 1)
 		return FALSE
 	if(ismob(target)) //If it could corrode mobs, it would one-shot them.
-		owner.balloon_alert(owner, "doesn't work on mobs!")
+		owner.balloon_alert(owner, "doesn't work on creatures!")
 		return FALSE
 
 	return ..()
@@ -251,7 +248,8 @@ Doesn't work on other aliens/AI.*/
 	plasma_cost = 50
 
 /datum/action/cooldown/alien/acid/neurotoxin/IsAvailable(feedback = FALSE)
-	if(owner.is_muzzled())
+	var/mob/living/carbon/as_carbon = owner
+	if(istype(as_carbon) && as_carbon.is_mouth_covered(ITEM_SLOT_MASK))
 		return FALSE
 	if(!isturf(owner.loc))
 		return FALSE
@@ -283,22 +281,22 @@ Doesn't work on other aliens/AI.*/
 // We do this in InterceptClickOn() instead of Activate()
 // because we use the click parameters for aiming the projectile
 // (or something like that)
-/datum/action/cooldown/alien/acid/neurotoxin/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/alien/acid/neurotoxin/InterceptClickOn(mob/living/clicker, params, atom/target)
 	. = ..()
 	if(!.)
-		unset_click_ability(caller, refund_cooldown = FALSE)
+		unset_click_ability(clicker, refund_cooldown = FALSE)
 		return FALSE
 
 	var/modifiers = params2list(params)
-	caller.visible_message(
-		span_danger("[caller] spits neurotoxin!"),
+	clicker.visible_message(
+		span_danger("[clicker] spits neurotoxin!"),
 		span_alertalien("You spit neurotoxin."),
 	)
-	var/obj/projectile/neurotoxin/neurotoxin = new /obj/projectile/neurotoxin(caller.loc)
-	neurotoxin.preparePixelProjectile(target, caller, modifiers)
-	neurotoxin.firer = caller
+	var/obj/projectile/neurotoxin/neurotoxin = new /obj/projectile/neurotoxin(clicker.loc)
+	neurotoxin.aim_projectile(target, clicker, modifiers)
+	neurotoxin.firer = clicker
 	neurotoxin.fire()
-	caller.newtonian_move(get_dir(target, caller))
+	clicker.newtonian_move(get_angle(target, clicker))
 	return TRUE
 
 // Has to return TRUE, otherwise is skipped.
@@ -346,7 +344,6 @@ Doesn't work on other aliens/AI.*/
 
 /datum/action/cooldown/mob_cooldown/sneak/alien
 	name = "Alien Sentinel Sneak"
-	panel = "Alien"
 	desc = "Blend into the shadows to stalk your prey."
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "alien_sneak"
@@ -366,7 +363,7 @@ Doesn't work on other aliens/AI.*/
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/alien/adult/alieninated_owner = owner
-	var/obj/item/organ/internal/stomach/alien/melting_pot = alieninated_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/alien/melting_pot = alieninated_owner.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(!melting_pot)
 		owner.visible_message(span_clown("[src] gags, and spits up a bit of purple liquid. Ewwww."), \
 			span_alien("You feel a pain in your... chest? There's nothing there there's nothing there no no n-"))
@@ -378,27 +375,22 @@ Doesn't work on other aliens/AI.*/
 	owner.visible_message(span_danger("[owner] hurls out the contents of their stomach!"))
 	var/dir_angle = dir2angle(owner.dir)
 
-	playsound(owner, 'sound/creatures/alien_york.ogg', 100)
+	playsound(owner, 'sound/mobs/non-humanoids/alien/alien_york.ogg', 100)
 	melting_pot.eject_stomach(slice_off_turfs(owner, border_diamond_range_turfs(owner, 9), dir_angle - angle_delta, dir_angle + angle_delta), 4, mob_speed, spit_speed)
 
 /// Gets the plasma level of this carbon's plasma vessel, or -1 if they don't have one
 /mob/living/carbon/proc/getPlasma()
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/alien/plasmavessel/vessel = get_organ_by_type(/obj/item/organ/alien/plasmavessel)
 	if(!vessel)
 		return -1
 	return vessel.stored_plasma
 
 /// Adjusts the plasma level of the carbon's plasma vessel if they have one
 /mob/living/carbon/proc/adjustPlasma(amount)
-	var/obj/item/organ/internal/alien/plasmavessel/vessel = get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel)
+	var/obj/item/organ/alien/plasmavessel/vessel = get_organ_by_type(/obj/item/organ/alien/plasmavessel)
 	if(!vessel)
 		return FALSE
-	vessel.stored_plasma = max(vessel.stored_plasma + amount,0)
-	vessel.stored_plasma = min(vessel.stored_plasma, vessel.max_plasma) //upper limit of max_plasma, lower limit of 0
+	vessel.adjust_plasma(amount)
 	for(var/datum/action/cooldown/alien/ability in actions)
 		ability.build_all_button_icons()
 	return TRUE
-
-/mob/living/carbon/alien/adjustPlasma(amount)
-	. = ..()
-	updatePlasmaDisplay()

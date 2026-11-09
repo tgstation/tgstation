@@ -86,7 +86,7 @@
 	if(COMPONENT_TRIGGERED_BY(trigger_input, port))
 		var/signal_code = round(code.value) || 0
 		var/turf/location = get_turf(src)
-		var/time = time2text(world.realtime,"hh:mm:ss")
+		var/time = time2text(world.realtime,"hh:mm:ss", TIMEZONE_UTC)
 
 		var/list/loggable_strings = list("[time] <B>:</B> The [QDELETED(parent_shell) ? "null circuit shell(?)" : parent_shell] @ location ([location.x],[location.y],[location.z]) transmitted the following signal <B>:</B> [format_frequency(current_freq)]/[signal_code] via the radio circuit component.")
 		if(!isnull(owner_ckey))

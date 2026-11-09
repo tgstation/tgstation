@@ -2,7 +2,7 @@
 
 ///Bike Horn - Plays a bike horn sound.
 /obj/item/mod/module/bikehorn
-	name = "MOD bike horn module"
+	name = "\improper MOD bike horn module"
 	desc = "A shoulder-mounted piece of heavy sonic artillery, this module uses the finest femto-manipulator technology to \
 		precisely deliver an almost lethal squeeze to... a bike horn, producing a significantly memorable sound."
 	icon_state = "bikehorn"
@@ -11,42 +11,24 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN
 	incompatible_modules = list(/obj/item/mod/module/bikehorn)
 	cooldown_time = 1 SECONDS
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 5)
 
-/obj/item/mod/module/bikehorn/on_use()
-	. = ..()
-	if(!.)
-		return
+/obj/item/mod/module/bikehorn/on_use(mob/activator)
 	playsound(src, 'sound/items/bikehorn.ogg', 100, FALSE)
 	drain_power(use_energy_cost)
 
 ///Advanced Balloon Blower - Blows a long balloon.
-/obj/item/mod/module/balloon_advanced
-	name = "MOD advanced balloon blower module"
+/obj/item/mod/module/balloon/advanced
+	name = "\improper MOD advanced balloon blower module"
 	desc = "A relatively new piece of technology developed by finest clown engineers to make long balloons and balloon animals \
-	at party-appropriate rate."
-	icon_state = "bloon"
-	module_type = MODULE_USABLE
-	complexity = 1
-	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0.5
-	incompatible_modules = list(/obj/item/mod/module/balloon_advanced)
-	cooldown_time = 15 SECONDS
-
-/obj/item/mod/module/balloon_advanced/on_use()
-	. = ..()
-	if(!.)
-		return
-	if(!do_after(mod.wearer, 15 SECONDS, target = mod))
-		return FALSE
-	mod.wearer.adjustOxyLoss(20)
-	playsound(src, 'sound/items/modsuit/inflate_bloon.ogg', 50, TRUE)
-	var/obj/item/toy/balloon/long/l_balloon = new(get_turf(src))
-	mod.wearer.put_in_hands(l_balloon)
-	drain_power(use_energy_cost)
-
+		at party-appropriate rate."
+	cooldown_time = 20 SECONDS
+	balloon_path = /obj/item/toy/balloon/long
+	blowing_time = 15 SECONDS
 
 ///Microwave Beam - Microwaves items instantly.
 /obj/item/mod/module/microwave_beam
-	name = "MOD microwave beam module"
+	name = "\improper MOD microwave beam module"
 	desc = "An oddly domestic device, this module is installed into the user's palm, \
 		hooking up with culinary scanners located in the helmet to blast food with precise microwave radiation, \
 		allowing them to cook food from a distance, with the greatest of ease. Not recommended for use against grapes."
@@ -54,8 +36,10 @@
 	module_type = MODULE_ACTIVE
 	complexity = 1
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
-	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organ_thrower)
-	cooldown_time = 10 SECONDS
+	incompatible_modules = list(/obj/item/mod/module/microwave_beam, /obj/item/mod/module/organizer)
+	cooldown_time = 4 SECONDS
+	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 5)
 
 /obj/item/mod/module/microwave_beam/on_select_use(atom/target)
 	. = ..()
@@ -64,27 +48,23 @@
 	if(!isitem(target))
 		return
 	if(!isturf(target.loc))
-		balloon_alert(mod.wearer, "must be on the floor!")
+		balloon_alert(mod.wearer, "not in storage!")
 		return
 	var/obj/item/microwave_target = target
-	var/datum/effect_system/spark_spread/spark_effect = new()
-	spark_effect.set_up(2, 1, mod.wearer)
-	spark_effect.start()
+	do_sparks(2, TRUE, mod.wearer)
 	mod.wearer.Beam(target,icon_state="lightning[rand(1,12)]", time = 5)
 	if(microwave_target.microwave_act(microwaver = mod.wearer) & COMPONENT_MICROWAVE_SUCCESS)
 		playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, FALSE)
 	else
 		balloon_alert(mod.wearer, "can't be microwaved!")
-	var/datum/effect_system/spark_spread/spark_effect_two = new()
-	spark_effect_two.set_up(2, 1, microwave_target)
-	spark_effect_two.start()
+	do_sparks(2, TRUE, microwave_target)
 	drain_power(use_energy_cost)
 
 //Waddle - Makes you waddle and squeak.
 /obj/item/mod/module/waddle
-	name = "MOD waddle module"
+	name = "\improper MOD waddle module"
 	desc = "Some of the most primitive technology in use by Honk Co. This module works off an automatic intention system, \
-		utilizing its' sensitivity to the pilot's often-limited brainwaves to directly read their next step, \
+		utilizing its sensitivity to the pilot's often-limited brainwaves to directly read their next step, \
 		affecting the boots they're installed in. Employing a twin-linked gravitonic drive to create \
 		miniaturized etheric blasts of space-time beneath the user's feet, this enables them to... \
 		to waddle around, bouncing to and fro with a pep in their step."
@@ -92,16 +72,55 @@
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/waddle)
+	required_slots = list(ITEM_SLOT_FEET)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 5)
 
-/obj/item/mod/module/waddle/on_suit_activation()
-	mod.boots.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
-	mod.wearer.AddElementTrait(TRAIT_WADDLING, MOD_TRAIT, /datum/element/waddling)
+/obj/item/mod/module/waddle/on_part_activation()
+	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
+	if(shoes)
+		shoes.AddComponent(/datum/component/squeak, list('sound/effects/footstep/clownstep1.ogg'=1,'sound/effects/footstep/clownstep2.ogg'=1), 50, falloff_exponent = 20) //die off quick please
+	mod.wearer.AddElementTrait(TRAIT_WADDLING, REF(src), /datum/element/waddling)
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.add_mood_event("clownshoes", /datum/mood_event/clownshoes)
 
-/obj/item/mod/module/waddle/on_suit_deactivation(deleting = FALSE)
-	if(!deleting)
-		qdel(mod.boots.GetComponent(/datum/component/squeak))
-	REMOVE_TRAIT(mod.wearer, TRAIT_WADDLING, MOD_TRAIT)
+/obj/item/mod/module/waddle/on_part_deactivation(deleting = FALSE)
+	var/obj/item/shoes = mod.get_part_from_slot(ITEM_SLOT_FEET)
+	if(shoes && !deleting)
+		qdel(shoes.GetComponent(/datum/component/squeak))
+	REMOVE_TRAIT(mod.wearer, TRAIT_WADDLING, REF(src))
 	if(is_clown_job(mod.wearer.mind?.assigned_role))
 		mod.wearer.clear_mood_event("clownshoes")
+
+// recharging cleaner spray module
+/obj/item/mod/module/mister/cleaner
+	name = "\improper MOD janitorial mister module"
+	desc = "A space cleaner mister, able to clean up messes quickly. Synthesizes its own supply over time (if active)."
+	device = /obj/item/reagent_containers/spray/mister/janitor
+	volume = 100
+	active_power_cost = DEFAULT_CHARGE_DRAIN
+	custom_materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+
+/obj/item/mod/module/mister/cleaner/Initialize(mapload)
+	. = ..()
+	reagents.flags = AMOUNT_VISIBLE
+	reagents.add_reagent(/datum/reagent/space_cleaner, volume)
+
+/obj/item/mod/module/mister/cleaner/on_active_process(seconds_per_tick)
+	var/refill_add = min(volume - reagents.total_volume, 2 * seconds_per_tick)
+	if(refill_add > 0)
+		reagents.add_reagent(/datum/reagent/space_cleaner, refill_add)
+
+/obj/item/mod/module/selfcleaner
+	name = "\improper MOD perfumer module"
+	desc = "A small spray to clean oneself up. Has a pleasant scent."
+	icon_state = "cleaner"
+	module_type = MODULE_USABLE
+	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
+	complexity = 1
+	incompatible_modules = list(/obj/item/mod/module/selfcleaner)
+	cooldown_time = 10 SECONDS
+
+/obj/item/mod/module/selfcleaner/on_use(mob/activator)
+	activator.wash(CLEAN_WASH)
+	drain_power(use_energy_cost)
+	playsound(activator, 'sound/effects/spray.ogg', 50, FALSE)

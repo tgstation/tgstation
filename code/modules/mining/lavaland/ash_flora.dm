@@ -10,7 +10,6 @@
 	resistance_flags = LAVA_PROOF
 	gender = PLURAL
 	layer = PROJECTILE_HIT_THRESHHOLD_LAYER //sporangiums up don't shoot
-	product_types = list(/obj/item/food/grown/ash_flora/shavings = 1)
 	harvest_with_hands = TRUE
 	harvested_name = "shortened mushrooms"
 	harvested_desc = "Some quickly regrowing mushrooms, formerly known to be quite large."
@@ -27,6 +26,9 @@
 	base_icon_state = "[base_icon_state][rand(1, number_of_variants)]"
 	icon_state = base_icon_state
 
+/obj/structure/flora/ash/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/shavings = 1)
+
 /obj/structure/flora/ash/harvest(user, product_amount_multiplier)
 	if(!..())
 		return FALSE
@@ -38,14 +40,13 @@
 	icon_state = base_icon_state
 
 /obj/structure/flora/ash/tall_shroom //exists only so that the spawning check doesn't allow these spawning near other things
-	regrowth_time_low = 4200
+	regrowth_time_low = 7 MINUTES
 
 /obj/structure/flora/ash/leaf_shroom
 	name = "leafy mushrooms"
 	desc = "A number of mushrooms, each of which surrounds a greenish sporangium with a number of leaf-like structures."
 	icon_state = "s_mushroom1"
 	base_icon_state = "s_mushroom"
-	product_types = list(/obj/item/food/grown/ash_flora/mushroom_leaf = 1)
 	harvested_name = "leafless mushrooms"
 	harvested_desc = "A bunch of formerly-leafed mushrooms, with their sporangiums exposed. Scandalous?"
 	harvest_amount_high = 4
@@ -53,15 +54,17 @@
 	harvest_message_med = "You pluck a number of leaves, leaving a few unsuitable ones."
 	harvest_message_high = "You pluck quite a lot of suitable leaves."
 	harvest_time = 20
-	regrowth_time_low = 2400
-	regrowth_time_high = 6000
+	regrowth_time_low = 4 MINUTES
+	regrowth_time_high = 10 MINUTES
+
+/obj/structure/flora/ash/leaf_shroom/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/mushroom_leaf = 1)
 
 /obj/structure/flora/ash/cap_shroom
 	name = "tall mushrooms"
 	desc = "Several mushrooms, the larger of which have a ring of conks at the midpoint of their stems."
 	icon_state = "r_mushroom1"
 	base_icon_state = "r_mushroom"
-	product_types = list(/obj/item/food/grown/ash_flora/mushroom_cap = 1)
 	harvested_name = "small mushrooms"
 	harvested_desc = "Several small mushrooms near the stumps of what likely were larger mushrooms."
 	harvest_amount_high = 4
@@ -69,8 +72,11 @@
 	harvest_message_med = "You slice off a few conks from the larger mushrooms."
 	harvest_message_high = "You slice off a number of caps and conks from these mushrooms."
 	harvest_time = 50
-	regrowth_time_low = 3000
-	regrowth_time_high = 5400
+	regrowth_time_low = 5 MINUTES
+	regrowth_time_high = 9 MINUTES
+
+/obj/structure/flora/ash/cap_shroom/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/mushroom_cap = 1)
 
 /obj/structure/flora/ash/stem_shroom
 	name = "numerous mushrooms"
@@ -79,7 +85,6 @@
 	base_icon_state = "t_mushroom"
 	light_range = 1.5
 	light_power = 2.1
-	product_types = list(/obj/item/food/grown/ash_flora/mushroom_stem = 1)
 	harvested_name = "tiny mushrooms"
 	harvested_desc = "A few tiny mushrooms around larger stumps. You can already see them growing back."
 	harvest_amount_high = 4
@@ -87,15 +92,17 @@
 	harvest_message_med = "You pick and decapitate several mushrooms for their stems."
 	harvest_message_high = "You acquire a number of stems from these mushrooms."
 	harvest_time = 40
-	regrowth_time_low = 3000
-	regrowth_time_high = 6000
+	regrowth_time_low = 5 MINUTES
+	regrowth_time_high = 10 MINUTES
+
+/obj/structure/flora/ash/stem_shroom/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/mushroom_stem = 1)
 
 /obj/structure/flora/ash/cacti
 	name = "fruiting cacti"
 	desc = "Several prickly cacti, brimming with ripe fruit and covered in a thin layer of ash."
 	icon_state = "cactus1"
 	base_icon_state = "cactus"
-	product_types = list(/obj/item/food/grown/ash_flora/cactus_fruit = 20, /obj/item/seeds/lavaland/cactus = 1)
 	harvested_name = "cacti"
 	harvested_desc = "A bunch of prickly cacti. You can see fruits slowly growing beneath the covering of ash."
 	harvest_amount_high = 2
@@ -103,20 +110,22 @@
 	harvest_message_med = "You pick several cactus fruit." //shouldn't show up, because you can't get more than two
 	harvest_message_high = "You pick a pair of cactus fruit."
 	harvest_time = 10
-	regrowth_time_low = 4800
-	regrowth_time_high = 7200
+	regrowth_time_low = 8 MINUTES
+	regrowth_time_high = 12 MINUTES
 	can_uproot = FALSE //Don't want 50 in one tile to decimate whoever dare step on the mass of cacti
 
 /obj/structure/flora/ash/cacti/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 3, max_damage = 6, probability = 70)
 
+/obj/structure/flora/ash/cacti/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/cactus_fruit = 20, /obj/item/seeds/lavaland/cactus = 1)
+
 /obj/structure/flora/ash/seraka
 	name = "seraka mushrooms"
 	desc = "A small cluster of seraka mushrooms. These must have come with the ashlizards."
 	icon_state = "seraka_mushroom1"
 	base_icon_state = "seraka_mushroom"
-	product_types = list(/obj/item/food/grown/ash_flora/seraka = 1)
 	harvested_name = "harvested seraka mushrooms"
 	harvested_desc = "A couple of small seraka mushrooms, with the larger ones clearly having been recently removed. They'll grow back... eventually."
 	harvest_amount_high = 6
@@ -124,10 +133,13 @@
 	harvest_message_med = "You grab a good haul of mushrooms."
 	harvest_message_high = "You hit the mushroom motherlode and make off with a bunch of tasty mushrooms."
 	harvest_time = 25
-	regrowth_time_low = 3000
-	regrowth_time_high = 5400
+	regrowth_time_low = 5 MINUTES
+	regrowth_time_high = 9 MINUTES
 	number_of_variants = 2
 	harvest_message_true_thresholds = FALSE
+
+/obj/structure/flora/ash/seraka/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/seraka = 1)
 
 /obj/structure/flora/ash/fireblossom
 	name = "fire blossom"
@@ -137,16 +149,18 @@
 	light_range = LIGHT_FIRE_BLOSSOM
 	light_power = LIGHT_FIRE_BLOSSOM
 	light_color = COLOR_BIOLUMINESCENCE_YELLOW
-	product_types = list(/obj/item/food/grown/ash_flora/fireblossom = 1)
 	harvested_name = "fire blossom stems"
 	harvested_desc = "A few fire blossom stems, missing their flowers."
 	harvest_amount_high = 3
 	harvest_message_low = "You pluck a single, suitable flower."
 	harvest_message_med = "You pluck a number of flowers, leaving a few unsuitable ones."
 	harvest_message_high = "You pluck quite a lot of suitable flowers."
-	regrowth_time_low = 2500
-	regrowth_time_high = 4000
+	regrowth_time_low = 4 MINUTES
+	regrowth_time_high = 7 MINUTES
 	number_of_variants = 2
+
+/obj/structure/flora/ash/fireblossom/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/fireblossom = 1)
 
 /obj/structure/flora/ash/fireblossom/after_harvest()
 	set_light_power(LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED)
@@ -160,13 +174,56 @@
 	update_light()
 	return ..()
 
+/obj/structure/flora/ash/glowgrowth
+	name = "glowgrowth colony"
+	desc = "A colony of bioluminescent fungi growing on a hot air vent, feeding off mineral particulate blowing through it."
+	icon_state = "glowgrowth1"
+	base_icon_state = "glowgrowth"
+	density = TRUE // Large rock formations with plants ontop
+	light_range = 1.7
+	light_power = 1.2
+	light_color = "#67b6a5"
+	harvested_name = "hot air vent"
+	harvested_desc = "A ridged porous rock formation exuming hot air from the depths of the planet."
+	harvest_amount_high = 4
+	harvest_verb = "scrape"
+	harvest_message_low = "You scrape off a thin layer of glowing fungi."
+	harvest_message_med = "You pick a sizeable patch of glowing fungi."
+	harvest_message_high = "You grab a large fistful of glowing fungi."
+	regrowth_time_low = 8 MINUTES
+	regrowth_time_high = 16 MINUTES
+	number_of_variants = 3
+
+/obj/structure/flora/ash/glowgrowth/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
+/obj/structure/flora/ash/glowgrowth/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/glowgrowth = 1)
+
+/obj/structure/flora/ash/glowgrowth/after_harvest()
+	set_light_on(FALSE)
+	update_light()
+	update_appearance()
+	return ..()
+
+/obj/structure/flora/ash/glowgrowth/regrow()
+	set_light_on(TRUE)
+	update_light()
+	update_appearance()
+	return ..()
+
+/obj/structure/flora/ash/glowgrowth/update_overlays()
+	. = ..()
+	if (!harvested)
+		. += emissive_appearance(icon, "[icon_state]e", src, alpha = 120)
+
 ///Snow flora to exist on icebox.
 /obj/structure/flora/ash/chilly
 	name = "springy grassy fruit"
 	desc = "A number of bright, springy blue fruiting plants. They seem to be unconcerned with the hardy, cold environment."
 	icon_state = "chilly_pepper1"
 	base_icon_state = "chilly_pepper"
-	product_types = list(/obj/item/food/grown/icepepper = 1)
 	harvested_name = "springy grass"
 	harvested_desc = "A bunch of springy, bouncy fruiting grass, all picked. Or maybe they were never fruiting at all?"
 	harvest_amount_high = 3
@@ -178,26 +235,157 @@
 	regrowth_time_high = 5500
 	number_of_variants = 2
 
+/obj/structure/flora/ash/chilly/get_potential_products()
+	return list(/obj/item/food/grown/icepepper = 1)
+
+/obj/structure/flora/ash/fonarstolbe
+	name = "fonarstolbe fruit"
+	desc = "A chemotrophic, insignificantly bioluminescent plant dubbed fonarstolbe by spinward scientists. They can survive for weeks in environments and presures lethal to most other plants, as long as they are well rooted.."
+	icon_state = "lamppostfruit1"
+	base_icon_state = "lamppostfruit"
+	light_range = 1.5
+	light_power = 2.1
+	harvested_name = "fonarstolbe"
+	harvested_desc = "Stem of a fonarstolbe. It should grow back up, sooner or later. And once it does, you can pluck its sweet and sour fruit."
+	harvest_amount_high = 3
+	harvest_message_low = "You pluck a single fonarstolbe fruit."
+	harvest_message_med = "You pluck a number of fonarstolbe fruits."
+	harvest_message_high = "You pluck quite a lot of fonarstolbe fruits."
+	harvest_time = 40
+	number_of_variants = 4
+
+/obj/structure/flora/ash/fonarstolbe/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/fonarstolbe = 1)
+
+/obj/structure/flora/ash/vahrezjia
+	name = "vahrezjia flowers"
+	desc = "Bright blue stalks emerging from purple flowery pods. Apparently they can drive animals aggresive. They definetly sped up huskies and bears shipped in here by Spinward colonizers going feral. Quite unlikely they were the direct reason, though."
+	icon_state = "flowerpod1"
+	base_icon_state = "flowerpod"
+	harvested_name = "vahrezjia pods"
+	harvested_desc = "A bunch of vahrezjia pods. Despite repeated attempts to burn or uproot them away, they somehow still spread around and perservere."
+	harvest_amount_high = 3
+	harvest_message_low = "You pluck a single vahrezjia stalk."
+	harvest_message_med = "You pluck a number of vahrezjia stalks."
+	harvest_message_high = "You pluck quite a lot of vahrezjia stalks."
+	harvest_time = 25
+	number_of_variants = 4
+
+/obj/structure/flora/ash/vahrezjia/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/vahrezjia = 1)
+
+/obj/structure/flora/ash/podsneyzka
+	name = "podsneyzka flower"
+	desc = "A bunch of flowering podsneyzkas. These flowers are known to taste quite like meat, and have quite similiar chemical composition to it. Better not to think about it, perhaps."
+	icon_state = "flower1"
+	base_icon_state = "flower"
+	harvested_name = "podsneyzka stems"
+	harvested_desc = "A bunch of podsneyzka stems. Most of the plants is actually underground, and their roots are extremely long, ever searching for decomposing corpses to sap off of."
+	harvest_amount_high = 5
+	harvest_message_low = "You menage to pluck a single bunch of podzneyzkas."
+	harvest_message_med = "You carefully pluck a whole bunch of podzneyzkas."
+	harvest_message_high = "You very carefully pluck quite a lot of podzneyzkas."
+	harvest_time = 30
+	number_of_variants = 4
+
+/obj/structure/flora/ash/podsneyzka/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/podsneyzka = 1)
+
+/obj/structure/flora/ash/inozhakust
+	name = "inozhakust"
+	desc = "A plant looking like roots growing into the sky, covered in mushy, wet, oily vines. They squelch and break apart when touched. You'll have to gather them as a paste."
+	icon_state = "shrub1"
+	base_icon_state = "shrub"
+	harvested_name = "inozhakust"
+	harvested_desc = "A plant looking like roots growing into the sky - inozhakust. Filters chemical compounds in both earth and dirt, and spits out disgusting vines which you should be able to harvest soon."
+	harvest_amount_high = 5
+	harvest_message_low = "You menage to scoop just a bit of inozhakust's vines into paste."
+	harvest_message_med = "You menage to scoop some inozhakust's vines into paste."
+	harvest_message_high = "You menage to scoop quite a lot of inozhakust's vines into paste."
+	harvest_time = 30
+	number_of_variants = 4
+
+/obj/structure/flora/ash/inozhakust/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/inozhakust = 1)
+
+/obj/structure/flora/ash/plasma_flower
+	name = "plasma flower"
+	desc = "A bunch of vines surrounding a clustered bunch of plasma flowers. Researches still are trying to wrap their heads around these ones."
+	icon_state = "plasma_flower1"
+	base_icon_state = "plasma_flower"
+	light_range = LIGHT_FIRE_BLOSSOM
+	light_power = LIGHT_FIRE_BLOSSOM
+	light_color = COLOR_BIOLUMINESCENCE_PURPLE
+	harvested_name = "fire blossom vines"
+	harvested_desc = "A few plasma flower vines, missing their flowers."
+	harvest_amount_high = 3
+	harvest_message_low = "You pluck a single, suitable flower."
+	harvest_message_med = "You pluck a number of flowers, leaving a few unsuitable ones."
+	harvest_message_high = "You pluck quite a lot of suitable flowers."
+	regrowth_time_low = 4 MINUTES
+	regrowth_time_high = 7 MINUTES
+	number_of_variants = 2
+
+/obj/structure/flora/ash/plasma_flower/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/plasma_flower = 1)
+
+/obj/structure/flora/ash/plasma_flower/after_harvest()
+	set_light_power(LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED)
+	set_light_range(LIGHT_POWER_FIRE_BLOSSOM_HARVESTED)
+	update_light()
+	return ..()
+
+/obj/structure/flora/ash/plasma_flower/regrow()
+	set_light_power(initial(light_power))
+	set_light_range(initial(light_range))
+	update_light()
+	return ..()
+
+/obj/structure/flora/ash/drake_beet
+	name = "drake beet"
+	desc = "An mutated beet. It seems to have adapted to local ecosystems by vaguely mimicking the appearance of a drake. Unsure how that helps, but its probably still tasty."
+	icon_state = "drakebeet1"
+	base_icon_state = "drakebeet"
+	harvested_name = "young drake beet"
+	harvested_desc = "An mutated beet. These ones are yet to grow up. Brought here by spinwarders in order to make borstch then went wild and mutated like everything else."
+	harvest_amount_high = 4
+	harvest_message_low = "You pull a single suitable beet from the ground."
+	harvest_message_med = "You pull a number of suitable beets from the ground."
+	harvest_message_high = "You pull quite a lot of suitable beets from the ground."
+	regrowth_time_low = 3 MINUTES
+	regrowth_time_high = 6 MINUTES
+	harvest_time = 25
+	number_of_variants = 2
+
+/obj/structure/flora/ash/drake_beet/get_potential_products()
+	return list(/obj/item/food/grown/drake_beet = 1)
+
 //SNACKS
 
 /obj/item/food/grown/ash_flora
-	name = "mushroom shavings"
-	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
+	name = "unidentified bits of a wierd plant"
+	desc = "What's this? An intruder, is what it is. Tell somebody about this."
 	icon = 'icons/obj/mining_zones/ash_flora.dmi'
 	icon_state = "mushroom_shavings"
+	abstract_type = /obj/item/food/grown/ash_flora
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
-	seed = /obj/item/seeds/lavaland/polypore
-	wine_power = 20
+	foodtypes = VEGETABLES
 
 /obj/item/food/grown/ash_flora/Initialize(mapload)
 	. = ..()
 	pixel_x = base_pixel_x + rand(-4, 4)
 	pixel_y = base_pixel_y + rand(-4, 4)
 
-/obj/item/food/grown/ash_flora/shavings //So we can't craft bowls from everything.
-	grind_results = list(/datum/reagent/toxin/mushroom_powder = 5)
+/obj/item/food/grown/ash_flora/shavings
+	name = "mushroom shavings"
+	desc = "Some shavings from a tall mushroom. With enough, might serve as a bowl."
+	seed = /obj/item/seeds/lavaland/polypore
+	wine_power = 20
+
+/obj/item/food/grown/ash_flora/shavings/grind_results()
+	return list(/datum/reagent/toxin/mushroom_powder = 5)
 
 /obj/item/food/grown/ash_flora/mushroom_leaf
 	name = "mushroom leaf"
@@ -226,6 +414,11 @@
 	icon_state = "cactus_fruit"
 	seed = /obj/item/seeds/lavaland/cactus
 	wine_power = 50
+	foodtypes = FRUIT
+
+/obj/item/food/grown/ash_flora/cactus_fruit/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, growth_modifier = 0.1, ability_modifier = -0.05)
 
 /obj/item/food/grown/ash_flora/seraka
 	name = "seraka cap"
@@ -233,6 +426,10 @@
 	icon_state = "seraka_cap"
 	seed = /obj/item/seeds/lavaland/seraka
 	wine_power = 40
+
+/obj/item/food/grown/ash_flora/seraka/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, ability_modifier = 0.1)
 
 /obj/item/food/grown/ash_flora/fireblossom
 	name = "fire blossom"
@@ -242,7 +439,67 @@
 	seed = /obj/item/seeds/lavaland/fireblossom
 	wine_power = 40
 
-//SEEDS
+/obj/item/food/grown/ash_flora/fireblossom/Initialize(mapload)
+	. = ..()
+	// Fire flowers make fireproof raptors
+	AddElement(/datum/element/raptor_food, color_chances = string_list(list(/datum/raptor_color/blue = 5)))
+
+/obj/item/food/grown/ash_flora/glowgrowth
+	name = "glowgrowth sheet"
+	desc = "A thick sheet of glowing fungi."
+	icon_state = "glowgrowth"
+	seed = /obj/item/seeds/lavaland/glowgrowth // Cannot be grown in hydroponics as it feeds off mineral air
+	wine_power = 50
+
+//SNACKS - icebox
+
+/obj/item/food/grown/ash_flora/fonarstolbe
+	name = "fonarstolbe fruit"
+	desc = "A fonarstolbe fruit. It's glowing blue, faintly."
+	icon_state = "fonarstolbe"
+	seed = /obj/item/seeds/lavaland/fonarstolbe
+	wine_power = 50
+	foodtypes = FRUIT
+
+/obj/item/food/grown/ash_flora/vahrezjia
+	name = "vahrezjia stalks"
+	desc = "Bunched together vahrezjia stalks. Suprisingly coarse in texture."
+	icon_state = "vahrezjia"
+	seed = /obj/item/seeds/lavaland/vahrezjia
+	wine_power = 50
+	foodtypes = FRUIT
+
+/obj/item/food/grown/ash_flora/podsneyzka
+	name = "podsneyzka bunch"
+	desc = "A bunch of spotted podsneyzka flowers, folded onto themselves. They smell bit like rotten meat."
+	icon_state = "podsneyzka"
+	seed = /obj/item/seeds/lavaland/podsneyzka
+	wine_power = 50
+	foodtypes = MEAT|VEGETABLES
+
+/obj/item/food/grown/ash_flora/inozhakust
+	name = "inozhakust mash"
+	desc = "The mashed up vines of an inozhakust scooped into whatever you had on hand."
+	icon_state = "inozhakust"
+	seed = /obj/item/seeds/lavaland/inozhakust
+	distill_reagent = /datum/reagent/consumable/ethanol/mouthwash
+	foodtypes = VEGETABLES|GROSS
+
+/obj/item/food/grown/ash_flora/plasma_flower
+	name = "plasma flower"
+	desc = "A bit of vine conected a crystalized plasma flower."
+	icon_state = "plasmaflower"
+	slot_flags = ITEM_SLOT_HEAD
+	seed = /obj/item/seeds/lavaland/plasma_flower
+	foodtypes = TOXIC
+	wine_power = 40
+
+/obj/item/food/grown/ash_flora/plasma_flower/Initialize(mapload)
+	. = ..()
+	// Fire flowers make fireproof raptors
+	AddElement(/datum/element/raptor_food, color_chances = string_list(list(/datum/raptor_color/blue = 5)))
+
+// SEEDS
 
 /obj/item/seeds/lavaland
 	name = "lavaland seeds"
@@ -261,7 +518,7 @@
 	graft_gene = /datum/plant_gene/trait/fire_resistance
 
 /obj/item/seeds/lavaland/cactus
-	name = "pack of fruiting cactus seeds"
+	name = "fruiting cactus seed pack"
 	desc = "These seeds grow into fruiting cacti."
 	icon_state = "seed-cactus"
 	species = "cactus"
@@ -275,7 +532,7 @@
 
 ///Star Cactus seeds, mutation of lavaland cactus.
 /obj/item/seeds/star_cactus
-	name = "pack of star cacti seeds"
+	name = "star cacti seed pack"
 	desc = "These seeds grow into star cacti."
 	icon_state = "seed-starcactus"
 	species = "starcactus"
@@ -303,7 +560,7 @@
 	distill_reagent = /datum/reagent/consumable/ethanol/tequila
 
 /obj/item/seeds/lavaland/polypore
-	name = "pack of polypore mycelium"
+	name = "polypore mycelium pack"
 	desc = "This mycelium grows into bracket mushrooms, also known as polypores. Woody and firm, shaft miners often use them for makeshift crafts."
 	icon_state = "mycelium-polypore"
 	species = "polypore"
@@ -311,10 +568,10 @@
 	product = /obj/item/food/grown/ash_flora/shavings
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance)
 	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list(/datum/reagent/consumable/sugar = 0.06, /datum/reagent/consumable/ethanol = 0.04, /datum/reagent/stabilizing_agent = 0.06, /datum/reagent/consumable/mintextract = 0.02)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04, /datum/reagent/consumable/ethanol = 0.04, /datum/reagent/stabilizing_agent = 0.06, /datum/reagent/consumable/mintextract = 0.02)
 
 /obj/item/seeds/lavaland/porcini
-	name = "pack of porcini mycelium"
+	name = "porcini mycelium pack"
 	desc = "This mycelium grows into Boletus edulus, also known as porcini. Native to the late Earth, but discovered on Lavaland. Has culinary, medicinal and relaxant effects."
 	icon_state = "mycelium-porcini"
 	species = "porcini"
@@ -322,10 +579,10 @@
 	product = /obj/item/food/grown/ash_flora/mushroom_leaf
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance)
 	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.06, /datum/reagent/consumable/vitfro = 0.04, /datum/reagent/drug/nicotine = 0.04)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.06,  /datum/reagent/consumable/sugar = 0.06, /datum/reagent/consumable/vitfro = 0.04, /datum/reagent/drug/nicotine = 0.04)
 
 /obj/item/seeds/lavaland/inocybe
-	name = "pack of inocybe mycelium"
+	name = "inocybe mycelium pack"
 	desc = "This mycelium grows into an inocybe mushroom, a species of Lavaland origin with hallucinatory and toxic effects."
 	icon_state = "mycelium-inocybe"
 	species = "inocybe"
@@ -336,7 +593,7 @@
 	reagents_add = list(/datum/reagent/toxin/mindbreaker = 0.04, /datum/reagent/consumable/entpoly = 0.08, /datum/reagent/drug/mushroomhallucinogen = 0.04)
 
 /obj/item/seeds/lavaland/ember
-	name = "pack of embershroom mycelium"
+	name = "embershroom mycelium pack"
 	desc = "This mycelium grows into embershrooms, a species of bioluminescent mushrooms native to Lavaland."
 	icon_state = "mycelium-ember"
 	species = "ember"
@@ -347,7 +604,7 @@
 	reagents_add = list(/datum/reagent/consumable/tinlux = 0.04, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/drug/space_drugs = 0.02)
 
 /obj/item/seeds/lavaland/seraka
-	name = "pack of seraka mycelium"
+	name = "seraka mycelium pack"
 	desc = "This mycelium grows into seraka mushrooms, a species of savoury mushrooms originally native to Tizira used in food and traditional medicine."
 	icon_state = "mycelium-seraka"
 	species = "seraka"
@@ -358,7 +615,7 @@
 	reagents_add = list(/datum/reagent/toxin/mushroom_powder = 0.1, /datum/reagent/medicine/coagulant/seraka_extract = 0.02)
 
 /obj/item/seeds/lavaland/fireblossom
-	name = "pack of fire blossom seeds"
+	name = "fire blossom seed pack"
 	desc = "These seeds grow into fire blossoms."
 	plantname = "Fire Blossom"
 	icon_state = "seed-fireblossom"
@@ -369,24 +626,113 @@
 	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	reagents_add = list(/datum/reagent/consumable/tinlux = 0.04, /datum/reagent/consumable/nutriment = 0.03, /datum/reagent/carbon = 0.05)
 
+/obj/item/seeds/lavaland/glowgrowth
+	name = "glowgrowth mycelium pack"
+	desc = "This mycelium grows into glowgrowth fungi."
+	plantname = "Glowgrowth Fungi"
+	icon_state = "mycelium-glowgrowth"
+	species = "glowgrowth"
+	product = /obj/item/food/grown/ash_flora/glowgrowth
+	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance, /datum/plant_gene/trait/glow/blue) // Fungal metab doesn't do anything (cause it can't be planted) but it shows up in analyzers
+	reagents_add = list(/datum/reagent/luminescent_fluid/cyan = 0.06, /datum/reagent/consumable/nutriment = 0.01, /datum/reagent/silicon = 0.03)
+	seed_flags = parent_type::seed_flags | NO_PLANTING
+
+/// SEEDS - icebox
+
+/obj/item/seeds/lavaland/fonarstolbe
+	name = "fonarstolbe seed pack"
+	desc = "These seeds grow into fonarstolbe."
+	icon_state = "seed-fonarstolbe"
+	species = "fonarstolbe"
+	plantname = "Fonarstolbe"
+	lifespan = 40
+	production = 5
+	yield = 3
+	growthstages = 4
+	product = /obj/item/food/grown/ash_flora/fonarstolbe
+	genes = list(/datum/plant_gene/trait/tox_resistance, /datum/plant_gene/trait/glow/blue)
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.04, /datum/reagent/luminescent_fluid/cyan = 0.03, /datum/reagent/iron = 0.02, /datum/reagent/consumable/guidoferrun = 0.2)
+	graft_gene = /datum/plant_gene/trait/glow/blue
+
+/obj/item/seeds/lavaland/vahrezjia
+	name = "vahrezjia seed pack"
+	desc = "These seeds grow into vahrezjia."
+	icon_state = "seed-vahrezjia"
+	species = "vahrezjia"
+	plantname = "Vahrezjia"
+	growthstages = 3
+	product = /obj/item/food/grown/ash_flora/vahrezjia
+	genes = list(/datum/plant_gene/trait/tox_resistance, /datum/plant_gene/trait/repeated_harvest)
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02, /datum/reagent/toxin/berserker = 0.06, /datum/reagent/consumable/nutriment/fat/oil = 0.03)
+
+/obj/item/seeds/lavaland/podsneyzka
+	name = "podsneyzka seed pack"
+	desc = "These seeds grow into podsneyzkas."
+	icon_state = "seed-podsneyzka"
+	species = "podsneyzka"
+	plantname = "Podsneyzka"
+	lifespan = 30
+	endurance = 15
+	production = 4
+	yield = 5
+	growthstages = 3
+	product = /obj/item/food/grown/ash_flora/podsneyzka
+	genes = list(/datum/plant_gene/trait/tox_resistance, /datum/plant_gene/trait/chem_cooling)
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.03, /datum/reagent/consumable/nutriment = 0.03, /datum/reagent/cryostylane = 0.02, /datum/reagent/consumable/liquidgibs = 0.02)
+	graft_gene = /datum/plant_gene/trait/chem_cooling
+
+/obj/item/seeds/lavaland/inozhakust
+	name = "inozhakust seed pack"
+	desc = "These seeds grow into a inozhakust."
+	icon_state = "seed-inozhakust"
+	species = "inozhakust"
+	plantname = "Inozhakust"
+	lifespan = 40
+	endurance = 30
+	yield = 3
+	growthstages = 5
+	product = /obj/item/food/grown/ash_flora/inozhakust
+	genes = list(/datum/plant_gene/trait/plant_type/toxin_adaptation, /datum/plant_gene/trait/repeated_harvest)
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.01, /datum/reagent/consumable/nutriment = 0.09,  /datum/reagent/consumable/mintextract = 0.03, /datum/reagent/impurity = 0.02)
+	graft_gene = /datum/plant_gene/trait/plant_type/toxin_adaptation
+
+/obj/item/seeds/lavaland/plasma_flower
+	name = "plasma flower seed pack"
+	desc = "These seeds grow into plasma flowers."
+	icon_state = "seed-plasmaflower"
+	species = "plasmaflower"
+	plantname = "Plasma flower"
+	lifespan = 40
+	endurance = 15
+	production = 5
+	yield = 3
+	potency = 20
+	growthstages = 3
+	product = /obj/item/food/grown/ash_flora/plasma_flower
+	genes = list(/datum/plant_gene/trait/plant_type/toxin_adaptation, /datum/plant_gene/trait/glow/purple)
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/plasma_oxide = 0.01, /datum/reagent/stable_plasma = 0.02)
+
 //CRAFTING
 
 /datum/crafting_recipe/mushroom_bowl
 	name = "Mushroom Bowl"
 	result = /obj/item/reagent_containers/cup/bowl/mushroom_bowl
 	reqs = list(/obj/item/food/grown/ash_flora/shavings = 5)
-	time = 30
+	time = 3 SECONDS
 	category = CAT_CONTAINERS
 
 /obj/item/reagent_containers/cup/bowl/mushroom_bowl
 	name = "mushroom bowl"
 	desc = "A bowl made out of mushrooms. Not food, though it might have contained some at some point."
 	icon = 'icons/obj/mining_zones/ash_flora.dmi'
+	base_icon_state = "mushroom_bowl"
 	icon_state = "mushroom_bowl"
 	fill_icon_state = "fullbowl"
 	fill_icon = 'icons/obj/mining_zones/ash_flora.dmi'
+	custom_materials = null
 
-/obj/item/reagent_containers/cup/bowl/mushroom_bowl/update_icon_state()
-	if(!reagents.total_volume)
-		icon_state = "mushroom_bowl"
-	return ..()

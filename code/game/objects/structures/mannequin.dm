@@ -63,7 +63,7 @@
 		material = pick(MANNEQUIN_WOOD, MANNEQUIN_PLASTIC)
 	icon_state = "mannequin_[material]_[body_type == FEMALE ? "female" : "male"]"
 	AddElement(/datum/element/strippable, GLOB.strippable_mannequin_items)
-	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
+	AddElement(/datum/element/simple_rotation, ROTATION_IGNORE_ANCHORED)
 	AddComponent(/datum/component/marionette)
 	update_appearance()
 
@@ -93,70 +93,30 @@
 /obj/structure/mannequin/update_overlays()
 	. = ..()
 	var/mutable_appearance/pedestal = mutable_appearance(icon, "pedestal_[material]")
-	pedestal.pixel_y = -3
+	pedestal.pixel_z = -3
 	. += pedestal
-	var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[underwear_name]
-	if(underwear)
-		if(body_type == FEMALE && underwear.gender == MALE)
-			. += wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
-		else
-			. += mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
-	var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[undershirt_name]
-	if(undershirt)
-		if(body_type == FEMALE)
-			. += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
-		else
-			. += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
-	var/datum/sprite_accessory/socks/socks = GLOB.socks_list[socks_name]
-	if(socks)
-		. += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
+	var/datum/sprite_accessory/clothing/underwear/underwear = SSaccessories.underwear_list[underwear_name]
+	var/mutable_appearance/underwear_overlay = underwear?.make_appearance(COLOR_WHITE, body_type, BODYSHAPE_HUMANOID)
+	if(underwear_overlay)
+		. += underwear_overlay
+	var/datum/sprite_accessory/clothing/undershirt/undershirt = SSaccessories.undershirt_list[undershirt_name]
+	var/mutable_appearance/undershirt_overlay = undershirt?.make_appearance(COLOR_WHITE, body_type, BODYSHAPE_HUMANOID)
+	if(undershirt_overlay)
+		. += undershirt_overlay
+	var/datum/sprite_accessory/clothing/socks/socks = SSaccessories.socks_list[socks_name]
+	var/mutable_appearance/socks_overlay = socks?.make_appearance(COLOR_WHITE, body_type, BODYSHAPE_HUMANOID)
+	if(socks_overlay)
+		. += socks_overlay
 	for(var/slot_flag in worn_items)
 		var/obj/item/worn_item = worn_items[slot_flag]
 		if(!worn_item)
 			continue
-		var/default_layer = 0
-		var/default_icon = null
+		var/default_icon = get_default_icon_by_slot(text2num(slot_flag))
+		var/default_layer = get_default_layer_by_slot(text2num(slot_flag))
 		var/female_icon = NO_FEMALE_UNIFORM
-		switch(text2num(slot_flag)) //this kinda sucks because build worn icon kinda sucks
-			if(ITEM_SLOT_HEAD)
-				default_layer = HEAD_LAYER
-				default_icon = 'icons/mob/clothing/head/default.dmi'
-			if(ITEM_SLOT_EYES)
-				default_layer = GLASSES_LAYER
-				default_icon = 'icons/mob/clothing/eyes.dmi'
-			if(ITEM_SLOT_EARS)
-				default_layer = EARS_LAYER
-				default_icon = 'icons/mob/clothing/ears.dmi'
-			if(ITEM_SLOT_MASK)
-				default_layer = FACEMASK_LAYER
-				default_icon = 'icons/mob/clothing/mask.dmi'
-			if(ITEM_SLOT_NECK)
-				default_layer = NECK_LAYER
-				default_icon = 'icons/mob/clothing/neck.dmi'
-			if(ITEM_SLOT_BACK)
-				default_layer = BACK_LAYER
-				default_icon = 'icons/mob/clothing/back.dmi'
-			if(ITEM_SLOT_BELT)
-				default_layer = BELT_LAYER
-				default_icon = 'icons/mob/clothing/belt.dmi'
-			if(ITEM_SLOT_ID)
-				default_layer = ID_LAYER
-				default_icon = 'icons/mob/clothing/id.dmi'
-			if(ITEM_SLOT_ICLOTHING)
-				default_layer = UNIFORM_LAYER
-				default_icon = DEFAULT_UNIFORM_FILE
-				if(body_type == FEMALE && istype(worn_item, /obj/item/clothing/under))
-					var/obj/item/clothing/under/worn_jumpsuit = worn_item
-					female_icon = worn_jumpsuit.female_sprite_flags
-			if(ITEM_SLOT_OCLOTHING)
-				default_layer = SUIT_LAYER
-				default_icon = DEFAULT_SUIT_FILE
-			if(ITEM_SLOT_GLOVES)
-				default_layer = GLOVES_LAYER
-				default_icon = 'icons/mob/clothing/hands.dmi'
-			if(ITEM_SLOT_FEET)
-				default_layer = SHOES_LAYER
-				default_icon = DEFAULT_SHOES_FILE
+		if(body_type == FEMALE && istype(worn_item, /obj/item/clothing/under))
+			var/obj/item/clothing/under/worn_jumpsuit = worn_item
+			female_icon = worn_jumpsuit.female_sprite_flags
 		. += worn_item.build_worn_icon(default_layer, default_icon, female_uniform = female_icon)
 
 /obj/structure/mannequin/attack_hand_secondary(mob/user, list/modifiers)
@@ -168,24 +128,26 @@
 		return
 	switch(choice)
 		if("Underwear")
-			var/new_undies = tgui_input_list(user, "Select the mannequin's underwear", "Changing", GLOB.underwear_list)
+			var/new_undies = tgui_input_list(user, "Select the mannequin's underwear", "Changing", SSaccessories.underwear_list)
 			if(new_undies)
 				underwear_name = new_undies
 		if("Undershirt")
-			var/new_undershirt = tgui_input_list(user, "Select the mannequin's undershirt", "Changing", GLOB.undershirt_list)
+			var/new_undershirt = tgui_input_list(user, "Select the mannequin's undershirt", "Changing", SSaccessories.undershirt_list)
 			if(new_undershirt)
 				undershirt_name = new_undershirt
 		if("Socks")
-			var/new_socks = tgui_input_list(user, "Select the mannequin's socks", "Changing", GLOB.socks_list)
+			var/new_socks = tgui_input_list(user, "Select the mannequin's socks", "Changing", SSaccessories.socks_list)
 			if(new_socks)
 				socks_name = new_socks
 	update_appearance()
 
 /obj/structure/mannequin/wood
 	material = MANNEQUIN_WOOD
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 25)
 
 /obj/structure/mannequin/plastic
 	material = MANNEQUIN_PLASTIC
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 25)
 
 /obj/structure/mannequin/skeleton
 	name = "skeleton model"

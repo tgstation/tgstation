@@ -4,6 +4,27 @@
  * @license MIT
  */
 
+export const THEMES = ['light', 'dark'] as const;
+
+export const COLORS = {
+  DARK: {
+    BG_BASE: '#202020',
+    BG_SECOND: '#151515',
+    BUTTON: '#404040',
+    TEXT: '#A6A6A6',
+    TEXT_IMPORTANT: '#A6A6A6',
+    BG_IMPORTANT: '#492020',
+  },
+  LIGHT: {
+    BG_BASE: '#EEEEEE',
+    BG_SECOND: '#FFFFFF',
+    BUTTON: '#FFFFFF',
+    TEXT: '#000000',
+    TEXT_IMPORTANT: '#A6A6A6',
+    BG_IMPORTANT: '#910707',
+  },
+} as const;
+
 export const SETTINGS_TABS = [
   {
     id: 'general',
@@ -18,7 +39,15 @@ export const SETTINGS_TABS = [
     id: 'chatPage',
     name: 'Chat Tabs',
   },
-];
+  {
+    id: 'statPanel',
+    name: 'Stat Panel',
+  },
+  {
+    id: 'websocket',
+    name: 'Websocket',
+  },
+] as const;
 
 export const FONTS_DISABLED = 'Default';
 
@@ -34,6 +63,6 @@ export const FONTS = [
   'Trebuchet MS',
   'Courier New',
   'Lucida Console',
-];
+] as const;
 
-export const MAX_HIGHLIGHT_SETTINGS = 10;
+export const WARN_AFTER_HIGHLIGHT_AMT = 10;

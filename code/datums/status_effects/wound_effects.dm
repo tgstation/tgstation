@@ -3,7 +3,8 @@
 /atom/movable/screen/alert/status_effect/determined
 	name = "Determined"
 	desc = "The serious wounds you've sustained have put your body into fight-or-flight mode! Now's the time to look for an exit!"
-	icon_state = "wounded"
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
+	overlay_state = "wounded"
 
 /datum/status_effect/determined
 	id = "determined"
@@ -14,22 +15,49 @@
 	. = ..()
 	owner.visible_message(span_danger("[owner]'s body tenses up noticeably, gritting against [owner.p_their()] pain!"), span_notice("<b>Your senses sharpen as your body tenses up from the wounds you've sustained!</b>"), \
 		vision_distance=COMBAT_MESSAGE_RANGE)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.bleed_mod *= WOUND_DETERMINATION_BLEED_MOD
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, WOUND_DETERMINATION_BLEED_MOD)
+	RegisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_strike))
 
 /datum/status_effect/determined/on_remove()
 	owner.visible_message(span_danger("[owner]'s body slackens noticeably!"), span_warning("<b>Your adrenaline rush dies off, and the pain from your wounds come aching back in...</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.bleed_mod /= WOUND_DETERMINATION_BLEED_MOD
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, 1/WOUND_DETERMINATION_BLEED_MOD)
+	UnregisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK)
 	return ..()
+
+/datum/status_effect/determined/proc/unarmed_strike(mob/living/source, atom/attack_target, proximity, modifiers)
+	SIGNAL_HANDLER
+
+	if(!proximity || !isliving(attack_target))
+		return NONE
+
+	var/obj/item/bodypart/arm = source.get_active_hand()
+	var/datum/wound/bruised/arm_bruises = arm.get_wound_type(/datum/wound/bruised)
+	if(!isnull(arm_bruises))
+		arm_bruises.bruise_ticks = initial(arm_bruises.bruise_ticks)
+		return
+	arm_bruises = new /datum/wound/bruised()
+
+	var/wound_source
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		wound_source = "defensive injuries from attempting to ward off"
+	else
+		wound_source = "offensive injuries from attempting to fight"
+
+	if(ishuman(attack_target))
+		wound_source += " a humanoid"
+	else if(issilicon(attack_target))
+		wound_source += " something mechanical"
+	else
+		wound_source += " an animal"
+	arm_bruises.apply_wound(arm, TRUE, wound_source = wound_source)
 
 /datum/status_effect/limp
 	id = "limp"
 	status_type = STATUS_EFFECT_REPLACE
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/limp
+	on_remove_on_mob_delete = TRUE
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 	/// The left leg of the limping person
 	var/obj/item/bodypart/leg/left/left
@@ -49,20 +77,24 @@
 /datum/status_effect/limp/on_apply()
 	if(!iscarbon(owner))
 		return FALSE
-	var/mob/living/carbon/C = owner
-	left = C.get_bodypart(BODY_ZONE_L_LEG)
-	right = C.get_bodypart(BODY_ZONE_R_LEG)
-	update_limp()
-	RegisterSignal(C, COMSIG_MOVABLE_MOVED, PROC_REF(check_step))
-	RegisterSignals(C, list(COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_POST_LOSE_WOUND, COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB), PROC_REF(update_limp))
+	var/mob/living/carbon/carbon_owner = owner
+	left = carbon_owner.get_bodypart(BODY_ZONE_L_LEG)
+	right = carbon_owner.get_bodypart(BODY_ZONE_R_LEG)
+	update_limp(src)
+	RegisterSignal(carbon_owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_step))
+	RegisterSignal(carbon_owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(on_limb_removed))
+	RegisterSignals(carbon_owner, list(COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_POST_LOSE_WOUND, COMSIG_CARBON_ATTACH_LIMB), PROC_REF(update_limp))
 	return TRUE
 
 /datum/status_effect/limp/on_remove()
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_GAIN_WOUND, COMSIG_CARBON_POST_LOSE_WOUND, COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
+	left = null
+	right = null
 
 /atom/movable/screen/alert/status_effect/limp
 	name = "Limping"
 	desc = "One or more of your legs has been wounded, slowing down steps with that leg! Get it fixed, or at least in a sling of gauze!"
+	icon_state = "injury"
 
 /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced)
 	SIGNAL_HANDLER
@@ -73,24 +105,47 @@
 	// less limping while we have determination still
 	var/determined_mod = owner.has_status_effect(/datum/status_effect/determined) ? 0.5 : 1
 
+	var/obj/item/bodypart/leg_about_to_limp
+	var/limp_chance
+	var/limp_slowdown
 	if(next_leg == left)
-		if(prob(limp_chance_left * determined_mod))
-			owner.client.move_delay += slowdown_left * determined_mod
+		leg_about_to_limp = left
+		limp_chance = limp_chance_left
+		limp_slowdown = slowdown_left
 		next_leg = right
 	else
-		if(prob(limp_chance_right * determined_mod))
-			owner.client.move_delay += slowdown_right * determined_mod
+		leg_about_to_limp = right
+		limp_chance = limp_chance_right
+		limp_slowdown = slowdown_right
 		next_leg = left
 
-/datum/status_effect/limp/proc/update_limp()
+	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING, leg_about_to_limp) & COMPONENT_CANCEL_LIMP)
+		return
+
+	if(prob(limp_chance * determined_mod))
+		owner.client.move_delay += limp_slowdown * determined_mod
+
+/// We need to make sure that we properly clear these refs if one of the owner's limbs gets deleted
+/datum/status_effect/limp/proc/on_limb_removed(datum/source, obj/item/bodypart/limb_lost, special, dismembered)
 	SIGNAL_HANDLER
 
-	var/mob/living/carbon/C = owner
-	left = C.get_bodypart(BODY_ZONE_L_LEG)
-	right = C.get_bodypart(BODY_ZONE_R_LEG)
+	if(limb_lost == left)
+		left = null
+	if(limb_lost == right)
+		right = null
+
+	update_limp() // calling this with no arg so we know it's coming from here and not a signal
+
+/datum/status_effect/limp/proc/update_limp(datum/source)
+	SIGNAL_HANDLER
+
+	var/mob/living/carbon/carbon_mob = owner
+	if(source) // if we don't have a source, that means we are calling it from on_limb_removed. In that case we do not want to reassign these to the about-to-be-removed limbs (which can cause hanging refs)
+		left = carbon_mob.get_bodypart(BODY_ZONE_L_LEG)
+		right = carbon_mob.get_bodypart(BODY_ZONE_R_LEG)
 
 	if(!left && !right)
-		C.remove_status_effect(src)
+		carbon_mob.remove_status_effect(src)
 		return
 
 	slowdown_left = 0
@@ -101,38 +156,49 @@
 	// technically you can have multiple wounds causing limps on the same limb, even if practically only bone wounds cause it in normal gameplay
 	if(left)
 		for(var/thing in left.wounds)
-			var/datum/wound/W = thing
-			slowdown_left += W.limp_slowdown
-			limp_chance_left = max(limp_chance_left, W.limp_chance)
+			var/datum/wound/wound = thing
+			slowdown_left += wound.limp_slowdown
+			limp_chance_left = max(limp_chance_left, wound.limp_chance)
 
 	if(right)
 		for(var/thing in right.wounds)
-			var/datum/wound/W = thing
-			slowdown_right += W.limp_slowdown
-			limp_chance_right = max(limp_chance_right, W.limp_chance)
+			var/datum/wound/wound = thing
+			slowdown_right += wound.limp_slowdown
+			limp_chance_right = max(limp_chance_right, wound.limp_chance)
 
 	// this handles losing your leg with the limp and the other one being in good shape as well
 	if(!slowdown_left && !slowdown_right)
-		C.remove_status_effect(src)
+		carbon_mob.remove_status_effect(src)
 		return
+
+//Quirk variant of limping. Will always be applied as long as you have a leg to stand on.
+/datum/status_effect/limp/quirk
+	id = "limp_quirk"
+	alert_type = null
+
+/datum/status_effect/limp/quirk/update_limp(datum/source)
+	var/mob/living/carbon/carbon_mob = owner
+	left = carbon_mob.get_bodypart(BODY_ZONE_L_LEG)
+	right = carbon_mob.get_bodypart(BODY_ZONE_R_LEG)
+
+	slowdown_left = 0
+	slowdown_right = 0
+	limp_chance_left = 0
+	limp_chance_right = 0
+
+
+	if(left)
+		slowdown_left = 7 //Same as compound fracture
+		limp_chance_left = 70
+
+	else if(right)
+		slowdown_right = 7
+		limp_chance_right = 70
 
 
 /////////////////////////
 //////// WOUNDS /////////
 /////////////////////////
-
-// wound alert
-/atom/movable/screen/alert/status_effect/wound
-	name = "Wounded"
-	desc = "Your body has sustained serious damage, click here to inspect yourself."
-
-/atom/movable/screen/alert/status_effect/wound/Click()
-	. = ..()
-	if(!.)
-		return
-
-	var/mob/living/carbon/carbon_owner = owner
-	carbon_owner.check_self_for_injuries()
 
 // wound status effect base
 /datum/status_effect/wound
@@ -215,3 +281,17 @@
 	id = "thirddeg"
 /datum/status_effect/wound/burn/flesh/critical
 	id = "fourthdeg"
+
+/datum/status_effect/wound/blunt/robotic/moderate
+	id = "loose"
+/datum/status_effect/wound/blunt/robotic/severe
+	id = "unfastening"
+/datum/status_effect/wound/blunt/robotic/critical
+	id = "collapse"
+
+/datum/status_effect/wound/burn/robotic/moderate
+	id = "overheating_moderate"
+/datum/status_effect/wound/burn/robotic/severe
+	id = "overheating_severe"
+/datum/status_effect/wound/burn/robotic/critical
+	id = "overheating_critical"

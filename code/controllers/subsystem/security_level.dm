@@ -1,16 +1,18 @@
 SUBSYSTEM_DEF(security_level)
 	name = "Security Level"
 	can_fire = FALSE // We will control when we fire in this subsystem
-	init_order = INIT_ORDER_SECURITY_LEVEL
 	/// Currently set security level
 	var/datum/security_level/current_security_level
 	/// A list of initialised security level datums.
 	var/list/available_levels = list()
+	/// A list of alert icon states for use in [/obj/machinery/status_display/evac] (to differentiate them from other display images)
+	var/list/alert_level_icons = list()
 
 /datum/controller/subsystem/security_level/Initialize()
 	for(var/iterating_security_level_type in subtypesof(/datum/security_level))
 		var/datum/security_level/new_security_level = new iterating_security_level_type
 		available_levels[new_security_level.name] = new_security_level
+		alert_level_icons += new_security_level.status_display_icon_state
 	current_security_level = available_levels[number_level_to_text(SEC_LEVEL_GREEN)]
 	return SS_INIT_SUCCESS
 
@@ -18,7 +20,7 @@ SUBSYSTEM_DEF(security_level)
 	if(!current_security_level.looping_sound) // No sound? No play.
 		can_fire = FALSE
 		return
-	sound_to_playing_players(current_security_level.looping_sound)
+	sound_to_playing_players(current_security_level.looping_sound, volume_preference = /datum/preference/numeric/volume/sound_ambience_volume)
 
 
 /**
@@ -40,9 +42,6 @@ SUBSYSTEM_DEF(security_level)
 	if(!selected_level)
 		CRASH("set_level was called with an invalid security level([new_level])")
 
-	if(SSnightshift.can_fire && (selected_level.number_level >= SEC_LEVEL_RED || current_security_level.number_level >= SEC_LEVEL_RED))
-		SSnightshift.next_fire = world.time + 7 SECONDS // Fire nightshift after the security level announcement is complete
-
 	if(announce)
 		level_announce(selected_level, current_security_level.number_level) // We want to announce BEFORE updating to the new level
 
@@ -53,9 +52,6 @@ SUBSYSTEM_DEF(security_level)
 		can_fire = TRUE
 	else
 		can_fire = FALSE
-
-	if(SSshuttle.emergency.mode == SHUTTLE_CALL || SSshuttle.emergency.mode == SHUTTLE_RECALL) // By god this is absolutely shit
-		SSshuttle.emergency.alert_coeff_change(selected_level.shuttle_call_time_mod)
 
 	SEND_SIGNAL(src, COMSIG_SECURITY_LEVEL_CHANGED, selected_level.number_level)
 	SSblackbox.record_feedback("tally", "security_level_changes", 1, selected_level.name)

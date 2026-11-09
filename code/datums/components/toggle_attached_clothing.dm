@@ -31,6 +31,8 @@
 	var/datum/callback/on_deployed
 	/// Optional callback triggered before we hide our equipment, before as we may delete it afterwards
 	var/datum/callback/on_removed
+	/// If TRUE, automatically deploys the hood
+	var/auto_deploy_on_outfit_equip = TRUE
 
 /datum/component/toggle_attached_clothing/Initialize(
 	deployable_type,
@@ -39,6 +41,7 @@
 	destroy_on_removal = FALSE,
 	parent_icon_state_suffix = "",
 	down_overlay_state_suffix = "",
+	auto_deploy_on_outfit_equip = TRUE,
 	datum/callback/pre_creation_check,
 	datum/callback/on_created,
 	datum/callback/on_deployed,
@@ -48,12 +51,13 @@
 	if (!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	if (!deployable_type || !equipped_slot)
-		return COMPONENT_INCOMPATIBLE // Not strictly true but INITIALIZE_HINT_QDEL doesn't work from components
+		return COMPONENT_REDUNDANT
 	src.deployable_type = deployable_type
 	src.equipped_slot = equipped_slot
 	src.destroy_on_removal = destroy_on_removal
 	src.parent_icon_state_suffix = parent_icon_state_suffix
 	src.down_overlay_state_suffix = down_overlay_state_suffix
+	src.auto_deploy_on_outfit_equip = auto_deploy_on_outfit_equip
 	src.pre_creation_check = pre_creation_check
 	src.on_created = on_created
 	src.on_deployed = on_deployed
@@ -70,7 +74,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(remove_deployable))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED_AS_OUTFIT, PROC_REF(on_parent_equipped_outfit))
 	if (down_overlay_state_suffix)
-		var/overlay_state = "[initial(clothing_parent.icon_state)][down_overlay_state_suffix]"
+		var/overlay_state = "[INITIAL_ICON_STATE(clothing_parent)][down_overlay_state_suffix]"
 		undeployed_overlay = mutable_appearance(initial(clothing_parent.worn_icon), overlay_state, -SUIT_LAYER)
 		RegisterSignal(parent, COMSIG_ITEM_GET_WORN_OVERLAYS, PROC_REF(on_checked_overlays))
 		clothing_parent.update_slot_icon()
@@ -106,7 +110,7 @@
 		return COMPONENT_ITEM_ACTION_SLOT_INVALID
 
 /// Apply an overlay while the item is not deployed
-/datum/component/toggle_attached_clothing/proc/on_checked_overlays(obj/item/source, list/overlays, mutable_appearance/standing, isinhands, icon_file)
+/datum/component/toggle_attached_clothing/proc/on_checked_overlays(obj/item/source, list/overlays, mutable_appearance/standing, isinhands, icon_file, bodyshape)
 	SIGNAL_HANDLER
 	if (isinhands || currently_deployed)
 		return
@@ -137,7 +141,7 @@
 	currently_deployed = TRUE
 	on_deployed?.Invoke(deployable)
 	if (parent_icon_state_suffix)
-		parent_gear.icon_state = "[initial(parent_gear.icon_state)][parent_icon_state_suffix]"
+		parent_gear.icon_state = "[INITIAL_ICON_STATE(parent_gear)][parent_icon_state_suffix]"
 		parent_gear.worn_icon_state = parent_gear.icon_state
 	parent_gear.update_slot_icon()
 	wearer.update_mob_action_buttons()
@@ -152,6 +156,8 @@
 /// Display deployed if worn in an outfit
 /datum/component/toggle_attached_clothing/proc/on_parent_equipped_outfit(obj/item/clothing/source, mob/equipper, visuals_only, slot)
 	SIGNAL_HANDLER
+	if (!auto_deploy_on_outfit_equip)
+		return
 	create_deployable()
 	toggle_deployable()
 
@@ -198,10 +204,10 @@
 	on_removed?.Invoke(deployable)
 
 	var/obj/item/parent_gear = parent
-	if (destroy_on_removal)
+	if(destroy_on_removal)
 		QDEL_NULL(deployable)
-	else if (parent_icon_state_suffix)
-		parent_gear.icon_state = "[initial(parent_gear.icon_state)]"
+	if(parent_icon_state_suffix)
+		parent_gear.icon_state = INITIAL_ICON_STATE(parent_gear)
 		parent_gear.worn_icon_state = parent_gear.icon_state
 	parent_gear.update_slot_icon()
 	parent_gear.update_item_action_buttons()

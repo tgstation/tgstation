@@ -12,3 +12,5 @@
 #define BB_SLIME_EVOLVE "BB_slime_evolve"
 ///Our reproduce action
 #define BB_SLIME_REPRODUCE "BB_slime_reproduce"
+///Target to try and eat, separate from retaliation because they use different strats
+#define BB_SLIME_EAT_TARGET "BB_slime_eat_target"

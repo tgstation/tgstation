@@ -16,6 +16,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 	/// The name that appears on the shell.
 	var/display_name = ""
@@ -24,7 +26,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	var/label_max_length = 24
 
 	/// The power of the integrated circuit
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 
 	/// The shell that this circuitboard is attached to. Used by components.
 	var/atom/movable/shell
@@ -80,6 +82,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	/// The Y position of the screen. Used for adding components.
 	var/screen_y = 0
 
+	/// The grid mode state for the circuit.
+	var/grid_mode = TRUE
+
 	/// The current size of the circuit.
 	var/current_size = 0
 
@@ -95,7 +100,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/loaded/Initialize(mapload)
 	. = ..()
-	set_cell(new /obj/item/stock_parts/cell/high(src))
+	set_cell(new /obj/item/stock_parts/power_store/cell/high(src))
 
 /obj/item/integrated_circuit/Destroy()
 	for(var/obj/item/circuit_component/to_delete in attached_components)
@@ -129,7 +134,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
  * Arguments:
  * * cell_to_set - The new cell of the circuit. Can be null.
  **/
-/obj/item/integrated_circuit/proc/set_cell(obj/item/stock_parts/cell_to_set)
+/obj/item/integrated_circuit/proc/set_cell(obj/item/stock_parts/power_store/cell_to_set)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_CELL, cell_to_set)
 	cell = cell_to_set
 
@@ -143,36 +148,40 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_LOCKED, new_value)
 	locked = new_value
 
-/obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
-	. = ..()
-	if(istype(I, /obj/item/circuit_component))
-		add_component_manually(I, user)
-		return
+/obj/item/integrated_circuit/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/circuit_component))
+		return add_component_manually(tool, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-	if(istype(I, /obj/item/stock_parts/cell))
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(cell)
 			balloon_alert(user, "there already is a cell inside!")
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		set_cell(I)
-		I.add_fingerprint(user)
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		set_cell(tool)
+		tool.add_fingerprint(user)
 		user.visible_message(span_notice("[user] inserts a power cell into [src]."), span_notice("You insert the power cell into [src]."))
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(isidcard(I))
-		balloon_alert(user, "owner id set for [I]")
-		owner_id = WEAKREF(I)
-		return
+	if(isidcard(tool))
+		balloon_alert(user, "owner id set for [tool]")
+		owner_id = WEAKREF(tool)
+		return ITEM_INTERACT_SUCCESS
 
-	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!cell)
-			return
-		I.play_tool_sound(src)
-		user.visible_message(span_notice("[user] unscrews the power cell from [src]."), span_notice("You unscrew the power cell from [src]."))
-		cell.forceMove(drop_location())
-		set_cell(null)
-		return
+	return NONE
+
+/obj/item/integrated_circuit/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!cell)
+		balloon_alert(user, "power cell missing!")
+		return ITEM_INTERACT_BLOCKING
+
+	tool.play_tool_sound(src)
+	user.visible_message(span_notice("[user] unscrews the power cell from [src]."), span_notice("You unscrew the power cell from [src]."))
+	cell.forceMove(drop_location())
+	set_cell(null)
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Registers an movable atom as a shell
@@ -227,14 +236,14 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
  * * to_check - The component to check.
  **/
 /obj/item/integrated_circuit/proc/is_duplicate(obj/item/circuit_component/to_check)
-	for(var/component as anything in attached_components)
+	for(var/component in attached_components)
 		if(component == to_check)
 			continue
 		if(istype(component, to_check.type))
 			return TRUE
 		if(istype(component, /obj/item/circuit_component/module))
 			var/obj/item/circuit_component/module/module = component
-			for(var/module_component as anything in module.internal_circuit.attached_components)
+			for(var/module_component in module.internal_circuit.attached_components)
 				if(module_component == to_check)
 					continue
 				if(istype(module_component, to_check.type))
@@ -272,6 +281,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 	to_add.rel_x = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS) - screen_x
 	to_add.rel_y = rand(COMPONENT_MIN_RANDOM_POS, COMPONENT_MAX_RANDOM_POS) - screen_y
+	SEND_SIGNAL(to_add, COMSIG_CIRCUIT_COMPONENT_ADDED, src)
 	to_add.parent = src
 	attached_components += to_add
 	current_size += to_add.circuit_size
@@ -287,7 +297,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
  */
 /obj/item/integrated_circuit/proc/add_component_manually(obj/item/circuit_component/to_add, mob/living/user)
 	if (SEND_SIGNAL(src, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, to_add, user) & COMPONENT_CANCEL_ADD_COMPONENT)
-		return
+		return FALSE
 
 	return add_component(to_add, user)
 
@@ -336,6 +346,12 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/ui_data(mob/user)
 	. = list()
+	var/obj/item/circuit_component/examined
+	if(examined_component)
+		examined = examined_component.resolve()
+	// before the components loop, since get_ui_notices() can update ui_alerts
+	var/list/examined_notices = examined?.get_ui_notices()
+
 	.["components"] = list()
 	for(var/obj/item/circuit_component/component as anything in attached_components)
 		if (component.circuit_flags & CIRCUIT_FLAG_HIDDEN)
@@ -375,6 +391,8 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		component_data["y"] = component.rel_y
 		component_data["removable"] = component.removable
 		component_data["color"] = component.ui_color
+		component_data["category"] = component.category
+		component_data["ui_alerts"] = component.ui_alerts
 		component_data["ui_buttons"] = component.ui_buttons
 		.["components"] += list(component_data)
 
@@ -391,15 +409,12 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 	.["display_name"] = display_name
 
-	var/obj/item/circuit_component/examined
-	if(examined_component)
-		examined = examined_component.resolve()
-
 	.["examined_name"] = examined?.display_name
 	.["examined_desc"] = examined?.desc
-	.["examined_notices"] = examined?.get_ui_notices()
+	.["examined_notices"] = examined_notices
 	.["examined_rel_x"] = examined_rel_x
 	.["examined_rel_y"] = examined_rel_y
+	.["grid_mode"] = grid_mode
 
 	.["is_admin"] = (admin_only || isAdminGhostAI(user)) && check_rights_for(user.client, R_VAREDIT)
 
@@ -496,8 +511,13 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				return
 			component.disconnect()
 			remove_component(component)
+
+			var/mob/user = ui.user
 			if(component.loc == src)
-				usr.put_in_hands(component)
+				user.put_in_hands(component)
+			var/obj/machinery/component_printer/printer = linked_component_printer?.resolve()
+			if (!isnull(printer))
+				printer.base_item_interaction(user, component)
 			. = TRUE
 		if("set_component_coordinates")
 			var/component_id = text2num(params["component_id"])
@@ -576,6 +596,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				set_display_name(params["display_name"])
 			else
 				set_display_name("")
+			. = TRUE
+		if("toggle_grid_mode")
+			toggle_grid_mode()
 			. = TRUE
 		if("set_examined_component")
 			var/component_id = text2num(params["component_id"])
@@ -661,7 +684,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 				if(!printer)
 					balloon_alert(ui.user, "linked printer not found!")
 					return
-				component = printer.print_component(component_path)
+				component = printer.print_component(component_path, user_data = ID_DATA(usr))
 				if(!component)
 					balloon_alert(ui.user, "failed to make the component!")
 					return
@@ -697,7 +720,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /// Sets the display name that appears on the shell.
 /obj/item/integrated_circuit/proc/set_display_name(new_name)
-	display_name = copytext(new_name, 1, label_max_length)
+	display_name = copytext_char(new_name, 1, label_max_length)
 	if(!shell)
 		return
 
@@ -708,6 +731,10 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 			shell.name = display_name
 	else
 		shell.name = initial(shell.name)
+
+/// Toggles the grid mode property for this circuit.
+/obj/item/integrated_circuit/proc/toggle_grid_mode()
+	grid_mode = !grid_mode
 
 /**
  * Returns the creator of the integrated circuit. Used in admin messages and other related things.

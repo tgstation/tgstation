@@ -24,7 +24,7 @@
 /area/virtual_domain)
 "aK" = (
 /turf/open/space/basic,
-/area/virtual_domain)
+/area/space/virtual_domain)
 "aL" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
@@ -50,9 +50,7 @@
 "bx" = (
 /obj/structure/frame/computer,
 /obj/item/shard,
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-12"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain)
 "bA" = (
 /obj/structure/chair/plastic,
@@ -587,7 +585,7 @@
 /area/virtual_domain)
 "rJ" = (
 /obj/structure/railing,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "rM" = (
@@ -598,11 +596,6 @@
 /area/virtual_domain)
 "rO" = (
 /turf/closed/mineral,
-/area/virtual_domain)
-"sn" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-38"
-	},
 /area/virtual_domain)
 "sB" = (
 /obj/machinery/light/broken{
@@ -615,7 +608,7 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "sW" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 1
 	},
@@ -645,9 +638,7 @@
 /area/virtual_domain)
 "ud" = (
 /obj/effect/decal/cleanable/blood/drip,
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-110"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain)
 "uk" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -681,11 +672,6 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
-/area/virtual_domain)
-"uP" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-55"
-	},
 /area/virtual_domain)
 "uU" = (
 /obj/structure/broken_flooring/side,
@@ -737,14 +723,12 @@
 /area/virtual_domain)
 "wh" = (
 /obj/structure/table/wood,
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-207"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain)
 "wl" = (
 /obj/item/shard,
 /turf/open/space/basic,
-/area/virtual_domain)
+/area/space/virtual_domain)
 "wm" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 1
@@ -758,9 +742,7 @@
 	name = "Cargo Bay Lockdown";
 	id = "factorylockdown"
 	},
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-63"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain)
 "ws" = (
 /obj/effect/turf_decal/trimline/yellow/corner{
@@ -831,7 +813,7 @@
 "xF" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/binary,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "xM" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
@@ -897,7 +879,7 @@
 "Av" = (
 /obj/item/stack/rods/two,
 /turf/open/space/basic,
-/area/virtual_domain)
+/area/space/virtual_domain)
 "Aw" = (
 /obj/structure/lattice/catwalk{
 	name = "industrial lift"
@@ -966,7 +948,7 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "BX" = (
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Ci" = (
@@ -990,9 +972,7 @@
 /obj/structure/chair/office{
 	dir = 8
 	},
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-157"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain)
 "CA" = (
 /obj/structure/disposalpipe/segment,
@@ -1037,9 +1017,7 @@
 /area/virtual_domain)
 "Ex" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-137"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain)
 "Ez" = (
 /obj/structure/flora/rock/style_random,
@@ -1049,7 +1027,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "EJ" = (
@@ -1096,20 +1074,13 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "FP" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-110"
-	},
+/turf/open/floor/carpet/royalblue,
 /area/virtual_domain)
 "Gb" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
 	},
 /turf/open/floor/iron,
-/area/virtual_domain)
-"Ge" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-21"
-	},
 /area/virtual_domain)
 "Gh" = (
 /obj/machinery/door/airlock/maintenance,
@@ -1336,11 +1307,6 @@
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
-"MI" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-74"
-	},
-/area/virtual_domain)
 "MN" = (
 /obj/effect/turf_decal/tile/dark,
 /obj/effect/decal/cleanable/dirt,
@@ -1528,9 +1494,13 @@
 /obj/machinery/disposal/bin,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"RI" = (
+/obj/effect/smooths_with_walls,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
 "RJ" = (
 /turf/closed/indestructible/binary,
-/area/virtual_domain)
+/area/virtual_domain/fullbright)
 "RK" = (
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/iron,
@@ -1863,23 +1833,13 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Zb" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
-/area/virtual_domain)
-"Zg" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-157"
-	},
 /area/virtual_domain)
 "Zy" = (
 /obj/structure/table,
 /obj/item/flashlight/lantern,
 /turf/open/floor/plating,
-/area/virtual_domain)
-"ZI" = (
-/turf/open/floor/carpet/royalblue{
-	icon_state = "carpet_royalblue-203"
-	},
 /area/virtual_domain)
 "ZP" = (
 /obj/structure/railing,
@@ -1921,7 +1881,7 @@ RJ
 RJ
 RJ
 RJ
-RJ
+RI
 RJ
 RJ
 RJ
@@ -2107,7 +2067,7 @@ yQ
 yQ
 yQ
 yQ
-RJ
+RI
 eg
 eg
 eg
@@ -2353,7 +2313,7 @@ yQ
 yQ
 yQ
 RJ
-RJ
+RI
 RJ
 RJ
 RJ
@@ -2443,8 +2403,8 @@ yQ
 yQ
 yQ
 yQ
-RJ
-RJ
+yQ
+yQ
 RJ
 eg
 eg
@@ -2493,7 +2453,7 @@ yQ
 yQ
 yQ
 yQ
-RJ
+yQ
 RJ
 RJ
 eg
@@ -2543,7 +2503,7 @@ yQ
 yQ
 yQ
 yQ
-RJ
+yQ
 RJ
 kU
 kU
@@ -3109,9 +3069,9 @@ hi
 dx
 pf
 UV
-sn
-uP
-Ge
+FP
+FP
+FP
 vb
 eg
 RJ
@@ -3126,7 +3086,7 @@ eg
 eg
 rO
 rO
-RJ
+RI
 RJ
 rO
 rO
@@ -3161,7 +3121,7 @@ SU
 CX
 FP
 wh
-Zg
+FP
 Nu
 eg
 RJ
@@ -3170,7 +3130,7 @@ RJ
 RJ
 RJ
 RJ
-RJ
+RI
 RJ
 RJ
 RJ
@@ -3215,7 +3175,7 @@ Cv
 Nu
 eg
 RJ
-RJ
+yQ
 yQ
 yQ
 yQ
@@ -3261,7 +3221,7 @@ uk
 CX
 FP
 wq
-Zg
+FP
 Nu
 eg
 RJ
@@ -3309,8 +3269,8 @@ jH
 Nu
 pf
 Xw
-MI
-ZI
+FP
+FP
 Ex
 xE
 eg
@@ -3652,7 +3612,7 @@ yQ
 yQ
 yQ
 yQ
-RJ
+yQ
 RJ
 RJ
 RJ

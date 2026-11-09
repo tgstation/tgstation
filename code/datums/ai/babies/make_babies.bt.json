@@ -1,0 +1,31 @@
+{
+	"dm_type": "/datum/bt_node/subtree/make_babies",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
+		"key": "BB_BABIES_TARGET"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"vars": {
+					"target_key": "BB_BABIES_TARGET",
+					"required_dist": 1,
+					"finish_on_arrival": true
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/make_babies",
+				"vars": {
+					"target_key": "BB_BABIES_TARGET",
+					"child_types_key": "BB_BABIES_CHILD_TYPES"
+				}
+			}
+		]
+	}
+}

@@ -1,4 +1,5 @@
 /obj/machinery/computer/sat_control
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control")
 	name = "satellite control"
 	desc = "Used to control the satellite network."
 	circuit = /obj/item/circuitboard/computer/sat_control
@@ -11,7 +12,7 @@
 		ui = new(user, src, "SatelliteControl", name)
 		ui.open()
 
-/obj/machinery/computer/sat_control/ui_act(action, params)
+/obj/machinery/computer/sat_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

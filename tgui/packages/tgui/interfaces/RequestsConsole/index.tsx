@@ -1,15 +1,16 @@
+import { Button, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Button, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { RequestsConsoleHeader } from './RequestsConsoleHeader';
 import { RequestMainScreen } from './RequestsConsoleMainScreen';
-import { RequestsData } from './types';
+import type { RequestsData } from './types';
 
 export const RequestsConsole = (props) => {
   const { act, data } = useBackend<RequestsData>();
   const { department } = data;
   return (
-    <Window title={department + ' Requests Console'} width={500} height={600}>
+    <Window title={`${department} Requests Console`} width={500} height={600}>
       <Window.Content>
         <RequestsConsoleContent />
       </Window.Content>

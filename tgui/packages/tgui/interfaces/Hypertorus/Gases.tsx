@@ -1,6 +1,7 @@
-import { filter, sortBy } from 'common/collections';
-import { toFixed } from 'common/math';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
 import { useBackend } from 'tgui/backend';
+import { getGasColor, getGasLabel } from 'tgui/constants';
 import {
   Box,
   Button,
@@ -8,10 +9,10 @@ import {
   NumberInput,
   ProgressBar,
   Section,
-} from 'tgui/components';
-import { getGasColor, getGasLabel } from 'tgui/constants';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
 
-import { HypertorusFuel, HypertorusGas } from '.';
+import type { HypertorusFuel, HypertorusGas } from '.';
 import { HelpDummy, HoverHelp } from './helpers';
 
 type GasListProps = {
@@ -67,7 +68,7 @@ const ensure_gases = (gas_array: HypertorusGas[] = [], gasids) => {
     gases_by_id[gas.id] = true;
   });
 
-  for (let gasid of gasids) {
+  for (const gasid of gasids) {
     if (!gases_by_id[gasid]) {
       gas_array.push({ id: gasid, amount: 0 });
     }
@@ -91,7 +92,7 @@ const GasList = (props: GasListProps) => {
 
   const gases: HypertorusGas[] = sortBy(
     filter(raw_gases, (gas) => gas.amount >= 0.01),
-    (gas) => -gas.amount,
+    [(gas) => -gas.amount],
   );
 
   if (stickyGases) {
@@ -117,12 +118,13 @@ const GasList = (props: GasListProps) => {
         />
         <NumberInput
           animated
+          tickWhileDragging
           step={1}
           value={parseFloat(data[input_rate])}
           unit="mol/s"
           minValue={input_min}
           maxValue={input_max}
-          onDrag={(v) => act(input_rate, { [input_rate]: v })}
+          onChange={(v) => act(input_rate, { [input_rate]: v })}
         />
       </LabeledList.Item>
       {gases.map((gas) => {
@@ -146,7 +148,7 @@ const GasList = (props: GasListProps) => {
               minValue={0}
               maxValue={minimumScale}
             >
-              {toFixed(gas.amount, 2) + ' moles'}
+              {`${toFixed(gas.amount, 2)} moles`}
             </ProgressBar>
           </LabeledList.Item>
         );

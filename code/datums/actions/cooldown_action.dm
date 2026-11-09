@@ -7,12 +7,10 @@
 
 	/// The actual next time this ability can be used
 	var/next_use_time = 0
-	/// The stat panel this action shows up in the stat panel in. If null, will not show up.
-	var/panel
 	/// The default cooldown applied when StartCooldown() is called
 	var/cooldown_time = 0
-	/// The default melee cooldown applied after the ability ends
-	var/melee_cooldown_time
+	/// The default melee cooldown applied after the ability ends. If set to null, copies cooldown_time.
+	var/melee_cooldown_time = 0
 	/// The actual next time the owner of this action can melee
 	var/next_melee_use_time = 0
 	/// Whether or not you want the cooldown for the ability to display in text form
@@ -63,7 +61,7 @@
 	if(original)
 		create_sequence_actions()
 
-/datum/action/cooldown/create_button()
+/datum/action/cooldown/create_button(mob/viewer)
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext = ""
 	button.maptext_x = 4
@@ -171,6 +169,9 @@
 		next_use_time = world.time + override_cooldown_time
 	else
 		next_use_time = world.time + cooldown_time
+	// Don't start a cooldown if we have a cooldown time of 0 seconds
+	if(next_use_time == world.time)
+		return
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
 
@@ -212,14 +213,14 @@
 	for(var/datum/action/cooldown/cd_action in owner.actions)
 		cd_action.disable()
 
-/datum/action/cooldown/Trigger(trigger_flags, atom/target)
+/datum/action/cooldown/Trigger(mob/clicker, trigger_flags, atom/target)
 	. = ..()
 	if(!.)
 		return FALSE
 	if(!owner)
 		return FALSE
 
-	var/mob/user = usr || owner
+	var/mob/user = clicker || owner
 
 	// If our cooldown action is a click_to_activate action:
 	// The actual action is activated on whatever the user clicks on -
@@ -247,7 +248,7 @@
 	return PreActivate(user)
 
 /// Intercepts client owner clicks to activate the ability
-/datum/action/cooldown/proc/InterceptClickOn(mob/living/caller, params, atom/target)
+/datum/action/cooldown/proc/InterceptClickOn(mob/living/clicker, params, atom/target)
 	if(!IsAvailable(feedback = TRUE))
 		return FALSE
 	if(!target)
@@ -258,8 +259,8 @@
 
 	// And if we reach here, the action was complete successfully
 	if(unset_after_click)
-		unset_click_ability(caller, refund_cooldown = FALSE)
-	caller.next_click = world.time + click_cd_override
+		unset_click_ability(clicker, refund_cooldown = FALSE)
+	clicker.next_click = world.time + click_cd_override
 
 	return TRUE
 
@@ -326,41 +327,5 @@
 		on_who.update_mouse_pointer()
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	return TRUE
-
-/// Formats the action to be returned to the stat panel.
-/datum/action/cooldown/proc/set_statpanel_format()
-	if(!panel)
-		return null
-
-	var/time_remaining = max(next_use_time - world.time, 0)
-	var/time_remaining_in_seconds = round(time_remaining / 10, 0.1)
-	var/cooldown_time_in_seconds =  round(cooldown_time / 10, 0.1)
-
-	var/list/stat_panel_data = list()
-
-	// Pass on what panel we should be displayed in.
-	stat_panel_data[PANEL_DISPLAY_PANEL] = panel
-	// Also pass on the name of the spell, with some spacing
-	stat_panel_data[PANEL_DISPLAY_NAME] = " - [name]"
-
-	// No cooldown time at all, just show the ability
-	if(cooldown_time_in_seconds <= 0)
-		stat_panel_data[PANEL_DISPLAY_STATUS] = ""
-
-	// It's a toggle-active ability, show if it's active
-	else if(click_to_activate && owner.click_intercept == src)
-		stat_panel_data[PANEL_DISPLAY_STATUS] = "ACTIVE"
-
-	// It's on cooldown, show the cooldown
-	else if(time_remaining_in_seconds > 0)
-		stat_panel_data[PANEL_DISPLAY_STATUS] = "CD - [time_remaining_in_seconds]s / [cooldown_time_in_seconds]s"
-
-	// It's not on cooldown, show that it is ready
-	else
-		stat_panel_data[PANEL_DISPLAY_STATUS] = "READY"
-
-	SEND_SIGNAL(src, COMSIG_ACTION_SET_STATPANEL, stat_panel_data)
-
-	return stat_panel_data
 
 #undef COOLDOWN_NO_DISPLAY_TIME

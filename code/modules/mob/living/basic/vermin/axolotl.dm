@@ -12,7 +12,7 @@
 	density = FALSE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
-	mob_biotypes = MOB_ORGANIC | MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_AQUATIC
 	gold_core_spawnable = FRIENDLY_SPAWN
 
 	response_help_continuous = "pets"
@@ -22,7 +22,6 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 
-	can_be_held = TRUE
 	held_w_class = WEIGHT_CLASS_TINY
 	held_lh = 'icons/mob/inhands/animal_item_lefthand.dmi'
 	held_rh = 'icons/mob/inhands/animal_item_righthand.dmi'
@@ -33,10 +32,11 @@
 
 /mob/living/basic/axolotl/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_AXOLOTL, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	AddElement(/datum/element/can_be_held)
 
 /datum/ai_controller/basic_controller/axolotl
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/axolotl.bt.json"
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk

@@ -58,7 +58,6 @@
 	name = "of <mobtype> slaying (random species, carbon or simple animal)"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
-	var/list/target_types_by_comp = list()
 
 /datum/fantasy_affix/bane/apply(datum/component/fantasy/comp, newName)
 	. = ..()
@@ -83,15 +82,8 @@
 	// This works even with the species picks since we're only accessing the name
 
 	var/obj/item/master = comp.parent
-	master.AddElement(/datum/element/bane, target_type = picked_mobtype)
-	target_types_by_comp[comp] = picked_mobtype
+	comp.appliedComponents += master.AddComponent(/datum/component/bane, affected_biotypes = picked_mobtype, damage_multiplier = 2)
 	return "[newName] of [initial(picked_mobtype.name)] slaying"
-
-/datum/fantasy_affix/bane/remove(datum/component/fantasy/comp)
-	var/picked_mobtype = target_types_by_comp[comp]
-	var/obj/item/master = comp.parent
-	master.RemoveElement(/datum/element/bane, picked_mobtype)
-	target_types_by_comp -= comp
 
 /datum/fantasy_affix/summoning
 	name = "of <mobtype> summoning (dangerous, can pick all but megafauna tier stuff)"
@@ -111,11 +103,12 @@
 			/mob/living/simple_animal,
 		)
 		for(var/type in mob_subtype_whitelist)
-			possible_mobtypes += subtypesof(type)
+			possible_mobtypes += valid_subtypesof(type)
 
 		var/list/mob_subtype_blacklist = list(
 			/mob/living/simple_animal/hostile/asteroid/elite,
 			/mob/living/simple_animal/hostile/megafauna,
+			/mob/living/basic/boss,
 		)
 		for(var/type in mob_subtype_blacklist)
 			possible_mobtypes -= subtypesof(type)
@@ -147,21 +140,22 @@
 /datum/fantasy_affix/shrapnel/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	// higher means more likely
-	var/list/weighted_projectile_types = list(/obj/projectile/meteor = 1,
-											  /obj/projectile/energy/nuclear_particle = 1,
-											  /obj/projectile/beam/pulse = 1,
-											  /obj/projectile/bullet/honker = 15,
-											  /obj/projectile/temp = 15,
-											  /obj/projectile/ion = 15,
-											  /obj/projectile/magic/door = 15,
-											  /obj/projectile/magic/locker = 15,
-											  /obj/projectile/magic/fetch = 15,
-											  /obj/projectile/beam/emitter = 15,
-											  /obj/projectile/magic/flying = 15,
-											  /obj/projectile/energy/net = 15,
-											  /obj/projectile/bullet/incendiary/c9mm = 15,
-											  /obj/projectile/temp/hot = 15,
-											  /obj/projectile/beam/disabler = 15)
+	var/list/weighted_projectile_types = list(
+		/obj/projectile/beam/disabler = 15,
+		/obj/projectile/beam/emitter = 15,
+		/obj/projectile/bullet/honker = 15,
+		/obj/projectile/beam/laser/pulse = 1,
+		/obj/projectile/bullet/incendiary/c9mm = 15,
+		/obj/projectile/energy/nuclear_particle = 1,
+		/obj/projectile/ion = 15,
+		/obj/projectile/magic/door = 15,
+		/obj/projectile/magic/fetch = 15,
+		/obj/projectile/magic/flying = 15,
+		/obj/projectile/magic/locker = 15,
+		/obj/projectile/meteor = 1,
+		/obj/projectile/temp = 15,
+		/obj/projectile/temp/hot = 15,
+	)
 
 	var/obj/projectile/picked_projectiletype = pick_weight(weighted_projectile_types)
 
@@ -276,3 +270,34 @@
 /datum/fantasy_affix/speed/remove(datum/component/fantasy/comp)
 	var/obj/item/master = comp.parent
 	master.slowdown = initial(master.slowdown)
+
+/datum/fantasy_affix/doot
+	name = "of dooting"
+	placement = AFFIX_SUFFIX
+	alignment = AFFIX_GOOD
+	weight = 1
+
+/datum/fantasy_affix/doot/apply(datum/component/fantasy/comp, newName)
+	. = ..()
+	comp.parent.AddElement(/datum/element/spooky, too_spooky = comp.quality > 17, stam_damage_mult = comp.quality * 0.15)
+	return "[newName] of [pick("dooting", "spooks", "rattling", "the bones")]"
+
+/datum/fantasy_affix/doot/remove(datum/component/fantasy/comp)
+	comp.parent.RemoveElement(/datum/element/spooky, too_spooky = comp.quality > 17, stam_damage_mult = comp.quality * 0.15)
+
+// On hitting a mob their click cd is slowed marginally
+/datum/fantasy_affix/windseeker
+	name = "of the Windseeker"
+	placement = AFFIX_SUFFIX
+	alignment = AFFIX_GOOD
+	weight = 3
+
+/datum/fantasy_affix/windseeker/apply(datum/component/fantasy/comp, newName)
+	comp.parent.AddElement(/datum/element/slow_target_click_cd_attack, get_cd_penalty(comp))
+	return "[newName] of the Windseeker"
+
+/datum/fantasy_affix/windseeker/remove(datum/component/fantasy/comp)
+	comp.parent.RemoveElement(/datum/element/slow_target_click_cd_attack, get_cd_penalty(comp))
+
+/datum/fantasy_affix/windseeker/proc/get_cd_penalty(datum/component/fantasy/comp)
+	return min(round(sqrt(comp.quality) * 0.1, 0.1), 0.4) // this gives you a small number, like 0.2 seconds

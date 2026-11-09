@@ -58,7 +58,7 @@
 	tram_hits_last_round = text2num(file2text(TRAM_COUNT_FILEPATH))
 
 /datum/controller/subsystem/persistence/proc/save_tram_counter()
-		rustg_file_write("[tram_hits_this_round]", TRAM_COUNT_FILEPATH)
+	rustg_file_write("[tram_hits_this_round]", TRAM_COUNT_FILEPATH)
 
 #undef TRAM_COUNT_FILEPATH
 #undef MAX_TRAM_SAVES

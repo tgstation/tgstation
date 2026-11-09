@@ -23,9 +23,13 @@
 	var/secured = TRUE
 	var/list/attached_overlays = null
 	var/obj/item/assembly_holder/holder = null
-	var/attachable = FALSE // can this be attached to wires
+	var/assembly_behavior = ASSEMBLY_FUNCTIONAL_OUTPUT // how does the assembly behave with respect to what it's connected to
 	var/datum/wires/connected = null
-	var/next_activate = 0 //When we're next allowed to activate - for spam control
+	COOLDOWN_DECLARE(next_activate)
+	/// Length of the cooldown between activations
+	var/activation_cooldown = 3 SECONDS
+	/// If true, the assembly's base icon will be used and shifted for assembly holders instead of using a different icon state
+	var/use_base_icon_for_holder = FALSE
 
 /obj/item/assembly/Destroy()
 	holder = null
@@ -40,19 +44,24 @@
  * Will also be called if the assembly holder is attached to a plasma (internals) tank or welding fuel (dispenser) tank.
  */
 /obj/item/assembly/proc/on_attach()
+	SHOULD_CALL_PARENT(TRUE)
 	if(!holder && connected)
 		holder = connected.holder
+	SEND_SIGNAL(src, COMSIG_ASSEMBLY_ATTACHED, holder)
 
 /**
  * on_detach: Called when removed from an assembly holder or wiring datum
  */
 /obj/item/assembly/proc/on_detach()
+	SHOULD_CALL_PARENT(TRUE)
 	if(connected)
 		connected = null
 	if(!holder)
 		return FALSE
-	forceMove(holder.drop_location())
+	var/atom/was_holder = holder
 	holder = null
+	forceMove(was_holder.drop_location())
+	SEND_SIGNAL(src, COMSIG_ASSEMBLY_DETACHED, was_holder)
 	return TRUE
 
 /**
@@ -66,7 +75,7 @@
 
 /obj/item/assembly/proc/is_secured(mob/user)
 	if(!secured)
-		to_chat(user, span_warning("The [name] is unsecured!"))
+		to_chat(user, span_warning("\The [src] is unsecured!"))
 		return FALSE
 	return TRUE
 
@@ -94,9 +103,9 @@
 
 /// What the device does when turned on
 /obj/item/assembly/proc/activate(mob/activator)
-	if(QDELETED(src) || !secured || (next_activate > world.time))
+	if(QDELETED(src) || !secured || !COOLDOWN_FINISHED(src, next_activate))
 		return FALSE
-	next_activate = world.time + 30
+	COOLDOWN_START(src, next_activate, activation_cooldown)
 	return TRUE
 
 /obj/item/assembly/proc/toggle_secure()
@@ -113,39 +122,42 @@
 		return
 	. = ..()
 
-/obj/item/assembly/attackby(obj/item/attacking_item, mob/user, params)
-	if(isassembly(attacking_item))
-		var/obj/item/assembly/new_assembly = attacking_item
+/obj/item/assembly/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(isassembly(tool))
+		var/obj/item/assembly/new_assembly = tool
 		// Check both our's and their's assembly flags to see if either should not duplicate
 		// If so, and we match types, don't create a holder - block it
 		if(((new_assembly.assembly_flags|assembly_flags) & ASSEMBLY_NO_DUPLICATES) && istype(new_assembly, type))
-			balloon_alert(user, "can't attach another of that!")
-			return
-		if(new_assembly.secured || secured)
-			balloon_alert(user, "both devices not attachable!")
-			return
+			balloon_alert(user, "can't attach another [new_assembly.name]!")
+			return ITEM_INTERACT_BLOCKING
+
+		if(new_assembly.secured)
+			balloon_alert(user, "[new_assembly.name] is not attachable!")
+			return ITEM_INTERACT_BLOCKING
+
+		if(secured)
+			balloon_alert(user, "[name] is not attachable!")
+			return ITEM_INTERACT_BLOCKING
 
 		holder = new /obj/item/assembly_holder(drop_location())
 		holder.assemble(src, new_assembly, user)
 		holder.balloon_alert(user, "parts combined")
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/assembly_holder))
-		var/obj/item/assembly_holder/added_to_holder = attacking_item
+	if(istype(tool, /obj/item/assembly_holder))
+		var/obj/item/assembly_holder/added_to_holder = tool
 		added_to_holder.try_add_assembly(src, user)
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	return ..()
+	return NONE
 
-/obj/item/assembly/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
+/obj/item/assembly/screwdriver_act(mob/living/user, obj/item/tool)
 	if(toggle_secure())
 		to_chat(user, span_notice("\The [src] is ready!"))
 	else
 		to_chat(user, span_notice("\The [src] can now be attached!"))
 	add_fingerprint(user)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/assembly/examine(mob/user)
 	. = ..()

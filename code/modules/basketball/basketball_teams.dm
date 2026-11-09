@@ -16,8 +16,8 @@
 	//Chance for the wearer to have their height increased. This is repeated three times for maximum height.
 	var/taller_chance = 50
 
-/datum/outfit/basketball/post_equip(mob/living/carbon/human/human_to_equip, visualsOnly=FALSE)
-	if(visualsOnly)
+/datum/outfit/basketball/post_equip(mob/living/carbon/human/human_to_equip, visuals_only=FALSE)
+	if(visuals_only)
 		return
 	var/list/no_drops = list()
 
@@ -32,7 +32,7 @@
 	for(var/slot in nodrop_slots)
 		no_drops += human_to_equip.get_item_by_slot(slot)
 	// Make items in the hands NODROP
-	for(var/obj/item/held_item in human_to_equip.held_items)
+	for(var/obj/item/held_item as anything in human_to_equip.get_held_items())
 		no_drops += held_item
 	list_clear_nulls(no_drops) // For any slots we didn't have filled
 	// Apply TRAIT_NODROP to everything
@@ -62,7 +62,7 @@
 
 /datum/outfit/basketball/nanotrasen
 	name = "Basketball NT Team"
-	undershirt = /datum/sprite_accessory/undershirt/bluejersey
+	undershirt = /datum/sprite_accessory/clothing/undershirt/bluejersey
 	uniform = /obj/item/clothing/under/shorts/blue
 	suit = /obj/item/clothing/suit/jacket/letterman_nanotrasen
 	shoes = /obj/item/clothing/shoes/sneakers/black
@@ -98,7 +98,7 @@
 	head = /obj/item/clothing/head/costume/xenos
 	mask = /obj/item/clothing/mask/chameleon
 
-/datum/outfit/basketball/lusty_xenomorphs/post_equip(mob/living/carbon/human/human_to_equip, visualsOnly=FALSE)
+/datum/outfit/basketball/lusty_xenomorphs/post_equip(mob/living/carbon/human/human_to_equip, visuals_only=FALSE)
 	. = ..()
 
 	var/obj/item/card/id/idcard = human_to_equip.wear_id
@@ -129,9 +129,9 @@
 
 /datum/outfit/basketball/beach_bums
 	name = "Basketball Beach Bums"
-	undershirt = /datum/sprite_accessory/undershirt/nude
-	underwear = /datum/sprite_accessory/underwear/nude
-	socks = /datum/sprite_accessory/socks/nude
+	undershirt = /datum/sprite_accessory/clothing/undershirt/nude
+	underwear = /datum/sprite_accessory/clothing/underwear/nude
+	socks = /datum/sprite_accessory/clothing/socks/nude
 	uniform = /obj/item/clothing/under/shorts/red
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/sandal

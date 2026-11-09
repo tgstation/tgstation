@@ -116,7 +116,7 @@
 	name = "Kitchen"
 	},
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "V" = (
 /obj/structure/table,
 /obj/item/reagent_containers/spray/cleaner{
@@ -140,7 +140,7 @@
 	},
 /obj/modular_map_connector,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 
 (1,1,1) = {"
 e

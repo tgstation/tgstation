@@ -15,14 +15,13 @@
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_TOXINLOVER,
-		TRAIT_NOBLOOD,
 	)
-	mutanttongue = /obj/item/organ/internal/tongue/jelly
-	mutantlungs = /obj/item/organ/internal/lungs/slime
-	mutanteyes = /obj/item/organ/internal/eyes/jelly
+	mutanttongue = /obj/item/organ/tongue/jelly
+	mutantlungs = /obj/item/organ/lungs/slime
+	mutanteyes = /obj/item/organ/eyes/jelly
 	mutantheart = null
 	meat = /obj/item/food/meat/slab/human/mutant/slime
-	exotic_blood = /datum/reagent/toxin/slimejelly
+	exotic_bloodtype = /datum/blood_type/slime
 	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -43,7 +42,7 @@
 	)
 	var/datum/action/innate/regenerate_limbs/regenerate_limbs
 
-/datum/species/jelly/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species, pref_load)
+/datum/species/jelly/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	if(ishuman(new_jellyperson))
 		regenerate_limbs = new
@@ -58,46 +57,70 @@
 	UnregisterSignal(former_jellyperson, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 	return ..()
 
-/datum/species/jelly/proc/slime_blood(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
+/datum/species/jelly/proc/slime_blood(mob/living/carbon/human/slime, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	if(slime.stat == DEAD)
 		return HANDLE_BLOOD_HANDLED
 
-	if(slime.blood_volume <= 0)
-		slime.blood_volume += JELLY_REGEN_RATE_EMPTY * seconds_per_tick
-		slime.adjustBruteLoss(2.5 * seconds_per_tick)
+	// In the following code, do not cache blood volumes.
+	// They are repeadetly updated and caching can introduce bugs.
+
+	// Blood regen thresholds use your real amount of blood.
+	if(slime.get_blood_volume() <= 0)
+		slime.adjust_blood_volume(JELLY_REGEN_RATE_EMPTY * GET_PHYSIOLOGY(slime, PHYS_COEFF_BLOOD_REGEN) * seconds_per_tick)
+		slime.adjust_brute_loss(2.5 * seconds_per_tick)
 		to_chat(slime, span_danger("You feel empty!"))
 
-	if(slime.blood_volume < BLOOD_VOLUME_NORMAL)
+	// Same logic applies here.
+	if(slime.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		if(slime.nutrition >= NUTRITION_LEVEL_STARVING)
-			slime.blood_volume += JELLY_REGEN_RATE * seconds_per_tick
-			if(slime.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
+			slime.adjust_blood_volume(JELLY_REGEN_RATE * GET_PHYSIOLOGY(slime, PHYS_COEFF_BLOOD_REGEN) * seconds_per_tick)
+			if(slime.get_blood_volume() <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
 				slime.adjust_nutrition(-1.25 * seconds_per_tick)
 
-	if(slime.blood_volume < BLOOD_VOLUME_OKAY)
+	// If you're on saline, you don't feel the effects of bloodloss.
+	if(slime.get_blood_volume(apply_modifiers = TRUE) < BLOOD_VOLUME_OKAY)
 		if(SPT_PROB(2.5, seconds_per_tick))
 			to_chat(slime, span_danger("You feel drained!"))
 
-	if(slime.blood_volume < BLOOD_VOLUME_BAD)
-		Cannibalize_Body(slime)
+	// Saline can prevent you from cannibalizing yourself.
+	if(slime.get_blood_volume(apply_modifiers = TRUE) < BLOOD_VOLUME_BAD)
+		cannibalize_body(slime)
 
 	regenerate_limbs?.build_all_button_icons(UPDATE_BUTTON_STATUS)
-	return HANDLE_BLOOD_NO_NUTRITION_DRAIN|HANDLE_BLOOD_NO_EFFECTS
+	return HANDLE_BLOOD_NO_NUTRITION_DRAIN|HANDLE_BLOOD_NO_OXYLOSS
 
-/datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
-	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
-	var/obj/item/bodypart/consumed_limb
+/datum/species/jelly/proc/cannibalize_body(mob/living/carbon/human/target)
+	var/list/limbs_to_consume = list()
+
+	for(var/body_zone, untyped_limb in target.get_bodyparts_by_zones())
+		var/obj/item/bodypart/limb = untyped_limb
+		if(isnull(limb))
+			continue
+
+		var/limb_zone = limb.body_zone
+
+		if(IS_STUMP(limb) || limb_zone == BODY_ZONE_CHEST || limb_zone == BODY_ZONE_HEAD)
+			continue
+
+		if(limb.biological_state & BIO_JELLY) // can only cannibalize limbs that are comprised of jelly (this is a last gasp to keep going, let's assume we can't digest out non-jelly limbs)
+			limbs_to_consume += limb_zone
+
 	if(!length(limbs_to_consume))
-		H.losebreath++
+		target.losebreath++
 		return
-	if(H.num_legs) //Legs go before arms
+
+	if(target.num_legs > 0) //Legs go before arms
 		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
-	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
+
+	var/obj/item/bodypart/consumed_limb = target.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
-	to_chat(H, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
+
+	to_chat(target, span_userdanger("Your [consumed_limb.name] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
-	H.blood_volume += 20
+
+	target.adjust_blood_volume(20 * GET_PHYSIOLOGY(target, PHYS_COEFF_BLOOD_REGEN))
 
 /datum/species/jelly/get_species_description()
 	return "Jellypeople are a strange and alien species with three eyes, made entirely out of gel."
@@ -108,22 +131,36 @@
 	)
 
 /datum/species/jelly/prepare_human_for_preview(mob/living/carbon/human/human)
-	human.dna.features["mcolor"] = COLOR_PINK
+	human.dna.features[FEATURE_MUTANT_COLOR] = COLOR_PINK
 	human.hairstyle = "Bob Hair 2"
 	human.hair_color = COLOR_PINK
 	human.update_body(is_creating = TRUE)
 
-// Slimes have both TRAIT_NOBLOOD and an exotic bloodtype set, so they need to be handled uniquely here.
+// Unique handling for slime blood here, it's got some unique properties that warrant a more detailed desc.
 // They may not be roundstart but in the unlikely event they become one might as well not leave a glaring issue open.
 /datum/species/jelly/create_pref_blood_perks()
 	var/list/to_add = list()
+	var/datum/blood_type/blood_type = get_blood_type(exotic_bloodtype)
 
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 		SPECIES_PERK_ICON = "tint",
 		SPECIES_PERK_NAME = "Jelly Blood",
-		SPECIES_PERK_DESC = "[plural_form] don't have blood, but instead have toxic [initial(exotic_blood.name)]! \
+		SPECIES_PERK_DESC = "[plural_form] don't have blood, but instead have toxic [initial(blood_type.reagent_type.name)]! \
 			Jelly is extremely important, as losing it will cause you to lose limbs. Having low jelly will make medical treatment very difficult.",
+	))
+
+	return to_add
+
+/datum/species/jelly/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = FA_ICON_PERSON_RUNNING,
+		SPECIES_PERK_NAME = "Jelly Body",
+		SPECIES_PERK_DESC = "[plural_form] have bodies of malleable Jelly. \
+			You can squeeze through small cracks like grilles, provided you're not wearing clothes.",
 	))
 
 	return to_add
@@ -136,6 +173,8 @@
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
 
+	var/blood_per_limb = 40
+
 /datum/action/innate/regenerate_limbs/IsAvailable(feedback = FALSE)
 	. = ..()
 	if(!.)
@@ -144,7 +183,7 @@
 	var/list/limbs_to_heal = H.get_missing_limbs()
 	if(!length(limbs_to_heal))
 		return FALSE
-	if(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
+	if(H.get_blood_volume() >= BLOOD_VOLUME_OKAY + blood_per_limb)
 		return TRUE
 
 /datum/action/innate/regenerate_limbs/Activate()
@@ -154,17 +193,17 @@
 		to_chat(H, span_notice("You feel intact enough as it is."))
 		return
 	to_chat(H, span_notice("You focus intently on your missing [length(limbs_to_heal) >= 2 ? "limbs" : "limb"]..."))
-	if(H.blood_volume >= 40*length(limbs_to_heal)+BLOOD_VOLUME_OKAY)
+	if(H.get_blood_volume() >= blood_per_limb * length(limbs_to_heal) + BLOOD_VOLUME_OKAY)
 		H.regenerate_limbs()
-		H.blood_volume -= 40*length(limbs_to_heal)
+		H.adjust_blood_volume(-blood_per_limb * length(limbs_to_heal))
 		to_chat(H, span_notice("...and after a moment you finish reforming!"))
 		return
-	else if(H.blood_volume >= 40)//We can partially heal some limbs
-		while(H.blood_volume >= BLOOD_VOLUME_OKAY+40)
+	else if(H.get_blood_volume() >= blood_per_limb)//We can partially heal some limbs
+		while(H.get_blood_volume() >= BLOOD_VOLUME_OKAY + blood_per_limb)
 			var/healed_limb = pick(limbs_to_heal)
 			H.regenerate_limb(healed_limb)
 			limbs_to_heal -= healed_limb
-			H.blood_volume -= 40
+			H.adjust_blood_volume(-blood_per_limb)
 		to_chat(H, span_warning("...but there is not enough of you to fix everything! You must attain more mass to heal completely!"))
 		return
 	to_chat(H, span_warning("...but there is not enough of you to go around! You must attain more mass to heal!"))
@@ -178,7 +217,7 @@
 	plural_form = "Slimepeople"
 	id = SPECIES_SLIMEPERSON
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	mutanteyes = /obj/item/organ/internal/eyes
+	mutanteyes = /obj/item/organ/eyes
 	var/datum/action/innate/split_body/slime_split
 	var/list/mob/living/carbon/bodies
 	var/datum/action/innate/swap_body/swap_body
@@ -205,11 +244,14 @@
 	bodies -= C // This means that the other bodies maintain a link
 	// so if someone mindswapped into them, they'd still be shared.
 	bodies = null
-	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
-	UnregisterSignal(C, COMSIG_LIVING_DEATH)
+	C.set_blood_volume(C.get_blood_volume(), maximum = BLOOD_VOLUME_NORMAL)
+	UnregisterSignal(C, list(
+		COMSIG_LIVING_DEATH,
+		COMSIG_LIVING_LIFE,
+	))
 	..()
 
-/datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load, regenerate_icons)
 	..()
 	if(ishuman(C))
 		slime_split = new
@@ -223,6 +265,7 @@
 			bodies |= C
 
 	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(on_death_move_body))
+	RegisterSignal(C, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 /datum/species/jelly/slime/proc/on_death_move_body(mob/living/carbon/human/source, gibbed)
 	SIGNAL_HANDLER
@@ -246,16 +289,16 @@
 /datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
 	bodies = old_species.bodies
 
-/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H, seconds_per_tick, times_fired)
-	. = ..()
-	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+/datum/species/jelly/slime/proc/on_life(mob/living/carbon/human/source, seconds_per_tick)
+	SIGNAL_HANDLER
+	if(source.get_blood_volume() >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(SPT_PROB(2.5, seconds_per_tick))
-			to_chat(H, span_notice("You feel very bloated!"))
+			to_chat(source, span_notice("You feel very bloated!"))
 
-	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		H.blood_volume += 1.5 * seconds_per_tick
-		if(H.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION)
-			H.adjust_nutrition(-1.25 * seconds_per_tick)
+	else if(source.nutrition >= NUTRITION_LEVEL_WELL_FED)
+		source.adjust_blood_volume(1.5 * seconds_per_tick)
+		if(source.get_blood_volume() <= BLOOD_VOLUME_LOSE_NUTRITION)
+			source.adjust_nutrition(-1.25 * seconds_per_tick)
 
 /datum/action/innate/split_body
 	name = "Split Body"
@@ -270,7 +313,7 @@
 	if(!.)
 		return
 	var/mob/living/carbon/human/H = owner
-	if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+	if(H.get_blood_volume() >= BLOOD_VOLUME_SLIME_SPLIT)
 		return TRUE
 	return FALSE
 
@@ -287,7 +330,7 @@
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, REF(src))
 
 	if(do_after(owner, delay = 6 SECONDS, target = owner, timed_action_flags = IGNORE_HELD_ITEM))
-		if(H.blood_volume >= BLOOD_VOLUME_SLIME_SPLIT)
+		if(H.get_blood_volume() >= BLOOD_VOLUME_SLIME_SPLIT)
 			make_dupe()
 		else
 			to_chat(H, span_warning("...but there is not enough of you to go around! You must attain more mass to split!"))
@@ -303,16 +346,15 @@
 	var/mob/living/carbon/human/spare = new /mob/living/carbon/human(H.loc)
 
 	spare.underwear = "Nude"
-	H.dna.transfer_identity(spare, transfer_SE=1)
-	spare.dna.features["mcolor"] = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"
-	spare.dna.update_uf_block(DNA_MUTANT_COLOR_BLOCK)
+	H.dna.copy_dna(spare.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
+	spare.dna.features[FEATURE_MUTANT_COLOR] = "#[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]"
+	spare.dna.update_uf_block(/datum/dna_block/feature/mutant_color)
 	spare.real_name = spare.dna.real_name
 	spare.name = spare.dna.real_name
 	spare.updateappearance(mutcolor_update=1)
-	spare.domutcheck()
 	spare.Move(get_step(H.loc, pick(NORTH,SOUTH,EAST,WEST)))
 
-	H.blood_volume *= 0.45
+	H.set_blood_volume(H.get_blood_volume() * 0.45)
 	REMOVE_TRAIT(H, TRAIT_NO_TRANSFORM, REF(src))
 
 	var/datum/species/jelly/slime/origin_datum = H.dna.species
@@ -372,14 +414,14 @@
 			continue
 
 		var/list/L = list()
-		L["htmlcolor"] = body.dna.features["mcolor"]
+		L["htmlcolor"] = body.dna.features[FEATURE_MUTANT_COLOR]
 		L["area"] = get_area_name(body, TRUE)
 		var/stat = "error"
 		switch(body.stat)
-			if(CONSCIOUS)
-				stat = "Conscious"
-			if(SOFT_CRIT to HARD_CRIT) // Also includes UNCONSCIOUS
-				stat = "Unconscious"
+			if(STABLE)
+				stat = "Stable"
+			if(SOFT_CRIT, HARD_CRIT)
+				stat = "Critical"
 			if(DEAD)
 				stat = "Dead"
 		var/occupied
@@ -391,7 +433,7 @@
 			occupied = "available"
 
 		L["status"] = stat
-		L["exoticblood"] = body.blood_volume
+		L["exoticblood"] = body.get_blood_volume()
 		L["name"] = body.name
 		L["ref"] = "[REF(body)]"
 		L["occupied"] = occupied
@@ -412,7 +454,7 @@
 
 	return data
 
-/datum/action/innate/swap_body/ui_act(action, params)
+/datum/action/innate/swap_body/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -447,7 +489,7 @@
 	if(dupe.stat == DEAD) //Is it alive?
 		return FALSE
 
-	if(dupe.stat != CONSCIOUS) //Is it awake?
+	if(IS_UNCONSCIOUS_OR_CRIT(dupe)) //Is it awake?
 		return FALSE
 
 	if(dupe.mind && dupe.mind.active) //Is it unoccupied?
@@ -461,17 +503,14 @@
 /datum/action/innate/swap_body/proc/swap_to_dupe(datum/mind/M, mob/living/carbon/human/dupe)
 	if(!can_swap(dupe)) //sanity check
 		return
-	if(M.current.stat == CONSCIOUS)
-		M.current.visible_message("<span class='notice'>[M.current] \
-			stops moving and starts staring vacantly into space.</span>",
+	if(!IS_UNCONSCIOUS_OR_CRIT(M.current))
+		M.current.visible_message(span_notice("[M.current] stops moving and starts staring vacantly into space."),
 			span_notice("You stop moving this body..."))
 	else
 		to_chat(M.current, span_notice("You abandon this body..."))
 	M.current.transfer_quirk_datums(dupe)
 	M.transfer_to(dupe)
-	dupe.visible_message("<span class='notice'>[dupe] blinks and looks \
-		around.</span>",
-		span_notice("...and move this one instead."))
+	dupe.visible_message(span_notice("[dupe] blinks and looks around."), span_notice("...and move this one instead."))
 
 
 ///////////////////////////////////LUMINESCENTS//////////////////////////////////////////
@@ -491,7 +530,7 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/jelly/luminescent,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/jelly/luminescent,
 	)
-	mutanteyes = /obj/item/organ/internal/eyes
+	mutanteyes = /obj/item/organ/eyes
 	/// How strong is our glow
 	var/glow_intensity = LUMINESCENT_DEFAULT_GLOW
 	/// Internal dummy used to glow (very cool)
@@ -514,7 +553,7 @@
 	QDEL_LIST(luminescent_actions)
 	return ..()
 
-/datum/species/jelly/luminescent/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species)
+/datum/species/jelly/luminescent/on_species_gain(mob/living/carbon/new_jellyperson, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	glow = new_jellyperson.mob_light(light_type = /obj/effect/dummy/lighting_obj/moblight/species)
 	update_glow(new_jellyperson)
@@ -531,7 +570,7 @@
 
 	var/datum/action/innate/use_extract/major/extract_major = new(src)
 	extract_major.Grant(new_jellyperson)
-	luminescent_actions += integrate_extract
+	luminescent_actions += extract_major
 
 /datum/species/jelly/luminescent/on_species_loss(mob/living/carbon/C)
 	. = ..()
@@ -545,7 +584,7 @@
 /datum/species/jelly/luminescent/proc/update_glow(mob/living/carbon/human/glowie, intensity)
 	if(intensity)
 		glow_intensity = intensity
-	glow.set_light_range_power_color(glow_intensity, glow_intensity, glowie.dna.features["mcolor"])
+	glow.set_light_range_power_color(glow_intensity, glow_intensity, glowie.dna.features[FEATURE_MUTANT_COLOR])
 
 /datum/action/innate/integrate_extract
 	name = "Integrate Extract"
@@ -680,7 +719,7 @@
 	return "Stargazers can link others' minds with their own, creating a private communication channel. \
 		Most things that are toxic heal them, but most things that prevent toxicity damage them!"
 
-/datum/species/jelly/stargazer/on_species_gain(mob/living/carbon/grant_to, datum/species/old_species)
+/datum/species/jelly/stargazer/on_species_gain(mob/living/carbon/grant_to, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	project_action = new(src)
 	project_action.Grant(grant_to)
@@ -689,6 +728,7 @@
 		/datum/component/mind_linker/active_linking, \
 		network_name = "Slime Link", \
 		signals_which_destroy_us = list(COMSIG_SPECIES_LOSS), \
+		show_balloon_alert = TRUE, \
 		linker_action_path = /datum/action/innate/link_minds, \
 	)
 
@@ -724,7 +764,7 @@
 	var/mob/living/recipient = tgui_input_list(telepath, "Choose a telepathic message recipient", "Telepathy", sort_names(recipient_options))
 	if(isnull(recipient) || telepath.stat == DEAD || !is_species(telepath, /datum/species/jelly/stargazer))
 		return
-	var/msg = tgui_input_text(telepath, title = "Telepathy")
+	var/msg = tgui_input_text(telepath, title = "Telepathy", max_length = MAX_MESSAGE_LEN)
 	if(isnull(msg) || telepath.stat == DEAD || !is_species(telepath, /datum/species/jelly/stargazer))
 		return
 	if(!(recipient in oview(telepath)))

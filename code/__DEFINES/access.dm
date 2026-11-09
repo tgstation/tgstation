@@ -28,6 +28,8 @@
 #define ACCESS_ALL_PERSONAL_LOCKERS "all_personal_lockers"
 /// Access used for Access-Changing Programs, this one will unlock all options that can be ever given via that program.
 #define ACCESS_CHANGE_IDS "change_ids"
+/// Access the PDA shopping app checks for to see if you can only request or place orders immediately
+#define ACCESS_BUDGET "department_budget"
 /// Access used for the Captain's personal quarters in mapping, as well as what allows one to order emergency shuttles.
 #define ACCESS_CAPTAIN "captain"
 /// Access used for the Head of Personnel's personal quarters in mapping, as well as the security console and other HoP-related things.
@@ -58,6 +60,8 @@
 #define ACCESS_MAINT_TUNNELS "maint_tunnels"
 /// Access to get into APCs, engineering equipment lockers, typically mapped in for key power rooms across the station, engineering vending machines, emitters, and some other stuff.
 #define ACCESS_ENGINE_EQUIP "engine_equip"
+/// Access to get into air alarms, atmos equipment lockers, potentially atmos storage rooms (like the gas storage room).
+#define ACCESS_ATMOS_EQUIP "atmos_equip"
 /// Access to "construction" areas of the station. However, in mapping, it's used to get access to the front door and lathe room of the engineering department.
 #define ACCESS_CONSTRUCTION "construction"
 /// Access to the technical storage room (contains all the boards and other miscellaneous engineering gear).
@@ -89,6 +93,8 @@
 #define ACCESS_PSYCHOLOGY "psychology"
 /// Access for the Chief Medical Officer's personal quarters in mapping, as well as some other CMO-related things.
 #define ACCESS_CMO "cmo"
+/// Access to the Paramedic dispatch.
+#define ACCESS_PARAMEDIC "paramedic"
 
 /// General access for Cargo, allows for entry to Cargo Bay and Cargo's Office.
 #define ACCESS_CARGO "cargo"
@@ -160,6 +166,8 @@
 #define ACCESS_AWAY_GENERIC2 "away_generic2"
 #define ACCESS_AWAY_GENERIC3 "away_generic3"
 #define ACCESS_AWAY_GENERIC4 "away_generic4"
+#define ACCESS_ROROCO "roroco"
+#define ACCESS_ROROCO_SECURE "roroco_secure"
 
 /// - - - MECH - - -
 	// Mech Access, allows maintanenace of internal components and altering keycard requirements.
@@ -180,8 +188,9 @@
 #define ACCESS_CENT_TELEPORTER "cent_teleporter"
 #define ACCESS_CENT_CAPTAIN "cent_captain"
 #define ACCESS_CENT_BAR "cent_bar"
+#define ACCESS_CENT_OFFICER "cent_officer"
 /// Special Ops. Captain's display case, Marauder and Seraph mechs.
-#define ACCESS_CENT_SPECOPS 188 ///Remind me to separate to captain, centcom, and syndicate mech access later -SonofSpace
+#define ACCESS_CENT_SPECOPS "cent_specops"
 
 /// - - - ANTAGONIST - - -
 /// SYNDICATE
@@ -192,6 +201,8 @@
 #define ACCESS_BLOODCULT "bloodcult"
 /// HUNTERS
 #define ACCESS_HUNTER "hunter"
+/// HERETIC
+#define ACCESS_HERETIC "heretic"
 
 /// - - - MISC - - -
 	// These don't really fit anywhere else
@@ -286,11 +297,13 @@
 /// Departmental/general/common area accesses. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMON)
 #define COMMON_ACCESS list( \
 	ACCESS_ATMOSPHERICS, \
+	ACCESS_ATMOS_EQUIP, \
 	ACCESS_AUX_BASE, \
 	ACCESS_BAR, \
 	ACCESS_BIT_DEN, \
 	ACCESS_BRIG, \
 	ACCESS_BRIG_ENTRANCE, \
+	ACCESS_BUDGET, \
 	ACCESS_CARGO, \
 	ACCESS_CHAPEL_OFFICE, \
 	ACCESS_CONSTRUCTION, \
@@ -323,10 +336,10 @@
 	ACCESS_NETWORK, \
 	ACCESS_ORDNANCE, \
 	ACCESS_ORDNANCE_STORAGE, \
+	ACCESS_PARAMEDIC, \
 	ACCESS_PHARMACY, \
 	ACCESS_PLUMBING, \
 	ACCESS_PSYCHOLOGY, \
-	ACCESS_QM, \
 	ACCESS_RESEARCH, \
 	ACCESS_ROBOTICS, \
 	ACCESS_SCIENCE, \
@@ -334,6 +347,7 @@
 	ACCESS_SERVICE, \
 	ACCESS_SHIPPING, \
 	ACCESS_SURGERY, \
+	ACCESS_TECH_STORAGE, \
 	ACCESS_THEATRE, \
 	ACCESS_VIROLOGY, \
 	ACCESS_WEAPONS, \
@@ -345,6 +359,7 @@
 	ACCESS_AI_UPLOAD, \
 	ACCESS_ALL_PERSONAL_LOCKERS, \
 	ACCESS_ARMORY, \
+	ACCESS_BUDGET, \
 	ACCESS_CHANGE_IDS, \
 	ACCESS_COMMAND, \
 	ACCESS_EVA, \
@@ -352,7 +367,6 @@
 	ACCESS_MINISAT, \
 	ACCESS_RC_ANNOUNCE, \
 	ACCESS_TCOMMS, \
-	ACCESS_TECH_STORAGE, \
 	ACCESS_TELEPORTER, \
 	ACCESS_VAULT, \
 )
@@ -382,6 +396,7 @@
 	ACCESS_CENT_STORAGE, \
 	ACCESS_CENT_TELEPORTER, \
 	ACCESS_CENT_THUNDER, \
+	ACCESS_CENT_OFFICER, \
 )
 
 /// Syndicate areas off station. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_SYNDICATE)
@@ -424,6 +439,7 @@
 /// Used to seed the accesses_by_region list in SSid_access. A list of general service accesses that are overseen by the HoP.
 #define REGION_ACCESS_GENERAL list( \
 	ACCESS_BAR, \
+	ACCESS_BUDGET, \
 	ACCESS_CHAPEL_OFFICE, \
 	ACCESS_CREMATORIUM, \
 	ACCESS_HYDROPONICS, \
@@ -441,6 +457,7 @@
 	ACCESS_ARMORY, \
 	ACCESS_BRIG, \
 	ACCESS_BRIG_ENTRANCE, \
+	ACCESS_BUDGET, \
 	ACCESS_COURT, \
 	ACCESS_DETECTIVE, \
 	ACCESS_HOS, \
@@ -452,11 +469,13 @@
 #define REGION_MEDBAY "Medbay"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all medbay regional accesses that are overseen by the CMO.
 #define REGION_ACCESS_MEDBAY list( \
+	ACCESS_BUDGET, \
 	ACCESS_CMO, \
 	ACCESS_MECH_MEDICAL, \
 	ACCESS_MEDICAL, \
 	ACCESS_MORGUE, \
 	ACCESS_MORGUE_SECURE, \
+	ACCESS_PARAMEDIC, \
 	ACCESS_PHARMACY, \
 	ACCESS_PLUMBING, \
 	ACCESS_PSYCHOLOGY, \
@@ -467,6 +486,8 @@
 #define REGION_RESEARCH "Research"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all research regional accesses that are overseen by the RD.
 #define REGION_ACCESS_RESEARCH list( \
+	ACCESS_AI_UPLOAD, \
+	ACCESS_BUDGET, \
 	ACCESS_GENETICS, \
 	ACCESS_MECH_SCIENCE, \
 	ACCESS_MINISAT, \
@@ -484,7 +505,9 @@
 /// Used to seed the accesses_by_region list in SSid_access. A list of all engineering regional accesses that are overseen by the CE.
 #define REGION_ACCESS_ENGINEERING list( \
 	ACCESS_ATMOSPHERICS, \
+	ACCESS_ATMOS_EQUIP, \
 	ACCESS_AUX_BASE, \
+	ACCESS_BUDGET, \
 	ACCESS_CE, \
 	ACCESS_CONSTRUCTION, \
 	ACCESS_ENGINEERING, \
@@ -501,6 +524,7 @@
 /// Used to seed the accesses_by_region list in SSid_access. A list of all cargo regional accesses that are overseen by the HoP.
 #define REGION_ACCESS_SUPPLY list( \
 	ACCESS_BIT_DEN, \
+	ACCESS_BUDGET, \
 	ACCESS_CARGO, \
 	ACCESS_MECH_MINING, \
 	ACCESS_MINERAL_STOREROOM, \
@@ -516,6 +540,7 @@
 #define REGION_ACCESS_COMMAND list( \
 	ACCESS_AI_UPLOAD, \
 	ACCESS_ALL_PERSONAL_LOCKERS, \
+	ACCESS_BUDGET, \
 	ACCESS_CAPTAIN, \
 	ACCESS_CHANGE_IDS, \
 	ACCESS_COMMAND, \
@@ -531,46 +556,6 @@
 #define REGION_CENTCOM "Central Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.
 #define REGION_ACCESS_CENTCOM CENTCOM_ACCESS
-
-/**
- * A list of PDA paths that can be painted as well as the regional heads which should be able to paint them.
- * If a PDA is not in this list, it cannot be painted using the PDA & ID Painter.
- * If a PDA is in this list, it can always be painted with ACCESS_CHANGE_IDS.
- * Used to see pda_region in [/datum/controller/subsystem/id_access/proc/setup_tgui_lists]
- */
-#define PDA_PAINTING_REGIONS list( \
-	/obj/item/modular_computer/pda = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/clown = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/mime = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/medical = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/coroner = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/engineering = list(REGION_ENGINEERING), \
-	/obj/item/modular_computer/pda/security = list(REGION_SECURITY), \
-	/obj/item/modular_computer/pda/detective = list(REGION_SECURITY), \
-	/obj/item/modular_computer/pda/warden = list(REGION_SECURITY), \
-	/obj/item/modular_computer/pda/janitor = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/science = list(REGION_RESEARCH), \
-	/obj/item/modular_computer/pda/heads/quartermaster = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/hop = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/hos = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/cmo = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/ce = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/rd = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/captain = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/cargo = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/pda/bitrunner = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/pda/shaftminer = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/pda/chaplain = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/lawyer = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/botanist = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/roboticist = list(REGION_RESEARCH), \
-	/obj/item/modular_computer/pda/curator = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/cook = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/bar = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/atmos = list(REGION_ENGINEERING), \
-	/obj/item/modular_computer/pda/chemist = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/geneticist = list(REGION_RESEARCH), \
-)
 
 /// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.
 #define REGION_AREA_STATION list( \
@@ -591,3 +576,8 @@
 #define FORCE_ADD_ALL 2
 /// Used in ID card access adding procs. Will stack trace on fail.
 #define ERROR_ON_FAIL 3
+
+#define ID_DATA(T) SSid_access.__in_character_record_id_information(T)
+#define SILICON_OVERRIDE "silicon_override"
+#define CHAMELEON_OVERRIDE "chameleon_override"
+#define ID_READ_FAILURE "id_read_failure"

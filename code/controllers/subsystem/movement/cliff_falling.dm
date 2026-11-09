@@ -2,7 +2,7 @@
 MOVEMENT_SUBSYSTEM_DEF(cliff_falling)
 	name = "Cliff Falling"
 	priority = FIRE_PRIORITY_CLIFF_FALLING
-	flags = SS_NO_INIT|SS_TICKER
+	ss_flags = SS_NO_INIT|SS_TICKER
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	/// Who are currently falling and with which movemanager?
@@ -10,7 +10,7 @@ MOVEMENT_SUBSYSTEM_DEF(cliff_falling)
 
 /datum/controller/subsystem/movement/cliff_falling/proc/start_falling(atom/movable/faller, turf/open/cliff/cliff)
 	// Make them move
-	var/mover = SSmove_manager.move(moving = faller, direction = cliff.fall_direction, delay = cliff.fall_speed, subsystem = src, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_OUTSIDE_CONTROL | MOVEMENT_LOOP_NO_DIR_UPDATE)
+	var/mover = GLOB.move_manager.move(moving = faller, direction = cliff.fall_direction, delay = cliff.fall_speed, subsystem = src, priority = MOVEMENT_ABOVE_SPACE_PRIORITY, flags = MOVEMENT_LOOP_OUTSIDE_CONTROL | MOVEMENT_LOOP_NO_DIR_UPDATE)
 
 	cliff_grinders[faller] = mover
 

@@ -7,28 +7,31 @@
 	circuit = /obj/item/circuitboard/machine/hypnochair
 	density = TRUE
 	opacity = FALSE
+	interaction_flags_mouse_drop = NEED_DEXTERITY
 
-	var/mob/living/carbon/victim = null ///Keeps track of the victim to apply effects if it teleports away
-	var/interrogating = FALSE ///Is the device currently interrogating someone?
-	var/start_time = 0 ///Time when the interrogation was started, to calculate effect in case of interruption
-	var/trigger_phrase = "" ///Trigger phrase to implant
-	var/timerid = 0 ///Timer ID for interrogations
-	var/message_cooldown = 0 ///Cooldown for breakout message
+	///Keeps track of the victim to apply effects if it teleports away
+	var/mob/living/carbon/victim = null
+	///Is the device currently interrogating someone?
+	var/interrogating = FALSE
+	///Time when the interrogation was started, to calculate effect in case of interruption
+	var/start_time = 0
+	///Trigger phrase to implant
+	var/trigger_phrase = ""
+	///Timer ID for interrogations
+	var/timerid = 0
+	///Cooldown for breakout message
+	var/message_cooldown = 0
 
 /obj/machinery/hypnochair/Initialize(mapload)
 	. = ..()
 	open_machine()
 	update_appearance()
 
-/obj/machinery/hypnochair/attackby(obj/item/I, mob/user, params)
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))
-		update_appearance()
-		return
-	if(default_pry_open(I))
-		return
-	if(default_deconstruction_crowbar(I))
-		return
-	return ..()
+/obj/machinery/hypnochair/screwdriver_act(mob/living/user, obj/item/tool)
+	return isnull(occupant) ? default_deconstruction_screwdriver(user, tool) : NONE
+
+/obj/machinery/hypnochair/crowbar_act(mob/living/user, obj/item/tool)
+	return default_pry_open(user, tool, deconstruct_on_fail = TRUE)
 
 /obj/machinery/hypnochair/ui_state(mob/user)
 	return GLOB.notcontained_state
@@ -56,7 +59,7 @@
 
 	return data
 
-/obj/machinery/hypnochair/ui_act(action, params)
+/obj/machinery/hypnochair/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -84,11 +87,11 @@
 
 /obj/machinery/hypnochair/proc/interrogate()
 	if(!trigger_phrase)
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
+		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 		return
 	var/mob/living/carbon/C = occupant
 	if(!istype(C))
-		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
+		playsound(get_turf(src), 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 		return
 	victim = C
 	if(C.get_eye_protection() <= 0)
@@ -107,13 +110,13 @@
 		interrupt_interrogation()
 		return
 	if(SPT_PROB(5, seconds_per_tick) && !(C.get_eye_protection() > 0))
-		to_chat(C, "<span class='hypnophrase'>[pick(\
+		to_chat(C, span_hypnophrase(pick(\
 			"...blue... red... green... blue, red, green, blueredgreen[span_small("blueredgreen")]",\
 			"...pretty colors...",\
 			"...you keep hearing words, but you can't seem to understand them...",\
 			"...so peaceful...",\
 			"...an annoying buzz in your ears..."\
-		)]</span>")
+		)))
 
 	use_energy(active_power_usage * seconds_per_tick)
 
@@ -176,13 +179,12 @@
 	return ..()
 
 /obj/machinery/hypnochair/container_resist_act(mob/living/user)
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
 		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(600)].)"), \
 		span_hear("You hear a metallic creaking from [src]."))
 	if(do_after(user,(600), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src || state_open)
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
 			span_notice("You successfully break out of [src]!"))
@@ -194,8 +196,7 @@
 		to_chat(user, span_warning("[src]'s door won't budge!"))
 
 
-/obj/machinery/hypnochair/MouseDrop_T(mob/target, mob/user)
-	if(HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !isliving(target) || !ISADVANCEDTOOLUSER(user))
+/obj/machinery/hypnochair/mouse_drop_receive(atom/target, mob/user, params)
+	if(!isliving(target))
 		return
-
 	close_machine(target)

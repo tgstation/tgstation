@@ -92,6 +92,23 @@ GLOBAL_LIST_INIT(alldirs, list(
 	SOUTHEAST,
 	SOUTHWEST,
 ))
+GLOBAL_LIST_INIT(alldirs_dmi_order, list(
+	SOUTH,
+	NORTH,
+	EAST,
+	WEST,
+	SOUTHEAST,
+	SOUTHWEST,
+	NORTHEAST,
+	NORTHWEST,
+))
+
+GLOBAL_LIST_INIT(cardinal_angles, list(
+	"[NORTH]" = 0,
+	"[SOUTH]" = 180,
+	"[EAST]" = 90,
+	"[WEST]" = 270,
+))
 
 /// list of all landmarks created
 GLOBAL_LIST_EMPTY(landmarks_list)
@@ -109,9 +126,6 @@ GLOBAL_LIST_EMPTY(jobspawn_overrides)
 
 GLOBAL_LIST_EMPTY(gorilla_start)
 GLOBAL_LIST_EMPTY(wizardstart)
-GLOBAL_LIST_EMPTY(nukeop_start)
-GLOBAL_LIST_EMPTY(nukeop_leader_start)
-GLOBAL_LIST_EMPTY(nukeop_overwatch_start)
 GLOBAL_LIST_EMPTY(newplayer_start)
 GLOBAL_LIST_EMPTY(prisonwarp) //admin prisoners go to these
 GLOBAL_LIST_EMPTY(holdingfacility) //captured people go here (ninja energy net)
@@ -127,13 +141,12 @@ GLOBAL_LIST_EMPTY(secequipment) //sec equipment lockers that scale with the numb
 GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(ruin_landmarks)
-GLOBAL_LIST_EMPTY(bar_areas)
+GLOBAL_LIST_EMPTY(river_waypoint_list) // Assoc list of river waypoint markers by z-level
+GLOBAL_LIST_EMPTY(mining_center) // For determining vent size ranked lists, epicenters for comparison goes here.
+GLOBAL_LIST_EMPTY(map_generators_by_z) // Assoc list of shared generators by z by type
 
 /// List of all the maps that have been cached for /proc/load_map
 GLOBAL_LIST_EMPTY(cached_maps)
-
-/// Away missions
-GLOBAL_LIST_EMPTY(vr_spawnpoints)
 
 /// Just a list of all the area objects in the game
 /// Note, areas can have duplicate types
@@ -143,6 +156,8 @@ GLOBAL_LIST_EMPTY(areas)
 GLOBAL_LIST_EMPTY(sortedAreas)
 /// An association from typepath to area instance. Only includes areas with `unique` set.
 GLOBAL_LIST_EMPTY_TYPED(areas_by_type, /area)
+/// A list of player-created areas.
+GLOBAL_LIST_EMPTY_TYPED(custom_areas, /area)
 
 GLOBAL_LIST_EMPTY(all_abstract_markers)
 
@@ -153,22 +168,6 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(
 	/mob/living/simple_animal/hostile/megafauna/dragon = 4,
 ))
 
-/// List of how many minerals spawned based on proximity to an ore vent.
-GLOBAL_LIST_INIT(post_ore_random, list(
-	"[ORE_WALL_FAR]" = 0,
-	"[ORE_WALL_LOW]" = 0,
-	"[ORE_WALL_MEDIUM]" = 0,
-	"[ORE_WALL_HIGH]" = 0,
-	"[ORE_WALL_VERY_HIGH]" = 0,
-))
-/// List of how many minerals spawned randomly off of mining Z-levels, and at what quantity.
-GLOBAL_LIST_INIT(post_ore_manual, list(
-	"[ORE_WALL_FAR]" = 0,
-	"[ORE_WALL_LOW]" = 0,
-	"[ORE_WALL_MEDIUM]" = 0,
-	"[ORE_WALL_HIGH]" = 0,
-	"[ORE_WALL_VERY_HIGH]" = 0,
-))
 /// List of how many ore vents spawned, and of what size.
 GLOBAL_LIST_INIT(ore_vent_sizes, list(
 	LARGE_VENT_TYPE = 0,

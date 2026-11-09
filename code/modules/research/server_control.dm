@@ -1,5 +1,5 @@
 /obj/machinery/computer/rdservercontrol
-	name = "R&D Server Controller"
+	name = "\improper R&D server control console"
 	desc = "Manages access to research databases and consoles."
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
@@ -24,7 +24,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "console emagged")
 	return TRUE
 
@@ -52,16 +52,17 @@
 			))
 
 		for(var/obj/machinery/computer/rdconsole/console as anything in stored_research.consoles_accessing)
+			var/obj/item/circuitboard/computer/rdconsole/console_board = console.circuit
 			data["consoles"] += list(list(
 				"console_name" = console,
 				"console_location" = get_area(console),
-				"console_locked" = console.locked,
+				"console_locked" = console_board.locked,
 				"console_ref" = REF(console),
 			))
 
 	return data
 
-/obj/machinery/computer/rdservercontrol/ui_act(action, params)
+/obj/machinery/computer/rdservercontrol/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return TRUE
@@ -79,7 +80,8 @@
 			return TRUE
 		if("lock_console")
 			var/obj/machinery/computer/rdconsole/console_selected = locate(params["selected_console"]) in stored_research.consoles_accessing
+			var/obj/item/circuitboard/computer/rdconsole/console_board = console_selected.circuit
 			if(!console_selected)
 				return FALSE
-			console_selected.locked = !console_selected.locked
+			console_board.locked = !console_board.locked
 			return TRUE

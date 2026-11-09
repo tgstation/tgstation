@@ -19,6 +19,8 @@
 #define BB_BABIES_CHILD_TYPES "BB_babies_child"
 ///Current partner target
 #define BB_BABIES_TARGET "BB_babies_target"
+///Timeout for finding partners when theres too many of us in 1 location
+#define BB_PARTNER_SEARCH_TIMEOUT "BB_partner_search_timeout"
 
 ///Finding adult mob
 ///key holds the adult we found
@@ -27,6 +29,8 @@
 #define BB_FIND_MOM_TYPES "BB_find_mom_types"
 ///list of types of mobs we must ignore
 #define BB_IGNORE_MOM_TYPES "BB_ignore_mom_types"
+///cooldown between emoting at our parent
+#define BB_PARENT_EMOTE_COOLDOWN "BB_parent_emote_cooldown"
 
 /// The current string that this parrot will repeat back to someone
 #define BB_PARROT_REPEAT_STRING "BB_parrot_repeat_string"
@@ -50,6 +54,8 @@
 #define BB_HOARD_LOCATION_RANGE "hoard_location_range"
 /// key that holds items we arent interested in hoarding
 #define BB_IGNORE_ITEMS "ignore_items"
+/// cooldown key throttling how often a parrot repeats a phrase
+#define BB_PARROT_SPEECH_COOLDOWN "BB_parrot_speech_cooldown"
 
 // Cultist pet keys
 ///our ability to summon runes
@@ -67,7 +73,7 @@
 
 //virtual pet keys
 ///the last PDA message we must relay
-#define BB_LAST_RECIEVED_MESSAGE "last_recieved_message"
+#define BB_LAST_RECEIVED_MESSAGE "last_received_message"
 ///our current virtual pet level
 #define BB_VIRTUAL_PET_LEVEL "virtual_pet_level"
 ///the target we will play with

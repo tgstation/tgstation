@@ -32,7 +32,7 @@
 /datum/quirk/glass_jaw/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE)
 
-/datum/quirk/glass_jaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/datum/quirk/glass_jaw/proc/punch_out(mob/living/carbon/source, damage, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
 	SIGNAL_HANDLER
 
 	if(isbodypart(def_zone))
@@ -45,10 +45,10 @@
 	//blunt items are more likely to knock out, but sharp ones are still capable of doing it
 	if(prob(CEILING(damage * (sharpness & (SHARP_EDGED|SHARP_POINTY) ? 0.65 : 1), 1)))
 		//don't display the message if little mac is already KO'd
-		if(!source.IsUnconscious())
+		if(!IS_UNCONSCIOUS(source))
 			source.visible_message(
 				span_warning("[source] gets knocked out!"),
 				span_userdanger("You get knocked out!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
-		)
+			)
 		source.Unconscious(3 SECONDS)

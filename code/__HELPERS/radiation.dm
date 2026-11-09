@@ -1,6 +1,9 @@
 /// Whether or not it's possible for this atom to be irradiated
 #define CAN_IRRADIATE(atom) (ishuman(##atom) || isitem(##atom))
 
+/// Calculates the max chance for a radiation_pulse via a radioactive reagent
+#define CALCULATE_RAD_MAX_CHANCE(rad_power) (20 + (15 * (rad_power - 1)))
+
 /// Sends out a pulse of radiation, eminating from the source.
 /// Radiation is performed by collecting all radiatables within the max range (0 means source only, 1 means adjacent, etc),
 /// then makes their way towards them. A number, starting at 1, is multiplied

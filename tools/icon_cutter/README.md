@@ -2,7 +2,7 @@
 
 ## What is this?
 
-This folder holds a set of cached versions of hypnagogic, our icon cutter.
+This folder will hold a set of cached versions of hypnagogic, our icon cutter. We autodownload the tagged version from github on build.
 
 ## How is it used?
 
@@ -20,4 +20,4 @@ If they have been, the cutter will perform a full runthrough, and compile all in
 
 These dmis can then be committed, and badabing badaboom we have autocut sprites.
 
-If you want to change the cutter version we have a set of  config values in [dependancies.sh](../../dependencies.sh) that control it.
+If you want to change the cutter version we have a set of config values in [dependancies.sh](../../dependencies.sh) that control it.

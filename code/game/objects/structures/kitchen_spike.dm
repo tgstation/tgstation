@@ -8,6 +8,7 @@
 	density = TRUE
 	anchored = FALSE
 	max_integrity = 200
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/structure/kitchenspike_frame/Initialize(mapload)
 	. = ..()
@@ -34,7 +35,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/kitchenspike_frame/welder_act(mob/living/user, obj/item/tool)
-	if(!tool.tool_start_check(user, amount = 0))
+	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return FALSE
 	to_chat(user, span_notice("You begin cutting \the [src] apart..."))
 	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
@@ -50,19 +51,22 @@
 	default_unfasten_wrench(user, tool)
 	return TRUE
 
-/obj/structure/kitchenspike_frame/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/kitchenspike_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(!istype(attacking_item, /obj/item/stack/rods))
-		return ..()
-	var/obj/item/stack/rods/used_rods = attacking_item
-	if(used_rods.get_amount() >= MEATSPIKE_IRONROD_REQUIREMENT)
-		used_rods.use(MEATSPIKE_IRONROD_REQUIREMENT)
-		balloon_alert(user, "meatspike built")
-		var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
-		transfer_fingerprints_to(new_meatspike)
-		qdel(src)
-		return
-	balloon_alert(user, "[MEATSPIKE_IRONROD_REQUIREMENT] rods needed!")
+	if(!istype(tool, /obj/item/stack/rods))
+		return NONE
+
+	var/obj/item/stack/rods/used_rods = tool
+	if(used_rods.get_amount() < MEATSPIKE_IRONROD_REQUIREMENT)
+		balloon_alert(user, "[MEATSPIKE_IRONROD_REQUIREMENT] rods needed!")
+		return ITEM_INTERACT_BLOCKING
+
+	used_rods.use(MEATSPIKE_IRONROD_REQUIREMENT)
+	var/obj/structure/new_meatspike = new /obj/structure/kitchenspike(loc)
+	new_meatspike.balloon_alert(user, "meatspike built")
+	transfer_fingerprints_to(new_meatspike)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/kitchenspike
 	name = "meat spike"
@@ -71,13 +75,17 @@
 	desc = "A spike for collecting meat from animals."
 	density = TRUE
 	anchored = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 180
+	buckle_dir = SOUTH
 	can_buckle = TRUE
 	max_integrity = 250
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7)
+	buckle_delay = 10 SECONDS
 
 /obj/structure/kitchenspike/Initialize(mapload)
 	. = ..()
 	register_context()
+	ADD_TRAIT(src, TRAIT_DANGEROUS_BUCKLE, INNATE_TRAIT)
 
 /obj/structure/kitchenspike/examine(mob/user)
 	. = ..()
@@ -111,21 +119,24 @@
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/target, mob/user, check_loc = TRUE)
 	if(!iscarbon(target) && !isanimal_or_basicmob(target))
 		return
+	if(target != user || target.loc == loc)
+		return ..()
 	if(!do_after(user, 10 SECONDS, target))
 		return
+	if(!is_user_buckle_possible(target, user, check_loc))
+		return FALSE
 	return ..()
 
 /obj/structure/kitchenspike/post_buckle_mob(mob/living/target)
 	playsound(src.loc, 'sound/effects/splat.ogg', 25, TRUE)
 	target.emote("scream")
 	target.add_splatter_floor()
-	target.adjustBruteLoss(30)
-	target.setDir(2)
-	var/matrix/m180 = matrix(target.transform)
-	m180.Turn(180)
-	animate(target, transform = m180, time = 3)
-	target.pixel_y = target.base_pixel_y + PIXEL_Y_OFFSET_LYING
+	target.adjust_brute_loss(30)
+	target.add_offsets(type, x_add = -1)
+	target.set_lying_angle(buckle_lying)
 	ADD_TRAIT(target, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
+	// So you can butcher people too
+	target.AddComponentFrom(REF(src), /datum/component/free_operation)
 
 /obj/structure/kitchenspike/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob != user)
@@ -142,22 +153,20 @@
 		buckled_mob.visible_message(span_warning("[buckled_mob] struggles to break free from [src]!"),\
 		span_notice("You struggle to break free from [src], exacerbating your wounds! (Stay still for two minutes.)"),\
 		span_hear("You hear a wet squishing noise.."))
-		buckled_mob.adjustBruteLoss(30)
-		if(!do_after(buckled_mob, 2 MINUTES, target = src, hidden = TRUE))
+		buckled_mob.adjust_brute_loss(30)
+		if(!do_after(buckled_mob, 2 MINUTES, target = src, timed_action_flags = HIDE_INTERACTION))
 			if(buckled_mob?.buckled)
 				to_chat(buckled_mob, span_warning("You fail to free yourself!"))
 			return
 	return ..()
 
 /obj/structure/kitchenspike/post_unbuckle_mob(mob/living/buckled_mob)
-	buckled_mob.adjustBruteLoss(30)
+	buckled_mob.adjust_brute_loss(30)
 	INVOKE_ASYNC(buckled_mob, TYPE_PROC_REF(/mob, emote), "scream")
 	buckled_mob.AdjustParalyzed(20)
-	var/matrix/m180 = matrix(buckled_mob.transform)
-	m180.Turn(180)
-	animate(buckled_mob, transform = m180, time = 3)
-	buckled_mob.pixel_y = buckled_mob.base_pixel_y + PIXEL_Y_OFFSET_LYING
+	buckled_mob.remove_offsets(type)
 	REMOVE_TRAIT(buckled_mob, TRAIT_MOVE_UPSIDE_DOWN, REF(src))
+	buckled_mob.RemoveComponentSource(REF(src), /datum/component/free_operation)
 
 /obj/structure/kitchenspike/atom_deconstruct(disassembled = TRUE)
 	if(disassembled)

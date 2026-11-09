@@ -10,7 +10,6 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 	speak_emote = list("yawns")
 
-	can_be_held = TRUE
 	held_state = "sloth"
 
 	response_help_continuous = "pets"
@@ -22,7 +21,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -37,11 +36,23 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 	ai_controller = /datum/ai_controller/basic_controller/sloth
 
+/datum/emote/sloth
+	abstract_type = /datum/emote/sloth
+	mob_type_allowed_typecache = /mob/living/basic/sloth
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/sloth/smile_slow
+	key = "ssmile"
+	key_third_person = "slowlysmiles"
+	message = "slowly smiles!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
 /mob/living/basic/sloth/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "slowly smiles!")
+	AddElement(/datum/element/pet_bonus, "ssmile")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/can_be_held)
 	AddComponent(/datum/component/tree_climber)
 
 	if(!mapload || !isnull(GLOB.cargo_sloth) || !is_station_level(z))
@@ -75,23 +86,16 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 /// They're really passive in game, so they just wanna get away if you start smacking them. No trees in space from them to use for clawing your eyes out, but they will try if desperate.
 /datum/ai_controller/basic_controller/sloth
+	behavior_tree_json = "code/modules/mob/living/basic/pets/sloth.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("snores.", "yawns."),
+			BB_EMOTE_SEE = list("dozes off.", "looks around sleepily."),
+			BB_SPEAK_CHANCE = 1,
+		),
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate/to_flee,
-		/datum/ai_planning_subtree/flee_target/from_flee_key,
-		/datum/ai_planning_subtree/climb_trees,
-		/datum/ai_planning_subtree/random_speech/sloth,
-	)
-
-/datum/ai_planning_subtree/random_speech/sloth
-	speech_chance = 1
-	emote_hear = list("snores.", "yawns.")
-	emote_see = list("dozes off.", "looks around sleepily.")

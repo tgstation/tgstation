@@ -80,6 +80,7 @@ This will display "LMB: Craft bola" when the user hovers over cable restraints w
 The basic system acknowledges the following two interactions:
 
 ### Self-defining items (Type A)
+
 These are items that are defined by their behavior. These should define their contextual text within themselves, and not in their targets.
 
 - Stun batons (LMB to stun, RMB to harm)
@@ -87,7 +88,8 @@ These are items that are defined by their behavior. These should define their co
 - Health analyzers (LMB to scan for health/wounds [another piece of context], RMB to scans for chemicals)
 
 ### Receiving action defining objects (Type B)
-These are objects (not necessarily items) that are defined by what happens *to* them. These should define their contextual text within themselves, and not in their operating tools.
+
+These are objects (not necessarily items) that are defined by what happens _to_ them. These should define their contextual text within themselves, and not in their operating tools.
 
 - Tables (RMB with wrench to deconstruct)
 - Construction objects (LMB with glass to put in screen for computers)
@@ -104,6 +106,7 @@ Note that you **must return `CONTEXTUAL_SCREENTIP_SET` if you change the context
 This signal is registered on **items**, and receives **the hovering object**, provided in the form of `obj/item/source, list/context, atom/target, mob/living/user`.
 
 ### `/atom/proc/register_item_context()`, and `/atom/proc/add_item_context()`
+
 `/atom/proc/add_item_context()` is a proc intended to be overridden to easily create Type-B interactions (ones where atoms are hovered over by items). It receives the exact same arguments as `COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET`: `obj/item/source, list/context, atom/target, mob/living/user`.
 
 In order for your `add_item_context()` method to be run, you **must** call `register_item_context()`.
@@ -113,6 +116,7 @@ In order for your `add_item_context()` method to be run, you **must** call `regi
 This signal is registered on **atoms**, and receives **what the user is hovering with**, provided in the form of `atom/source, list/context, obj/item/held_item, mob/living/user`.
 
 ### `/atom/proc/register_context()`, and `/atom/proc/add_context()`
+
 `/atom/proc/add_context()` is a proc intended to be overridden to easily create Type-B interactions (ones where atoms are hovered over by items). It receives the exact same arguments as `COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM`: `atom/source, list/context, obj/item/held_item, mob/living/user`.
 
 In order for your `add_context()` method to be run, you **must** call `register_context()`.

@@ -8,8 +8,10 @@
 	var/obj/item/food/golem_food/golem_snack
 	/// Any extra checks which need to be done when seeing if this is edible
 	var/datum/callback/extra_validation
+	/// What additional nutrition modifiers should be added to this food? We apply extra nutrition to ores that are processed into sheets.
+	var/food_multiplier
 
-/datum/component/golem_food/Initialize(consume_on_eat = TRUE, golem_food_key, datum/callback/extra_validation)
+/datum/component/golem_food/Initialize(consume_on_eat = TRUE, golem_food_key, datum/callback/extra_validation, food_multiplier = 1)
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	if (!golem_food_key || !is_path_in_list(golem_food_key, GLOB.golem_stack_food_directory))
@@ -18,7 +20,8 @@
 	src.consume_on_eat = consume_on_eat
 	snack_type = GLOB.golem_stack_food_directory[golem_food_key]
 	src.extra_validation = extra_validation
-
+	if(food_multiplier)
+		src.food_multiplier = food_multiplier
 
 /datum/component/golem_food/RegisterWithParent()
 	. = ..()
@@ -36,7 +39,7 @@
 	return ..()
 
 /// Attempt to feed this item to golem
-/datum/component/golem_food/proc/on_attack(atom/source, mob/living/target, mob/living/user, click_parameters)
+/datum/component/golem_food/proc/on_attack(atom/source, mob/living/target, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
 	if (user.combat_mode || !HAS_TRAIT(target, TRAIT_ROCK_EATER))
 		return
@@ -48,7 +51,7 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if (isnull(golem_snack))
 		create_golem_snack(source)
-	golem_snack.attack(target, user, click_parameters)
+	golem_snack.attack(target, user, modifiers)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Creates our golem snack atom instance
@@ -59,6 +62,7 @@
 		consume_food = consume_on_eat,
 		food_buff = snack_type,
 		owner = parent,
+		nutrition_mod = food_multiplier
 	)
 	RegisterSignal(golem_snack, COMSIG_QDELETING, PROC_REF(on_food_destroyed))
 
@@ -94,11 +98,13 @@
 	consume_food = TRUE,
 	datum/golem_food_buff/food_buff,
 	atom/owner,
+	nutrition_mod,
 )
 	src.name = name
 	src.consume_food = consume_food
 	src.food_buff = food_buff
 	src.owner = owner
+	src.bite_consumption = food_buff.nutrition * nutrition_mod
 	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(on_parent_destroyed))
 
 /// Clean ourselves up if our parent dies
@@ -108,7 +114,7 @@
 
 /obj/item/food/golem_food/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(took_bite)), volume = INFINITY)
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, after_eat = CALLBACK(src, PROC_REF(took_bite)), volume = INFINITY)
 
 /// Called when someone bites this food, subtract one charge from our material stack
 /obj/item/food/golem_food/proc/took_bite(mob/eater)

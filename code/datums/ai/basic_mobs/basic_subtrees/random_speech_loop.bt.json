@@ -1,0 +1,19 @@
+{
+	"dm_type": "/datum/bt_node/subtree/random_speech_loop",
+	"bindings": {
+		"bqdqne64": {
+			"label": "speech_behavior",
+			"default": "/datum/bt_node/ai_behavior/random_speech_blackboard"
+		}
+	},
+	"type": "subplan",
+	"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+	"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+	"loop_delay": "1 SECONDS",
+	"children": [
+		{
+			"type": "leaf",
+			"behavior": "$bqdqne64"
+		}
+	]
+}

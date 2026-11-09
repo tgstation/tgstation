@@ -5,14 +5,14 @@
 // These are mutually exclusive; can't have req_any and req_all
 /obj/effect/mapping_helpers/airlock/access/any/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.req_access != null)
-		log_mapping("[src] at [AREACOORD(src)] tried to set req_one_access, but req_access was already set!")
+		log_mapping("[src] access at [AREACOORD(src)] failed to apply (cannot mix any/all access helpers: all existed, any failed)")
 	else
 		var/list/access_list = get_access()
 		airlock.req_one_access += access_list
 
 /obj/effect/mapping_helpers/airlock/access/all/payload(obj/machinery/door/airlock/airlock)
 	if(airlock.req_one_access != null)
-		log_mapping("[src] at [AREACOORD(src)] tried to set req_one_access, but req_access was already set!")
+		log_mapping("[src] access at [AREACOORD(src)] failed to apply (cannot mix any/all access helpers: any existed, all failed)")
 	else
 		var/list/access_list = get_access()
 		airlock.req_access += access_list
@@ -121,6 +121,11 @@
 	access_list += ACCESS_ATMOSPHERICS
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/any/engineering/atmos_equip/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_ATMOS_EQUIP
+	return access_list
+
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_TCOMMS
@@ -183,6 +188,11 @@
 /obj/effect/mapping_helpers/airlock/access/any/medical/maintenance/get_access()
 	var/list/access_list = ..()
 	access_list += list(ACCESS_MEDICAL, ACCESS_MAINT_TUNNELS)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/medical/paramedic/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_PARAMEDIC
 	return access_list
 
 // -------------------- Science access helpers
@@ -510,7 +520,17 @@
 
 /obj/effect/mapping_helpers/airlock/access/any/admin/bar/get_access()
 	var/list/access_list = ..()
-	access_list += list(ACCESS_CENT_CAPTAIN)
+	access_list += list(ACCESS_CENT_BAR)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/officer/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_OFFICER)
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/any/admin/specops/get_access()
+	var/list/access_list = ..()
+	access_list += list(ACCESS_CENT_SPECOPS)
 	return access_list
 
 // -------------------- Req All (Requires ALL of the given accesses to open)
@@ -602,6 +622,11 @@
 	access_list += ACCESS_ATMOSPHERICS
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos_equip/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_ATMOS_EQUIP
+	return access_list
+
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_TCOMMS
@@ -659,6 +684,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/medical/psychology/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_PSYCHOLOGY
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/medical/paramedic/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_PARAMEDIC
 	return access_list
 
 // -------------------- Science access helpers
@@ -842,6 +872,11 @@
 	access_list += ACCESS_VAULT
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/all/supply/bit_den/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_BIT_DEN
+	return access_list
+
 // -------------------- Syndicate access helpers
 /obj/effect/mapping_helpers/airlock/access/all/syndicate
 	icon_state = "access_helper_syn"
@@ -971,4 +1006,14 @@
 /obj/effect/mapping_helpers/airlock/access/all/admin/bar/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_CENT_BAR
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/officer/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_OFFICER
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/admin/specops/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_CENT_SPECOPS
 	return access_list

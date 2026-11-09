@@ -1,0 +1,1 @@
+/obj/item/reagent_containers/cup/rag : /obj/item/rag{@OLD}

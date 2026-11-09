@@ -12,7 +12,7 @@
 	incredible_hulk.put_in_hands(item_to_hold)
 	incredible_hulk.AddComponent(/datum/component/mutant_hands)
 
-	for(var/obj/item/hand as anything in incredible_hulk.held_items)
+	for(var/obj/item/hand as anything in incredible_hulk.get_hand_slots())
 		if(!istype(hand, /obj/item/mutant_hand))
 			TEST_FAIL("Dummy didn't have a mutant hand on gaining mutant hands comp! Had: [hand || "nothing"].")
 
@@ -21,7 +21,7 @@
 
 	TEST_ASSERT(left_arm.try_attach_limb(incredible_hulk), "Mutant hands test failed to re-attach the limb after losing it.")
 
-	for(var/obj/item/hand as anything in incredible_hulk.held_items)
+	for(var/obj/item/hand as anything in incredible_hulk.get_hand_slots())
 		if(!istype(hand, /obj/item/mutant_hand))
 			TEST_FAIL("Dummy didn't have a mutant hand after re-gaining a limb! Had: [hand || "nothing"].")
 
@@ -40,16 +40,16 @@
 	incredible_hulk.put_in_hand(item_to_hold, 1)
 	incredible_hulk.AddComponent(/datum/component/mutant_hands)
 
-	if(!istype(incredible_hulk.held_items[1], /obj/item/storage/toolbox))
-		TEST_FAIL("Dummy's left hand was not a toolbox, though it was supposed to be. Was: [incredible_hulk.held_items[1] || "nothing"].")
+	if(!istype(incredible_hulk.get_item_for_held_index(LEFT_HANDS), /obj/item/storage/toolbox))
+		TEST_FAIL("Dummy's left hand was not a toolbox, though it was supposed to be. Was: [incredible_hulk.get_item_for_held_index(LEFT_HANDS) || "nothing"].")
 
-	if(!istype(incredible_hulk.held_items[2], /obj/item/mutant_hand))
-		TEST_FAIL("Dummy 's right hand was not a mutant hand! Was: [incredible_hulk.held_items[2] || "nothing"].")
+	if(!istype(incredible_hulk.get_item_for_held_index(RIGHT_HANDS), /obj/item/mutant_hand))
+		TEST_FAIL("Dummy 's right hand was not a mutant hand! Was: [incredible_hulk.get_item_for_held_index(RIGHT_HANDS) || "nothing"].")
 
 	QDEL_NULL(item_to_hold)
 
-	if(!istype(incredible_hulk.held_items[1], /obj/item/mutant_hand))
-		TEST_FAIL("Dummy's left hand was not a mutant hand after losing the nodrop item. Was: [incredible_hulk.held_items[1] || "nothing"].")
+	if(!istype(incredible_hulk.get_item_for_held_index(LEFT_HANDS), /obj/item/mutant_hand))
+		TEST_FAIL("Dummy's left hand was not a mutant hand after losing the nodrop item. Was: [incredible_hulk.get_item_for_held_index(LEFT_HANDS) || "nothing"].")
 
 /**
  * Test: Mutant hands fireman carrying

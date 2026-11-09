@@ -14,9 +14,11 @@
 	///Determines whether we throw all things away when ramming them or just mobs, varedit only
 	var/crash_all = FALSE
 
-/obj/vehicle/sealed/car/speedwagon/Initialize(mapload)
+/obj/vehicle/sealed/car/speedwagon/update_overlays()
 	. = ..()
-	add_overlay(image(icon, "speedwagon_cover", ABOVE_MOB_LAYER))
+	var/mutable_appearance/cover_overlay = mutable_appearance(icon, "speedwagon_cover", ABOVE_MOB_LAYER, src, appearance_flags = KEEP_APART)
+	cover_overlay = color_atom_overlay(cover_overlay)
+	. += cover_overlay
 
 /obj/vehicle/sealed/car/speedwagon/Bump(atom/bumped)
 	. = ..()
@@ -33,7 +35,7 @@
 		return
 	var/mob/living/carbon/human/rammed = bumped
 	rammed.Paralyze(100)
-	rammed.adjustStaminaLoss(30)
+	rammed.adjust_stamina_loss(30)
 	rammed.apply_damage(rand(20,35), BRUTE)
 	if(!crash_all)
 		rammed.throw_at(get_edge_target_turf(bumped, dir), 4, 3)

@@ -19,7 +19,7 @@
 	. += create_ui_notice("Clock Interval: [DisplayTimeText(COMP_CLOCK_DELAY)]", "orange", "clock")
 
 /obj/item/circuit_component/clock/populate_ports()
-	on = add_input_port("On", PORT_TYPE_NUMBER)
+	on = add_input_port("On", PORT_TYPE_BOOLEAN)
 
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 

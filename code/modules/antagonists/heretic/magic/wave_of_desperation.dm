@@ -1,14 +1,14 @@
 /datum/action/cooldown/spell/aoe/wave_of_desperation
 	name = "Wave Of Desperation"
 	desc = "Removes your restraints, repels and knocks down adjacent people, and applies certain effects of the Mansus Grasp upon everything nearby. \
-		Cannot be cast unless you are restrained, and the stress renders you unconscious 12 seconds later!"
+		Cannot be cast unless you are restrained. (Can be casted without a focus)"
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "uncuff"
-	sound = 'sound/magic/swap.ogg'
+	sound = 'sound/effects/magic/swap.ogg'
 
-	school = SCHOOL_FORBIDDEN
+	school = SCHOOL_EVOCATION
 	cooldown_time = 5 MINUTES
 
 	invocation = "F'K 'FF."
@@ -18,7 +18,7 @@
 	aoe_radius = 3
 
 /datum/action/cooldown/spell/aoe/wave_of_desperation/is_valid_target(mob/living/carbon/cast_on)
-	return ..() && istype(cast_on) && (cast_on.handcuffed || cast_on.legcuffed)
+	return ..() && istype(cast_on) && length(cast_on.get_all_attached_restraints())
 
 // Before the cast, we do some small AOE damage around the caster
 /datum/action/cooldown/spell/aoe/wave_of_desperation/before_cast(mob/living/carbon/cast_on)
@@ -26,12 +26,9 @@
 	if(. & SPELL_CANCEL_CAST)
 		return
 
-	if(cast_on.handcuffed)
-		cast_on.visible_message(span_danger("[cast_on.handcuffed] on [cast_on] shatter!"))
-		QDEL_NULL(cast_on.handcuffed)
-	if(cast_on.legcuffed)
-		cast_on.visible_message(span_danger("[cast_on.legcuffed] on [cast_on] shatters!"))
-		QDEL_NULL(cast_on.legcuffed)
+	for(var/obj/item/restraint in cast_on.get_all_attached_restraints())
+		cast_on.visible_message(span_danger("[restraint] on [cast_on] shatter!"))
+		qdel(restraint)
 
 	cast_on.apply_status_effect(/datum/status_effect/heretic_lastresort)
 	new /obj/effect/temp_visual/knockblast(get_turf(cast_on))

@@ -1,7 +1,8 @@
 /atom/movable/screen/alert/status_effect/slime_leech
 	name = "Covered in Slime"
 	desc = "A slime is draining your very lifeforce! Remove it by hand, by hitting it, or by water."
-	icon_state = "slime_leech"
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
+	overlay_state = "slime_leech"
 
 /datum/status_effect/slime_leech
 	id = "slime_leech"
@@ -30,13 +31,20 @@
 	if(prob(bio_protection))
 		owner.apply_status_effect(/datum/status_effect/slimed, our_slime.slime_type.rgb_code, our_slime.slime_type.colour == SLIME_TYPE_RAINBOW)
 
+	UnregisterSignal(our_slime, list(COMSIG_LIVING_DEATH, COMSIG_MOB_UNBUCKLED, COMSIG_QDELETING,))
+	if(!QDELETED(our_slime))
+		our_slime.stop_feeding()
+
 	qdel(src)
 
 /datum/status_effect/slime_leech/on_remove()
 	our_slime = null
 
 /datum/status_effect/slime_leech/tick(seconds_between_ticks)
-	if(our_slime.stat)
+	if(QDELETED(our_slime))
+		qdel(src)
+		return
+	if(IS_UNCONSCIOUS_OR_CRIT(our_slime) || !owner)
 		our_slime.stop_feeding(silent = TRUE)
 		return
 
@@ -46,27 +54,28 @@
 
 		SEND_SIGNAL(owner, COMSIG_SLIME_DRAINED, our_slime)
 
-		if(prob(60) && owner.client && ishuman(owner) && !our_slime.ai_controller.blackboard[BB_SLIME_RABID])
+		if(prob(60) && ishuman(owner) && owner.client && !our_slime.ai_controller.blackboard[BB_SLIME_RABID])
 			our_slime.ai_controller?.set_blackboard_key(BB_SLIME_RABID, TRUE) //we might go rabid after finishing to feed on a human with a client.
 
-		our_slime.stop_feeding()
+		if(our_slime)
+			our_slime.stop_feeding()
 		return
 
 	var/totaldamage = 0 //total damage done to this unfortunate soul
 
 	if(iscarbon(owner))
-		totaldamage += owner.adjustBruteLoss(rand(2, 4) * 0.5 * seconds_between_ticks)
-		totaldamage += owner.adjustToxLoss(rand(1, 2) * 0.5 * seconds_between_ticks)
+		totaldamage += owner.adjust_brute_loss(rand(2, 4) * 0.5 * seconds_between_ticks)
+		totaldamage += owner.adjust_tox_loss(rand(1, 2) * 0.5 * seconds_between_ticks)
 
 	if(isanimal_or_basicmob(owner))
 
 		var/need_mob_update
-		need_mob_update = totaldamage += owner.adjustBruteLoss(rand(2, 4) * 0.5 * seconds_between_ticks, updating_health = FALSE)
-		need_mob_update += totaldamage += owner.adjustToxLoss(rand(1, 2) * 0.5 * seconds_between_ticks, updating_health = FALSE)
+		need_mob_update = totaldamage += owner.adjust_brute_loss(rand(2, 4) * 0.5 * seconds_between_ticks, updating_health = FALSE)
+		need_mob_update += totaldamage += owner.adjust_tox_loss(rand(1, 2) * 0.5 * seconds_between_ticks, updating_health = FALSE)
 		if(need_mob_update)
 			owner.updatehealth()
 
-	if(totaldamage >= 0) // AdjustBruteLoss returns a negative value on succesful damage adjustment
+	if(totaldamage >= 0) // adjust_brute_loss() returns a negative value on successful damage adjustment
 		our_slime.balloon_alert(our_slime, "not food!")
 		our_slime.stop_feeding()
 		return
@@ -90,4 +99,4 @@
 	our_slime.adjust_nutrition(-1 * 1.8 * totaldamage) //damage is already modified by seconds_between_ticks
 
 	//Heal yourself.
-	our_slime.adjustBruteLoss(-1.5 * seconds_between_ticks)
+	our_slime.adjust_brute_loss(-1.5 * seconds_between_ticks)

@@ -28,7 +28,7 @@
 	melee_damage_upper = 12
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	faction = list(FACTION_HOSTILE)
@@ -56,22 +56,23 @@
 	. = ..()
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PINE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	var/list/death_loot = string_list(list(/obj/item/stack/sheet/mineral/wood))
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/item/stack/sheet/mineral/wood)
 	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("growls")), emote_chance = 20)
 
-/mob/living/basic/tree/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	..()
+/mob/living/basic/tree/Life(seconds_per_tick = SSMOBS_DT)
+	. = ..()
+	if(!.) //dead or deleted
+		return
 	if(!isopenturf(loc))
 		return
 	var/turf/open/our_turf = src.loc
-	if(!our_turf.air || !our_turf.air.gases[/datum/gas/carbon_dioxide])
+	if(!our_turf.air || !our_turf.air.moles[/datum/gas/carbon_dioxide])
 		return
-
-	var/co2 = our_turf.air.gases[/datum/gas/carbon_dioxide][MOLES]
+	var/datum/gas_mixture/our_air = our_turf.air
+	var/co2 = our_air.moles[/datum/gas/carbon_dioxide]
 	if(co2 > 0 && SPT_PROB(13, seconds_per_tick))
 		var/amt = min(co2, 9)
-		our_turf.air.gases[/datum/gas/carbon_dioxide][MOLES] -= amt
+		our_air.adjust_gas(/datum/gas/carbon_dioxide, -amt)
 		our_turf.atmos_spawn_air("[GAS_O2]=[amt]")
 
 /mob/living/basic/tree/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
@@ -86,10 +87,8 @@
 	var/mob/living/victim = target
 	var/boost = 0
 	if(iscarbon(victim))
-		for(var/item_path in infuriating_objects)
-			if(locate(item_path) in victim.held_items)
-				boost = anger_boost
-				break
+		if(victim.is_holding_item_of_types(infuriating_objects))
+			boost = anger_boost
 
 	if(prob(paralyze_prob + boost))
 		victim.Paralyze(paralyze_value + boost)
@@ -99,14 +98,13 @@
 		)
 
 /datum/ai_controller/basic_controller/tree
+	behavior_tree_json = "code/modules/mob/living/basic/tree.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SEE = list("photosynthesizes angrily."),
+			BB_SPEAK_CHANCE = 3,
+		),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/tree,
-	)

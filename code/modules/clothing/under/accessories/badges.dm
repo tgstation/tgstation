@@ -4,6 +4,10 @@
 	desc = "Fills you with the conviction of JUSTICE. Lawyers tend to want to show it to everyone they meet."
 	icon_state = "lawyerbadge"
 
+/obj/item/clothing/accessory/lawyers_badge/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/bubble_icon_override, "lawyer", BUBBLE_ICON_PRIORITY_ACCESSORY)
+
 /obj/item/clothing/accessory/lawyers_badge/interact(mob/user)
 	. = ..()
 	if(prob(1))
@@ -12,11 +16,9 @@
 
 /obj/item/clothing/accessory/lawyers_badge/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, PROC_REF(table_slam))
-	user.bubble_icon = "lawyer"
 
 /obj/item/clothing/accessory/lawyers_badge/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
 	UnregisterSignal(user, COMSIG_LIVING_SLAM_TABLE)
-	user.bubble_icon = initial(user.bubble_icon)
 
 /obj/item/clothing/accessory/lawyers_badge/proc/table_slam(mob/living/source, obj/structure/table/the_table)
 	SIGNAL_HANDLER
@@ -129,11 +131,9 @@
 	. += display
 
 // Examining the clothes will display the examine message of the dogtag
-/obj/item/clothing/accessory/dogtag/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+/obj/item/clothing/accessory/dogtag/attach(obj/item/clothing/under/attached_to)
 	. = ..()
-	if(!.)
-		return
-	RegisterSignal(attach_to, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(attached_to, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /obj/item/clothing/accessory/dogtag/detach(obj/item/clothing/under/detach_from)
 	. = ..()
@@ -175,27 +175,63 @@
 	name = "Pre-Approved Cyborg Candidate dogtag"
 	display = "This employee has been screened for negative mental traits to an acceptable level of accuracy, and is approved for the NT Cyborg program as an alternative to medical resuscitation."
 
-/// Reskins for the pride pin accessory, mapped by display name to icon state
-GLOBAL_LIST_INIT(pride_pin_reskins, list(
-	"Rainbow Pride" = "pride",
-	"Bisexual Pride" = "pride_bi",
-	"Pansexual Pride" = "pride_pan",
-	"Asexual Pride" = "pride_ace",
-	"Non-binary Pride" = "pride_enby",
-	"Transgender Pride" = "pride_trans",
-	"Intersex Pride" = "pride_intersex",
-	"Lesbian Pride" = "pride_lesbian",
-))
+// Pride pin skins
+/datum/atom_skin/pride_pin
+	abstract_type = /datum/atom_skin/pride_pin
+
+/datum/atom_skin/pride_pin/gay
+	preview_name = "Rainbow Pride"
+	new_icon_state = "pride"
+	new_name = "\improper Rainbow Pride pin"
+
+/datum/atom_skin/pride_pin/bi
+	preview_name = "Bisexual Pride"
+	new_icon_state = "pride_bi"
+	new_name = "\improper Bisexual Pride pin"
+
+/datum/atom_skin/pride_pin/pan
+	preview_name = "Pansexual Pride"
+	new_icon_state = "pride_pan"
+	new_name = "\improper Pansexual Pride pin"
+
+/datum/atom_skin/pride_pin/ace
+	preview_name = "Asexual Pride"
+	new_icon_state = "pride_ace"
+	new_name = "\improper Asexual Pride pin"
+
+/datum/atom_skin/pride_pin/enby
+	preview_name = "Non-binary Pride"
+	new_icon_state = "pride_enby"
+	new_name = "\improper Non-binary Pride pin"
+
+/datum/atom_skin/pride_pin/trans
+	preview_name = "Transgender Pride"
+	new_icon_state = "pride_trans"
+	new_name = "\improper Transgender Pride pin"
+
+/datum/atom_skin/pride_pin/intersex
+	preview_name = "Intersex Pride"
+	new_icon_state = "pride_intersex"
+	new_name = "\improper Intersex Pride pin"
+
+/datum/atom_skin/pride_pin/lesbian
+	preview_name = "Lesbian Pride"
+	new_icon_state = "pride_lesbian"
+	new_name = "\improper Lesbian Pride pin"
+
+/datum/atom_skin/pride_pin/mlm
+	preview_name = "Gay Pride"
+	new_icon_state = "pride_gay"
+	new_name = "\improper Gay Pride pin"
 
 /obj/item/clothing/accessory/pride
 	name = "pride pin"
 	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your pride, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
 	icon_state = "pride"
-	obj_flags = UNIQUE_RENAME | INFINITE_RESKIN
+	obj_flags = UNIQUE_RENAME
 
-/obj/item/clothing/accessory/pride/Initialize(mapload)
-	. = ..()
-	unique_reskin = GLOB.pride_pin_reskins
+/obj/item/clothing/accessory/pride/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/pride_pin, infinite = TRUE)
 
 /obj/item/clothing/accessory/deaf_pin
 	name = "deaf personnel pin"
@@ -213,12 +249,13 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	name = "subversive pin"
 	desc = "A badge which loudly and proudly proclaims your hostility to the Nanotrasen Security Team, and authority in general."
 	icon_state = "anti_sec"
+	clothing_traits = list(TRAIT_ALWAYS_WANTED)
 
 /obj/item/clothing/accessory/anti_sec_pin/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/pinnable_accessory, silent = TRUE, pinning_time = 5 SECONDS)
 
-/obj/item/clothing/accessory/anti_sec_pin/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+/obj/item/clothing/accessory/anti_sec_pin/try_attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	. = ..()
 	if (!. || isnull(attacher))
 		return
@@ -229,14 +266,55 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 
 /obj/item/clothing/accessory/anti_sec_pin/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	. = ..()
-	ADD_TRAIT(user, TRAIT_ALWAYS_WANTED, "[CLOTHING_TRAIT]_[REF(src)]")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_wearer = user
 		human_wearer.sec_hud_set_security_status()
 
 /obj/item/clothing/accessory/anti_sec_pin/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_ALWAYS_WANTED, "[CLOTHING_TRAIT]_[REF(src)]")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_wearer = user
 		human_wearer.sec_hud_set_security_status()
+
+/obj/item/clothing/accessory/press_badge
+	name = "press badge"
+	desc = "A blue press badge that clearly identifies the wearer as a member of the media. While it signifies press affiliation, it does not grant any special privileges or rights no matter how much the wearer yells about it."
+	desc_controls = "Click person with it to show them it"
+	icon_state = "press_badge"
+	attachment_slot = NONE // actually NECK but that doesn't make sense
+	/// The name of the person in the badge
+	var/journalist_name
+	/// The name of the press person is working for
+	var/press_name
+
+/obj/item/clothing/accessory/press_badge/examine(mob/user)
+	. = ..()
+	if(!journalist_name || !press_name)
+		. += span_notice("Use it in hand to input information")
+		return
+
+	. += span_notice("It belongs to <b>[journalist_name]</b>, <b>[press_name]</b>")
+
+/obj/item/clothing/accessory/press_badge/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!journalist_name)
+		journalist_name = tgui_input_text(user, "What is your name?", "Journalist Name", "[user.name]", max_length = MAX_NAME_LEN)
+	if(!press_name)
+		press_name = tgui_input_text(user, "For what organization you work?", "Press Name", "Nanotrasen", max_length = MAX_CHARTER_LEN)
+
+/obj/item/clothing/accessory/press_badge/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(!isliving(interacting_with))
+		return
+
+	var/mob/living/interacting_living = interacting_with
+	if(user.combat_mode)
+		playsound(interacting_living, 'sound/items/weapons/throw.ogg', 30)
+		interacting_living.examinate(src)
+		to_chat(interacting_living, span_userdanger("[user] shoves the [src] up your face!"))
+		user.visible_message(span_warning("[user] have shoved a [src] into [interacting_living] face."))
+	else
+		playsound(interacting_living, 'sound/items/weapons/throwsoft.ogg', 20)
+		interacting_living.examinate(src)
+		to_chat(interacting_living, span_boldwarning("[user] shows the [src] to you."))
+		user.visible_message(span_notice("[user] shows a [src] to [interacting_living]."))

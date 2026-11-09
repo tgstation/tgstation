@@ -73,3 +73,16 @@
 		return FALSE
 
 	return is_admin(preferences.parent)
+
+/datum/preference/toggle/auto_deadmin_on_ready_or_latejoin
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "auto_deadmin_on_ready_or_latejoin"
+	savefile_identifier = PREFERENCE_PLAYER
+
+/datum/preference/toggle/auto_deadmin_on_ready_or_latejoin/is_accessible(datum/preferences/preferences)
+	if (!..(preferences))
+		return FALSE
+	if (preferences.toggles & DEADMIN_ALWAYS) //No reason to show if they're deadminning always, because deadmin always also deadmins on ready / latejoin
+		return FALSE
+
+	return is_admin(preferences.parent)

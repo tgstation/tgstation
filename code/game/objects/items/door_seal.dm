@@ -13,7 +13,7 @@
 	throw_speed = 2
 	throw_range = 1
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/plasma= SMALL_MATERIAL_AMOUNT * 5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 5)
 	/// how long the seal takes to place on the door
 	var/seal_time = 3 SECONDS
 	/// how long it takes to remove the seal from a door
@@ -21,6 +21,6 @@
 
 /obj/item/door_seal/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is sealing [user.p_them()]self off from the world with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
+	playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE)
 	return BRUTELOSS
 

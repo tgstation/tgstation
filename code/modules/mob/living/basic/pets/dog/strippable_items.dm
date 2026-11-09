@@ -38,11 +38,11 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	key = STRIPPABLE_ITEM_PET_COLLAR
 
 /datum/strippable_item/pet_collar/get_item(atom/source)
-	var/mob/living/basic/pet/pet_source = source
+	var/mob/living/basic/pet_source = source
 	if(!istype(pet_source))
 		return
 
-	return pet_source.collar
+	return (locate(/obj/item/clothing/neck/petcollar) in source)
 
 /datum/strippable_item/pet_collar/try_equip(atom/source, obj/item/equipping, mob/user)
 	. = ..()
@@ -56,18 +56,10 @@ GLOBAL_LIST_INIT(strippable_corgi_items, create_strippable_list(list(
 	return TRUE
 
 /datum/strippable_item/pet_collar/finish_equip(atom/source, obj/item/equipping, mob/user)
-	var/mob/living/basic/pet/pet_source = source
-	if(!istype(pet_source))
-		return
-
-	pet_source.add_collar(equipping, user)
+	user.transferItemToLoc(equipping, source)
 
 /datum/strippable_item/pet_collar/finish_unequip(atom/source, mob/user)
-	var/mob/living/basic/pet/pet_source = source
-	if(!istype(pet_source))
-		return
-
-	var/obj/collar = pet_source.remove_collar(user.drop_location())
+	var/obj/item/clothing/neck/petcollar/collar = locate() in source
 	user.put_in_hands(collar)
 
 /datum/strippable_item/corgi_back

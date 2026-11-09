@@ -1,0 +1,1 @@
+/mob/living/simple_animal/hostile/asteroid/polarbear : /mob/living/basic/mining/polarbear{@OLD}

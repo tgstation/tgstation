@@ -5,28 +5,31 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 #define SCYTHE_SATED 1
 #define SCYTHE_EMPOWERED 2
 
-/obj/item/organ/internal/cyberimp/arm/shard/scythe
+/obj/item/organ/cyberimp/arm/toolkit/shard/scythe
 	name = "sinister shard"
 	desc = "This shard seems to be directly linked to some sinister entity. It might be your god! It also gives you a really horrible rash when you hold onto it for too long."
-	items_to_create = list(/obj/item/vorpalscythe)
+	organ_traits = list(TRAIT_MORBID)
 
-/obj/item/organ/internal/cyberimp/arm/shard/scythe/Insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/cyberimp/arm/toolkit/shard/scythe/Initialize(mapload)
 	. = ..()
-	if(receiver.mind)
-		ADD_TRAIT(receiver.mind, TRAIT_MORBID, ORGAN_TRAIT)
 
-/obj/item/organ/internal/cyberimp/arm/shard/scythe/Retract()
+/obj/item/organ/cyberimp/arm/toolkit/shard/scythe/get_init_items()
+	return list(/obj/item/vorpalscythe)
+
+/obj/item/organ/cyberimp/arm/toolkit/shard/scythe/prepare_init_item(obj/item/new_item)
+	. = ..()
+	ADD_TRAIT(new_item, TRAIT_NULLROD_ITEM, INNATE_TRAIT)
+
+/obj/item/organ/cyberimp/arm/toolkit/shard/scythe/Retract()
 	var/obj/item/vorpalscythe/scythe = active_item
 	if(!scythe)
 		return FALSE
-
-	var/obj/item/bodypart/part = hand
-	if(isnull(part) || scythe.empowerment >= SCYTHE_SATED)
+	if(scythe.empowerment >= SCYTHE_SATED)
 		return ..()
 
 	to_chat(owner, span_userdanger("[scythe] tears into you for your unworthy display of arrogance!"))
-	playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
-	part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
+	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
+	owner.apply_damage(25, BRUTE, bodypart_owner, wound_bonus = 10, sharpness = SHARP_EDGED)
 	return ..()
 
 /obj/item/vorpalscythe
@@ -36,6 +39,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	icon_state = "vorpalscythe"
 	inhand_icon_state = "vorpalscythe"
 	worn_icon_state = null
+	icon_angle = -35 // Scythes look better when slightly angled
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
@@ -45,11 +49,12 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	armour_penetration = 50 //Very good armor penetration to make up for our abysmal force
 	reach = 2 //why yes, this does have reach
 	slot_flags = null
+	obj_flags = UNIQUE_RENAME
 	sharpness = SHARP_EDGED
 	attack_verb_continuous = list("chops", "slices", "cuts", "reaps")
 	attack_verb_simple = list("chop", "slice", "cut", "reap")
 	wound_bonus = 10
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	/*What state is our scythe in?
 
 	If it is SCYTHE_WEAK, it will harm our reaper on being sheathed.
@@ -60,8 +65,6 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	var/empowerment = SCYTHE_WEAK
 	///Our bonus to force after we have death knelled. Lasts approximately 2 minutes.
 	var/bonus_force_multiplier = 2
-	///Our initial force before empowerment. For tracking on the item, and in case the item somehow gains more force for some reason before we death knelled.
-	var/original_force
 
 /obj/item/vorpalscythe/examine(mob/user)
 	. = ..()
@@ -79,27 +82,23 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 /obj/item/vorpalscythe/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
-	AddComponent(/datum/component/effect_remover, \
-		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
-		success_forcesay = "TO DUST WITH YE!! AWAY!!", \
-		tip_text = "Clear rune", \
-		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
-		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune) \
-	)
-	AddComponent(
-		/datum/component/butchering, \
-		speed = 3 SECONDS, \
-		effectiveness = 125, \
-	)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_PLANT, damage_multiplier = 0.5, requires_combat_mode = FALSE) //less good at killing revenants, much better at killing plants
+	AddElement(/datum/element/nullrod_core, chaplain_spawnable = FALSE, rune_remove_line = "TO DUST WITH YE!! AWAY!!") // The implant is the actual item the chappie can select
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_PLANT, damage_multiplier = 1.5) //also good at killing plants
+	AddComponent(/datum/component/butchering, speed = 3 SECONDS, effectiveness = 125)
+	AddComponent(/datum/component/walking_aid)
 
-/obj/item/vorpalscythe/attack(mob/living/target, mob/living/user, params)
-	if(ismonkey(target) && !target.mind) //Don't empower from hitting monkeys. Hit a corgi or something, I don't know.
+/obj/item/vorpalscythe/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(HAS_TRAIT(target, TRAIT_LESSER_HUMANOID) && !target.mind) //Don't empower from hitting monkeys. Hit a corgi or something, I don't know.
 		return ..()
 
-	if(target.stat < DEAD && target != user)
+	if(target.stat != DEAD && target != user)
 		scythe_empowerment(SCYTHE_SATED)
+
+	return ..()
+
+/obj/item/vorpalscythe/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(empowerment == SCYTHE_EMPOWERED)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, bonus_force_multiplier)
 
 	return ..()
 
@@ -130,7 +129,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	var/potential_empowerment = SCYTHE_EMPOWERED
 
 	if(!potential_reaping.mind) //We put this here juuuust in case there is something funky with ling checks
-		if(ismonkey(potential_reaping))
+		if(HAS_TRAIT(potential_reaping, TRAIT_LESSER_HUMANOID))
 			to_chat(user, span_warning("A pointless existence. You'll get no benefit from this death knell beyond the satisfaction of beheading this foul thing."))
 			potential_empowerment = SCYTHE_WEAK
 		else
@@ -140,19 +139,19 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	var/death_knell_speed_mod = 1
 
 	potential_reaping.visible_message(span_danger("[user] begins to raise [src] above [potential_reaping]'s [head_name]."), span_userdanger("[user] begins to raise [src], aiming to slice off your [head_name]!"))
-	if(potential_reaping.stat >= UNCONSCIOUS || HAS_TRAIT(potential_reaping, TRAIT_INCAPACITATED)) //if the victim is incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly behead
+	if(IS_UNCONSCIOUS(potential_reaping) || HAS_TRAIT(potential_reaping, TRAIT_INCAPACITATED)) //if the victim is incapacitated (due to paralysis, a stun, being in staminacrit, etc.), critted, unconscious, or dead, it's much easier to properly behead
 		death_knell_speed_mod *= 0.5
 	if(potential_reaping.stat != DEAD && potential_reaping.has_status_effect(/datum/status_effect/jitter)) //jittering will make it harder to perform the death knell, even if they're still
 		death_knell_speed_mod *= 1.5 //Staminacritting someone who's jittering (from, say, a stun baton) won't give you enough time to slice their head off, but staminacritting someone who isn't jittering will
 	if(empowerment == SCYTHE_EMPOWERED) //That said, if heads are already rolling, why stop here?
 		death_knell_speed_mod *= 0.5
-	if(ispodperson(potential_reaping) || ismonkey(potential_reaping)) //And if they're a podperson or monkey, they can just die.
+	if((potential_reaping.mob_biotypes & MOB_PLANT) || HAS_TRAIT(potential_reaping, TRAIT_LESSER_HUMANOID)) //And if they're a podperson/mushperson or monkey, they can just die.
 		death_knell_speed_mod *= 0.5
 
 	log_combat(user, potential_reaping, "prepared to use [src] to decapitate")
 
 	if(do_after(user,  15 SECONDS * death_knell_speed_mod, target = potential_reaping))
-		playsound(get_turf(potential_reaping), 'sound/weapons/bladeslice.ogg', 250, TRUE)
+		playsound(get_turf(potential_reaping), 'sound/items/weapons/bladeslice.ogg', 250, TRUE)
 		reaped_head.dismember()
 		user.visible_message(span_danger("[user] swings [src] down, slicing [potential_reaping]'s [head_name] clean off! You think [src] may have grown stronger!"), span_notice("As you perform the death knell on [potential_reaping], [src] gains power! For a time..."))
 		if(potential_empowerment == SCYTHE_SATED) //We don't want actual player heads to go wandering off, but it'll be funny if a bunch of monkeyhuman heads started floating around
@@ -178,34 +177,16 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	//Determines if we are entitled to setting/resetting our timer.
 	//Only reset SCYTHE_EMPOWERED with an empowerment that would grant that.
 	//Only reset SCTHE_SATED if hitting at least simple mobs or nonmonkey carbons.
-	var/allow_timer_set = FALSE
 
-	if(potential_empowerment == SCYTHE_EMPOWERED)
-		if(empowerment != SCYTHE_EMPOWERED) //We only empower our stats if we beheaded a human with a mind.
-			original_force = force
-			force *= bonus_force_multiplier
-			empowerment = potential_empowerment
-		allow_timer_set = TRUE
-	else if(empowerment < potential_empowerment) //so we don't end up weakening our scythe somehow and creating an infinite empowerment loop, only update empowerment if it is better
-		empowerment = potential_empowerment
-		allow_timer_set = TRUE
-	if(potential_empowerment != SCYTHE_WEAK && allow_timer_set) //And finally, if the empowerment was improved and wasn't too weak to get an empowerment, we set/reset our timer
+	if(empowerment > potential_empowerment) //If the new is weaker than the old, don't reset the timer and don't change our power
+		return
+
+	empowerment = potential_empowerment
+	if(potential_empowerment != SCYTHE_WEAK) //And finally, if it wasn't too weak to get an empowerment, we set/reset our timer
 		addtimer(CALLBACK(src, PROC_REF(scythe_empowerment_end)), (4 MINUTES / empowerment), TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/item/vorpalscythe/proc/scythe_empowerment_end()
-	if(empowerment == SCYTHE_EMPOWERED)
-		force = original_force
-		original_force = null
 	empowerment = SCYTHE_WEAK
-
-/obj/item/vorpalscythe/proc/on_cult_rune_removed(obj/effect/target, mob/living/user)
-	if(!istype(target, /obj/effect/rune))
-		return
-
-	var/obj/effect/rune/target_rune = target
-	if(target_rune.log_when_erased)
-		user.log_message("erased [target_rune.cultist_name] rune using [src]", LOG_GAME)
-	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_NARNAR] = TRUE
 
 #undef SCYTHE_WEAK
 #undef SCYTHE_SATED

@@ -1,10 +1,9 @@
-import { multiline } from 'common/string';
+import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { Button, Section, Stack } from '../../components';
 import { REVERSE_OPTIONS } from './constants';
 import { useTab } from './hooks';
-import { PodLauncherData } from './types';
+import type { PodLauncherData } from './types';
 
 export function ReverseMenu(props) {
   const { act, data } = useBackend<PodLauncherData>();
@@ -30,11 +29,12 @@ export function ReverseMenu(props) {
             }
           }}
           selected={effectReverse}
-          tooltip={multiline`
+          tooltip={`
             Doesn't send items.
             Afer landing, returns to
             dropoff turf (or bay
             if none specified).`}
+          tooltipPosition="bottom"
         />
       }
       fill
@@ -47,7 +47,7 @@ export function ReverseMenu(props) {
               disabled={!effectReverse}
               onClick={() => act('pickDropoffTurf')}
               selected={picking_dropoff_turf}
-              tooltip={multiline`
+              tooltip={`
                 Where reverse pods
                 go after landing`}
               tooltipPosition="bottom-end"
@@ -65,7 +65,7 @@ export function ReverseMenu(props) {
                   act('tabSwitch', { tabIndex: 1 });
                 }
               }}
-              tooltip={multiline`
+              tooltip={`
                 Clears the custom dropoff
                 location. Reverse pods will
                 instead dropoff at the

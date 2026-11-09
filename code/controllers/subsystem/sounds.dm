@@ -2,8 +2,8 @@
 
 SUBSYSTEM_DEF(sounds)
 	name = "Sounds"
-	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_SOUNDS
+	ss_flags = SS_NO_FIRE
+	init_stage = INITSTAGE_EARLY
 	var/static/using_channels_max = CHANNEL_HIGHEST_AVAILABLE //BYOND max channels
 	/// Amount of channels to reserve for random usage rather than reservations being allowed to reserve all channels. Also a nice safeguard for when someone screws up.
 	var/static/random_channels_min = 50
@@ -26,9 +26,71 @@ SUBSYSTEM_DEF(sounds)
 	/// All valid sound files in the sound directory
 	var/list/all_sounds
 
+	// || Sound caching ||
+	/// k:v list of file_path : length
+	VAR_PRIVATE/list/sound_lengths
+	/// A list of sounds to cache upon initialize.
+	VAR_PRIVATE/list/sounds_to_precache = list()
+	/// Any errors from precaching.
+	VAR_PRIVATE/list/precache_errors = list()
+
+	// Comments from https://github.com/DaedalusDock/daedalusdock We love Francinum.
+	/// A list of sound formats that work in byond. Indexed for direct accesing rather then loop itteration or usage of `in`
+	var/static/list/byond_sound_formats = list(
+		"mid" = TRUE, //Midi, 8.3 File Name
+		"midi" = TRUE, //Midi, Long File Name
+		"mod" = TRUE, //Module, Original Amiga Tracker format
+		"it" = TRUE, //Impulse Tracker Module format
+		"s3m" = TRUE, //ScreamTracker 3 Module
+		"xm" = TRUE, //FastTracker 2 Module
+		"oxm" = TRUE, //FastTracker 2 (Vorbis Compressed Samples)
+		"wav" = TRUE, //Waveform Audio File Format, A (R)IFF-class format, and Microsoft's choice in the 80s sound format pissing match.
+		"ogg" = TRUE, //OGG Audio Container, Usually contains Vorbis-compressed Audio
+		//"raw" = TRUE, //On the tin, byond purports to support raw, uncompressed PCM Audio. I actually have no fucking idea how FMOD actually handles these.
+		//since they completely lack all information. As a confusion based anti-footgun, I'm just going to wire this to FALSE for now. It's here though.
+		"wma" = TRUE, //Windows Media Audio container
+		"aiff" = TRUE, //Audio Interchange File Format, Apple's side of the 80s sound format pissing match. It's also (R)IFF in a trenchcoat.
+		"mp3" = TRUE //MPeg Layer 3 Container (And usually, Codec.)
+	)
+
+	/// File types we can sniff the duration from using rustg.
+	var/static/list/safe_formats = list(
+		"ogg" = TRUE,
+		"mp3" = TRUE
+	)
+
+	// Currently set to private as I would prefer you use byond_sound_formats but you can unprivate it if you have a valid use!
+	// Put more common extensions first to speed this up a bit (So only ogg and mp3 lol.)
+	/// Similar to byond_sound_formats, a list of sound formats that work in byond.
+	VAR_PRIVATE/static/list/byond_sound_extensions = list(
+		".ogg",
+		".mp3",
+		".mid",
+		".midi",
+		".mod",
+		".it",
+		".s3m",
+		".xm",
+		".oxm",
+		".wav",
+		//".raw", See byond_sound_formats
+		".wma",
+		".aiff"
+	)
+
 /datum/controller/subsystem/sounds/Initialize()
 	setup_available_channels()
 	find_all_available_sounds()
+
+	if(!RUST_G)
+		to_chat(world, span_boldnotice("Sounds subsystem: No rust_g detected."))
+		return ..()
+
+	// Precache ambience sounds
+	for(var/key, value in GLOB.ambience_assoc)
+		sounds_to_precache |= value
+	precache_sounds()
+
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/sounds/proc/setup_available_channels()
@@ -43,51 +105,35 @@ SUBSYSTEM_DEF(sounds)
 
 /datum/controller/subsystem/sounds/proc/find_all_available_sounds()
 	all_sounds = list()
-	// Put more common extensions first to speed this up a bit
-	var/static/list/valid_file_extensions = list(
-		".ogg",
-		".wav",
-		".mid",
-		".midi",
-		".mod",
-		".it",
-		".s3m",
-		".xm",
-		".oxm",
-		".raw",
-		".wma",
-		".aiff",
-	)
-
-	all_sounds = pathwalk("sound/", valid_file_extensions)
+	all_sounds = pathwalk("sound/", byond_sound_extensions)
 
 /// Removes a channel from using list.
 /datum/controller/subsystem/sounds/proc/free_sound_channel(channel)
 	var/text_channel = num2text(channel)
 	var/using = using_channels[text_channel]
 	using_channels -= text_channel
-	if(using != TRUE) // datum channel
+	if(using != DATUMLESS) // datum channel
 		using_channels_by_datum[using] -= channel
 		if(!length(using_channels_by_datum[using]))
-			using_channels_by_datum -= using
+			stop_tracking_datum(using)
 	free_channel(channel)
 
 /// Frees all the channels a datum is using.
-/datum/controller/subsystem/sounds/proc/free_datum_channels(datum/D)
-	var/list/L = using_channels_by_datum[D]
+/datum/controller/subsystem/sounds/proc/free_datum_channels(datum/channel_owner)
+	var/list/L = using_channels_by_datum[channel_owner]
 	if(!L)
 		return
 	for(var/channel in L)
 		using_channels -= num2text(channel)
 		free_channel(channel)
-	using_channels_by_datum -= D
+	stop_tracking_datum(channel_owner)
 
 /// Frees all datumless channels
 /datum/controller/subsystem/sounds/proc/free_datumless_channels()
 	free_datum_channels(DATUMLESS)
 
-/// NO AUTOMATIC CLEANUP - If you use this, you better manually free it later! Returns an integer for channel.
-/datum/controller/subsystem/sounds/proc/reserve_sound_channel_datumless()
+/// Reserve a sound channel. Free it later with free_sound_channel()
+/datum/controller/subsystem/sounds/proc/reserve_sound_channel()
 	. = reserve_channel()
 	if(!.) //oh no..
 		return FALSE
@@ -97,16 +143,19 @@ SUBSYSTEM_DEF(sounds)
 	using_channels_by_datum[DATUMLESS] += .
 
 /// Reserves a channel for a datum. Automatic cleanup only when the datum is deleted. Returns an integer for channel.
-/datum/controller/subsystem/sounds/proc/reserve_sound_channel(datum/D)
-	if(!D) //i don't like typechecks but someone will fuck it up
+/datum/controller/subsystem/sounds/proc/reserve_sound_channel_for_datum(datum/channel_owner)
+	if(!channel_owner) //i don't like typechecks but someone will fuck it up
 		CRASH("Attempted to reserve sound channel without datum using the managed proc.")
 	.= reserve_channel()
 	if(!.)
 		CRASH("No more sound channels can be reserved")
 	var/text_channel = num2text(.)
-	using_channels[text_channel] = D
-	LAZYINITLIST(using_channels_by_datum[D])
-	using_channels_by_datum[D] += .
+	using_channels[text_channel] = channel_owner
+	LAZYINITLIST(using_channels_by_datum[channel_owner])
+	using_channels_by_datum[channel_owner] += .
+
+	if(length(using_channels_by_datum[channel_owner]) == 1)
+		RegisterSignal(channel_owner, COMSIG_QDELETING, PROC_REF(tracked_datum_deleted))
 
 /**
  * Reserves a channel and updates the datastructure. Private proc.
@@ -155,5 +204,56 @@ SUBSYSTEM_DEF(sounds)
 /// How many channels we have left.
 /datum/controller/subsystem/sounds/proc/available_channels_left()
 	return length(channel_list) - random_channels_min
+
+/datum/controller/subsystem/sounds/proc/precache_sounds()
+	if(!length(sounds_to_precache))
+		return
+
+	var/list/lengths = rustg_sound_length_list(sounds_to_precache)
+	precache_errors = lengths[RUSTG_SOUNDLEN_ERRORS]
+	sound_lengths = lengths[RUSTG_SOUNDLEN_SUCCESSES]
+	for(var/sound_path, sound_length in sound_lengths)
+		sound_lengths[sound_path] = text2num(sound_length)
+
+	sounds_to_precache = null
+
+/// Cache and return a single sound.
+/datum/controller/subsystem/sounds/proc/get_sound_length(file_path)
+	. = 0
+	if(!istext(file_path))
+		if(!isfile(file_path))
+			CRASH("rustg_sound_length error: Passed non-text object")
+
+		if(length("[file_path]")) // Runtime generated RSC references stringify into 0-length strings.
+			file_path = "[file_path]"
+		else
+			CRASH("rustg_sound_length does not support non-static file refs.")
+
+	var/cached_length = sound_lengths[file_path]
+	if(!isnull(cached_length))
+		return cached_length
+
+	var/ret = RUSTG_CALL(RUST_G, "sound_len")(file_path)
+	var/as_num = text2num(ret)
+	if(isnull(ret))
+		. = 0
+		CRASH("rustg_sound_length error: [ret]")
+
+	sound_lengths[file_path] = as_num
+	return as_num
+
+///Call to free all channels reserved by a datum.
+/datum/controller/subsystem/sounds/proc/stop_tracking_datum(datum/channel_owner)
+	PRIVATE_PROC(TRUE)
+
+	using_channels_by_datum -= channel_owner
+	UnregisterSignal(channel_owner, COMSIG_QDELETING)
+
+/// Handles a tracked datum being deleted, automatically freeing the channels.
+/datum/controller/subsystem/sounds/proc/tracked_datum_deleted(datum/source)
+	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
+
+	free_datum_channels(source)
 
 #undef DATUMLESS

@@ -1,7 +1,6 @@
 /datum/job/scientist
 	title = JOB_SCIENTIST
 	description = "Do experiments, perform research, feed the slimes, make bombs."
-	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 5
 	spawn_positions = 3
@@ -17,7 +16,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SCI
 
-	liver_traits = list(TRAIT_BALLMER_SCIENTIST)
+	liver_traits = list(TRAIT_SCIENTIST_LIVER)
 
 	display_order = JOB_DISPLAY_ORDER_SCIENTIST
 	bounty_types = CIV_JOB_SCI
@@ -35,6 +34,7 @@
 	job_flags = STATION_JOB_FLAGS
 
 	job_tone = "boom"
+	tgui_icon = FA_ICON_FLASK
 
 
 /datum/outfit/job/scientist
@@ -44,7 +44,7 @@
 	id_trim = /datum/id_trim/job/scientist
 	uniform = /obj/item/clothing/under/rank/rnd/scientist
 	suit = /obj/item/clothing/suit/toggle/labcoat/science
-	belt = /obj/item/modular_computer/pda/science
+	belt = /obj/item/modular_computer/pda/crew/science
 	ears = /obj/item/radio/headset/headset_sci
 	shoes = /obj/item/clothing/shoes/sneakers/white
 
@@ -52,6 +52,8 @@
 	satchel = /obj/item/storage/backpack/satchel/science
 	duffelbag = /obj/item/storage/backpack/duffelbag/science
 	messenger = /obj/item/storage/backpack/messenger/science
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/science
 
 /datum/outfit/job/scientist/pre_equip(mob/living/carbon/human/H)
 	..()

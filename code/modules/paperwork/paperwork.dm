@@ -21,6 +21,9 @@
 	throw_range = 1
 	throw_speed = 1
 	layer = MOB_LAYER
+	// Could use a more specific sound since it's a lot of paper (ditto with `/documents`).
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 	///The stamp overlay, used to show that the paperwork is complete without making a bunch of sprites
 	var/mutable_appearance/stamp_overlay
 	///The specific stamp icon to be overlaid on the paperwork
@@ -39,27 +42,27 @@
 
 	detailed_desc = span_notice("<i>As you sift through the papers, you slowly start to piece together what you're reading.</i>")
 
-/obj/item/paperwork/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
-	if(.)
-		return
+/obj/item/paperwork/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stamp))
+		return NONE
 
-	if(stamped || istype(attacking_item, /obj/item/stamp))
-		return
+	if(stamped)
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(attacking_item, stamp_requested))
+	if(istype(tool, stamp_requested))
 		add_stamp()
 		to_chat(user, span_notice("You skim through the papers until you find a field reading 'STAMP HERE', and complete the paperwork."))
-		return TRUE
-	var/datum/action/item_action/chameleon/change/stamp/stamp_action = locate() in attacking_item.actions
-	if(isnull(stamp_action))
-		to_chat(user, span_warning("You hunt through the papers for somewhere to use [attacking_item], but can't find anything."))
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	to_chat(user, span_notice("[attacking_item] morphs into the appropriate stamp, which you use to complete the paperwork."))
+	var/datum/action/item_action/chameleon/change/stamp/stamp_action = locate() in tool.actions
+	if(isnull(stamp_action))
+		to_chat(user, span_warning("You hunt through the papers for somewhere to use [tool], but can't find anything."))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("[tool] morphs into the appropriate stamp, which you use to complete the paperwork."))
 	stamp_action.update_look(stamp_requested)
 	add_stamp()
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/paperwork/examine_more(mob/user)
 	. = ..()
@@ -84,8 +87,7 @@
 	new_paper.throw_at(turf_to_throw_at, 2)
 
 	var/obj/item/bodypart/BP = user.get_bodypart(pick(BODY_ZONE_HEAD))
-	if(BP)
-		BP.dismember()
+	if(BP?.dismember())
 		new_paper.visible_message(span_alert("The [src] launches a sheet of paper, instantly slicing off [user]'s head!"))
 	else
 		user.visible_message(span_suicide("[user] panics and starts choking to death!"))
@@ -97,7 +99,7 @@
  * Adds the stamp overlay and sets "stamped" to true
  *
  * Adds the stamp overlay to a piece of paperwork, and sets "stamped" to true.
- * Handled as a proc so that an object may be maked as "stamped" even when a stamp isn't present (like the photocopier)
+ * Handled as a proc so that an object may be marked as "stamped" even when a stamp isn't present (like the photocopier)
  */
 /obj/item/paperwork/proc/add_stamp()
 	stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', stamp_icon)
@@ -138,7 +140,7 @@
 /obj/item/paperwork/security/Initialize(mapload)
 	. = ..()
 
-	detailed_desc += span_info(" The stack of documents are related to a civil case being processed by a neighboring installation.")
+	detailed_desc += span_info(" The stack of documents is related to a civil case being processed by a neighboring installation.")
 	detailed_desc += span_info(" The document requests that you review a conduct report submitted by the lawyer of the station.")
 	detailed_desc += span_info(" The case file details accusations against the station's security department, including misconduct, harassment, an-")
 	detailed_desc += span_info(" What a bunch of crap, the security team were clearly just doing what they had to. You should probably stamp this.")
@@ -164,9 +166,9 @@
 /obj/item/paperwork/medical/Initialize(mapload)
 	. = ..()
 
-	detailed_desc += span_info(" The stack of documents appear to be a medical report from a nearby station, detailing the autopsy of an unknown xenofauna.")
+	detailed_desc += span_info(" The stack of documents appears to be a medical report from a nearby station, detailing the autopsy of an unknown xenofauna.")
 	detailed_desc += span_info(" Skipping to the end of the report reveals that the specimen was the station bartender's pet monkey.")
-	detailed_desc += span_info(" The specimen had been exposed to radiation during an 'unrelated incident with the engine', leading to it's mutated form.")
+	detailed_desc += span_info(" The specimen had been exposed to radiation during an 'unrelated incident with the engine', leading to its mutated form.")
 	detailed_desc += span_info(" Regardless, the autopsy results look like they could be useful. You should probably stamp this.")
 
 
@@ -234,16 +236,15 @@
 	else
 		. += span_notice("These appear to just be a photocopy of the original documents.")
 
-/obj/item/paperwork/photocopy/attackby(obj/item/attacking_item, mob/user, params)
-	if(istype(attacking_item, /obj/item/stamp/void) && !stamped && !voided)
-		to_chat(user, span_notice("You plant the [attacking_item] firmly onto the front of the documents."))
-		stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_stamp-void")
-		add_overlay(stamp_overlay)
-		voided = TRUE
-		stamped = TRUE //It won't get you any money, but it also can't LOSE you money now.
-		return
-
-	return ..()
+/obj/item/paperwork/photocopy/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stamp/void) || stamped || voided)
+		return ..()
+	to_chat(user, span_notice("You plant the [tool] firmly onto the front of the documents."))
+	stamp_overlay = mutable_appearance('icons/obj/service/bureaucracy.dmi', "paper_stamp-void")
+	add_overlay(stamp_overlay)
+	voided = TRUE
+	stamped = TRUE //It won't get you any money, but it also can't LOSE you money now.
+	return ITEM_INTERACT_SUCCESS
 
 //Ancient paperwork is a subtype of paperwork, meant to be used for any paperwork not spawned by the event.
 //It doesn't have any of the flavor text that the event ones spawn with.
@@ -255,7 +256,7 @@
 /obj/item/paperwork/ancient/Initialize(mapload)
 	. = ..()
 
-	detailed_desc = span_notice("It's impossible to really tell how old these are or what they're for, but Central Command might appreciate them anyways.")
+	detailed_desc = span_notice("It's impossible to really tell how old these are or what they're for, but Central Command might appreciate them anyway.")
 
 	var/static/list/paperwork_to_use //Make the ancient paperwork function like one of the main types
 	if(!paperwork_to_use)

@@ -23,7 +23,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark,
-/obj/machinery/disposal/bin,
+/obj/structure/closet/crate/bin,
 /turf/open/floor/iron/dark/side,
 /area/template_noop)
 "dy" = (

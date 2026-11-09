@@ -10,10 +10,12 @@
 	/// Cooldown for how often we can pull rabbits out of here
 	COOLDOWN_DECLARE(rabbit_cooldown)
 
-/obj/item/clothing/head/hats/tophat/attackby(obj/item/hitby_item, mob/user, params)
-	. = ..()
-	if(istype(hitby_item, /obj/item/gun/magic/wand))
-		abracadabra(hitby_item, user)
+/obj/item/clothing/head/hats/tophat/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/gun/magic/wand))
+		return ..()
+
+	abracadabra(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/head/hats/tophat/proc/abracadabra(obj/item/hitby_wand, mob/magician)
 	if(!COOLDOWN_FINISHED(src, rabbit_cooldown))
@@ -21,8 +23,8 @@
 		return
 
 	COOLDOWN_START(src, rabbit_cooldown, RABBIT_CD_TIME)
-	playsound(get_turf(src), 'sound/weapons/emitter.ogg', 70)
-	do_smoke(amount = DIAMOND_AREA(1), holder = src, location = src, smoke_type=/obj/effect/particle_effect/fluid/smoke/quick)
+	playsound(get_turf(src), 'sound/items/weapons/emitter.ogg', 70)
+	do_smoke(1, src, src, effect_type = /obj/effect/particle_effect/fluid/smoke/quick)
 
 	if(prob(10))
 		magician.visible_message(span_danger("[magician] taps [src] with [hitby_wand], then reaches in and pulls out a bu- wait, those are bees!"), span_danger("You tap [src] with your [hitby_wand.name] and pull out... <b>BEES!</b>"))
@@ -38,11 +40,12 @@
 
 /obj/item/clothing/head/hats/tophat/balloon
 	name = "balloon top-hat"
-	desc = "It's an colourful looking top-hat to match yout colourful personality."
+	desc = "It's a colourful looking top-hat to match your colourful personality."
 	icon_state = "balloon_tophat"
 	inhand_icon_state = "balloon_that"
 	throwforce = 0
 	resistance_flags = FIRE_PROOF
 	dog_fashion = null
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3.6)
 
 #undef RABBIT_CD_TIME

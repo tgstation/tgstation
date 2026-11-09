@@ -1,0 +1,2 @@
+# dankpockets are now a subtype of donkpockets
+/obj/item/food/dankpocket : /obj/item/food/donkpocket/dank{@OLD}

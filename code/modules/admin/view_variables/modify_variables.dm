@@ -65,7 +65,6 @@ GLOBAL_PROTECT(VVpixelmovement)
 		.["[D]([shorttype])[REF(D)]#[i]"] = D
 
 /client/proc/mod_list_add_ass(atom/O) //hehe
-
 	var/list/L = vv_get_value(restricted_classes = list(VV_RESTORE_DEFAULT))
 	var/class = L["class"]
 	if (!class)
@@ -113,6 +112,9 @@ GLOBAL_PROTECT(VVpixelmovement)
 		return
 	if(!istype(L, /list))
 		to_chat(src, "Not a List.", confidential = TRUE)
+		return
+	if(isalist(L))
+		to_chat(src, "alists are currently unsupported", confidential = TRUE)
 		return
 
 	if(L.len > 1000)

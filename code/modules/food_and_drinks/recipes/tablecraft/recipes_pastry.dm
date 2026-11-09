@@ -4,15 +4,16 @@
 ////////////////////////////////////////////////DONUTS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/donut
-	time = 15
+	time = 1.5 SECONDS
 	name = "Donut"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 1,
 		/obj/item/food/pastrybase = 1
 	)
 	result = /obj/item/food/donut/plain
-	category = CAT_PASTRY
-
+	added_foodtypes = JUNKFOOD|SUGAR|BREAKFAST|FRIED
+	removed_foodtypes = RAW
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/donut/chaos
 	name = "Chaos donut"
@@ -21,15 +22,17 @@
 		/datum/reagent/consumable/capsaicin = 5,
 		/obj/item/food/pastrybase = 1
 	)
+	added_foodtypes = JUNKFOOD|BREAKFAST|FRIED
 	result = /obj/item/food/donut/chaos
 
 /datum/crafting_recipe/food/donut/meat
-	time = 15
+	time = 1.5 SECONDS
 	name = "Meat donut"
 	reqs = list(
 		/obj/item/food/meat/rawcutlet = 1,
 		/obj/item/food/pastrybase = 1
 	)
+	added_foodtypes = JUNKFOOD|BREAKFAST|FRIED|GORE
 	result = /obj/item/food/donut/meat
 
 /datum/crafting_recipe/food/donut/jelly
@@ -38,6 +41,7 @@
 		/datum/reagent/consumable/berryjuice = 5,
 		/obj/item/food/pastrybase = 1
 	)
+	added_foodtypes = parent_type::added_foodtypes|FRUIT
 	result = /obj/item/food/donut/jelly/plain
 
 /datum/crafting_recipe/food/donut/slimejelly
@@ -46,6 +50,7 @@
 		/datum/reagent/toxin/slimejelly = 5,
 		/obj/item/food/pastrybase = 1
 	)
+	added_foodtypes = parent_type::added_foodtypes|TOXIC
 	result = /obj/item/food/donut/jelly/slimejelly/plain
 
 
@@ -55,6 +60,7 @@
 		/datum/reagent/consumable/berryjuice = 3,
 		/obj/item/food/donut/plain = 1
 	)
+	added_foodtypes = parent_type::added_foodtypes|FRUIT
 	result = /obj/item/food/donut/berry
 
 /datum/crafting_recipe/food/donut/trumpet
@@ -72,6 +78,7 @@
 		/datum/reagent/consumable/applejuice = 3,
 		/obj/item/food/donut/plain = 1
 	)
+	added_foodtypes = parent_type::added_foodtypes|FRUIT
 	result = /obj/item/food/donut/apple
 
 /datum/crafting_recipe/food/donut/caramel
@@ -96,6 +103,7 @@
 		/datum/reagent/consumable/blumpkinjuice = 3,
 		/obj/item/food/donut/plain = 1
 	)
+	added_foodtypes = VEGETABLES
 	result = /obj/item/food/donut/blumpkin
 
 /datum/crafting_recipe/food/donut/bungo
@@ -171,6 +179,7 @@
 		/datum/reagent/consumable/blumpkinjuice = 3,
 		/obj/item/food/donut/jelly/plain = 1
 	)
+	added_foodtypes = parent_type::added_foodtypes|VEGETABLES
 	result = /obj/item/food/donut/jelly/blumpkin
 
 /datum/crafting_recipe/food/donut/jelly/bungo
@@ -205,6 +214,7 @@
 		/datum/reagent/consumable/berryjuice = 3,
 		/obj/item/food/donut/jelly/slimejelly/plain = 1
 	)
+	added_foodtypes = parent_type::added_foodtypes|FRUIT
 	result = /obj/item/food/donut/jelly/slimejelly/berry
 
 /datum/crafting_recipe/food/donut/slimejelly/trumpet
@@ -222,6 +232,7 @@
 		/datum/reagent/consumable/applejuice = 3,
 		/obj/item/food/donut/jelly/slimejelly/plain = 1
 	)
+	added_foodtypes = parent_type::added_foodtypes|FRUIT
 	result = /obj/item/food/donut/jelly/slimejelly/apple
 
 /datum/crafting_recipe/food/donut/slimejelly/caramel
@@ -246,6 +257,7 @@
 		/datum/reagent/consumable/blumpkinjuice = 3,
 		/obj/item/food/donut/jelly/slimejelly/plain = 1
 	)
+	added_foodtypes = parent_type::added_foodtypes|VEGETABLES
 	result = /obj/item/food/donut/jelly/slimejelly/blumpkin
 
 /datum/crafting_recipe/food/donut/slimejelly/bungo
@@ -275,13 +287,14 @@
 ////////////////////////////////////////////////WAFFLES////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/waffles
-	time = 15
+	time = 1.5 SECONDS
 	name = "Waffles"
 	reqs = list(
 		/obj/item/food/pastrybase = 2
 	)
 	result = /obj/item/food/waffles
-	category = CAT_PASTRY
+	added_foodtypes = BREAKFAST
+	dish_category = DISH_BREAD
 
 
 /datum/crafting_recipe/food/soylenviridians
@@ -290,8 +303,8 @@
 		/obj/item/food/pastrybase = 2,
 		/obj/item/food/grown/soybeans = 1
 	)
-	result = /obj/item/food/soylenviridians
-	category = CAT_PASTRY
+	result = /obj/item/food/soylenviridians // they look like waffles
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/soylentgreen
 	name = "Soylent green"
@@ -300,7 +313,8 @@
 		/obj/item/food/meat/slab/human = 2
 	)
 	result = /obj/item/food/soylentgreen
-	category = CAT_PASTRY
+	removed_foodtypes = GORE|RAW
+	dish_category = DISH_PASTRY // they look like waffles
 
 
 /datum/crafting_recipe/food/rofflewaffles
@@ -310,106 +324,150 @@
 		/obj/item/food/pastrybase = 2
 	)
 	result = /obj/item/food/rofflewaffles
-	category = CAT_PASTRY
+	added_foodtypes = VEGETABLES|BREAKFAST
+	dish_category = DISH_BREAD
 
 ////////////////////////////////////////////////DONKPOCCKETS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/donkpocket
-	time = 15
+	time = 1.5 SECONDS
 	name = "Donk-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/meatball = 1
 	)
-	result = /obj/item/food/donkpocket
-	category = CAT_PASTRY
+	result = /obj/item/food/donkpocket/homemade
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/dankpocket
-	time = 15
+	time = 1.5 SECONDS
 	name = "Dank-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/grown/cannabis = 1
 	)
-	result = /obj/item/food/dankpocket
-	category = CAT_PASTRY
+	result = /obj/item/food/donkpocket/dank
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/spicy
-	time = 15
+	time = 1.5 SECONDS
 	name = "Spicy-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/meatball = 1,
 		/obj/item/food/grown/chili = 1
 	)
-	result = /obj/item/food/donkpocket/spicy
-	category = CAT_PASTRY
+	result = /obj/item/food/donkpocket/spicy/homemade
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/teriyaki
-	time = 15
+	time = 1.5 SECONDS
 	name = "Teriyaki-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/meatball = 1,
 		/datum/reagent/consumable/soysauce = 3
 	)
-	result = /obj/item/food/donkpocket/teriyaki
-	category = CAT_PASTRY
+	result = /obj/item/food/donkpocket/teriyaki/homemade
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/pizza
-	time = 15
+	time = 1.5 SECONDS
 	name = "Pizza-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
-		/obj/item/food/meatball = 1,
+		/obj/item/food/doughslice = 1,
+		/obj/item/food/cheese/wedge = 1,
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/donkpocket/pizza
-	category = CAT_PASTRY
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/honk
-	time = 15
+	time = 1.5 SECONDS
 	name = "Honk-Pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/grown/banana = 1,
 		/datum/reagent/consumable/sugar = 3
 	)
 	result = /obj/item/food/donkpocket/honk
-	category = CAT_PASTRY
+	added_foodtypes = FRUIT|SUGAR
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/berry
-	time = 15
+	time = 1.5 SECONDS
 	name = "Berry-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/grown/berries = 1
 	)
 	result = /obj/item/food/donkpocket/berry
-	category = CAT_PASTRY
+	added_foodtypes = FRUIT|SUGAR
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/donkpocket/gondola
-	time = 15
+	time = 1.5 SECONDS
 	name = "Gondola-pocket"
 	reqs = list(
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 		/obj/item/food/meatball = 1,
 		/datum/reagent/gondola_mutation_toxin = 5
 	)
 	result = /obj/item/food/donkpocket/gondola
-	category = CAT_PASTRY
+	dish_category = DISH_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/deluxe
+	time = 1.5 SECONDS
+	name = "Deluxe Donk-pocket"
+	reqs = list(
+		/obj/item/food/doughslice = 1,
+		/obj/item/food/meatball = 1,
+		/obj/item/food/meat/bacon = 1,
+		/obj/item/food/onion_slice/red = 1
+	)
+	result = /obj/item/food/donkpocket/deluxe
+	dish_category = DISH_PASTRY
+	removed_foodtypes = BREAKFAST
+	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED
+
+/datum/crafting_recipe/food/donkpocket/deluxe/nocarb
+	time = 1.5 SECONDS
+	name = "Deluxe Meat-pocket"
+	reqs = list(
+		/obj/item/organ/heart = 1,
+		/obj/item/food/meatball = 1,
+		/obj/item/food/meat/slab = 1,
+		/obj/item/food/grown/herbs = 1
+	)
+	result = /obj/item/food/donkpocket/deluxe/nocarb
+	removed_foodtypes = VEGETABLES //The herbs are only to enhance the flavor
+	dish_category = DISH_PASTRY
+
+/datum/crafting_recipe/food/donkpocket/deluxe/vegan
+	time = 1.5 SECONDS
+	name = "Deluxe Donk-roll"
+	reqs = list(
+		/obj/item/food/doughslice = 1,
+		/obj/item/food/boiledrice = 1,
+		/obj/item/food/grown/bell_pepper = 1,
+		/obj/item/food/tofu = 2,
+	)
+	result = /obj/item/food/donkpocket/deluxe/vegan
+	removed_foodtypes = BREAKFAST
+	dish_category = DISH_PASTRY
 
 ////////////////////////////////////////////////MUFFINS////////////////////////////////////////////////
 
 /datum/crafting_recipe/food/muffin
-	time = 15
+	time = 1.5 SECONDS
 	name = "Muffin"
 	reqs = list(
 		/datum/reagent/consumable/milk = 5,
 		/obj/item/food/pastrybase = 1
 	)
+	added_foodtypes = BREAKFAST|SUGAR|DAIRY
 	result = /obj/item/food/muffin
-	category = CAT_PASTRY
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/berrymuffin
 	name = "Berry muffin"
@@ -419,7 +477,8 @@
 		/obj/item/food/grown/berries = 1
 	)
 	result = /obj/item/food/muffin/berry
-	category = CAT_PASTRY
+	added_foodtypes = BREAKFAST|SUGAR|FRUIT|DAIRY
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/booberrymuffin
 	name = "Booberry muffin"
@@ -430,7 +489,8 @@
 		/obj/item/ectoplasm = 1
 	)
 	result = /obj/item/food/muffin/booberry
-	category = CAT_PASTRY
+	added_foodtypes = BREAKFAST|SUGAR|DAIRY
+	dish_category = DISH_PASTRY
 
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
@@ -444,20 +504,22 @@
 		/obj/item/food/bread/plain = 1
 	)
 	result = /obj/item/food/khachapuri
-	category = CAT_PASTRY
+	added_foodtypes = MEAT
+	dish_category = DISH_BREAD
 
 /datum/crafting_recipe/food/sugarcookie
-	time = 15
+	time = 1.5 SECONDS
 	name = "Sugar cookie"
 	reqs = list(
 		/datum/reagent/consumable/sugar = 5,
 		/obj/item/food/pastrybase = 1
 	)
 	result = /obj/item/food/cookie/sugar
-	category = CAT_PASTRY
+	added_foodtypes = JUNKFOOD|SUGAR
+	dish_category = DISH_COOKIE
 
 /datum/crafting_recipe/food/spookyskull
-	time = 15
+	time = 1.5 SECONDS
 	name = "Skull cookie"
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
@@ -465,10 +527,11 @@
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/food/cookie/sugar/spookyskull
-	category = CAT_PASTRY
+	added_foodtypes = JUNKFOOD|SUGAR
+	dish_category = DISH_COOKIE
 
 /datum/crafting_recipe/food/spookycoffin
-	time = 15
+	time = 1.5 SECONDS
 	name = "Coffin cookie"
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
@@ -476,10 +539,11 @@
 		/datum/reagent/consumable/coffee = 5
 	)
 	result = /obj/item/food/cookie/sugar/spookycoffin
-	category = CAT_PASTRY
+	added_foodtypes = JUNKFOOD|SUGAR
+	dish_category = DISH_COOKIE
 
 /datum/crafting_recipe/food/fortunecookie
-	time = 15
+	time = 1.5 SECONDS
 	name = "Fortune cookie"
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
@@ -489,37 +553,40 @@
 		/obj/item/paper = 1
 	)
 	result = /obj/item/food/fortunecookie
-	category = CAT_PASTRY
+	added_foodtypes = SUGAR
+	dish_category = DISH_COOKIE
+	requirements_mats_blacklist = list(/obj/item/paper)
 
 /datum/crafting_recipe/food/poppypretzel
-	time = 15
+	time = 1.5 SECONDS
 	name = "Poppy pretzel"
 	reqs = list(
 		/obj/item/seeds/poppy = 1,
 		/obj/item/food/pastrybase = 1
 	)
 	result = /obj/item/food/poppypretzel
-	category = CAT_PASTRY
+	added_foodtypes = SUGAR
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/plumphelmetbiscuit
-	time = 15
+	time = 1.5 SECONDS
 	name = "Plumphelmet biscuit"
 	reqs = list(
 		/obj/item/food/pastrybase = 1,
 		/obj/item/food/grown/mushroom/plumphelmet = 1
 	)
 	result = /obj/item/food/plumphelmetbiscuit
-	category = CAT_PASTRY
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/cracker
-	time = 15
+	time = 1.5 SECONDS
 	name = "Cracker"
 	reqs = list(
 		/datum/reagent/consumable/salt = 1,
-		/obj/item/food/pastrybase = 1,
+		/obj/item/food/doughslice = 1,
 	)
 	result = /obj/item/food/cracker
-	category = CAT_PASTRY
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/chococornet
 	name = "Choco cornet"
@@ -529,7 +596,7 @@
 		/obj/item/food/chocolatebar = 1
 	)
 	result = /obj/item/food/chococornet
-	category = CAT_PASTRY
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/oatmealcookie
 	name = "Oatmeal cookie"
@@ -538,7 +605,7 @@
 		/obj/item/food/grown/oat = 1
 	)
 	result = /obj/item/food/cookie/oatmeal
-	category = CAT_PASTRY
+	dish_category = DISH_COOKIE
 
 /datum/crafting_recipe/food/raisincookie
 	name = "Raisin cookie"
@@ -548,7 +615,8 @@
 		/obj/item/food/grown/oat = 1
 	)
 	result = /obj/item/food/cookie/raisin
-	category = CAT_PASTRY
+	removed_foodtypes = JUNKFOOD
+	dish_category = DISH_COOKIE
 
 /datum/crafting_recipe/food/cherrycupcake
 	name = "Cherry cupcake"
@@ -557,7 +625,8 @@
 		/obj/item/food/grown/cherries = 1
 	)
 	result = /obj/item/food/cherrycupcake
-	category = CAT_PASTRY
+	added_foodtypes = SUGAR
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/bluecherrycupcake
 	name = "Blue cherry cupcake"
@@ -566,7 +635,19 @@
 		/obj/item/food/grown/bluecherries = 1
 	)
 	result = /obj/item/food/cherrycupcake/blue
-	category = CAT_PASTRY
+	added_foodtypes = SUGAR
+	dish_category = DISH_PASTRY
+
+/datum/crafting_recipe/food/jupitercupcake
+	name = "Jupiter-cup-cake"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/grown/mushroom/jupitercup = 1,
+		/datum/reagent/consumable/caramel = 3,
+	)
+	result = /obj/item/food/jupitercupcake
+	added_foodtypes = SUGAR
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/honeybun
 	name = "Honey bun"
@@ -575,7 +656,8 @@
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/food/honeybun
-	category = CAT_PASTRY
+	added_foodtypes = SUGAR
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/cannoli
 	name = "Cannoli"
@@ -585,7 +667,8 @@
 		/datum/reagent/consumable/sugar = 3
 	)
 	result = /obj/item/food/cannoli
-	category = CAT_PASTRY
+	added_foodtypes = SUGAR
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/peanut_butter_cookie
 	name = "Peanut butter cookie"
@@ -594,7 +677,8 @@
 		/obj/item/food/pastrybase = 1
 	)
 	result = /obj/item/food/cookie/peanut_butter
-	category = CAT_PASTRY
+	added_foodtypes = JUNKFOOD|NUTS
+	dish_category = DISH_COOKIE
 
 /datum/crafting_recipe/food/raw_brownie_batter
 	name = "Raw brownie batter"
@@ -606,7 +690,9 @@
 		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/raw_brownie_batter
-	category = CAT_PASTRY
+	added_foodtypes = GRAIN|JUNKFOOD|SUGAR
+	removed_foodtypes = MEAT|RAW|EGG
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/peanut_butter_brownie_batter
 	name = "Raw peanut butter brownie batter"
@@ -619,7 +705,9 @@
 		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/peanut_butter_brownie_batter
-	category = CAT_PASTRY
+	added_foodtypes = GRAIN|JUNKFOOD|SUGAR|NUTS
+	removed_foodtypes = MEAT|RAW|EGG
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/crunchy_peanut_butter_tart
 	name = "Crunchy peanut butter tart"
@@ -630,7 +718,8 @@
 		/datum/reagent/consumable/cream = 5,
 	)
 	result = /obj/item/food/crunchy_peanut_butter_tart
-	category = CAT_PASTRY
+	added_foodtypes = JUNKFOOD|SUGAR
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/chocolate_chip_cookie
 	name = "Chocolate chip cookie"
@@ -639,7 +728,8 @@
 		/obj/item/food/chocolatebar = 1,
 	)
 	result = /obj/item/food/cookie/chocolate_chip_cookie
-	category = CAT_PASTRY
+	removed_foodtypes = JUNKFOOD
+	dish_category = DISH_COOKIE
 
 /datum/crafting_recipe/food/snickerdoodle
 	name = "Snickerdoodle"
@@ -648,7 +738,8 @@
 		/datum/reagent/consumable/vanilla = 5,
 	)
 	result = /obj/item/food/cookie/snickerdoodle
-	category = CAT_PASTRY
+	added_foodtypes = SUGAR
+	dish_category = DISH_COOKIE
 
 /datum/crafting_recipe/food/thumbprint_cookie
 	name = "Thumbprint cookie"
@@ -657,7 +748,8 @@
 		/datum/reagent/consumable/cherryjelly = 5,
 	)
 	result = /obj/item/food/cookie/thumbprint_cookie
-	category = CAT_PASTRY
+	added_foodtypes = FRUIT|SUGAR
+	dish_category = DISH_COOKIE
 
 /datum/crafting_recipe/food/macaron
 	name = "Macaron"
@@ -667,4 +759,15 @@
 		/datum/reagent/consumable/flour = 5,
 	)
 	result = /obj/item/food/cookie/macaron
-	category = CAT_PASTRY
+	dish_category = DISH_COOKIE
+
+/datum/crafting_recipe/food/apple_fritter
+	name = "Apple fritter"
+	reqs = list(
+		/obj/item/food/pastrybase = 1,
+		/obj/item/food/appleslice = 1,
+	)
+	result = /obj/item/food/apple_fritter
+	added_foodtypes = GRAIN|FRUIT|FRIED|BREAKFAST
+	dish_category = DISH_PASTRY
+	meal_category = MEAL_BREAKFAST

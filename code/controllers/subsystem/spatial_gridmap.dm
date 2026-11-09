@@ -9,25 +9,29 @@
  * these datums shouldnt have significant behavior, they should just hold data. the lists are filled and emptied by the subsystem.
  */
 /datum/spatial_grid_cell
-	///our x index in the list of cells. this is our index inside of our row list
+	/// Our x index in the list of cells. this is our index inside of our row list
 	var/cell_x
-	///our y index in the list of cells. this is the index of our row list inside of our z level grid
+	/// Our y index in the list of cells. this is the index of our row list inside of our z level grid
 	var/cell_y
-	///which z level we belong to, corresponding to the index of our gridmap in SSspatial_grid.grids_by_z_level
+	/// Which z level we belong to, corresponding to the index of our gridmap in SSspatial_grid.grids_by_z_level
 	var/cell_z
-	//every data point in a grid cell is separated by usecase
+	// Every data point in a grid cell is separated by usecase
 
-	//when empty, the contents lists of these grid cell datums are just references to a dummy list from SSspatial_grid
-	//this is meant to allow a great compromise between memory usage and speed.
-	//now orthogonal_range_search() doesnt need to check if the list is null and each empty list is taking 12 bytes instead of 24
-	//the only downside is that it needs to be switched over to a new list when it goes from 0 contents to > 0 contents and switched back on the opposite case
+	// When empty, the contents lists of these grid cell datums are just references to a dummy list from SSspatial_grid
+	// This is meant to allow a great compromise between memory usage and speed.
+	// Now orthogonal_range_search() doesnt need to check if the list is null and each empty list is taking 12 bytes instead of 24
+	// The only downside is that it needs to be switched over to a new list when it goes from 0 contents to > 0 contents and switched back on the opposite case
 
-	///every hearing sensitive movable inside this cell
+	/// Every hearing sensitive movable inside this cell
 	var/list/hearing_contents
-	///every client possessed mob inside this cell
+	/// Every client possessed mob inside this cell
 	var/list/client_contents
-	///every atmos machine inside this cell
+	/// Every atmos machine inside this cell
 	var/list/atmos_contents
+
+	/// Every dynamic light source *affecting* this cell
+	/// Light sources have their own radius rather than static polling range, so we need to store them in multiple cells
+	var/list/dynamic_light_sources
 
 /datum/spatial_grid_cell/New(cell_x, cell_y, cell_z)
 	. = ..()
@@ -40,14 +44,16 @@
 	if(length(dummy_list))
 		dummy_list.Cut()
 		stack_trace("SSspatial_grid.dummy_list had something inserted into it at some point! this is a problem as it is supposed to stay empty")
+
 	hearing_contents = dummy_list
 	client_contents = dummy_list
 	atmos_contents = dummy_list
+	dynamic_light_sources = dummy_list
 
 /datum/spatial_grid_cell/Destroy(force)
-	if(force)//the response to someone trying to qdel this is a right proper fuck you
+	if(!force)//the response to someone trying to qdel this is a right proper fuck you
 		stack_trace("dont try to destroy spatial grid cells without a good reason. if you need to do it use force")
-		return
+		return QDEL_HINT_LETMELIVE
 
 	. = ..()
 
@@ -79,7 +85,9 @@
  */
 SUBSYSTEM_DEF(spatial_grid)
 	can_fire = FALSE
-	init_order = INIT_ORDER_SPATIAL_GRID
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+	)
 	name = "Spatial Grid"
 
 	///list of the spatial_grid_cell datums per z level, arranged in the order of y index then x index
@@ -101,6 +109,9 @@ SUBSYSTEM_DEF(spatial_grid)
 	var/list/mob/oranges_ear/pregenerated_oranges_ears = list()
 	///how many pregenerated /mob/oranges_ear instances currently exist. this should hopefully never exceed its starting value
 	var/number_of_oranges_ears = NUMBER_OF_PREGENERATED_ORANGES_EARS
+
+	///for debugging, stores a list of grids with colors to paint atoms with
+	var/list/cells_with_color
 
 /datum/controller/subsystem/spatial_grid/Initialize()
 	cells_on_x_axis = SPATIAL_GRID_CELLS_PER_SIDE(world.maxx)
@@ -137,22 +148,20 @@ SUBSYSTEM_DEF(spatial_grid)
 
 ///removes an initialized and probably deleted movable from our pre init queue before we're initialized
 /datum/controller/subsystem/spatial_grid/proc/remove_from_pre_init_queue(atom/movable/movable_to_remove, exclusive_type)
-	if(exclusive_type)
-		waiting_to_add_by_type[exclusive_type] -= movable_to_remove
-
-		var/waiting_movable_is_in_other_queues = FALSE//we need to check if this movable is inside the other queues
+	if(isnull(exclusive_type))
+		UnregisterSignal(movable_to_remove, COMSIG_QDELETING)
 		for(var/type in waiting_to_add_by_type)
-			if(movable_to_remove in waiting_to_add_by_type[type])
-				waiting_movable_is_in_other_queues = TRUE
-
-		if(!waiting_movable_is_in_other_queues)
-			UnregisterSignal(movable_to_remove, COMSIG_QDELETING)
-
+			waiting_to_add_by_type[type] -= movable_to_remove
 		return
 
+	waiting_to_add_by_type[exclusive_type] -= movable_to_remove
+
+	// We need to check if this movable is inside the other queues
+	for(var/type, queue in waiting_to_add_by_type)
+		if(movable_to_remove in queue)
+			return
+
 	UnregisterSignal(movable_to_remove, COMSIG_QDELETING)
-	for(var/type in waiting_to_add_by_type)
-		waiting_to_add_by_type[type] -= movable_to_remove
 
 ///if a movable is inside our pre init queue before we're initialized and it gets deleted we need to remove that reference with this proc
 /datum/controller/subsystem/spatial_grid/proc/queued_item_deleted(atom/movable/movable_being_deleted)
@@ -234,7 +243,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	. = list()
 
 	//technically THIS list only contains lists, but inside those lists are grid cell datums and we can go without a SINGLE var init if we do this
-	var/list/datum/spatial_grid_cell/grid_level = grids_by_z_level[center_turf.z]
+	var/list/list/datum/spatial_grid_cell/grid_level = grids_by_z_level[center_turf.z]
 
 	switch(type)
 		if(SPATIAL_GRID_CONTENTS_TYPE_CLIENTS)
@@ -412,7 +421,7 @@ SUBSYSTEM_DEF(spatial_grid)
 	return intersecting_cell
 
 /**
- * find the spatial map cell that target used to belong to, then remove the target (and sometimes it's important_recusive_contents) from it.
+ * find the spatial map cell that target used to belong to, then remove the target (and sometimes its important_recusive_contents) from it.
  * make sure to provide the turf old_target used to be "in"
  *
  * * old_target - the thing we want to remove from the spatial grid cell
@@ -840,6 +849,31 @@ SUBSYSTEM_DEF(spatial_grid)
 	[cells_with_clients] cells have clients, [cells_with_hearables] have hearables, and [cells_with_atmos] have atmos machines \
 	the average client distance is: [average_client_distance], the average hearable_distance is [average_hearable_distance], \
 	and the average atmos distance is [average_atmos_distance] ")
+
+//A debugging proc that colors objects based on what grid they belong to
+/datum/controller/subsystem/spatial_grid/proc/paint_grids()
+	cells_with_color = list()
+	for(var/list/z_level_grid as anything in grids_by_z_level)
+		for(var/list/cell_row as anything in z_level_grid)
+			for(var/datum/spatial_grid_cell/cell as anything in cell_row)
+				cells_with_color[cell] = RANDOM_COLOUR
+	for(var/atom/thing in world.contents)
+		var/datum/spatial_grid_cell/things_cell = get_cell_of(thing)
+		if(!things_cell)
+			continue
+		thing.add_atom_colour(cells_with_color[things_cell], ADMIN_COLOUR_PRIORITY)
+		if(ismovable(thing))
+			RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(update_color))
+		CHECK_TICK
+
+//A debugging proc that colors objects based on what grid they belong to
+/datum/controller/subsystem/spatial_grid/proc/update_color(atom/movable/thing)
+	SIGNAL_HANDLER
+
+	var/datum/spatial_grid_cell/things_cell = get_cell_of(thing)
+	if(!isdatum(things_cell))
+		return
+	thing.add_atom_colour(cells_with_color[things_cell], ADMIN_COLOUR_PRIORITY)
 
 #undef BOUNDING_BOX_MAX
 #undef BOUNDING_BOX_MIN

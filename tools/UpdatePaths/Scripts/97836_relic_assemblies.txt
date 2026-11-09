@@ -1,0 +1,1 @@
+/obj/item/relic/@SUBTYPES : /obj/item/assembly/relic/@SUBTYPES{@OLD}

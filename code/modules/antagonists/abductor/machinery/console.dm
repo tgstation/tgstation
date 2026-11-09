@@ -72,7 +72,7 @@
 			TeleporterSend()
 
 /obj/machinery/abductor/console/ui_status(mob/user, datum/ui_state/state)
-	if(!isabductor(user) && !isobserver(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_KNOWLEDGE) && !isobserver(user))
 		return UI_CLOSE
 	return ..()
 
@@ -94,10 +94,19 @@
 			"items" = (category == selected_cat ? list() : null))
 		for(var/gear in possible_gear[category])
 			var/datum/abductor_gear/AG = possible_gear[category][gear]
+
+			var/atom/gear_path
+			if(!length(AG.build_path))
+				continue
+
+			gear_path = AG.build_path[1]
+
 			cat["items"] += list(list(
 				"name" = AG.name,
 				"cost" = AG.cost,
 				"desc" = AG.description,
+				"icon" = gear_path::icon,
+				"icon_state" = gear_path::icon_state,
 			))
 		data["categories"] += list(cat)
 	return data
@@ -118,7 +127,7 @@
 		data["vest_lock"] = HAS_TRAIT_FROM(vest, TRAIT_NODROP, ABDUCTOR_VEST_TRAIT)
 	return data
 
-/obj/machinery/abductor/console/ui_act(action, list/params)
+/obj/machinery/abductor/console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -257,13 +266,16 @@
 	vest = V
 	return TRUE
 
-/obj/machinery/abductor/console/attackby(obj/O, mob/user, params)
-	if(istype(O, /obj/item/abductor/gizmo) && AddGizmo(O))
+/obj/machinery/abductor/console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/abductor/gizmo) && AddGizmo(tool))
 		to_chat(user, span_notice("You link the tool to the console."))
-	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest) && AddVest(O))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/clothing/suit/armor/abductor/vest) && AddVest(tool))
 		to_chat(user, span_notice("You link the vest to the console."))
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/machinery/abductor/console/proc/Dispense(items_list, cost=1)
 	if(experiment && experiment.credits >= cost)

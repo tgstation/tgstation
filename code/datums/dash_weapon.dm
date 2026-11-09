@@ -11,9 +11,9 @@
 	/// How long does it take to get a dash charge back?
 	var/charge_rate = 25 SECONDS
 	/// What sound do we play on dash?
-	var/dash_sound = 'sound/magic/blink.ogg'
+	var/dash_sound = 'sound/effects/magic/blink.ogg'
 	/// What sound do we play on recharge?
-	var/recharge_sound = 'sound/magic/charge.ogg'
+	var/recharge_sound = 'sound/effects/magic/charge.ogg'
 	/// What effect does our beam use?
 	var/beam_effect = "blur"
 	/// How long does our beam last?
@@ -50,7 +50,9 @@
 	if(!(target in view(user.client.view, user)))
 		user.balloon_alert(user, "out of view!")
 		return FALSE
-
+	if(target_turf.is_blocked_turf_ignore_climbable())
+		user.balloon_alert(user, "destination blocked!")
+		return FALSE
 	if(!do_teleport(user, target_turf, no_effects = TRUE))
 		user.balloon_alert(user, "dash blocked!")
 		return FALSE
@@ -66,12 +68,14 @@
 	current_charges--
 	addtimer(CALLBACK(src, PROC_REF(charge)), charge_rate)
 	owner?.update_mob_action_buttons()
+	SEND_SIGNAL(src, COMSIG_DASH_ACTION_DASHED)
 
 	return TRUE
 
 /// Callback for [/proc/teleport] to increment our charges after  use.
 /datum/action/innate/dash/proc/charge()
 	current_charges = clamp(current_charges + 1, 0, max_charges)
+	SEND_SIGNAL(src, COMSIG_DASH_ACTION_CHARGED)
 
 	var/obj/item/dashing_item = target
 	if(!istype(dashing_item))

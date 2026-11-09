@@ -4,13 +4,14 @@
 	var/obj/machinery/connected_machine
 	var/obj/machinery/atmospherics/components/unary/gas_connector
 
-/datum/gas_machine_connector/New(location, obj/machinery/connecting_machine = null, direction = SOUTH, gas_volume)
-	connected_machine = connecting_machine
-	if(!connected_machine)
+/datum/gas_machine_connector/New(obj/machinery/linked_machine, gas_volume = CELL_VOLUME)
+	if(isnull(linked_machine))
+		stack_trace("Gas machine connection without a linked machine")
 		qdel(src)
 		return
 
-	gas_connector = new(location)
+	connected_machine = linked_machine
+	gas_connector = new(connected_machine.loc)
 	gas_connector.dir = connected_machine.dir
 	gas_connector.airs[1].volume = gas_volume
 
@@ -57,8 +58,12 @@
 /**
  * Called when the machine has been moved, reconnect to the pipe network
  */
-/datum/gas_machine_connector/proc/moved_connected_machine()
+/datum/gas_machine_connector/proc/moved_connected_machine(obj/machinery/source, atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	SIGNAL_HANDLER
+	if(forced) // Called from parent doing abstract_move()
+		gas_connector.abstract_move(get_turf(connected_machine))
+		return // No side-effects means no disconnections
+
 	gas_connector.forceMove(get_turf(connected_machine))
 	reconnect_connector()
 

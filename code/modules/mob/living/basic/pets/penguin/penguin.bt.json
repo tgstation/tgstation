@@ -1,0 +1,154 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/penguin",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_CURRENT_TARGET",
+				"observer_abort": "BT_ABORT_BOTH"
+			},
+			"child": {
+				"type": "subtree",
+				"subtype": "/datum/bt_node/subtree/run_away_from_target"
+			}
+		},
+		{
+			"type": "parallel",
+			"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+			"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+			"repeat_secondary": true,
+			"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+			"finish_on_primary": true,
+			"children": [
+				{
+					"type": "subplan",
+					"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+					"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+					"children": [
+						{
+							"type": "selector",
+							"children": [
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/move_to_and_eat"
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/move_to_and_hunt",
+									"bindings": {
+										"bvtz06kb": "BB_FISHING_TARGET",
+										"b3y599q4": "BB_FISHING_TARGET",
+										"brrasnah": "BB_FISHING_TARGET",
+										"b3cnse9r": "TRUE",
+										"bd1towgc": "FALSE",
+										"bqwjf4id": "45 SECONDS",
+										"bm3y5m55": "BB_FISHING_TIMER"
+									}
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/move_to_and_hunt",
+									"bindings": {
+										"bvtz06kb": "BB_DRILLABLE_ICE",
+										"b3y599q4": "BB_DRILLABLE_ICE",
+										"brrasnah": "BB_DRILLABLE_ICE",
+										"b3cnse9r": "TRUE",
+										"bd1towgc": "TRUE",
+										"bqwjf4id": "15 SECONDS",
+										"bm3y5m55": "BB_ICE_DRILLING_TIMER"
+									}
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/move_to_and_hunt"
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/random_walk"
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/random_speech_loop",
+					"bindings": {
+						"bqdqne64": "/datum/bt_node/ai_behavior/random_speech/penguin"
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/target_from_retaliate_list/nearest",
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"targeting_strategy": "BB_TARGETING_STRATEGY",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/find_food"
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+					"vars": {
+						"cooldown_key": "BB_NEXT_FOOD_EAT"
+					},
+					"child": {
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+						"vars": {
+							"cooldown_key": "BB_FISHING_TIMER"
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+							"vars": {
+								"target_key": "BB_FISHING_TARGET",
+								"target_source": "/datum/target_source/range_turfs/typecache_visible/ice",
+								"targeting_strategy": "/datum/targeting_strategy/fishing"
+							}
+						}
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"invert": true,
+						"key": "BB_FISHING_TARGET"
+					},
+					"child": {
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+						"vars": {
+							"cooldown_key": "BB_ICE_DRILLING_TIMER"
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+							"vars": {
+								"target_key": "BB_DRILLABLE_ICE",
+								"target_source": "/datum/target_source/range_turfs/typecache_visible/ice",
+								"targeting_strategy": "/datum/targeting_strategy/drillable_ice"
+							}
+						}
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+					"vars": {
+						"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
+						"target_source": "/datum/target_source/oview_single_type/penguin_egg",
+						"targeting_strategy": "/datum/targeting_strategy/uncarried_egg"
+					}
+				}
+			]
+		}
+	]
+}

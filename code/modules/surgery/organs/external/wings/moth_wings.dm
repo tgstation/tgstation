@@ -1,47 +1,47 @@
+#define MOTH_WING_FORCE 1 NEWTONS
+
 ///Moth wings! They can flutter in low-grav and burn off in heat
-/obj/item/organ/external/wings/moth
+/obj/item/organ/wings/moth
 	name = "moth wings"
 	desc = "Spread your wings and FLOOOOAAAAAT!"
 
-	preference = "feature_moth_wings"
-
-	dna_block = DNA_MOTH_WINGS_BLOCK
+	dna_block = /datum/dna_block/feature/accessory/moth_wing
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/moth
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
+
+	//Not very capable under normal circumstances, try as they might.
+	flight_level = WINGS_FLIGHTLESS
+	has_open_sprite = FALSE
+	flap_sound = 'sound/mobs/humanoids/moth/moth_flutter.ogg'
 
 	///Are we burned?
 	var/burnt = FALSE
 	///Store our old datum here for if our burned wings are healed
 	var/original_sprite_datum
 
-/obj/item/organ/external/wings/moth/on_mob_insert(mob/living/carbon/receiver)
+	drift_force = MOTH_WING_FORCE
+
+/obj/item/organ/wings/moth/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
 	RegisterSignal(receiver, COMSIG_HUMAN_BURNING, PROC_REF(try_burn_wings))
 	RegisterSignal(receiver, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(heal_wings))
-	RegisterSignal(receiver, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(update_float_move))
 
-/obj/item/organ/external/wings/moth/on_mob_remove(mob/living/carbon/organ_owner)
+/obj/item/organ/wings/moth/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
-	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_MOVABLE_PRE_MOVE))
-	REMOVE_TRAIT(organ_owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
+	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
 
-/obj/item/organ/external/wings/moth/can_soften_fall()
+/obj/item/organ/wings/moth/can_soften_fall()
 	return !burnt
 
-///Check if we can flutter around
-/obj/item/organ/external/wings/moth/proc/update_float_move()
-	SIGNAL_HANDLER
+/obj/item/organ/wings/moth/allow_flight()
+	if(burnt)
+		return FALSE
+	return ..()
 
-	if(!isspaceturf(owner.loc) && !burnt)
-		var/datum/gas_mixture/current = owner.loc.return_air()
-		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
-			ADD_TRAIT(owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
-			return
-
-	REMOVE_TRAIT(owner, TRAIT_FREE_FLOAT_MOVEMENT, REF(src))
 
 ///check if our wings can burn off ;_;
-/obj/item/organ/external/wings/moth/proc/try_burn_wings(mob/living/carbon/human/human)
+/obj/item/organ/wings/moth/proc/try_burn_wings(mob/living/carbon/human/human)
 	SIGNAL_HANDLER
 
 	if(!burnt && human.bodytemperature >= 800 && human.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
@@ -52,13 +52,13 @@
 		human.update_body_parts()
 
 ///burn the wings off
-/obj/item/organ/external/wings/moth/proc/burn_wings()
+/obj/item/organ/wings/moth/proc/burn_wings()
 	var/datum/bodypart_overlay/mutant/wings/moth/wings = bodypart_overlay
 	wings.burnt = TRUE
 	burnt = TRUE
 
 ///heal our wings back up!!
-/obj/item/organ/external/wings/moth/proc/heal_wings(datum/source, heal_flags)
+/obj/item/organ/wings/moth/proc/heal_wings(datum/source, heal_flags)
 	SIGNAL_HANDLER
 
 	if(!burnt)
@@ -69,10 +69,19 @@
 		wings.burnt = FALSE
 		burnt = FALSE
 
+/obj/item/organ/wings/moth/feel_for_damage(self_aware)
+	if(burnt)
+		return "Your wings are all burnt up!"
+	return ..()
+
 ///Moth wing bodypart overlay, including burn functionality!
 /datum/bodypart_overlay/mutant/wings/moth
-	feature_key = "moth_wings"
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	feature_key = FEATURE_MOTH_WINGS
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
+	slot_blocker = HIDEMUTWINGS
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_wings/burnt_off
 	///Are we burned? If so we draw differently
@@ -80,16 +89,27 @@
 
 /datum/bodypart_overlay/mutant/wings/moth/New()
 	. = ..()
-
 	burn_datum = fetch_sprite_datum(burn_datum)
-
-/datum/bodypart_overlay/mutant/wings/moth/get_global_feature_list()
-	return GLOB.moth_wings_list
-
-/datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if(!(human.wear_suit?.flags_inv & HIDEMUTWINGS))
-		return TRUE
-	return FALSE
 
 /datum/bodypart_overlay/mutant/wings/moth/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
+
+#undef MOTH_WING_FORCE
+
+
+// These look like moth wings. They sound like moth wings. They are not moth wings by any shared interaction besides their flap sounds.
+// Don't try it. Burn states, driftability, forced sprite accessory overrides...
+
+///mothra wings, which relate to moths.
+/obj/item/organ/wings/mothra
+	name = "mothra wings"
+	desc = "Fly like the mighty mothra of legend once did."
+	sprite_accessory_override = /datum/sprite_accessory/wings/mothra
+	flap_sound = 'sound/mobs/humanoids/moth/moth_flutter.ogg'
+
+///megamoth wings, which relate to moths as an alternate choice. they're both pretty cool.
+/obj/item/organ/wings/megamoth
+	name = "megamoth wings"
+	desc = "Don't get murderous."
+	sprite_accessory_override = /datum/sprite_accessory/wings/megamoth
+	flap_sound = 'sound/mobs/humanoids/moth/moth_flutter.ogg'

@@ -1,4 +1,3 @@
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -8,7 +7,9 @@ import {
   Modal,
   NoticeBox,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const Holopad = (props) => {
@@ -89,8 +90,8 @@ const HolopadContent = (props) => {
                   icon={call.connected ? 'phone-slash' : 'phone-alt'}
                   content={
                     call.connected
-                      ? 'Disconnect call from ' + call.caller
-                      : 'Answer call from ' + call.caller
+                      ? `Disconnect call from ${call.caller}`
+                      : `Answer call from ${call.caller}`
                   }
                   color={call.connected ? 'bad' : 'good'}
                   disabled={!on_network}

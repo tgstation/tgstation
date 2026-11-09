@@ -136,13 +136,13 @@
 		data["timeout"] = CLAMP01((timeout - (world.time - start_time) - 1 SECONDS) / (timeout - 1 SECONDS))
 	return data
 
-/datum/tgui_input_number/ui_act(action, list/params)
+/datum/tgui_input_number/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
 	switch(action)
 		if("submit")
-			if(!isnum(params["entry"]))
+			if(!isnum(params["entry"]) || isnan(params["entry"]))
 				CRASH("A non number was input into tgui input number by [usr]")
 			var/choice = round_value ? round(params["entry"]) : params["entry"]
 			if(choice > max_value)

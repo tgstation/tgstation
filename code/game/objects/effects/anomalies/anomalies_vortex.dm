@@ -3,7 +3,7 @@
 	name = "vortex anomaly"
 	icon_state = "vortex"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
-	aSignal = /obj/item/assembly/signaler/anomaly/vortex
+	anomaly_core = /obj/item/assembly/signaler/anomaly/vortex
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()
@@ -19,7 +19,7 @@
 			return //DON'T DELETE YOURSELF GOD DAMN
 		if(!O.anchored)
 			var/mob/living/target = locate() in view(4,src)
-			if(target && !target.stat)
+			if(target && !IS_UNCONSCIOUS_OR_CRIT(target))
 				O.throw_at(target, 7, 5)
 		else
 			SSexplosions.med_mov_atom += O
@@ -62,3 +62,7 @@
 				SSexplosions.medturf += T
 			if(EXPLODE_LIGHT)
 				SSexplosions.lowturf += T
+
+/obj/effect/anomaly/bhole/detonate()
+	new /obj/effect/temp_visual/circle_wave/vortex/small(get_turf(src))
+	playsound(src, 'sound/effects/hallucinations/far_noise.ogg', vol = 50)

@@ -27,30 +27,36 @@
 		P.deconstruct(FALSE)
 	return ..()
 
-/obj/structure/transit_tube/singularity_pull(S, current_size)
+/obj/structure/transit_tube/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
-/obj/structure/transit_tube/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_WRENCH)
-		if(tube_construction)
-			for(var/obj/structure/transit_tube_pod/pod in src.loc)
-				to_chat(user, span_warning("Remove the pod first!"))
-				return
-			user.visible_message(span_notice("[user] starts to detach \the [src]."), span_notice("You start to detach the [name]..."))
-			if(W.use_tool(src, user, 2 SECONDS, volume=50))
-				to_chat(user, span_notice("You detach the [name]."))
-				var/obj/structure/c_transit_tube/R = new tube_construction(loc)
-				R.setDir(dir)
-				transfer_fingerprints_to(R)
-				R.add_fingerprint(user)
-				qdel(src)
-	else if(W.tool_behaviour == TOOL_CROWBAR)
-		for(var/obj/structure/transit_tube_pod/pod in src.loc)
-			pod.attackby(W, user)
-	else
-		return ..()
+/obj/structure/transit_tube/wrench_act(mob/living/user, obj/item/tool)
+	if(!tube_construction)
+		return NONE
+
+	for(var/obj/structure/transit_tube_pod/pod in loc)
+		to_chat(user, span_warning("Remove the pod first!"))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user] starts to detach \the [src]."), \
+						span_notice("You start to detach \the [src]..."))
+	if(!tool.use_tool(src, user, 2 SECONDS, volume=50))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You detach \the [src]."))
+	var/obj/structure/c_transit_tube/husk = new tube_construction(loc)
+	husk.setDir(dir)
+	transfer_fingerprints_to(husk)
+	husk.add_fingerprint(user)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/transit_tube/crowbar_act(mob/living/user, obj/item/tool)
+	for(var/obj/structure/transit_tube_pod/pod in loc)
+		pod.item_interaction(user, tool)
+	return ITEM_INTERACT_SUCCESS
 
 // Called to check if a pod should stop upon entering this tube.
 /obj/structure/transit_tube/proc/should_stop_pod(pod, from_dir)
@@ -146,13 +152,13 @@
 		tube_overlay.icon_state = "decorative_diag"
 		switch(shift_dir)
 			if(NORTH)
-				tube_overlay.pixel_y = 32
+				tube_overlay.pixel_z = 32
 			if(SOUTH)
-				tube_overlay.pixel_y = -32
+				tube_overlay.pixel_z = -32
 			if(EAST)
-				tube_overlay.pixel_x = 32
+				tube_overlay.pixel_w = 32
 			if(WEST)
-				tube_overlay.pixel_x = -32
+				tube_overlay.pixel_w = -32
 	else
 		tube_overlay.icon_state = "decorative"
 

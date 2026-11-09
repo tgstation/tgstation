@@ -6,7 +6,7 @@
 	var/list/stored_access
 	var/update_id_name = FALSE //If the name of the human is same as the name on the id they're wearing we'll update provided id when equipping
 
-/datum/outfit/varedit/pre_equip(mob/living/carbon/human/equipping_mob, visualsOnly)
+/datum/outfit/varedit/pre_equip(mob/living/carbon/human/equipping_mob, visuals_only)
 	equipping_mob.delete_equipment() //Applying VV to wrong objects is not reccomended.
 	return ..()
 
@@ -103,14 +103,14 @@
 			if(ID.trim)
 				outfit.id_trim = ID.trim.type
 	//Copy hands
-	if(held_items.len >= 2) //Not in the mood to let outfits transfer amputees
-		var/obj/item/left_hand = held_items[1]
-		var/obj/item/right_hand = held_items[2]
+	if(get_num_hand_slots() >= 2) //Not in the mood to let outfits transfer amputees
+		var/obj/item/left_hand = get_item_for_held_index(LEFT_HANDS)
 		if(istype(left_hand))
 			outfit.l_hand = left_hand.type
 			var/vedits = collect_vv(left_hand)
 			if(vedits)
 				result["LHAND"] = vedits
+		var/obj/item/right_hand = get_item_for_held_index(RIGHT_HANDS)
 		if(istype(right_hand))
 			outfit.r_hand = right_hand.type
 			var/vedits = collect_vv(left_hand)
@@ -139,7 +139,7 @@
 	GLOB.custom_outfits += outfit
 	to_chat(usr,"Outfit registered, use select equipment to equip it.")
 
-/datum/outfit/varedit/post_equip(mob/living/carbon/human/human, visualsOnly)
+/datum/outfit/varedit/post_equip(mob/living/carbon/human/human, visuals_only)
 	. = ..()
 	//Apply VV
 	for(var/slot in vv_values)
@@ -147,9 +147,9 @@
 		var/obj/item/item
 		switch(slot)
 			if("LHAND")
-				item = human.held_items[1]
+				item = human.get_item_for_held_index(LEFT_HANDS)
 			if("RHAND")
-				item = human.held_items[2]
+				item = human.get_item_for_held_index(RIGHT_HANDS)
 			else
 				item = human.get_item_by_slot(text2num(slot))
 		for(var/vname in edits)

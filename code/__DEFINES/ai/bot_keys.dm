@@ -9,16 +9,18 @@
 #define BB_SALUTE_MESSAGES "salute_messages"
 ///the beepsky we will salute
 #define BB_SALUTE_TARGET "salute_target"
+///cooldown key for authority saluting
+#define BB_SALUTE_COOLDOWN "salute_cooldown"
 ///our announcement ability
 #define BB_ANNOUNCE_ABILITY "announce_ability"
 ///list of our radio channels
 #define BB_RADIO_CHANNEL "radio_channel"
 ///list of unreachable things we will temporarily ignore
 #define BB_TEMPORARY_IGNORE_LIST "temporary_ignore_list"
+///penalty cooldown if we are unable to path to any beacons
+#define BB_BOT_BEACON_COOLDOWN "bot_beacon_cooldown"
 
 // medbot keys
-///the patient we must heal
-#define BB_PATIENT_TARGET "patient_target"
 ///list holding our wait dialogue
 #define BB_WAIT_SPEECH "wait_speech"
 ///what we will say to our patient after we heal them
@@ -51,12 +53,13 @@
 #define BB_CLEANBOT_EMAGGED_PHRASES "emagged_phrases"
 ///key that holds drawings we hunt
 #define BB_CLEANABLE_DRAWINGS "cleanable_drawings"
-///Key that holds our clean target
-#define BB_CLEAN_TARGET "clean_target"
+
 ///key that holds the janitor we will befriend
 #define BB_FRIENDLY_JANITOR "friendly_janitor"
 ///key that holds the victim we will spray
 #define BB_ACID_SPRAY_TARGET "acid_spray_target"
+///key that holds our acid spray attack cooldown
+#define BB_ACID_SPRAY_COOLDOWN "acid_spray_cooldown"
 ///key that holds trash we will burn
 #define BB_HUNTABLE_TRASH "huntable_trash"
 
@@ -73,3 +76,76 @@
 #define BB_WASH_FRUSTRATION "wash_frustration"
 ///key that holds cooldown after we finish cleaning something, so we dont immediately run off to patrol
 #define BB_POST_CLEAN_COOLDOWN "post_clean_cooldown"
+///key that holds cooldown after trash talk
+#define BB_TRASH_TALK_COOLDOWN "trash_talk_cooldown"
+
+//secbots
+///threat of our current target
+#define BB_CURRENT_CRIMINAL_ASSESSMENT "current_criminal_assessment"
+
+//Honkbots
+///key that holds all possible clown friends
+#define BB_CLOWNS_LIST "clowns_list"
+///key that holds the clown we play with
+#define BB_CLOWN_FRIEND "clown_friend"
+///key that holds the list of slippery items
+#define BB_SLIPPERY_ITEMS "slippery_items"
+///key that holds list of types we will attempt to slip
+#define BB_SLIP_LIST "slip_list"
+///key that holds the slippery item we will drag people too
+#define BB_SLIPPERY_TARGET "slippery_target"
+///key that holds the victim we will slip
+#define BB_SLIP_TARGET "slip_target"
+///key that holds our honk ability
+#define BB_HONK_ABILITY "honk_ability"
+
+//firebot keys
+///things we can extinguish
+#define BB_FIREBOT_CAN_EXTINGUISH "can_extinguish"
+///lines we say when we detect a fire
+#define BB_FIREBOT_FIRE_DETECTED_LINES "fire_detected_lines"
+///lines we say when we are idle
+#define BB_FIREBOT_IDLE_LINES "idle_lines"
+///lines we say when we are emagged
+#define BB_FIREBOT_EMAGGED_LINES "emagged_lines"
+
+//vibebots
+///key that holds our partying ability
+#define BB_VIBEBOT_PARTY_ABILITY "party_ability"
+///key that holds our birthday song
+#define BB_VIBEBOT_BIRTHDAY_SONG "birthday_song"
+///key that holds happy songs we play to depressed targets
+#define BB_VIBEBOT_HAPPY_SONG "happy_song"
+///key that holds grim song we play when emagged
+#define BB_VIBEBOT_GRIM_SONG "GRIM_song"
+///key that holds neutral targets we vibe with
+#define BB_VIBEBOT_PARTY_TARGET "party_target"
+///key that holds our instrument
+#define BB_VIBEBOT_INSTRUMENT "instrument"
+
+//repairbots
+///our wall girder ability
+#define BB_GIRDER_BUILD_ABILITY "girder_build_ability"
+///key that holds our emagged speech
+#define BB_REPAIRBOT_EMAGGED_SPEECH "emagged_speech"
+///key that holds our normal speech
+#define BB_REPAIRBOT_NORMAL_SPEECH "normal_speech"
+///key that holds our speech timer
+#define BB_REPAIRBOT_SPEECH_COOLDOWN "speech_cooldown"
+///Key that holds our current interaction type, to determine how we will interact with this object
+#define BB_REPAIRBOT_INTERACTION_TYPE "interaction_type"
+///Key that hold robot target
+#define BB_ROBOT_TARGET "robot target"
+///Key that holds thingt to deconstruct
+#define BB_DECONSTRUCT_TARGET "deconstruct_target"
+
+#define REPAIRBOT_INTERACTION_INTERACT 1
+#define REPAIRBOT_INTERACTION_BUILD_GIRDERS 2
+
+//mulebots
+///key that holds our delivery destination's name
+#define BB_MULEBOT_DESTINATION_BEACON "mulebot_destination"
+///key that holds our home port's name
+#define BB_MULEBOT_HOME_BEACON "mulebot_home_beacon"
+///key that holds our current delivery target atom
+#define BB_MULEBOT_TRAVEL_TARGET "mulebot_travel_target"

@@ -9,14 +9,16 @@
 	icon_state = "setup_medium_med"
 	maxHealth = 300
 	health = 300
-	living_flags = 0
+	mob_biotypes = MOB_ROBOTIC
+	living_flags = NONE
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 
 /mob/living/circuit_drone/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(
-		new /obj/item/circuit_component/bot_circuit()
+		new /obj/item/circuit_component/bot_circuit(),
+		new /obj/item/circuit_component/remotecam/drone()
 	), SHELL_CAPACITY_LARGE)
 
 /mob/living/circuit_drone/examine(mob/user)
@@ -42,9 +44,6 @@
 	if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 		heal_overall_damage(50, 50)
 	return TRUE
-
-/mob/living/circuit_drone/spawn_gibs()
-	new /obj/effect/gibspawner/robot(drop_location(), src, get_static_viruses())
 
 /obj/item/circuit_component/bot_circuit
 	display_name = "Drone"
@@ -89,7 +88,7 @@
 /obj/item/circuit_component/bot_circuit/input_received(datum/port/input/port)
 
 	var/mob/living/shell = parent.shell
-	if(!istype(shell) || shell.stat)
+	if(!istype(shell) || IS_UNCONSCIOUS_OR_CRIT(shell))
 		return
 
 	var/direction
@@ -108,6 +107,11 @@
 		COOLDOWN_START(src, west_delay, move_delay)
 
 	if(!direction)
+		return
+
+	if(ismovable(shell.loc)) //Inside an object, tell it we moved
+		var/atom/loc_atom = shell.loc
+		loc_atom.relaymove(shell, direction)
 		return
 
 	if(shell.Process_Spacemove(direction))

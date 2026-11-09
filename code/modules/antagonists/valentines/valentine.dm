@@ -2,12 +2,10 @@
 	name = "\improper Valentine"
 	roundend_category = "valentines" //there's going to be a ton of them so put them in separate category
 	show_in_antagpanel = FALSE
-	prevent_roundtype_conversion = FALSE
 	suicide_cry = "FOR MY LOVE!!"
 	ui_name = null
 	// Not 'true' antags, this disables certain interactions that assume the owner is a baddie
-	antag_flags = FLAG_FAKE_ANTAG
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_FAKE|ANTAG_SKIP_GLOBAL_LIST
 	/// Reference to our date's mind
 	VAR_FINAL/datum/mind/date
 
@@ -22,12 +20,12 @@
 
 	if(isAI(owner.current))
 		var/mob/living/silicon/ai/ai_lover = owner.current
-		if(!ai_lover.laws.zeroth)
-			ai_lover.laws.set_zeroth_law(
-				"Protect your date, [date]. All other laws still apply in situations not pertaining to your date.",
-				"Be a good wingman for your master AI. Assist them in protecting [ai_lover.p_their()] date, [date].",
-			)
-			ai_lover.laws.show_laws()
+		ai_lover.laws.set_zeroth_law(
+			"Protect your date, [date]. All other laws still apply in situations not pertaining to your date.",
+			"Be a good wingman for your master AI. Assist them in protecting [ai_lover.p_their()] date, [date].",
+		)
+		ai_lover.laws.show_laws()
+		ai_lover.try_sync_laws()
 
 	if(iscyborg(owner.current))
 		var/mob/living/silicon/robot/borg_lover = owner.current

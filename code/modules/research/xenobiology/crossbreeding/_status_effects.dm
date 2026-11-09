@@ -5,62 +5,58 @@
 
 /datum/status_effect/rainbow_protection
 	id = "rainbow_protection"
-	duration = 100
+	duration = 10 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/rainbow_protection
-	var/originalcolor
+	show_duration = TRUE
 
 /datum/status_effect/rainbow_protection/on_apply()
-	owner.status_flags |= GODMODE
-	ADD_TRAIT(owner, TRAIT_PACIFISM, /datum/status_effect/rainbow_protection)
+	owner.add_traits(list(TRAIT_GODMODE, TRAIT_PACIFISM), TRAIT_STATUS_EFFECT(id))
 	owner.visible_message(span_warning("[owner] shines with a brilliant rainbow light."),
 		span_notice("You feel protected by an unknown force!"))
-	originalcolor = owner.color
-	return ..()
-
-/datum/status_effect/rainbow_protection/tick(seconds_between_ticks)
-	owner.color = rgb(rand(0,255),rand(0,255),rand(0,255))
-	return ..()
+	// okay, now time for the rainbow animation.
+	owner.add_filter("rainbow_protection_[REF(src)]", 2, color_matrix_filter(list(0,0,0, 0,0.75,0, 0,0,1, 0,0.25,0), COLORSPACE_HSL))
+	var/color_filter = owner.get_filter("rainbow_protection_[REF(src)]")
+	animate(color_filter, list("color" = list(0,0,0, 0,0.75,0, 0,0,1, 0.33,0.25,0)), time = 1 SECONDS, loop = -1)
+	animate(list("color" = list(0,0,0, 0,0.75,0, 0,0,1, 0.66,0.25,0)), time = 1 SECONDS)
+	animate(list("color" = list(0,0,0, 0,0.75,0, 0,0,1, 1,0.25,0)), time = 1 SECONDS)
+	animate(list("color" = list(0,0,0, 0,0.75,0, 0,0,1, 0,0.25,0)), time = 0) // IMPORTANT!
+	return TRUE
 
 /datum/status_effect/rainbow_protection/on_remove()
-	owner.status_flags &= ~GODMODE
-	owner.color = originalcolor
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, /datum/status_effect/rainbow_protection)
+	owner.remove_filter("rainbow_protection_[REF(src)]")
+	owner.remove_traits(list(TRAIT_GODMODE, TRAIT_PACIFISM), TRAIT_STATUS_EFFECT(id))
 	owner.visible_message(span_notice("[owner] stops glowing, the rainbow light fading away."),
 		span_warning("You no longer feel protected..."))
 
 /atom/movable/screen/alert/status_effect/slimeskin
 	name = "Adamantine Slimeskin"
-	desc = "You are covered in a thick, non-neutonian gel."
+	desc = "You are covered in a thick, non-Newtonian gel."
 	icon_state = "slime_stoneskin"
 
 /datum/status_effect/slimeskin
 	id = "slimeskin"
-	duration = 300
+	duration = 30 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/slimeskin
-	var/originalcolor
+	show_duration = TRUE
 
 /datum/status_effect/slimeskin/on_apply()
-	originalcolor = owner.color
-	owner.color = "#3070CC"
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.damage_resistance += 10
+	owner.add_atom_colour(color_transition_filter("#3070CC", SATURATION_OVERRIDE), TEMPORARY_COLOUR_PRIORITY)
+	owner.damage_resistance += 10
 	owner.visible_message(span_warning("[owner] is suddenly covered in a strange, blue-ish gel!"),
 		span_notice("You are covered in a thick, rubbery gel."))
 	return ..()
 
 /datum/status_effect/slimeskin/on_remove()
-	owner.color = originalcolor
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.damage_resistance -= 10
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
+	owner.damage_resistance -= 10
 	owner.visible_message(span_warning("[owner]'s gel coating liquefies and dissolves away."),
 		span_notice("Your gel second-skin dissolves!"))
 
 /datum/status_effect/slimerecall
 	id = "slime_recall"
-	duration = -1 //Will be removed by the extract.
-	tick_interval = -1
+	duration = STATUS_EFFECT_PERMANENT //Will be removed by the extract.
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = null
 	var/interrupted = FALSE
 	var/mob/target
@@ -96,49 +92,62 @@
 /datum/status_effect/frozenstasis
 	id = "slime_frozen"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = -1 //Will remove self when block breaks.
+	duration = STATUS_EFFECT_PERMANENT //Will remove self when block breaks.
 	alert_type = /atom/movable/screen/alert/status_effect/freon/stasis
+	tick_interval = STATUS_EFFECT_NO_TICK
+	/// The cube we will place our mob into.
 	var/obj/structure/ice_stasis/cube
+	/// Whether or not this version of the status effect can be resisted out of.
+	var/resistable = TRUE
 
 /datum/status_effect/frozenstasis/on_apply()
-	RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(breakCube))
 	cube = new /obj/structure/ice_stasis(get_turf(owner))
 	owner.forceMove(cube)
-	owner.status_flags |= GODMODE
-	return ..()
+	RegisterSignal(cube, COMSIG_QDELETING, PROC_REF(clear_effect))
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(has_escaped))
+	if(resistable)
+		RegisterSignal(owner, COMSIG_LIVING_RESIST, PROC_REF(clear_effect))
+	ADD_TRAIT(owner, TRAIT_GODMODE, TRAIT_STATUS_EFFECT(id))
+	return TRUE
 
-/datum/status_effect/frozenstasis/tick(seconds_between_ticks)
-	if(!cube || owner.loc != cube)
-		owner.remove_status_effect(src)
-
-/datum/status_effect/frozenstasis/proc/breakCube()
+/datum/status_effect/frozenstasis/proc/clear_effect(...)
 	SIGNAL_HANDLER
 
-	owner.remove_status_effect(src)
+	qdel(src)
+
+/datum/status_effect/frozenstasis/proc/has_escaped(...)
+	SIGNAL_HANDLER
+
+	if(owner.loc != cube)
+		qdel(src)
 
 /datum/status_effect/frozenstasis/on_remove()
-	if(cube)
-		qdel(cube)
-	owner.status_flags &= ~GODMODE
+	REMOVE_TRAIT(owner, TRAIT_GODMODE, TRAIT_STATUS_EFFECT(id))
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(owner, COMSIG_LIVING_RESIST)
+	UnregisterSignal(cube, COMSIG_QDELETING)
+	QDEL_NULL(cube)
+
+/datum/status_effect/frozenstasis/irresistable
+	resistable = FALSE
 
 /datum/status_effect/slime_clone
 	id = "slime_cloned"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	var/mob/living/clone
 	var/datum/mind/originalmind //For when the clone gibs.
 
 /datum/status_effect/slime_clone/on_apply()
 	var/typepath = owner.type
-	clone = new typepath(owner.loc)
-	var/mob/living/carbon/O = owner
-	var/mob/living/carbon/C = clone
-	if(istype(C) && istype(O))
-		C.real_name = O.real_name
-		O.dna.transfer_identity(C)
-		C.updateappearance(mutcolor_update=1)
+	clone = new typepath(owner.drop_location())
+	if(iscarbon(owner) && iscarbon(clone))
+		var/mob/living/carbon/carbon_owner = owner
+		var/mob/living/carbon/carbon_clone = clone
+		carbon_clone.real_name = carbon_owner.real_name
+		carbon_owner.dna.copy_dna(carbon_clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+		carbon_clone.updateappearance(mutcolor_update = TRUE)
 	if(owner.mind)
 		originalmind = owner.mind
 		owner.mind.transfer_to(clone)
@@ -146,7 +155,7 @@
 	return ..()
 
 /datum/status_effect/slime_clone/tick(seconds_between_ticks)
-	if(!istype(clone) || clone.stat != CONSCIOUS)
+	if(!istype(clone) || IS_UNCONSCIOUS_OR_CRIT(clone))
 		owner.remove_status_effect(src)
 
 /datum/status_effect/slime_clone/on_remove()
@@ -159,7 +168,7 @@
 				owner.ckey = originalmind.key
 	if(clone)
 		clone.unequip_everything()
-		qdel(clone)
+		QDEL_NULL(clone)
 
 /atom/movable/screen/alert/status_effect/clone_decay
 	name = "Clone Decay"
@@ -169,27 +178,31 @@
 /datum/status_effect/slime_clone_decay
 	id = "slime_clonedecay"
 	status_type = STATUS_EFFECT_UNIQUE
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = /atom/movable/screen/alert/status_effect/clone_decay
+
+/datum/status_effect/slime_clone_decay/on_apply()
+	owner.add_atom_colour("#007BA7", FIXED_COLOUR_PRIORITY)
+	return TRUE
 
 /datum/status_effect/slime_clone_decay/tick(seconds_between_ticks)
 	var/need_mob_update
-	need_mob_update = owner.adjustToxLoss(1, updating_health = FALSE)
-	need_mob_update += owner.adjustOxyLoss(1, updating_health = FALSE)
-	need_mob_update += owner.adjustBruteLoss(1, updating_health = FALSE)
-	need_mob_update += owner.adjustFireLoss(1, updating_health = FALSE)
+	need_mob_update = owner.adjust_tox_loss(1, updating_health = FALSE)
+	need_mob_update += owner.adjust_oxy_loss(1, updating_health = FALSE)
+	need_mob_update += owner.adjust_brute_loss(1, updating_health = FALSE)
+	need_mob_update += owner.adjust_fire_loss(1, updating_health = FALSE)
 	if(need_mob_update)
 		owner.updatehealth()
-	owner.color = "#007BA7"
 
 /atom/movable/screen/alert/status_effect/bloodchill
 	name = "Bloodchilled"
 	desc = "You feel a shiver down your spine after getting hit with a glob of cold blood. You'll move slower and get frostbite for a while!"
-	icon_state = "bloodchill"
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
+	overlay_state = "bloodchill"
 
 /datum/status_effect/bloodchill
 	id = "bloodchill"
-	duration = 100
+	duration = 10 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/bloodchill
 
 /datum/status_effect/bloodchill/on_apply()
@@ -197,15 +210,15 @@
 	return ..()
 
 /datum/status_effect/bloodchill/tick(seconds_between_ticks)
-	if(prob(50))
-		owner.adjustFireLoss(2)
+	if(SPT_PROB(50, seconds_between_ticks))
+		owner.adjust_fire_loss(2)
 
 /datum/status_effect/bloodchill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bloodchill)
 
 /datum/status_effect/bonechill
 	id = "bonechill"
-	duration = 80
+	duration = 8 SECONDS
 	alert_type = /atom/movable/screen/alert/status_effect/bonechill
 
 /datum/status_effect/bonechill/on_apply()
@@ -213,28 +226,31 @@
 	return ..()
 
 /datum/status_effect/bonechill/tick(seconds_between_ticks)
-	if(prob(50))
-		owner.adjustFireLoss(1)
-		owner.set_jitter_if_lower(6 SECONDS)
-		owner.adjust_bodytemperature(-10)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/humi = owner
-			humi.adjust_coretemperature(-10)
+	if(!SPT_PROB(50, seconds_between_ticks))
+		return
+	owner.adjust_fire_loss(1)
+	owner.set_jitter_if_lower(6 SECONDS)
+	owner.adjust_bodytemperature(-10)
+	if(ishuman(owner))
+		var/mob/living/carbon/human/humi = owner
+		humi.adjust_coretemperature(-10)
 
 /datum/status_effect/bonechill/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/bonechill)
+
 /atom/movable/screen/alert/status_effect/bonechill
 	name = "Bonechilled"
 	desc = "You feel a shiver down your spine after hearing the haunting noise of bone rattling. You'll move slower and get frostbite for a while!"
-	icon_state = "bloodchill"
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
+	overlay_state = "bloodchill"
 
 /datum/status_effect/rebreathing
 	id = "rebreathing"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 
 /datum/status_effect/rebreathing/tick(seconds_between_ticks)
-	owner.adjustOxyLoss(-6, 0) //Just a bit more than normal breathing.
+	owner.adjust_oxy_loss(-6 * seconds_between_ticks) //Just a bit more than normal breathing.
 
 ///////////////////////////////////////////////////////
 //////////////////CONSUMING EXTRACTS///////////////////
@@ -244,24 +260,25 @@
 	id = "firecookie"
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	duration = 100
+	duration = 10 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/firecookie/on_apply()
-	ADD_TRAIT(owner, TRAIT_RESISTCOLD,"firecookie")
+	ADD_TRAIT(owner, TRAIT_RESISTCOLD, TRAIT_STATUS_EFFECT(id))
 	owner.adjust_bodytemperature(110)
 	return ..()
 
 /datum/status_effect/firecookie/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_RESISTCOLD,"firecookie")
+	REMOVE_TRAIT(owner, TRAIT_RESISTCOLD, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/watercookie
 	id = "watercookie"
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	duration = 100
+	duration = 10 SECONDS
 
 /datum/status_effect/watercookie/on_apply()
-	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER,"watercookie")
+	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/watercookie/tick(seconds_between_ticks)
@@ -269,62 +286,56 @@
 		T.MakeSlippery(TURF_WET_WATER, min_wet_time = 10, wet_time_to_add = 5)
 
 /datum/status_effect/watercookie/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER,"watercookie")
+	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/metalcookie
 	id = "metalcookie"
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
-	duration = 100
+	duration = 10 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/metalcookie/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.brute_mod *= 0.9
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 0.9)
 	return ..()
 
 /datum/status_effect/metalcookie/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.brute_mod /= 0.9
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 1 / 0.9)
 
 /datum/status_effect/sparkcookie
 	id = "sparkcookie"
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
-	duration = 300
-	var/original_coeff
+	duration = 30 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/sparkcookie/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		original_coeff = H.physiology.siemens_coeff
-		H.physiology.siemens_coeff = 0
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/sparkcookie/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.siemens_coeff = original_coeff
+	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/toxincookie
 	id = "toxincookie"
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	duration = 600
+	duration = 1 MINUTES
+	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/toxincookie/on_apply()
-	ADD_TRAIT(owner, TRAIT_TOXINLOVER,"toxincookie")
+	ADD_TRAIT(owner, TRAIT_TOXINLOVER, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/toxincookie/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_TOXINLOVER,"toxincookie")
+	REMOVE_TRAIT(owner, TRAIT_TOXINLOVER, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/timecookie
 	id = "timecookie"
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	duration = 600
+	duration = 1 MINUTES
+	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/timecookie/on_apply()
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/timecookie)
@@ -338,10 +349,10 @@
 	id = "lovecookie"
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	duration = 300
+	duration = 30 SECONDS
 
 /datum/status_effect/lovecookie/tick(seconds_between_ticks)
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		return
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
@@ -359,7 +370,7 @@
 	id = "tarcookie"
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	duration = 100
+	duration = 10 SECONDS
 
 /datum/status_effect/tarcookie/tick(seconds_between_ticks)
 	for(var/mob/living/carbon/human/L in range(get_turf(owner),1))
@@ -370,7 +381,7 @@
 	id = "tarfoot"
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	duration = 30
+	duration = 3 SECONDS
 
 /datum/status_effect/tarfoot/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/tarfoot)
@@ -383,12 +394,12 @@
 	id = "spookcookie"
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	duration = 300
+	duration = 30 SECONDS
 
 /datum/status_effect/spookcookie/on_apply()
-	var/image/I = image(icon = 'icons/mob/human/human.dmi', icon_state = "skeleton", layer = ABOVE_MOB_LAYER, loc = owner)
-	I.override = 1
-	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", I)
+	var/image/skeleton_image = image(icon = 'icons/mob/human/human.dmi', icon_state = "skeleton", layer = ABOVE_MOB_LAYER, loc = owner)
+	skeleton_image.override = TRUE
+	owner.add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/everyone, "spookyscary", skeleton_image)
 	return ..()
 
 /datum/status_effect/spookcookie/on_remove()
@@ -398,7 +409,7 @@
 	id = "peacecookie"
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	duration = 100
+	duration = 10 SECONDS
 
 /datum/status_effect/peacecookie/tick(seconds_between_ticks)
 	for(var/mob/living/L in range(get_turf(owner),1))
@@ -408,39 +419,37 @@
 	id = "plur"
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	duration = 30
+	duration = 3 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/plur/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, "peacecookie")
+	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/plur/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "peacecookie")
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/adamantinecookie
 	id = "adamantinecookie"
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = null
-	duration = 100
+	duration = 10 SECONDS
+	tick_interval = STATUS_EFFECT_NO_TICK
 
 /datum/status_effect/adamantinecookie/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.burn_mod *= 0.9
+	MODIFY_PHYSIOLOGY(owner, BURN, 0.9)
 	return ..()
 
 /datum/status_effect/adamantinecookie/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.burn_mod /= 0.9
+	MODIFY_PHYSIOLOGY(owner, BURN, 1 / 0.9)
 
 ///////////////////////////////////////////////////////
 //////////////////STABILIZED EXTRACTS//////////////////
 ///////////////////////////////////////////////////////
 
-/datum/status_effect/stabilized //The base stabilized extract effect, has no effect of its' own.
+/datum/status_effect/stabilized //The base stabilized extract effect, has no effect of its own.
 	id = "stabilizedbase"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	/// Item which provides this buff
 	var/obj/item/slimecross/stabilized/linked_extract
@@ -474,7 +483,7 @@
 
 /datum/status_effect/stabilized/grey/tick(seconds_between_ticks)
 	for(var/mob/living/basic/slime/slimes_in_range in range(1, get_turf(owner)))
-		if(!(REF(owner) in slimes_in_range.faction))
+		if(!slimes_in_range.has_ally(owner))
 			to_chat(owner, span_notice("[linked_extract] pulses gently as it communicates with [slimes_in_range]."))
 			slimes_in_range.befriend(owner)
 	return ..()
@@ -510,17 +519,17 @@
 	healed_last_tick = FALSE
 	var/need_mob_update = FALSE
 
-	if(owner.getBruteLoss() > 0)
-		need_mob_update += owner.adjustBruteLoss(-0.2, updating_health = FALSE)
+	if(owner.get_brute_loss() > 0)
+		need_mob_update += owner.adjust_brute_loss(-0.2, updating_health = FALSE)
 		healed_last_tick = TRUE
 
-	if(owner.getFireLoss() > 0)
-		need_mob_update += owner.adjustFireLoss(-0.2, updating_health = FALSE)
+	if(owner.get_fire_loss() > 0)
+		need_mob_update += owner.adjust_fire_loss(-0.2, updating_health = FALSE)
 		healed_last_tick = TRUE
 
-	if(owner.getToxLoss() > 0)
+	if(owner.get_tox_loss() > 0)
 		// Forced, so slimepeople are healed as well.
-		need_mob_update += owner.adjustToxLoss(-0.2, updating_health = FALSE, forced = TRUE)
+		need_mob_update += owner.adjust_tox_loss(-0.2, updating_health = FALSE, forced = TRUE)
 		healed_last_tick = TRUE
 
 	if(need_mob_update)
@@ -532,7 +541,7 @@
 
 	return ..()
 
-/datum/status_effect/stabilized/purple/get_examine_text()
+/datum/status_effect/stabilized/purple/get_examine_text(mob/examiner)
 	if(healed_last_tick)
 		return span_warning("[owner.p_They()] [owner.p_are()] regenerating slowly, purplish goo filling in small injuries!")
 
@@ -543,11 +552,11 @@
 	colour = SLIME_TYPE_BLUE
 
 /datum/status_effect/stabilized/blue/on_apply()
-	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, "slimestatus")
+	ADD_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/stabilized/blue/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, "slimestatus")
+	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/stabilized/metal
 	id = "stabilizedmetal"
@@ -578,7 +587,7 @@
 	var/cooldown = 10
 	var/max_cooldown = 10
 
-/datum/status_effect/stabilized/yellow/get_examine_text()
+/datum/status_effect/stabilized/yellow/get_examine_text(mob/examiner)
 	return span_warning("Nearby electronics seem just a little more charged wherever [owner.p_they()] go[owner.p_es()].")
 
 /datum/status_effect/stabilized/yellow/tick(seconds_between_ticks)
@@ -587,11 +596,11 @@
 		return ..()
 	cooldown = max_cooldown
 	var/list/batteries = list()
-	for(var/obj/item/stock_parts/cell/C in owner.get_all_contents())
+	for(var/obj/item/stock_parts/power_store/C in assoc_to_values(owner.get_all_cells()))
 		if(C.charge < C.maxcharge)
 			batteries += C
 	if(batteries.len)
-		var/obj/item/stock_parts/cell/ToCharge = pick(batteries)
+		var/obj/item/stock_parts/power_store/ToCharge = pick(batteries)
 		ToCharge.charge += min(ToCharge.maxcharge - ToCharge.charge, ToCharge.maxcharge/10) //10% of the cell, or to maximum.
 	return ..()
 
@@ -608,7 +617,7 @@
 	var/obj/item/hothands/fire
 
 /datum/status_effect/stabilized/darkpurple/on_apply()
-	ADD_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
+	ADD_TRAIT(owner, TRAIT_RESISTHEATHANDS, TRAIT_STATUS_EFFECT(id))
 	fire = new(owner)
 	return ..()
 
@@ -622,10 +631,10 @@
 	return ..()
 
 /datum/status_effect/stabilized/darkpurple/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_RESISTHEATHANDS, "slimestatus")
-	qdel(fire)
+	REMOVE_TRAIT(owner, TRAIT_RESISTHEATHANDS, TRAIT_STATUS_EFFECT(id))
+	QDEL_NULL(fire)
 
-/datum/status_effect/stabilized/darkpurple/get_examine_text()
+/datum/status_effect/stabilized/darkpurple/get_examine_text(mob/examiner)
 	return span_notice("[owner.p_Their()] fingertips burn brightly!")
 
 /datum/status_effect/stabilized/darkblue
@@ -665,15 +674,11 @@
 	colour = SLIME_TYPE_SILVER
 
 /datum/status_effect/stabilized/silver/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.hunger_mod *= 0.8 //20% buff
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HUNGER_MOD, 0.8)
 	return ..()
 
 /datum/status_effect/stabilized/silver/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.hunger_mod /= 0.8
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HUNGER_MOD, 1.25)
 
 //Bluespace has an icon because it's kinda active.
 /atom/movable/screen/alert/status_effect/bluespaceslime
@@ -683,7 +688,8 @@
 
 /datum/status_effect/bluespacestabilization
 	id = "stabilizedbluespacecooldown"
-	duration = 1200
+	duration = 2 MINUTES
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = null
 
 /datum/status_effect/stabilized/bluespace
@@ -704,12 +710,12 @@
 	if(healthcheck && (healthcheck - owner.health) > 5)
 		owner.visible_message(span_warning("[linked_extract] notices the sudden change in [owner]'s physical health, and activates!"))
 		do_sparks(5,FALSE,owner)
-		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
+		var/turf/emergency_turf = find_safe_turf(owner.z, extended_safety_checks = TRUE)
 		var/range = 0
-		if(!F)
-			F = get_turf(owner)
+		if(!emergency_turf)
+			emergency_turf = get_turf(owner)
 			range = 50
-		if(do_teleport(owner, F, range, channel = TELEPORT_CHANNEL_BLUESPACE))
+		if(do_teleport(owner, emergency_turf, range, channel = TELEPORT_CHANNEL_BLUESPACE))
 			to_chat(owner, span_notice("[linked_extract] will take some time to re-align you on the bluespace axis."))
 			do_sparks(5,FALSE,owner)
 			owner.apply_status_effect(/datum/status_effect/bluespacestabilization)
@@ -741,13 +747,19 @@
 
 /datum/status_effect/stabilized/cerulean/on_apply()
 	var/typepath = owner.type
-	clone = new typepath(owner.loc)
-	var/mob/living/carbon/O = owner
-	var/mob/living/carbon/C = clone
-	if(istype(C) && istype(O))
-		C.real_name = O.real_name
-		O.dna.transfer_identity(C)
-		C.updateappearance(mutcolor_update=1)
+	clone = new typepath(owner.drop_location())
+	if(iscarbon(owner) && iscarbon(clone))
+		var/mob/living/carbon/human/human_owner = owner
+		var/mob/living/carbon/human/human_clone = clone
+		human_clone.physique = human_owner.physique
+		human_clone.real_name = human_owner.real_name
+		human_clone.age = human_owner.age
+		human_clone.voice = human_owner.voice
+		human_clone.voice_filter = human_owner.voice_filter
+		for(var/datum/quirk/original_quirks as anything in human_owner.quirks)
+			human_clone.add_quirk(original_quirks.type, add_unique = FALSE, announce = FALSE)
+		human_owner.dna.copy_dna(human_clone.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
+		human_clone.updateappearance(mutcolor_update = TRUE)
 	return ..()
 
 /datum/status_effect/stabilized/cerulean/tick(seconds_between_ticks)
@@ -773,18 +785,14 @@
 /datum/status_effect/stabilized/pyrite
 	id = "stabilizedpyrite"
 	colour = SLIME_TYPE_PYRITE
-	var/originalcolor
-
-/datum/status_effect/stabilized/pyrite/on_apply()
-	originalcolor = owner.color
-	return ..()
 
 /datum/status_effect/stabilized/pyrite/tick(seconds_between_ticks)
-	owner.color = rgb(rand(0,255),rand(0,255),rand(0,255))
+	var/new_color = rgb(rand(0, 360), 100, 50, space = COLORSPACE_HSL)
+	owner.add_atom_colour(color_transition_filter(new_color, SATURATION_OVERRIDE), TEMPORARY_COLOUR_PRIORITY)
 	return ..()
 
 /datum/status_effect/stabilized/pyrite/on_remove()
-	owner.color = originalcolor
+	owner.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY)
 
 /datum/status_effect/stabilized/red
 	id = "stabilizedred"
@@ -810,12 +818,12 @@
 		var/mob/living/carbon/human/H = owner
 		originalDNA = new H.dna.type
 		originalname = H.real_name
-		H.dna.copy_dna(originalDNA)
+		H.dna.copy_dna(originalDNA, COPY_DNA_SE|COPY_DNA_SPECIES)
 		randomize_human(H)
 	return ..()
 
 // Only occasionally give examiners a warning.
-/datum/status_effect/stabilized/green/get_examine_text()
+/datum/status_effect/stabilized/green/get_examine_text(mob/examiner)
 	if(prob(50))
 		return span_warning("[owner.p_They()] look[owner.p_s()] a bit green and gooey...")
 
@@ -824,10 +832,11 @@
 /datum/status_effect/stabilized/green/on_remove()
 	to_chat(owner, span_notice("You feel more like yourself."))
 	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		originalDNA.transfer_identity(H)
-		H.real_name = originalname
-		H.updateappearance(mutcolor_update=1)
+		var/mob/living/carbon/human/human = owner
+		originalDNA.copy_dna(human.dna, COPY_DNA_SE|COPY_DNA_SPECIES|COPY_DNA_MUTATIONS)
+		human.real_name = originalname
+		human.updateappearance(mutcolor_update=1)
+	originalDNA = null
 
 /datum/status_effect/brokenpeace
 	id = "brokenpeace"
@@ -836,7 +845,7 @@
 
 /datum/status_effect/pinkdamagetracker
 	id = "pinkdamagetracker"
-	duration = -1
+	duration = STATUS_EFFECT_PERMANENT
 	alert_type = null
 	var/damage = 0
 	var/lasthealth
@@ -856,26 +865,20 @@
 
 /datum/status_effect/stabilized/pink/on_apply()
 	faction_name = FACTION_PINK_EXTRACT(owner)
-	owner.faction |= faction_name
+	owner.add_ally(faction_name)
 	to_chat(owner, span_notice("[linked_extract] pulses, generating a fragile aura of peace."))
 	return ..()
 
 /datum/status_effect/stabilized/pink/tick(seconds_between_ticks)
 	update_nearby_mobs()
-	var/has_faction = FALSE
-	for (var/check_faction in owner.faction)
-		if(check_faction != faction_name)
-			continue
-		has_faction = TRUE
-		break
-
-	if(has_faction)
+	var/has_ally = owner.has_ally(faction_name)
+	if(has_ally)
 		if(owner.has_status_effect(/datum/status_effect/brokenpeace))
-			owner.faction -= faction_name
+			owner.remove_ally(faction_name)
 			to_chat(owner, span_userdanger("The peace has been broken! Hostile creatures will now react to you!"))
 	else if(!owner.has_status_effect(/datum/status_effect/brokenpeace))
 		to_chat(owner, span_notice("[linked_extract] pulses, generating a fragile aura of peace."))
-		owner.faction |= faction_name
+		owner.add_ally(faction_name)
 	return ..()
 
 /// Pacifies mobs you can see and unpacifies mobs you no longer can
@@ -894,7 +897,7 @@
 			return // No point continuing from here if we're going to end the effect
 		if(beast in visible_things)
 			continue
-		beast.faction -= faction_name
+		beast.remove_ally(faction_name)
 		beast.remove_status_effect(/datum/status_effect/pinkdamagetracker)
 		mobs -= weak_mob
 
@@ -907,16 +910,16 @@
 			continue
 		mobs += weak_mob
 		beast.apply_status_effect(/datum/status_effect/pinkdamagetracker)
-		beast.faction |= faction_name
+		beast.add_faction(faction_name)
 
 /datum/status_effect/stabilized/pink/on_remove()
 	for(var/datum/weakref/weak_mob as anything in mobs)
 		var/mob/living/beast = weak_mob.resolve()
 		if(isnull(beast))
 			continue
-		beast.faction -= faction_name
+		beast.remove_faction(faction_name)
 		beast.remove_status_effect(/datum/status_effect/pinkdamagetracker)
-	owner.faction -= faction_name
+	owner.remove_faction(faction_name)
 
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"
@@ -928,7 +931,7 @@
 		qdel(linked_extract)
 	return ..()
 
-/datum/status_effect/stabilized/oil/get_examine_text()
+/datum/status_effect/stabilized/oil/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] smell[owner.p_s()] of sulfur and oil!")
 
 /// How much damage is dealt per healing done for the stabilized back.
@@ -967,7 +970,7 @@
 	to_chat(owner, span_boldnotice("You feel your hands melt around [draining]'s neck as you start to drain [draining.p_them()] of [draining.p_their()] life!"))
 	to_chat(draining, span_userdanger("[owner]'s hands melt around your neck as you can feel your life starting to drain away!"))
 
-/datum/status_effect/stabilized/black/get_examine_text()
+/datum/status_effect/stabilized/black/get_examine_text(mob/examiner)
 	var/mob/living/draining = draining_ref?.resolve()
 	if(!draining)
 		return null
@@ -985,11 +988,11 @@
 		return
 
 	var/list/healing_types = list()
-	if(owner.getBruteLoss() > 0)
+	if(owner.get_brute_loss() > 0)
 		healing_types += BRUTE
-	if(owner.getFireLoss() > 0)
+	if(owner.get_fire_loss() > 0)
 		healing_types += BURN
-	if(owner.getToxLoss() > 0)
+	if(owner.get_tox_loss() > 0)
 		healing_types += TOX
 
 	if(length(healing_types))
@@ -1007,7 +1010,7 @@
 
 /datum/status_effect/stabilized/lightpink/on_apply()
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
-	ADD_TRAIT(owner, TRAIT_PACIFISM, STABILIZED_LIGHT_PINK_EXTRACT_TRAIT)
+	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/stabilized/lightpink/tick(seconds_between_ticks)
@@ -1019,13 +1022,13 @@
 
 /datum/status_effect/stabilized/lightpink/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/lightpink)
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, STABILIZED_LIGHT_PINK_EXTRACT_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/stabilized/adamantine
 	id = "stabilizedadamantine"
 	colour = SLIME_TYPE_ADAMANTINE
 
-/datum/status_effect/stabilized/adamantine/get_examine_text()
+/datum/status_effect/stabilized/adamantine/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] [owner.p_have()] strange metallic coating on [owner.p_their()] skin.")
 
 /datum/status_effect/stabilized/gold
@@ -1058,15 +1061,11 @@
 		qdel(familiar)
 
 /datum/status_effect/stabilized/adamantine/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.damage_resistance += 5
+	owner.damage_resistance += 5
 	return ..()
 
 /datum/status_effect/stabilized/adamantine/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		H.physiology.damage_resistance -= 5
+	owner.damage_resistance -= 5
 
 /datum/status_effect/stabilized/rainbow
 	id = "stabilizedrainbow"
@@ -1077,7 +1076,7 @@
 		var/obj/item/slimecross/stabilized/rainbow/X = linked_extract
 		if(istype(X))
 			if(X.regencore)
-				X.regencore.afterattack(owner,owner,TRUE)
+				X.regencore.interact_with_atom(owner, owner)
 				X.regencore = null
 				owner.visible_message(span_warning("[owner] flashes a rainbow of colors, and [owner.p_their()] skin is coated in a milky regenerative goo!"))
 				qdel(src)

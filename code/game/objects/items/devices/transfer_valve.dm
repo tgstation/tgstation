@@ -24,11 +24,60 @@
 
 /obj/item/transfer_valve/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/cuffable_item)
 	RegisterSignal(src, COMSIG_ITEM_FRIED, PROC_REF(on_fried))
+	register_context()
+	register_item_context()
 
 /obj/item/transfer_valve/Destroy()
 	attached_device = null
 	return ..()
+
+/obj/item/transfer_valve/examine(mob/user)
+	. = ..()
+	if(tank_one)
+		. += span_notice("A [tank_one] is attached to the primary port.")
+	if(tank_two)
+		. += span_notice("A [tank_two] is attached to the secondary port.")
+	if(!tank_one || !tank_two)
+		. += span_notice("You could attach a gas tank onto the open port.")
+	if(attached_device)
+		. += span_notice("A [attached_device] is attached to the fuse input.")
+	if(wired)
+		. += span_notice("It looks like some nutjob added makeshift backpack straps with [EXAMINE_HINT("wires")]...")
+		. += span_notice("You could cut off the straps with [EXAMINE_HINT(TOOL_WIRECUTTER)].")
+
+/obj/item/transfer_valve/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(tank_one || tank_two)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove [tank_one || tank_two]"
+		. = CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item) && is_type_in_list(held_item, list(/obj/item/tank, /obj/item/assembly)))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach [held_item]"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
+
+/obj/item/transfer_valve/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = NONE
+	if(istype(target, /obj/vehicle/ridden/wheelchair))
+		var/obj/vehicle/ridden/wheelchair/chair = target
+		if(!chair.bell_attached)
+			context[SCREENTIP_CONTEXT_LMB] = "Attach TTV to wheelchair."
+			return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/transfer_valve/click_alt(mob/user)
+	if(tank_one)
+		split_gases()
+		valve_open = FALSE
+		tank_one.forceMove(drop_location())
+	else if(tank_two)
+		split_gases()
+		valve_open = FALSE
+		tank_two.forceMove(drop_location())
+
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/transfer_valve/IsAssemblyHolder()
 	return TRUE
@@ -42,64 +91,105 @@
 		tank_two = null
 		update_appearance()
 
-/obj/item/transfer_valve/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/tank))
-		if(tank_one && tank_two)
-			to_chat(user, span_warning("There are already two tanks attached, remove one first!"))
-			return
+/obj/item/transfer_valve/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(istype(interacting_with, /obj/vehicle/ridden/wheelchair))
+		var/obj/vehicle/ridden/wheelchair/chair = interacting_with
 
-		if(!tank_one)
-			if(!user.transferItemToLoc(item, src))
-				return
-			tank_one = item
-			to_chat(user, span_notice("You attach the tank to the transfer valve."))
-		else if(!tank_two)
-			if(!user.transferItemToLoc(item, src))
-				return
-			tank_two = item
-			to_chat(user, span_notice("You attach the tank to the transfer valve."))
+		if (chair.bomb_attached)
+			user.balloon_alert(user, "already has a TTV!")
+			return ITEM_INTERACT_FAILURE
+		user.balloon_alert(user, "attaching TTV...")
+		if (!do_after(user, 0.5 SECONDS, chair))
+			return ITEM_INTERACT_FAILURE
 
-		update_appearance()
-//TODO: Have this take an assemblyholder
-	else if(isassembly(item))
-		var/obj/item/assembly/A = item
-		if(A.secured)
-			to_chat(user, span_notice("The device is secured."))
-			return
-		if(attached_device)
-			to_chat(user, span_warning("There is already a device attached to the valve, remove it first!"))
-			return
-		if(!user.transferItemToLoc(item, src))
-			return
-		attached_device = A
-		to_chat(user, span_notice("You attach the [item] to the valve controls and secure it."))
-		A.holder = src
-		A.on_attach()
-		A.toggle_secure() //this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
-		log_bomber(user, "attached a [item.name] to a ttv -", src, null, FALSE)
-		attacher = user
+		chair.attach_bomb(src)
+		user.log_message("attached [src] to [chair]", LOG_GAME)
+		return ITEM_INTERACT_SUCCESS
+	else if(istype(interacting_with, /obj/item/tank))
+		if(try_attach_tank(interacting_with, user))
+			return ITEM_INTERACT_SUCCESS
+		else
+			return ITEM_INTERACT_FAILURE
+	else if(isassembly(interacting_with))
+		if(try_attach_assembly(interacting_with))
+			return ITEM_INTERACT_SUCCESS
+		else
+			return ITEM_INTERACT_FAILURE
+	return NONE
 
-	else if(istype(item, /obj/item/stack/cable_coil) && !wired)
-		var/obj/item/stack/cable_coil/coil = item
+/obj/item/transfer_valve/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/tank))
+		try_attach_tank(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	//TODO: Have this take an assemblyholder <-- commit five years ago
+	if(isassembly(tool))
+		try_attach_assembly(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/cable_coil) && !wired)
+		var/obj/item/stack/cable_coil/coil = tool
 		if (coil.get_amount() < 15)
 			to_chat(user, span_warning("You need fifteen lengths of coil for this!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		coil.use(15)
 		to_chat(user, span_notice("You add some cables, not being really sure why. Looks like <i>backpack</i> straps."))
 		wired = TRUE
 		slot_flags |= ITEM_SLOT_BACK
 		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else if(item.tool_behaviour == TOOL_WIRECUTTER && wired)
-		item.play_tool_sound(src)
-		to_chat(user, span_notice("You remove the cables."))
-		wired = FALSE
-		slot_flags &= ~ITEM_SLOT_BACK
-		Move(drop_location())
-		new /obj/item/stack/cable_coil(drop_location(), 15)
-		update_appearance()
+	return NONE
 
-	return
+/obj/item/transfer_valve/wirecutter_act(mob/living/user, obj/item/tool)
+	if(!wired)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You remove the cables."))
+	wired = FALSE
+	slot_flags &= ~ITEM_SLOT_BACK
+	forceMove(drop_location())
+	new /obj/item/stack/cable_coil(drop_location(), 15)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+
+/obj/item/transfer_valve/proc/try_attach_tank(obj/item/tank/new_tank, mob/user)
+	if(!tank_one)
+		if(!user.transferItemToLoc(new_tank, src))
+			return FALSE
+		tank_one = new_tank
+		to_chat(user, span_notice("You attach the [new_tank] to the transfer valve's primary port."))
+	else if(!tank_two)
+		if(!user.transferItemToLoc(new_tank, src))
+			return FALSE
+		tank_two = new_tank
+		to_chat(user, span_notice("You attach the [new_tank] to the transfer valve's secondary port."))
+	else
+		to_chat(user, span_warning("There are already two tanks attached, remove one first!"))
+		return FALSE
+
+	update_appearance()
+	return TRUE
+
+/obj/item/transfer_valve/proc/try_attach_assembly(obj/item/assembly/A, mob/user)
+	if(A.secured)
+		to_chat(user, span_notice("The [A] is secured; unsecure it first."))
+		return FALSE
+	if(attached_device)
+		to_chat(user, span_warning("There is already a device attached to the valve, remove it first!"))
+		return FALSE
+	if(!user.transferItemToLoc(A, src))
+		return FALSE
+	attached_device = A
+	to_chat(user, span_notice("You attach the [A] to the valve controls and secure it."))
+	A.holder = src
+	A.on_attach()
+	A.toggle_secure() //this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
+	log_bomber(user, "attached a [A.name] to a ttv -", src, null, FALSE)
+	attacher = user
+	return TRUE
 
 //These keep attached devices synced up, for example a TTV with a mouse trap being found in a bag so it's triggered, or moving the TTV with an infrared beam sensor to update the beam's direction.
 /obj/item/transfer_valve/Move()
@@ -183,6 +273,11 @@
 	if(!istype(target) || (target != tank_one && target != tank_two))
 		return FALSE
 
+	for(var/obj/effect/forcefield/cosmic_field/potential_field as anything in GLOB.active_cosmic_fields)
+		if(get_dist(potential_field, src) < 3)
+			new /obj/effect/temp_visual/revenant(get_turf(src))
+			return FALSE
+
 	// Throw both tanks into processing queue
 	var/datum/gas_mixture/target_mix = target.return_air()
 	var/datum/gas_mixture/other_mix
@@ -211,6 +306,7 @@
 	it explodes properly when it gets a signal (and it does).
 */
 /obj/item/transfer_valve/proc/toggle_valve(obj/item/tank/target, change_volume = TRUE)
+	playsound(src, 'sound/effects/valve_opening.ogg', 50)
 	if(!valve_open && tank_one && tank_two)
 		var/turf/bombturf = get_turf(src)
 
@@ -219,7 +315,7 @@
 		if(attached_device)
 			if(issignaler(attached_device))
 				var/obj/item/assembly/signaler/attached_signaller = attached_device
-				attachment = "<A HREF='?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_signaller]</A>"
+				attachment = "<A href='byond://?_src_=holder;[HrefToken()];secrets=list_signalers'>[attached_signaller]</A>"
 				attachment_signal_log = attached_signaller.last_receive_signal_log ? "The following log entry is the last one associated with the attached signaller<br>[attached_signaller.last_receive_signal_log]" : "There is no signal log entry."
 			else
 				attachment = attached_device
@@ -290,7 +386,7 @@
 	data["valve"] = valve_open
 	return data
 
-/obj/item/transfer_valve/ui_act(action, params)
+/obj/item/transfer_valve/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

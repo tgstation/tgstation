@@ -15,6 +15,8 @@
 	var/map_name
 	/// place_on_top: Whether to use /turf/proc/PlaceOnTop rather than /turf/proc/ChangeTurf
 	var/place_on_top = FALSE
+	/// type of turf reservation
+	var/turf_reservation_type = /datum/turf_reservation
 
 /datum/lazy_template/New()
 	reservations = list()
@@ -62,6 +64,7 @@
 		width,
 		height,
 		parsed_template.parsed_bounds[MAP_MAXZ],
+		reservation_type = turf_reservation_type,
 	)
 	if(!reservation)
 		CRASH("Failed to reserve a block for lazy template: '[key]'")
@@ -77,6 +80,17 @@
 	for(var/z_idx in parsed_template.parsed_bounds[MAP_MAXZ] to 1 step -1)
 		var/turf/bottom_left = reservation.bottom_left_turfs[z_idx]
 		var/turf/top_right = reservation.top_right_turfs[z_idx]
+
+		// Make our turfs dead to atmos
+		// Cache for sonic speed
+		var/list/to_rebuild = SSair.adjacent_rebuild
+		for(var/turf/contained_turf as anything in block(bottom_left, top_right))
+			SSair.remove_from_active(contained_turf)
+			to_rebuild -= contained_turf
+			for(var/turf/sub_turf as anything in contained_turf.atmos_adjacent_turfs)
+				sub_turf.atmos_adjacent_turfs?.Remove(contained_turf)
+			contained_turf.atmos_adjacent_turfs?.Cut()
+			CHECK_TICK
 
 		load_map(
 			file(load_path),
@@ -101,12 +115,21 @@
 				loaded_atom_movables |= thing
 
 	SSatoms.InitializeAtoms(loaded_areas + loaded_atom_movables + loaded_turfs)
+	for(var/turf/turf as anything in loaded_turfs)
+		CALCULATE_ADJACENT_TURFS(turf, NORMAL_TURF)
+		CHECK_TICK
+
+	SSlighting.setup_static_lighting_if_needed(loaded_turfs)
 	SSmachines.setup_template_powernets(loaded_cables)
 	SSair.setup_template_machinery(loaded_atmospherics)
 
 	SEND_SIGNAL(src, COMSIG_LAZY_TEMPLATE_LOADED, loaded_atom_movables, loaded_turfs, loaded_areas)
 	reservations += reservation
 	return reservation
+
+/datum/lazy_template/nukie_elevator
+	key = LAZY_TEMPLATE_KEY_NUKIEELEVATOR
+	map_name = "nukie_elevator"
 
 /datum/lazy_template/nukie_base
 	key = LAZY_TEMPLATE_KEY_NUKIEBASE
@@ -127,3 +150,7 @@
 /datum/lazy_template/heretic_sacrifice_room
 	key = LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE
 	map_name = "heretic_sacrifice"
+
+/datum/lazy_template/voidwalker_void
+	key = LAZY_TEMPLATE_KEY_VOIDWALKER_VOID
+	map_name = "voidwalker_void"

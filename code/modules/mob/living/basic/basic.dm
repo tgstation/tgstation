@@ -2,19 +2,25 @@
 /mob/living/basic
 	name = "basic mob"
 	icon = 'icons/mob/simple/animal.dmi'
+	abstract_type = /mob/living/basic
 	health = 20
 	maxHealth = 20
-	gender = PLURAL
+	max_stamina = BASIC_MOB_STAMINA_MATCH_HEALTH
+	gender = PLURAL // Plural means we randomize by default.
 	living_flags = MOVES_ON_ITS_OWN
-	status_flags = CANPUSH
+	status_flags = CANPUSH | CANSTUN
 	fire_stack_decay_rate = -5 // Reasonably fast as NPCs will not usually actively extinguish themselves
 
 	var/basic_mob_flags = NONE
 
 	///Defines how fast the basic mob can move. This is not a multiplier
 	var/speed = 1
-	///How much stamina the mob recovers per second
-	var/stamina_recovery = 5
+	///How much stamina the mob recovers per second, if set to >0 stamina loses its normal function of resetting after a set amount of time
+	var/stamina_recovery = 0
+	///How slow will we get when we lose all our stamina?
+	var/max_stamina_slowdown = 3
+	///Percentage of max stamina loss we need to lose in order to get stunned
+	var/stamina_crit_threshold = 100
 
 	///how much damage this basic mob does to objects, if any.
 	var/obj_damage = 0
@@ -25,7 +31,7 @@
 	///How much wounding power it has
 	var/wound_bonus = CANT_WOUND
 	///How much bare wounding power it has
-	var/bare_wound_bonus = 0
+	var/exposed_wound_bonus = 0
 	///If the attacks from this are sharp
 	var/sharpness = NONE
 
@@ -34,18 +40,15 @@
 	/// Override for the visual attack effect shown on 'do_attack_animation()'.
 	var/attack_vis_effect
 	///Played when someone punches the creature.
-	var/attacked_sound = SFX_PUNCH //This should be an element
+	var/attacked_sound = /datum/sound_effect/punch //This should be an element
 	/// How often can you melee attack?
 	var/melee_attack_cooldown = 2 SECONDS
 
 	/// Variable maintained for compatibility with attack_animal procs until simple animals can be refactored away. Use element instead of setting manually.
 	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 
-	/// 1 for full damage, 0 for none, -1 for 1:1 heal from that source.
-	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
-
 	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
-	var/list/speak_emote = list()
+	var/list/speak_emote
 
 	///When someone interacts with the simple animal.
 	///Help-intent verb in present continuous tense.
@@ -79,6 +82,9 @@
 	///We only try to show a gibbing animation if this exists.
 	var/icon_gib = null
 
+	/// If we randomize our gender when its default is set to plural
+	var/randomize_gender = TRUE
+
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
 	///Sentience type, for slime potions. SHOULD BE AN ELEMENT BUT I DONT CARE ABOUT IT FOR NOW
@@ -101,7 +107,7 @@
 /mob/living/basic/Initialize(mapload)
 	. = ..()
 
-	if(gender == PLURAL)
+	if((gender == PLURAL) && randomize_gender)
 		gender = pick(MALE,FEMALE)
 
 	if(!real_name)
@@ -111,8 +117,10 @@
 		stack_trace("Basic mob being instantiated in nullspace")
 
 	update_basic_mob_varspeed()
+	apply_target_randomisation()
+	make_stamina_slowable()
 
-	if(speak_emote)
+	if(LAZYLEN(speak_emote))
 		speak_emote = string_list(speak_emote)
 
 	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
@@ -121,7 +129,6 @@
 		return
 	apply_atmos_requirements(mapload)
 	apply_temperature_requirements(mapload)
-	apply_target_randomisation()
 
 /mob/living/basic/proc/on_ssair_init(datum/source)
 	SIGNAL_HANDLER
@@ -143,15 +150,23 @@
 		return
 	AddElement(/datum/element/body_temp_sensitive, minimum_survivable_temperature, maximum_survivable_temperature, unsuitable_cold_damage, unsuitable_heat_damage, mapload)
 
+/// Ensures that this mob can be slowed from taking stamina damage
+/mob/living/basic/proc/make_stamina_slowable()
+	if (max_stamina == BASIC_MOB_STAMINA_MATCH_HEALTH)
+		max_stamina = maxHealth
+	if (GET_PHYSIOLOGY(src, STAMINA) <= 0 || max_stamina <= 0 || max_stamina_slowdown <= 0)
+		return
+	AddElement(/datum/element/basic_stamina_slowdown, minium_stamina_threshold = max_stamina / 3, maximum_stamina = max_stamina, maximum_slowdown = max_stamina_slowdown)
+
 /mob/living/basic/proc/apply_target_randomisation()
 	if (basic_mob_flags & PRECISE_ATTACK_ZONES)
 		return
 	AddElement(/datum/element/attack_zone_randomiser)
 
-/mob/living/basic/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(staminaloss > 0)
-		adjustStaminaLoss(-stamina_recovery * seconds_per_tick, forced = TRUE)
+		adjust_stamina_loss(-stamina_recovery * seconds_per_tick)
 
 /mob/living/basic/get_default_say_verb()
 	return length(speak_emote) ? pick(speak_emote) : ..()
@@ -205,10 +220,6 @@
 		REMOVE_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 	SEND_SIGNAL(src, COMSIG_BASICMOB_LOOK_ALIVE)
 
-/mob/living/basic/update_sight()
-	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
-	return ..()
-
 /mob/living/basic/examine(mob/user)
 	. = ..()
 	if(stat != DEAD)
@@ -216,14 +227,22 @@
 	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
-	face_atom(target)
-	if (!ignore_cooldown)
-		changeNext_move(melee_attack_cooldown)
-	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target, Adjacent(target), modifiers) & COMPONENT_HOSTILE_NO_ATTACK)
-		return FALSE //but more importantly return before attack_animal called
+	var/early_melee_result = early_melee_attack(target, modifiers, ignore_cooldown)
+	if(early_melee_result) //Truthy value means we want to end the chain
+		if(!ignore_cooldown && early_melee_result == BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN)
+			changeNext_move(melee_attack_cooldown)
+		return FALSE
 	var/result = target.attack_basic_mob(src, modifiers)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
+	if(result && !ignore_cooldown) //Only set cooldown if the attack achieved something, which is the case when the value is true-ey. This could definitely be done better but is probably easier once living/simple is gone and we no longer use attack_animal.
+		changeNext_move(melee_attack_cooldown)
 	return result
+
+/mob/living/basic/proc/early_melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
+	face_atom(target)
+	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target, Adjacent(target), modifiers) & COMPONENT_HOSTILE_NO_ATTACK)
+		return BASIC_MOB_END_ATTACK_CHAIN //but more importantly return before attack_animal called
+	return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 
 /mob/living/basic/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	melee_attack(attack_target, modifiers)
@@ -266,55 +285,40 @@
 		REMOVE_TRAIT(src, TRAIT_NO_GLIDE, SPEED_TRAIT)
 
 /mob/living/basic/relaymove(mob/living/user, direction)
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return
 	return relaydrive(user, direction)
 
-/mob/living/basic/get_status_tab_items()
-	. = ..()
-	. += "Health: [round((health / maxHealth) * 100)]%"
-	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
-
 /mob/living/basic/compare_sentience_type(compare_type)
 	return sentience_type == compare_type
-
-/// Updates movement speed based on stamina loss
-/mob/living/basic/update_stamina()
-	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
 /mob/living/basic/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)
 	adjust_bodytemperature((maximum_survivable_temperature + (fire_handler.stacks * 12)) * 0.5 * seconds_per_tick)
 
 /mob/living/basic/get_fire_overlay(stacks, on_fire)
-	var/fire_icon = "generic_fire"
-	if(!GLOB.fire_appearances[fire_icon])
-		GLOB.fire_appearances[fire_icon] = mutable_appearance(
-			'icons/mob/effects/onfire.dmi',
-			fire_icon,
-			-HIGHEST_LAYER,
-			appearance_flags = RESET_COLOR,
-		)
-
-	return GLOB.fire_appearances[fire_icon]
+	return make_generic_fire_overlay()
 
 /mob/living/basic/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()
 	if (.)
 		update_held_items()
 
-/mob/living/basic/update_held_items()
-	. = ..()
-	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_NOHUD)
-		return
-	var/turf/our_turf = get_turf(src)
-	for(var/obj/item/held in held_items)
-		var/index = get_held_index_of_item(held)
-		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
-		held.screen_loc = ui_hand_position(index)
-		client.screen |= held
-
 /mob/living/basic/get_body_temp_heat_damage_limit()
 	return maximum_survivable_temperature
 
 /mob/living/basic/get_body_temp_cold_damage_limit()
 	return minimum_survivable_temperature
+
+/mob/living/basic/proc/hop_on_nearby_turf()
+	var/dir = pick(GLOB.cardinals)
+	Move(get_step(src, dir), dir)
+	animate(src, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
+	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)
+
+///ovverride to add mob specific cytology mutation effects, returns TRUE if we added a mob specific mutation
+/mob/living/basic/proc/mutate()
+	if(SEND_SIGNAL(src, COMSIG_BASICMOB_MUTATED) & MUTATED_NO_FURTHER_MUTATIONS)
+		//Tells the vat our mob has been mutated by another source and we don't want to add potentially incompatible mutations such as shiny mutation.
+		return TRUE
+	else
+		return FALSE

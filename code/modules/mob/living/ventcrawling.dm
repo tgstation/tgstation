@@ -1,4 +1,18 @@
 // VENTCRAWLING
+
+/mob/living/proc/notify_ventcrawler_on_login()
+	var/ventcrawler = HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS) || HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE)
+	if(!ventcrawler)
+		return
+	to_chat(src, span_notice("You can ventcrawl! Use alt+click on vents to quickly travel about the station."))
+
+/mob/living/carbon/human/notify_ventcrawler_on_login()
+	if(!HAS_TRAIT(src, TRAIT_LESSER_HUMANOID))
+		return ..()
+	if(!istype(head, /obj/item/clothing/head/helmet/monkey_sentience)) //don't notify them about ventcrawling if they're wearing the sentience helmet, because they can't ventcrawl with it on, and if they take it off they'll no longer be in control of the mob.
+		return ..()
+
+
 /// Checks if the mob is able to enter the vent, and provides feedback if they are unable to.
 /mob/living/proc/can_enter_vent(obj/machinery/atmospherics/components/ventcrawl_target, provide_feedback = TRUE)
 	// Being able to always ventcrawl trumps being only able to ventcrawl when wearing nothing
@@ -10,7 +24,7 @@
 		return
 	if(!HAS_TRAIT(src, TRAIT_VENTCRAWLER_NUDE) && !HAS_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS))
 		return
-	if(stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		if(provide_feedback)
 			to_chat(src, span_warning("You must be conscious to do this!"))
 		return
@@ -31,13 +45,16 @@
 			to_chat(src, span_warning("You can't vent crawl while buckled!"))
 		return
 	if(iscarbon(src) && required_nudity)
-		if(length(get_equipped_items(include_pockets = TRUE)) || get_num_held_items())
+		if(length(get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD)) || has_status_effect(/datum/status_effect/cuffed_item))
 			if(provide_feedback)
 				to_chat(src, span_warning("You can't crawl around in the ventilation ducts with items!"))
 			return
 	if(ventcrawl_target.welded)
 		if(provide_feedback)
-			to_chat(src, span_warning("You can't crawl around a welded vent!"))
+			// Add cooldown to prevent welded vent message spam during movement
+			if(COOLDOWN_FINISHED(src, welded_vent_message_cd))
+				to_chat(src, span_warning("You can't crawl around a welded vent!"))
+				COOLDOWN_START(src, welded_vent_message_cd, 2 SECONDS)
 		return
 
 	if(!(vent_movement & VENTCRAWL_ENTRANCE_ALLOWED))
@@ -75,6 +92,8 @@
 		if(vent_parent && (vent_parent.members.len || vent_parent.other_atmos_machines))
 			ventcrawl_target.flick_overlay_static(image('icons/effects/vent_indicator.dmi', "arrow", ABOVE_MOB_LAYER, dir = get_dir(src.loc, ventcrawl_target.loc)), 2 SECONDS)
 			visible_message(span_notice("[src] begins climbing into the ventilation system...") ,span_notice("You begin climbing into the ventilation system..."))
+			if((ventcrawl_target.airs[1].temperature < BODYTEMP_COLD_WARNING_1) || (BODYTEMP_HEAT_WARNING_1 < ventcrawl_target.airs[1].temperature))
+				balloon_alert(src, "feels [ventcrawl_target.airs[1].temperature < BODYTEMP_COLD_WARNING_1 ? "cold!" : "hot!"]")
 			if(!do_after(src, 2.5 SECONDS, target = ventcrawl_target, extra_checks = CALLBACK(src, PROC_REF(can_enter_vent), ventcrawl_target)))
 				return
 			if(has_client && isnull(client))
@@ -116,11 +135,13 @@
 	if(!isnull(ai_controller) && isnull(client)) // we don't care about pipe vision if we have an AI controller with no client (typically means we are clientless).
 		return
 
+	update_sight()
+
 	// Take away all the pipe images if we're not doing anything with em
 	if(isnull(client) || !HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) || !istype(loc, /obj/machinery/atmospherics) || !(movement_type & VENTCRAWLING))
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
-		pipes_shown.len = 0
+		LAZYNULL(pipes_shown)
 		pipetracker = null
 		for(var/atom/movable/screen/plane_master/lighting as anything in hud_used.get_true_plane_masters(LIGHTING_PLANE))
 			lighting.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#4d4d4d")
@@ -143,10 +164,11 @@
 	if(full_refresh)
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
-		pipes_shown.len = 0
+		LAZYCLEARLIST(pipes_shown)
 		pipetracker = null
 
 	if(!pipetracker)
+		LAZYINITLIST(pipes_shown)
 		pipetracker = new()
 
 	var/turf/our_turf = get_turf(src)

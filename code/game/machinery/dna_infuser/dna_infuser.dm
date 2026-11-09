@@ -11,7 +11,9 @@
 	base_icon_state = "infuser"
 	density = TRUE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
+	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
 	circuit = /obj/item/circuitboard/machine/dna_infuser
+
 	/// maximum tier this will infuse
 	var/max_tier_allowed = DNA_MUTANT_TIER_ONE
 	///currently infusing a vict- subject
@@ -64,9 +66,8 @@
 		balloon_alert(user, "not while it's on!")
 		return
 	if(occupant && infusing_from)
-		// Abort infusion if the occupant is invalid.
-		if(!is_valid_occupant(occupant, user))
-			playsound(src, 'sound/machines/scanbuzz.ogg', 35, vary = TRUE)
+		if(!occupant.can_infuse(user))
+			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 35, vary = TRUE)
 			return
 		balloon_alert(user, "starting DNA infusion...")
 		start_infuse()
@@ -77,91 +78,44 @@
 	var/mob/living/carbon/human/human_occupant = occupant
 	infusing = TRUE
 	visible_message(span_notice("[src] hums to life, beginning the infusion process!"))
+
+	infusing_into = infusing_from.get_infusion_entry()
 	var/fail_title = ""
-	var/fail_reason = ""
-	// Replace infusing_into with a [/datum/infuser_entry]
-	for(var/datum/infuser_entry/entry as anything in GLOB.infuser_entries)
-		if(entry.tier == DNA_MUTANT_UNOBTAINABLE)
-			continue
-		if(is_type_in_list(infusing_from, entry.input_obj_or_mob))
-			if(entry.tier > max_tier_allowed)
-				fail_title = "Overcomplexity"
-				fail_reason = "DNA too complicated to infuse. The machine needs to infuse simpler DNA first."
-			infusing_into = entry
-			break
-	if(!infusing_into)
-		//no valid recipe, so you get a fly mutation
-		if(!fail_reason)
-			fail_title = "Unknown DNA"
-			fail_reason = "Unknown DNA. Consult the \"DNA infusion book\"."
-		infusing_into = GLOB.infuser_entries[1]
+	var/fail_explanation = ""
+	if(istype(infusing_into, /datum/infuser_entry/fly))
+		fail_title = "Unknown DNA"
+		fail_explanation = "Unknown DNA. Consult the \"DNA infusion book\"."
+	if(infusing_into.tier > max_tier_allowed)
+		infusing_into = GLOB.infuser_entries[/datum/infuser_entry/fly]
+		fail_title = "Overcomplexity"
+		fail_explanation = "DNA too complicated to infuse. The machine needs to infuse simpler DNA first."
 	playsound(src, 'sound/machines/blender.ogg', 50, vary = TRUE)
 	to_chat(human_occupant, span_danger("Little needles repeatedly prick you!"))
 	human_occupant.take_overall_damage(10)
 	human_occupant.add_mob_memory(/datum/memory/dna_infusion, protagonist = human_occupant, deuteragonist = infusing_from, mutantlike = infusing_into.infusion_desc)
 	Shake(duration = INFUSING_TIME)
 	addtimer(CALLBACK(human_occupant, TYPE_PROC_REF(/mob, emote), "scream"), INFUSING_TIME - 1 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(end_infuse), fail_reason, fail_title), INFUSING_TIME)
+	addtimer(CALLBACK(src, PROC_REF(end_infuse), fail_explanation, fail_title), INFUSING_TIME)
 	update_appearance()
 
-/obj/machinery/dna_infuser/proc/end_infuse(fail_reason, fail_title)
-	if(infuse_organ(occupant))
+/obj/machinery/dna_infuser/proc/end_infuse(fail_explanation, fail_title)
+	var/mob/living/carbon/human/human_occupant = occupant
+	if(human_occupant.infuse_organ(infusing_into, infusing_from))
+		check_tier_progression(human_occupant)
 		to_chat(occupant, span_danger("You feel yourself becoming more... [infusing_into.infusion_desc]?"))
 	infusing = FALSE
 	infusing_into = null
 	QDEL_NULL(infusing_from)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, vary = FALSE)
-	if(fail_reason)
+	if(fail_explanation)
 		playsound(src, 'sound/machines/printer.ogg', 100, TRUE)
 		visible_message(span_notice("[src] prints an error report."))
 		var/obj/item/paper/printed_paper = new /obj/item/paper(loc)
 		printed_paper.name = "error report - '[fail_title]'"
-		printed_paper.add_raw_text(fail_reason)
+		printed_paper.add_raw_text(fail_explanation)
 		printed_paper.update_appearance()
 	toggle_open()
 	update_appearance()
-
-/// Attempt to replace/add-to the occupant's organs with "mutated" equivalents.
-/// Returns TRUE on success, FALSE on failure.
-/// Requires the target mob to have an existing organic organ to "mutate".
-// TODO: In the future, this should have more logic:
-// - Replace non-mutant organs before mutant ones.
-/obj/machinery/dna_infuser/proc/infuse_organ(mob/living/carbon/human/target)
-	if(!ishuman(target))
-		return FALSE
-	var/obj/item/organ/new_organ = pick_organ(target)
-	if(!new_organ)
-		return FALSE
-	// Valid organ successfully picked.
-	new_organ = new new_organ()
-	new_organ.replace_into(target)
-	check_tier_progression(target)
-	return TRUE
-
-/// Picks a random mutated organ from the infuser entry which is also compatible with the target mob.
-/// Tries to return a typepath of a valid mutant organ if all of the following criteria are true:
-/// 1. Target must have a pre-existing organ in the same organ slot as the new organ;
-///   - or the new organ must be external.
-/// 2. Target's pre-existing organ must be organic / not robotic.
-/// 3. Target must not have the same/identical organ.
-/obj/machinery/dna_infuser/proc/pick_organ(mob/living/carbon/human/target)
-	if(!infusing_into)
-		return FALSE
-	var/list/obj/item/organ/potential_new_organs = infusing_into.output_organs.Copy()
-	// Remove organ typepaths from the list if they're incompatible with target.
-	for(var/obj/item/organ/new_organ as anything in infusing_into.output_organs)
-		var/obj/item/organ/old_organ = target.get_organ_slot(initial(new_organ.slot))
-		if(old_organ)
-			if((old_organ.type != new_organ) && !IS_ROBOTIC_ORGAN(old_organ))
-				continue // Old organ can be mutated!
-		else if(ispath(new_organ, /obj/item/organ/external))
-			continue // External organ can be grown!
-		// Internal organ is either missing, or is non-organic.
-		potential_new_organs -= new_organ
-	// Pick a random organ from the filtered list.
-	if(length(potential_new_organs))
-		return pick(potential_new_organs)
-	return FALSE
 
 /// checks to see if the machine should progress a new tier.
 /obj/machinery/dna_infuser/proc/check_tier_progression(mob/living/carbon/human/target)
@@ -171,7 +125,7 @@
 		&& target.has_status_effect(infusing_into.status_effect_type) \
 	)
 		max_tier_allowed++
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 		visible_message(span_notice("[src] dings as it records the results of the full infusion."))
 
 /obj/machinery/dna_infuser/update_icon_state()
@@ -207,22 +161,26 @@
 	//we set drop to false to manually call it with an allowlist
 	dump_inventory_contents(list(occupant))
 
-/obj/machinery/dna_infuser/attackby(obj/item/used, mob/user, params)
-	if(infusing)
-		return
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, used))//sent icon_state is irrelevant...
-		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
-		return
-	if(default_pry_open(used))
-		return
-	if(default_deconstruction_crowbar(used))
-		return
-	if(ismovable(used))
-		add_infusion_item(used, user)
-	return ..()
+/obj/machinery/dna_infuser/screwdriver_act(mob/living/user, obj/item/tool)
+	return infusing ? NONE : default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/dna_infuser/crowbar_act(mob/living/user, obj/item/tool)
+	return infusing ? NONE : default_pry_open(user, tool, deconstruct_on_fail = TRUE)
+
+/obj/machinery/dna_infuser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode)
+		return NONE
+	// if the machine already has a infusion target, or the target is not valid then no adding.
+	if(!is_valid_infusion(tool, user))
+		return ..() //research scanning is so back
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("[tool] is stuck to your hand!"))
+		return ITEM_INTERACT_BLOCKING
+	infusing_from = tool
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/dna_infuser/relaymove(mob/living/user, direction)
-	if(user.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(user))
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			COOLDOWN_START(src, message_cooldown, 4 SECONDS)
 			to_chat(user, span_warning("[src]'s door won't budge!"))
@@ -236,42 +194,16 @@
 	//we set drop to false to manually call it with an allowlist
 	dump_inventory_contents(list(occupant))
 
-// mostly good for dead mobs that turn into items like dead mice (smack to add).
-/obj/machinery/dna_infuser/proc/add_infusion_item(obj/item/target, mob/user)
-	// if the machine already has a infusion target, or the target is not valid then no adding.
-	if(!is_valid_infusion(target, user))
-		return
-	if(!user.transferItemToLoc(target, src))
-		to_chat(user, span_warning("[target] is stuck to your hand!"))
-		return
-	infusing_from = target
-
 // mostly good for dead mobs like corpses (drag to add).
-/obj/machinery/dna_infuser/MouseDrop_T(atom/movable/target, mob/user)
+/obj/machinery/dna_infuser/mouse_drop_receive(atom/target, mob/user, params)
 	// if the machine is closed, already has a infusion target, or the target is not valid then no mouse drop.
 	if(!is_valid_infusion(target, user))
 		return
 	infusing_from = target
 	infusing_from.forceMove(src)
 
-/// Verify that the occupant/target is organic, and has mutable DNA.
-/obj/machinery/dna_infuser/proc/is_valid_occupant(mob/living/carbon/human/human_target, mob/user)
-	// Invalid: DNA is too damaged to mutate anymore / has TRAIT_BADDNA.
-	if(HAS_TRAIT(human_target, TRAIT_BADDNA))
-		balloon_alert(user, "dna is corrupted!")
-		return FALSE
-	// Invalid: Occupant isn't Human, isn't organic, lacks DNA / has TRAIT_GENELESS.
-	if(!ishuman(human_target) || !human_target.can_mutate())
-		balloon_alert(user, "dna is missing!")
-		return FALSE
-	// Valid: Occupant is an organic Human who has undamaged and mutable DNA.
-	return TRUE
-
 /// Verify that the given infusion source/mob is a dead creature.
 /obj/machinery/dna_infuser/proc/is_valid_infusion(atom/movable/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !user.Adjacent(target) || !ISADVANCEDTOOLUSER(user))
-		return FALSE
-	var/datum/component/edible/food_comp = IS_EDIBLE(target)
 	if(infusing_from)
 		balloon_alert(user, "empty the machine first!")
 		return FALSE
@@ -280,11 +212,8 @@
 		if(living_target.stat != DEAD)
 			balloon_alert(user, "only dead creatures!")
 			return FALSE
-	else if(food_comp)
-		if(!(food_comp.foodtypes & GORE))
-			balloon_alert(user, "only creatures!")
-			return FALSE
-	else
+	else if(!HAS_TRAIT(target, TRAIT_VALID_DNA_INFUSION))
+		balloon_alert(user, "only creatures!")
 		return FALSE
 	return TRUE
 

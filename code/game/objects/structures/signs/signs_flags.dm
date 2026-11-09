@@ -34,7 +34,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/tizira, 32)
 
 /obj/structure/sign/flag/mothic
 	name = "flag of the Grand Nomad Fleet"
-	desc = "The flag of the Mothic Grand Nomad Fleet. A classic naval ensign, its use has superceded the old national flag which can be seen in its canton."
+	desc = "The flag of the Mothic Grand Nomad Fleet. A classic naval ensign, its use has superseded the old national flag which can be seen in its canton."
 	icon_state = "flag_mothic"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/flag/mothic, 32)

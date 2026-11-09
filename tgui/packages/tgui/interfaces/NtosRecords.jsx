@@ -1,8 +1,8 @@
-import { createSearch } from 'common/string';
 import { useState } from 'react';
+import { Box, Icon, Input, Section } from 'tgui-core/components';
+import { createSearch } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { Box, Icon, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosRecords = (props) => {
@@ -20,11 +20,12 @@ export const NtosRecords = (props) => {
         </Section>
         <Section>
           <Input
-            placeholder={'Filter results...'}
+            placeholder="Filter results..."
             value={searchTerm}
             fluid
             textAlign="center"
-            onChange={(e, value) => setSearchTerm(value)}
+            onChange={setSearchTerm}
+            expensive
           />
         </Section>
         {mode === 'security' &&
@@ -95,14 +96,16 @@ export const NtosRecords = (props) => {
               <br />
               Bloodtype: {record.bloodtype}
               <br />
-              Minor Disabilities: {record.mi_dis}
-              <br />
-              Major Disabilities: {record.ma_dis}
-              <br />
+              Minor Disabilities:
+              {record.mi_dis?.split('<br>').map((entry, index) => (
+                <Box key={index}>&#8226; {entry}</Box>
+              ))}
+              Major Disabilities:
+              {record.ma_dis?.split('<br>').map((entry, index) => (
+                <Box key={index}>&#8226; {entry}</Box>
+              ))}
               <br />
               Notes: {record.notes}
-              <br />
-              Notes Contd: {record.cnotes}
             </Section>
           ))}
       </NtosWindow.Content>

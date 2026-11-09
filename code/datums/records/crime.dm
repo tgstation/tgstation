@@ -12,12 +12,14 @@
 	var/time
 	/// Whether the crime is active or not
 	var/valid = TRUE
+	/// Player that marked the crime as invalid
+	var/voider
 
 /datum/crime/New(name = "Crime", details = "No details provided.", author = "Anonymous")
 	src.author = author
 	src.details = details
 	src.name = name
-	src.time = station_time_timestamp()
+	src.time = round_timestamp()
 
 /datum/crime/citation
 	/// Fine for the crime

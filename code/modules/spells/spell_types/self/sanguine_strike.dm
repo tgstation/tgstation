@@ -9,13 +9,13 @@
 	desc = "Enchants your next weapon strike to deal more damage, heal you for damage dealt, and refill blood."
 	button_icon_state = "charge"
 
-	sound = 'sound/magic/charge.ogg'
+	sound = 'sound/effects/magic/charge.ogg'
 	// makes this spell not take blood from splattercasting
 	school = SCHOOL_SANGUINE
 	cooldown_time = 60 SECONDS
 	cooldown_reduction_per_rank = 10 SECONDS
 
-	invocation = "SHAPSDAY"
+	invocation = "SHAPSDAY."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
@@ -58,27 +58,25 @@
 	RegisterSignal(enchanted, COMSIG_ITEM_DROPPED, PROC_REF(on_dropped))
 
 /// signal called from attacking with the enchanted item
-/datum/action/cooldown/spell/sanguine_strike/proc/on_enchanted_afterattack(obj/item/enchanted, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/action/cooldown/spell/sanguine_strike/proc/on_enchanted_afterattack(obj/item/enchanted, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	end_enchantment(enchanted)
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
-	if(living_target.blood_volume < BLOOD_VOLUME_SURVIVE)
+	if(living_target.get_blood_volume() < BLOOD_VOLUME_SURVIVE)
 		return
-	playsound(target, "sound/effects/wounds/crackandbleed.ogg", 100)
-	playsound(target, 'sound/magic/charge.ogg', 100)
+	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100)
+	playsound(target, 'sound/effects/magic/charge.ogg', 100)
 	var/attack_direction = get_dir(user, living_target)
 	if(iscarbon(living_target))
 		var/mob/living/carbon/carbon_target = living_target
 		carbon_target.spray_blood(attack_direction, 3)
-	living_target.blood_volume -= 50
+	living_target.adjust_blood_volume(-50)
 	if(!isliving(user))
 		return
 	var/mob/living/living_user = user
-	//if we blind-added blood volume to the caster, non-vampire wizards could easily kill themselves by using the spell enough
-	if(living_user.blood_volume < BLOOD_VOLUME_MAXIMUM)
-		living_user.blood_volume += 50
+	living_user.adjust_blood_volume(50)
 
 /// signal called from dropping the enchanted item
 /datum/action/cooldown/spell/sanguine_strike/proc/on_dropped(obj/item/enchanted, mob/dropper)

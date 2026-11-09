@@ -10,6 +10,8 @@
 #define AB_CHECK_INCAPACITATED (1<<4)
 ///Action button checks if user is jaunting
 #define AB_CHECK_PHASED (1<<5)
+///Action button checks if user is not on an open turf
+#define AB_CHECK_OPEN_TURF (1<<6)
 
 DEFINE_BITFIELD(check_flags, list(
 	"CHECK IF HANDS BLOCKED" = AB_CHECK_HANDS_BLOCKED,
@@ -18,21 +20,13 @@ DEFINE_BITFIELD(check_flags, list(
 	"CHECK IF CONSCIOUS" = AB_CHECK_CONSCIOUS,
 	"CHECK IF INCAPACITATED" = AB_CHECK_INCAPACITATED,
 	"CHECK IF TEMPORARILY INCORPOREAL" = AB_CHECK_PHASED,
+	"CHECK IF NOT ON AN OPEN TURF" = AB_CHECK_OPEN_TURF,
 ))
 
 ///Action button triggered with right click
 #define TRIGGER_SECONDARY_ACTION (1<<0)
 ///Action triggered to ignore any availability checks
 #define TRIGGER_FORCE_AVAILABLE (1<<1)
-
-// Defines for formatting cooldown actions for the stat panel.
-/// The stat panel the action is displayed in.
-#define PANEL_DISPLAY_PANEL "panel"
-/// The status shown in the stat panel.
-/// Can be stuff like "ready", "on cooldown", "active", "charges", "charge cost", etc.
-#define PANEL_DISPLAY_STATUS "status"
-/// The name shown in the stat panel.
-#define PANEL_DISPLAY_NAME "name"
 
 #define ACTION_BUTTON_DEFAULT_BACKGROUND "_use_ui_default_background"
 

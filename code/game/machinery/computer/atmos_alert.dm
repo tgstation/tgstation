@@ -2,12 +2,18 @@
 	name = "atmospheric alert console"
 	desc = "Used to monitor the station's air alarms."
 	circuit = /obj/item/circuitboard/computer/atmos_alert
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/atmos_alert")
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
 	light_color = LIGHT_COLOR_CYAN
 
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
+
+/obj/machinery/computer/atmos_alert/examine(mob/user)
+	. = ..()
+	var/obj/item/circuitboard/computer/atmos_alert/my_circuit = circuit
+	. += span_info("The console is set to [my_circuit.station_only ? "track all station and mining alarms" : "track alarms on the same z-level"].")
 
 /obj/machinery/computer/atmos_alert/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -28,7 +34,7 @@
 
 	return data
 
-/obj/machinery/computer/atmos_alert/ui_act(action, params)
+/obj/machinery/computer/atmos_alert/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -56,8 +62,22 @@
 	priority_alarms.Cut()
 	minor_alarms.Cut()
 
+	// An area list used for station_only circuits, so we only send an alarm if we're in one of the station or mining home areas
+	var/static/list/station_alert_areas = null
+	if (isnull(station_alert_areas))
+		station_alert_areas = list()
+		for (var/area_type in GLOB.the_station_areas + typesof(/area/mine))
+			station_alert_areas[area_type] = TRUE
+
+	// Setting up a variable for checking our circuit's station_only
+	var/obj/item/circuitboard/computer/atmos_alert/my_circuit = circuit
 	for (var/obj/machinery/airalarm/air_alarm as anything in GLOB.air_alarms)
-		if (air_alarm.z != z)
+		// If the circuit has station_only, check if alarm areas are in the station list
+		if(my_circuit.station_only)
+			if(!station_alert_areas[air_alarm.my_area.type])
+				continue
+		// Otherwise just check if alarms match the console's z-level
+		else if (air_alarm.z != z)
 			continue
 
 		switch (air_alarm.danger_level)
@@ -83,3 +103,7 @@
 		return
 	if(minor_alarms.len)
 		. += "alert:1"
+
+// Subtype with the board pre-set to check only station areas and the mining station
+/obj/machinery/computer/atmos_alert/station_only
+	circuit = /obj/item/circuitboard/computer/atmos_alert/station_only

@@ -4,7 +4,6 @@
 	temp_exponent_factor = 1
 	optimal_ph_min = 2
 	optimal_ph_max = 10
-	thermic_constant = 0
 	H_ion_release = 0
 	rate_up_lim = 60
 	purity_min = 0
@@ -50,11 +49,11 @@
 
 /datum/chemical_reaction/drink/gin_tonic
 	results = list(/datum/reagent/consumable/ethanol/gintonic = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 2, /datum/reagent/consumable/tonic = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 1, /datum/reagent/consumable/tonic = 2)
 
 /datum/chemical_reaction/drink/rum_coke
 	results = list(/datum/reagent/consumable/ethanol/rum_coke = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/space_cola = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 1, /datum/reagent/consumable/space_cola = 2)
 
 /datum/chemical_reaction/drink/cuba_libre
 	results = list(/datum/reagent/consumable/ethanol/cuba_libre = 4)
@@ -75,11 +74,11 @@
 
 /datum/chemical_reaction/drink/whiskey_cola
 	results = list(/datum/reagent/consumable/ethanol/whiskey_cola = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 2, /datum/reagent/consumable/space_cola = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 1, /datum/reagent/consumable/space_cola = 2)
 
 /datum/chemical_reaction/drink/screwdriver
 	results = list(/datum/reagent/consumable/ethanol/screwdrivercocktail = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, /datum/reagent/consumable/orangejuice = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 1, /datum/reagent/consumable/orangejuice = 2)
 
 /datum/chemical_reaction/drink/bloody_mary
 	results = list(/datum/reagent/consumable/ethanol/bloody_mary = 4)
@@ -185,11 +184,11 @@
 
 /datum/chemical_reaction/drink/vodka_tonic
 	results = list(/datum/reagent/consumable/ethanol/vodkatonic = 3)
-	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 2, /datum/reagent/consumable/tonic = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 1, /datum/reagent/consumable/tonic = 2)
 
 /datum/chemical_reaction/drink/gin_fizz
 	results = list(/datum/reagent/consumable/ethanol/ginfizz = 4)
-	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 2, /datum/reagent/consumable/sodawater = 1, /datum/reagent/consumable/limejuice = 1)
+	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 1, /datum/reagent/consumable/sodawater = 2, /datum/reagent/consumable/limejuice = 1)
 
 /datum/chemical_reaction/drink/bahama_mama
 	results = list(/datum/reagent/consumable/ethanol/bahama_mama = 5)
@@ -224,7 +223,7 @@
 /datum/chemical_reaction/drink/moscow_mule
 	results = list(/datum/reagent/consumable/ethanol/moscow_mule = 10)
 	required_reagents = list(/datum/reagent/consumable/sol_dry = 5, /datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/ice = 1)
-	mix_sound = 'sound/effects/bubbles2.ogg'
+	mix_sound = 'sound/effects/bubbles/bubbles2.ogg'
 
 /datum/chemical_reaction/drink/painkiller
 	results = list(/datum/reagent/consumable/ethanol/painkiller = 10)
@@ -361,7 +360,7 @@
 /datum/chemical_reaction/drink/bacchus_blessing
 	results = list(/datum/reagent/consumable/ethanol/bacchus_blessing = 4)
 	required_reagents = list(/datum/reagent/consumable/ethanol/hooch = 1, /datum/reagent/consumable/ethanol/absinthe = 1, /datum/reagent/consumable/ethanol/manly_dorf = 1, /datum/reagent/consumable/ethanol/syndicatebomb = 1)
-	mix_message = "<span class='warning'>The mixture turns to a sickening froth.</span>"
+	mix_message = span_warning("The mixture turns to a sickening froth.")
 
 /datum/chemical_reaction/drink/eggnog
 	results = list(/datum/reagent/consumable/ethanol/eggnog = 15)
@@ -378,7 +377,7 @@
 	results = list(/datum/reagent/consumable/ethanol/quadruple_sec = 15)
 	required_reagents = list(/datum/reagent/consumable/ethanol/triple_sec = 5, /datum/reagent/consumable/triple_citrus = 5, /datum/reagent/consumable/grenadine = 5)
 	mix_message = "The snap of a taser emanates clearly from the mixture as it settles."
-	mix_sound = 'sound/weapons/taser.ogg'
+	mix_sound = 'sound/items/weapons/taser.ogg'
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/grasshopper
@@ -394,7 +393,7 @@
 	results = list(/datum/reagent/consumable/ethanol/quintuple_sec = 15)
 	required_reagents = list(/datum/reagent/consumable/ethanol/quadruple_sec = 5, /datum/reagent/consumable/nutriment/soup/clown_tears = 5, /datum/reagent/consumable/ethanol/syndicatebomb = 5)
 	mix_message = "Judgement is upon you."
-	mix_sound = 'sound/items/airhorn2.ogg'
+	mix_sound = 'sound/items/airhorn/airhorn2.ogg'
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/bastion_bourbon
@@ -481,14 +480,14 @@
 	results = list(/datum/reagent/consumable/ethanol/wizz_fizz = 3)
 	required_reagents = list(/datum/reagent/consumable/ethanol/triple_sec = 1, /datum/reagent/consumable/sodawater = 1, /datum/reagent/consumable/ethanol/champagne = 1)
 	mix_message = "The beverage starts to froth with an almost mystical zeal!"
-	mix_sound = 'sound/effects/bubbles2.ogg'
+	mix_sound = 'sound/effects/bubbles/bubbles2.ogg'
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/bug_spray
 	results = list(/datum/reagent/consumable/ethanol/bug_spray = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/triple_sec = 2, /datum/reagent/consumable/lemon_lime = 1, /datum/reagent/consumable/ethanol/rum = 2, /datum/reagent/consumable/ethanol/vodka = 1)
 	mix_message = "The faint aroma of summer camping trips wafts through the air; but what's that buzzing noise?"
-	mix_sound = 'sound/creatures/bee.ogg'
+	mix_sound = 'sound/mobs/non-humanoids/bee/bee.ogg'
 	reaction_tags = REACTION_TAG_DRINK | REACTION_TAG_EASY | REACTION_TAG_OTHER
 
 /datum/chemical_reaction/drink/jack_rose
@@ -579,7 +578,7 @@
 	results = list(/datum/reagent/consumable/ethanol/pod_tesla = 15)
 	required_reagents = list(/datum/reagent/consumable/ethanol/telepole = 5, /datum/reagent/consumable/ethanol/brave_bull = 3, /datum/reagent/consumable/ethanol/admiralty = 5)
 	mix_message = "Arcs of lightning fly from the mixture."
-	mix_sound = 'sound/weapons/zapbang.ogg'
+	mix_sound = 'sound/items/weapons/zapbang.ogg'
 
 /datum/chemical_reaction/drink/yuyakita
 	results = list(/datum/reagent/consumable/ethanol/yuyakita = 4)
@@ -656,3 +655,199 @@
 /datum/chemical_reaction/drink/blue_hawaiian
 	results = list(/datum/reagent/consumable/ethanol/blue_hawaiian = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 2, /datum/reagent/consumable/pineapplejuice = 1, /datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/ethanol/curacao = 1)
+
+/datum/chemical_reaction/drink/boston_sour
+	results = list(/datum/reagent/consumable/ethanol/boston_sour = 15)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey_sour = 15, /datum/reagent/consumable/eggwhite = 2, /datum/reagent/consumable/ethanol/bitters = 1)
+	mix_message = "A frothy head forms over the mixture."
+
+/datum/chemical_reaction/drink/star
+	results = list(/datum/reagent/consumable/ethanol/star = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/applejack = 5, /datum/reagent/consumable/ethanol/vermouth = 5, /datum/reagent/consumable/ethanol/bitters = 1)
+
+/datum/chemical_reaction/drink/old_fashioned
+	results = list(/datum/reagent/consumable/ethanol/old_fashioned = 30)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 25, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/ethanol/bitters = 2)
+	mix_message = "The sugar dissolves into the bitters and whiskey."
+
+/datum/chemical_reaction/drink/sazerac
+	results = list(/datum/reagent/consumable/ethanol/sazerac = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/old_fashioned = 10, /datum/reagent/consumable/ethanol/absinthe = 1)
+	mix_message = "The mixture takes on a pleasing pink hue."
+
+/datum/chemical_reaction/drink/amaretto_sour
+	results = list(/datum/reagent/consumable/ethanol/amaretto_sour = 15)
+	required_reagents = list(/datum/reagent/consumable/ethanol/amaretto = 10, /datum/reagent/consumable/lemonjuice = 5, /datum/reagent/consumable/eggwhite = 2)
+	mix_message = "A frothy head forms over the mixture."
+
+/datum/chemical_reaction/drink/ramos_gin_fizz
+	results = list(/datum/reagent/consumable/ethanol/ramos_gin_fizz = 25)
+	//yes, this is intentionally a pain in the ass
+	required_reagents = list(/datum/reagent/consumable/ethanol/ginfizz = 12, /datum/reagent/consumable/lemonjuice = 3, /datum/reagent/consumable/sugar = 3, /datum/reagent/consumable/eggwhite = 3, /datum/reagent/consumable/cream = 3, /datum/reagent/consumable/ethanol/triple_sec = 1)
+	mix_message = "The drink forms a rising head of foam that begins to creep out of the top of the glass."
+
+/datum/chemical_reaction/drink/french_75
+	results = list(/datum/reagent/consumable/ethanol/french_75 = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/champagne = 5, /datum/reagent/consumable/ethanol/gin = 3, /datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/sugar = 1)
+
+/datum/chemical_reaction/drink/sangria
+	results = list(/datum/reagent/consumable/ethanol/sangria = 20)
+	required_reagents = list(/datum/reagent/consumable/ethanol/wine = 10, /datum/reagent/consumable/ethanol/cognac = 3, /datum/reagent/consumable/triple_citrus = 3, /datum/reagent/consumable/sodawater = 3, /datum/reagent/consumable/sugar = 1)
+
+/datum/chemical_reaction/drink/suffering_bastard
+	results = list(/datum/reagent/consumable/ethanol/suffering_bastard = 20)
+	required_reagents = list(/datum/reagent/consumable/sol_dry = 10, /datum/reagent/consumable/ethanol/cognac = 3, /datum/reagent/consumable/ethanol/gin = 3, /datum/reagent/consumable/limejuice = 2, /datum/reagent/consumable/ethanol/bitters = 1, /datum/reagent/consumable/sugar = 1)
+
+/datum/chemical_reaction/drink/hot_toddy
+	results = list(/datum/reagent/consumable/ethanol/hot_toddy = 10)
+	required_reagents = list(/datum/reagent/water = 5, /datum/reagent/consumable/ethanol/cognac = 3, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/lemonjuice = 1)
+	mix_message = "The scent of warm cognac fills the air."
+	required_temp = 320 //Pour 100c water into other ingredients
+
+/datum/chemical_reaction/drink/tizirian_sour
+	results = list(/datum/reagent/consumable/ethanol/tizirian_sour = 8)
+	required_reagents = list(/datum/reagent/consumable/ethanol/bitters = 3, /datum/reagent/consumable/lemonjuice = 2, /datum/reagent/consumable/korta_nectar = 2, /datum/reagent/consumable/sugar = 1)
+
+/datum/chemical_reaction/drink/daiquiri
+	results = list(/datum/reagent/consumable/ethanol/daiquiri = 6)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 3, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/sugar = 1, /datum/reagent/consumable/ice = 1)
+
+/datum/chemical_reaction/drink/flip_cocktail
+	results=list(/datum/reagent/consumable/ethanol/flip_cocktail = 25)
+	required_reagents = list(/datum/reagent/consumable/ethanol/cognac = 15, /datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/eggwhite = 4, /datum/reagent/consumable/eggyolk = 2)
+	mix_message = "The egg emulsifies into a smooth mixture."
+
+/datum/chemical_reaction/drink/blue_blazer
+	results=list(/datum/reagent/consumable/ethanol/blue_blazer = 9)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 4, /datum/reagent/water = 4, /datum/reagent/consumable/sugar = 1)
+	mix_message = "The whiskey ignites in a brilliant blue flame!"
+	required_temp = 365 //autoignition temp of ethanol
+
+/datum/chemical_reaction/drink/bartenders_handshake
+	results=list(/datum/reagent/consumable/ethanol/bartenders_handshake = 2)
+	required_reagents = list(/datum/reagent/consumable/ethanol/aperitivo = 1, /datum/reagent/consumable/ethanol/fernet = 1)
+
+/datum/chemical_reaction/drink/brandy_crusta
+	results=list(/datum/reagent/consumable/ethanol/brandy_crusta = 6)
+	required_reagents = list(/datum/reagent/consumable/ethanol/sidecar = 4, /datum/reagent/consumable/ethanol/maraschino = 1, /datum/reagent/consumable/sugar = 1)
+
+/datum/chemical_reaction/drink/casino
+	results=list(/datum/reagent/consumable/ethanol/casino = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 8, /datum/reagent/consumable/lemonjuice = 1, /datum/reagent/consumable/ethanol/maraschino = 1)
+
+/datum/chemical_reaction/drink/garibaldi
+	results=list(/datum/reagent/consumable/ethanol/garibaldi = 5)
+	required_reagents = list(/datum/reagent/consumable/orangejuice = 4, /datum/reagent/consumable/ethanol/aperitivo = 1)
+
+/datum/chemical_reaction/drink/improved_whiskey
+	results=list(/datum/reagent/consumable/ethanol/improved_whiskey = 7)
+	required_reagents = list(/datum/reagent/consumable/ethanol/sazerac = 6, /datum/reagent/consumable/ethanol/maraschino = 1)
+
+/datum/chemical_reaction/drink/jungle_bird
+	results=list(/datum/reagent/consumable/ethanol/jungle_bird = 9)
+	required_reagents = list(/datum/reagent/consumable/pineapplejuice = 3, /datum/reagent/consumable/ethanol/rum = 3, /datum/reagent/consumable/ethanol/aperitivo = 1, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/sugar = 1)
+
+/datum/chemical_reaction/drink/last_word
+	results=list(/datum/reagent/consumable/ethanol/last_word = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 1, /datum/reagent/consumable/ethanol/herbal_liqueur = 1, /datum/reagent/consumable/limejuice = 1, /datum/reagent/consumable/ethanol/maraschino = 1)
+
+/datum/chemical_reaction/drink/mary_pickford
+	results=list(/datum/reagent/consumable/ethanol/mary_pickford = 9)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 4, /datum/reagent/consumable/pineapplejuice = 3, /datum/reagent/consumable/grenadine = 1, /datum/reagent/consumable/ethanol/maraschino = 1)
+
+/datum/chemical_reaction/drink/negroni
+	results=list(/datum/reagent/consumable/ethanol/negroni = 6)
+	required_reagents = list(/datum/reagent/consumable/ethanol/martini = 3, /datum/reagent/consumable/ethanol/aperitivo = 2, /datum/reagent/consumable/ethanol/vermouth = 1)
+
+/datum/chemical_reaction/drink/nuclear_daiquiri
+	results=list(/datum/reagent/consumable/ethanol/nuclear_daiquiri = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/navy_rum = 4, /datum/reagent/consumable/ethanol/herbal_liqueur = 3, /datum/reagent/consumable/limejuice = 2, /datum/reagent/consumable/sugar = 1)
+
+/datum/chemical_reaction/drink/nuclear_daiquiri_thermo
+	results=list(/datum/reagent/consumable/ethanol/nuclear_daiquiri_thermo = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/nuclear_daiquiri = 10, /datum/reagent/uranium = 1, /datum/reagent/hydrogen = 9)
+	mix_message = "As the mixture begins to combine and glow, an ominous metallic taste fills your mouth."
+
+/datum/chemical_reaction/drink/poets_dream
+	results=list(/datum/reagent/consumable/ethanol/poets_dream = 4)
+	required_reagents = list(/datum/reagent/consumable/ethanol/martini = 3, /datum/reagent/consumable/ethanol/herbal_liqueur = 1)
+
+/datum/chemical_reaction/drink/pousse_cafe
+	results=list(/datum/reagent/consumable/ethanol/pousse_cafe = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/herbal_liqueur = 1, /datum/reagent/consumable/ethanol/bitters = 1, /datum/reagent/consumable/ethanol/branca_menta = 1, /datum/reagent/consumable/ethanol/irish_cream = 1, /datum/reagent/consumable/ethanol/yuyake = 1, /datum/reagent/consumable/ethanol/aperitivo = 1, /datum/reagent/consumable/ethanol/amaretto = 1, /datum/reagent/consumable/ethanol/curacao = 1, /datum/reagent/consumable/ethanol/maraschino = 1, /datum/reagent/consumable/toechtauese_syrup = 1)	// In case someone wants to implement some sort of actual layering mechanic, these are listed from left to right by their specific gravity more or less
+
+/datum/chemical_reaction/drink/spritz
+	results=list(/datum/reagent/consumable/ethanol/spritz = 6)
+	required_reagents = list(/datum/reagent/consumable/ethanol/champagne = 3, /datum/reagent/consumable/ethanol/aperitivo = 2, /datum/reagent/consumable/sodawater = 1)
+
+/datum/chemical_reaction/drink/vieux_carre
+	results=list(/datum/reagent/consumable/ethanol/vieux_carre = 15)
+	required_reagents = list(/datum/reagent/consumable/ethanol/manhattan = 6, /datum/reagent/consumable/ethanol/cognac = 4, /datum/reagent/consumable/ethanol/vermouth = 2, /datum/reagent/consumable/ethanol/herbal_liqueur = 2, /datum/reagent/consumable/ethanol/bitters = 1)
+
+/datum/chemical_reaction/drink/mouthwash_strong
+	results=list(/datum/reagent/consumable/ethanol/mouthwash_strong = 6)
+	required_reagents = list(/datum/reagent/consumable/ethanol/mouthwash = 3, /datum/reagent/consumable/ethanol/absinthe = 2, /datum/reagent/consumable/mintextract = 2, /datum/reagent/consumable/frostoil = 2, /datum/reagent/consumable/menthol = 1)
+
+/datum/chemical_reaction/drink/frosty_dorf
+	results=list(/datum/reagent/consumable/ethanol/frosty_dorf = 8)
+	required_reagents = list(/datum/reagent/consumable/ethanol/manly_dorf  = 2,  /datum/reagent/consumable/ethanol/herbal_liqueur = 2, /datum/reagent/consumable/ethanol/mouthwash = 2, /datum/reagent/consumable/ice = 2)
+
+/datum/chemical_reaction/drink/stone_cold_stout
+	results=list(/datum/reagent/consumable/ethanol/stone_cold_stout = 6)
+	required_reagents = list(/datum/reagent/consumable/ethanol/beer/maltliquor = 1, /datum/reagent/consumable/frostoil = 1, /datum/reagent/consumable/ethanol/fernet = 1, /datum/reagent/consumable/ethanol/bitters = 1, /datum/reagent/cryostylane = 1)
+
+/datum/chemical_reaction/drink/ramp_rager
+	results=list(/datum/reagent/consumable/ethanol/ramp_rager = 8)
+	required_reagents = list(/datum/reagent/consumable/ethanol/manly_dorf  = 3, /datum/reagent/toxin/berserker = 2, /datum/reagent/consumable/grey_bull = 2, /datum/reagent/blood = 1)
+
+/datum/chemical_reaction/drink/sea_lantern
+	results=list(/datum/reagent/consumable/ethanol/sea_lantern = 8)
+	required_reagents = list(/datum/reagent/consumable/guidoferrun = 4,  /datum/reagent/consumable/strawberryshake = 4, /datum/reagent/consumable/ethanol/wine_voltaic = 2, /datum/reagent/consumable/ethanol/admiralty = 2)
+
+/datum/chemical_reaction/drink/icegrave
+	results=list(/datum/reagent/consumable/ethanol/icegrave = 6)
+	required_reagents = list(/datum/reagent/toxin/formaldehyde = 2,  /datum/reagent/cryostylane = 1, /datum/reagent/consumable/ethanol/mouthwash = 1, /datum/reagent/consumable/ethanol/whiskey = 1, /datum/reagent/consumable/ice = 1)
+
+/datum/chemical_reaction/drink/watchmans_nightcap
+	results=list(/datum/reagent/consumable/ethanol/watchmans_nightcap = 9)
+	required_reagents = list(/datum/reagent/consumable/ethanol/hot_toddy = 3, /datum/reagent/consumable/ethanol/blue_blazer = 3, /datum/reagent/ash = 2, /datum/reagent/luminescent_fluid = 1)
+	required_temp = 900
+	mix_message = "The familiar blue fire of ethanol shifts and turns strange."
+	mix_sound = 'sound/effects/fire_puff.ogg'
+
+/datum/chemical_reaction/drink/footsoldiers_razor
+	results=list(/datum/reagent/consumable/ethanol/footsoldiers_razor = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/patron = 3, /datum/reagent/consumable/ethanol/fernet = 2, /datum/reagent/consumable/ethanol/kahlua = 2, /datum/reagent/consumable/blackpepper = 1, /datum/reagent/silver = 1, /datum/reagent/drug/pumpup = 1)
+	mix_message = "As the scent of coffee and agave swirls around you, you feel that it's a good day to die."
+	mix_sound = 'sound/items/unsheath.ogg'
+
+/datum/chemical_reaction/drink/farstar_amrita
+	results=list(/datum/reagent/consumable/ethanol/farstar_amrita = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/star = 3, /datum/reagent/consumable/ethanol/singulo = 3, /datum/reagent/toxin/plasma = 2, /datum/reagent/consumable/honey = 2)
+	mix_message = "As the mixture combines, you feel yourself being watched."
+	mix_sound = 'sound/effects/curse/curse6.ogg'
+
+/datum/chemical_reaction/drink/openthroat_draught
+	results=list(/datum/reagent/consumable/ethanol/openthroat_draught = 15)
+	required_reagents = list(/datum/reagent/consumable/ethanol/trappist = 5, /datum/reagent/consumable/ethanol/poets_dream = 3, /datum/reagent/consumable/shamblers = 2, /datum/reagent/consumable/wellcheers = 2, /datum/reagent/consumable/eggwhite = 2, /datum/reagent/consumable/eggyolk = 1)
+	mix_message = "Distant conversation can be heard, from somewhere unknown. Did someone leave a door open?"
+	mix_sound = 'sound/effects/eldritch_crowd.ogg'
+
+/datum/chemical_reaction/drink/lunacy
+	results=list(/datum/reagent/consumable/ethanol/lunacy = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/suffering_bastard = 4, /datum/reagent/consumable/ethanol/absinthe = 2, /datum/reagent/consumable/ethanol/moonshine = 2, /datum/reagent/mercury = 1, /datum/reagent/iron = 1)
+	mix_message = "Someone stretches their mouth into a rictus grin. It might even be you."
+	mix_sound = 'sound/effects/moon_parade_short.ogg'
+
+/datum/chemical_reaction/drink/entropic_brew
+	results=list(/datum/reagent/consumable/ethanol/entropic_brew = 15)
+	required_reagents = list(/datum/reagent/consumable/ethanol/pruno = 7, /datum/reagent/consumable/ethanol/hooch = 3, /datum/reagent/toxin/bad_food = 3, /datum/reagent/hydrogen_peroxide = 1, /datum/reagent/eldritch = 1)
+	mix_message = "The scent of rot and rust begins to pervade the air."
+
+/datum/chemical_reaction/drink/emptiest_glass
+	results=list(/datum/reagent/consumable/ethanol/emptiest_glass = 4)
+	required_reagents = list(/datum/reagent/consumable/ice = 1, /datum/reagent/consumable/ethanol/last_word = 1, /datum/reagent/consumable/nothing = 1, /datum/reagent/cryostylane = 1)
+	is_cold_recipe = TRUE
+	required_temp = 250
+	mix_message = "The world seems just a bit paler, for a moment."
+	mix_sound = 'sound/music/antag/heretic/VoidsEmbrace_short.ogg'

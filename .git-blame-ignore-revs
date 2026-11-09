@@ -16,3 +16,7 @@
 0f435d5dff0a7957e8cba60a41a7fc10439064c3
 # Remove one errant disposals pipe
 cc78227c693a3246e8d4d2930ee97242f6546246
+# Reorganized the sound folder
+58501dce77aba5811fa92a6d7de7d0cc0a1e56ac
+# Compress all sounds using optivorbis
+436ba869ebcd0b60b63973fb7562f447ee655205

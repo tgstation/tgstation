@@ -9,7 +9,7 @@
 	melee_damage_upper = 10
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	basic_mob_flags = DEL_ON_DEATH
 	unsuitable_atmos_damage = 2.5
 	combat_mode = FALSE
@@ -23,7 +23,7 @@
 	///Sound used when item sold/bought
 	var/sell_sound = 'sound/effects/cashregister.ogg'
 	///The currency name
-	var/currency_name = "credits"
+	var/currency_name = MONEY_NAME
 	///The spawner we use to create our look
 	var/spawner_path = /obj/effect/mob_spawn/corpse/human/generic_assistant
 	///Our species to create our look
@@ -33,7 +33,7 @@
 	///Casing used to shoot during retaliation
 	var/ranged_attack_casing = /obj/item/ammo_casing/shotgun/buckshot
 	///Sound to make while doing a retalitory attack
-	var/ranged_attack_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	var/ranged_attack_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
 	///Weapon path, for visuals
 	var/held_weapon_visual = /obj/item/gun/ballistic/shotgun
 
@@ -49,7 +49,7 @@
 	AddComponent(/datum/component/trader, trader_data = trader_data)
 	AddComponent(/datum/component/ranged_attacks, casing_type = ranged_attack_casing, projectile_sound = ranged_attack_sound, cooldown_time = 3 SECONDS)
 	AddElement(/datum/element/ai_retaliate)
-	AddElement(/datum/element/ai_swap_combat_mode, BB_BASIC_MOB_CURRENT_TARGET, string_list(trader_data.say_phrases[TRADER_BATTLE_START_PHRASE]), string_list(trader_data.say_phrases[TRADER_BATTLE_END_PHRASE]))
+	AddElement(/datum/element/ai_swap_combat_mode, BB_CURRENT_TARGET, string_list(trader_data.say_phrases[TRADER_BATTLE_START_PHRASE]), string_list(trader_data.say_phrases[TRADER_BATTLE_END_PHRASE]))
 	if(LAZYLEN(loot))
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
@@ -57,6 +57,9 @@
 	var/datum/action/setup_shop/setup_shop = new (src, trader_data.shop_spot_type, trader_data.sign_type, trader_data.sell_sound, trader_data.say_phrases[TRADER_SHOP_OPENING_PHRASE])
 	setup_shop.Grant(src)
 	ai_controller.set_blackboard_key(BB_SETUP_SHOP, setup_shop)
+
+/mob/living/basic/trader/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
 
 /mob/living/basic/trader/mrbones
 	name = "Mr. Bones"
@@ -69,7 +72,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/trader/jumpscare
 
-	sell_sound = 'sound/voice/hiss2.ogg'
+	sell_sound = 'sound/mobs/non-humanoids/hiss/hiss2.ogg'
 	species_path = /datum/species/skeleton
 	spawner_path = /obj/effect/mob_spawn/corpse/human/skeleton/mrbones
 	loot = list(/obj/effect/decal/remains/human)

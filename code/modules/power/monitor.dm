@@ -19,11 +19,17 @@
 
 /obj/machinery/computer/monitor/Initialize(mapload)
 	. = ..()
+	//Add to the late process queue to record the accurate power usage data
+	SSmachines.processing_late += src
 	search()
 	history["supply"] = list()
 	history["demand"] = list()
 
-/obj/machinery/computer/monitor/process()
+/obj/machinery/computer/monitor/Destroy(force)
+	SSmachines.processing_late -= src
+	return ..()
+
+/obj/machinery/computer/monitor/process_late()
 	if(!get_powernet())
 		update_use_power(IDLE_POWER_USE)
 		search()
@@ -36,7 +42,7 @@
 	attached_wire_ref = WEAKREF(locate(/obj/structure/cable) in T)
 	if(attached_wire_ref)
 		return
-	var/area/A = get_area(src) //if the computer isn't directly connected to a wire, attempt to find the APC powering it to pull it's powernet instead
+	var/area/A = get_area(src) //if the computer isn't directly connected to a wire, attempt to find the APC powering it to pull its powernet instead
 	if(!A)
 		return
 	var/obj/machinery/power/apc/local_apc = A.apc

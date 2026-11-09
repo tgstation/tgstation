@@ -43,8 +43,6 @@
 #define COMSIG_GLOB_RANDOM_EVENT "!random_event"
 	/// Do not allow this random event to continue.
 	#define CANCEL_RANDOM_EVENT (1<<0)
-/// a person somewhere has thrown something : (mob/living/carbon/carbon_thrower, target)
-#define COMSIG_GLOB_CARBON_THROW_THING	"!throw_thing"
 /// a trapdoor remote has sent out a signal to link with a trapdoor
 #define COMSIG_GLOB_TRAPDOOR_LINK "!trapdoor_link"
 	///successfully linked to a trapdoor!
@@ -57,11 +55,13 @@
 #define COMSIG_GLOB_NEW_MACHINE "!new_machine"
 /// a client (re)connected, after all /client/New() checks have passed : (client/connected_client)
 #define COMSIG_GLOB_CLIENT_CONNECT "!client_connect"
-/// a weather event of some kind occured
+/// a weather event of some kind occurred
 #define COMSIG_WEATHER_TELEGRAPH(event_type) "!weather_telegraph [event_type]"
 #define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
 #define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
 #define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
+/// A new weather particle holder has been created
+#define COMSIG_WEATHER_NEW_PARTICLE_HOLDER "!weather_new_particle_holder"
 /// An alarm of some form was sent (datum/alarm_handler/source, alarm_type, area/source_area)
 #define COMSIG_GLOB_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
 /// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)
@@ -84,11 +84,24 @@
 /// (new_name, old_name)
 #define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"
 
+/// Sent when a station trait with a lobby button is created
+#define COMSIG_GLOB_LOBBY_TRAIT_ADDED "!lobby_trait_added"
+/// Sent when a station trait with a lobby button is destroyed
+#define COMSIG_GLOB_LOBBY_TRAIT_REMOVED "!lobby_trait_removed"
+
 /// Global signal sent before we decide what job everyone has
 #define COMSIG_GLOB_PRE_JOBS_ASSIGNED "!pre_roles_assigned"
 
 /// global signal when a global nullrod type is picked
 #define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
+
+/// global signal when someone prays via prayer verb.
+#define COMSIG_GLOB_SEND_PRAYER "!send_prayer"
+	#define ARG_PRAYING_MOB 1
+	#define ARG_PRAYER_MSG 2
+	#define ARG_PRAYER_TYPE 3
+	#define ARG_PRAYER_SYMBOL 4
+	#define ARG_PRAYED_DEITIES 5
 
 /// Global signal when light debugging is canceled
 #define COMSIG_LIGHT_DEBUG_DISABLED "!light_debug_disabled"
@@ -103,3 +116,15 @@
 
 /// Global signal sent when narsie summon count is updated: (new count)
 #define COMSIG_NARSIE_SUMMON_UPDATE "!narsie_summon_update"
+
+/// Global signal sent when a mob is spawned from a ghost in a dynamic ruleset (mob/spawned_mob)
+#define COMSIG_RULESET_BODY_GENERATED_FROM_GHOSTS "!ruleset_body_generated_from_ghosts"
+
+/// Global signal whenever a camera network broadcast is started/stopped/updated: (camera_net, is_show_active, announcement)
+#define COMSIG_GLOB_NETWORK_BROADCAST_UPDATED "!network_broadcast_updated"
+
+///Global signal sent when the player list grows. Called by [mob/add_to_player_list] (mob/player)
+#define COMSIG_GLOB_PLAYER_LOGIN "!player_login"
+
+///Global signal sent when the player list shrinks. Called by [mob/remove_from_player_list] (mob/player)
+#define COMSIG_GLOB_PLAYER_LOGOUT "!player_logout"

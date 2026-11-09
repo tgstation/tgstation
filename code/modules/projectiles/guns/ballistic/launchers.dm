@@ -1,29 +1,57 @@
 //KEEP IN MIND: These are different from gun/grenadelauncher. These are designed to shoot premade rocket and grenade projectiles, not flashbangs or chemistry casings etc.
 //Put handheld rocket launchers here if someone ever decides to make something so hilarious ~Paprika
 
-/obj/item/gun/ballistic/revolver/grenadelauncher//this is only used for underbarrel grenade launchers at the moment, but admins can still spawn it if they feel like being assholes
-	desc = "A break-operated grenade launcher."
-	name = "grenade launcher"
-	icon_state = "dshotgun_sawn"
-	inhand_icon_state = "gun"
+/obj/item/gun/ballistic/revolver/grenadelauncher
+	name = "break-action grenade launcher"
+	desc = "A break-action grenade launcher. Archaic by modern standards, but it still works, so who can complain?"
+	icon_state = "grenade_launcher"
+	inhand_icon_state = "grenade_launcher"
+	worn_icon_state = "shotgun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
-	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
-	w_class = WEIGHT_CLASS_NORMAL
+	fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
 	pin = /obj/item/firing_pin/implant/pindicate
 	bolt_type = BOLT_TYPE_NO_BOLT
+	can_muzzle_flash = FALSE
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
 	pin = /obj/item/firing_pin
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/attackby(obj/item/A, mob/user, params)
-	..()
-	if(istype(A, /obj/item/ammo_box) || isammocasing(A))
+/obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted/tear
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/grenadelauncher/tear
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if((. = ITEM_INTERACT_SUCCESS) && (istype(tool, /obj/item/ammo_box) || isammocasing(tool)))
 		chamber_round()
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
+	name = "underbarrel grenade launcher"
+	spawn_blacklisted = TRUE
+	pin = null
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel/Initialize(mapload)
+	. = ..()
+	var/obj/item/gun/gun = loc
+	if (!istype(gun))
+		return INITIALIZE_HINT_QDEL
+	pin = gun.pin
+	RegisterSignal(gun, COMSIG_GUN_PIN_INSERTED, PROC_REF(on_pin_inserted))
+	RegisterSignal(gun, COMSIG_GUN_PIN_REMOVED, PROC_REF(on_pin_removed))
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel/proc/on_pin_inserted(obj/item/gun/source, obj/item/firing_pin/new_pin, mob/living/user)
+	SIGNAL_HANDLER
+	pin = new_pin
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel/proc/on_pin_removed(obj/item/gun/source, obj/item/firing_pin/old_pin, mob/living/user)
+	SIGNAL_HANDLER
+	pin = null
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/cyborg
 	desc = "A 6-shot grenade launcher."
 	name = "multi grenade launcher"
-	icon = 'icons/mob/mecha_equipment.dmi'
+	icon = 'icons/obj/devices/mecha_equipment.dmi'
 	icon_state = "mecha_grenadelnchr"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	pin = /obj/item/firing_pin
@@ -35,10 +63,10 @@
 	name = "gyrojet pistol"
 	desc = "A prototype pistol designed to fire self propelled rockets."
 	icon_state = "gyropistol"
-	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m75
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = 0 SECONDS
 	actions_types = list()
 	casing_ejector = FALSE
 
@@ -54,13 +82,13 @@
 	worn_icon_state = "rocketlauncher"
 	SET_BASE_PIXEL(-8, 0)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
-	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
+	fire_sound = 'sound/items/weapons/gun/general/rocket_launch.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	can_suppress = FALSE
 	pin = /obj/item/firing_pin/implant/pindicate
 	burst_size = 1
-	fire_delay = 0
+	fire_delay = 0 SECONDS
 	casing_ejector = FALSE
 	weapon_weight = WEAPON_HEAVY
 	bolt_type = BOLT_TYPE_NO_BOLT
@@ -68,6 +96,7 @@
 	cartridge_wording = "rocket"
 	empty_indicator = TRUE
 	tac_reloads = FALSE
+	can_muzzle_flash = FALSE
 	/// Do we shit flames behind us when we fire?
 	var/backblast = TRUE
 
@@ -89,9 +118,11 @@
 		This one has been fitted with a special backblast diverter to prevent 'friendly' fire 'accidents' during use."
 	backblast = FALSE
 
-/obj/item/gun/ballistic/rocketlauncher/afterattack()
+/obj/item/gun/ballistic/rocketlauncher/try_fire_gun(atom/target, mob/living/user, params)
 	. = ..()
-	magazine.get_round(FALSE) //Hack to clear the mag after it's fired
+	if(!.)
+		return
+	magazine.get_round() //Hack to clear the mag after it's fired
 
 /obj/item/gun/ballistic/rocketlauncher/attack_self_tk(mob/user)
 	return //too difficult to remove the rocket with TK
@@ -124,3 +155,8 @@
 			span_userdanger("You look around after realizing you're still here, then proceed to choke yourself to death with [src]!"))
 		sleep(2 SECONDS)
 		return OXYLOSS
+
+/obj/item/gun/ballistic/rocketlauncher/unrestricted/nanotrasen
+	desc = "A reusable rocket propelled grenade launcher. The words \"Syndicate this way\" and an arrow have been written near the barrel. \
+	A sticker near the cheek rest reads, \"ENSURE AREA BEHIND IS CLEAR BEFORE FIRING\""
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/rocketlauncher/empty

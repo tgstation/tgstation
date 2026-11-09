@@ -18,7 +18,7 @@
 	var/stimulant = TRUE
 	var/detonate_explosion = TRUE
 	var/detonate_dev_range = 0
-	var/detonate_heavy_range = 0
+	var/detonate_heavy_range = 1
 	var/detonate_light_range = 2
 	var/detonate_flash_range = 5
 	var/detonate_fire_range = 5
@@ -51,7 +51,10 @@
 /obj/item/hot_potato/proc/detonate()
 	var/atom/location = loc
 	location.visible_message(span_userdanger("[src] [detonate_explosion? "explodes" : "activates"]!"), span_userdanger("[src] activates! You've ran out of time!"))
-	if(detonate_explosion)
+	if(detonate_explosion && isliving(loc))
+		var/mob/living/victim_mob = loc
+		if(victim_mob.is_holding(src))
+			victim_mob.gib(DROP_ALL_REMAINS)
 		explosion(src, detonate_dev_range, detonate_heavy_range, detonate_light_range, detonate_fire_range, detonate_flash_range)
 	deactivate()
 	if(!reusable)
@@ -95,19 +98,22 @@
 	if(active)
 		to_chat(user, span_userdanger("You have a really bad feeling about [src]!"))
 
-/obj/item/hot_potato/afterattack(atom/target, mob/user, adjacent, params)
+/obj/item/hot_potato/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(!adjacent || !ismob(target))
-		return
-	force_onto(target, user)
+	if(.)
+		return .
+
+	return force_onto(target_mob, user)
 
 /obj/item/hot_potato/proc/force_onto(mob/living/victim, mob/user)
 	if(!istype(victim) || user != loc || victim == user)
 		return FALSE
 	if(!victim.client)
 		to_chat(user, span_boldwarning("[src] refuses to attach to a non-sapient creature!"))
-	if(victim.stat != CONSCIOUS || !victim.usable_legs)
+		return FALSE
+	if(IS_UNCONSCIOUS_OR_CRIT(victim) || !victim.usable_legs)
 		to_chat(user, span_boldwarning("[src] refuses to attach to someone incapable of using it!"))
+		return FALSE
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	. = FALSE
 	if(!victim.put_in_hands(src))
@@ -151,7 +157,7 @@
 	active = TRUE
 	if(detonate_explosion) //doesn't send a notification unless it's a genuine, exploding hot potato.
 		notify_ghosts(
-			"[user] has primed a Hot Potato!",
+			"[user.real_name] has primed a Hot Potato!",
 			source = src,
 			header = "Hot Hot Hot!",
 		)

@@ -10,16 +10,17 @@
 		/obj/item/food/friedegg = 1,
 	)
 	result = /obj/item/food/eggsausage
-	category = CAT_EGG
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/omelette
-	name = "Omelette"
+	name = "Omelette du fromage"
 	reqs = list(
 		/obj/item/food/egg = 2,
 		/obj/item/food/cheese/wedge = 2
 	)
 	result = /obj/item/food/omelette
-	category = CAT_EGG
+	added_foodtypes = BREAKFAST
+	removed_foodtypes = RAW
 
 /datum/crafting_recipe/food/chocolateegg
 	name = "Chocolate egg"
@@ -28,7 +29,9 @@
 		/obj/item/food/chocolatebar = 1
 	)
 	result = /obj/item/food/chocolateegg
-	category = CAT_EGG
+	removed_foodtypes = MEAT|BREAKFAST //This recipe is very wrong, please change it ffs
+	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/eggsbenedict
 	name = "Eggs benedict"
@@ -38,7 +41,7 @@
 		/obj/item/food/breadslice/plain = 1,
 	)
 	result = /obj/item/food/benedict
-	category = CAT_EGG
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/eggbowl
 	name = "Egg bowl"
@@ -46,11 +49,12 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 		/obj/item/food/boiledrice = 1,
 		/obj/item/food/boiledegg = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/corn = 1
 	)
 	result = /obj/item/food/salad/eggbowl
-	category = CAT_EGG
+	removed_foodtypes = BREAKFAST
+	dish_category = DISH_RICE
 
 /datum/crafting_recipe/food/wrap
 	name = "Egg Wrap"
@@ -59,7 +63,9 @@
 		/obj/item/food/grown/cabbage = 1,
 	)
 	result = /obj/item/food/eggwrap
-	category = CAT_EGG
+	removed_foodtypes = BREAKFAST
+	cuisine_category = CUISINE_MEXICAN
+	dish_category = DISH_BURRITO
 
 /datum/crafting_recipe/food/chawanmushi
 	name = "Chawanmushi"
@@ -70,5 +76,5 @@
 		/obj/item/food/grown/mushroom/chanterelle = 1
 	)
 	result = /obj/item/food/chawanmushi
-	category = CAT_EGG
-
+	removed_foodtypes = BREAKFAST
+	cuisine_category = CUISINE_JAPANESE

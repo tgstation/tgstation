@@ -7,7 +7,7 @@
 /// Poly has only just survived a round, and is doing a consecutive one.
 #define POLY_CONSECUTIVE_ROUND "consecutive_round"
 /// haunt filter we apply to who we possess
-#define POLY_POSSESS_FILTER
+#define POLY_POSSESS_FILTER "poly_possess_filter"
 /// haunt filter color we apply to who we possess
 #define POLY_POSSESS_GLOW "#522059"
 
@@ -16,7 +16,7 @@
 	name = "Poly"
 	desc = "Poly the Parrot. An expert on quantum cracker theory."
 	gold_core_spawnable = NO_SPAWN
-	speech_probability_rate = 13
+	speech_probability_rate = 6
 
 	/// Callback to save our memory at the end of the round.
 	var/datum/callback/roundend_callback = null
@@ -42,7 +42,7 @@
 	if(!SStts.tts_enabled)
 		return
 
-	voice = pick(SStts.available_speakers)
+	voice = SStts.random_tts_voice()
 	if(SStts.pitch_enabled)
 		if(findtext(voice, "Woman"))
 			pitch = 12 // up-pitch by one octave
@@ -67,7 +67,7 @@
 		if(mind)
 			mind.transfer_to(specter)
 		else
-			specter.key = key
+			specter.PossessByPlayer(key)
 	return ..()
 
 /mob/living/basic/parrot/poly/get_static_list_of_phrases() // there's only one poly, so there should only be one ongoing list of phrases. i guess
@@ -115,28 +115,19 @@
 			add_atom_colour("#BB7777", FIXED_COLOUR_PRIORITY)
 
 /// Reads the memory of the parrot, and updates the necessary variables. Returns a list of phrases to add to the parrot's speech buffer.
-/mob/living/basic/parrot/poly/proc/read_memory()
-	RETURN_TYPE(/list)
-	var/list/returnable_list = list()
-	if(fexists("data/npc_saves/Poly.sav")) //legacy compatability to convert old format to new
-		var/savefile/legacy = new /savefile("data/npc_saves/Poly.sav")
-		legacy["phrases"] >> returnable_list
-		legacy["roundssurvived"] >> rounds_survived
-		legacy["longestsurvival"] >> longest_survival
-		legacy["longestdeathstreak"] >> longest_deathstreak
-		fdel("data/npc_saves/Poly.sav")
+/mob/living/basic/parrot/poly/proc/read_memory() as /list
+	var/json_file = file("data/npc_saves/Poly.json")
+	if(!fexists(json_file))
+		return list()
+	var/json_text = file2text(json_file)
+	if(!rustg_json_is_valid(json_text))
+		return list()
+	var/list/json = json_decode(json_text)
+	rounds_survived = json["roundssurvived"]
+	longest_survival = json["longestsurvival"]
+	longest_deathstreak = json["longestdeathstreak"]
 
-	else
-		var/json_file = file("data/npc_saves/Poly.json")
-		if(!fexists(json_file))
-			return list()
-		var/list/json = json_decode(file2text(json_file))
-		returnable_list = json["phrases"]
-		rounds_survived = json["roundssurvived"]
-		longest_survival = json["longestsurvival"]
-		longest_deathstreak = json["longestdeathstreak"]
-
-	return returnable_list
+	return json["phrases"]
 
 /// Determines the type of Poly we might have here based on the statistics we got from the memory.
 /mob/living/basic/parrot/poly/proc/determine_special_poly()
@@ -191,9 +182,9 @@
 	name = "The Ghost of Poly"
 	desc = "Doomed to squawk the Earth."
 	color = "#FFFFFF77"
-	status_flags = GODMODE
 	sentience_type = SENTIENCE_BOSS //This is so players can't mindswap into ghost poly to become a literal god
 	incorporeal_move = INCORPOREAL_MOVE_BASIC
+	status_flags = NONE
 	butcher_results = list(/obj/item/ectoplasm = 1)
 	ai_controller = /datum/ai_controller/basic_controller/parrot/ghost
 	speech_probability_rate = 1
@@ -202,7 +193,7 @@
 /mob/living/basic/parrot/poly/ghost/Initialize(mapload)
 	// block anything and everything that could possibly happen with writing memory for ghosts
 	memory_saved = TRUE
-	ADD_TRAIT(src, TRAIT_DONT_WRITE_MEMORY, INNATE_TRAIT)
+	add_traits(list(TRAIT_GODMODE, TRAIT_DONT_WRITE_MEMORY), INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	return ..()
 

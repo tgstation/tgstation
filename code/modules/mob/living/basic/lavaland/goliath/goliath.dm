@@ -9,8 +9,7 @@
 	pixel_x = -12
 	base_pixel_x = -12
 	gender = MALE // Female ones are the bipedal elites
-	speed = 30
-	basic_mob_flags = IMMUNE_TO_FISTS
+	speed = 12
 	maxHealth = 300
 	health = 300
 	friendly_verb_continuous = "wails at"
@@ -19,7 +18,7 @@
 	obj_damage = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_verb_continuous = "pulverizes"
 	attack_verb_simple = "pulverize"
 	throw_blocked_message = "does nothing to the tough hide of"
@@ -29,15 +28,12 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/goliath
 
-	crusher_loot = /obj/item/crusher_trophy/goliath_tentacle
 	butcher_results = list(/obj/item/food/meat/slab/goliath = 2, /obj/item/stack/sheet/bone = 2)
 	guaranteed_butcher_results = list(/obj/item/stack/sheet/animalhide/goliath_hide = 1)
 	/// Icon state to use when tentacles are available
 	var/tentacle_warning_state = "goliath_preattack"
 	/// Can this kind of goliath be tamed?
 	var/tameable = TRUE
-	/// Has this particular goliath been tamed?
-	var/tamed = FALSE
 	/// Can someone ride us around like a horse?
 	var/saddled = FALSE
 	/// Slight cooldown to prevent double-dipping if we use both abilities at once
@@ -54,7 +50,6 @@
 /mob/living/basic/mining/goliath/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_TENTACLE_IMMUNE, INNATE_TRAIT)
-	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = goliath_foods)
 	AddElement(\
@@ -65,10 +60,9 @@
 	)
 
 	AddComponent(/datum/component/ai_target_timer)
-	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5)
+		AddComponent(/datum/component/tameable, tame_chance = 10, bonus_tame_chance = 5)
 
 	tentacles = new (src)
 	tentacles.Grant(src)
@@ -83,6 +77,16 @@
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(goliath_foods))
 	ai_controller.set_blackboard_key(BB_GOLIATH_TENTACLES, tentacles)
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/basic/mining/goliath/Destroy()
+	QDEL_NULL(tentacles)
+	QDEL_NULL(melee_tentacles)
+	QDEL_NULL(tentacle_line)
+	return ..()
+
+/mob/living/basic/mining/goliath/get_hud_x_offset()
+	return -4
 
 /mob/living/basic/mining/goliath/examine(mob/user)
 	. = ..()
@@ -90,35 +94,53 @@
 		. += span_info("Someone appears to have attached a saddle to this one.")
 
 // Goliaths can summon tentacles more frequently as they take damage, scary.
-/mob/living/basic/mining/goliath/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item)
+/mob/living/basic/mining/goliath/apply_damage/apply_damage(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	blocked = 0,
+	forced = FALSE,
+	spread_damage = FALSE,
+	wound_bonus = 0,
+	exposed_wound_bonus = 0,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+	wound_clothing = TRUE,
+)
 	. = ..()
 	if (. <= 0)
 		return
 	if (tentacles.cooldown_time > 1 SECONDS)
 		tentacles.cooldown_time -= 1 SECONDS
 
-/mob/living/basic/mining/goliath/attackby(obj/item/attacking_item, mob/living/user, params)
-	if (!istype(attacking_item, /obj/item/goliath_saddle))
+/mob/living/basic/mining/goliath/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/goliath_saddle))
 		return ..()
+
 	if (!tameable)
 		balloon_alert(user, "doesn't fit!")
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	if (saddled)
 		balloon_alert(user, "already saddled!")
-		return
-	if (!tamed)
+		return ITEM_INTERACT_BLOCKING
+
+	if (!HAS_TRAIT(src, TRAIT_TAMED))
 		balloon_alert(user, "too rowdy!")
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	balloon_alert(user, "affixing saddle...")
 	if (!do_after(user, delay = 5.5 SECONDS, target = src))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	balloon_alert(user, "ready to ride")
-	qdel(attacking_item)
+	qdel(tool)
 	make_rideable()
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/mining/goliath/proc/make_rideable()
 	saddled = TRUE
-	buckle_lying = 0
 	add_overlay("goliath_saddled")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath)
 
@@ -136,7 +158,7 @@
 	if (!COOLDOWN_FINISHED(src, ability_animation_cooldown))
 		return
 	COOLDOWN_START(src, ability_animation_cooldown, 2 SECONDS)
-	playsound(src, 'sound/magic/demon_attack1.ogg', vol = 50, vary = TRUE)
+	playsound(src, 'sound/effects/magic/demon_attack1.ogg', vol = 50, vary = TRUE)
 	Shake(1, 0, 1.5 SECONDS)
 
 /// Called slightly before tentacles ability comes off cooldown, as a warning
@@ -145,20 +167,23 @@
 		return
 	icon_state = tentacle_warning_state
 
-/// Get ready for mounting
-/mob/living/basic/mining/goliath/tamed(mob/living/tamer, atom/food)
-	tamed = TRUE
-
 // Copy entire faction rather than just placing user into faction, to avoid tentacle peril on station
 /mob/living/basic/mining/goliath/befriend(mob/living/new_friend)
 	. = ..()
-	faction = new_friend.faction.Copy()
+	if(isnull(.))
+		return
+	SET_FACTION_AND_ALLIES_FROM(src, new_friend)
 
 /mob/living/basic/mining/goliath/RangedAttack(atom/atom_target, modifiers)
 	tentacles?.Trigger(target = atom_target)
 
 /mob/living/basic/mining/goliath/ranged_secondary_attack(atom/atom_target, modifiers)
 	tentacle_line?.Trigger(target = atom_target)
+
+/mob/living/basic/mining/goliath/update_overlays()
+	. = ..()
+	if (stat != DEAD)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
 
 /// Version of the goliath that already starts saddled and doesn't require a lasso to be ridden.
 /mob/living/basic/mining/goliath/deathmatch
@@ -191,13 +216,12 @@
 		This one is clearly ancient, and its tentacles constantly churn the earth around it."
 	maxHealth = 400
 	health = 400
-	crusher_drop_chance = 30 // Wow a whole 5% more likely, how generous
 	/// Don't re-check nearby turfs for this long
 	COOLDOWN_DECLARE(retarget_turfs_cooldown)
 	/// List of places we might spawn a tentacle, if we're alive
 	var/list/tentacle_target_turfs
 
-/mob/living/basic/mining/goliath/ancient/immortal/Life(seconds_per_tick, times_fired)
+/mob/living/basic/mining/goliath/ancient/immortal/Life(seconds_per_tick)
 	. = ..()
 	if (!. || !isturf(loc))
 		return
@@ -208,7 +232,7 @@
 			tentacle_target_turfs -= target_turf
 			continue
 		if (prob(10))
-			new /obj/effect/goliath_tentacle(target_turf)
+			new /obj/effect/goliath_tentacle(target_turf, src)
 
 /mob/living/basic/mining/goliath/ancient/immortal/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -218,7 +242,7 @@
 
 /// Store nearby turfs in our list so we can pop them out later
 /mob/living/basic/mining/goliath/ancient/immortal/proc/cache_nearby_turfs()
-	COOLDOWN_START(src, retarget_turfs_cooldown, 10 SECONDS)
+	COOLDOWN_START(src, retarget_turfs_cooldown, 5 SECONDS)
 	LAZYCLEARLIST(tentacle_target_turfs)
 	for(var/turf/open/floor in orange(4, loc))
 		LAZYADD(tentacle_target_turfs, floor)

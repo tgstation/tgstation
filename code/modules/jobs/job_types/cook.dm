@@ -1,10 +1,9 @@
 /datum/job/cook
 	title = JOB_COOK
 	description = "Serve food, cook meat, keep the crew fed."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 2
-	spawn_positions = 1
+	spawn_positions = 2
 	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "COOK"
@@ -16,6 +15,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
 
+	desensitized_base = DESENSITIZED_THRESHOLD // butcher
 	liver_traits = list(TRAIT_CULINARY_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_COOK
@@ -32,14 +32,15 @@
 
 	// Adds up to 100, don't mess it up
 	mail_goodies = list(
-		/obj/item/storage/box/ingredients/random = 40,
-		/obj/item/reagent_containers/cup/bottle/caramel = 7,
-		/obj/item/reagent_containers/condiment/flour = 7,
-		/obj/item/reagent_containers/condiment/rice = 7,
-		/obj/item/reagent_containers/condiment/ketchup = 7,
-		/obj/item/reagent_containers/condiment/enzyme = 7,
-		/obj/item/reagent_containers/condiment/soymilk = 7,
-		/obj/item/kitchen/spoon/soup_ladle = 6,
+		/obj/item/cooking_voucher = 10,
+		/obj/item/reagent_containers/cup/bottle/caramel = 10,
+		/obj/item/reagent_containers/condiment/flour = 10,
+		/obj/item/reagent_containers/condiment/rice = 10,
+		/obj/item/reagent_containers/condiment/ketchup = 10,
+		/obj/item/reagent_containers/condiment/mustard = 10,
+		/obj/item/reagent_containers/condiment/enzyme = 10,
+		/obj/item/reagent_containers/condiment/soymilk = 10,
+		/obj/item/kitchen/spoon/soup_ladle = 8,
 		/obj/item/kitchen/tongs = 6,
 		/obj/item/knife/kitchen = 4,
 		/obj/item/knife/butcher = 2,
@@ -50,6 +51,7 @@
 		JOB_CHEF,
 	)
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_UTENSILS
 
 /datum/job/cook/award_service(client/winner, award)
 	winner.give_award(award, winner.mob)
@@ -70,28 +72,28 @@
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/toggle/chef
 	backpack_contents = list(
-		/obj/item/choice_beacon/ingredient = 1,
 		/obj/item/sharpener = 1,
 	)
-	belt = /obj/item/modular_computer/pda/cook
+	belt = /obj/item/modular_computer/pda/crew/cook
 	ears = /obj/item/radio/headset/headset_srv
 	head = /obj/item/clothing/head/utility/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
+	r_pocket = /obj/item/cooking_voucher
 
 	skillchips = list(/obj/item/skillchip/job/chef)
 
-/datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/job/cook/pre_equip(mob/living/carbon/human/H, visuals_only = FALSE)
 	..()
-	var/datum/job/cook/other_chefs = SSjob.GetJobType(jobtype)
+	var/datum/job/cook/other_chefs = SSjob.get_job_type(jobtype)
 	if(other_chefs) // If there's other Chefs, you're a Cook
 		if(other_chefs.cooks > 0)//Cooks
 			id_trim = /datum/id_trim/job/cook
 			suit = /obj/item/clothing/suit/apron/chef
 			head = /obj/item/clothing/head/soft/mime
-		if(!visualsOnly)
+		if(!visuals_only)
 			other_chefs.cooks++
 
-/datum/outfit/job/cook/post_equip(mob/living/carbon/human/user, visualsOnly = FALSE)
+/datum/outfit/job/cook/post_equip(mob/living/carbon/human/user, visuals_only = FALSE)
 	. = ..()
 	// Update PDA to match possible new trim.
 	var/obj/item/card/id/worn_id = user.wear_id

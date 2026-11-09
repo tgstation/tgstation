@@ -25,7 +25,7 @@
 
 /datum/supply_pack/materials/sandstone30
 	name = "30 Sandstone Blocks"
-	desc = "Neither sandy nor stoney, these thirty blocks will still get the job done."
+	desc = "Neither sandy nor stony, these thirty blocks will still get the job done."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	crate_name = "sandstone blocks crate"
@@ -75,6 +75,7 @@
 	cost = CARGO_CRATE_VALUE * 0.05
 	contains = list(/obj/machinery/portable_atmospherics/canister)
 	crate_type = /obj/structure/closet/crate/large
+	test_ignored = TRUE
 
 /datum/supply_pack/materials/gas_canisters/generate_supply_packs()
 	var/list/canister_packs = list()
@@ -83,22 +84,23 @@
 	// This is the amount of moles in a default canister
 	var/moleCount = (initial(fakeCanister.maximum_pressure) * initial(fakeCanister.filled)) * initial(fakeCanister.volume) / (R_IDEAL_GAS_EQUATION * T20C)
 
-	for(var/gasType in GLOB.meta_gas_info)
-		var/datum/gas/gas = gasType
-		var/name = initial(gas.name)
-		if(!initial(gas.purchaseable))
+	for(var/datum/gas/gas as anything in GLOB.meta_gas_info[META_GAS_ID])
+		if(!(initial(gas.cargo_flags) & GAS_PURCHASABLE))
 			continue
 		var/datum/supply_pack/materials/pack = new
-		pack.name = "[name] Canister"
-		pack.desc = "Contains a canister of [name]."
-		if(initial(gas.dangerous))
+		var/canname = initial(gas.name)
+		pack.name = "[canname] Canister"
+		pack.desc = "Contains a canister of [canname]."
+		if(initial(gas.cargo_flags) & GAS_DANGEROUS)
 			pack.access = ACCESS_ATMOSPHERICS
 			pack.access_view = ACCESS_ATMOSPHERICS
-		pack.crate_name = "[name] canister crate"
-		pack.id = "[type]([name])"
+		pack.crate_name = "[canname] canister crate"
+		pack.id = "[type]([canname])"
 
 		pack.cost = cost + moleCount * initial(gas.base_value) * 1.6
 		pack.cost = CEILING(pack.cost, 10)
+
+		pack.test_ignored = FALSE
 
 		pack.contains = list(GLOB.gas_id_to_canister[initial(gas.id)])
 

@@ -5,7 +5,7 @@
 
 	name = "air vent"
 	desc = "Has a valve and pump attached to it."
-
+	construction_type = /obj/item/pipe/directional/vent
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.15
 	can_unwrench = TRUE
@@ -32,9 +32,6 @@
 	// ATMOS_INTERNAL_BOUND: Do not pass internal_pressure_bound
 	// NO_BOUND: Do not pass either
 
-	/// id of air sensor its connected to
-	var/chamber_id
-
 	///area this vent is assigned to
 	var/area/assigned_area
 
@@ -49,6 +46,9 @@
 
 	/// Datum for managing the overclock sound loop
 	var/datum/looping_sound/vent_pump_overclock/sound_loop
+
+	/// Multiplier to the amount of mols transferred - updated as it takes integrity damage
+	VAR_PRIVATE/transfer_rate_modifier = 1.0
 
 /obj/machinery/atmospherics/components/unary/vent_pump/Initialize(mapload)
 	if(!id_tag)
@@ -71,7 +71,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on_update_integrity(old_value, new_value)
 	. = ..()
 	var/condition_string
-	switch(get_integrity_percentage())
+	switch(transfer_rate_modifier)
 		if(1)
 			condition_string = "perfect"
 		if(0.75 to 0.99)
@@ -83,6 +83,10 @@
 		else
 			condition_string = "terrible"
 	examine_condition = "The fan is in [condition_string] condition."
+
+/obj/machinery/atmospherics/components/unary/vent_pump/on_update_integrity(old_value, new_value)
+	. = ..()
+	transfer_rate_modifier = get_integrity_percentage()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	. = ..()
@@ -108,7 +112,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/screwdriver_act(mob/living/user, obj/item/tool)
-	var/time_to_repair = (10 SECONDS) * (1 - get_integrity_percentage())
+	var/time_to_repair = (10 SECONDS) * (1 - transfer_rate_modifier)
 	if(!time_to_repair)
 		return FALSE
 
@@ -123,7 +127,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atom_fix()
 	set_is_operational(TRUE)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atom_break(damage_flag)
@@ -189,7 +193,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon_nopipes()
 	cut_overlays()
-	if(showpipe)
+	if(underfloor_state)
 		var/image/cap = get_pipe_image(icon, "vent_cap", initialize_directions)
 		add_overlay(cap)
 	else
@@ -230,7 +234,7 @@
 	fan_overclocked = !fan_overclocked
 
 	if(from_break)
-		playsound(src, 'sound/machines/fan_break.ogg', 100)
+		playsound(src, 'sound/machines/fan/fan_break.ogg', 100)
 		fan_overclocked = FALSE
 
 	if(fan_overclocked)
@@ -240,13 +244,18 @@
 
 	investigate_log("had its overlock setting [fan_overclocked ? "enabled" : "disabled"] by [source]", INVESTIGATE_ATMOS)
 
-	update_appearance()
+	update_appearance(UPDATE_ICON)
+
+/obj/machinery/atmospherics/components/unary/vent_pump/atom_destruction(damage_flag)
+	. = ..()
+	if(!damage_flag && fan_overclocked)
+		investigate_log("was destroyed as a result of overclocking", INVESTIGATE_ATMOS)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
 	if(!is_operational)
 		return
 	if(!nodes[1])
-		on = FALSE
+		set_on(FALSE)
 	if(!on || welded)
 		return
 	var/turf/open/us = loc
@@ -254,12 +263,8 @@
 		return
 
 	if(fan_overclocked)
-		take_damage(fan_damage_rate, sound_effect=FALSE)
-		if(get_integrity() == 0)
-			investigate_log("was destroyed as a result of overclocking", INVESTIGATE_ATMOS)
-			return
+		take_damage(fan_damage_rate, sound_effect = FALSE)
 
-	var/percent_integrity = get_integrity_percentage()
 	var/datum/gas_mixture/air_contents = airs[1]
 	var/datum/gas_mixture/environment = us.return_air()
 	var/environment_pressure = environment.return_pressure()
@@ -278,8 +283,8 @@
 					return FALSE
 
 				var/transfer_moles = (pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
-				if(!fan_overclocked && (percent_integrity < 1))
-					transfer_moles *= percent_integrity
+				if(!fan_overclocked)
+					transfer_moles *= transfer_rate_modifier
 
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
@@ -301,8 +306,8 @@
 				return FALSE
 
 			var/transfer_moles = (pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION)
-			if(!fan_overclocked && (percent_integrity < 1))
-				transfer_moles *= percent_integrity
+			if(!fan_overclocked)
+				transfer_moles *= transfer_rate_modifier
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
@@ -330,7 +335,7 @@
 		else
 			user.visible_message(span_notice("[user] unwelded the vent."), span_notice("You unweld the vent."), span_hear("You hear welding."))
 			welded = FALSE
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		pipe_vision_img = image(src, loc, dir = dir)
 		SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
@@ -357,17 +362,17 @@
 		return
 	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the vent."), span_hear("You hear loud scraping noises."))
 	welded = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	pipe_vision_img = image(src, loc, dir = dir)
 	SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
+	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 100, TRUE)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "large air vent"
 	power_channel = AREA_USAGE_EQUIP
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/Initialize(mapload)
+	. = ..()
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = 1000
 

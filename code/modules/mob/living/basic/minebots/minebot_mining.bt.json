@@ -1,0 +1,193 @@
+{
+	"dm_type": "/datum/bt_node/subtree/minebot_mining",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "selector",
+					"children": [
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/bb_key_true",
+							"vars": {
+								"observer_abort": "BT_ABORT_BOTH",
+								"key": "BB_MINEBOT_REPAIR_DRONE"
+							},
+							"child": {
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"vars": {
+									"observer_abort": "BT_ABORT_BOTH",
+									"key": "BB_DRONE_DEFEND"
+								},
+								"child": {
+									"type": "decorator",
+									"decorator": "/datum/bt_node/decorator/target_health_below_fraction",
+									"vars": {
+										"observer_abort": "BT_ABORT_BOTH",
+										"key": "BB_DRONE_DEFEND",
+										"fraction": 0.75
+									},
+									"child": {
+										"type": "sequence",
+										"children": [
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+												"vars": {
+													"target_key": "BB_DRONE_DEFEND",
+													"required_dist": 1,
+													"finish_on_arrival": true
+												}
+											},
+											{
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/repair_drone",
+												"vars": {
+													"target_key": "BB_DRONE_DEFEND"
+												}
+											}
+										]
+									}
+								}
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/befriend_target/check_ally",
+							"vars": {
+								"target_key": "BB_DRONE_DEFEND",
+								"long_range_friendship": true,
+								"forget_target": false
+							}
+						}
+					]
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"observer_abort": "BT_ABORT_BOTH",
+						"key": "BB_ORE_TARGET"
+					},
+					"child": {
+						"type": "sequence",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"vars": {
+									"target_key": "BB_ORE_TARGET",
+									"required_dist": 1,
+									"finish_on_arrival": true
+								}
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/collect_ore/minebot",
+								"vars": {
+									"target_key": "BB_ORE_TARGET"
+								}
+							}
+						]
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_true",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+						"key": "BB_AUTOMATED_MINING"
+					},
+					"child": {
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"vars": {
+							"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+							"key": "BB_TARGET_MINERAL_TURF"
+						},
+						"child": {
+							"type": "sequence",
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+									"vars": {
+										"target_key": "BB_TARGET_MINERAL_TURF",
+										"required_dist": 2,
+										"finish_on_arrival": true
+									}
+								},
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/minebot_mine_turf",
+									"vars": {
+										"target_key": "BB_TARGET_MINERAL_TURF"
+									}
+								}
+							]
+						}
+					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/random_walk"
+				}
+			]
+		},
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+					"vars": {
+						"time_between_perform": "5 SECONDS",
+						"target_key": "BB_DRONE_DEFEND",
+						"targeting_strategy": "/datum/targeting_strategy/anything",
+						"target_source": "/datum/target_source/oview_single_type/node_drone",
+						"vision_range": 9,
+						"revalidation_mode": "TARGET_REVALIDATE"
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_true",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+						"key": "BB_AUTOMATED_MINING"
+					},
+					"child": {
+						"type": "selector",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+								"vars": {
+									"target_key": "BB_ORE_TARGET",
+									"targeting_strategy": "/datum/targeting_strategy/pickup_item",
+									"target_source": "/datum/target_source/oview_single_type/ore",
+									"vision_range": 2
+								}
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/find_mineral_wall/minebot",
+								"vars": {
+									"target_key": "BB_TARGET_MINERAL_TURF"
+								}
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

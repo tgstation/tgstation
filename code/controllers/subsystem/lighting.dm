@@ -1,8 +1,11 @@
 SUBSYSTEM_DEF(lighting)
 	name = "Lighting"
-	wait = 2
-	init_order = INIT_ORDER_LIGHTING
-	flags = SS_TICKER
+	dependencies = list(
+		/datum/controller/subsystem/atoms,
+		/datum/controller/subsystem/mapping,
+	)
+	wait = 1
+	ss_flags = SS_TICKER
 	var/static/list/sources_queue = list() // List of lighting sources queued for update.
 	var/static/list/corners_queue = list() // List of lighting corners queued for update.
 	var/static/list/objects_queue = list() // List of lighting objects queued for update.
@@ -13,7 +16,7 @@ SUBSYSTEM_DEF(lighting)
 #endif
 
 /datum/controller/subsystem/lighting/stat_entry(msg)
-	msg = "L:[length(sources_queue)]|C:[length(corners_queue)]|O:[length(objects_queue)]"
+	msg = "\n  Sources:[length(sources_queue)]|Corners:[length(corners_queue)]|Objects:[length(objects_queue)]"
 	return ..()
 
 
@@ -26,6 +29,22 @@ SUBSYSTEM_DEF(lighting)
 
 	return SS_INIT_SUCCESS
 
+
+/datum/controller/subsystem/lighting/proc/create_all_lighting_objects()
+	for(var/area/area as anything in GLOB.areas)
+		if(!area.static_lighting)
+			continue
+		for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+			for(var/turf/area_turf as anything in zlevel_turfs)
+				if(area_turf.space_lit)
+					continue
+				var/atom/movable/lighting_object/existing_object = area_turf.lighting_object
+				if(!QDELETED(existing_object) && existing_object.affected_turf == area_turf)
+					continue
+				new /atom/movable/lighting_object(area_turf)
+			CHECK_TICK
+		CHECK_TICK
+
 /datum/controller/subsystem/lighting/fire(resumed, init_tick_checks)
 	MC_SPLIT_TICK_INIT(3)
 	if(!init_tick_checks)
@@ -37,6 +56,7 @@ SUBSYSTEM_DEF(lighting)
 
 	// UPDATE SOURCE QUEUE
 	var/i = 0
+	// something something cache locally for sonic speed
 	var/list/queue = current_sources
 	while(i < length(queue)) //we don't use for loop here because i cannot be changed during an iteration
 		i += 1
@@ -94,7 +114,7 @@ SUBSYSTEM_DEF(lighting)
 	while(i < length(queue)) //we don't use for loop here because i cannot be changed during an iteration
 		i += 1
 
-		var/datum/lighting_object/O = queue[i]
+		var/atom/movable/lighting_object/O = queue[i]
 		if(QDELETED(O))
 			continue
 		O.update()
@@ -116,3 +136,13 @@ SUBSYSTEM_DEF(lighting)
 /datum/controller/subsystem/lighting/Recover()
 	initialized = SSlighting.initialized
 	..()
+
+/// Takes a list of turfs in, and sets up static lighting for them as needed.
+/// Exactly what it says on the tin.
+/datum/controller/subsystem/lighting/proc/setup_static_lighting_if_needed(list/turfs)
+	for(var/turf/unlit as anything in turfs)
+		if(unlit.space_lit)
+			continue
+		var/area/loc_area = unlit.loc
+		if(loc_area.static_lighting)
+			unlit.lighting_build_overlay()

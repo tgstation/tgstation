@@ -1,0 +1,20 @@
+template = "bitmask/diagonal_32x32"
+
+# We're a corner diagonal
+output_type = "CornerDiagonal"
+
+# And because of that we need a state for all directions and all our asshole corner bits
+[positions]
+convex = 0
+vertical = 1
+horizontal = 2
+concave = 3
+flat = 4
+bottom_right_inner = 5
+bottom_left_inner = 6
+top_right_inner = 7
+top_left_inner = 8
+bottom_right_outer = 9
+bottom_left_outer = 10
+top_right_outer = 11
+top_left_outer = 12

@@ -1,15 +1,16 @@
-import { range } from 'common/collections';
-import { BooleanLike } from 'common/react';
+import { range } from 'es-toolkit';
+import type { CSSProperties } from 'react';
+import { Box, Button, DmIcon, Icon, Image, Stack } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Image, Stack } from '../components';
 import { Window } from '../layouts';
 
 const ROWS = 5;
 const COLUMNS = 6;
 
-const BUTTON_DIMENSIONS = '50px';
+const BUTTON_DIMENSIONS = '64px';
 
 type GridSpotKey = string;
 
@@ -20,7 +21,7 @@ const getGridSpotKey = (spot: [number, number]): GridSpotKey => {
 const CornerText = (props: {
   align: 'left' | 'right';
   children: string;
-}): JSX.Element => {
+}): React.JSX.Element => {
   const { align, children } = props;
 
   return (
@@ -58,6 +59,11 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
     text: 'Unknot',
   },
 
+  remove_item_cuffs: {
+    icon: 'handcuffs',
+    text: 'Remove Handcuffs',
+  },
+
   enable_internals: {
     icon: 'tg-air-tank',
     text: 'Enable internals',
@@ -77,67 +83,95 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
     icon: 'microchip',
     text: 'Adjust sensors',
   },
+
+  strip_accessory: {
+    icon: 'ribbon',
+    text: 'Strip accessory',
+  },
+
+  deploy: {
+    icon: 'plus',
+    text: 'Deploy MOD',
+  },
+
+  undeploy: {
+    icon: 'minus',
+    text: 'Undeploy MOD',
+  },
+
+  activate_mod: {
+    icon: 'power-off',
+    text: 'Activate MOD',
+  },
+  deactivate_mod: {
+    icon: 'power-off',
+    text: 'Deactivate MOD',
+  },
+
+  access_storage: {
+    icon: 'box-open',
+    text: 'Open',
+  },
 };
 
-const SLOTS: Record<
-  string,
-  {
-    displayName: string;
-    gridSpot: GridSpotKey;
-    image?: string;
-    additionalComponent?: JSX.Element;
-  }
-> = {
+type StripSlot = {
+  displayName: string;
+  gridSpot: GridSpotKey;
+  image?: string;
+  additionalComponent?: React.JSX.Element;
+};
+
+const SLOTS: Record<string, StripSlot> = {
   eyes: {
     displayName: 'eyewear',
-    gridSpot: getGridSpotKey([0, 1]),
+    gridSpot: getGridSpotKey([0, 0]),
     image: 'inventory-glasses.png',
   },
 
   head: {
     displayName: 'headwear',
-    gridSpot: getGridSpotKey([0, 2]),
+    gridSpot: getGridSpotKey([0, 1]),
     image: 'inventory-head.png',
   },
 
   neck: {
     displayName: 'neckwear',
-    gridSpot: getGridSpotKey([1, 1]),
+    gridSpot: getGridSpotKey([1, 0]),
     image: 'inventory-neck.png',
   },
 
   mask: {
     displayName: 'mask',
-    gridSpot: getGridSpotKey([1, 2]),
+    gridSpot: getGridSpotKey([1, 1]),
     image: 'inventory-mask.png',
   },
 
   pet_collar: {
     displayName: 'collar',
-    gridSpot: getGridSpotKey([1, 2]),
+    gridSpot: getGridSpotKey([1, 0]),
     image: 'inventory-collar.png',
   },
 
   ears: {
     displayName: 'earwear',
-    gridSpot: getGridSpotKey([1, 3]),
+    gridSpot: getGridSpotKey([0, 2]),
     image: 'inventory-ears.png',
   },
 
   parrot_headset: {
     displayName: 'headset',
-    gridSpot: getGridSpotKey([1, 3]),
+    gridSpot: getGridSpotKey([0, 2]),
     image: 'inventory-ears.png',
   },
 
   handcuffs: {
     displayName: 'handcuffs',
-    gridSpot: getGridSpotKey([1, 4]),
+    gridSpot: getGridSpotKey([3, 5]),
   },
 
   legcuffs: {
     displayName: 'legcuffs',
-    gridSpot: getGridSpotKey([1, 5]),
+    gridSpot: getGridSpotKey([4, 2]),
   },
 
   jumpsuit: {
@@ -154,7 +188,7 @@ const SLOTS: Record<
 
   gloves: {
     displayName: 'gloves',
-    gridSpot: getGridSpotKey([2, 3]),
+    gridSpot: getGridSpotKey([3, 4]),
     image: 'inventory-gloves.png',
   },
 
@@ -172,45 +206,59 @@ const SLOTS: Record<
     additionalComponent: <CornerText align="right">L</CornerText>,
   },
 
+  upper_right_hand: {
+    displayName: 'upper right hand',
+    gridSpot: getGridSpotKey([1, 4]),
+    image: 'inventory-hand_r.png',
+    additionalComponent: <CornerText align="left">(U) R</CornerText>,
+  },
+
+  upper_left_hand: {
+    displayName: 'upper left hand',
+    gridSpot: getGridSpotKey([1, 5]),
+    image: 'inventory-hand_l.png',
+    additionalComponent: <CornerText align="right">L (U)</CornerText>,
+  },
+
   shoes: {
     displayName: 'shoes',
-    gridSpot: getGridSpotKey([3, 2]),
+    gridSpot: getGridSpotKey([4, 1]),
     image: 'inventory-shoes.png',
   },
 
   suit_storage: {
     displayName: 'suit storage item',
-    gridSpot: getGridSpotKey([4, 0]),
+    gridSpot: getGridSpotKey([2, 0]),
     image: 'inventory-suit_storage.png',
   },
 
   id: {
     displayName: 'ID',
-    gridSpot: getGridSpotKey([4, 1]),
+    gridSpot: getGridSpotKey([4, 0]),
     image: 'inventory-id.png',
   },
 
   belt: {
     displayName: 'belt',
-    gridSpot: getGridSpotKey([4, 2]),
+    gridSpot: getGridSpotKey([3, 1]),
     image: 'inventory-belt.png',
   },
 
   back: {
     displayName: 'backpack',
-    gridSpot: getGridSpotKey([4, 3]),
+    gridSpot: getGridSpotKey([1, 2]),
     image: 'inventory-back.png',
   },
 
   left_pocket: {
     displayName: 'left pocket',
-    gridSpot: getGridSpotKey([4, 4]),
+    gridSpot: getGridSpotKey([3, 0]),
     image: 'inventory-pocket.png',
   },
 
   right_pocket: {
     displayName: 'right pocket',
-    gridSpot: getGridSpotKey([4, 5]),
+    gridSpot: getGridSpotKey([3, 2]),
     image: 'inventory-pocket.png',
   },
 };
@@ -218,10 +266,21 @@ const SLOTS: Record<
 enum ObscuringLevel {
   Completely = 1,
   Hidden = 2,
+  Inaccessible = 3,
 }
 
 type Interactable = {
   interacting: BooleanLike;
+};
+
+type AlternateActionIcon = {
+  icon: string;
+  icon_state: string;
+};
+
+type AlternateActions = {
+  alternate?: string[];
+  alternate_icons?: Record<string, AlternateActionIcon> | null;
 };
 
 /**
@@ -238,14 +297,15 @@ type StripMenuItem =
   | null
   | Interactable
   | ((
-      | {
+      | ({
           icon: string;
+          icon_state: string;
           name: string;
-          alternate?: string[];
-        }
-      | {
           obscured: ObscuringLevel;
-        }
+        } & AlternateActions)
+      | ({
+          obscured: ObscuringLevel;
+        } & AlternateActions)
     ) &
       Partial<Interactable>);
 
@@ -263,7 +323,9 @@ export const StripMenu = (props) => {
   }
 
   return (
-    <Window title={`Stripping ${data.name}`} width={400} height={400}>
+    // (64 + 6) * 6 + 6 = 426
+    // (64 + 6) * 5 + 6 + 31 (from title) =
+    <Window title={`Stripping ${data.name}`} width={426} height={387}>
       <Window.Content>
         <Stack fill vertical>
           {range(0, ROWS).map((row) => (
@@ -288,18 +350,19 @@ export const StripMenu = (props) => {
                   const item = data.items[keyAtSpot];
                   const slot = SLOTS[keyAtSpot];
 
-                  let content: JSX.Element | undefined;
-                  let alternateActions: JSX.Element[] | undefined;
+                  let content: React.JSX.Element | undefined;
+                  let alternateActions: React.JSX.Element[] | undefined;
                   let tooltip: string | undefined;
 
                   if (item === null) {
                     tooltip = slot.displayName;
                   } else if ('name' in item) {
                     content = (
-                      <Image
-                        src={`data:image/jpeg;base64,${item.icon}`}
-                        height="100%"
-                        width="100%"
+                      <DmIcon
+                        icon={item.icon}
+                        icon_state={item.icon_state}
+                        width="64px"
+                        height="64px"
                         style={{
                           verticalAlign: 'middle',
                         }}
@@ -307,42 +370,11 @@ export const StripMenu = (props) => {
                     );
 
                     tooltip = item.name;
-                    if (item.alternate) {
-                      alternateActions = item.alternate.map(
-                        (alternateKey, idx) => {
-                          const alternateAction =
-                            ALTERNATE_ACTIONS[alternateKey];
-
-                          const alternateActionStyle = {
-                            background: 'rgba(0, 0, 0, 0.6)',
-                            position: 'absolute',
-                            overflow: 'hidden',
-                            margin: '0px',
-                            maxWidth: '22px', // yes I know its not 20 or 25; they look bad. 22px is perfect
-                            zIndex: '2',
-                            left: `${idx === 0 ? '0' : undefined}`,
-                            right: `${idx === 1 ? '0' : undefined}`,
-                            bottom: '0',
-                          };
-                          return (
-                            <Button
-                              key={alternateAction.text}
-                              onClick={() => {
-                                act('alt', {
-                                  key: keyAtSpot,
-                                  alternate_action: alternateKey,
-                                });
-                              }}
-                              tooltip={alternateAction.text}
-                              style={alternateActionStyle}
-                            >
-                              <Icon name={alternateAction.icon} />
-                            </Button>
-                          );
-                        },
-                      );
-                    }
-                  } else if ('obscured' in item) {
+                  } else if (
+                    'obscured' in item &&
+                    (item.obscured === ObscuringLevel.Hidden ||
+                      item.obscured === ObscuringLevel.Completely)
+                  ) {
                     content = (
                       <Icon
                         name={
@@ -352,9 +384,10 @@ export const StripMenu = (props) => {
                         }
                         size={3}
                         ml={0}
-                        mt={1.3}
+                        mt={2.5}
                         style={{
                           textAlign: 'center',
+                          verticalAlign: 'middle',
                           height: '100%',
                           width: '100%',
                         }}
@@ -362,6 +395,64 @@ export const StripMenu = (props) => {
                     );
 
                     tooltip = `obscured ${slot.displayName}`;
+                  }
+
+                  if (item && 'alternate' in item && item.alternate?.length) {
+                    alternateActions = item.alternate.map(
+                      (alternateKey, idx) => {
+                        const alternateAction = ALTERNATE_ACTIONS[alternateKey];
+                        const alternateIcon =
+                          item.alternate_icons?.[alternateKey];
+
+                        const alternateActionStyle: CSSProperties = {
+                          background: 'rgba(0, 0, 0, 0.6)',
+                          position: 'absolute',
+                          overflow: 'hidden',
+                          margin: '0',
+                          width: '20px',
+                          height: '20px',
+                          zIndex: '2',
+                          left: idx === 0 ? '0' : undefined,
+                          right: idx === 1 ? '0' : undefined,
+                          top: idx === 2 ? '0' : undefined,
+                          bottom: '0',
+                          padding: '0',
+                          textAlign: 'center',
+                        };
+                        return (
+                          <Button
+                            key={alternateAction.text}
+                            onClick={() => {
+                              act('alt', {
+                                key: keyAtSpot,
+                                alternate_action: alternateKey,
+                              });
+                            }}
+                            tooltip={alternateAction.text}
+                            style={alternateActionStyle}
+                            disabled={
+                              item.obscured === ObscuringLevel.Inaccessible
+                            }
+                            opacity={
+                              item.obscured === ObscuringLevel.Inaccessible
+                                ? 0.7
+                                : 1
+                            }
+                          >
+                            {alternateIcon ? (
+                              <DmIcon
+                                icon={alternateIcon.icon}
+                                icon_state={alternateIcon.icon_state}
+                                width="20px"
+                                height="20px"
+                              />
+                            ) : (
+                              <Icon name={alternateAction.icon} />
+                            )}
+                          </Button>
+                        );
+                      },
+                    );
                   }
 
                   return (
@@ -397,11 +488,13 @@ export const StripMenu = (props) => {
                             padding: '0',
                           }}
                         >
-                          {slot.image && (
+                          {slot.image && !(item && 'name' in item) && (
                             <Image
                               className="centered-image"
                               src={resolveAsset(slot.image)}
                               opacity={0.7}
+                              width="64px"
+                              height="64px"
                             />
                           )}
 

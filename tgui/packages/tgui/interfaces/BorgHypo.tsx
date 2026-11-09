@@ -1,7 +1,13 @@
-import { toFixed } from 'common/math';
+import {
+  Button,
+  Flex,
+  NoticeBox,
+  ProgressBar,
+  Section,
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
-import { Button, Flex, NoticeBox, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
 
 type BorgHypoContext = {
@@ -52,7 +58,7 @@ const ReagentDisplay = (props) => {
             <Flex.Item grow textAlign={'left'}>
               {reagent.name}
             </Flex.Item>
-            <Flex.Item>{toFixed(reagent.volume) + 'u'}</Flex.Item>
+            <Flex.Item>{`${toFixed(reagent.volume)}u`}</Flex.Item>
           </Flex>
         </ProgressBar>
       </Flex.Item>

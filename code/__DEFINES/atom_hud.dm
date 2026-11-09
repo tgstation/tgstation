@@ -3,19 +3,19 @@
 // /datum/atom_hud expects these to be unique
 // these need to be strings in order to make them associative lists
 
-/// dead, alive, sick, health status
-#define HEALTH_HUD "1"
 /// a simple line rounding the mob's number health
+#define HEALTH_HUD "1"
+/// dead, alive, sick, health status
 #define STATUS_HUD "2"
 /// the job asigned to your ID
 #define ID_HUD "3"
 /// wanted, released, parroled, security status
 #define WANTED_HUD "4"
-/// loyality implant
+/// shows loyalty implant if we have one
 #define IMPLOYAL_HUD "5"
-/// chemical implant
+/// shows implant type installed
 #define IMPSEC_FIRST_HUD "6"
-/// tracking implant
+/// shows implant type installed if we have multiple. most recently implanted.
 #define IMPSEC_SECOND_HUD "7"
 /// Silicon/Mech/Circuit Status
 #define DIAG_STAT_HUD "8"
@@ -35,18 +35,19 @@
 #define DIAG_PATH_HUD "15"
 /// Gland indicators for abductors
 #define GLAND_HUD "16"
-#define SENTIENT_DISEASE_HUD "17"
-#define AI_DETECT_HUD "18"
+#define AI_DETECT_HUD "17"
 /// Displays launchpads' targeting reticle
-#define DIAG_LAUNCHPAD_HUD "19"
-//for antag huds. these are used at the /mob level
-#define ANTAG_HUD "20"
-// for fans to identify pins
-#define FAN_HUD "21"
+#define DIAG_LAUNCHPAD_HUD "18"
+/// for antag huds. these are used at the /mob level
+#define ANTAG_HUD "19"
+/// for fans to identify pins
+#define FAN_HUD "20"
 /// Mech camera HUD
-#define DIAG_CAMERA_HUD "22"
+#define DIAG_CAMERA_HUD "21"
 /// Steady Hacked APC effect, visible only to Malf AIs
-#define MALF_APC_HUD "23"
+#define MALF_APC_HUD "22"
+/// Blood volume bar, visible to blood worms
+#define BLOOD_HUD "23"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -58,18 +59,20 @@
 #define DATA_HUD_SECURITY_ADVANCED 2
 #define DATA_HUD_MEDICAL_BASIC 3
 #define DATA_HUD_MEDICAL_ADVANCED 4
-#define DATA_HUD_DIAGNOSTIC_BASIC 5
-#define DATA_HUD_DIAGNOSTIC_ADVANCED 6
+#define DATA_HUD_DIAGNOSTIC 5
+#define DATA_HUD_BOT_PATH 6
 #define DATA_HUD_ABDUCTOR 7
-#define DATA_HUD_SENTIENT_DISEASE 8
-#define DATA_HUD_AI_DETECT 9
-#define DATA_HUD_FAN 10
-#define DATA_HUD_MALF_APC 11
+#define DATA_HUD_AI_DETECT 8
+#define DATA_HUD_FAN 9
+#define DATA_HUD_MALF_APC 10
+#define DATA_HUD_BLOOD 11
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20
 
 // Security HUD icon_state defines
+
+#define DEFAULT_HUDS_DMI 'icons/mob/huds/hud.dmi'
 
 #define SECHUD_NO_ID "hudno_id"
 #define SECHUD_UNKNOWN "hudunknown"
@@ -77,10 +80,13 @@
 #define SECHUD_SYNDICATE "hudsyndicate"
 #define SECHUD_SYNDICATE_INTERDYNE "hudsyndicateinterdyne"
 #define SECHUD_SYNDICATE_INTERDYNE_HEAD "hudsyndicateinterdynehead"
+#define SECHUD_CLOWNOPS "hudclownop"
 
 #define SECHUD_ASSISTANT "hudassistant"
 #define SECHUD_ATMOSPHERIC_TECHNICIAN "hudatmospherictechnician"
 #define SECHUD_BARTENDER "hudbartender"
+#define SECHUD_BUSSER "hudbusser"
+#define SECHUD_BITAVATAR "hudbitavatar"
 #define SECHUD_BITRUNNER "hudbitrunner"
 #define SECHUD_BOTANIST "hudbotanist"
 #define SECHUD_BRIDGE_ASSISTANT "hudbridgeassistant"

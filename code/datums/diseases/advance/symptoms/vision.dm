@@ -10,22 +10,24 @@
 	name = "Hyphema"
 	desc = "Sufferers exhibit dangerously low levels of frames per second in the eyes, leading to damage and eventually blindness."
 	illness = "Diluted Pupils"
-	stealth = -1
-	resistance = -4
-	stage_speed = -4
-	transmittable = -3
-	level = 5
+	stealth = 0
+	resistance = -2
+	stage_speed = -3
+	transmittable = -2
+	level = 8
 	severity = 5
 	base_message_chance = 50
-	symptom_delay_min = 25
-	symptom_delay_max = 80
+	symptom_delay = 52.5
 	required_organ = ORGAN_SLOT_EYES
+	symptom_cure = /datum/reagent/medicine/oculine
+	cure_color = "yellow"
 	threshold_descs = list(
 		"Resistance 12" = "Weakens extraocular muscles, eventually leading to complete detachment of the eyes.",
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
 	/// At max stage: If FALSE, cause blindness. If TRUE, cause their eyes to fall out.
 	var/remove_eyes = FALSE
+	var/suppress_warning = FALSE
 
 /datum/symptom/visionloss/Start(datum/disease/advance/A)
 	. = ..()
@@ -42,7 +44,7 @@
 		return
 
 	var/mob/living/carbon/infected_mob = source_disease.affected_mob
-	var/obj/item/organ/internal/eyes/eyes = infected_mob.get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = infected_mob.get_organ_slot(ORGAN_SLOT_EYES)
 
 	switch(source_disease.stage)
 		if(1, 2)

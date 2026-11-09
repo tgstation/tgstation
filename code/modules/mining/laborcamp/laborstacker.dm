@@ -1,5 +1,3 @@
-#define SHEET_POINT_VALUE 33
-
 /**********************Prisoners' Console**************************/
 
 /obj/machinery/mineral/labor_claim_console
@@ -10,20 +8,30 @@
 	density = FALSE
 	/// Connected stacking machine
 	var/obj/machinery/mineral/stacking_machine/laborstacker/stacking_machine
-	/// Needed to send messages to sec radio
-	var/obj/item/radio/security_radio
+	/// Whether the claim console initiated the launch.
+	var/initiated_launch = FALSE
+	/// Cooldown for console says.
+	COOLDOWN_DECLARE(say_cooldown)
 
 /obj/machinery/mineral/labor_claim_console/Initialize(mapload)
 	. = ..()
-	security_radio = new /obj/item/radio(src)
-	security_radio.set_listening(FALSE)
 	locate_stacking_machine()
+	if(!SSshuttle.initialized)
+		RegisterSignal(SSshuttle, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(register_shuttle_signal))
+	else
+		register_shuttle_signal()
 	//If we can't find a stacking machine end it all ok?
 	if(!stacking_machine)
 		return INITIALIZE_HINT_QDEL
 
+/obj/machinery/mineral/labor_claim_console/proc/register_shuttle_signal()
+	SIGNAL_HANDLER
+	var/obj/docking_port/mobile/laborshuttle = SSshuttle.getShuttle("laborcamp")
+	if(laborshuttle)
+		RegisterSignal(laborshuttle, COMSIG_SHUTTLE_SHOULD_MOVE, PROC_REF(on_laborshuttle_can_move))
+	UnregisterSignal(SSshuttle, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+
 /obj/machinery/mineral/labor_claim_console/Destroy()
-	QDEL_NULL(security_radio)
 	if(stacking_machine)
 		stacking_machine.labor_console = null
 		stacking_machine = null
@@ -68,7 +76,12 @@
 	data["can_go_home"] = can_go_home
 	return data
 
-/obj/machinery/mineral/labor_claim_console/ui_act(action, params)
+/obj/machinery/mineral/labor_claim_console/ui_static_data(mob/user)
+	var/list/data = list()
+	data["shuttle_exists"] = !isnull(SSshuttle.getShuttle("laborcamp"))
+	return data
+
+/obj/machinery/mineral/labor_claim_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -86,30 +99,69 @@
 				var/obj/item/card/id/advanced/prisoner/worn_prisoner_id = worn_id
 				worn_prisoner_id.points += stacking_machine.points
 				stacking_machine.points = 0
-				to_chat(user_mob, span_notice("Points transferred."))
+				say("Points transferred.")
 				return TRUE
 			else
-				to_chat(user_mob, span_alert("No valid id for point transfer detected."))
+				if(COOLDOWN_FINISHED(src, say_cooldown))
+					say("No valid id for point transfer detected.")
+					COOLDOWN_START(src, say_cooldown, 2 SECONDS)
 
 		if("move_shuttle")
-			if(!alone_in_area(get_area(src), user_mob))
-				to_chat(user_mob, span_alert("Prisoners are only allowed to be released while alone."))
+			if(isnull(SSshuttle.getShuttle("laborcamp")))
+				if(COOLDOWN_FINISHED(src, say_cooldown))
+					say("Shuttle not found.")
+					COOLDOWN_START(src, say_cooldown, 2 SECONDS)
+				return
+
+			var/list/labor_shuttle_mobs = find_labor_shuttle_mobs()
+			if(length(labor_shuttle_mobs) > 1 || labor_shuttle_mobs[1] != user_mob)
+				if(COOLDOWN_FINISHED(src, say_cooldown))
+					say("Prisoners may only be released one at a time.")
+					COOLDOWN_START(src, say_cooldown, 2 SECONDS)
 				return
 
 			switch(SSshuttle.moveShuttle("laborcamp", "laborcamp_home", TRUE))
 				if(1)
-					to_chat(user_mob, span_alert("Shuttle not found."))
+					if(COOLDOWN_FINISHED(src, say_cooldown))
+						say("Shuttle not found.")
+						COOLDOWN_START(src, say_cooldown, 2 SECONDS)
 				if(2)
-					to_chat(user_mob, span_alert("Shuttle already at station."))
+					if(COOLDOWN_FINISHED(src, say_cooldown))
+						say("Shuttle already at station.")
+						COOLDOWN_START(src, say_cooldown, 2 SECONDS)
 				if(3)
-					to_chat(user_mob, span_alert("No permission to dock could be granted."))
+					if(COOLDOWN_FINISHED(src, say_cooldown))
+						say("No permission to dock could be granted.")
+						COOLDOWN_START(src, say_cooldown, 2 SECONDS)
 				else
 					if(!(obj_flags & EMAGGED))
-						security_radio.set_frequency(FREQ_SECURITY)
-						security_radio.talk_into(src, "A prisoner has returned to the station. Minerals and Prisoner ID card ready for retrieval.", FREQ_SECURITY)
+						var/datum/record/crew/target = find_record(user_mob.real_name)
+						target?.wanted_status = WANTED_PAROLE
+
+						aas_config_announce(/datum/aas_config_entry/security_labor_stacker, list("PERSON" = user_mob.real_name), src, list(RADIO_CHANNEL_SECURITY))
 					user_mob.log_message("has completed their labor points goal and is now sending the gulag shuttle back to the station.", LOG_GAME)
-					to_chat(user_mob, span_notice("Shuttle received message and will be sent shortly."))
+					say("Labor sentence finished, shuttle returning.")
+					initiated_launch = TRUE
 					return TRUE
+
+/obj/machinery/mineral/labor_claim_console/proc/find_labor_shuttle_mobs()
+	var/list/prisoners = mobs_in_area_type(list(get_area(src)))
+
+	// security personnel and nonhumans do not count towards this
+	for(var/mob/living/mob as anything in prisoners)
+		var/obj/item/card/id/card = mob.get_idcard(FALSE)
+		if(!ishuman(mob) || (ACCESS_BRIG in card?.GetAccess()))
+			prisoners -= mob
+
+	return prisoners
+
+/obj/machinery/mineral/labor_claim_console/proc/on_laborshuttle_can_move(obj/docking_port/mobile/source)
+	SIGNAL_HANDLER
+
+	if(initiated_launch && length(find_labor_shuttle_mobs()) > 1)
+		initiated_launch = FALSE
+		say("Takeoff aborted. Prisoners may only be released one at a time.")
+		return BLOCK_SHUTTLE_MOVE
 
 /obj/machinery/mineral/labor_claim_console/proc/locate_stacking_machine()
 	stacking_machine = locate(/obj/machinery/mineral/stacking_machine) in dview(2, get_turf(src))
@@ -129,6 +181,7 @@
 /**********************Prisoner Collection Unit**************************/
 
 /obj/machinery/mineral/stacking_machine/laborstacker
+	name = "labor camp collection unit"
 	force_connect = TRUE
 	damage_deflection = 21 //otherwise prisoners will destroy it
 	///Idle points sitting in the machine left to be claimed.
@@ -142,15 +195,18 @@
 		labor_console = null
 	return ..()
 
-/obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/input)
-	if (input.manufactured && input.gulag_valid)
-		points += SHEET_POINT_VALUE * input.amount
+/obj/machinery/mineral/stacking_machine/laborstacker/process_stack(obj/item/stack/input)
+	if (!istype(input, /obj/item/stack/sheet))
+		return ..()
+	var/obj/item/stack/sheet/sheet = input
+	if (sheet.manufactured && sheet.gulag_value)
+		points += sheet.gulag_value * sheet.amount
 	return ..()
 
-/obj/machinery/mineral/stacking_machine/laborstacker/attackby(obj/item/weapon, mob/user, params)
-	if(istype(weapon, /obj/item/stack/sheet))
-		process_sheet(weapon)
-		return
+/obj/machinery/mineral/stacking_machine/laborstacker/base_item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
+	if (is_type_in_typecache(weapon, accepted_types))
+		process_stack(weapon)
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /**********************Point Lookup Console**************************/
@@ -168,15 +224,25 @@
 		return
 	user.examinate(src)
 
-/obj/machinery/mineral/labor_points_checker/attackby(obj/item/weapon, mob/user, params)
-	if(!istype(weapon, /obj/item/card/id/advanced/prisoner))
-		return ..()
-	var/obj/item/card/id/advanced/prisoner/prisoner_id = weapon
+/obj/machinery/mineral/labor_points_checker/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/card/id/advanced/prisoner))
+		return NONE
+
+	var/obj/item/card/id/advanced/prisoner/prisoner_id = tool
 	if(!prisoner_id.goal) //no goal to reach
 		say("No goal required for this ID.")
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	say("ID: [prisoner_id.registered_name].")
 	say("Points Collected: [prisoner_id.points] / [prisoner_id.goal].")
 	say("Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.")
+	return ITEM_INTERACT_SUCCESS
 
-#undef SHEET_POINT_VALUE
+/datum/aas_config_entry/security_labor_stacker
+	name = "Security Alert: Labor Camp Release"
+	announcement_lines_map = list(
+		"Message" = "%PERSON returned to the station. Minerals and Prisoner ID card ready for retrieval."
+	)
+	vars_and_tooltips_map = list(
+		"PERSON" = "will be replaced with the name of the prisoner."
+	)

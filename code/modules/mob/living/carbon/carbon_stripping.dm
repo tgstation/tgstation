@@ -6,14 +6,15 @@
 	key = STRIPPABLE_ITEM_BACK
 	item_slot = ITEM_SLOT_BACK
 
-/datum/strippable_item/mob_item_slot/back/get_alternate_actions(atom/source, mob/user)
-	return get_strippable_alternate_action_internals(get_item(source), source)
+/datum/strippable_item/mob_item_slot/back/get_alternate_actions(atom/source, mob/user, obj/item/item)
+	. = ..()
+	. += get_strippable_alternate_action_internals(item, source)
 
-/datum/strippable_item/mob_item_slot/back/perform_alternate_action(atom/source, mob/user, action_key)
+/datum/strippable_item/mob_item_slot/back/perform_alternate_action(atom/source, mob/user, action_key, obj/item/item)
 	if(!..())
 		return
-	if(action_key in get_strippable_alternate_action_internals(get_item(source), source))
-		strippable_alternate_action_internals(get_item(source), source, user)
+	if(action_key in get_strippable_alternate_action_internals(item, source))
+		strippable_alternate_action_internals(item, source, user)
 
 /datum/strippable_item/mob_item_slot/mask
 	key = STRIPPABLE_ITEM_MASK
@@ -106,9 +107,6 @@
 	return TRUE
 
 /datum/strippable_item/hand/finish_equip(atom/source, obj/item/equipping, mob/user)
-	if (!iscarbon(source))
-		return FALSE
-
 	var/mob/mob_source = source
 	mob_source.put_in_hand(equipping, hand_index)
 
@@ -129,10 +127,62 @@
 
 	return finish_unequip_mob(item, source, user)
 
+/datum/strippable_item/hand/should_show(mob/source, mob/user)
+	return astype(source)?.get_num_hand_slots() >= hand_index
+
+/datum/strippable_item/hand/get_alternate_actions(atom/source, mob/user, obj/item/item)
+	. = ..()
+	if (!isnull(get_cuffed_item_effect(source)))
+		. += STRIPPABLE_ALT_ACTION_REMOVE_ITEM_CUFFS
+
+/datum/strippable_item/hand/get_alternate_action_icons(atom/source, mob/user, obj/item/item)
+	var/datum/status_effect/cuffed_item/effect = get_cuffed_item_effect(source)
+	if (isnull(effect))
+		return null
+
+	return list(
+		STRIPPABLE_ALT_ACTION_REMOVE_ITEM_CUFFS = list(
+			"icon" = effect.cuffed.icon, "icon_state" = effect.cuffed.icon_state
+		)
+	)
+
+/datum/strippable_item/hand/perform_alternate_action(atom/source, mob/user, action_key, obj/item/item)
+	if (!..())
+		return
+	if (action_key != STRIPPABLE_ALT_ACTION_REMOVE_ITEM_CUFFS)
+		return
+
+	var/datum/status_effect/cuffed_item/effect = get_cuffed_item_effect(source)
+	effect.try_remove_cuffs(user)
+
+/// Returns the cuffed item status effect bound to the arm of this hand, if there is one
+/datum/strippable_item/hand/proc/get_cuffed_item_effect(atom/source)
+	if (!iscarbon(source))
+		return null
+
+	var/mob/living/carbon/carbon_source = source
+	var/obj/item/bodypart/hand_bodypart = carbon_source.hand_bodyparts[hand_index]
+	if (isnull(hand_bodypart))
+		return null
+
+	for (var/datum/status_effect/cuffed_item/effect in carbon_source.status_effects)
+		if (effect.cuffed_to == hand_bodypart)
+			return effect
+
+	return null
+
 /datum/strippable_item/hand/left
 	key = STRIPPABLE_ITEM_LHAND
-	hand_index = 1
+	hand_index = LEFT_HANDS
 
 /datum/strippable_item/hand/right
 	key = STRIPPABLE_ITEM_RHAND
-	hand_index = 2
+	hand_index = RIGHT_HANDS
+
+/datum/strippable_item/hand/upper_left
+	key = STRIPPABLE_ITEM_UPPER_LHAND
+	hand_index = LEFT_HANDS + 2
+
+/datum/strippable_item/hand/upper_right
+	key = STRIPPABLE_ITEM_UPPER_RHAND
+	hand_index = RIGHT_HANDS + 2

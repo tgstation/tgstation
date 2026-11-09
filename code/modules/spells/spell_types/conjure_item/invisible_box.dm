@@ -8,12 +8,11 @@
 	button_icon = 'icons/mob/actions/actions_mime.dmi'
 	button_icon_state = "invisible_box"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED|AB_CHECK_INCAPACITATED
-	panel = "Mime"
 	sound = null
 
 	school = SCHOOL_MIME
 	cooldown_time = 30 SECONDS
-	invocation = "Someone does a weird gesture." // Overriden in before cast
+	invocation = span_notice("<b>%CASTER</b> moves %PRONOUN_their hands in the shape of a box, pressing a box out of the air.")
 	invocation_self_message = span_notice("You conjure up an invisible box, large enough to store a few things.")
 	invocation_type = INVOCATION_EMOTE
 
@@ -25,10 +24,6 @@
 	item_type = /obj/item/storage/box/mime
 	/// How long boxes last before going away
 	var/box_lifespan = 50 SECONDS
-
-/datum/action/cooldown/spell/conjure_item/invisible_box/before_cast(atom/cast_on)
-	. = ..()
-	invocation = span_notice("<b>[cast_on]</b> moves [cast_on.p_their()] hands in the shape of a cube, pressing a box out of the air.")
 
 /datum/action/cooldown/spell/conjure_item/invisible_box/make_item(atom/caster)
 	. = ..()

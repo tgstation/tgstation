@@ -54,28 +54,25 @@
 	return ..()
 
 /datum/component/wet_floor/proc/update_overlay()
+	var/turf/parent_turf = parent
 	if(!should_display_overlay)
 		if(!current_overlay)
 			return
 
-		var/turf/parent_turf = parent
 		parent_turf.cut_overlay(current_overlay)
 		current_overlay = null
 		return
 
 	var/intended
-	if(!isfloorturf(parent))
-		intended = generic_turf_overlay
-	else
-		switch(highest_strength)
-			if(TURF_WET_PERMAFROST)
-				intended = permafrost_overlay
-			if(TURF_WET_ICE)
-				intended = ice_overlay
-			else
-				intended = water_overlay
+	switch(highest_strength)
+		if(TURF_WET_PERMAFROST)
+			intended = permafrost_overlay
+		if(TURF_WET_ICE)
+			// Should really get someone to make a generic_ice_overlay.
+			intended = parent_turf.tiled_turf ? ice_overlay : generic_turf_overlay
+		else
+			intended = parent_turf.tiled_turf ? water_overlay : generic_turf_overlay
 	if(current_overlay != intended)
-		var/turf/parent_turf = parent
 		parent_turf.cut_overlay(current_overlay)
 		parent_turf.add_overlay(intended)
 		current_overlay = intended
@@ -159,14 +156,14 @@
 	for(var/i in time_left_list)
 		. |= text2num(i)
 
-/datum/component/wet_floor/PreTransfer()
+/datum/component/wet_floor/PreTransfer(datum/new_parent)
 	var/turf/O = parent
 	O.cut_overlay(current_overlay)
 	//That turf is no longer slippery, we're out of here
 	//Slippery components don't transfer due to callbacks
 	qdel(O.GetComponent(/datum/component/slippery))
 
-/datum/component/wet_floor/PostTransfer()
+/datum/component/wet_floor/PostTransfer(datum/new_parent)
 	if(!isopenturf(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/turf/T = parent

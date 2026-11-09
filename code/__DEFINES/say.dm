@@ -5,7 +5,14 @@
 #define RADIO_EXTENSION "department specific"
 #define RADIO_KEY "department specific key"
 #define LANGUAGE_EXTENSION "language specific"
+///This is a mob that is forcing us to say something, so we can use the mob typing the text for bans rather than the one speaking.
+#define MANNEQUIN_CONTROLLED "mannequin controlled"
+/// Message mod which contains a list of bonus "mutual understanding" to allow arbitrary understanding of any speech
+#define LANGUAGE_MUTUAL_BONUS "language mutual bonus"
 #define SAY_MOD_VERB "say_mod_verb"
+
+#define HEAR_HEARD (1<<0)
+#define HEAR_UNDERSTOOD (1<<1)
 
 //Message modes. Each one defines a radio channel, more or less.
 //if you use ! as a mode key for some ungodly reason, change the first character for ion_num() so get_message_mode() doesn't freak out with state law prompts - shiz.
@@ -44,7 +51,10 @@
 #define MODE_KEY_PUPPET "j"
 
 #define MODE_ALIEN "alientalk"
+#define MODE_KEY_ALIEN "a"
+
 #define MODE_HOLOPAD "holopad"
+#define MODE_KEY_HOLOPAD "h"
 
 #define MODE_CHANGELING "changeling"
 #define MODE_KEY_CHANGELING "g"
@@ -52,6 +62,9 @@
 
 #define MODE_VOCALCORDS "cords"
 #define MODE_KEY_VOCALCORDS "x"
+
+/// Automatically playing a set of lines
+#define MODE_SEQUENTIAL "sequential"
 
 #define MODE_MAFIA "mafia"
 
@@ -63,6 +76,12 @@
 #define MODE_CUSTOM_SAY_ERASE_INPUT "erase_input"
 /// Message is being relayed through another object
 #define MODE_RELAY "relayed"
+/// Message has a TTS identifier attached to it
+#define MODE_TTS_IDENTIFIER "tts_identifier"
+/// Override the mob's name
+#define MODE_SPEAKER_NAME_OVERRIDE "speaker_name_override"
+/// Override the mob's gender
+#define MODE_SPEAKER_GENDER_OVERRIDE "speaker_gender_override"
 
 //Spans. Robot speech, italics, etc. Applied in compose_message().
 #define SPAN_ROBOT "robot"
@@ -76,7 +95,10 @@
 #define SPAN_SINGING "singing"
 #define SPAN_TAPE_RECORDER "tape_recorder"
 #define SPAN_SMALL_VOICE "small"
-
+#define SPAN_SOAPBOX "soapbox"
+#define SPAN_COLOSSUS "colossus"
+#define SPAN_DANGER "danger"
+#define SPAN_REVENWARNING "revenwarning"
 //bitflag #defines for return value of the radio() proc.
 /// Makes the message use italics
 #define ITALICS (1<<0)
@@ -90,15 +112,15 @@
 /// Range to hear whispers normally
 #define WHISPER_RANGE 1
 /// Additional range to partially hear whispers
-#define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
+#define EAVESDROP_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
 
 /// How close intercoms can be for radio code use
 #define MODE_RANGE_INTERCOM 1
 
 // A link given to ghost alice to follow bob
-#define FOLLOW_LINK(alice, bob) "<a href=?src=[REF(alice)];follow=[REF(bob)]>(F)</a>"
-#define TURF_LINK(alice, turfy) "<a href=?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
-#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
+#define FOLLOW_LINK(alice, bob) "<a href=byond://?src=[REF(alice)];follow=[REF(bob)]>(F)</a>"
+#define TURF_LINK(alice, turfy) "<a href=byond://?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
+#define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=byond://?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
 #define MAX_MESSAGE_LEN 1024
@@ -108,12 +130,37 @@
 #define MAX_PLAQUE_LEN 144
 #define MAX_LABEL_LEN 64
 #define MAX_DESC_LEN 280
+#define MAX_AAS_LENGTH 168
 
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)
 #define MSG_AUDIBLE (1<<1)
 
 
+// Say mode message handling return flags, exist for readability.
+/// Say mode has handled the message.
+#define SAYMODE_MESSAGE_HANDLED (1<<0)
 
-//Used in visible_message_flags, audible_message_flags and runechat_flags
+// Used in visible_message_flags, audible_message_flags and runechat_flags
+/// Automatically applies emote related spans/fonts/formatting to the message
 #define EMOTE_MESSAGE (1<<0)
+/// By default, self_message will respect the visual / audible component of the message.
+/// Meaning that if the message is visual, and sourced from a blind mob, they will not see it.
+/// This flag skips that behavior, and will always show the self message to the mob.
+#define ALWAYS_SHOW_SELF_MESSAGE (1<<1)
+/// Applies emphasis formatting to the message.
+#define WITH_EMPHASIS_MESSAGE (1<<2)
+/// Blocks chat highlighting from being applied to the message sent to the self.
+#define BLOCK_SELF_HIGHLIGHT_MESSAGE (1<<3)
+
+///Defines for priorities for the bubble_icon_override comp
+#define BUBBLE_ICON_PRIORITY_ACCESSORY 2
+#define BUBBLE_ICON_PRIORITY_ORGAN 1
+
+//These are the names of the commands, what you'd need to type to do the command (also used in winset)
+#define VERB_SAY "Say"
+#define VERB_WHISPER "Whisper"
+#define VERB_ME "Me"
+//Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
+#define VERB_OOC "OOC"
+#define VERB_PRAY "Pray"

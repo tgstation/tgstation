@@ -18,6 +18,8 @@ GLOBAL_LIST_EMPTY(unit_test_mapping_logs)
 /// Global assoc list of required mapping items, [item typepath] to [required item datum].
 GLOBAL_LIST_EMPTY(required_map_items)
 
+GLOBAL_LIST_EMPTY(test_run_times)
+
 /// A list of every test that is currently focused.
 /// Use the PERFORM_ALL_TESTS macro instead.
 GLOBAL_VAR_INIT(focused_tests, focused_tests())
@@ -25,35 +27,40 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /proc/focused_tests()
 	var/list/focused_tests = list()
 	for (var/datum/unit_test/unit_test as anything in subtypesof(/datum/unit_test))
-		if (initial(unit_test.focus))
+		if (unit_test::test_flags & UNIT_TEST_FOCUS)
 			focused_tests += unit_test
 
-	return focused_tests.len > 0 ? focused_tests : null
+	return length(focused_tests) ? focused_tests : null
 
 /datum/unit_test
-	//Bit of metadata for the future maybe
-	var/list/procs_tested
+	abstract_type = /datum/unit_test
 
+	/// Behavior flags for this unit test
+	var/test_flags = UNIT_TEST_BASIC
+	/// The priority of the test, the larger it is the later it fires
+	var/priority = TEST_DEFAULT
+	/// How many times this unit test will run. Use the TEST_REPEAT() macro
+	var/times_to_run = 1
+
+	// internal shit
+	/// If this test has passed or not
+	var/succeeded = TRUE
 	/// The bottom left floor turf of the testing zone
 	var/turf/run_loc_floor_bottom_left
-
 	/// The top right floor turf of the testing zone
 	var/turf/run_loc_floor_top_right
-	///The priority of the test, the larger it is the later it fires
-	var/priority = TEST_DEFAULT
-	//internal shit
-	var/focus = FALSE
-	var/succeeded = TRUE
+	/// A list of instances created by this unit test. Use allocate()
 	var/list/allocated
+	/// Lazy list of why this unit test failed.
 	var/list/fail_reasons
 
-	/// Do not instantiate if type matches this
-	var/abstract_type = /datum/unit_test
-
-	/// List of atoms that we don't want to ever initialize in an agnostic context, like for Create and Destroy. Stored on the base datum for usability in other relevant tests that need this data.
+	/// List of atoms that we don't want to ever initialize in an agnostic context, like for Create and Destroy.
+	/// Stored on the base datum for usability in other relevant tests that need this data.
 	var/static/list/uncreatables = null
-
+	/// Reference to the blank z-level containing our testing enviroment
 	var/static/datum/space_level/reservation
+	/// If this unit test requires a normal turf to run.
+	var/normal_floor_required = FALSE
 
 /proc/cmp_unit_test_priority(datum/unit_test/a, datum/unit_test/b)
 	return initial(a.priority) - initial(b.priority)
@@ -63,15 +70,24 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		var/datum/map_template/unit_tests/template = new
 		reservation = template.load_new_z()
 
-	if (isnull(uncreatables))
-		uncreatables = build_list_of_uncreatables()
+	if(test_flags & UNIT_TEST_FOCUS)
+		log_world("::error::[src] has UNIT_TEST_FOCUS present inside var/test_flags. This is a reminder to remove it from your commit!") // So CI fails.
+	uncreatables ||= build_list_of_uncreatables()
 
-	allocated = new
+	allocated = list()
+
 	run_loc_floor_bottom_left = get_turf(locate(/obj/effect/landmark/unit_test_bottom_left) in GLOB.landmarks_list)
 	run_loc_floor_top_right = get_turf(locate(/obj/effect/landmark/unit_test_top_right) in GLOB.landmarks_list)
 
-	TEST_ASSERT(isfloorturf(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not a floor ([run_loc_floor_bottom_left])")
-	TEST_ASSERT(isfloorturf(run_loc_floor_top_right), "run_loc_floor_top_right was not a floor ([run_loc_floor_top_right])")
+	if(priority > TEST_CREATE_AND_DESTROY) //the create and destroy test WILL wreck havok in the unit test room. You CANNOT stop the inevitable.
+		return
+
+	//Make sure that the top and bottom locations in the diagonal are floors. Anything else may get in the way of several tests.
+	TEST_ASSERT(isindestructiblefloor(run_loc_floor_bottom_left), "run_loc_floor_bottom_left was not an indestructable floor ([run_loc_floor_bottom_left])")
+	TEST_ASSERT(isindestructiblefloor(run_loc_floor_top_right), "run_loc_floor_top_right was not an indestructable floor ([run_loc_floor_top_right])")
+	if(normal_floor_required)
+		for(var/turf/open/turf in get_area_turfs(run_loc_floor_bottom_left.loc))
+			turf.ChangeTurf(/turf/open/floor)
 
 /datum/unit_test/Destroy()
 	QDEL_LIST(allocated)
@@ -81,6 +97,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 			if (istype(content, /obj/effect/landmark))
 				continue
 			qdel(content)
+	if(normal_floor_required)
+		for(var/turf/open/turf in get_area_turfs(run_loc_floor_bottom_left.loc))
+			turf.ChangeTurf(/turf/open/indestructible)
 	return ..()
 
 /datum/unit_test/proc/Run()
@@ -97,6 +116,9 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /// Allocates an instance of the provided type, and places it somewhere in an available loc
 /// Instances allocated through this proc will be destroyed when the test is over
 /datum/unit_test/proc/allocate(type, ...)
+	if(priority > TEST_CREATE_AND_DESTROY) //I'm not using TEST_ASSERT here since these are just numbers that tell nothing useful about the problem.
+		TEST_FAIL("allocate() was called for a unit test after 'create_and_destroy' has finished. The unit test room is no longer a reliable testing ground for atoms.")
+		return null //you deserve runtime errors for it
 	var/list/arguments = args.Copy(2)
 	if(ispath(type, /atom))
 		if (!arguments.len)
@@ -112,6 +134,16 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	allocated += instance
 	return instance
 
+/// Resets the air of our testing room to its default
+/datum/unit_test/proc/restore_atmos()
+	var/area/working_area = run_loc_floor_bottom_left.loc
+	var/list/turf/to_restore = working_area.get_turfs_from_all_zlevels()
+	for(var/turf/open/restore in to_restore)
+		var/datum/gas_mixture/GM = SSair.parse_gas_string(restore.initial_gas_mix, /datum/gas_mixture/turf)
+		restore.copy_air(GM)
+		restore.temperature = initial(restore.temperature)
+		restore.air_update_turf(update = FALSE, remove = FALSE)
+
 /datum/unit_test/proc/test_screenshot(name, icon/icon)
 	if (!istype(icon))
 		TEST_FAIL("[icon] is not an icon.")
@@ -126,15 +158,18 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		var/data_filename = "data/screenshots/[path_prefix]_[name].png"
 		fcopy(icon, data_filename)
 		log_test("\t[path_prefix]_[name] was found, putting in data/screenshots")
-	else if (fexists("code"))
-		// We are probably running in a local build
-		fcopy(icon, filename)
-		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
 	else
-		// We are probably running in real CI, so just pretend it worked and move on
+#ifdef CIBUILDING
+		// We are runing in real CI, so just pretend it worked and move on
 		fcopy(icon, "data/screenshots_new/[path_prefix]_[name].png")
 
 		log_test("\t[path_prefix]_[name] was put in data/screenshots_new")
+#else
+		// We are probably running in a local build
+		fcopy(icon, filename)
+		TEST_FAIL("Screenshot for [name] did not exist. One has been created.")
+#endif
+
 
 /// Helper for screenshot tests to take an image of an atom from all directions and insert it into one icon
 /datum/unit_test/proc/get_flat_icon_for_all_directions(atom/thing, no_anim = TRUE)
@@ -148,13 +183,25 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 /// Logs a test message. Will use GitHub action syntax found at https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions
 /datum/unit_test/proc/log_for_test(text, priority, file, line)
-	var/map_name = SSmapping.config.map_name
+	var/map_name = SSmapping.current_map.map_name
 
 	// Need to escape the text to properly support newlines.
 	var/annotation_text = replacetext(text, "%", "%25")
 	annotation_text = replacetext(annotation_text, "\n", "%0A")
 
 	log_world("::[priority] file=[file],line=[line],title=[map_name]: [type]::[annotation_text]")
+
+/**
+ * Helper to perform a click
+ *
+ * * clicker: The mob that will be clicking
+ * * clicked_on: The atom that will be clicked
+ * * passed_params: A list of parameters to pass to the click
+ */
+/datum/unit_test/proc/click_wrapper(mob/living/clicker, atom/clicked_on, list/passed_params = list(LEFT_CLICK = 1, BUTTON = LEFT_CLICK))
+	clicker.next_click = -1
+	clicker.next_move = -1
+	clicker.ClickOn(clicked_on, list2params(passed_params))
 
 /proc/RunUnitTest(datum/unit_test/test_path, list/test_results)
 	if(ispath(test_path, /datum/unit_test/focus_only))
@@ -167,18 +214,20 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 
 	GLOB.current_test = test
 	var/duration = REALTIMEOFDAY
-	var/skip_test = (test_path in SSmapping.config.skipped_tests)
+	var/skip_test = (test_path in SSmapping.current_map.skipped_tests)
 	var/test_output_desc = "[test_path]"
 	var/message = ""
 
 	log_world("::group::[test_path]")
 
 	if(skip_test)
-		log_world("[TEST_OUTPUT_YELLOW("SKIPPED")] Skipped run on map [SSmapping.config.map_name].")
+		log_world("[TEST_OUTPUT_YELLOW("SKIPPED")] Skipped run on map [SSmapping.current_map.map_name].")
 
 	else
 
 		test.Run()
+		if(test.priority < TEST_CREATE_AND_DESTROY) //We shouldn't care about restoring atmos after create_and_destroy.
+			test.restore_atmos()
 
 		duration = REALTIMEOFDAY - duration
 		GLOB.current_test = null
@@ -202,6 +251,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 			log_test(message)
 
 		test_output_desc += " [duration / 10]s"
+		if(duration > 10)
+			GLOB.test_run_times[test_path] = duration
 		if (test.succeeded)
 			log_world("[TEST_OUTPUT_GREEN("PASS")] [test_output_desc]")
 
@@ -219,21 +270,10 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 /// It is appreciated to add the reason why the atom shouldn't be initialized if you add it to this list.
 /datum/unit_test/proc/build_list_of_uncreatables()
 	RETURN_TYPE(/list)
-	var/list/returnable_list = list()
-	// The following are just generic, singular types.
-	returnable_list = list(
-		//this is somehow a subtype of /atom/movable, because of its purpose...
-		/image/appearance,
-		//Never meant to be created, errors out the ass for mobcode reasons
-		/mob/living/carbon,
-		//And another
-		/obj/item/slimecross/recurring,
-		//This should be obvious
-		/obj/machinery/doomsday_device,
+	// The following are just generic, singular types
+	var/list/returnable_list = list(
 		//Yet more templates
 		/obj/machinery/restaurant_portal,
-		//Template type
-		/obj/effect/mob_spawn,
 		//Template type
 		/obj/structure/holosign/robot_seat,
 		//Singleton
@@ -242,17 +282,22 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/item/bodypart,
 		//This is meant to fail extremely loud every single time it occurs in any environment in any context, and it falsely alarms when this unit test iterates it. Let's not spawn it in.
 		/obj/merge_conflict_marker,
-		//briefcase launchpads erroring
-		/obj/machinery/launchpad/briefcase,
-		//Both are abstract types meant to scream bloody murder if spawned in raw
-		/obj/item/organ/external,
-		/obj/item/organ/external/wings,
 		//Not meant to spawn without the machine wand
 		/obj/effect/bug_moving,
+		//Single use case holder atom requiring a user
+		/atom/movable/looking_holder,
+		//Should not exist outside of holders
+		/obj/effect/decal/cleanable/blood/trail,
+		//Should not exist outside of ethereals
+		/obj/item/stock_parts/power_store/cell/ethereal,
+		// Abstract type, controlled by turfs
+		// Literally errors on creation/deletion
+		/atom/movable/lighting_object,
 	)
 
 	// Everything that follows is a typesof() check.
-
+	returnable_list += typesof(/obj/machinery/doomsday_device) //This should be obvious
+	returnable_list += typesof(/obj/machinery/launchpad/briefcase) //briefcase launchpads erroring
 	//Say it with me now, type template
 	returnable_list += typesof(/obj/effect/mapping_helpers)
 	//This turf existing is an error in and of itself
@@ -264,8 +309,6 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/item/modular_computer/processor)
 	//Very finiky, blacklisting to make things easier
 	returnable_list += typesof(/obj/item/poster/wanted)
-	//This expects a seed, we can't pass it
-	returnable_list += typesof(/obj/item/food/grown)
 	//Needs clients / mobs to observe it to exist. Also includes hallucinations.
 	returnable_list += typesof(/obj/effect/client_image_holder)
 	//Same to above. Needs a client / mob / hallucination to observe it to exist.
@@ -277,19 +320,21 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//We have a baseturf limit of 10, adding more than 10 baseturf helpers will kill CI, so here's a future edge case to fix.
 	returnable_list += typesof(/obj/effect/baseturf_helper)
 	//No tauma to pass in
-	returnable_list += typesof(/mob/camera/imaginary_friend)
-	//No pod to gondola
-	returnable_list += typesof(/mob/living/simple_animal/pet/gondola/gondolapod)
+	returnable_list += typesof(/mob/eye/imaginary_friend)
 	//No heart to give
 	returnable_list += typesof(/obj/structure/ethereal_crystal)
 	//No linked console
-	returnable_list += typesof(/mob/camera/ai_eye/remote/base_construction)
+	returnable_list += typesof(/mob/eye/camera/remote/base_construction)
 	//See above
-	returnable_list += typesof(/mob/camera/ai_eye/remote/shuttle_docker)
+	returnable_list += typesof(/mob/eye/camera/remote/shuttle_docker)
 	//Hangs a ref post invoke async, which we don't support. Could put a qdeleted check but it feels hacky
 	returnable_list += typesof(/obj/effect/anomaly/grav/high)
 	//See above
 	returnable_list += typesof(/obj/effect/timestop)
+	//Sparks can ignite a number of things, causing a fire to burn the floor away. Only you can prevent CI fires
+	returnable_list += typesof(/obj/effect/particle_effect/sparks)
+	//See above - These are one of those things.
+	returnable_list += typesof(/obj/effect/decal/cleanable/fuel_pool)
 	//Invoke async in init, skippppp
 	returnable_list += typesof(/mob/living/silicon/robot/model)
 	//This lad also sleeps
@@ -313,7 +358,7 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	//Needs a linked mecha
 	returnable_list += typesof(/obj/effect/skyfall_landingzone)
 	//Expects a mob to holderize, we have nothing to give
-	returnable_list += typesof(/obj/item/clothing/head/mob_holder)
+	returnable_list += typesof(/obj/item/mob_holder)
 	//Needs cards passed into the initilazation args
 	returnable_list += typesof(/obj/item/toy/cards/cardhand)
 	//Needs a holodeck area linked to it which is not guarenteed to exist and technically is supposed to have a 1:1 relationship with computer anyway.
@@ -322,36 +367,73 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/structure/transport/linear)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	returnable_list += subtypesof(/obj/machinery/airlock_controller)
-	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
-	returnable_list += subtypesof(/atom/movable/screen/escape_menu)
 	// Can't spawn openspace above nothing, it'll get pissy at me
 	returnable_list += typesof(/turf/open/space/openspace)
 	returnable_list += typesof(/turf/open/openspace)
-
+	returnable_list += typesof(/obj/item/robot_model) // These should never be spawned outside of a robot.
+	//A lot of these depend on a hud datum to function and should not be created in a vacuum
+	returnable_list += typesof(/atom/movable/screen)
 	return returnable_list
 
 /proc/RunUnitTests()
 	CHECK_TICK
 
-	var/list/tests_to_run = subtypesof(/datum/unit_test)
+	// Find our primary unit test map & find out if we are the secondary
+	var/datum/map_config/primary_unit_test_map
+	var/is_secondary_unit_test_map = FALSE
+	var/found_secondary_unit_test_map = FALSE
+	for(var/map_name, _map_config in config.maplist)
+		var/datum/map_config/map_config = _map_config
+		if(map_config.is_unit_test_map)
+			primary_unit_test_map = map_config
+		if(!LAZYLEN(map_config.skipped_tests) && !found_secondary_unit_test_map)
+			found_secondary_unit_test_map = TRUE
+			if(SSmapping.current_map.map_name == map_name)
+				is_secondary_unit_test_map = TRUE
+
+	var/list/tests_to_run = list()
 	var/list/focused_tests = list()
-	for (var/_test_to_run in tests_to_run)
-		var/datum/unit_test/test_to_run = _test_to_run
-		if (initial(test_to_run.focus))
-			focused_tests += test_to_run
+	for (var/datum/unit_test/potential_test as anything in subtypesof(/datum/unit_test))
+// if you're doing this locally, do ALL of it
+// otherwise, we gotta split em up
+#ifndef RUNNING_LOCAL_TESTS
+		// If the test has [UNIT_TEST_DEBUG_MAP_ONLY] and we aren't the primary unit test map, skip it.
+		// HOWEVER, some unit tests are incompatible with the primary testing map, so we must offload them a secondary one with no blacklisted tests.
+		// If we didn't find a primary unit test map then we are likely a solo runner.
+		if((potential_test::test_flags & UNIT_TEST_DEBUG_MAP_ONLY) && \
+			!isnull(primary_unit_test_map) && \
+			!SSmapping.current_map.is_unit_test_map && \
+			!(primary_unit_test_map.skipped_tests?.Find(potential_test) && is_secondary_unit_test_map) \
+		)
+			continue
+#endif
+		if (potential_test::test_flags & UNIT_TEST_FOCUS)
+			focused_tests += potential_test
+			continue
+		tests_to_run += potential_test
 	if(length(focused_tests))
 		tests_to_run = focused_tests
 
-	tests_to_run = sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
+	primary_unit_test_map = null // I'm paranoid
+
+	sortTim(tests_to_run, GLOBAL_PROC_REF(cmp_unit_test_priority))
 
 	var/list/test_results = list()
 
 	//Hell code, we're bound to end the round somehow so let's stop if from ending while we work
 	SSticker.delay_end = TRUE
-	for(var/unit_path in tests_to_run)
-		CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
-		RunUnitTest(unit_path, test_results)
+	for(var/datum/unit_test/unit_path as anything in tests_to_run)
+		var/loop_count = unit_path::times_to_run
+		for(var/i in 1 to loop_count)
+			CHECK_TICK //We check tick first because the unit test we run last may be so expensive that checking tick will lock up this loop forever
+			RunUnitTest(unit_path, test_results)
 	SSticker.delay_end = FALSE
+
+	log_world("::group::Expensive Unit Test Times")
+	sortTim(GLOB.test_run_times, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+	for(var/type, duration in GLOB.test_run_times)
+		log_world("[type] took [duration/10]s")
+	log_world("::endgroup::")
 
 	var/file_name = "data/unit_tests.json"
 	fdel(file_name)

@@ -10,6 +10,7 @@
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	melee_damage_lower = 30
 	melee_damage_upper = 30
+	melee_attack_cooldown = CLICK_CD_MELEE
 	maxHealth = 300
 	health = 300
 
@@ -22,14 +23,14 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	minimum_survivable_temperature = T0C
 	maximum_survivable_temperature = T0C + 450
-	status_flags = NONE
+	status_flags = CANSTUN
 	lighting_cutoff_red = 5
 	lighting_cutoff_green = 20
 	lighting_cutoff_blue = 25
 	mob_size = MOB_SIZE_LARGE
 
 	speak_emote = list("chitters")
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	ai_controller = /datum/ai_controller/basic_controller/mega_arachnid
 	alpha = 40

@@ -3,6 +3,7 @@
 
 	name = "air scrubber"
 	desc = "Has a valve and pump attached to it."
+	construction_type = /obj/item/pipe/directional/scrubber
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
@@ -119,7 +120,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
-	if(showpipe)
+	if(underfloor_state)
 		var/image/cap = get_pipe_image(icon, "scrub_cap", initialize_directions)
 		add_overlay(cap)
 	else
@@ -182,15 +183,13 @@
 	if(welded || !is_operational)
 		return FALSE
 	if(!nodes[1] || !on || (!filter_types && scrubbing != ATMOS_DIRECTION_SIPHONING))
-		on = FALSE
+		set_on(FALSE)
 		return FALSE
 
-	var/list/changed_gas = air.gases
-
-	if(!changed_gas)
+	if(!air.moles)
 		return FALSE
 
-	if(scrubbing == ATMOS_DIRECTION_SIPHONING || length(filter_types & changed_gas))
+	if(scrubbing == ATMOS_DIRECTION_SIPHONING || length(filter_types & air.moles))
 		return TRUE
 
 	return FALSE
@@ -199,19 +198,21 @@
 	if(welded || !is_operational)
 		return FALSE
 	if(!nodes[1] || !on)
-		on = FALSE
+		set_on(FALSE)
 		return FALSE
 	var/turf/open/us = loc
 	if(!istype(us))
 		return
-	scrub(us)
+	if(scrub(us))
+		us.air_update_turf(FALSE, FALSE)
 	if(widenet)
 		if(COOLDOWN_FINISHED(src, check_turfs_cooldown))
 			check_turfs()
 			COOLDOWN_START(src, check_turfs_cooldown, 2 SECONDS)
 
 		for(var/turf/tile in adjacent_turfs)
-			scrub(tile)
+			if (scrub(tile))
+				tile.air_update_turf(FALSE, FALSE)
 	return TRUE
 
 ///filtered gases at or below this amount automatically get removed from the mix
@@ -222,36 +223,36 @@
 		return FALSE
 	var/datum/gas_mixture/environment = tile.return_air()
 	var/datum/gas_mixture/air_contents = airs[1]
-	var/list/env_gases = environment.gases
+	var/list/env_cached_moles = environment.moles
 
 	if(air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE)
 		return FALSE
 
 	if(scrubbing == ATMOS_DIRECTION_SCRUBBING)
-		if(length(env_gases & filter_types))
+		if(length(env_cached_moles & filter_types))
 			///contains all of the gas we're sucking out of the tile, gets put into our parent pipenet
 			var/datum/gas_mixture/filtered_out = new
-			var/list/filtered_gases = filtered_out.gases
+			var/list/filtered_out_cached_moles = filtered_out.moles
 			filtered_out.temperature = environment.temperature
 
 			///maximum percentage of the turfs gas we can filter
 			var/removal_ratio =  min(1, volume_rate / environment.volume)
 
 			var/total_moles_to_remove = 0
-			for(var/gas in filter_types & env_gases)
-				total_moles_to_remove += env_gases[gas][MOLES]
+			for(var/gas_id in filter_types & env_cached_moles)
+				total_moles_to_remove += env_cached_moles[gas_id]
 
 			if(total_moles_to_remove == 0)//sometimes this gets non gc'd values
 				environment.garbage_collect()
 				return FALSE
 
-			for(var/gas in filter_types & env_gases)
-				filtered_out.add_gas(gas)
-				//take this gases portion of removal_ratio of the turfs air, or all of that gas if less than or equal to MINIMUM_MOLES_TO_SCRUB
-				var/transferred_moles = max(QUANTIZE(env_gases[gas][MOLES] * removal_ratio * (env_gases[gas][MOLES] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, env_gases[gas][MOLES]))
+			for(var/gas_id in filter_types & env_cached_moles)
+				filtered_out.add_gas(gas_id)
+				//take this gases portion of removal_ratio of the turfs air, or all of that gas_id if less than or equal to MINIMUM_MOLES_TO_SCRUB
+				var/transferred_moles = max(QUANTIZE(env_cached_moles[gas_id] * removal_ratio * (env_cached_moles[gas_id] / total_moles_to_remove)), min(MINIMUM_MOLES_TO_SCRUB, env_cached_moles[gas_id]))
 
-				filtered_gases[gas][MOLES] = transferred_moles
-				env_gases[gas][MOLES] -= transferred_moles
+				filtered_out_cached_moles[gas_id] = transferred_moles
+				env_cached_moles[gas_id] -= transferred_moles
 
 			environment.garbage_collect()
 
@@ -295,7 +296,7 @@
 		else
 			user.visible_message(span_notice("[user] unwelds the scrubber."), span_notice("You unweld the scrubber."), span_hear("You hear welding."))
 			welded = FALSE
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		pipe_vision_img = image(src, loc, dir = dir)
 		SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
 		investigate_log("was [welded ? "welded shut" : "unwelded"] by [key_name(user)]", INVESTIGATE_ATMOS)
@@ -318,10 +319,10 @@
 		return
 	user.visible_message(span_warning("[user] furiously claws at [src]!"), span_notice("You manage to clear away the stuff blocking the scrubber."), span_hear("You hear loud scraping noises."))
 	welded = FALSE
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	pipe_vision_img = image(src, loc, dir = dir)
 	SET_PLANE_EXPLICIT(pipe_vision_img, ABOVE_HUD_PLANE, src)
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 100, TRUE)
+	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 100, TRUE)
 
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2
@@ -346,4 +347,4 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/disconnect()
 	..()
-	on = FALSE
+	set_on(FALSE)

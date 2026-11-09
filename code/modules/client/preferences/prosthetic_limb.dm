@@ -3,15 +3,18 @@
 	savefile_key = "prosthetic"
 	savefile_identifier = PREFERENCE_CHARACTER
 
+/datum/preference/choiced/prosthetic/create_default_value()
+	return "Random"
+
 /datum/preference/choiced/prosthetic/init_possible_values()
-	return list("Random") + GLOB.limb_choice
+	return list("Random") + GLOB.prosthetic_limb_choice
 
 /datum/preference/choiced/prosthetic/is_accessible(datum/preferences/preferences)
 	. = ..()
 	if (!.)
 		return FALSE
 
-	return "Prosthetic Limb" in preferences.all_quirks
+	return /datum/quirk/prosthetic_limb::name in preferences.all_quirks
 
-/datum/preference/choiced/prosthetic/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/prosthetic/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return

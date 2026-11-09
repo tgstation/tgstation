@@ -21,14 +21,8 @@
 	var/mutable_appearance/center = null
 	///The pipe icon
 	var/mutable_appearance/pipe = null
-	///Reference to the node
-	var/obj/machinery/atmospherics/front_node = null
 
-/* We use New() instead of Initialize() because these values are used in update_icon()
- * in the mapping subsystem init before Initialize() is called in the atoms subsystem init.
- * This is true for the other manifolds (the 4 ways and the heat exchanges) too.
- */
-/obj/machinery/atmospherics/pipe/multiz/New()
+/obj/machinery/atmospherics/pipe/multiz/Initialize(mapload, process, setdir, init_dir)
 	icon_state = ""
 	center = mutable_appearance(icon, "adapter_center", layer = HIGH_OBJ_LAYER)
 	pipe = mutable_appearance(icon, "pipe-[piping_layer]")
@@ -42,10 +36,13 @@
 
 /obj/machinery/atmospherics/pipe/multiz/update_overlays()
 	. = ..()
-	pipe.color = front_node ? front_node.pipe_color : rgb(255, 255, 255)
+
+	pipe.appearance_flags |= RESET_COLOR|KEEP_APART
+	pipe.color = SELECT_ATMOS_NODE_COLOR(src, nodes[1])
 	pipe.icon_state = "pipe-[piping_layer]"
 	. += pipe
-	center.pixel_x = PIPING_LAYER_P_X * (piping_layer - PIPING_LAYER_DEFAULT)
+
+	center.pixel_w = PIPING_LAYER_P_X * (piping_layer - PIPING_LAYER_DEFAULT)
 	. += center
 
 ///Attempts to locate a multiz pipe that's above us, if it finds one it merges us into its pipenet

@@ -25,6 +25,11 @@
 
 	return ..()
 
+/datum/action/cooldown/spell/jaunt/PreActivate(atom/target)
+	if(SEND_SIGNAL(target, COMSIG_MOB_PRE_JAUNT, target) & COMPONENT_BLOCK_JAUNT)
+		return FALSE
+	. = ..()
+
 /datum/action/cooldown/spell/jaunt/before_cast(atom/cast_on)
 	return ..() | SPELL_NO_FEEDBACK // Don't do the feedback until after we're jaunting
 
@@ -37,7 +42,7 @@
 	if(!owner_area || !owner_turf)
 		return FALSE // nullspaced?
 
-	if(owner_area.area_flags & NOTELEPORT)
+	if(!check_teleport_valid(owner, owner_turf, TELEPORT_CHANNEL_MAGIC))
 		if(feedback)
 			to_chat(owner, span_danger("Some dull, universal force is stopping you from jaunting here."))
 		return FALSE

@@ -1,9 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ab" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "ac" = (
 /turf/closed/wall/r_wall,
@@ -338,7 +338,6 @@
 /area/ruin/powered/seedvault)
 "bc" = (
 /obj/machinery/light/directional/west,
-/obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 8
@@ -346,6 +345,7 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 4
 	},
+/obj/machinery/hydroponics/constructable/fullupgrade,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bd" = (
@@ -375,10 +375,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bh" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 6
 	},
+/obj/machinery/hydroponics/constructable/fullupgrade,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bi" = (
@@ -395,10 +395,10 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bj" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 10
 	},
+/obj/machinery/hydroponics/constructable/fullupgrade,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bk" = (
@@ -413,7 +413,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 8
@@ -421,6 +420,7 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 4
 	},
+/obj/machinery/hydroponics/constructable/fullupgrade,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bm" = (
@@ -479,18 +479,18 @@
 /area/ruin/powered/seedvault)
 "bw" = (
 /obj/machinery/light/directional/south,
-/obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/green/line,
+/obj/machinery/hydroponics/constructable/fullupgrade,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bx" = (
 /obj/effect/decal/cleanable/glass,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "by" = (
 /obj/structure/disposalpipe/segment{
@@ -511,22 +511,19 @@
 /turf/closed/wall/r_wall,
 /area/ruin/powered/seedvault)
 "bB" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 5
 	},
+/obj/machinery/hydroponics/constructable/fullupgrade,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "bC" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 9
 	},
+/obj/machinery/hydroponics/constructable/fullupgrade,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
-"bD" = (
-/turf/closed/wall/r_wall,
-/area/lavaland/surface/outdoors)
 "ca" = (
 /obj/machinery/atmospherics/components/tank/air{
 	dir = 4
@@ -541,7 +538,7 @@
 /area/ruin/powered/seedvault)
 "eq" = (
 /obj/effect/baseturf_helper/lava_land/surface,
-/turf/closed/mineral/volcanic/lava_land_surface,
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors)
 "hf" = (
 /obj/structure/sink/directional/east,
@@ -565,7 +562,6 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "pZ" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/effect/turf_decal/trimline/green/line{
@@ -574,10 +570,10 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 4
 	},
+/obj/machinery/hydroponics/constructable/fullupgrade,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "rF" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 8
@@ -585,6 +581,7 @@
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 4
 	},
+/obj/machinery/hydroponics/constructable/fullupgrade,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 "rX" = (
@@ -600,6 +597,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/blue,
+/area/ruin/powered/seedvault)
+"yq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/extinguisher_cabinet/directional/north,
 /turf/open/floor/mineral/titanium/blue,
 /area/ruin/powered/seedvault)
 "Bb" = (
@@ -656,12 +658,12 @@
 /turf/open/floor/iron/freezer,
 /area/ruin/powered/seedvault)
 "VF" = (
-/obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/green/line,
+/obj/machinery/hydroponics/constructable/fullupgrade,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/powered/seedvault)
 
@@ -693,7 +695,7 @@ aa
 aa
 aa
 ab
-ab
+aa
 aa
 aa
 aa
@@ -717,7 +719,7 @@ ac
 ac
 ac
 ac
-aa
+ac
 aa
 aa
 aa
@@ -738,7 +740,7 @@ OE
 ah
 ac
 ca
-ac
+ah
 ac
 ac
 ac
@@ -816,7 +818,7 @@ bc
 rF
 ac
 ac
-bD
+ac
 aa
 "}
 (8,1,1) = {"
@@ -853,7 +855,7 @@ aT
 ac
 ac
 ac
-bb
+yq
 bb
 aN
 aN

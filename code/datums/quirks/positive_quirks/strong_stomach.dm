@@ -8,5 +8,5 @@
 	lose_text = span_danger("Looking at food on the ground makes you feel a little queasy.")
 	medical_record_text = "Patient has a stronger than average immune system...to food poisoning, at least."
 	mail_goodies = list(
-		/obj/item/reagent_containers/pill/ondansetron,
+		/obj/item/reagent_containers/applicator/pill/ondansetron,
 	)

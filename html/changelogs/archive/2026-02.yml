@@ -1,0 +1,438 @@
+2026-02-01:
+  Jacquerel:
+  - sound: wands and staffs adjust their fire sound pitch instead of frequency as
+      charges are depleted
+  Melbert:
+  - bugfix: Having an active honorific no longer changes your runechat emote color
+  SmArtKar:
+  - qol: Item fortification scroll no longer requires combat mode in order to be used
+  lelandkemble:
+  - bugfix: The "Super-Stable" line of Donk Co. Bomb Payloads are now stable when
+      exposed to extreme temperatures
+  - bugfix: bounties where you must submit reagents or pills or viruses now work
+  - map: Icebox engineering circuit lab no longer has firelocks placed in the windows
+2026-02-02:
+  Cyberboss:
+  - server: If TGS is configured to push test merge commits to a publicly accessible
+      GitHub, the exact game revision will be set as the `round`.`commit_hash` in
+      the database.
+  Justice12354:
+  - rscadd: Added lemon juice box
+  Melbert:
+  - balance: Plant instability can no longer cause the value of the instability stat
+      to change randomly unless instability is >=80
+  - balance: Plants can no longer mutate their stats twice in one tick starting at
+      40 instability - though the degree to which stats mutate is still increased
+      at the 40 mark, that is unchanged.
+  Y0SH1M4S73R:
+  - refactor: Painting has been significantly refactored with a new UI that should
+      provide every painting control you need without having to unfocus the UI window.
+      Please report any issues.
+  - refactor: Items that can store paint palettes now start with no colors. Colors
+      can be added to and removed from the item's palette, up to the number of colors
+      they previously stored.
+2026-02-03:
+  alien3301:
+  - qol: Heretic void cloak doesn't quickdraw
+2026-02-04:
+  Fghj240:
+  - bugfix: viruses should maybe probably not cure themselves
+  Melbert:
+  - qol: Blushing matches blood color, so lizards blush greeeen.
+  SmArtKar:
+  - refactor: Refactored sparks, foam, smoke, and other miscellaneous effect systems.
+  - refactor: Vapes now have consistent rigging with cigs using the new system.
+  - bugfix: Fixed some effects never working.
+  SyncIt21:
+  - qol: plumbing disposer now has TGUI interface for operations
+  - bugfix: plumbing disposer icon state correctly switches between on & off under
+      circumstances
+  Y0SH1M4S73R:
+  - bugfix: The holy energy swords and the carp-sie plushie can once again be renamed
+  - bugfix: The holy energy swords and the carp-sie plushie can once again be sacrificed
+      by cultists to spawn different weapons based on how many unique cultists the
+      chaplain has crit or killed with them
+  - qol: The holy skateboard can be renamed like other null rod variants can
+  - bugfix: Unusual null rod variants like the holy skateboard and bow can now be
+      sacrificed by cultists to spawn different weapons based on how many unique cultists
+      the chaplain has crit or killed with them. The bow and the burdened chaplain's
+      revolver, in particular, also count cultists crit or killed by arrows/bullets
+      fired from them by the chaplain.
+  lelandkemble:
+  - spellcheck: Language manuals correctly refer to the person using them up to viewers
+  - bugfix: Sources of random slimes will now produce random slimes
+  - bugfix: Slimes revived via magic will now continue to look as they should
+2026-02-05:
+  Kashargul:
+  - bugfix: tgui error year display
+  lelandkemble:
+  - bugfix: the auto updating lootpanel now automatically shows new items that haven't
+      moved yet.
+2026-02-06:
+  Bugwasabi:
+  - bugfix: Play Internet Sounds will now only display song details to users who have
+      admin music enabled.
+  Melbert:
+  - balance: Stasis now stops addiction ticks while active - meaning addictions will
+      not apply their ticking withdrawal effects, but also won't heal over time
+  - refactor: Refactored how deafness is tracked. Please report any weird interactions
+      with sounds, like messages or sfx being missing.
+  - bugfix: Lacking ears and being in hard crit now consistently treats you as "being
+      deaf". This affects a few minor interactions like empath, the jukebox, and sleeping.
+  lelandkemble:
+  - bugfix: the Space Furnace is now usable in rooms that have previously been breached,
+      provided they have recovered enough air.
+2026-02-07:
+  ArcaneMusic:
+  - rscadd: Stations can now spawn with Structural weakpoints. If they're subject
+      to an explosion, they'll crack open a tear in the station's turfs. If you spot
+      one, make sure to weld it or seal it with sticky tape to fix one. Or not!
+  - rscadd: Adds a negative station trait that greatly increases the number of weakpoints
+      that can spawn on station.
+  SmArtKar:
+  - bugfix: Fixed chemical foam not working
+  lelandkemble:
+  - bugfix: Blast doors & shutters no longer inexplicably open when approached on
+      a mount
+2026-02-08:
+  ArcaneMusic:
+  - balance: Multitools cost has been decreased from youtool vendors, and their stock
+      increased (150 credits, 4 stock).
+  Cyberboss:
+  - bugfix: Fixed encoding of special characters in chem dispenser recorded recipe
+      names.
+  Laikodaemon:
+  - image: HoP's Accounting console now has a new sprite.
+2026-02-09:
+  Cyberboss:
+  - bugfix: Fixed right clicking a closet with an ID in hand toggling locks twice
+      in one tick
+  SmArtKar:
+  - image: Husk visuals now inherit their mob's blood color
+  lelandkemble:
+  - rscadd: You can now put a deconstructed nuclear bomb back together again
+  - bugfix: Nuclear bombs with exposed cores will again irradiate their surrounding
+      area
+  - map: Catwalks vault is now restricted access
+  vinylspiders:
+  - code_imp: sinks can be mounted to floors
+2026-02-10:
+  Melbert:
+  - qol: You are always notified if your paycheck amount changes
+2026-02-11:
+  Cerulyss-Aureon:
+  - qol: The HFR can now produce Tier 5 gases at Level 4 when plasma is present in
+      the moderator. This makes it a more viable and competitive alternative to traditional
+      pipe or chamber gas synthesis.
+  Iajret:
+  - bugfix: fixed brain not getting traumas from brain damage (including rotting or
+      chemicals)
+  - bugfix: brains should no longer be getting traumas from mannitol healing
+  - bugfix: apparently cut stomach healing had been broken too, and it should be fixed
+      now.
+  Maximal08:
+  - map: Adds missing wires and pipes to meta
+  Neocloudy:
+  - bugfix: Entertainment monitors don't bypass radio speech volume.
+  lelandkemble:
+  - spellcheck: Pronouns in counterattack text are more correct
+2026-02-12:
+  SyncIt21:
+  - qol: you can place plumbing machines on ducts with different layers again
+  lelandkemble:
+  - bugfix: Airlock painters are now short range once again
+  sesametg:
+  - server: 'fix: HR have reopened positions at unstaffed stations'
+2026-02-13:
+  Cyberboss:
+  - bugfix: Fixed some inconsistencies with bodytypes when non-binary genders had
+      it set to "Use gender". This is no longer possible. If you use have previously
+      used this setting, your bodytype will be explicitly set to female.
+  LT3:
+  - code_imp: Removed unused rock the vote config entry
+  SyncIt21:
+  - refactor: plumbing automatic buffer has been refactored for better performance
+      & interactions. report bugs on github
+  - refactor: plumbing accmilator code has been improved. Report bugs on github
+  - bugfix: power monitors report accurate readings for plumbing machinery
+  - refactor: code for plumbing splitter & filter have been improved. plumbing splitter
+      is now a 3 way component. Report bugs on github
+  - code_imp: mob metabolization code has better cpu performance
+  TealSeer:
+  - balance: The CE spawns with upgraded tools again
+2026-02-14:
+  Co0kie-GG:
+  - bugfix: AI portraits are now displayed correctly
+  - bugfix: AI display selector displays them correctly
+  Cyberboss:
+  - bugfix: The Kommand action icon will now properly reflect your pointer colour
+      after being reset.
+  Melbert:
+  - refactor: Rewrites how addiction points are applied from reagents. Some reagents
+      may be marginally more or less addictive as a consequence.
+  - balance: Addiction gained per metabolism tick now scales to the amount of reagents
+      metabolized. In other words if you metabolize 0.2 units instead of the expected
+      0.4 units, you get 0.5x of the amount of addiction gain. This ultimately changes
+      very little and I would imagine it's how most people expected it to work in
+      the first place...
+  - rscdel: Cytology creations no longer have a random chance to fail if another sample
+      in the vat has growth process. All growth is still reset on any successful creation.
+      As growth failure has been removed, some cell lines that had unique fail interactions
+      have been altered.
+  - rscadd: Clown cell lines are now all boosted by supplying mutagen. However, using
+      mutagen may cause a mutant clown to spawn. (Before, failure caused a mutant
+      clown to spawn.)
+  - rscadd: Queen bee lines now alternate between spawning a queen bee and a swarm
+      of bees. (Before, failure caused a swarm of bees to spawn.)
+  - rscadd: Cytology created bees have a rare chance of having a random toxin.
+  - rscadd: When you get absorbed by a changeling, you get made into an imaginary
+      friend of the changeling that absorbed you.
+  - refactor: Refactored how people are returned to their bodies after occupying separate
+      bodies, such as bitrunners and ghost roles. Report any oddities or failure to
+      return correctly.
+  lelandkemble:
+  - map: Meta's cryo waste pipe is connected to main waste pipes
+  matchalabubu67:
+  - bugfix: radio uplinks now generate three word codes instead of one
+  vinylspiders:
+  - bugfix: fixes certain particle effects not triggering under certain conditions
+2026-02-15:
+  Melbert:
+  - rscadd: Adds Tourniquets. While attached to a limb, reduces blood loss from that
+      limb by 90%, but makes you walk / interact slower. (Or if you put it on your
+      head, you die.)
+  - rscadd: You can purchase Tourniquets from the premium section of the medical vendor
+  - rscadd: 'Paramedic belt setup has changed yet again: Surgical tape replaced with
+      Tourniquet, Bone gel replaced with Bonesetter.'
+  - rscadd: You can use all forms of tape as splint - like Gauze. Will secure a fracture
+      but won't stop your blood from exiting.
+  - refactor: Refactored gauze entirely, report any strangeness with it (or tape,
+      or tourniquets)
+2026-02-16:
+  Arturlang:
+  - bugfix: moon heretics getting hit by things that target limbs specifically (like
+      vendors) will no longer bypass moon robe protection, but, good luck surviving
+      that.
+  - bugfix: fix moon heretic's empathy runtiming on when they gain their initial knowledge
+  Exester509:
+  - rscadd: Pigs and goats can now be grown in a cytology vat
+  LT3:
+  - bugfix: Admins can now actually adjust the speed of the tram
+  - bugfix: Fixed tram doors repeating multiple varied copies of their audio
+  - bugfix: Fixed tram doors emergency release sound/animation
+  - code_imp: Cleaned up some tram signal code
+  Y0SH1M4S73R:
+  - rscadd: Anomaly cores now have effects when pulsed by an assembly, button, or
+      wire. These effects are generally weaker versions of the effects of the source
+      anomalies, or of their respective reactive armors, and many have a 50% longer
+      cooldown than said armors.
+  lelandkemble:
+  - bugfix: Holopads no longer runtime or delete their disks when being destroyed
+  - bugfix: You can no longer make any vending machine free
+2026-02-18:
+  00-Steven:
+  - bugfix: Trying to insert an item into a vendor that has reached its maximum capacity
+      for that item no longer says "no space for any more /list", and no longer TRIES
+      to say it has too much of that category. It now correctly says it can't accept
+      any more of that item.
+  - bugfix: Trying to insert an item into a vendor that can hold it but you can't
+      put it in no longer both says you insert the item into its input compartment
+      while also sending an error message about not being able to put it in.
+  - bugfix: Trying to insert an item into a vendor that can't hold it no longer sends
+      the error message twice.
+  Aliceee2ch:
+  - image: Added missing directional sprites for few apps on consoles.
+  - map: The shuttles were also equipped with vitals displays.
+  ArcaneMusic:
+  - sound: The quantum spin inverter now makes a sound effect on either side of the
+      inverters when activated.
+  Melbert:
+  - bugfix: Tourniquet fits in medkits and medbelts
+2026-02-19:
+  Dominion:
+  - map: Pulled the medical wrench out from under the cryogenics freeze on Deltastation
+  - qol: Did you know the roundstart countdown is inclusive of loading times? Now
+      you can see it.
+  SyncIt21:
+  - code_imp: adds a framework for implementing effects when multiple reagents are
+      metabolized per tick
+  Y0SH1M4S73R:
+  - rscadd: A subdermally implantable integrated circuit shell is now available to
+      print from the component printer upon researching advanced circuit shells. Implanter
+      not included.
+2026-02-20:
+  SyncIt21:
+  - qol: except for plumbing reaction chamber & acclimator, no reactions will occur
+      inside plumbing machines
+  mcbalaam:
+  - rscadd: E.X.P.E.R.I-MENTOR now has proper wires
+  - refactor: Refactored the E.X.P.E.R.I-MENTOR and it's E.X.P.E.R.I-ment system
+2026-02-21:
+  00-Steven:
+  - bugfix: Exporting stock blocks no longer uses its own elasticity value separate
+      from the materials exports, and no longer erroneously shows the stock block
+      elasticity instead of the material elasticity in the GMM for the material of
+      the most recently sold stock block.
+  Aliceee2ch:
+  - bugfix: Replaced loot spawner in Catwalk's space to prevent flaky errors.
+  Dominion:
+  - image: After decades of failing to compete with Cohiba Robustos, Havana cigars
+      have rebranded to a new colour theme.
+  - image: Cigar butts are now distinguishable based on the type of cigar it was.
+  LemonInTheDark:
+  - bugfix: Cameras should work a little better (won't fail in the dark, will display
+      multiz correctly
+  - refactor: Changed how static turf generation thinks about cameras. Shouldn't break
+      anything but it MIGHT so keep an eye out for that. The chunks we use to divvy
+      up the world for them are also 1/4th the area now, which should make flying
+      around as ai less lagsikey
+  MajManatee:
+  - bugfix: Smoke blowing emote perspective is now correct.
+  Melbert:
+  - balance: When the Paddy enables its sirens, it also enables overclock mode, speeding
+      it up 1.5x.
+  - balance: Paddy is forced onto overclock safety mode, meaning said overclock will
+      self-disable eventually.
+  - qol: Paper UI now updates immediately when you pick up or drop a writing tool.
+  - qol: The roundstart command report has had its style updated, and now contains
+      some bonus lore.
+  - admin: Changes the perms needed to add command report footnotes to "Fun" rather
+      than "Admin"
+  - admin: Adds a verb for changing the command report main contents (Requiring "Fun")
+  - config: Adds a config for hiding the dynamic report, disabled by default (disabled
+      meaning you still get the report)
+  SmArtKar:
+  - bugfix: Fixed tapes being invisible
+  - spellcheck: Fixed the channel D-Notice toggle description
+  - bugfix: Fixed shuttle chair buckle bars not appearing until sat on
+  lelandkemble:
+  - bugfix: Radio encryption keys are no longer tied to their radios once removed
+2026-02-22:
+  GregariousJB:
+  - qol: 'Keybinding visual improvements: "Unbound" is grayed out and custom binds
+      are highlighted in green for better visibility'
+  JohnFulpWillard:
+  - qol: You now need to click twice on the telecomms monitor console to wipe logs.
+  SmArtKar:
+  - bugfix: Fixed incorrect deuteragonist being passed to surgery memories
+  - refactor: Refactored the material system to calculate material effects based on
+      7 main properties. You can check them using science goggles!
+  - balance: A lot of materials have had their stats slightly changed, with some affected
+      more than others.
+  - balance: Material items now inherit their material's conductivity and have a slowdown
+      based on its density if it is especially dense.
+  - balance: Spears now use their shard's material for their combat stats, slightly
+      changing plastitanium spear's efficiency.
+  - balance: Material fishing rods have had their stat calculations significantly
+      simplified.
+  - image: Iron toolboxes now get printed with a random sprite instead of being grey.
+  - bugfix: Fixed metalgenned armor having broken armor stat calculations.
+  lelandkemble:
+  - bugfix: Fixed infinite machine guns
+2026-02-23:
+  Dominion:
+  - rscadd: Added a 3x handheld crew monitor medical crate to cargo.
+  - rscadd: Added a goodie crate with a handheld crew monitor to cargo.
+  Jacquerel:
+  - bugfix: Dead ghosts will return to the grave upon dying.
+  - bugfix: When you dig up a ghost's grave you will find the skeleton of that ghost,
+      not the skeleton of some other random guy.
+  - bugfix: The grave will also contain all of the ghost's worldly belongings.
+  LemonInTheDark:
+  - rscdel: Removed the Aromantic personality (I'm pretty sure it wasn't really implemented
+      correctly)
+  Melbert:
+  - balance: Revamped echolocation effect entirely. Now updates constantly, rather
+      than on a cooldown.
+  - balance: Echolocaters can filter out certain objects that they would really prefer
+      not to see at the moment.
+  - balance: Echolocaters are mechanically (but not visually) blind, which means they
+      have flash immunity and whatnot. Because of course they are.
+  - balance: Echolocater lose their ability to echolocate if they've gone deaf. Then
+      you're truly fully blind.
+  - balance: Echolocaters can see (or rather, hear) mobs through walls.
+  - refactor: Refactored Prosopagnosia to make the effect a bit more generic.
+  - bugfix: Fixes Changlings transformed into a Felinid losing decap immunity thanks
+      to their newly shrunken brain
+  TealSeer:
+  - admin: added tap all ore vents button to secrets panel
+  alien3301:
+  - balance: Replaced formaldehyde with anacea in traitor poison kits
+2026-02-24:
+  Melbert:
+  - qol: If an airlock pump's link is broken, it unbolts all airlocks
+  - rscadd: Cerdits siphoned from the vault are output as space cash rather than as
+      holochips
+  SmArtKar:
+  - bugfix: Breathing tube no longer bypasses nonfunctional lungs
+  - bugfix: Fixed bloodworms not being able to insert organs into their hosts
+  - balance: Husked mobs now keep some of their bodypart overlays, such as snouts,
+      tails and horns
+  - bugfix: Metalgen can no longer morph abstract turfs like space or chasms
+  SyncIt21:
+  - bugfix: moving reagents like acid/basic buffer and others across plumbing machinery
+      produces correct effects again
+  Y0SH1M4S73R:
+  - rscadd: Adds ethereal mutation toxin, created by injecting enriched liquid electricity
+      into a green slime extract.
+  - qol: Moth Mutation Toxin and Felinid Mutation Toxin may be required for randomized
+      recipes. Remember, they are each obtained using cellulose and milk in a green
+      slime extract, respectively.
+  - rscadd: Adds ghost mutation toxin. You might find it in maintenance pills or strange
+      seeds.
+2026-02-25:
+  DaddyChristmas:
+  - balance: Golem shells can now be deconstructed with a crowbar (Not Golem the species!)
+  Dominion:
+  - rscadd: Incapacitation status effects and dead now trigger you to forcefully say
+      whatever was in your input prompt.
+  Melbert:
+  - refactor: Made some minor changes to how things like airlocks, vendors, and autolathes
+      shock you. Report any wierdness with that
+  - bugfix: Food items no longer "duplicate" their intended reagents when crafted
+  - rscadd: Spraying items with lube makes them slippery, causing them to fall out
+      of people's hands who try to pick them up or use them.
+  - rscadd: Vitals monitors have USB ports, allowing circuits to read patient status
+  SmArtKar:
+  - bugfix: Ghosts can now see through potted plants and syndicate armor when examining
+      people
+  - bugfix: Material turfs, such as plasma floors, now function again after 3+ years.
+  - bugfix: Condensers can no longer be used to ignite things
+  TealSeer:
+  - bugfix: fixed recharger not properly charging the laser rifle power pack
+  alien3301:
+  - balance: Clown's water flower can splash reagents
+  dwasint:
+  - qol: Ghosts now have runechat.
+  lelandkemble:
+  - rscadd: Several items have been given special interactions when placed inside
+      counterfit mail.
+  - bugfix: Bioscrambler anomaly pulse activation works
+  - bugfix: Pieces of paper no longer make bodybags inescapable
+2026-02-26:
+  nevimer:
+  - bugfix: fixed runechat's for radio emotes appearing incorrectly for observers
+  - code_imp: reuse the emote check from living's hearing function
+2026-02-27:
+  Absolucy:
+  - bugfix: Fixed a rare bug that could result in people permanently becoming pitch
+      black as a result of stabilized pyrite or regenerative rainbow extracts.
+  Ghommie:
+  - bugfix: Fixed materials not being applied when crafting with stacks if said stack
+      is zero'd in the process.
+  JohnFulpWillard:
+  - bugfix: pAIs/AIs in a Modsuit/PDA can now take photos properly, and their zoom
+      functionality works again.
+  - bugfix: pAI abilities like host scan now works while inside of a PDA.
+  - qol: pAI HUD now takes widescreen into account.
+  Melbert:
+  - bugfix: Weather anomaly cores are orderable from cargo
+  - refactor: Anomaly core cargo orders are auto-generated - report any oddities with
+      them.
+  MelokG000:
+  - qol: you can now quit the game
+  Swan:
+  - bugfix: fixes the gravity generator's crushing gravity effect not disappearing
+      when the gen goes offline
+  Watermelon914:
+  - bugfix: Fixed composite types appearing incorrectly in the IC editor.

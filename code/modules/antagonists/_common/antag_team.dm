@@ -29,6 +29,9 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 /datum/team/Destroy(force)
 	GLOB.antagonist_teams -= src
 	members = null
+	for(var/datum/objective/objective as anything in objectives)
+		if(objective.team == src)
+			objective.team = null
 	objectives = null
 	return ..()
 
@@ -49,12 +52,12 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 /datum/team/proc/roundend_report()
 	var/list/report = list()
 
-	report += "<span class='header'>\The [name]:</span>"
+	report += span_header("\The [name]:")
 	report += "The [member_name]s were:"
 	report += printplayerlist(members)
 
 	if(objectives.len)
-		report += "<span class='header'>Team had following objectives:</span>"
+		report += span_header("Team had following objectives:")
 		var/win = TRUE
 		var/objective_count = 1
 		for(var/datum/objective/objective as anything in objectives)

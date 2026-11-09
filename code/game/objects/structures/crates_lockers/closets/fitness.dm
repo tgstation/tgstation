@@ -13,7 +13,6 @@
 	new /obj/item/clothing/under/shorts/green(src)
 	new /obj/item/clothing/under/costume/jabroni(src)
 
-
 /obj/structure/closet/boxinggloves
 	name = "boxing gloves closet"
 	desc = "It's a storage unit for gloves for use in the boxing ring."
@@ -26,7 +25,6 @@
 	new /obj/item/clothing/gloves/boxing/yellow(src)
 	new /obj/item/clothing/gloves/boxing(src)
 
-
 /obj/structure/closet/masks
 	name = "mask closet"
 	desc = "IT'S A STORAGE UNIT FOR FIGHTER MASKS OLE!"
@@ -36,7 +34,6 @@
 	new /obj/item/clothing/mask/luchador(src)
 	new /obj/item/clothing/mask/luchador/rudos(src)
 	new /obj/item/clothing/mask/luchador/tecnicos(src)
-
 
 /obj/structure/closet/lasertag/red
 	name = "red laser tag equipment"
@@ -50,7 +47,7 @@
 		new /obj/item/gun/energy/laser/redtag(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/redtag(src)
-	new /obj/item/clothing/head/helmet/redtaghelm(src)
+	new /obj/item/clothing/head/helmet/taghelm/red(src)
 
 
 /obj/structure/closet/lasertag/blue
@@ -65,4 +62,4 @@
 		new /obj/item/gun/energy/laser/bluetag(src)
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/suit/bluetag(src)
-	new /obj/item/clothing/head/helmet/bluetaghelm(src)
+	new /obj/item/clothing/head/helmet/taghelm/blue(src)

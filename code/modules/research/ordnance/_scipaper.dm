@@ -102,12 +102,12 @@
 	if(!tier || !experiment_path || !tracked_variable)
 		return FALSE
 	var/gain = calculate_gains(tier)
-	for (var/gain_type in 1 to gains.len)
-		gains[gain_type] = gain
+	for (var/gain_index in gains)
+		gains[gain_index] = gain
 		if(!partner_path)
 			continue
 		var/datum/scientific_partner/partner = locate(partner_path) in SSresearch.scientific_partners
-		gains[gain_type] *= partner.multipliers[gain_type]
+		gains[gain_index] *= partner.multipliers[gain_index]
 
 /** Fully check if our paper have all the required variables, and prevent duplicate papers being published in the same tier.
  * Things to check: tier, gain, and partner here. ex_path and record datums in subtypes.
@@ -151,23 +151,23 @@
 /datum/scientific_paper/proc/return_gist()
 	var/list/gist = list()
 	var/list/transcripted_gains = list(SCIPAPER_COOPERATION_INDEX, SCIPAPER_FUNDING_INDEX)
-	for (var/index in 1 to transcripted_gains.len)
+	for (var/gain_index in transcripted_gains)
 		if (!gains)
-			transcripted_gains[index] = "None"
+			transcripted_gains[gain_index] = "None"
 			continue
-		switch (round(gains[index]))
+		switch (round(gains[gain_index]))
 			if(-INFINITY to 0)
-				transcripted_gains[index] = "None"
+				transcripted_gains[gain_index] = "None"
 			if(1 to 24)
-				transcripted_gains[index] = "Little"
+				transcripted_gains[gain_index] = "Little"
 			if(25 to 49)
-				transcripted_gains[index] = "Moderate"
+				transcripted_gains[gain_index] = "Moderate"
 			if(50 to 99)
-				transcripted_gains[index] = "Significant"
+				transcripted_gains[gain_index] = "Significant"
 			if(100 to INFINITY)
-				transcripted_gains[index] = "Huge"
+				transcripted_gains[gain_index] = "Huge"
 			else
-				transcripted_gains[index] = "Undefined"
+				transcripted_gains[gain_index] = "Undefined"
 	gist["gains"] = transcripted_gains
 	gist["title"] = title
 	gist["author"] = author
@@ -185,7 +185,7 @@
 		author = "Unknown"
 		et_alia = FALSE
 	if(!abstract)
-		abstract = "Published on [station_time_timestamp()]"
+		abstract = "Published on [server_timestamp(ic_time = TRUE)] (PT: [round_timestamp()])"
 
 /datum/scientific_paper/explosive
 	/**
@@ -200,10 +200,9 @@
 		return FALSE
 	if(!istype(explosion_record))
 		return FALSE
-	var/list/published_papers = techweb_to_check.published_papers
-	for(var/experiment_path in published_papers)
-		for(var/datum/scientific_paper/explosive/papers in published_papers[experiment_path])
-			var/datum/data/tachyon_record/record_to_check = papers.explosion_record
+	for(var/experiment_path, papers in techweb_to_check.published_papers)
+		for(var/datum/scientific_paper/explosive/paper in papers)
+			var/datum/data/tachyon_record/record_to_check = paper.explosion_record
 			if(explosion_record.explosion_identifier == record_to_check.explosion_identifier)
 				return FALSE
 	return ..()
@@ -242,21 +241,14 @@
 		return FALSE
 	if(!istype(compressor_record))
 		return FALSE
-	var/list/published_papers = techweb_to_check.published_papers
-	for(var/experiment_path in published_papers)
-		for(var/datum/scientific_paper/gaseous/papers in published_papers[experiment_path])
-			if(compressor_record == papers.compressor_record)
+	for(var/experiment_path, papers in techweb_to_check.published_papers)
+		for(var/datum/scientific_paper/gaseous/paper in papers)
+			if(compressor_record == paper.compressor_record)
 				return FALSE
-	. = ..()
+	return ..()
 
 /datum/scientific_paper/gaseous/set_experiment(ex_path = null, variable = null, data = null)
-	var/invalid = FALSE
-
-	invalid = invalid || !ispath(ex_path, /datum/experiment/ordnance/gaseous)
-	invalid = invalid || !variable
-	invalid = invalid || !istype(data, /datum/data/compressor_record)
-
-	if(invalid)
+	if(!ispath(ex_path, /datum/experiment/ordnance/gaseous) || !istype(data, /datum/data/compressor_record) || !variable)
 		experiment_path = null
 		tracked_variable = null
 		compressor_record = null
@@ -289,18 +281,37 @@
 	/// Associative list of which technology the partner might be able to boost and by how much.
 	var/list/boostable_nodes = list()
 
+/datum/scientific_partner/New()
+	. = ..()
+	// Convey boosts to their associated nodes so that they can then be passed
+	// to techweb UIs as static data.
+	for(var/node_path, discount_amount in boostable_nodes)
+		var/datum/techweb_node/node = SSresearch.techweb_nodes[node_path]
+		LAZYSET(node.discount_boosts, TECHWEB_POINT_TYPE_GENERIC, discount_amount)
+
 /datum/scientific_partner/proc/purchase_boost(datum/techweb/purchasing_techweb, datum/techweb_node/node)
-	if(!allowed_to_boost(purchasing_techweb, node.id))
+	var/possible_boost = allowed_to_boost(purchasing_techweb, node.type)
+	if(!possible_boost)
 		return FALSE
-	purchasing_techweb.boost_techweb_node(node, list(TECHWEB_POINT_TYPE_GENERIC = boostable_nodes[node.id]))
-	purchasing_techweb.scientific_cooperation[type] -= boostable_nodes[node.id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER
+	var/boost_amount = boostable_nodes[node.type]
+
+	purchasing_techweb.boost_techweb_node(node, list(TECHWEB_POINT_TYPE_GENERIC = boost_amount))
+	purchasing_techweb.scientific_cooperation[type] -= boost_amount * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER
+	if(possible_boost == SCIPAPER_ALREADY_BOUGHT) // Refund the original price
+		purchasing_techweb.adjust_points(TECHWEB_POINT_TYPE_GENERIC, boost_amount)
+		return SCIPAPER_ALREADY_BOUGHT
 	return TRUE
 
-/datum/scientific_partner/proc/allowed_to_boost(datum/techweb/purchasing_techweb, node_id)
-	if(purchasing_techweb.scientific_cooperation[type] < (boostable_nodes[node_id] * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER)) // Too expensive
+/datum/scientific_partner/proc/allowed_to_boost(datum/techweb/purchasing_techweb, node_path)
+	var/datum/techweb_node/boosting_node = SSresearch.techweb_nodes[node_path]
+	var/boost_amount = boostable_nodes[node_path]
+
+	if(purchasing_techweb.scientific_cooperation[type] < (boost_amount * SCIENTIFIC_COOPERATION_PURCHASE_MULTIPLIER)) // Too expensive
 		return FALSE
-	if(!(node_id in purchasing_techweb.get_available_nodes())) // Not currently available
+	if(purchasing_techweb.boosted_nodes[node_path] && (boosting_node.discount_boosts[TECHWEB_POINT_TYPE_GENERIC] >= boost_amount)) // Already bought or we have a bigger discount
 		return FALSE
-	if((TECHWEB_POINT_TYPE_GENERIC in purchasing_techweb.boosted_nodes[node_id]) && (purchasing_techweb.boosted_nodes[node_id][TECHWEB_POINT_TYPE_GENERIC] >= boostable_nodes[node_id])) // Already bought or we have a bigger discount
+	if(purchasing_techweb.researched_nodes[node_path])
+		return SCIPAPER_ALREADY_BOUGHT
+	if(!purchasing_techweb.get_available_nodes()[node_path]) // Not currently available
 		return FALSE
 	return TRUE

@@ -14,6 +14,10 @@
 	/// Return from before cast signals to prevent the spell from going on cooldown before aftercast.
 	#define SPELL_NO_IMMEDIATE_COOLDOWN (1 << 2)
 
+/// Sent from /datum/action/cooldown/spell/can_cast_check() to the spell: (feedback)
+#define COMSIG_SPELL_CAN_CAST_CHECK "can_cast_spell"
+	// Return SPELL_CANCEL_CAST to prevent the spell from being cast
+
 /// Sent to an mob when a [/datum/action/cooldown/spell] calls try_invoke() to the caster: (datum/action/cooldown/spell/spell, feedback)
 #define COMSIG_MOB_TRY_INVOKE_SPELL "try_invoke_spell"
 	/// The spell gets canceled
@@ -66,14 +70,28 @@
 // Touch spells
 /// Sent from /datum/action/cooldown/spell/touch/do_hand_hit: (atom/hit, mob/living/carbon/caster, obj/item/melee/touch_attack/hand)
 #define COMSIG_SPELL_TOUCH_HAND_HIT "spell_touch_hand_cast"
+/// Sent from /datum/action/cooldown/spell/touch/cast: (mob/living/carbon/cast_on)
+#define COMSIG_TOUCH_HANDLESS_CAST "spell_touch_handless_cast"
+	/// Return this to prevent the hand spawning/unspawning
+	#define COMPONENT_CAST_HANDLESS (1<<0)
+/// "Casting" a touch spell brings it into your hand, so this is for actually hitting someone with it
+/// Sent from /datum/action/cooldown/spell/touch/do_hand_hit: (atom/hit, mob/living/carbon/caster, obj/item/melee/touch_attack/hand)
+#define COMSIG_SPELL_TOUCH_SPELL_ACTUALLY_CAST "spell_touch_spell_actually_cast"
 
 // Jaunt Spells
+/// Sent from datum/action/cooldown/spell/jaunt/before_cast, before the mob enters jaunting as a pre-check: (datum/action/cooldown/spell/spell)
+#define COMSIG_MOB_PRE_JAUNT "spell_mob_pre_jaunt"
+	#define COMPONENT_BLOCK_JAUNT (1<<0)
 /// Sent from datum/action/cooldown/spell/jaunt/enter_jaunt, to the mob jaunting: (obj/effect/dummy/phased_mob/jaunt, datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_ENTER_JAUNT "spell_mob_enter_jaunt"
 /// Set from /obj/effect/dummy/phased_mob after the mob is ejected from its contents: (obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
 #define COMSIG_MOB_EJECTED_FROM_JAUNT "spell_mob_eject_jaunt"
 /// Sent from datum/action/cooldown/spell/jaunt/exit_jaunt, after the mob exited jaunt: (datum/action/cooldown/spell/spell)
 #define COMSIG_MOB_AFTER_EXIT_JAUNT "spell_mob_after_exit_jaunt"
+/// Sent from /obj/effect/dummy/phased_mob/proc/phased_check when moving to the holder object: (/obj/effect/dummy/phased_mob, mob/living/phaser, turf/newloc)
+#define COMSIG_MOB_PHASED_CHECK "mob_phased_check"
+	/// Return this to cancel the phased move
+	#define COMPONENT_BLOCK_PHASED_MOVE (1 << 0)
 
 /// Sent from/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/try_enter_jaunt,
 /// to any unconscious / critical mobs being dragged when the jaunter enters blood:
@@ -109,7 +127,11 @@
 // Charge
 /// Sent from /datum/action/cooldown/spell/charge/cast(), to the item in hand being charged: (datum/action/cooldown/spell/spell, mob/user)
 #define COMSIG_ITEM_MAGICALLY_CHARGED "item_magic_charged"
-	/// Return if an item was successfuly recharged
+	/// Return if an item was successful recharged
 	#define COMPONENT_ITEM_CHARGED (1 << 0)
 	/// Return if the item had a negative side effect occur while recharging
 	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)
+
+// Time Stop
+/// Sent from /datum/action/cooldown/spell/timestop/cast(), to the atom casting the spell: (datum/action/cooldown/spell/timestop/spell, list/immune_atoms)
+#define COMSIG_ATOM_STOPPING_TIME "atom_stopping_time"

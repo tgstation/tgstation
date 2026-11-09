@@ -1,0 +1,273 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/structure/weightmachine,
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"d" = (
+/obj/item/kirbyplants/organic/plant17,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"g" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 2
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"j" = (
+/obj/structure/window/reinforced/tinted/frosted/spawner/directional/north,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"k" = (
+/obj/item/clothing/under/color/yellow,
+/obj/structure/rack,
+/obj/item/clothing/under/color/yellow,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"l" = (
+/obj/structure/punching_bag,
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"m" = (
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"n" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 1
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"p" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"s" = (
+/obj/item/clothing/under/color/blue,
+/obj/structure/rack,
+/obj/item/clothing/under/color/blue,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"t" = (
+/obj/item/kirbyplants/organic/plant2,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"u" = (
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"v" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"w" = (
+/obj/item/clothing/under/color/darkgreen,
+/obj/structure/rack,
+/obj/item/clothing/under/color/darkgreen,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"x" = (
+/obj/item/instrument/piano_synth/headphones{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/obj/structure/table,
+/obj/item/instrument/piano_synth/headphones{
+	pixel_y = -1;
+	pixel_x = 3
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"A" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"H" = (
+/obj/structure/curtain,
+/obj/machinery/shower/directional/south,
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"I" = (
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"J" = (
+/obj/item/kirbyplants/organic/plant1,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"K" = (
+/obj/structure/table,
+/obj/item/radio/entertainment/speakers/physical,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"N" = (
+/turf/open/floor/holofloor,
+/area/template_noop)
+"O" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"P" = (
+/obj/item/kirbyplants/organic/plant13,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"R" = (
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"S" = (
+/obj/item/clothing/under/color/red,
+/obj/structure/rack,
+/obj/item/clothing/under/color/red,
+/turf/open/floor/holofloor,
+/area/template_noop)
+"U" = (
+/obj/item/training_toolbox,
+/obj/structure/table,
+/obj/item/training_toolbox{
+	pixel_y = 3;
+	pixel_x = 2
+	},
+/turf/open/floor/holofloor,
+/area/template_noop)
+"V" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+"W" = (
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/turf/open/floor/holofloor/white,
+/area/template_noop)
+"Y" = (
+/obj/structure/weightmachine/weightlifter,
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/turf/open/floor/holofloor/dark,
+/area/template_noop)
+
+(1,1,1) = {"
+R
+R
+O
+I
+d
+P
+I
+p
+N
+U
+"}
+(2,1,1) = {"
+R
+g
+O
+Y
+V
+V
+b
+p
+N
+S
+"}
+(3,1,1) = {"
+H
+u
+j
+V
+V
+V
+V
+p
+N
+k
+"}
+(4,1,1) = {"
+R
+u
+j
+Y
+V
+V
+b
+p
+N
+w
+"}
+(5,1,1) = {"
+H
+u
+j
+V
+V
+V
+V
+p
+N
+s
+"}
+(6,1,1) = {"
+R
+u
+j
+Y
+V
+V
+b
+p
+m
+x
+"}
+(7,1,1) = {"
+H
+u
+j
+V
+V
+V
+V
+p
+v
+n
+"}
+(8,1,1) = {"
+R
+W
+O
+l
+V
+V
+l
+p
+v
+n
+"}
+(9,1,1) = {"
+R
+R
+O
+I
+J
+t
+I
+p
+A
+K
+"}

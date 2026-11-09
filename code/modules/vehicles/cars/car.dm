@@ -1,6 +1,7 @@
 /obj/vehicle/sealed/car
 	layer = ABOVE_MOB_LAYER
 	move_resist = MOVE_FORCE_VERY_STRONG
+
 	///Bitflags for special behavior such as kidnapping
 	var/car_traits = NONE
 	///Sound file(s) to play when we drive around
@@ -11,6 +12,8 @@
 	var/escape_time = 6 SECONDS
 	/// How long it takes to move, cars don't use the riding component similar to mechs so we handle it ourselves
 	var/vehicle_move_delay = 1
+	/// What sound to play if someone was forced in.
+	var/forced_enter_sound
 	/// How long it takes to rev (vrrm vrrm!)
 	COOLDOWN_DECLARE(enginesound_cooldown)
 
@@ -21,13 +24,13 @@
 	if(car_traits & CAN_KIDNAP)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/dump_kidnapped_mobs, VEHICLE_CONTROL_DRIVE)
 
-/obj/vehicle/sealed/car/MouseDrop_T(atom/dropping, mob/M)
-	if(M.incapacitated() || (HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !is_driver(M)))
-		return FALSE
-	if((car_traits & CAN_KIDNAP) && isliving(dropping) && M != dropping)
+/obj/vehicle/sealed/car/mouse_drop_receive(atom/dropping, mob/user, params)
+	if(!isliving(user) || (HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && !is_driver(user)))
+		return
+	if((car_traits & CAN_KIDNAP) && isliving(dropping) && user != dropping)
 		var/mob/living/kidnapped = dropping
-		kidnapped.visible_message(span_warning("[M] starts forcing [kidnapped] into [src]!"))
-		mob_try_forced_enter(M, kidnapped)
+		kidnapped.visible_message(span_warning("[user] starts forcing [kidnapped] into [src]!"))
+		mob_try_forced_enter(user, kidnapped)
 	return ..()
 
 /obj/vehicle/sealed/car/mob_try_exit(mob/future_pedestrian, mob/user, silent = FALSE)
@@ -74,8 +77,10 @@
 /obj/vehicle/sealed/car/proc/mob_forced_enter(mob/kidnapped, silent = FALSE)
 	if(!silent)
 		kidnapped.visible_message(span_warning("[kidnapped] is forced into \the [src]!"))
+		if(forced_enter_sound)
+			playsound(src, forced_enter_sound, 70, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 	kidnapped.forceMove(src)
-	add_occupant(kidnapped, VEHICLE_CONTROL_KIDNAPPED)
+	add_occupant(kidnapped, VEHICLE_CONTROL_KIDNAPPED, TRUE)
 
 /obj/vehicle/sealed/car/atom_destruction(damage_flag)
 	explosion(src, heavy_impact_range = 1, light_impact_range = 2, flash_range = 3, adminlog = FALSE)

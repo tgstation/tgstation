@@ -3,7 +3,7 @@
 	name = "old manual"
 	martial_name = "close quarters combat"
 	desc = "A small, black manual. There are drawn instructions of tactical hand-to-hand combat."
-	greet = "<span class='boldannounce'>You've mastered the basics of CQC.</span>"
+	greet = span_bolddanger("You've mastered the basics of CQC.")
 	icon_state = "cqcmanual"
 	remarks = list(
 		"Kick... Slam...",
@@ -22,8 +22,8 @@
 
 /obj/item/book/granter/martial/cqc/recoil(mob/living/user)
 	to_chat(user, span_warning("[src] explodes!"))
-	playsound(src,'sound/effects/explosion1.ogg',40,TRUE)
+	playsound(src,'sound/effects/explosion/explosion1.ogg',40,TRUE)
 	user.flash_act(1, 1)
-	user.adjustBruteLoss(6)
-	user.adjustFireLoss(6)
+	user.adjust_brute_loss(6)
+	user.adjust_fire_loss(6)
 	qdel(src)

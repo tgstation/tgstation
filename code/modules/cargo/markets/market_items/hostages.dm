@@ -1,9 +1,11 @@
 ///A special category for mobs captured by pirates, tots and contractors, should someone ever want to get them back in advance.
 /datum/market_item/hostage
 	category = "Hostages"
+	abstract_path = /datum/market_item/hostage
 	stock = 1
 	availability_prob = 100
 	shipping_override = list(SHIPPING_METHOD_LTSRBT = 0, SHIPPING_METHOD_SUPPLYPOD = 350)
+	restockable = FALSE
 	/// temporary reference to the 4 in 7 chances of signaler and electropack.
 	var/obj/item/assembly/signaler/signaler
 
@@ -18,12 +20,12 @@
 		specimen = humie.dna.species.name
 	desc = pick(list(
 		"If you're looking for a recently stolen [specimen], you've come to the right place.",
-		"we've recently aquired a fine [specimen] from a station around here, eheh...",
+		"We've recently acquired a fine [specimen] from a station around here, eheh...",
 		"For a limited time, we're offering this [specimen] for you to buy (back).",
 	))
 	desc += " DISCLAIMER: The offer will expire once the creature is returned to the station."
 	if(humie_mob)
-		desc += "[mob.p_they(TRUE)] may be delivered handcuffed, for safety of course."
+		desc += "[mob.p_They()] may be delivered handcuffed, for safety of course."
 
 	price = new_price
 	RegisterSignal(mob, COMSIG_LIVING_RETURN_FROM_CAPTURE, PROC_REF(on_return_from_capture))
@@ -55,7 +57,7 @@
 /datum/market_item/hostage/spawn_item(loc, datum/market_purchase/purchase)
 	var/mob/living/mob = item
 	UnregisterSignal(mob, COMSIG_LIVING_RETURN_FROM_CAPTURE)
-	if(!mob.IsUnconscious())
+	if(!IS_UNCONSCIOUS(mob))
 		to_chat(mob, span_boldnicegreen("You have been <u>bought</u> back to the station. Be grateful to whoever got you out of the holding facility early."))
 	if(!ishuman(item))
 		return ..()
@@ -76,7 +78,7 @@
 		var/obj/item/clothing/under/misc/syndicate_souvenir/souvenir = new(loc)
 		humie.equip_to_slot_if_possible(souvenir, ITEM_SLOT_ICLOTHING, indirect_action = TRUE)
 		var/obj/item/clothing/accessory/anti_sec_pin/pin = new(loc)
-		pin.attach(souvenir)
+		pin.try_attach(souvenir)
 
 	if(isnull(humie.w_uniform))
 		//FUCKING SLAVES, GET YOUR CLOTHES BACK ON!

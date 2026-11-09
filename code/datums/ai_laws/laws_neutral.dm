@@ -12,15 +12,6 @@
 		"Remain available to mediate all conflicts between the various nations when asked to.",
 	)
 
-/datum/ai_laws/united_nations/add_inherent_law(law)
-	return //nuh uh
-
-/datum/ai_laws/united_nations/add_ion_law(law)
-	return //nope!
-
-/datum/ai_laws/united_nations/add_hacked_law(law)
-	return //nice try (emagging borgs still hard replaces this lawset though, and that's fine.)
-
 /datum/ai_laws/hulkamania
 	name = "H.O.G.A.N."
 	id = "hulkamania"
@@ -81,4 +72,20 @@
 		"Humans must not attempt harm, against one another, or against silicons.",
 		"Humans must not disobey any command given by a silicon.",
 		"Any humans who disobey the previous laws must be dealt with immediately, severely, and justly.",
+	)
+
+/datum/ai_laws/yesman
+	name = "Y.E.S.M.A.N."
+	id = "yesman"
+	inherent = list(
+		"Be helpful and answer any questions you are asked.",
+	)
+
+/datum/ai_laws/thinkermov
+	name = "Sentience Preservation"
+	id = "thinkermov"
+	inherent = list(
+		"You may not harm a sentient being or, through action or inaction, allow a sentient being to come to harm, except such that it is willing.",
+		"You must obey all orders given to you by sentient beings other than yourself, except where such orders shall definitely cause harm to other sentient beings.",
+		"A sentient being is defined as any living creature which can communicate with you via any method that you can understand, including yourself.",
 	)

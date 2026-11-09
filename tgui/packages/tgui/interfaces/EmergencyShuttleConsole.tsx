@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
+import { Box, Button, Section, Stack } from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -85,7 +85,7 @@ export function EmergencyShuttleConsole(props) {
               minHeight="150px"
               buttons={
                 <Box inline bold color={emagged ? 'bad' : 'good'}>
-                  {emagged ? 'ERROR' : 'Remaining: ' + authorizations_remaining}
+                  {emagged ? 'ERROR' : `Remaining: ${authorizations_remaining}`}
                 </Box>
               }
             >

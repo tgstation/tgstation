@@ -2,20 +2,21 @@
 /obj/effect/anomaly/bioscrambler
 	name = "bioscrambler anomaly"
 	icon_state = "bioscrambler"
-	aSignal = /obj/item/assembly/signaler/anomaly/bioscrambler
-	immortal = TRUE
+	anomaly_core = /obj/item/assembly/signaler/anomaly/bioscrambler
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
 	layer = ABOVE_MOB_LAYER
+	lifespan = ANOMALY_COUNTDOWN_TIMER * 2
+
 	/// Who are we moving towards?
 	var/datum/weakref/pursuit_target
 	/// Cooldown for every anomaly pulse
 	COOLDOWN_DECLARE(pulse_cooldown)
 	/// How many seconds between each anomaly pulses
-	var/pulse_delay = 15 SECONDS
+	var/pulse_delay = 10 SECONDS
 	/// Range of the anomaly pulse
-	var/range = 5
+	var/range = 2
 
-/obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan)
 	. = ..()
 	pursuit_target = WEAKREF(find_nearest_target())
 
@@ -24,6 +25,8 @@
 	if(!COOLDOWN_FINISHED(src, pulse_cooldown))
 		return
 
+	new /obj/effect/temp_visual/circle_wave/bioscrambler(get_turf(src))
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
 	COOLDOWN_START(src, pulse_cooldown, pulse_delay)
 	for(var/mob/living/carbon/nearby in hearers(range, src))
 		nearby.bioscramble(name)
@@ -60,9 +63,7 @@
 	for(var/mob/living/carbon/target in GLOB.player_list)
 		if (target.z != z)
 			continue
-		if (target.status_flags & GODMODE)
-			continue
-		if (target.stat >= UNCONSCIOUS)
+		if (HAS_TRAIT(target, TRAIT_GODMODE) || IS_UNCONSCIOUS(target))
 			continue // Don't just haunt a corpse
 		var/distance_from_target = get_dist(src, target)
 		if(distance_from_target >= closest_distance)
@@ -77,3 +78,7 @@
 
 /obj/effect/anomaly/bioscrambler/docile/update_target()
 	return
+
+/obj/effect/anomaly/bioscrambler/detonate()
+	COOLDOWN_RESET(src, pulse_cooldown)
+	anomalyEffect()

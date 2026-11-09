@@ -47,7 +47,7 @@
 	data["search_mode"] = search_mode == PAINTINGS_FILTER_SEARCH_TITLE ? "Title" : "Author"
 	return data
 
-/datum/portrait_picker/ui_act(action, params)
+/datum/portrait_picker/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -73,24 +73,31 @@
 				return
 			var/png = "data/paintings/images/[chosen_portrait.md5].png"
 			var/icon/portrait_icon = new(png)
-			var/mob/living/ai = holder.mob
+			var/mob/living/silicon/ai/ai = holder.mob
 			var/w = portrait_icon.Width()
 			var/h = portrait_icon.Height()
+
 			var/mutable_appearance/MA = mutable_appearance(portrait_icon)
+			MA.appearance_flags = RESET_COLOR | KEEP_APART
+			MA.layer = FLOAT_LAYER
+
 			if(w == 23 || h == 23)
 				to_chat(ai, span_notice("Small note: 23x23 Portraits are accepted, but they do not fit perfectly inside the display frame."))
-				MA.pixel_x = 5
+				MA.pixel_w = 5
 				MA.pixel_z = 5
 			else if(w == 24 || h == 24)
 				to_chat(ai, span_notice("Portrait Accepted. Enjoy!"))
-				MA.pixel_x = 4
+				MA.pixel_w = 4
 				MA.pixel_z = 4
 			else
 				to_chat(ai, span_warning("Sorry, only 23x23 and 24x24 Portraits are accepted."))
 				return
-			ai.cut_overlays() //so people can't keep repeatedly select portraits to add stacking overlays
-			ai.icon_state = "ai-portrait-active"//background
-			ai.add_overlay(MA)
+
+			ai.portrait_appearance = MA
+
+			ai.display_icon_override = "ai-portrait"//for AI cards
+
+			ai.update_appearance()
 
 /datum/portrait_picker/proc/generate_matching_paintings_list()
 	matching_paintings = null

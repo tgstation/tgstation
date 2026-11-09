@@ -19,7 +19,8 @@
 	suicide_cry = "FOR THE SYNDICATE!!!"
 	antag_hud_name = "battlecruiser_crew"
 	antagpanel_category = ANTAG_GROUP_SYNDICATE
-	job_rank = ROLE_BATTLECRUISER_CREW
+	pref_flag = ROLE_BATTLECRUISER_CREW
+	stinger_sound = 'sound/music/antag/ops.ogg'
 	/// Team to place the crewmember on.
 	var/datum/team/battlecruiser/battlecruiser_team
 
@@ -27,7 +28,7 @@
 	return battlecruiser_team
 
 /datum/antagonist/battlecruiser/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0, use_reverb = FALSE)
+	play_stinger()
 	to_chat(owner, span_big("You are a [name]!"))
 	owner.announce_objectives()
 
@@ -38,7 +39,7 @@
 /datum/antagonist/battlecruiser/captain
 	name = "Battlecruiser Captain"
 	antag_hud_name = "battlecruiser_lead"
-	job_rank = ROLE_BATTLECRUISER_CAPTAIN
+	pref_flag = ROLE_BATTLECRUISER_CAPTAIN
 
 /datum/antagonist/battlecruiser/create_team(datum/team/battlecruiser/team)
 	if(!team)

@@ -31,5 +31,5 @@
 
 	var/mob/living/overlord_to_damage = overlord_mob?.resolve()
 	if(!isnull(overlord_to_damage))
-		overlord_to_damage.adjustBruteLoss(previous_health_count - source.health) ///damage or heal overlord
+		overlord_to_damage.adjust_brute_loss(previous_health_count - source.health) ///damage or heal overlord
 	previous_health_count = source.health

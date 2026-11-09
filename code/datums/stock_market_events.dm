@@ -8,7 +8,7 @@
 		"MODular Solutions",
 		"SolGov",
 		"Australicus Industrial Mining",
-		"Vey-Medical",
+		"Nanotrasen-DeForest Corporation",
 		"Aussec Armory",
 		"Dreamland Robotics"
 	)
@@ -23,7 +23,7 @@
 
 	/// When this event is ongoing, what direction will the price trend in?
 	var/trend_value
-	/// When this event is triggered, for how long will it's effects last?
+	/// When this event is triggered, for how long will its effects last?
 	var/trend_duration
 
 /**
@@ -147,5 +147,3 @@
 	SSstock_market.materials_quantity[mat] = initial(mat.tradable_base_quantity) //Force the material to be available again.
 	SSstock_market.materials_prices[mat] = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT //Force the price to be reset once the lockdown is over.
 	create_news()
-
-

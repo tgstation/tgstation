@@ -39,8 +39,8 @@
 #define IS_VALID_ASSOC_KEY(V) (!isnum(V)) //hhmmm..
 
 //General helpers
-#define VV_HREF_TARGET_INTERNAL(target, href_key) "?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[REF(target)]"
-#define VV_HREF_TARGETREF_INTERNAL(targetref, href_key) "?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[targetref]"
+#define VV_HREF_TARGET_INTERNAL(target, href_key) "byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[REF(target)]"
+#define VV_HREF_TARGETREF_INTERNAL(targetref, href_key) "byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;[VV_HK_TARGET]=[targetref]"
 #define VV_HREF_TARGET(target, href_key, text) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)]'>[text]</a>"
 #define VV_HREF_TARGETREF(targetref, href_key, text) "<a href='[VV_HREF_TARGETREF_INTERNAL(targetref, href_key)]'>[text]</a>"
 #define VV_HREF_TARGET_1V(target, href_key, text, varname) "<a href='[VV_HREF_TARGET_INTERNAL(target, href_key)];[VV_HK_VARNAME]=[varname]'>[text]</a>" //for stuff like basic varedits, one variable
@@ -50,12 +50,10 @@
 #define GET_VV_VAR_TARGET href_list[VV_HK_VARNAME]
 
 //Helper for getting something to vv_do_topic in general
-#define VV_TOPIC_LINK(datum, href_key, text) "<a href='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(datum)]'>text</a>"
+#define VV_TOPIC_LINK(datum, href_key, text) "<a href='byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(datum)]'>text</a>"
 
 //Helpers for vv_get_dropdown()
-#define VV_DROPDOWN_OPTION(href_key, name) . += "<option value='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(src)]'>[name]</option>"
-//Same with VV_DROPDOWN_OPTION, but global proc doesn't have src
-#define VV_DROPDOWN_OPTION_APPEARANCE(thing, href_key, name) . += "<option value='?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(thing)]'>[name]</option>"
+#define VV_DROPDOWN_OPTION(href_key, name) . += "<a href='byond://?_src_=vars;[HrefToken()];[href_key]=TRUE;target=[REF(src)]' style='display:none;'>[name]</a>"
 
 // VV HREF KEYS
 #define VV_HK_TARGET "target"
@@ -86,9 +84,11 @@
 #define VV_HK_REMOVECOMPONENT "removecomponent"
 #define VV_HK_MASS_REMOVECOMPONENT "massremovecomponent"
 #define VV_HK_MODIFY_TRAITS "modtraits"
+#define VV_HK_DEBUG_APPEARANCE "debugappearance"
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
+#define VV_HK_DOWNLOAD_SPRITE "download_sprite"
 #define VV_HK_SPIN_ANIMATION "atom_spin"
 #define VV_HK_STOP_ALL_ANIMATIONS "stop_animations"
 #define VV_HK_MODIFY_GREYSCALE "modify_greyscale"
@@ -108,6 +108,9 @@
 #define VV_HK_OBSERVE_FOLLOW "observe_follow"
 #define VV_HK_GET_MOVABLE "get_movable"
 #define VV_HK_DEADCHAT_PLAYS "deadchat_plays"
+#define VV_HK_ADD_REMOVE_FACTION "add_remove_faction"
+#define VV_HK_GET_FACTIONS "add_remove_factions"
+#define VV_HK_SET_TTS_VOICE "set_tts_voice"
 
 // /obj
 #define VV_HK_OSAY "osay"
@@ -129,12 +132,16 @@
 #define VV_HK_GODMODE "godmode"
 #define VV_HK_DROP_ALL "dropall"
 #define VV_HK_REGEN_ICONS "regen_icons"
+#define VV_HK_REGEN_ICONS_FULL "regen_icons_full"
 #define VV_HK_PLAYER_PANEL "player_panel"
 #define VV_HK_BUILDMODE "buildmode"
 #define VV_HK_DIRECT_CONTROL "direct_control"
 #define VV_HK_GIVE_DIRECT_CONTROL "give_direct_control"
 #define VV_HK_OFFER_GHOSTS "offer_ghosts"
 #define VV_HK_VIEW_PLANES "view_planes"
+#define VV_HK_GIVE_AI "give_ai"
+#define VV_HK_GIVE_AI_SPEECH "give_ai_speech"
+#define VV_HK_GIVE_ACCESS "give_access"
 
 // /mob/living
 #define VV_HK_GIVE_SPEECH_IMPEDIMENT "impede_speech"
@@ -144,6 +151,7 @@
 #define VV_HK_GIVE_HALLUCINATION "give_hallucination"
 #define VV_HK_GIVE_DELUSION_HALLUCINATION "give_hallucination_delusion"
 #define VV_HK_GIVE_GUARDIAN_SPIRIT "give_guardian_spirit"
+#define VV_HK_NAVIGATE_TO_MARKED_OBJECT "navigate_to_marked_object"
 
 // /mob/living/carbon
 #define VV_HK_MODIFY_BODYPART "mod_bodypart"

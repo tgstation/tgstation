@@ -1,0 +1,130 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/south,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"b" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"c" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"p" = (
+/obj/machinery/light/directional/west,
+/obj/modular_map_connector,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"s" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"t" = (
+/obj/structure/table,
+/obj/machinery/recharger,
+/obj/machinery/light/small/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"A" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"D" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"J" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"K" = (
+/obj/item/stack/tile/mineral/titanium,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"L" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/escape)
+"P" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/escape)
+"W" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/effect/mapping_helpers/damaged_window,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+"Z" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/glass/titanium,
+/obj/item/shard/titanium,
+/turf/open/floor/plating,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+p
+P
+e
+e
+P
+L
+"}
+(2,1,1) = {"
+P
+L
+Z
+c
+P
+L
+"}
+(3,1,1) = {"
+P
+L
+W
+c
+P
+a
+"}
+(4,1,1) = {"
+P
+L
+D
+c
+P
+K
+"}
+(5,1,1) = {"
+P
+L
+D
+c
+e
+t
+"}
+(6,1,1) = {"
+s
+b
+b
+J
+A
+A
+"}

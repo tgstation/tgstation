@@ -4,7 +4,12 @@
 	name = "Shadowtongue"
 	desc = "What a grand and intoxicating innocence."
 	key = "x"
-	space_chance = 50
+	space_chance = 40
+	sentence_chance = 0
+	between_word_sentence_chance = 10
+	between_word_space_chance = 75
+	additional_syllable_low = 0
+	additional_syllable_high = 1
 	syllables = list(
 		"er", "sint", "en", "et", "nor", "bahr", "sint", "un", "ku'elm", "lakor", "eri",
 		"noj", "dashilu", "as", "ot", "lih", "morh", "ghinu", "kin", "sha", "marik", "jibu",
@@ -16,3 +21,5 @@
 	)
 	icon_state = "shadow"
 	default_priority = 90
+	default_name_syllable_min = 2
+	default_name_syllable_max = 3

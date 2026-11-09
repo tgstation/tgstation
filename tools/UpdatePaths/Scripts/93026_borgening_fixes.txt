@@ -1,0 +1,3 @@
+/obj/item/borg/sight/meson : @DELETE
+
+/obj/item/borg/sight/thermal : @DELETE

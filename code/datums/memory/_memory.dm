@@ -358,9 +358,9 @@
 	//after replacement section for performance
 	if(story_flags & STORY_FLAG_DATED)
 		if(memory_flags & MEMORY_FLAG_NOSTATIONNAME)
-			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [CURRENT_STATION_YEAR]."
+			parsed_story += "This took place in [time2text(world.realtime, "Month", NO_TIMEZONE)] of [CURRENT_STATION_YEAR]."
 		else
-			parsed_story += "This took place in [time2text(world.realtime, "Month")] of [CURRENT_STATION_YEAR] on [station_name()]."
+			parsed_story += "This took place in [time2text(world.realtime, "Month", NO_TIMEZONE)] of [CURRENT_STATION_YEAR] on [station_name()]."
 
 	parsed_story = trim_right(parsed_story)
 

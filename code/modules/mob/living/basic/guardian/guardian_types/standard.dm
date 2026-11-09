@@ -1,7 +1,7 @@
 /// Plain, but durable and strong. Can destroy walls.
 /mob/living/basic/guardian/standard
 	guardian_type = GUARDIAN_STANDARD
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, STAMINA = 0, OXY = 0.5)
+	physiology = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, OXY = 0.5, STAMINA = 0)
 	melee_damage_lower = 20
 	melee_damage_upper = 20
 	melee_attack_cooldown = 0.6 SECONDS
@@ -23,17 +23,19 @@
 
 /mob/living/basic/guardian/standard/do_attack_animation(atom/attacked_atom, visual_effect_icon, used_item, no_effect)
 	. = ..()
-	if (!isliving(attacked_atom) || !isclosedturf(attacked_atom))
+	if (!isliving(attacked_atom) && !isclosedturf(attacked_atom))
 		return
 	var/msg = ""
 	for(var/i in 1 to 9)
 		msg += battlecry
 	say("[msg]!!", ignore_spam = TRUE)
 	for(var/sounds in 1 to 4)
-		addtimer(CALLBACK(src, PROC_REF(do_attack_sound), attacked_atom.loc), sounds DECISECONDS, TIMER_DELETE_ME)
+		addtimer(CALLBACK(src, PROC_REF(do_attack_sound), attacked_atom), sounds DECISECONDS, TIMER_DELETE_ME)
 
 /// Echo our punching sounds
 /mob/living/basic/guardian/standard/proc/do_attack_sound(atom/playing_from)
+	if (QDELETED(playing_from))
+		return
 	playsound(playing_from, attack_sound, 50, TRUE, TRUE)
 
 /// Action to change our battlecry
@@ -52,7 +54,7 @@
 		return FALSE
 	return ..()
 
-/datum/action/select_guardian_battlecry/Trigger(trigger_flags)
+/datum/action/select_guardian_battlecry/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if (!.)
 		return

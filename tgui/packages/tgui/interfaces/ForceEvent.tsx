@@ -1,8 +1,16 @@
-import { paginate } from 'common/collections';
-import { BooleanLike } from 'common/react';
+import { chunk } from 'es-toolkit';
+import { createContext, useContext, useState } from 'react';
+import {
+  Button,
+  Icon,
+  Input,
+  Section,
+  Stack,
+  Tabs,
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
-import { useBackend, useLocalState } from '../backend';
-import { Button, Icon, Input, Section, Stack, Tabs } from '../components';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 const CATEGORY_PAGE_ITEMS = 4;
@@ -13,7 +21,7 @@ const EVENT_PAGE_MAXCHARS = 48;
  * Same as paginate, but respecting event names with a character max length
  * that will also create a new page if created
  */
-const paginateEvents = (events: Event[], maxPerPage: number): Event[][] => {
+function paginateEvents(events: Event[], maxPerPage: number): Event[][] {
   const pages: Event[][] = [];
   let page: Event[] = [];
   // conditions that make a new page
@@ -45,13 +53,14 @@ const paginateEvents = (events: Event[], maxPerPage: number): Event[][] => {
     pages.push(page);
   }
   return pages;
-};
+}
 
 type Event = {
   name: string;
   description: string;
   type: string;
   category: string;
+  disabled: BooleanLike;
   has_customization: BooleanLike;
 };
 
@@ -65,27 +74,40 @@ type ForceEventData = {
   events: Event[];
 };
 
-export const ForceEvent = (props) => {
+export function ForceEvent(props) {
+  const { data } = useBackend<ForceEventData>();
+  const { categories } = data;
+
+  const announceState = useState(true);
+  const categoryState = useState(categories[0]);
+  const searchQueryState = useState('');
+
   return (
     <Window theme="admin" title="Force Event" width={450} height={450}>
       <Window.Content>
-        <Stack vertical fill>
-          <Stack.Item>
-            <EventTabs />
-          </Stack.Item>
-          <Stack.Item grow>
-            <EventSection />
-          </Stack.Item>
-        </Stack>
+        <ForceEventContext.Provider
+          value={{ announceState, categoryState, searchQueryState }}
+        >
+          <Stack vertical fill>
+            <Stack.Item>
+              <EventTabs />
+            </Stack.Item>
+            <Stack.Item grow>
+              <EventSection />
+            </Stack.Item>
+          </Stack>
+        </ForceEventContext.Provider>
       </Window.Content>
     </Window>
   );
-};
+}
 
-export const PanelOptions = (props) => {
-  const [searchQuery, setSearchQuery] = useLocalState('searchQuery', '');
+function PanelOptions(props) {
+  const { searchQueryState, announceState } = useForceEventContext();
 
-  const [announce, setAnnounce] = useLocalState('announce', true);
+  const [searchQuery, setSearchQuery] = searchQueryState;
+
+  const [announce, setAnnounce] = announceState;
 
   return (
     <Stack width="240px">
@@ -96,7 +118,7 @@ export const PanelOptions = (props) => {
         <Input
           autoFocus
           fluid
-          onInput={(e, value) => setSearchQuery(value)}
+          onChange={setSearchQuery}
           placeholder="Search..."
           value={searchQuery}
         />
@@ -112,15 +134,18 @@ export const PanelOptions = (props) => {
       </Stack.Item>
     </Stack>
   );
-};
+}
 
-export const EventSection = (props) => {
+function EventSection(props) {
   const { data, act } = useBackend<ForceEventData>();
-  const { categories, events } = data;
+  const { events } = data;
 
-  const [category] = useLocalState('category', categories[0]);
-  const [searchQuery] = useLocalState('searchQuery', '');
-  const [announce] = useLocalState('announce', true);
+  const { categoryState, searchQueryState, announceState } =
+    useForceEventContext();
+
+  const [category] = categoryState;
+  const [searchQuery] = searchQueryState;
+  const [announce] = announceState;
 
   const preparedEvents = paginateEvents(
     events.filter((event) => {
@@ -144,7 +169,7 @@ export const EventSection = (props) => {
     EVENT_PAGE_ITEMS,
   );
 
-  const sectionTitle = searchQuery ? 'Searching...' : category.name + ' Events';
+  const sectionTitle = searchQuery ? 'Searching...' : `${category.name} Events`;
 
   return (
     <Section scrollable fill title={sectionTitle} buttons={<PanelOptions />}>
@@ -154,26 +179,38 @@ export const EventSection = (props) => {
             <Stack>
               {eventPage.map((event) => (
                 <Stack.Item grow key={event.type}>
-                  <Button
-                    className="Button__rightIcon"
-                    tooltip={
-                      event.description +
-                      (event.has_customization
-                        ? ' Includes admin customization.'
-                        : '')
-                    }
-                    fluid
-                    icon={event.has_customization ? 'gear' : undefined}
-                    iconPosition="right"
-                    onClick={() =>
-                      act('forceevent', {
-                        type: event.type,
-                        announce: announce,
-                      })
-                    }
-                  >
-                    {event.name}
-                  </Button>
+                  <Stack fill>
+                    <Stack.Item>
+                      <Button.Checkbox
+                        fluid
+                        checked={!event.disabled}
+                        onClick={() => act('toggleevent', { type: event.type })}
+                        tooltip="If unchecked, this event cannot randomly trigger."
+                      />
+                    </Stack.Item>
+                    <Stack.Item grow>
+                      <Button
+                        className="Button__rightIcon"
+                        tooltip={
+                          event.description +
+                          (event.has_customization
+                            ? ' Includes admin customization.'
+                            : '')
+                        }
+                        fluid
+                        icon={event.has_customization ? 'gear' : undefined}
+                        iconPosition="right"
+                        onClick={() =>
+                          act('forceevent', {
+                            type: event.type,
+                            announce: announce,
+                          })
+                        }
+                      >
+                        {event.name}
+                      </Button>
+                    </Stack.Item>
+                  </Stack>
                 </Stack.Item>
               ))}
             </Stack>
@@ -182,15 +219,16 @@ export const EventSection = (props) => {
       </Stack>
     </Section>
   );
-};
+}
 
-export const EventTabs = (props) => {
+function EventTabs(props) {
   const { data } = useBackend<ForceEventData>();
   const { categories } = data;
 
-  const [category, setCategory] = useLocalState('category', categories[0]);
+  const { categoryState } = useForceEventContext();
+  const [category, setCategory] = categoryState;
 
-  const layerCats = paginate(categories, CATEGORY_PAGE_ITEMS);
+  const layerCats = chunk(categories, CATEGORY_PAGE_ITEMS);
 
   return (
     <Section mb="-6px">
@@ -210,4 +248,21 @@ export const EventTabs = (props) => {
       ))}
     </Section>
   );
+}
+
+type ForceEventContextType = {
+  announceState: [boolean, (value: boolean) => void];
+  categoryState: [Category, (value: Category) => void];
+  searchQueryState: [string, (value: string) => void];
 };
+
+const ForceEventContext = createContext<ForceEventContextType>({
+  announceState: [true, () => {}],
+  categoryState: [{ icon: '', name: '' }, () => {}],
+  searchQueryState: ['', () => {}],
+});
+
+/** Local state hook for ForceEvent */
+function useForceEventContext() {
+  return useContext(ForceEventContext);
+}

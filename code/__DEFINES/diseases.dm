@@ -4,11 +4,13 @@
 //Visibility Flags
 #define HIDDEN_SCANNER (1<<0)
 #define HIDDEN_PANDEMIC (1<<1)
+#define HIDDEN_BOOK (1<<2)
 
 //Bitfield for Visibility Flags
 DEFINE_BITFIELD(visibility_flags, list(
 	"HIDDEN_FROM_ANALYZER" = HIDDEN_SCANNER,
 	"HIDDEN_FROM_PANDEMIC" = HIDDEN_PANDEMIC,
+	"HIDDEN_FROM_BOOK" = HIDDEN_BOOK,
 ))
 
 //Disease Flags
@@ -16,6 +18,8 @@ DEFINE_BITFIELD(visibility_flags, list(
 #define CAN_CARRY (1<<1)
 #define CAN_RESIST (1<<2)
 #define CHRONIC (1<<3)
+/// Instead of instantly curing the disease, cures will simply reduce the stage
+#define INCREMENTAL_CURE (1<<4)
 
 //Spread Flags
 #define DISEASE_SPREAD_SPECIAL (1<<0)
@@ -66,8 +70,8 @@ DEFINE_BITFIELD(spread_flags, list(
 #define DISEASE_CYCLES_DANGEROUS 90
 /// Roughly 2 minutes for a harmful virus
 #define DISEASE_CYCLES_HARMFUL 60
-/// Roughly 1 minute for a biohazard kill-death-evil-bad virus
-#define DISEASE_CYCLES_BIOHAZARD 30
+/// Roughly 1 minute and 20 seconds for a biohazard kill-death-evil-bad virus
+#define DISEASE_CYCLES_BIOHAZARD 40
 
 //Natural Immunity/Recovery Balance Levers
 /// Recovery Constant - starting point, 'base' recovery when you get initially infected.
@@ -81,33 +85,28 @@ DEFINE_BITFIELD(spread_flags, list(
 //// Adjust to make it faster or slower to cure once the virus has reached its peak.
 #define DISEASE_PEAKED_RECOVERY_MULTIPLIER 1.2
 /// Slowdown Recovery Bonus - set this to the maximum extra chance per tick you want people to get to recover from spaceacillin or other slowdown/virus resistance effects
-#define DISEASE_SLOWDOWN_RECOVERY_BONUS 1
-/// Slowdown Recovery Bonus Duration - set this to the maximum # of cycles you want things that cause slowdown/virus resistance to be able to add a bonus up to DISEASE_SLOWDOWN_RECOVERY_BONUS.______qdel_list_wrapper(list/L)
+#define DISEASE_SLOWDOWN_RECOVERY_BONUS 2
+/// Slowdown Recovery Bonus Duration - set this to the maximum # of cycles you want things that cause slowdown/virus resistance to be able to add a bonus up to DISEASE_SLOWDOWN_RECOVERY_BONUS.
 //// Scales down linearly over time.
-#define DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION 100
+#define DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION 120
 /// Negative Malnutrition Recovery Penalty
 //// Flat penalty to recovery chance if malnourished or starving
-#define DISEASE_MALNUTRITION_RECOVERY_PENALTY 1.5
-/// Satiety Recovery Multiplier - added chance to recover based on positive satiety
-//// Multiplier of satiety/max_satiety if satiety is positive or zero. Increase to make satiety more valuable, decrease for less.
-#define DISEASE_SATIETY_RECOVERY_MULTIPLIER 1
+#define DISEASE_MALNUTRITION_RECOVERY_PENALTY 3
 /// Good Sleeping Recovery Bonus - additive benefits for various types of good sleep (blanket, bed, darkness, pillows.)
 //// Raise to make each factor add this much chance to recover.
-#define DISEASE_GOOD_SLEEPING_RECOVERY_BONUS 0.2
+#define DISEASE_GOOD_SLEEPING_RECOVERY_BONUS 0.6
 /// Sleeping Recovery Multiplier - multiplies ALL recovery chance effects by this amount.
 //// Set to 1 for no effect on recovery chances from sleeping.
-#define DISEASE_SLEEPING_RECOVERY_MULTIPLIER 2
+#define DISEASE_SLEEPING_RECOVERY_MULTIPLIER 6
 /// Final Cure Chance Multiplier - multiplies the disease's cure chance to get the probability of moving from stage 1 to a final cure.
 //// Must be greater than zero for diseases to self cure.
-#define DISEASE_FINAL_CURE_CHANCE_MULTIPLIER 3
+#define DISEASE_FINAL_CURE_CHANCE_MULTIPLIER 6
 /// Symptom Offset Duration - number of cycles over which sleeping/having spaceacillin or a slowdown effect can prevent symptoms appearing
 //// Set to maximum # of cycles you want to be able to offset symptoms. Scales down linearly over time.
-#define DISEASE_SYMPTOM_OFFSET_DURATION 100
-
+#define DISEASE_SYMPTOM_OFFSET_DURATION 200
 /// Symptom Frequency Modifier
 //// Raise to make symptoms fire less frequently, lower to make them fire more frequently. Keep at 0 or above.
 #define DISEASE_SYMPTOM_FREQUENCY_MODIFIER 1
-
-/// Minimum Chemical Cure Chance
-//// Minimum per-cycle chance we want of being able to cure an advanced disease with the chemicals present.
-#define DISEASE_MINIMUM_CHEMICAL_CURE_CHANCE 5
+/// Symptom Immunity Recovery Bonus
+/// Raise to make recovering from similar diseases more harshly affect future similar ones (like smallpox and cowpox)
+#define DISEASE_SYMPTOM_IMMUNITY_RECOVERY_BONUS 1.5

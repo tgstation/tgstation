@@ -71,6 +71,7 @@
 		fold_in(force = TRUE)
 	if(amount > 0)
 		to_chat(src, span_userdanger("The impact degrades your holochassis!"))
+	update_health_hud()
 	return amount
 
 /// Called when we take burn or brute damage, pass it to the shell instead
@@ -85,8 +86,8 @@
 	take_holo_damage(amount * ((forced) ? 1 : 0.25))
 	return COMPONENT_IGNORE_CHANGE
 
-/mob/living/silicon/pai/getBruteLoss()
+/mob/living/silicon/pai/get_brute_loss()
 	return HOLOCHASSIS_MAX_HEALTH - holochassis_health
 
-/mob/living/silicon/pai/getFireLoss()
+/mob/living/silicon/pai/get_fire_loss()
 	return HOLOCHASSIS_MAX_HEALTH - holochassis_health

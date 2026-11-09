@@ -29,6 +29,7 @@
 	download_access = list(ACCESS_SECURITY, ACCESS_FLAG_COMMAND)
 	program_flags = PROGRAM_ON_NTNET_STORE
 	mode = "security"
+	detomatix_resistance = DETOMATIX_RESIST_MINOR
 
 /datum/computer_file/program/records/proc/GetRecordsReadable()
 	var/list/all_records = list()
@@ -58,7 +59,10 @@
 				current_record["physical_status"] = person.physical_status
 				current_record["mental_status"] = person.mental_status
 				current_record["name"] = person.name
-				current_record["notes"] = person.medical_notes
+				var/list/notes = list()
+				for(var/datum/medical_note/note as anything in person.medical_notes)
+					notes += note.content
+				current_record["notes"] = notes.Join(" ")
 
 				all_records += list(current_record)
 

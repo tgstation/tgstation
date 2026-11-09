@@ -1,11 +1,15 @@
 # This is a reusable workflow to run integration tests on a single map.
 # This is run for every single map in ci_suite.yml. You might want to edit that instead.
 name: Run Integration Tests
+
 on:
   workflow_call:
     inputs:
       map:
         required: true
+        type: string
+      map_config:
+        required: false
         type: string
       major:
         required: false
@@ -16,62 +20,118 @@ on:
       max_required_byond_client:
         required: true
         type: string
+
 jobs:
   run_integration_tests:
-    runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:latest
-        env:
-          MYSQL_ROOT_PASSWORD: root
-        ports:
-          - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    # If `inputs.major` is specified, this will output `Run Tests (major.minor; map; max)`.
+    # For example, `Run Tests (515.1627; runtimestation; 515)`.
+    #
+    # Otherwise, it will output `Run Tests (map; max)`.
+    # For example, `Run Tests (runtimestation; 515)`.
+    name: ${{ inputs.map }} ${{ inputs.major && format('({0}.{1})', inputs.major, inputs.minor) || '' }} (${{ inputs.max_required_byond_client }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
     steps:
-      - uses: actions/checkout@v4
-      - name: Restore BYOND cache
-        uses: actions/cache@v4
+      - name: Checkout required files
+        uses: actions/checkout@v7
         with:
-          path: ~/BYOND
-          key: ${{ runner.os }}-byond-${{ hashFiles('dependencies.sh') }}
+          sparse-checkout: |
+            _maps
+            .github
+            build/behavior_trees
+            code/datums/greyscale/json_configs
+            icons
+            sound/runtime
+            strings
+            tgui/public
+            dependencies.sh
+            SQL/tgstation_schema.sql
+            SQL/tgstation_schema_prefixed.sql
+            tools/ci/install_byond.sh
+            tools/ci/install_dreamluau.sh
+            tools/ci/install_rust_g.sh
+            tools/ci/mysql_config.cnf
+            tools/ci/run_server.sh
+
+      - name: Configure BYOND version
+        uses: ./.github/actions/configure_byond_version
+        with:
+          major: ${{ inputs.major }}
+          minor: ${{ inputs.minor }}
+
+      - parallel:
+        - name: Restore or install BYOND
+          uses: ./.github/actions/restore_or_install_byond
+
+        - name: Install rust-g
+          run: |
+            bash tools/ci/install_rust_g.sh
+
+        - name: Install dreamluau
+          run: |
+            bash tools/ci/install_dreamluau.sh
+
+      # Excluded from the above parallel group because it reads event.json as it loads, and the runner empties and rewrites that file whenever another step starts (actions/runner#4641)
+      - name: Download build artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: build-artifact-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR }}
+          path: ./
+
+      # Excluded from the above parallel group because it makes the database setup flaky. Probably something to do with IO ports being clogged
       - name: Setup database
+        env:
+          MYSQL_CONFIG_FILE: tools/ci/mysql_config.cnf
         run: |
           sudo systemctl start mysql
-          mysql -u root -proot -e 'CREATE DATABASE tg_ci;'
-          mysql -u root -proot tg_ci < SQL/tgstation_schema.sql
-          mysql -u root -proot -e 'CREATE DATABASE tg_ci_prefixed;'
-          mysql -u root -proot tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
-      - name: Install rust-g
-        run: |
-          bash tools/ci/install_rust_g.sh
-      - name: Install auxlua
-        run: |
-          bash tools/ci/install_auxlua.sh
-      - name: Configure version
-        run: |
-          echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
-          echo "BYOND_MINOR=${{ inputs.minor }}" >> $GITHUB_ENV
-        if: ${{ inputs.major }}
-      - name: Compile Tests
-        id: compile_tests
-        run: |
-          bash tools/ci/install_byond.sh
-          source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -WError -NWTG0001
-      - name: Run Tests
+          mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} -e 'CREATE DATABASE tg_ci;'
+          mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} tg_ci < SQL/tgstation_schema.sql
+          mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} -e 'CREATE DATABASE tg_ci_prefixed;'
+          mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
+          echo "Sucessful MySQL Database Setup"
+
+      - name: Run unit tests
+        id: run_tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
-          bash tools/ci/run_server.sh ${{ inputs.map }}
+          bash tools/ci/run_server.sh "${{ inputs.map }}" "${{ inputs.map_config }}"
+
       - name: Upload screenshot tests
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: test_artifacts_${{ inputs.map }}_${{ inputs.major }}_${{ inputs.minor }}
+          name: test-artifact-${{ inputs.map }}-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR }}
           path: data/screenshots_new/
           retention-days: 1
-      - name: Check client Compatibility
+          if-no-files-found: ignore
+
+      - name: On test fail, write a step summary
+        if: always() && steps.run_tests.outcome == 'failure'
+        run: |
+          # Get a JSON array of failed unit tests
+          FAILED_UNIT_TESTS=$(jq 'to_entries | map(.value | select(.status == 1))' data/unit_tests.json)
+
+          FAIL_COUNT=$(echo $FAILED_UNIT_TESTS | jq 'length')
+
+          echo "# Test failures" >> $GITHUB_STEP_SUMMARY
+          echo "$FAIL_COUNT tests failed." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          for i in $( seq $FAIL_COUNT ); do
+            CURRENT_FAIL=$(echo $FAILED_UNIT_TESTS | jq --arg i $i '.[($i | tonumber) - 1]')
+
+            TEST=$(echo $CURRENT_FAIL | jq --raw-output '.name')
+
+            echo "### $TEST" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo $CURRENT_FAIL | jq --raw-output '.message' >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+          done
+
+      - name: Check client compatibility
         if: always() && steps.compile_tests.outcome == 'success'
         uses: tgstation/byond-client-compatibility-check@v3
         with:
           dmb-location: tgstation.dmb
-          max-required-client-version: ${{inputs.max_required_byond_client}}
+          max-required-client-version: ${{ inputs.max_required_byond_client }}

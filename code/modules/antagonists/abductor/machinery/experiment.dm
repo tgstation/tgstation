@@ -5,6 +5,8 @@
 	icon_state = "experiment-open"
 	density = FALSE
 	state_open = TRUE
+	interaction_flags_mouse_drop = NEED_DEXTERITY
+
 	var/points = 0
 	var/credits = 0
 	var/list/history
@@ -21,10 +23,8 @@
 		console = null
 	return ..()
 
-/obj/machinery/abductor/experiment/MouseDrop_T(mob/target, mob/user)
-	if(user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_UI_BLOCKED) || !Adjacent(user) || !target.Adjacent(user) || !ishuman(target))
-		return
-	if(isabductor(target))
+/obj/machinery/abductor/experiment/mouse_drop_receive(mob/target, mob/user, params)
+	if(!ishuman(target) || HAS_MIND_TRAIT(target, TRAIT_ABDUCTOR_KNOWLEDGE))
 		return
 	close_machine(target)
 
@@ -33,27 +33,26 @@
 		..()
 
 /obj/machinery/abductor/experiment/close_machine(mob/target, density_to_set = TRUE)
-	for(var/A in loc)
-		if(isabductor(A))
+	for(var/mob/living/mob in loc)
+		if(HAS_MIND_TRAIT(mob, TRAIT_ABDUCTOR_KNOWLEDGE))
 			return
 	if(state_open && !panel_open)
 		..(target)
 
 /obj/machinery/abductor/experiment/relaymove(mob/living/user, direction)
-	if(user.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(user))
 		return
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
 		to_chat(user, span_warning("[src]'s door won't budge!"))
 
 /obj/machinery/abductor/experiment/container_resist_act(mob/living/user)
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
 		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear a metallic creaking from [src]."))
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src || state_open)
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
 			span_notice("You successfully break out of [src]!"))
@@ -86,7 +85,7 @@
 		data["occupant_status"] = mob_occupant.stat
 	return data
 
-/obj/machinery/abductor/experiment/ui_act(action, list/params)
+/obj/machinery/abductor/experiment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -137,7 +136,7 @@
 	if(occupant.stat == DEAD)
 		say("Specimen deceased - please provide fresh sample.")
 		return "Specimen deceased."
-	var/obj/item/organ/internal/heart/gland/GlandTest = locate() in occupant.organs
+	var/obj/item/organ/heart/gland/GlandTest = locate() in occupant.organs
 	if(!GlandTest)
 		say("Experimental dissection not detected!")
 		return "No glands detected!"
@@ -158,7 +157,7 @@
 		user_abductor.team.abductees += occupant.mind
 		occupant.mind.add_antag_datum(/datum/antagonist/abductee)
 
-		for(var/obj/item/organ/internal/heart/gland/G in occupant.organs)
+		for(var/obj/item/organ/heart/gland/G in occupant.organs)
 			G.Start()
 			point_reward++
 		if(point_reward > 0)
@@ -169,7 +168,7 @@
 			credits += point_reward
 			return "Experiment successful! [point_reward] new data-points collected."
 		else
-			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+			playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 			return "Experiment failed! No replacement organ detected."
 	else
 		say("Brain activity nonexistent - disposing sample...")
@@ -190,7 +189,7 @@
 		H.forceMove(console.pad.teleport_target)
 		return
 	//Area not chosen / It's not safe area - teleport to arrivals
-	SSjob.SendToLateJoin(H, FALSE)
+	SSjob.send_to_late_join(H, FALSE)
 	return
 
 /obj/machinery/abductor/experiment/update_icon_state()

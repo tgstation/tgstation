@@ -1,5 +1,6 @@
+import { Box, Button, Section, Table, Tooltip } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Box, Section, Table, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 type BindingInfo = {
@@ -33,7 +34,7 @@ const addColorModifier = (
   content: string,
   regex: RegExp,
   color: string,
-): JSX.Element | null => {
+): React.JSX.Element | null => {
   const match = content.match(regex);
 
   if (match) {
@@ -51,7 +52,7 @@ const addColorModifier = (
   return null;
 };
 
-const processColorModifiers = (content: string): string | JSX.Element => {
+const processColorModifiers = (content: string): string | React.JSX.Element => {
   const shifted = addColorModifier(content, shiftRegex, '#88f');
 
   if (shifted) {
@@ -89,12 +90,19 @@ const KeyBinding = (props: KeyBindingBoxProps) => (
 );
 
 export const HotkeysHelp = (props) => {
-  const { data } = useBackend<HotkeysHelpData>();
+  const { act, data } = useBackend<HotkeysHelpData>();
 
   return (
-    <Window title="Hotkeys Help" width={500} height={800}>
+    <Window title="Hotkeys" width={500} height={800}>
       <Window.Content scrollable>
-        <Section title="Sorted by Key">
+        <Section
+          title="Sorted by Key"
+          buttons={
+            <Button icon="wrench" onClick={() => act('open_keybindings')}>
+              Open Hotkey Settings
+            </Button>
+          }
+        >
           <Table>
             <Table.Row header>
               <Table.Cell textAlign="center" m={1}>

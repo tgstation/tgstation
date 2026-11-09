@@ -15,7 +15,7 @@
 	attack_verb_continuous = "telekinetically rams its moonihorn into"
 	attack_verb_simple = "telekinetically ram your moonihorn into"
 	gold_core_spawnable = NO_SPAWN
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	ai_controller = /datum/ai_controller/basic_controller/cow/moonicorn
 	food_types = list(/obj/item/food/grown/galaxythistle)
@@ -32,40 +32,37 @@
 	var/static/list/food_types
 	if(!food_types)
 		food_types = src.food_types.Copy()
-	AddElement(/datum/element/basic_eating, food_types = food_types)
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15)
 
 /mob/living/basic/cow/moonicorn/tamed(mob/living/tamer, atom/food)
 	. = ..()
 	///stop killing my FRIENDS
-	faction |= tamer.faction
+	APPLY_FACTION_AND_ALLIES_FROM(src, tamer)
 
 /datum/ai_controller/basic_controller/cow/moonicorn
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/cow/cow_moonicorn.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items/moonicorn,
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,
-	)
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/tip_reaction,
-		/datum/ai_planning_subtree/random_speech/cow,
-		//finds someone to kill
-		/datum/ai_planning_subtree/simple_find_target,
-		//...or something to eat, possibly. both types of target handled by melee attack subtree
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("moo?", "moo", "MOOOOOO"),
+			BB_EMOTE_HEAR = list("brays."),
+			BB_EMOTE_SEE = list("shakes her head."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/cow/cow.ogg'),
+			BB_SPEAK_CHANCE = 1,
+		),
 	)
 
 ///moonicorns will not attack people holding something that could tame them.
 /datum/targeting_strategy/basic/allow_items/moonicorn
 
-/datum/targeting_strategy/basic/allow_items/moonicorn/can_attack(mob/living/living_mob, atom/the_target, vision_range)
+/datum/targeting_strategy/basic/allow_items/moonicorn/is_valid_target(mob/living/living_mob, atom/the_target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
 	if(!.)
 		return FALSE
 
 	if(isliving(the_target)) //Targeting vs living mobs
 		var/mob/living/living_target = the_target
-		for(var/obj/item/food/grown/galaxythistle/tame_food in living_target.held_items)
+		if(living_target.is_holding_item_of_type(/obj/item/food/grown/galaxythistle))
 			return FALSE //heyyy this can tame me! let's NOT fight

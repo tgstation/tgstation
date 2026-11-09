@@ -55,23 +55,20 @@
 		if(TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 		if(TOOL_WRENCH)
-			context[SCREENTIP_CONTEXT_RMB] = "Rotate"
+			context[SCREENTIP_CONTEXT_LMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
-	if(!on)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", I))
-			return
-	if(default_change_direction_wrench(user, I))
-		return
-	return ..()
+/obj/machinery/atmospherics/components/binary/crystallizer/screwdriver_act(mob/living/user, obj/item/tool)
+	return on ? NONE : default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/atmospherics/components/binary/crystallizer/wrench_act(mob/living/user, obj/item/tool)
+	return default_change_direction_wrench(user, tool)
 
 /obj/machinery/atmospherics/components/binary/crystallizer/crowbar_act(mob/living/user, obj/item/tool)
 	return crowbar_deconstruction_act(user, tool, internal.return_pressure())
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_overlays()
 	. = ..()
-	cut_overlays()
 	var/mutable_appearance/pipe_appearance1 = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[dir]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
 	pipe_appearance1.color = COLOR_LIME
 	var/mutable_appearance/pipe_appearance2 = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[REVERSE_DIR(dir)]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
@@ -88,17 +85,16 @@
 	else
 		icon_state = "[base_icon_state]-off"
 
-/obj/machinery/atmospherics/components/binary/crystallizer/CtrlClick(mob/living/user)
-	if(!can_interact(user))
-		return
+/obj/machinery/atmospherics/components/binary/crystallizer/click_ctrl(mob/user)
+	if(!is_operational)
+		return CLICK_ACTION_BLOCKING
 	if(panel_open)
 		balloon_alert(user, "close panel!")
-		return
-	on = !on
+		return CLICK_ACTION_BLOCKING
+	set_on(!on)
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-	update_icon()
-	return ..()
+	return CLICK_ACTION_SUCCESS
 
 ///Checks if the reaction temperature is inside the range of temperature + a little deviation
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/check_temp_requirements()
@@ -106,23 +102,23 @@
 		return TRUE
 	return FALSE
 
-///Injects the gases from the input inside the internal gasmix, the amount is dependant on the gas_input var
+///Injects the gases from the input inside the internal gasmix, the amount is dependent on the gas_input var
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases()
 	var/datum/gas_mixture/contents = airs[2]
 	for(var/gas_type in selected_recipe.requirements)
-		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
+		if(!contents.moles[gas_type])
 			continue
-		if(internal.gases[gas_type] && internal.gases[gas_type][MOLES] >= selected_recipe.requirements[gas_type] * 2)
+		if(internal.moles[gas_type] >= selected_recipe.requirements[gas_type] * 2)
 			continue
-		internal.merge(contents.remove_specific(gas_type, contents.gases[gas_type][MOLES] * gas_input))
+		internal.merge(contents.remove_specific(gas_type, contents.moles[gas_type] * gas_input))
 
 ///Checks if the gases required are all inside
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/internal_check()
 	var/gas_check = 0
 	for(var/gas_type in selected_recipe.requirements)
-		if(!internal.gases[gas_type] || !internal.gases[gas_type][MOLES])
+		if(!internal.moles[gas_type])
 			return FALSE
-		if(internal.gases[gas_type][MOLES] >= selected_recipe.requirements[gas_type])
+		if(internal.moles[gas_type] >= selected_recipe.requirements[gas_type])
 			gas_check++
 	if(gas_check == selected_recipe.requirements.len)
 		return TRUE
@@ -194,7 +190,7 @@
 	for(var/gas_type in selected_recipe.requirements)
 		var/required_gas_moles = selected_recipe.requirements[gas_type]
 		var/amount_consumed = required_gas_moles + (required_gas_moles * (quality_loss * 0.01))
-		if(internal.gases[gas_type][MOLES] < amount_consumed)
+		if(internal.moles[gas_type] < amount_consumed)
 			quality_loss = min(quality_loss + 10, 100)
 		internal.remove_specific(gas_type, amount_consumed)
 
@@ -261,18 +257,20 @@
 		data["selected"] = ""
 
 	var/list/internal_gas_data = list()
+	var/list/cached_gas_name = GAS_META[META_GAS_NAME]
+	var/list/cached_gas_id = GAS_META[META_GAS_ID]
 	if(internal.total_moles())
-		for(var/gasid in internal.gases)
+		for(var/gasid, amount in internal.moles)
 			internal_gas_data.Add(list(list(
-			"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
-			"id" = internal.gases[gasid][GAS_META][META_GAS_ID],
-			"amount" = round(internal.gases[gasid][MOLES], 0.01),
+			"name"= cached_gas_name[gasid],
+			"id" = cached_gas_id[gasid],
+			"amount" = round(amount, 0.01),
 			)))
 	else
-		for(var/gasid in internal.gases)
+		for(var/gasid in internal.moles)
 			internal_gas_data.Add(list(list(
-				"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
-				"id" = internal.gases[gasid][GAS_META][META_GAS_ID],
+				"name"= cached_gas_name[gasid],
+				"id" = cached_gas_id[gasid],
 				"amount" = 0,
 				)))
 	data["internal_gas_data"] = internal_gas_data
@@ -300,13 +298,13 @@
 	data["gas_input"] = gas_input
 	return data
 
-/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	switch(action)
 		if("power")
-			on = !on
+			set_on(!on)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 		if("recipe")

@@ -1,4 +1,3 @@
-#define RUNTIME_SAVE_DATA "data/npc_saves/Runtime.sav"
 #define RUNTIME_JSON_DATA "data/npc_saves/Runtime.json"
 #define MAX_CAT_DEPLOY 50
 
@@ -8,6 +7,7 @@
 	icon_state = "cat"
 	icon_living = "cat"
 	icon_dead = "cat_dead"
+	held_state = "cat"
 	gender = FEMALE
 	gold_core_spawnable = NO_SPAWN
 	unique_pet = TRUE
@@ -30,21 +30,14 @@
 		read_memory()
 		deploy_the_cats()
 
-	if(!prob(5))
-		return
-	icon_state = "original"
-	icon_living = "original"
-	icon_dead = "original_dead"
-	update_appearance()
+	if(prob(5))
+		icon_state = "original"
+		icon_living = "original"
+		icon_dead = "original_dead"
+		held_state = "original"
+		update_appearance()
 
-
-/mob/living/basic/pet/cat/runtime/add_breeding_component()
-	AddComponent(\
-		/datum/component/breed,\
-		can_breed_with = typecacheof(list(/mob/living/basic/pet/cat)),\
-		baby_path = /mob/living/basic/pet/cat/kitten,\
-		post_birth = CALLBACK(src, PROC_REF(after_birth)),\
-	)
+	post_birth_callback = CALLBACK(src, PROC_REF(after_birth))
 
 /mob/living/basic/pet/cat/runtime/proc/after_birth(mob/living/baby)
 	if(isnull(baby))
@@ -52,20 +45,19 @@
 	LAZYADD(children, baby)
 
 /mob/living/basic/pet/cat/runtime/proc/read_memory()
-	if(fexists(RUNTIME_SAVE_DATA))
-		var/savefile/save_data = new(RUNTIME_SAVE_DATA)
-		save_data["family"] >> family
-		fdel(RUNTIME_SAVE_DATA)
-		return
 	var/json_file = file(RUNTIME_JSON_DATA)
 	if(!fexists(json_file))
 		return
-	var/list/json_list = json_decode(file2text(json_file))
+	var/json_text = file2text(json_file)
+	if(!rustg_json_is_valid(json_text))
+		return
+	var/list/json_list = json_decode(json_text)
 	family = json_list["family"]
 
 /mob/living/basic/pet/cat/runtime/Destroy()
 	LAZYREMOVE(SSticker.round_end_events, register_family)
 	register_family = null
+	post_birth_callback = null
 	return ..()
 
 /mob/living/basic/pet/cat/runtime/Write_Memory(dead, gibbed)
@@ -94,6 +86,5 @@
 		for(var/index in 1 to min(family[cat_type], MAX_CAT_DEPLOY))
 			new cat_type(loc)
 
-#undef RUNTIME_SAVE_DATA
 #undef RUNTIME_JSON_DATA
 #undef MAX_CAT_DEPLOY

@@ -1,6 +1,6 @@
 /datum/quirk/pushover
 	name = "Pushover"
-	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."
+	desc = "Your first instinct is always to let people push you around. Resisting out of grabs is noticeably more difficult."
 	icon = FA_ICON_HANDSHAKE
 	value = -8
 	mob_trait = TRAIT_GRABWEAKNESS

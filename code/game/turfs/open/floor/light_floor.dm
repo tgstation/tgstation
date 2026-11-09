@@ -19,7 +19,7 @@
 	var/currentcolor = LIGHT_COLOR_CYAN
 	///var to prevent changing color on certain admin spawn only tiles
 	var/can_modify_colour = TRUE
-	tiled_dirt = FALSE
+	tiled_turf = FALSE
 	///icons for radial menu
 	var/static/list/lighttile_designs
 	///used for light floors that cycle colours
@@ -129,33 +129,43 @@
 	currentcolor = choice
 	update_appearance()
 
-/turf/open/floor/light/attackby(obj/item/C, mob/user, params)
-	if(..())
-		return
-	if(istype(C, /obj/item/light/bulb)) //only for light tiles
-		var/obj/item/light/bulb/B = C
-		if(B.status)/// check if broken
-			to_chat(user, span_danger("The light bulb is broken!"))
-			return
-		if(state && user.temporarilyRemoveItemFromInventory(C))
-			qdel(C)
-			state = LIGHTFLOOR_FINE //fixing it by bashing it with a light bulb, fun eh?
-			update_appearance()
-			to_chat(user, span_notice("You replace the light bulb."))
-		else
-			to_chat(user, span_notice("The light bulb seems fine, no need to replace it."))
+/turf/open/floor/light/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
+
+	if(!istype(tool, /obj/item/light/bulb)) //only for light tiles
+		return .
+
+	if(astype(tool, /obj/item/light/bulb).status)/// check if broken
+		to_chat(user, span_danger("The light bulb is broken!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!state)
+		to_chat(user, span_notice("The light bulb seems fine, no need to replace it."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		return ITEM_INTERACT_BLOCKING
+
+	qdel(tool)
+	state = LIGHTFLOOR_FINE //fixing it by bashing it with a light bulb, fun eh?
+	update_appearance()
+	to_chat(user, span_notice("You replace the light bulb."))
+	return ITEM_INTERACT_SUCCESS
+
 
 /turf/open/floor/light/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	currentcolor = pick(coloredlights)
 	if(state == LIGHTFLOOR_BROKEN)  /// he's dead, jim
 		return
-	if(prob(50))
-		state++
+
 	currentcolor = pick(coloredlights)
 	update_appearance()
+	if(prob(150 / severity))
+		break_tile()
 
 //Cycles through all of the colours
 /turf/open/floor/light/colour_cycle
@@ -184,7 +194,7 @@
 /turf/open/floor/light/proc/check_menu(mob/living/user, obj/item/multitool)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(!multitool || !user.is_holding(multitool))
 		return FALSE

@@ -8,6 +8,11 @@
 #define USE_CUSTOM_ERROR_HANDLER
 #endif
 
+#if defined(OPENDREAM) && !defined(SPACEMAN_DMM) && !defined(CIBUILDING)
+// The code is being compiled for OpenDream, and not just for the CI linting.
+#define OPENDREAM_REAL
+#endif
+
 #ifdef TESTING
 #define DATUMVAR_DEBUGGING_MODE
 
@@ -19,13 +24,17 @@
 /// We'll use another define to convert uses of the proc over. That'll be all
 // #define APPEARANCE_SUCCESS_TRACKING
 
-///Used to find the sources of harddels, quite laggy, don't be surpised if it freezes your client for a good while
+///Used to find the sources of harddels, quite laggy, don't be surprised if it freezes your client for a good while
 //#define REFERENCE_TRACKING
 #ifdef REFERENCE_TRACKING
 
 ///Used for doing dry runs of the reference finder, to test for feature completeness
 ///Slightly slower, higher in memory. Just not optimal
 //#define REFERENCE_TRACKING_DEBUG
+
+///Skips over a bunch of types that are "unlikely" to have any hanging refs,
+///MASSIVELY speeding up finding references. Relatively speaking. The reftracker is still not very fast.
+//#define FAST_REFERENCE_TRACKING
 
 ///Run a lookup on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
@@ -34,6 +43,8 @@
 #define FIND_REF_NO_CHECK_TICK
 #endif //ifdef GC_FAILURE_HARD_LOOKUP
 
+// Log references in their own file, rather then in runtimes.log
+//#define REFERENCE_TRACKING_LOG_APART
 #endif //ifdef REFERENCE_TRACKING
 
 /*
@@ -60,14 +71,37 @@
 #define REFERENCE_TRACKING
 // actually look for refs
 #define GC_FAILURE_HARD_LOOKUP
+// Log references in their own file
+#define REFERENCE_TRACKING_LOG_APART
+// use fast reftracking
+#define FAST_REFERENCE_TRACKING
 #endif // REFERENCE_DOING_IT_LIVE
 
-// If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
-// #define UNIT_TESTS
+/// Sets up the reftracker to be used locally, to hunt for hard deletions
+/// Errors are logged to [log_dir]/harddels.log
+//#define REFERENCE_TRACKING_STANDARD
+#ifdef REFERENCE_TRACKING_STANDARD
+// compile the backend
+#define REFERENCE_TRACKING
+// actually look for refs
+#define GC_FAILURE_HARD_LOOKUP
+// spend ALL our time searching, not just part of it
+#define FIND_REF_NO_CHECK_TICK
+// Log references in their own file
+#define REFERENCE_TRACKING_LOG_APART
+#endif // REFERENCE_TRACKING_STANDARD
 
-// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so.
-// We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
+// If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
+//#define UNIT_TESTS
+
+// If this is uncommented, will attempt to load and initialize prof.dll/libprof.so by default.
+// Even if it's not defined, you can pass "tracy" via -params in order to try to load it.
+// We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy,
+// or the fork which writes profiling data to a file: https://github.com/ParadiseSS13/byond-tracy
 // #define USE_BYOND_TRACY
+
+// If uncommented, will display info about byond-tracy's status in the MC tab.
+// #define MC_TAB_TRACY_INFO
 
 // If defined, we will compile with FULL timer debug info, rather then a limited scope
 // Be warned, this increases timer creation cost by 5x
@@ -76,12 +110,28 @@
 // If defined, we will NOT defer asset generation till later in the game, and will instead do it all at once, during initiialize
 //#define DO_NOT_DEFER_ASSETS
 
+// Forces init assets to generate regardless of config setting
+//#define FORCE_GENERATE_INIT_ASSETS
+
 /// If this is uncommented, Autowiki will generate edits and shut down the server.
 /// Prefer the autowiki build target instead.
 // #define AUTOWIKI
 
+/// If defined, we boot up, run world.run_performance_tests() and then shut down the server
+// #define PERFORMANCE_TESTS
+
 /// If this is uncommented, will profile mapload atom initializations
 // #define PROFILE_MAPLOAD_INIT_ATOM
+
+/// If uncommented, Dreamluau will be fully disabled.
+// #define DISABLE_DREAMLUAU
+
+// OpenDream currently doesn't support byondapi, so automatically disable it on OD,
+// unless CIBUILDING is defined - we still want to lint dreamluau-related code.
+// Get rid of this whenever it does have support.
+#ifdef OPENDREAM_REAL
+#define DISABLE_DREAMLUAU
+#endif
 
 /// If this is uncommented, force our verb processing into just the 2% of a tick
 /// We normally reserve for it
@@ -102,10 +152,7 @@
 #endif // 1 to use the default behaviour;
 								// 2 for preloading absolutely everything;
 
-#ifdef LOWMEMORYMODE
-#define FORCE_MAP "runtimestation"
-#define FORCE_MAP_DIRECTORY "_maps"
-#endif
+#define FORCE_MAP_DIRECTORY MAP_DIRECTORY_MAPS
 
 //Additional code for the above flags.
 #ifdef TESTING
@@ -128,8 +175,14 @@
 #define GC_FAILURE_HARD_LOOKUP
 //Ensures all early assets can actually load early
 #define DO_NOT_DEFER_ASSETS
+//Always gen assets, unit tests will check if the contributor needs to update them
+#define FORCE_GENERATE_INIT_ASSETS
 //Test at full capacity, the extra cost doesn't matter
 #define TIMER_DEBUG
+	// Checks if unit tests are being run locally or well, not
+	#if !defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
+	#define RUNNING_LOCAL_TESTS
+	#endif
 #endif
 
 #ifdef TGS
@@ -158,3 +211,8 @@
 #ifdef MAP_TEST
 #warn Compiling in MAP_TEST mode. Certain game mechanics will be disabled.
 #endif
+
+/// Disable to use builtin DM-based generation.
+/// IconForge is 250x times faster but requires storing the icons in tmp/ and may result in higher asset transport.
+/// Note that the builtin GAGS editor still uses the 'legacy' generation to allow for debugging.
+#define USE_RUSTG_ICONFORGE_GAGS

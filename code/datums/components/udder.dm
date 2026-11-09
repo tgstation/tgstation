@@ -31,17 +31,17 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/milked = parent
-	if(milked.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(milked))
 		return //come on now
 
 	var/udder_filled_percentage = PERCENT(udder.reagents.total_volume / udder.reagents.maximum_volume)
 	switch(udder_filled_percentage)
 		if(0 to 10)
-			examine_list += span_notice("[parent]'s [udder] is dry.")
+			examine_list += span_notice("[parent]'s [udder.name] is dry.")
 		if(11 to 99)
-			examine_list += span_notice("[parent]'s [udder] can be milked if you have something to contain it.")
+			examine_list += span_notice("[parent]'s [udder.name] can be milked if you have something to contain it.")
 		if(100)
-			examine_list += span_notice("[parent]'s [udder] is round and full, and can be milked if you have something to contain it.")
+			examine_list += span_notice("[parent]'s [udder.name] is round and full, and can be milked if you have something to contain it.")
 
 
 ///signal called on parent being attacked with an item
@@ -49,7 +49,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/milked = parent
-	if(milked.stat == CONSCIOUS && istype(milking_tool, /obj/item/reagent_containers/cup))
+	if(!IS_UNCONSCIOUS_OR_CRIT(milked) && istype(milking_tool, /obj/item/reagent_containers/cup))
 		udder.milk(milking_tool, user)
 		if(on_milk_callback)
 			on_milk_callback.Invoke(udder.reagents.total_volume, udder.reagents.maximum_volume)
@@ -119,7 +119,7 @@
 	var/atom/movable/final_food = food
 	if(isstack(food)) //if stack, only consume 1
 		var/obj/item/stack/food_stack = food
-		final_food = food_stack.split_stack(udder_mob, 1)
+		final_food = food_stack.split_stack(1)
 	final_food.forceMove(src)
 
 /obj/item/udder/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -204,3 +204,16 @@
 		reagents.add_reagent(/datum/reagent/medicine/salglu_solution, rand(2,5))
 	if(on_generate_callback)
 		on_generate_callback.Invoke(reagents.total_volume, reagents.maximum_volume)
+
+/obj/item/udder/raptor
+	name = "bird udder"
+
+/obj/item/udder/raptor/generate()
+	if(!prob(production_probability))
+		return FALSE
+	var/happiness_percentage = udder_mob.ai_controller?.blackboard[BB_BASIC_HAPPINESS]
+	if(prob(happiness_percentage))
+		reagents.add_reagent(/datum/reagent/consumable/cream, 5, added_purity = 1)
+	var/minimum_bound = happiness_percentage > 0.6 ? 10 : 5
+	var/upper_bound = minimum_bound + 5
+	reagents.add_reagent(reagent_produced_typepath, rand(minimum_bound, upper_bound), added_purity = 1)

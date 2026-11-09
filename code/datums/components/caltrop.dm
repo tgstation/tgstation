@@ -30,7 +30,7 @@
 	///So we can update ant damage
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
-/datum/component/caltrop/Initialize(min_damage = 0, max_damage = 0, probability = 100, paralyze_duration = 6 SECONDS, flags = NONE, soundfile = null)
+/datum/component/caltrop/Initialize(min_damage = 0, max_damage = 0, probability = 100, paralyze_duration = 2 SECONDS, flags = NONE, soundfile = null)
 	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -104,6 +104,8 @@
 	if(HAS_TRAIT(digitigrade_fan, TRAIT_LIGHT_STEP))
 		damage *= 0.75
 
+	if(flags & CALTROP_ANTS && HAS_TRAIT(digitigrade_fan, TRAIT_SPACE_ANT_IMMUNITY))
+		damage = 0
 
 	if(!(flags & CALTROP_SILENT) && !digitigrade_fan.has_status_effect(/datum/status_effect/caltropped))
 		digitigrade_fan.apply_status_effect(/datum/status_effect/caltropped)

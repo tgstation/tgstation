@@ -17,20 +17,17 @@
 #define INVISIBILITY_OBSERVER 60
 #define SEE_INVISIBLE_OBSERVER 60
 
+#define INVISIBILITY_ADMIN 61
+#define SEE_INVISIBLE_ADMIN 61
+
 #define INVISIBILITY_MAXIMUM 100 //the maximum allowed for "real" objects
 
 #define INVISIBILITY_ABSTRACT 101 //only used for abstract objects (e.g. spacevine_controller), things that are not really there.
 
-#define BORGMESON (1<<0)
-#define BORGTHERM (1<<1)
-#define BORGXRAY (1<<2)
-#define BORGMATERIAL (1<<3)
-
 //for clothing visor toggles, these determine which vars to toggle
 #define VISOR_FLASHPROTECT (1<<0)
 #define VISOR_TINT (1<<1)
-#define VISOR_VISIONFLAGS (1<<2) //all following flags only matter for glasses
-#define VISOR_INVISVIEW (1<<3)
+#define VISOR_INVISVIEW (1<<2) //allows the player to see normally invisible things, matters only for glasses rn
 
 // BYOND internal values for the sight flags
 // See [https://www.byond.com/docs/ref/#/mob/var/sight]
@@ -71,8 +68,9 @@
 //------------------------
 // INVISIBILITY SOURCE IDS
 // Though don't feel the need to add one here if you have a simple effect that
-// gets added and/or removed in only one place near eachother in the code.
+// gets added and/or removed in only one place near each other in the code.
 
 #define INVISIBILITY_SOURCE_INVISIMIN "invisimin"
 #define INVISIBILITY_SOURCE_STEALTHMODE "stealthmode"
+#define INVISIBILITY_SOURCE_SLEEP_HUD_BUTTON "sleep_hud_button"
 

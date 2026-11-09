@@ -3,6 +3,9 @@
 	savefile_key = "trans_prosthetic"
 	savefile_identifier = PREFERENCE_CHARACTER
 
+/datum/preference/choiced/trans_prosthetic/create_default_value()
+	return "Random"
+
 /datum/preference/choiced/trans_prosthetic/init_possible_values()
 	return list("Random") + GLOB.part_choice_transhuman
 
@@ -11,7 +14,7 @@
 	if (!.)
 		return FALSE
 
-	return "Transhumanist" in preferences.all_quirks
+	return /datum/quirk/transhumanist::name in preferences.all_quirks
 
-/datum/preference/choiced/trans_prosthetic/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/trans_prosthetic/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return

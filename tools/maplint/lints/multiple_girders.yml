@@ -1,3 +1,3 @@
 /obj/structure/girder:
   banned_neighbors:
-  - /obj/structure/girder
+    - /obj/structure/girder

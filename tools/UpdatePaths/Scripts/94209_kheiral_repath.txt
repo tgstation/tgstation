@@ -1,0 +1,1 @@
+/obj/item/kheiral_cuffs : /obj/item/clothing/accessory/kheiral_cuffs

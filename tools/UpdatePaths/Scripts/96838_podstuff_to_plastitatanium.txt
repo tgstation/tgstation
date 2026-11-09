@@ -1,0 +1,3 @@
+/turf/open/floor/pod : /turf/open/floor/mineral/plastitanium/pod{@OLD}
+/turf/open/floor/pod/light : /turf/open/floor/mineral/plastitanium/pod/light{@OLD}
+/turf/closed/wall/mineral/titanium/survival/pod : /turf/closed/wall/mineral/plastitanium/survival/pod{@OLD}

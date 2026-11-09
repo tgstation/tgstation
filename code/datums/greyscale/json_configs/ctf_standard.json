@@ -9,7 +9,7 @@
 			"type": "icon_state",
 			"icon_state": "standard_colours",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	]
 }

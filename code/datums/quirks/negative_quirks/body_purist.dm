@@ -3,7 +3,6 @@
 	desc = "You believe your body is a temple and its natural form is an embodiment of perfection. Accordingly, you despise the idea of ever augmenting it with unnatural parts, cybernetic, prosthetic, or anything like it."
 	icon = FA_ICON_PERSON_RAYS
 	value = -2
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
 	gain_text = span_danger("You now begin to hate the idea of having cybernetic implants.")
 	lose_text = span_notice("Maybe cybernetics aren't so bad. You now feel okay with augmentations and prosthetics.")
 	medical_record_text = "This patient has disclosed an extreme hatred for unnatural bodyparts and augmentations."
@@ -31,7 +30,7 @@
 	var/mob/living/carbon/owner = quirk_holder
 	if(!istype(owner))
 		return
-	for(var/obj/item/bodypart/limb as anything in owner.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in owner.get_bodyparts())
 		if(IS_ROBOTIC_LIMB(limb))
 			cybernetics_level++
 	for(var/obj/item/organ/organ as anything in owner.organs)

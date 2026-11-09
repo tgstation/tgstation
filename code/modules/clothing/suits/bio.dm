@@ -11,11 +11,18 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDEFACE|HIDESNOUT
 	resistance_flags = ACID_PROOF
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/biosuit
+	// Icon_state passed into clothing dirt component
+	var/dirt_state = "bio_dirt"
 
 /obj/item/clothing/head/bio_hood/Initialize(mapload)
 	. = ..()
-	if(flags_inv & HIDEFACE)
-		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+	if (dirt_state)
+		AddComponent(/datum/component/clothing_dirt, dirt_state)
+	AddElement(/datum/element/adjust_fishing_difficulty, 6)
+	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, texture_type)
 
 /datum/armor/head_bio_hood
 	bio = 100
@@ -35,10 +42,20 @@
 	slowdown = 0.5
 	allowed = list(/obj/item/tank/internals, /obj/item/reagent_containers/dropper, /obj/item/flashlight/pen, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/cup/beaker, /obj/item/gun/syringe)
 	armor_type = /datum/armor/suit_bio_suit
-	flags_inv = HIDEGLOVES|HIDEJUMPSUIT
-	strip_delay = 70
-	equip_delay_other = 70
+	flags_inv = HIDEGLOVES|HIDEJUMPSUIT|HIDEBELT
+	strip_delay = 7 SECONDS
+	equip_delay_other = 7 SECONDS
 	resistance_flags = ACID_PROOF
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
+	cerulean_flipper_palette = "#eeeeee"
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/biosuit
+
+/obj/item/clothing/suit/bio_suit/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/adjust_fishing_difficulty, 6)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, texture_type)
 
 //Standard biosuit, orange stripe
 /datum/armor/suit_bio_suit
@@ -95,9 +112,11 @@
 //Janitor's biosuit, grey with purple arms
 /obj/item/clothing/head/bio_hood/janitor
 	icon_state = "bio_janitor"
+	texture_type = /datum/bodypart_texture/mesh/biosuit_dark
 
 /obj/item/clothing/suit/bio_suit/janitor
 	icon_state = "bio_janitor"
+	texture_type = /datum/bodypart_texture/mesh/biosuit_dark
 
 /obj/item/clothing/suit/bio_suit/janitor/Initialize(mapload)
 	. = ..()
@@ -127,8 +146,10 @@
 	desc = "It protected doctors from the Black Death, back then. You bet your arse it's gonna help you against viruses."
 	icon_state = "plaguedoctor"
 	inhand_icon_state = "bio_suit"
-	strip_delay = 40
-	equip_delay_other = 20
+	strip_delay = 4 SECONDS
+	equip_delay_other = 2 SECONDS
+	texture_type = /datum/bodypart_texture/mesh/black
+	supports_variations_flags = NONE
 
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit/Initialize(mapload)
 	. = ..()

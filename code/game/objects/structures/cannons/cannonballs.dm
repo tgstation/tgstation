@@ -71,6 +71,7 @@
 	base_icon_state = "trashballs"
 	merge_type = /obj/item/stack/cannonball/trashball
 	projectile_type = /obj/projectile/bullet/cannonball/trashball
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/stack/cannonball/trashball/four
 	amount = 4

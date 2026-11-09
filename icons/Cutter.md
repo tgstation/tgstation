@@ -16,7 +16,7 @@ The toml file will be named like this. `{name}.{input_extension}.toml`. So if I 
 
 It'll then use the `{name}.png` file to make `{name}.dmi` (or whatever the cutter mode outputs)
 
-You should NEVER modify the cutter's output, it'll be erased. You only want to modify the inputs (configs, pngs, etc). 
+You should NEVER modify the cutter's output, it'll be erased. You only want to modify the inputs (configs, pngs, etc).
 
 As I mentioned our cutter has several different modes that do different things with different inputs.
 
@@ -33,17 +33,17 @@ So instead we take a base set of directions, typically no connections, north/sou
 
 Looks something like this
 
->Example: [Bamboo](turf/floors/bamboo_mat.png.toml)
+> Example: [Bamboo](turf/floors/bamboo_mat.png.toml)
 >
 > png of 32x32 blocks, representing connections.
 >
 > [None, North + South, East + West, North + South + East + West, All]
 >
->[<img alt="Bamboo Template" src="turf/floors/bamboo_mat.png" width="320px">](turf/floors/bamboo_mat.png)
+> [<img alt="Bamboo Template" src="turf/floors/bamboo_mat.png" width="320px">](turf/floors/bamboo_mat.png)
 >
 > And its output dmi
 >
->[<img alt="Bamboo Output" src="turf/floors/bamboo_mat.dmi" width="320px">](turf/floors/bamboo_mat.dmi)
+> [<img alt="Bamboo Output" src="turf/floors/bamboo_mat.dmi" width="320px">](turf/floors/bamboo_mat.dmi)
 
 ### How do I modify a smoothed icon?
 
@@ -61,16 +61,16 @@ If you want to make something with nonstandard bounds you'll need to set the rel
 
 > Example: [Grass (50x50)](turf/floors/grass.png.toml)
 >
->[<img alt="Grass Template (50x50)" src="turf/floors/grass.png" width="320px"/>](turf/floors/grass.png)
+> [<img alt="Grass Template (50x50)" src="turf/floors/grass.png" width="320px"/>](turf/floors/grass.png)
 
 If you want to give a particular smoothing junction a unique icon state use the prefabs var, add a new "state" to the png, and modify the config so it knows how to use it.
 
 > Example: [Donk Carpets (Big Pocket)](turf/floors/carpet_donk.png.toml)
 >
->[<img alt="Grass Template (50x50)" src="turf/floors/carpet_donk.png" width="384x"/>](turf/floors/carpet_donk.png)
+> [<img alt="Grass Template (50x50)" src="turf/floors/carpet_donk.png" width="384x"/>](turf/floors/carpet_donk.png)
 
 If you want to make the smoothed icon animated, add another row of states below your first one. Each new row is a new frame, you define delays inside the config file as deciseconds.
 
 > Example: [Lava (Animated, 4 Frames)](turf/floors/lava.png.toml)
 >
->[<img alt="Lava (Animated)" src="turf/floors/lava.png" width="320px"/>](turf/floors/lava.png)
+> [<img alt="Lava (Animated)" src="turf/floors/lava.png" width="320px"/>](turf/floors/lava.png)

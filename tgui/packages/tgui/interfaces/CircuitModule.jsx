@@ -1,5 +1,6 @@
+import { Button, Dropdown, Input, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Dropdown, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const CircuitModule = (props) => {
@@ -40,7 +41,7 @@ export const CircuitModule = (props) => {
                             port_type: type,
                           })
                         }
-                        onEnter={(e, value) =>
+                        onEnter={(value) =>
                           act('set_port_name', {
                             port_id: index + 1,
                             is_input: true,
@@ -82,7 +83,7 @@ export const CircuitModule = (props) => {
                             port_type: type,
                           })
                         }
-                        onEnter={(e, value) =>
+                        onEnter={(value) =>
                           act('set_port_name', {
                             port_id: index + 1,
                             is_input: false,

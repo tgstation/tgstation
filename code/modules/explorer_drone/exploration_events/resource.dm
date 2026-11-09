@@ -1,7 +1,7 @@
 /// Simple event type that checks if you have a tool and after a retrieval delay adds loot to drone.
 /datum/exploration_event/simple/resource
 	name = "retrievable resource"
-	root_abstract_type = /datum/exploration_event/simple/resource
+	abstract_type = /datum/exploration_event/simple/resource
 	discovery_log = "Encountered recoverable resource."
 	action_text = "Extract"
 	/// Tool type required to recover this resource
@@ -84,7 +84,7 @@
 
 // EXPLORATION_SITE_RUINS 2/2
 /datum/exploration_event/simple/resource/remnants
-	name = "dessicated corpse"
+	name = "desiccated corpse"
 	required_site_traits = list(EXPLORATION_SITE_RUINS)
 	required_tool = EXODRONE_TOOL_MULTITOOL
 	discovery_log = "Discovered a corpse of a humanoid."
@@ -289,13 +289,13 @@
 /datum/exploration_event/simple/resource/mineral_deposit/New()
 	. = ..()
 	chosen_material_type = pick(possible_materials)
-	var/datum/material/chosen_mat = GET_MATERIAL_REF(chosen_material_type)
+	var/datum/material/chosen_mat = SSmaterials.get_material(chosen_material_type)
 	name = "[chosen_mat.name] Deposit"
 	discovery_log = "Discovered a sizeable [chosen_mat.name] deposit"
 	success_log = "Extracted [chosen_mat.name]."
 	description = "You locate a rich surface deposit of [chosen_mat.name]."
 
 /datum/exploration_event/simple/resource/mineral_deposit/dispense_loot(obj/item/exodrone/drone)
-	var/datum/material/chosen_mat = GET_MATERIAL_REF(chosen_material_type)
+	var/datum/material/chosen_mat = SSmaterials.get_material(chosen_material_type)
 	var/obj/loot = new chosen_mat.sheet_type(loot_amount)
 	drone.try_transfer(loot)

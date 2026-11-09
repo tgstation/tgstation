@@ -2,7 +2,7 @@
 	name ="explosive bolt"
 	icon_state= "bolter"
 	damage = 50
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 
 /obj/projectile/bullet/gyro/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -17,7 +17,7 @@
 	icon_state= "missile"
 	damage = 50
 	sharpness = NONE
-	embedding = null
+	embed_type = null
 	shrapnel_type = null
 	ricochets_max = 0
 	/// Whether we do extra damage when hitting a mech or silicon
@@ -29,7 +29,7 @@
 	var/random_crit_gib = FALSE
 	if(isliving(target) && prob(1) && random_crits_enabled)
 		var/mob/living/gibbed_dude = target
-		if(gibbed_dude.stat < HARD_CRIT)
+		if(!IS_UNCONSCIOUS_OR_CRIT(gibbed_dude))
 			gibbed_dude.say("Is that a fucking ro-", forced = "hit by rocket")
 			random_crit_gib = TRUE
 	..()
@@ -127,3 +127,13 @@ among other potential differences. This granularity is helpful for things like t
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "missile_broken"
 	w_class = WEIGHT_CLASS_TINY
+
+//immediately hits firer
+/obj/projectile/bullet/rocket/reverse
+	name = "faulty rocket"
+
+/obj/projectile/bullet/rocket/reverse/fire(angle, atom/direct_target)
+	..()
+	if(firer) //troll
+		firer.visible_message(span_danger("[src] blows up as soon as [firer] fires it!"))
+		on_hit(firer)

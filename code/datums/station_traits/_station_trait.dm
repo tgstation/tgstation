@@ -3,6 +3,8 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 
 ///Base class of station traits. These are used to influence rounds in one way or the other by influencing the levers of the station.
 /datum/station_trait
+	/// Trait should not be instantiated in a round if its type matches this type
+	abstract_type = /datum/station_trait
 	///Name of the trait
 	var/name = "unnamed station trait"
 	///The type of this trait. Used to classify how this trait influences the station
@@ -29,33 +31,29 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/can_revert = TRUE
 	/// If set to true we'll show a button on the lobby to notify people about this trait
 	var/sign_up_button = FALSE
-	/// Lobby buttons controlled by this trait
-	var/list/lobby_buttons = list()
 	/// The ID that we look for in dynamic.json. Not synced with 'name' because I can already see this go wrong
 	var/dynamic_threat_id
-	/// If ran during dynamic, do we reduce the total threat? Will be overriden by config if set
-	var/threat_reduction = 0
-	/// Trait should not be instantiated in a round if its type matches this type
-	var/abstract_type = /datum/station_trait
 
 /datum/station_trait/New()
 	. = ..()
 
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(on_round_start))
 
-	if(threat_reduction)
-		GLOB.dynamic_station_traits[src] = threat_reduction
 	if(sign_up_button)
 		GLOB.lobby_station_traits += src
+		SEND_SIGNAL(SSdcs, COMSIG_GLOB_LOBBY_TRAIT_ADDED)
 	if(trait_processes)
 		START_PROCESSING(SSstation, src)
 	if(trait_to_give)
 		ADD_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 
 /datum/station_trait/Destroy()
+	var/had_button = sign_up_button
 	SSstation.station_traits -= src
-	GLOB.dynamic_station_traits.Remove(src)
-	destroy_lobby_buttons()
+	GLOB.lobby_station_traits -= src
+	if(had_button)
+		SEND_SIGNAL(SSdcs, COMSIG_GLOB_LOBBY_TRAIT_REMOVED)
+	REMOVE_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 	return ..()
 
 /// Returns the type of info the centcom report has on this trait, if any.
@@ -72,14 +70,6 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 
 	qdel(src)
 
-/// Called by decals if they can be colored, to see if we got some cool colors for them. Only takes the first station trait
-/proc/request_station_colors(atom/thing_to_color, pattern)
-	for(var/datum/station_trait/trait in SSstation.station_traits)
-		var/decal_color = trait.get_decal_color(thing_to_color, pattern || PATTERN_DEFAULT)
-		if(decal_color)
-			return decal_color
-	return null
-
 /// Return a color for the decals, if any
 /datum/station_trait/proc/get_decal_color(thing_to_color, pattern)
 	return
@@ -88,42 +78,27 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 /datum/station_trait/proc/can_display_lobby_button(client/player)
 	return sign_up_button && !SSticker.HasRoundStarted()
 
-/// Apply any additional handling we need to our lobby button
-/datum/station_trait/proc/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
-	SHOULD_CALL_PARENT(TRUE)
-	lobby_buttons |= lobby_button
-	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_lobby_button_update_icon))
-	RegisterSignal(lobby_button, COMSIG_SCREEN_ELEMENT_CLICK, PROC_REF(on_lobby_button_click))
-	RegisterSignal(lobby_button, COMSIG_QDELETING, PROC_REF(on_lobby_button_destroyed))
-	lobby_button.update_appearance(UPDATE_ICON)
-
-/// Called when our lobby button is clicked on
-/datum/station_trait/proc/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
-	SIGNAL_HANDLER
+/// Called when a player clicks this trait's lobby button.
+/// Return a string to show as feedback in the lobby UI.
+/datum/station_trait/proc/on_lobby_button_click(mob/dead/new_player/player)
 	return
 
-/// Called when our lobby button tries to update its appearance
-/datum/station_trait/proc/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
-	SIGNAL_HANDLER
-	return
+/// Returns the tooltip text for this trait's lobby button
+/datum/station_trait/proc/get_lobby_description()
+	return report_message
 
-/// Don't hold references to deleted buttons
-/datum/station_trait/proc/on_lobby_button_destroyed(atom/movable/screen/lobby/button/sign_up/lobby_button)
-	SIGNAL_HANDLER
-	lobby_buttons -= lobby_button
+/// Returns the icon state for this trait's lobby button for a given player
+/datum/station_trait/proc/get_lobby_icon_state(mob/dead/new_player/player)
+	return "signup"
 
-/// Proc ran when round starts. Use this for roundstart effects. By default we clean up our buttons here.
+/// Returns a list of overlay icon states to layer on top of the lobby button
+/datum/station_trait/proc/get_lobby_overlay_states(mob/dead/new_player/player)
+	return list()
+
+/// Proc ran when round starts. Use this for roundstart effects.
 /datum/station_trait/proc/on_round_start()
 	SIGNAL_HANDLER
-	destroy_lobby_buttons()
 
-/// Remove all of our active lobby buttons
-/datum/station_trait/proc/destroy_lobby_buttons()
-	for (var/atom/movable/screen/button as anything in lobby_buttons)
-		var/mob/hud_owner = button.get_mob()
-		qdel(button)
-		if (QDELETED(hud_owner))
-			continue
-		var/datum/hud/using_hud = hud_owner.hud_used
-		using_hud?.show_hud(using_hud?.hud_version)
-	lobby_buttons = list()
+/// Called when overriding a pulsar star command report message.
+/datum/station_trait/proc/get_pulsar_message()
+	return

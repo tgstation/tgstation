@@ -7,7 +7,7 @@
 	Note that AI have no need for the adjacency proc, and so this proc is a lot cleaner.
 */
 /mob/living/silicon/ai/DblClickOn(atom/A, params)
-	if(control_disabled || incapacitated())
+	if(control_disabled || incapacitated)
 		return
 
 	if(ismob(A))
@@ -39,7 +39,7 @@
 	if(check_click_intercept(params,A))
 		return
 
-	if(control_disabled || incapacitated())
+	if(control_disabled || incapacitated)
 		return
 
 	var/turf/pixel_turf = get_turf_pixel(A)
@@ -51,6 +51,9 @@
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		if(LAZYACCESS(modifiers, CTRL_CLICK))
 			CtrlShiftClickOn(A)
+			return
+		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+			ShiftMiddleClickOn(A)
 			return
 		ShiftClickOn(A)
 		return
@@ -73,11 +76,13 @@
 	if(world.time <= next_move)
 		return
 
-	if(waypoint_mode)
-		waypoint_mode = 0
+	if(setting_waypoint)
+		setting_waypoint = FALSE
 		set_waypoint(A)
 		return
 
+	if(SEND_SIGNAL(A, COMSIG_ATOM_ATTACK_AI, src, params) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return
 	A.attack_ai(src)
 
 /*
@@ -87,9 +92,13 @@
 	it functions and re-insert it above.
 */
 /mob/living/silicon/ai/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
+	if(SEND_SIGNAL(A, COMSIG_ATOM_ATTACK_AI, src) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return
 	A.attack_ai(src)
 
 /mob/living/silicon/ai/RangedAttack(atom/A)
+	if(SEND_SIGNAL(A, COMSIG_ATOM_ATTACK_AI, src) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return
 	A.attack_ai(src)
 
 /atom/proc/attack_ai(mob/user)
@@ -115,7 +124,9 @@
 	target.AICtrlShiftClick(src)
 
 /mob/living/silicon/ai/ShiftClickOn(atom/target)
-	target.AIShiftClick(src)
+	if(target.AIShiftClick(src))
+		return
+	return ..()
 
 /mob/living/silicon/ai/CtrlClickOn(atom/target)
 	target.AICtrlClick(src)
@@ -150,10 +161,11 @@
 	return
 
 /atom/proc/ai_click_alt(mob/living/silicon/ai/user)
+	SHOULD_CALL_PARENT(FALSE)
 	return
 
 /atom/proc/AIShiftClick(mob/living/silicon/ai/user)
-	return
+	return FALSE
 
 /atom/proc/AICtrlShiftClick(mob/living/silicon/ai/user)
 	return
@@ -168,19 +180,21 @@
 
 /obj/machinery/door/airlock/ai_click_alt(mob/living/silicon/ai/user)
 	if(obj_flags & EMAGGED)
-		return
+		return NONE
 
 	if(!secondsElectrified)
 		shock_perm(user)
 	else
 		shock_restore(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/door/airlock/AIShiftClick(mob/living/silicon/ai/user)  // Opens and closes doors!
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 
 	user_toggle_open(user)
 	add_hiddenprint(user)
+	return TRUE
 
 /obj/machinery/door/airlock/AICtrlShiftClick(mob/living/silicon/ai/user)  // Sets/Unsets Emergency Access Override
 	if(obj_flags & EMAGGED)
@@ -220,10 +234,10 @@
 /// Toggle APC lighting settings
 /obj/machinery/power/apc/AIShiftClick(mob/living/silicon/ai/user)
 	if(!can_use(user, loud = TRUE))
-		return
+		return FALSE
 
 	if(!is_operational || failure_timer)
-		return
+		return FALSE
 
 	lighting = lighting ? APC_CHANNEL_OFF : APC_CHANNEL_ON
 	if (user)
@@ -233,14 +247,15 @@
 		user.log_message("turned [enabled_or_disabled] the [src] lighting settings", LOG_GAME)
 	update_appearance()
 	update()
+	return TRUE
 
 /// Toggle APC equipment settings
 /obj/machinery/power/apc/ai_click_alt(mob/living/silicon/ai/user)
 	if(!can_use(user, loud = TRUE))
-		return
+		return NONE
 
 	if(!is_operational || failure_timer)
-		return
+		return CLICK_ACTION_BLOCKING
 
 	equipment = equipment ? APC_CHANNEL_OFF : APC_CHANNEL_ON
 	if (user)
@@ -250,22 +265,31 @@
 		user.log_message("turned [enabled_or_disabled] the [src] equipment settings", LOG_GAME)
 	update_appearance()
 	update()
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/power/apc/attack_ai_secondary(mob/living/silicon/user, list/modifiers)
-	if(!can_use(user, loud = TRUE))
-		return
-
-	togglelock(user)
+	if(can_use(user, loud = TRUE))
+		togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/mob/living/silicon/ai/ShiftMiddleClickOn(atom/A)
+	if(control_disabled || incapacitated)
+		return
+	if(!can_see(A))
+		return
+	if(!point_at(A, TRUE))
+		return
+	log_message("points at [A] using holopad", LOG_EMOTE)
 
 /* AI Turrets */
 /obj/machinery/turretid/ai_click_alt(mob/living/silicon/ai/user) //toggles lethal on turrets
-	if(ailock)
-		return
+	if(is_ai_locked(user))
+		return CLICK_ACTION_BLOCKING
 	toggle_lethal(user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/turretid/AICtrlClick(mob/living/silicon/ai/user) //turns off/on Turrets
-	if(ailock)
+	if(is_ai_locked(user))
 		return
 	toggle_on(user)
 
@@ -275,10 +299,11 @@
 		balloon_alert(user, "disrupted all active calls")
 		add_hiddenprint(user)
 	hangup_all_calls()
+	return CLICK_ACTION_SUCCESS
 
 //
 // Override TurfAdjacent for AltClicking
 //
 
 /mob/living/silicon/ai/TurfAdjacent(turf/target_turf)
-	return (GLOB.cameranet && GLOB.cameranet.checkTurfVis(target_turf))
+	return (SScameras.is_visible_by_cameras(target_turf))

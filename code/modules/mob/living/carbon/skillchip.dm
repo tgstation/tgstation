@@ -9,7 +9,7 @@
  */
 /mob/living/carbon/proc/implant_skillchip(obj/item/skillchip/skillchip, force = FALSE)
 	// Grab the brain.
-	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 
 	// Check for the brain. No brain = no implant.
 	if(QDELETED(brain))
@@ -37,7 +37,7 @@
  */
 /mob/living/carbon/proc/remove_skillchip(obj/item/skillchip/skillchip, silent = FALSE)
 	// Check the target's brain, making sure the target exists and has a brain.
-	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(brain))
 		return FALSE
 
@@ -59,7 +59,7 @@
  */
 /mob/living/carbon/proc/clone_skillchip_list(not_removable = FALSE)
 	// Check the target's brain, making sure the target exists and has a brain.
-	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(QDELETED(brain))
 		return list()
 
@@ -70,7 +70,7 @@
  */
 /mob/living/carbon/proc/destroy_all_skillchips(silent = FALSE)
 	// Check the target's brain, making sure the target exists and has a brain.
-	var/obj/item/organ/internal/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 
 	if(QDELETED(brain))
 		return FALSE

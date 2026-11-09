@@ -27,6 +27,8 @@
 #define SPACE_TEMP_NOBLIUM GAS_HYPER_NOBLIUM + "=7500;TEMP=2.7"
 ///Xenobio slime containment turf
 #define XENOBIO_BZ GAS_BZ + "=100;TEMP=293.15"
+///Gas mix snowflaked onto the moonbase19 gas mixture.
+#define MOONBASE19_ATMOS GAS_CO2 + "=48.7;" + GAS_N2 + "=13.2;" + GAS_O2 + "=32.4;TEMP=251"
 
 //ATMOSPHERICS DEPARTMENT GAS TANK TURFS
 #define ATMOS_TANK_N2O GAS_N2O + "=6000;TEMP=293.15"

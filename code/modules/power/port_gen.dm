@@ -1,4 +1,4 @@
-//Baseline portable generator. Has all the default handling. Not intended to be used on it's own (since it generates unlimited power).
+//Baseline portable generator. Has all the default handling. Not intended to be used on its own (since it generates unlimited power).
 /obj/machinery/power/port_gen
 	name = "portable generator"
 	desc = "A portable generator for emergency backup power."
@@ -8,9 +8,10 @@
 	density = TRUE
 	anchored = FALSE
 	use_power = NO_POWER_USE
-
+	/// the emissive light mask icon
+	var/light_mask = "portgen-emissive"
 	var/active = FALSE
-	var/power_gen = 5000
+	var/power_gen = 5 KILO JOULES
 	var/power_output = 1
 	var/consumption = 0
 	var/datum/looping_sound/generator/soundloop
@@ -60,6 +61,13 @@
 	icon_state = "[base_icon_state]_[active]"
 	return ..()
 
+/obj/machinery/power/port_gen/update_overlays()
+	. = ..()
+	if(panel_open || !is_operational || !active)
+		return
+
+	. += emissive_appearance(icon, light_mask, src, alpha = src.alpha)
+
 /obj/machinery/power/port_gen/process()
 	if(active)
 		if(!HasFuel() || !anchored)
@@ -81,13 +89,13 @@
 /obj/machinery/power/port_gen/pacman
 	name = "\improper P.A.C.M.A.N.-type portable generator"
 	circuit = /obj/item/circuitboard/machine/pacman
-	power_gen = 5000
+	power_gen = 10 KILO JOULES
 	var/sheets = 0
 	var/max_sheets = 50
 	var/sheet_name = ""
 	var/sheet_path = /obj/item/stack/sheet/mineral/plasma
 	var/sheet_left = 0 // How much is left of the sheet
-	var/time_per_sheet = 60
+	var/time_per_sheet = 180
 	var/current_heat = 0
 
 /obj/machinery/power/port_gen/pacman/Initialize(mapload)
@@ -108,8 +116,8 @@
 		icon_state = "portgen1_0"
 		base_icon_state = "portgen1"
 		max_sheets = 20
-		time_per_sheet = 20
-		power_gen = 15000
+		time_per_sheet = 60
+		power_gen = 30 KILO JOULES
 		sheet_path = /obj/item/stack/sheet/mineral/uranium
 
 /obj/machinery/power/port_gen/pacman/examine(mob/user)
@@ -175,39 +183,44 @@
 	else
 		disconnect_from_network()
 
-/obj/machinery/power/port_gen/pacman/attackby(obj/item/O, mob/user, params)
-	if(istype(O, sheet_path))
-		var/obj/item/stack/addstack = O
-		var/amount = min((max_sheets - sheets), addstack.amount)
-		if(amount < 1)
-			to_chat(user, span_notice("The [src.name] is full!"))
-			return
-		to_chat(user, span_notice("You add [amount] sheets to the [src.name]."))
-		sheets += amount
-		addstack.use(amount)
-		return
-	else if(!active)
-		if(O.tool_behaviour == TOOL_WRENCH)
-			if(!anchored && !isinspace())
-				set_anchored(TRUE)
-				to_chat(user, span_notice("You secure the generator to the floor."))
-			else if(anchored)
-				set_anchored(FALSE)
-				to_chat(user, span_notice("You unsecure the generator from the floor."))
+/obj/machinery/power/port_gen/pacman/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, sheet_path))
+		return ..()
+	var/obj/item/stack/addstack = tool
+	var/amount = min((max_sheets - sheets), addstack.amount)
+	if(amount < 1)
+		to_chat(user, span_notice("\The [src] is full!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You add [amount] sheets to \the [src]."))
+	sheets += amount
+	addstack.use(amount)
+	return ITEM_INTERACT_SUCCESS
 
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			return
-		else if(O.tool_behaviour == TOOL_SCREWDRIVER)
-			toggle_panel_open()
-			O.play_tool_sound(src)
-			if(panel_open)
-				to_chat(user, span_notice("You open the access panel."))
-			else
-				to_chat(user, span_notice("You close the access panel."))
-			return
-		else if(default_deconstruction_crowbar(O))
-			return
-	return ..()
+/obj/machinery/power/port_gen/screwdriver_act(mob/living/user, obj/item/tool)
+	if(active)
+		return NONE
+	toggle_panel_open()
+	tool.play_tool_sound(src)
+	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the access panel."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/power/port_gen/wrench_act(mob/living/user, obj/item/tool)
+	if(active)
+		return NONE
+	if(!anchored && !isinspace())
+		set_anchored(TRUE)
+		to_chat(user, span_notice("You secure the generator to the floor."))
+		return ITEM_INTERACT_SUCCESS
+
+	set_anchored(FALSE)
+	to_chat(user, span_notice("You unsecure the generator from the floor."))
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/power/port_gen/crowbar_act(mob/living/user, obj/item/tool)
+	if(active)
+		return NONE
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/power/port_gen/pacman/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -246,7 +259,7 @@
 	data["current_heat"] = current_heat
 	. = data
 
-/obj/machinery/power/port_gen/pacman/ui_act(action, params)
+/obj/machinery/power/port_gen/pacman/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -274,9 +287,21 @@
 	icon_state = "portgen1_0"
 	base_icon_state = "portgen1"
 	max_sheets = 20
-	time_per_sheet = 20
-	power_gen = 15000
+	time_per_sheet = 60
+	power_gen = 30 KILO JOULES
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
+
+/obj/machinery/power/port_gen/pacman/wood
+	name = "\improper P.L.A.N.K.M.A.N.-type portable generator"
+	desc = "Burns wood to generate some power. Do not touch when powered."
+	circuit = /obj/item/circuitboard/machine/plankman
+	icon_state = "portgen3_0"
+	base_icon_state = "portgen3"
+	max_sheets = 75
+	time_per_sheet = 360
+	power_gen = 5 KILO JOULES
+	sheet_path = /obj/item/stack/sheet/mineral/wood
+	light_mask = "portgen3-emissive"
 
 /obj/machinery/power/port_gen/pacman/pre_loaded
 	sheets = 15

@@ -6,6 +6,8 @@
 	inhand_icon_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	obj_flags = UNIQUE_RENAME
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	var/enabled = TRUE
 	var/renamed = FALSE
 
@@ -28,6 +30,22 @@
 
 	return NONE
 
+/obj/item/beacon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	if(prob(75 / severity))
+		if(enabled)
+			icon_state = "beacon-off"
+			GLOB.teleportbeacons -= src
+			SEND_SIGNAL(src, COMSIG_BEACON_DISABLED)
+		else
+			icon_state = "beacon"
+			GLOB.teleportbeacons += src
+
+		enabled = !enabled
+
 /obj/item/beacon/proc/turn_off()
 	icon_state = "beacon-off"
 	GLOB.teleportbeacons -= src
@@ -46,15 +64,3 @@
 /obj/item/beacon/attack_hand_secondary(mob/user, list/modifiers)
 	attack_self(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/item/beacon/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/pen)) // needed for things that use custom names like the locator
-		var/new_name = tgui_input_text(user, "What would you like the name to be?", "Beacon", max_length = MAX_NAME_LEN)
-		if(!user.can_perform_action(src))
-			return
-		if(new_name)
-			name = new_name
-			renamed = TRUE
-		return
-	else
-		return ..()

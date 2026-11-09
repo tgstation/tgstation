@@ -26,7 +26,7 @@
 /datum/component/interaction_booby_trap/Initialize(
 	explosion_light_range = 3,
 	explosion_heavy_range = 1, // So we destroy some machine components
-	triggered_sound = 'sound/machines/triple_beep.ogg',
+	triggered_sound = 'sound/machines/beep/triple_beep.ogg',
 	trigger_delay = 0.5 SECONDS,
 	sound_loop_type = /datum/looping_sound/trapped_machine_beep,
 	defuse_tool = TOOL_SCREWDRIVER,
@@ -75,7 +75,7 @@
 	if (explode_timer)
 		return
 	explode_timer = addtimer(CALLBACK(src, PROC_REF(explode), source), 0.5 SECONDS)
-	source.balloon_alert_to_viewers("beep")
+	source.balloon_alert_to_hearers("*beep*")
 	playsound(parent, triggered_sound, 50, FALSE)
 	return
 

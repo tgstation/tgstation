@@ -14,6 +14,6 @@
 
 /// Creates a new skull assigned to the owner of this action
 /datum/action/cooldown/mob_cooldown/create_legion_skull/proc/create(atom/target)
-	var/mob/living/basic/legion_brood/minion = new(owner.loc)
+	var/mob/living/basic/mining/legion_brood/minion = new(owner.loc)
 	minion.assign_creator(owner)
-	minion.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = target
+	minion.ai_controller.set_blackboard_key(BB_CURRENT_TARGET, target)

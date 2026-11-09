@@ -29,7 +29,13 @@
 		if(!ispath(path))
 			path.forceMove(pod)
 		else
-			path = new path(pod)
+			var/amount_to_spawn = paths_to_spawn[path] || 1
+			if(!isnum(amount_to_spawn))
+				stack_trace("amount to spawn for path \"[path]\" is not a number, defaulting to 1")
+				amount_to_spawn = 1
+
+			for(var/item_number in 1 to amount_to_spawn)
+				new path(pod)
 
 	//remove non var edits from specifications
 	specifications -= "target"

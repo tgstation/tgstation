@@ -23,16 +23,14 @@
 	/// The amount of time it takes to create a venus human trap.
 	var/growth_time = 120 SECONDS
 	var/growth_icon = 0
-
 	/// Used by countdown to check time, this is when the timer will complete and the venus trap will spawn.
 	var/finish_time
 	/// The countdown ghosts see to when the plant will hatch
 	var/obj/effect/countdown/flower_bud/countdown
-
-	var/trait_flags = 0
-
+	/// List of mutations for a specific flower vine
+	var/list/mutations = list()
+	/// List of anchored vines that are attatched to the flower for the bloom/beam effect
 	var/list/vines = list()
-
 	/// The spawner that actually handles spawning the ghost role in
 	var/obj/effect/mob_spawn/ghost_role/venus_human_trap/spawner
 
@@ -55,18 +53,20 @@
 	countdown.start()
 
 /obj/structure/alien/resin/flower_bud/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if((trait_flags & SPACEVINE_HEAT_RESISTANT) && damage_type == BURN)
+	var/datum/spacevine_mutation/fire_proof/fire_proof = locate() in mutations
+	if(fire_proof && damage_type == BURN)
 		damage_amount = 0
+
 	. = ..()
 
-/obj/structure/alien/resin/flower_bud/attacked_by(obj/item/item, mob/living/user)
-	var/damage_dealt = item.force
+/obj/structure/alien/resin/flower_bud/attacked_by(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
+	LAZYSET(attack_modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)
+	LAZYSET(attack_modifiers, FORCE_MULTIPLIER, 1)
 	if(item.damtype == BURN)
-		damage_dealt *= 4
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 4)
 	if(item.get_sharpness())
-		damage_dealt *= 16 // alien resin applies 75% reduction to brute damage so this actually x4 damage
-
-	take_damage(damage_dealt, item.damtype, MELEE, 1)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 16) // alien resin applies 75% reduction to brute damage so this actually x4 damage
+	return ..()
 
 /obj/structure/alien/resin/flower_bud/Destroy()
 	QDEL_LIST(vines)
@@ -110,7 +110,7 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		if(!isvineimmune(L))
-			L.adjustBruteLoss(5)
+			L.adjust_brute_loss(5)
 			to_chat(L, span_alert("You cut yourself on the thorny vines."))
 
 /**
@@ -134,8 +134,8 @@
 	health_doll_icon = "venus_human_trap"
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	layer = SPACEVINE_MOB_LAYER
-	health = 100
-	maxHealth = 100
+	health = 50
+	maxHealth = 50
 	obj_damage = 60
 	melee_damage_lower = 10
 	melee_damage_upper = 20
@@ -143,9 +143,9 @@
 	combat_mode = TRUE
 	basic_mob_flags = DEL_ON_DEATH
 	death_message = "collapses into bits of plant matter."
-	attacked_sound = 'sound/creatures/venus_trap_hurt.ogg'
-	death_sound = 'sound/creatures/venus_trap_death.ogg'
-	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
+	attacked_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_hurt.ogg'
+	death_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_death.ogg'
+	attack_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_hit.ogg'
 	unsuitable_heat_damage = 5 // heat damage is different from cold damage since coldmos is significantly more common than plasmafires
 	unsuitable_cold_damage = 2 // they now do take cold damage, but this should be sufficiently small that it does not cause major issues
 	habitable_atmos = null
@@ -156,7 +156,7 @@
 	lighting_cutoff_red = 10
 	lighting_cutoff_green = 35
 	lighting_cutoff_blue = 20
-	faction = list(FACTION_HOSTILE,FACTION_VINES,FACTION_PLANTS)
+	faction = list(FACTION_HOSTILE, FACTION_VINES, FACTION_PLANTS)
 	initial_language_holder = /datum/language_holder/venus
 	unique_name = TRUE
 	speed = 1.2
@@ -165,9 +165,13 @@
 	///how much damage we take out of weeds
 	var/no_weed_damage = 12.5
 	///how much do we heal in weeds
-	var/weed_heal = 10
+	var/weed_heal = 5
 	///if the balloon alert was shown atleast once, reset after healing in weeds
 	var/alert_shown = FALSE
+	///the distance it can move away from kudzu before taking damage
+	var/kudzu_off_distance_range = 0
+	/// Internal dummy used to glow (very cool)
+	var/obj/effect/dummy/lighting_obj/moblight/glow
 
 /mob/living/basic/venus_human_trap/Initialize(mapload)
 	. = ..()
@@ -177,6 +181,10 @@
 	)
 	grant_actions_by_list(innate_actions)
 
+/mob/living/basic/venus_human_trap/Destroy(force)
+	QDEL_NULL(glow)
+	return ..()
+
 /mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
 	if(!combat_mode)
 		return
@@ -185,19 +193,19 @@
 		return
 	tangle_ability.Trigger(target = victim)
 
-/mob/living/basic/venus_human_trap/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/venus_human_trap/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	var/vines_in_range = locate(/obj/structure/spacevine) in range(2, src)
+	var/vines_in_range = locate(/obj/structure/spacevine) in range(kudzu_off_distance_range, src)
 	if(!vines_in_range && !alert_shown)
 		alert_shown = TRUE
 		balloon_alert(src, "do not leave vines!")
 	else if(vines_in_range)
 		alert_shown = FALSE
 
-	adjustBruteLoss(vines_in_range ? -weed_heal : no_weed_damage) //every life tick take 20 damage if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
+	adjust_brute_loss(vines_in_range ? -weed_heal : no_weed_damage) //every life tick take 20 damage if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle
 	name = "Tangle"
@@ -216,18 +224,22 @@
 	QDEL_LIST(vines)
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle/Activate(atom/target_atom)
-	if(isturf(target_atom) || istype(target_atom, /obj/structure/spacevine))
+/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle/Activate(atom/movable/target_atom)
+	if(!ismovable(target_atom) || istype(target_atom, /obj/structure/spacevine))
+		return
+	if(target_atom.anchored)
+		owner.balloon_alert(owner, "can't pull!")
 		return
 	if(get_dist(owner, target_atom) > vine_grab_distance)
 		owner.balloon_alert(owner, "too far!")
 		return
-	for(var/turf/blockage in get_line(owner, target_atom))
+	var/list/target_turfs = get_line(owner, target_atom) - list(get_turf(owner), get_turf(target_atom))
+	for(var/turf/blockage in target_turfs)
 		if(blockage.is_blocked_turf(exclude_mobs = TRUE))
-			owner.balloon_alert(owner, "something's in the way!")
+			owner.balloon_alert(owner, "path blocked!")
 			return
 
-	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
+	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = NONE)
 	var/component = target_atom.AddComponent(/datum/component/leash, owner, vine_grab_distance)
 	RegisterSignal(new_vine, COMSIG_QDELETING, PROC_REF(remove_vine), new_vine)
 	vines[new_vine] = component
@@ -252,17 +264,11 @@
 	vines -= vine
 
 /datum/ai_controller/basic_controller/human_trap
+	behavior_tree_json = "code/modules/mob/living/basic/jungle/human_trap.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/continue_planning,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 #undef FINAL_BUD_GROWTH_ICON

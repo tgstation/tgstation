@@ -6,7 +6,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 4, /datum/material/glass=SMALL_MATERIAL_AMOUNT*1.2)
-	attachable = TRUE
+	assembly_behavior = ASSEMBLY_ALL
 	drop_sound = 'sound/items/handling/component_drop.ogg'
 	pickup_sound = 'sound/items/handling/component_pickup.ogg'
 
@@ -26,8 +26,10 @@
 	var/hearing_range = 1
 	/// String containing the last piece of logging data relating to when this signaller has received a signal.
 	var/last_receive_signal_log
+	/// Signal range, see /datum/radio_frequency/proc/post_signal
+	var/range = 0 //Everywhere
 
-/obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
+/obj/item/assembly/signaler/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] eats \the [src]! If it is signaled, [user.p_they()] will die!"))
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	moveToNullspace()
@@ -35,23 +37,23 @@
 	suicide_mob = REF(user)
 	return MANUAL_SUICIDE_NONLETHAL
 
-/obj/item/assembly/signaler/proc/manual_suicide(datum/mind/suicidee)
-	var/mob/living/user = suicidee.current
+/obj/item/assembly/signaler/proc/manual_suicide()
+	var/mob/living/user = suicider.current
 	if(!istype(user))
 		return
-	if(suicide_mob == REF(user))
-		user.visible_message(span_suicide("[user]'s [src] receives a signal, killing [user.p_them()] instantly!"))
-	else
-		user.visible_message(span_suicide("[user]'s [src] receives a signal and [user.p_they()] die[user.p_s()] like a gamer!"))
+	if(suicide_mob != REF(user))
+		return
+	user.visible_message(span_suicide("[user]'s [src] receives a signal, killing [user.p_them()] instantly!"))
 	user.set_suicide(TRUE)
-	user.adjustOxyLoss(200)//it sends an electrical pulse to their heart, killing them. or something.
+	user.adjust_oxy_loss(200)//it sends an electrical pulse to their heart, killing them. or something.
 	user.death(FALSE)
-	playsound(user, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	playsound(user, 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	qdel(src)
 
 /obj/item/assembly/signaler/Initialize(mapload)
 	. = ..()
 	set_frequency(frequency)
+	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
 
 /obj/item/assembly/signaler/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -120,14 +122,18 @@
 
 	update_appearance()
 
-/obj/item/assembly/signaler/attackby(obj/item/W, mob/user, params)
-	if(issignaler(W))
-		var/obj/item/assembly/signaler/signaler2 = W
-		if(secured && signaler2.secured)
-			code = signaler2.code
-			set_frequency(signaler2.frequency)
-			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
-	..()
+/obj/item/assembly/signaler/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!issignaler(tool))
+		return ..()
+
+	var/obj/item/assembly/signaler/sister_signaler = tool
+	if(!secured || !sister_signaler.secured)
+		return ..()
+
+	code = sister_signaler.code
+	set_frequency(sister_signaler.frequency)
+	to_chat(user, "You transfer the frequency and code of \the [sister_signaler.name] to \the [name]")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/assembly/signaler/attack_self_secondary(mob/user, modifiers)
 	. = ..()
@@ -146,14 +152,14 @@
 	if(!radio_connection)
 		return
 
-	var/time = time2text(world.realtime,"hh:mm:ss")
+	var/time = time2text(world.realtime, "hh:mm:ss", TIMEZONE_UTC)
 	var/turf/T = get_turf(src)
 
 	var/logging_data = "[time] <B>:</B> [key_name(usr)] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]"
 	add_to_signaler_investigate_log(logging_data)
 
 	var/datum/signal/signal = new(list("code" = code), logging_data = logging_data)
-	radio_connection.post_signal(src, signal)
+	radio_connection.post_signal(src, signal, range = range)
 
 /obj/item/assembly/signaler/receive_signal(datum/signal/signal)
 	. = FALSE
@@ -162,16 +168,16 @@
 	if(signal.data["code"] != code)
 		return
 	if(suicider)
-		manual_suicide(suicider)
+		manual_suicide()
 		return
 
 	// If the holder is a TTV, we want to store the last received signal to incorporate it into TTV logging, else wipe it.
 	last_receive_signal_log = istype(holder, /obj/item/transfer_valve) ? signal.logging_data : null
 
 	pulse()
-	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>", null, hearing_range)
+	audible_message(span_infoplain("[icon2html(src, hearers(src))] *beep* *beep* *beep*"), null, hearing_range)
 	for(var/mob/hearing_mob in get_hearers_in_view(hearing_range, src))
-		hearing_mob.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+		hearing_mob.playsound_local(get_turf(src), 'sound/machines/beep/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	return TRUE
 
 /obj/item/assembly/signaler/proc/set_frequency(new_frequency)
@@ -180,12 +186,19 @@
 	radio_connection = SSradio.add_object(src, frequency, RADIO_SIGNALER)
 	return
 
+/obj/item/assembly/signaler/proc/on_mail_unwrap(atom/source, mob/user, obj/item/mail/traitor/letter)
+	SIGNAL_HANDLER
+	to_chat(user, span_danger("As you open [letter], you accidentally press a button on [src]!"))
+	INVOKE_ASYNC(src, PROC_REF(signal)) // No need to check for cooldown, the cooldown is shorter than the do_after for opening mail
+	return NONE //don't return handled, we want in hands and open ui
+
 /obj/item/assembly/signaler/cyborg
 
-/obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, params)
-	return
+/obj/item/assembly/signaler/cyborg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_BLOCKING
+
 /obj/item/assembly/signaler/cyborg/screwdriver_act(mob/living/user, obj/item/I)
-	return
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/assembly/signaler/internal
 	name = "internal remote signaling device"
@@ -193,13 +206,18 @@
 /obj/item/assembly/signaler/internal/ui_state(mob/user)
 	return GLOB.inventory_state
 
-/obj/item/assembly/signaler/internal/attackby(obj/item/W, mob/user, params)
-	return
+/obj/item/assembly/signaler/internal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/assembly/signaler/internal/screwdriver_act(mob/living/user, obj/item/I)
-	return
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/assembly/signaler/internal/can_interact(mob/user)
 	if(ispAI(user))
 		return TRUE
 	. = ..()
+
+/obj/item/assembly/signaler/low_range
+	name = "low-power remote signaling device"
+	desc = "Used to remotely activate devices, within a small range of 9 tiles. Allows for syncing when using a secure signaler on another."
+	range = 9

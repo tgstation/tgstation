@@ -15,26 +15,68 @@
 	anchored = TRUE
 	can_buckle = TRUE
 	buckle_lying = 90
+	buckle_dir = SOUTH
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	integrity_failure = 0.35
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	/// What material this bed is made of
 	var/build_stack_type = /obj/item/stack/sheet/iron
 	/// How many mats to drop when deconstructed
 	var/build_stack_amount = 2
 	/// Mobs standing on it are nudged up by this amount. Also used to align the person back when buckled to it after init.
 	var/elevation = 8
+	/// If this bed can be deconstructed using a wrench
+	var/can_deconstruct = TRUE
+	/// Directions in which the bed has its headrest on the left side.
+	var/left_headrest_dirs = NORTHEAST
 
 /obj/structure/bed/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/soft_landing)
 	if(elevation)
 		AddElement(/datum/element/elevation, pixel_shift = elevation)
+	update_buckle_vars(dir)
 	register_context()
+
+/obj/structure/bed/buckle_feedback(mob/living/being_buckled, mob/buckler)
+	if(HAS_TRAIT(being_buckled, TRAIT_RESTRAINED))
+		return ..()
+
+	if(being_buckled == buckler)
+		being_buckled.visible_message(
+			span_notice("[buckler] lays down on [src]."),
+			span_notice("You lay down on [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		being_buckled.visible_message(
+			span_notice("[buckler] lays [being_buckled] down on [src]."),
+			span_notice("[buckler] lays you down on [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+
+/obj/structure/bed/unbuckle_feedback(mob/living/being_unbuckled, mob/unbuckler)
+	if(HAS_TRAIT(being_unbuckled, TRAIT_RESTRAINED))
+		return ..()
+
+	if(being_unbuckled == unbuckler)
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] gets up from [src]."),
+			span_notice("You get up from [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] pulls [being_unbuckled] up from [src]."),
+			span_notice("[unbuckler] pulls you up from [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
 
 /obj/structure/bed/examine(mob/user)
 	. = ..()
-	. += span_notice("It's held together by a couple of <b>bolts</b>.")
+	if (can_deconstruct)
+		. += span_notice("It's held together by a couple of <b>bolts</b>.")
 
 /obj/structure/bed/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
@@ -48,6 +90,13 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Unbuckle"
 		return CONTEXTUAL_SCREENTIP_SET
 
+/obj/structure/bed/setDir(newdir)
+	. = ..()
+	update_buckle_vars(newdir)
+
+/obj/structure/bed/proc/update_buckle_vars(newdir)
+	buckle_lying = newdir & left_headrest_dirs ? 270 : 90
+
 /obj/structure/bed/atom_deconstruct(disassembled = TRUE)
 	if(build_stack_type)
 		new build_stack_type(loc, build_stack_amount)
@@ -56,6 +105,8 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/bed/wrench_act_secondary(mob/living/user, obj/item/weapon)
+	if (!can_deconstruct)
+		return NONE
 	..()
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)
@@ -69,10 +120,15 @@
 	icon_state = "med_down"
 	base_icon_state = "med"
 	anchored = FALSE
+	left_headrest_dirs = SOUTHWEST
+	buckle_lying = 270
 	resistance_flags = NONE
 	build_stack_type = /obj/item/stack/sheet/mineral/titanium
 	build_stack_amount = 1
 	elevation = 0
+	buckle_sound = /datum/sound_effect/seatbelt_buckle
+	unbuckle_sound = /datum/sound_effect/seatbelt_unbuckle
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.7, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.7)
 	/// The item it spawns when it's folded up.
 	var/foldable_type
 
@@ -154,26 +210,28 @@
 		. += mutable_appearance(icon, "brakes_down")
 		. += emissive_appearance(icon, "brakes_down", src, alpha = src.alpha)
 
-/obj/structure/bed/medical/emergency/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/emergency_bed/silicon))
-		var/obj/item/emergency_bed/silicon/silicon_bed = item
-		if(silicon_bed.loaded)
-			to_chat(user, span_warning("You already have a medical bed docked!"))
-			return
+/obj/structure/bed/medical/emergency/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/emergency_bed/silicon))
+		return NONE
+	var/obj/item/emergency_bed/silicon/silicon_bed = tool
+	if(silicon_bed.loaded)
+		to_chat(user, span_warning("You already have a medical bed docked!"))
+		return ITEM_INTERACT_BLOCKING
 
-		if(has_buckled_mobs())
-			if(buckled_mobs.len > 1)
-				unbuckle_all_mobs()
-				user.visible_message(span_notice("[user] unbuckles all creatures from [src]."))
-			else
-				user_unbuckle_mob(buckled_mobs[1],user)
-		else
-			silicon_bed.loaded = src
-			forceMove(silicon_bed)
-			user.visible_message(span_notice("[user] collects [src]."), span_notice("You collect [src]."))
-		return TRUE
-	else
-		return ..()
+	if(has_buckled_mobs())
+		if(buckled_mobs.len == 1)
+			user_unbuckle_mob(buckled_mobs[1],user)
+			return ITEM_INTERACT_SUCCESS
+
+		unbuckle_all_mobs()
+		user.visible_message(span_notice("[user] unbuckles all creatures from [src]."))
+		return ITEM_INTERACT_SUCCESS
+
+
+	silicon_bed.loaded = src
+	forceMove(silicon_bed)
+	user.visible_message(span_notice("[user] collects [src]."), span_notice("You collect [src]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/bed/medical/emergency/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -199,32 +257,32 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL // No more excuses, stop getting blood everywhere
+	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.7, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.7)
 
-/obj/item/emergency_bed/attackby(obj/item/item, mob/living/user, params)
-	if(istype(item, /obj/item/emergency_bed/silicon))
-		var/obj/item/emergency_bed/silicon/silicon_bed = item
-		if(silicon_bed.loaded)
-			to_chat(user, span_warning("[silicon_bed] already has a roller bed loaded!"))
-			return
+/obj/item/emergency_bed/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/emergency_bed/silicon))
+		return NONE
 
-		user.visible_message(span_notice("[user] loads [src]."), span_notice("You load [src] into [silicon_bed]."))
-		silicon_bed.loaded = new/obj/structure/bed/medical/emergency(silicon_bed)
-		qdel(src) //"Load"
-		return
+	var/obj/item/emergency_bed/silicon/silicon_bed = tool
+	if(silicon_bed.loaded)
+		to_chat(user, span_warning("[silicon_bed] already has a roller bed loaded!"))
+		return ITEM_INTERACT_BLOCKING
 
-	else
-		return ..()
+	user.visible_message(span_notice("[user] loads [src]."), span_notice("You load [src] into [silicon_bed]."))
+	silicon_bed.loaded = new/obj/structure/bed/medical/emergency(silicon_bed)
+	qdel(src) //"Load"
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/emergency_bed/attack_self(mob/user)
 	deploy_bed(user, user.loc)
 
-/obj/item/emergency_bed/afterattack(obj/target, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
+/obj/item/emergency_bed/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(isopenturf(interacting_with))
+		deploy_bed(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-	if(isopenturf(target))
-		deploy_bed(user, target)
 
 /obj/item/emergency_bed/proc/deploy_bed(mob/user, atom/location)
 	var/obj/structure/bed/medical/emergency/deployed = new /obj/structure/bed/medical/emergency(location)
@@ -261,6 +319,7 @@
 	build_stack_type = /obj/item/stack/sheet/mineral/wood
 	build_stack_amount = 10
 	elevation = 0
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 	var/owned = FALSE
 
 /obj/structure/bed/dogbed/ian
@@ -271,6 +330,11 @@
 /obj/structure/bed/dogbed/cayenne
 	desc = "Seems kind of... fishy."
 	name = "Cayenne's bed"
+	anchored = TRUE
+
+/obj/structure/bed/dogbed/misha
+	desc = "There is fur all over it, and some blood..."
+	name = "Misha's bed"
 	anchored = TRUE
 
 /obj/structure/bed/dogbed/lia
@@ -323,6 +387,7 @@
 	icon_state = "bed_double"
 	build_stack_amount = 4
 	max_buckled_mobs = 2
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4)
 	/// The mob who buckled to this bed second, to avoid other mobs getting pixel-shifted before he unbuckles.
 	var/mob/living/goldilocks
 

@@ -11,6 +11,19 @@
 #define FIXED_COLOUR_PRIORITY 4
 ///how many colour priority levels there are.
 #define COLOUR_PRIORITY_AMOUNT 4
+/// If this is a plain atom color
+#define ATOM_COLOR_TYPE_NORMAL "normal"
+/// If this is a color filter
+#define ATOM_COLOR_TYPE_FILTER "filter"
+// Indexes for color arrays
+#define ATOM_COLOR_VALUE_INDEX 1
+#define ATOM_COLOR_TYPE_INDEX 2
+#define ATOM_PRIORITY_COLOR_FILTER "atom_priority_color"
+#define ATOM_PRIORITY_COLOR_FILTER_PRIORITY -1
+/// Multiply pixel's saturation by color's saturation. Paints accents while keeping dim areas dim.
+#define SATURATION_MULTIPLY "multiply"
+/// Always affects the original pixel's saturation and lightness.
+#define SATURATION_OVERRIDE "always"
 
 #define COLOR_DARKMODE_BACKGROUND "#202020"
 #define COLOR_DARKMODE_DARKBACKGROUND "#171717"
@@ -64,6 +77,7 @@
 #define COLOR_LIGHT_YELLOW "#FFFEE0"
 
 #define COLOR_OLIVE "#808000"
+#define COLOR_OLIVE_GREEN "#677714"
 #define COLOR_ASSISTANT_OLIVE "#828163"
 #define COLOR_VIBRANT_LIME "#00FF00"
 #define COLOR_SERVICE_LIME "#58C800"
@@ -72,6 +86,7 @@
 #define COLOR_LIME "#32CD32"
 #define COLOR_DARK_LIME "#00aa00"
 #define COLOR_VERY_PALE_LIME_GREEN "#DDFFD3"
+#define COLOR_HERETIC_GREEN COLOR_VERY_PALE_LIME_GREEN // i am co-opting this as heretic glow.
 #define COLOR_VERY_DARK_LIME_GREEN "#003300"
 #define COLOR_GREEN "#008000"
 #define COLOR_CHRISTMAS_GREEN "#00873E"
@@ -98,16 +113,20 @@
 #define COLOR_MODERATE_BLUE "#555CC2"
 #define COLOR_TRAM_BLUE "#6160A8"
 #define COLOR_TRAM_LIGHT_BLUE "#A8A7DA"
-#define COLOR_AMETHYST "#822BFF"
+#define COLOR_AMETHYST "#822bff"
 #define COLOR_BLUE_LIGHT "#33CCFF"
+#define COLOR_BLUE_VERY_LIGHT "#ccecff"
 #define COLOR_NAVY "#000080"
 #define COLOR_BLUE_GRAY "#75A2BB"
+#define COLOR_AI_HOLOGRAM_BLUE "#7DB4E1"
 
 #define COLOR_PINK "#FFC0CB"
 #define COLOR_LIGHT_PINK "#FF3CC8"
 #define COLOR_SCIENCE_PINK "#C96DBF"
 #define COLOR_MOSTLY_PURE_PINK "#E4005B"
 #define COLOR_ADMIN_PINK "#D100D1"
+#define COLOR_TONGUE_PINK "#ff6ea0"
+#define COLOR_PUCE "#cc8899"
 #define COLOR_BLUSH_PINK "#DE5D83"
 #define COLOR_FADED_PINK "#ff80d5"
 #define COLOR_MAGENTA "#FF00FF"
@@ -116,7 +135,7 @@
 #define COLOR_VIOLET "#B900F7"
 #define COLOR_VOID_PURPLE "#53277E"
 #define COLOR_STRONG_VIOLET "#6927C5"
-#define COLOR_DARK_PURPLE "#551A8B"
+#define COLOR_DARK_PURPLE "#551a8b"
 
 #define COLOR_ORANGE "#FF9900"
 #define COLOR_IRISH_ORANGE "#FF883E"
@@ -130,6 +149,7 @@
 #define COLOR_DARK_ORANGE "#C3630C"
 #define COLOR_PRISONER_ORANGE "#A54900"
 #define COLOR_DARK_MODERATE_ORANGE "#8B633B"
+#define COLOR_RUSTED_GLASS "#917c65"
 
 #define COLOR_BROWN "#BA9F6D"
 #define COLOR_DARK_BROWN "#997C4F"
@@ -201,6 +221,14 @@
 #define COLOR_SAMPLE_BROWN "#91542d"
 #define COLOR_SAMPLE_GRAY "#5e5856"
 
+///Colors for blood greyscale sprites
+#define BLOOD_COLOR_RED "#AA1010"
+#define BLOOD_COLOR_LIZARD "#035A00"
+#define BLOOD_COLOR_XENO "#96BB00"
+#define BLOOD_COLOR_OIL "#2C2C2C"
+#define BLOOD_COLOR_BLACK "#1F1A00"
+#define BLOOD_COLOR_DRIED "#370404" // Not to be used normally, only exists for mapper convinience
+
 ///Main colors for UI themes
 #define COLOR_THEME_MIDNIGHT "#6086A0"
 #define COLOR_THEME_PLASMAFIRE "#FFB200"
@@ -268,6 +296,8 @@
 #define LIGHT_COLOR_HOLY_MAGIC "#FFF743"
 /// deep crimson
 #define LIGHT_COLOR_BLOOD_MAGIC "#D00000"
+/// Light-ish blue, used on mining sprites
+#define LIGHT_COLOR_MINING "#4AA0ED"
 
 /* These ones aren't a direct colour like the ones above, because nothing would fit */
 /// Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)
@@ -304,6 +334,45 @@
 #define COLOR_PRIDE_GREEN "#41FC66"
 #define COLOR_PRIDE_BLUE "#42FFF2"
 #define COLOR_PRIDE_PURPLE "#5D5DFC"
+
+#define PRIDE_FLAG_COLORS list(COLOR_PRIDE_PURPLE, COLOR_PRIDE_BLUE, COLOR_PRIDE_GREEN, COLOR_PRIDE_YELLOW, COLOR_PRIDE_ORANGE, COLOR_PRIDE_RED)
+
+#define COLOR_LESBIAN_RED "#D62800"
+#define COLOR_LESBIAN_ORANGE "#FF9B56"
+#define COLOR_LESBIAN_PINK "#D452A6"
+#define COLOR_LESBIAN_MAGENTA "#A40062"
+
+#define LESBIAN_FLAG_COLORS list(COLOR_LESBIAN_MAGENTA, COLOR_LESBIAN_PINK, COLOR_LESBIAN_ORANGE, COLOR_LESBIAN_RED)
+
+#define COLOR_GAY_GREEN "#078D70"
+#define COLOR_GAY_LIGHT_GREEN "#98E8C1"
+#define COLOR_GAY_LIGHT_BLUE "#7BADE2"
+#define COLOR_GAY_BLUE "#3D1A78"
+
+#define GAY_MAN_FLAG_COLORS list(COLOR_GAY_BLUE, COLOR_GAY_LIGHT_BLUE, COLOR_GAY_LIGHT_GREEN, COLOR_GAY_GREEN)
+
+#define COLOR_TRANS_BLUE "#5BCEFA"
+#define COLOR_TRANS_PINK "#F5A9B8"
+
+#define TRANS_FLAG_COLORS list(COLOR_TRANS_PINK, COLOR_WHITE, COLOR_TRANS_PINK, COLOR_TRANS_BLUE)
+
+#define COLOR_BI_PINK "#D60270"
+#define COLOR_BI_PURPLE "#9B4F96"
+#define COLOR_BI_BLUE "#0038A8"
+
+#define BI_FLAG_COLORS list(COLOR_BI_BLUE, COLOR_BI_PURPLE, COLOR_BI_PINK)
+
+#define COLOR_ACE_BLACK "#292929"
+#define COLOR_ACE_GREY "#888888"
+#define COLOR_ACE_PURPLE "#800080"
+
+#define ACE_FLAG_COLORS list(COLOR_ACE_PURPLE, COLOR_WHITE, COLOR_ACE_GREY, COLOR_ACE_BLACK)
+
+#define COLOR_PAN_MAGENTA "#FF218C"
+#define COLOR_PAN_YELLOW "#FFE45E"
+#define COLOR_PAN_CYAN "#2CCAFF"
+
+#define PAN_FLAG_COLORS list(COLOR_PAN_CYAN, COLOR_PAN_YELLOW, COLOR_PAN_MAGENTA)
 
 /// Colors for status/tram/incident displays
 #define COLOR_DISPLAY_RED "#BE3455"
@@ -349,6 +418,7 @@
 
 
 #define COLOR_CARP_PURPLE "#aba2ff"
+#define COLOR_CARP_DARK_PURPLE "#4c486e"
 #define COLOR_CARP_PINK "#da77a8"
 #define COLOR_CARP_GREEN "#70ff25"
 #define COLOR_CARP_GRAPE "#df0afb"
@@ -420,6 +490,23 @@
 #define COLOR_ICECREAM_CUSTOM "#f3f3f3"
 #define COLOR_ICECREAM_CHERRY_CHOCOLATE "#800000"
 
+// defines for .38 ammo type colors
+#define COLOR_AMMO_TRACK "#bd0ed4"
+#define COLOR_AMMO_MATCH "#ff0000a8"
+#define COLOR_AMMO_RUBBER "#3d3181"
+#define COLOR_AMMO_TRUESTRIKE "#ff05de"
+#define COLOR_AMMO_DUMDUM "#ffe601"
+#define COLOR_AMMO_HOTSHOT "#ff7b00"
+#define COLOR_AMMO_ICEBLOX "#0de3ff"
+#define COLOR_AMMO_HELLFIRE "#f60021"
+
+// defines for other ammo type colors (should this be merged with above?)
+#define COLOR_AMMO_INCENDIARY "#f4001f"
+#define COLOR_AMMO_ARMORPIERCE "#d9d9d9"
+#define COLOR_AMMO_HOLLOWPOINT "#ff9900"
+
+#define COLOR_DMI_MASK "#a0a0a000"
+
 GLOBAL_LIST_INIT(cable_colors, list(
 	CABLE_COLOR_BLUE = CABLE_HEX_COLOR_BLUE,
 	CABLE_COLOR_CYAN = CABLE_HEX_COLOR_CYAN,
@@ -432,4 +519,47 @@ GLOBAL_LIST_INIT(cable_colors, list(
 	CABLE_COLOR_BROWN = CABLE_HEX_COLOR_BROWN
 ))
 
+GLOBAL_LIST_INIT(heretic_path_to_color, list(
+		PATH_START = COLOR_LIME,
+		PATH_RUST = COLOR_CARGO_BROWN,
+		PATH_FLESH = COLOR_SOFT_RED,
+		PATH_ASH = COLOR_VIVID_RED,
+		PATH_VOID = COLOR_CYAN,
+		PATH_BLADE = COLOR_SILVER,
+		PATH_COSMIC = COLOR_PURPLE,
+		PATH_LOCK = COLOR_YELLOW,
+		PATH_MOON = COLOR_BLUE_LIGHT,
+	))
+
 #define HUSK_COLOR_TONE rgb(96, 88, 80)
+
+#define CM_COLOR_SAT_MIN 0.6
+#define CM_COLOR_SAT_MAX 0.7
+#define CM_COLOR_LUM_MIN 0.65
+#define CM_COLOR_LUM_MAX 0.75
+
+// Lowest priority
+#define EYE_COLOR_ORGAN_PRIORITY 1
+/// Base priority for atom colors, gets atom priorities added to it
+#define EYE_COLOR_ATOM_COLOR_PRIORITY 2
+#define EYE_COLOR_SPECIES_PRIORITY 10
+#define EYE_COLOR_WEED_PRIORITY 20
+#define EYE_COLOR_HUD_PRIORITY 30
+#define EYE_COLOR_LUMINESCENT_PRIORITY 40
+#define EYE_COLOR_CULTLIKE_PRIORITY 49
+#define EYE_COLOR_CULT_PRIORITY 50
+
+// Client color priorities
+
+#define CLIENT_COLOR_GLASSES_PRIORITY 1 // Lowest there is, used by glasses
+#define CLIENT_COLOR_HELMET_PRIORITY 2 // Same but for helmets
+#define CLIENT_COLOR_ORGAN_PRIORITY 3 // For heads and organs
+#define CLIENT_COLOR_FILTER_PRIORITY 4 // Filters which should go ontop of previous ones
+#define CLIENT_COLOR_TEMPORARY_PRIORITY 5 // Temporary flashing effects
+#define CLIENT_COLOR_IMPORTANT_PRIORITY 6 // Gameplay important hints signifying antag status or near-death, should be always shown
+#define CLIENT_COLOR_OVERRIDE_PRIORITY 7 // For effects that are meant to mask all others for technical reasons
+
+//Luma coefficients suggested for HDTVs. If you change these, make sure they add up to 1.
+#define LUMA_R 0.213
+#define LUMA_G 0.715
+#define LUMA_B 0.072

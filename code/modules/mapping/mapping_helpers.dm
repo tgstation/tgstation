@@ -102,11 +102,17 @@
 /obj/effect/baseturf_helper/reinforced_plating/ceiling/replace_baseturf(turf/thing)
 	var/turf/ceiling = get_step_multiz(thing, UP)
 	if(isnull(ceiling))
-		CRASH("baseturf helper is attempting to modify the Z level above but there is no Z level above above it.")
+		CRASH("baseturf helper is attempting to modify the Z level above but there is no Z level above it.")
 	if(isspaceturf(ceiling) || istype(ceiling, /turf/open/openspace))
 		return
 	return ..(ceiling)
 
+///Used for marking mapping errors. These should only be created by cases explicitly caught by unit tests, and should NEVER actually appear in production.
+/obj/effect/mapping_error
+	name = "I AM ERROR"
+	desc = "IF YOU SEE ME, YELL AT A MAPPER!!!"
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "mapping_error"
 
 /obj/effect/mapping_helpers
 	icon = 'icons/effects/mapping_helpers.dmi'
@@ -124,6 +130,8 @@
 /obj/effect/mapping_helpers/airlock
 	layer = DOOR_HELPER_LAYER
 	late = TRUE
+	/// If TRUE we will apply to every windoor in the loc if we can't find an airlock.
+	var/apply_to_windoors = FALSE
 
 /obj/effect/mapping_helpers/airlock/Initialize(mapload)
 	. = ..()
@@ -133,51 +141,40 @@
 
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(!airlock)
+		if(apply_to_windoors)
+			var/any_found = FALSE
+			for(var/obj/machinery/door/window/windoor in loc)
+				payload(windoor)
+				any_found = TRUE
+			if(!any_found)
+				log_mapping("[src] failed to find an airlock at [AREACOORD(src)], AND no windoors were found.")
+			return
+
 		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
-	else
-		payload(airlock)
+		return
+
+	payload(airlock)
 
 /obj/effect/mapping_helpers/airlock/LateInitialize()
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(!airlock)
 		qdel(src)
 		return
-	if(airlock.cyclelinkeddir)
-		airlock.cyclelinkairlock()
-	if(airlock.closeOtherId)
-		airlock.update_other_id()
-	if(airlock.abandoned)
-		var/outcome = rand(1,100)
-		switch(outcome)
-			if(1 to 9)
-				var/turf/here = get_turf(src)
-				for(var/turf/closed/T in range(2, src))
-					here.place_on_top(T.type)
-					qdel(airlock)
-					qdel(src)
-					return
-				here.place_on_top(/turf/closed/wall)
-				qdel(airlock)
-				qdel(src)
-				return
-			if(9 to 11)
-				airlock.lights = FALSE
-				// These do not use airlock.bolt() because we want to pretend it was always locked. That means no sound effects.
-				airlock.locked = TRUE
-			if(12 to 15)
-				airlock.locked = TRUE
-			if(16 to 23)
-				airlock.welded = TRUE
-			if(24 to 30)
-				airlock.set_panel_open(TRUE)
-	if(airlock.cutAiWire)
-		airlock.wires.cut(WIRE_AI)
-	if(airlock.autoname)
-		airlock.name = get_area_name(src, TRUE)
-	airlock.update_appearance()
+	late_payload(airlock)
+	if(!QDELETED(airlock))
+		if(airlock.cyclelinkeddir)
+			airlock.cyclelinkairlock()
+		if(airlock.closeOtherId)
+			airlock.update_other_id()
+		if(airlock.autoname)
+			airlock.name = get_area_name(src, TRUE)
+		airlock.update_appearance()
 	qdel(src)
 
 /obj/effect/mapping_helpers/airlock/proc/payload(obj/machinery/door/airlock/payload)
+	return
+
+/obj/effect/mapping_helpers/airlock/proc/late_payload(obj/machinery/door/airlock/payload)
 	return
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper
@@ -220,17 +217,98 @@
 
 /obj/effect/mapping_helpers/airlock/unres/payload(obj/machinery/door/airlock/airlock)
 	airlock.unres_sides ^= dir
-	airlock.unres_sensor = TRUE
+	airlock.unres_latch = TRUE
+
+/obj/effect/mapping_helpers/airlock/unres/delayed
+	name = "airlock unrestricted side delayed helper"
+	icon_state = "airlock_unres_delayed_helper"
+
+/obj/effect/mapping_helpers/airlock/unres/delayed/payload(obj/machinery/door/airlock/airlock)
+	. = ..()
+	airlock.delayed_unres_open = TRUE
+
+#define ABANDON_WALL "wall"
+#define ABANDON_FALSEWALL "falsewall"
+#define ABANDON_LOCKED_NOLIGHT "locked_no_lights"
+#define ABANDON_LOCKED "locked"
+#define ABANDON_WELDED "welded"
+#define ABANDON_PANEL_OPEN "panel_open"
+#define ABANDON_NONE "none"
 
 /obj/effect/mapping_helpers/airlock/abandoned
 	name = "airlock abandoned helper"
 	icon_state = "airlock_abandoned"
+	var/list/weights = list(
+		ABANDON_WALL = 8,
+		ABANDON_FALSEWALL = 1,
+		ABANDON_LOCKED_NOLIGHT = 2,
+		ABANDON_LOCKED = 4,
+		ABANDON_WELDED = 8,
+		ABANDON_PANEL_OPEN = 8,
+	)
 
-/obj/effect/mapping_helpers/airlock/abandoned/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.abandoned)
-		log_mapping("[src] at [AREACOORD(src)] tried to make [airlock] abandoned but it's already abandoned!")
-	else
-		airlock.abandoned = TRUE
+/obj/effect/mapping_helpers/airlock/abandoned/Initialize(mapload)
+	. = ..()
+	modify_weights()
+	var/max_weight = values_sum(weights)
+	weights[ABANDON_NONE] = 100 - max_weight
+
+/obj/effect/mapping_helpers/airlock/abandoned/proc/modify_weights()
+	return
+
+/obj/effect/mapping_helpers/airlock/abandoned/late_payload(obj/machinery/door/airlock/airlock)
+	switch(pick_weight(weights))
+		if(ABANDON_WALL)
+			var/turf/here = get_turf(src)
+			here.place_on_top(get_wall_type(airlock))
+			qdel(airlock)
+
+		if(ABANDON_FALSEWALL)
+			var/walltype = get_wall_type(airlock)
+			var/falsewalltype = /obj/structure/falsewall
+			for(var/obj/structure/falsewall/false_wall as anything in typesof(/obj/structure/falsewall))
+				if(false_wall::walltype == walltype)
+					falsewalltype = false_wall
+					break
+
+			var/turf/here = get_turf(src)
+			new falsewalltype(here)
+			qdel(airlock)
+
+		if(ABANDON_LOCKED_NOLIGHT)
+			airlock.feedback = FALSE
+			// These do not use airlock.bolt() because we want to pretend it was always locked. That means no sound effects.
+			airlock.locked = TRUE
+
+		if(ABANDON_LOCKED)
+			airlock.locked = TRUE
+
+		if(ABANDON_WELDED)
+			airlock.welded = TRUE
+
+		if(ABANDON_PANEL_OPEN)
+			airlock.set_panel_open(TRUE)
+
+/obj/effect/mapping_helpers/airlock/abandoned/proc/get_wall_type(obj/machinery/door/airlock/airlock)
+	for(var/turf/closed/wall in range(2, airlock)) // uses range to prioritize closest
+		return wall.type
+
+	return /turf/closed/wall
+
+/obj/effect/mapping_helpers/airlock/abandoned/nowall
+	name = "airlock abandoned helper (no wall)"
+
+/obj/effect/mapping_helpers/airlock/abandoned/nowall/modify_weights()
+	weights[ABANDON_WALL] = 0
+	weights[ABANDON_FALSEWALL] = 0
+
+#undef ABANDON_WALL
+#undef ABANDON_FALSEWALL
+#undef ABANDON_LOCKED_NOLIGHT
+#undef ABANDON_LOCKED
+#undef ABANDON_WELDED
+#undef ABANDON_PANEL_OPEN
+#undef ABANDON_NONE
 
 /obj/effect/mapping_helpers/airlock/welded
 	name = "airlock welded helper"
@@ -245,11 +323,11 @@
 	name = "airlock cut ai wire helper"
 	icon_state = "airlock_cutaiwire"
 
-/obj/effect/mapping_helpers/airlock/cutaiwire/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.cutAiWire)
+/obj/effect/mapping_helpers/airlock/cutaiwire/late_payload(obj/machinery/door/airlock/airlock)
+	if(airlock.wires.is_cut(WIRE_AI))
 		log_mapping("[src] at [AREACOORD(src)] tried to cut the ai wire on [airlock] but it's already cut!")
 	else
-		airlock.cutAiWire = TRUE
+		airlock.wires.cut(WIRE_AI)
 
 /obj/effect/mapping_helpers/airlock/autoname
 	name = "airlock autoname helper"
@@ -260,6 +338,24 @@
 		log_mapping("[src] at [AREACOORD(src)] tried to autoname the [airlock] but it's already autonamed!")
 	else
 		airlock.autoname = TRUE
+
+/obj/effect/mapping_helpers/airlock/inaccessible
+	name = "airlock inaccessible helper"
+	icon_state = "airlock_inaccessible"
+
+/obj/effect/mapping_helpers/airlock/inaccessible/payload(obj/machinery/door/airlock/airlock)
+	if(airlock.req_one_access != null)
+		log_mapping("[src] at [AREACOORD(src)] tried to set req_access, but req__one_access was already set!")
+	else
+		airlock.req_access += list(ACCESS_INACCESSIBLE)
+
+/obj/effect/mapping_helpers/airlock/red_alert_access
+	name = "airlock red alert access helper"
+	icon_state = "airlock_red_alert_access"
+	apply_to_windoors = TRUE
+
+/obj/effect/mapping_helpers/airlock/red_alert_access/payload(obj/machinery/door/airlock)
+	airlock.red_alert_access = TRUE
 
 //air alarm helpers
 /obj/effect/mapping_helpers/airalarm
@@ -292,9 +388,11 @@
 
 	if(target.tlv_cold_room)
 		target.set_tlv_cold_room()
+	if(target.tlv_kitchen)
+		target.set_tlv_kitchen()
 	if(target.tlv_no_checks)
 		target.set_tlv_no_checks()
-	if(target.tlv_no_checks && target.tlv_cold_room)
+	if(target.tlv_no_checks + target.tlv_cold_room + target.tlv_kitchen > 1)
 		CRASH("Tried to apply incompatible air alarm threshold helpers!")
 
 	if(target.syndicate_access)
@@ -309,9 +407,6 @@
 		target.give_all_access()
 	if(target.syndicate_access + target.away_general_access + target.engine_access + target.mixingchamber_access + target.all_access > 1)
 		CRASH("Tried to combine incompatible air alarm access helpers!")
-
-	if(target.air_sensor_chamber_id)
-		target.setup_chamber_link()
 
 	target.update_appearance()
 	qdel(src)
@@ -389,6 +484,16 @@
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to cold_room but it's already changed!")
 	target.tlv_cold_room = TRUE
 
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen
+	name = "airalarm kitchen tlv helper"
+	icon_state = "airalarm_tlv_kitchen_helper"
+
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen/payload(obj/machinery/airalarm/target)
+	if(target.tlv_kitchen)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to kitchen but it's already changed!")
+	target.tlv_kitchen = TRUE
+
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks
 	name = "airalarm no checks tlv helper"
 	icon_state = "airalarm_tlv_no_checks_helper"
@@ -402,6 +507,7 @@
 /obj/effect/mapping_helpers/airalarm/link
 	name = "airalarm link helper"
 	icon_state = "airalarm_link_helper"
+	late = TRUE
 	var/chamber_id = ""
 	var/allow_link_change = FALSE
 
@@ -411,13 +517,26 @@
 		log_mapping("[src] spawned outside of mapload!")
 		return INITIALIZE_HINT_QDEL
 
+/obj/effect/mapping_helpers/airalarm/link/LateInitialize(mapload)
 	var/obj/machinery/airalarm/alarm = locate(/obj/machinery/airalarm) in loc
 	if(!isnull(alarm))
 		alarm.air_sensor_chamber_id = chamber_id
 		alarm.allow_link_change = allow_link_change
+		alarm.setup_chamber_link()
 	else
 		log_mapping("[src] failed to find air alarm at [AREACOORD(src)].")
-		return INITIALIZE_HINT_QDEL
+	qdel(src)
+
+/obj/effect/mapping_helpers/airalarm/surgery
+	name = "airalarm surgery helper"
+	icon_state = "airalarm_surgery_helper"
+
+/obj/effect/mapping_helpers/airalarm/surgery/LateInitialize()
+	var/obj/machinery/airalarm/target = locate() in loc
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in target?.my_area?.air_scrubbers)
+		scrubber.filter_types |= /datum/gas/nitrous_oxide
+		scrubber.set_widenet(TRUE)
+	return ..()
 
 //apc helpers
 /obj/effect/mapping_helpers/apc
@@ -445,8 +564,7 @@
 	if(isnull(target))
 		qdel(src)
 		return
-	if(target.cut_AI_wire)
-		target.wires.cut(WIRE_AI)
+	late_payload(target)
 	if(target.cell_5k)
 		target.install_cell_5k()
 	if(target.cell_10k)
@@ -473,15 +591,19 @@
 /obj/effect/mapping_helpers/apc/proc/payload(obj/machinery/power/apc/target)
 	return
 
+/obj/effect/mapping_helpers/apc/proc/late_payload(obj/machinery/power/apc/target)
+	return
+
 /obj/effect/mapping_helpers/apc/cut_AI_wire
 	name = "apc AI wire mended helper"
 	icon_state = "apc_cut_AIwire_helper"
 
-/obj/effect/mapping_helpers/apc/cut_AI_wire/payload(obj/machinery/power/apc/target)
-	if(target.cut_AI_wire)
+/obj/effect/mapping_helpers/apc/cut_AI_wire/late_payload(obj/machinery/power/apc/target)
+	if(target.wires.is_cut(WIRE_AI))
 		var/area/apc_area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to mend the AI wire on the [target] but it's already cut!")
-	target.cut_AI_wire = TRUE
+	else
+		target.wires.cut(WIRE_AI)
 
 /obj/effect/mapping_helpers/apc/cell_5k
 	name = "apc 5k cell helper"
@@ -563,17 +685,17 @@
 	if(!mapload)
 		log_mapping("[src] spawned outside of mapload!")
 		return INITIALIZE_HINT_QDEL
-	check_validity()
-	return INITIALIZE_HINT_QDEL
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch/proc/check_validity()
+/obj/effect/mapping_helpers/turn_off_lights_with_lightswitch/LateInitialize()
 	var/area/needed_area = get_area(src)
 	if(!needed_area.lightswitch)
 		stack_trace("[src] at [AREACOORD(src)] [(needed_area.type)] tried to turn lights off but they are already off!")
 	var/obj/machinery/light_switch/light_switch = locate(/obj/machinery/light_switch) in needed_area
 	if(!light_switch)
-		stack_trace("Trying to turn off lights with lightswitch in area without lightswitches. In [(needed_area.type)] to be precise.")
-	needed_area.lightswitch = FALSE
+		CRASH("Trying to turn off lights with lightswitch in area without lightswitches. In [(needed_area.type)] to be precise.")
+	light_switch.set_lights(FALSE)
+	qdel(src)
 
 //needs to do its thing before spawn_rivers() is called
 INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
@@ -585,6 +707,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	. = ..()
 	var/turf/T = get_turf(src)
 	T.turf_flags |= NO_LAVA_GEN
+
+INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
+/obj/effect/mapping_helpers/no_atoms_ontop
+	icon_state = "no_atoms_ontop"
+
+/obj/effect/mapping_helpers/no_atoms_ontop/Initialize(mapload)
+	. = ..()
+	var/turf/loc_turf = get_turf(src)
+	loc_turf.turf_flags |= TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES
 
 ///Helpers used for injecting stuff into atoms on the map.
 /obj/effect/mapping_helpers/atom_injector
@@ -849,11 +980,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/admin_spawned
 	///number of bodies to spawn
 	var/bodycount = 3
-	/// These species IDs will be barred from spawning if morgue_cadaver_disable_nonhumans is disabled (In the future, we can also dehardcode this)
-	var/list/blacklisted_from_rng_placement = list(
-		SPECIES_ETHEREAL, // they revive on death which is bad juju
-		SPECIES_HUMAN,  // already have a 50% chance of being selected
-	)
+	/// Corpse type we spawn thats always human
+	var/datum/corpse_damage_class/morgue_body_class = /datum/corpse_damage_class/station/morgue
 
 /obj/effect/mapping_helpers/dead_body_placer/Initialize(mapload)
 	. = ..()
@@ -881,57 +1009,17 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	var/reuse_trays = (numtrays < bodycount) //are we going to spawn more trays than bodies?
 
-	var/use_species = !(CONFIG_GET(flag/morgue_cadaver_disable_nonhumans))
-	var/species_probability = CONFIG_GET(number/morgue_cadaver_other_species_probability)
-	var/override_species = CONFIG_GET(string/morgue_cadaver_override_species)
-	var/list/usable_races
-	if(use_species)
-		var/list/temp_list = get_selectable_species()
-		usable_races = temp_list.Copy()
-		LAZYREMOVE(usable_races, blacklisted_from_rng_placement)
-		if(!LAZYLEN(usable_races))
-			notice("morgue_cadaver_disable_nonhumans. There are no valid roundstart nonhuman races enabled. Defaulting to humans only!")
-		if(override_species)
-			warning("morgue_cadaver_override_species BEING OVERRIDEN since morgue_cadaver_disable_nonhumans is disabled.")
-	else if(override_species)
-		LAZYADD(usable_races, override_species)
-
-	var/guaranteed_human_spawned = FALSE
 	for (var/i in 1 to bodycount)
 		var/obj/structure/bodycontainer/morgue/morgue_tray = reuse_trays ? pick(trays) : pick_n_take(trays)
 		var/obj/structure/closet/body_bag/body_bag = new(morgue_tray.loc)
-		var/mob/living/carbon/human/new_human = new(morgue_tray.loc)
-
-		var/species_to_pick
-
-		if(guaranteed_human_spawned && use_species)
-			if(LAZYLEN(usable_races))
-				if(!isnum(species_probability))
-					species_probability = 50
-					stack_trace("WARNING: morgue_cadaver_other_species_probability CONFIG SET TO 0% WHEN SPAWNING. DEFAULTING TO [species_probability]%.")
-				if(prob(species_probability))
-					species_to_pick = pick(usable_races)
-					var/datum/species/new_human_species = GLOB.species_list[species_to_pick]
-					if(new_human_species)
-						new_human.set_species(new_human_species)
-						new_human_species = new_human.dna.species
-						new_human.fully_replace_character_name(new_human.real_name, new_human_species.random_name(new_human.gender, TRUE, TRUE))
-					else
-						stack_trace("failed to spawn cadaver with species ID [species_to_pick]") //if it's invalid they'll just be a human, so no need to worry too much aside from yelling at the server owner lol.
-		else
-			guaranteed_human_spawned = TRUE
+		var/mob/living/carbon/human/new_human = GLOB.lost_crew_manager.create_lost_crew(revivable = FALSE, forced_class = morgue_body_class)
 
 		body_bag.insert(new_human, TRUE)
 		body_bag.close()
-		body_bag.handle_tag("[new_human.real_name][species_to_pick ? " - [capitalize(species_to_pick)]" : " - Human"]")
+		body_bag.tag_name = "[new_human.real_name][new_human.dna?.species ? " - [new_human.dna.species.name]" : " - Human"]"
+		body_bag.AddComponent(/datum/component/rename, "[initial(body_bag.name)][body_bag.tag_name? " - [body_bag.tag_name]" : null]", body_bag.desc)
+		body_bag.update_icon()
 		body_bag.forceMove(morgue_tray)
-
-		new_human.death() //here lies the mans, rip in pepperoni.
-		for (var/obj/item/organ/internal/part in new_human.organs) //randomly remove organs from each body, set those we keep to be in stasis
-			if (prob(40))
-				qdel(part)
-			else
-				part.organ_flags |= ORGAN_FROZEN
 
 		morgue_tray.update_appearance()
 
@@ -1064,14 +1152,16 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/airlock_note_placer/LateInitialize()
 	var/turf/turf = get_turf(src)
-	if(note_path && !istype(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
+	if(note_path && !ispath(note_path, /obj/item/paper)) //don't put non-paper in the paper slot thank you
 		log_mapping("[src] at [x],[y] had an improper note_path path, could not place paper note.")
 		qdel(src)
 		return
 	if(locate(/obj/machinery/door/airlock) in turf)
 		var/obj/machinery/door/airlock/found_airlock = locate(/obj/machinery/door/airlock) in turf
 		if(note_path)
-			found_airlock.note = note_path
+			var/obj/item/paper/paper = new note_path(src)
+			found_airlock.note = paper
+			paper.forceMove(found_airlock)
 			found_airlock.update_appearance()
 			qdel(src)
 			return
@@ -1175,7 +1265,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	if(response.errored || response.status_code != 200)
 		query_in_progress = FALSE
 		CRASH("Failed to fetch mapped custom json from url [json_url], code: [response.status_code], error: [response.error]")
-	var/json_data = response["body"]
+	var/json_data = response.body
 	json_cache[json_url] = json_data
 	query_in_progress = FALSE
 	return json_data
@@ -1294,7 +1384,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/requests_console/LateInitialize()
 	var/obj/machinery/airalarm/target = locate(/obj/machinery/requests_console) in loc
 	if(isnull(target))
-		var/area/target_area = get_area(target)
+		var/area/target_area = get_area(src)
 		log_mapping("[src] failed to find a requests console at [AREACOORD(src)] ([target_area.type]).")
 	else
 		payload(target)
@@ -1393,6 +1483,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/mapping_helpers/mob_buckler/Initialize(mapload)
 	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/mob_buckler/LateInitialize()
 	var/atom/movable/buckle_to
 	var/list/mobs = list()
 	for(var/atom/movable/possible_buckle as anything in loc)
@@ -1405,12 +1502,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 	if(isnull(buckle_to))
 		log_mapping("[type] at [x] [y] [z] did not find anything to buckle to")
-		return INITIALIZE_HINT_QDEL
+		qdel(src)
+		return
 
 	for(var/mob/living/mob as anything in mobs)
 		buckle_to.buckle_mob(mob, force = force_buckle)
 
-	return INITIALIZE_HINT_QDEL
+	qdel(src)
 
 ///Basic mob flag helpers for things like deleting on death.
 /obj/effect/mapping_helpers/basic_mob_flags
@@ -1456,12 +1554,113 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	icon_state = "basic_mob_flammable"
 	flag_to_give = FLAMMABLE_MOB
 
-/obj/effect/mapping_helpers/basic_mob_flags/immune_to_fists
-	name = "Basic mob immune to fists flag helper"
-	icon_state = "basic_mob_immune_to_fists"
-	flag_to_give = IMMUNE_TO_FISTS
-
 /obj/effect/mapping_helpers/basic_mob_flags/immune_to_getting_wet
 	name = "Basic mob immune to getting wet flag helper"
 	icon_state = "basic_mob_immune_to_getting_wet"
 	flag_to_give = IMMUNE_TO_GETTING_WET
+
+/obj/effect/mapping_helpers/wall_dent
+	name = "bullet impact dent"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "bullet_hole"
+	/// Dent type to spawn
+	var/dent_type = WALL_DENT_SHOT
+
+/obj/effect/mapping_helpers/wall_dent/Initialize(mapload)
+	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return
+
+	var/turf/closed/wall/our_turf = get_turf(src) // In case a locker ate us or something
+	if (!istype(our_turf))
+		log_mapping("[src] placed on a non-wall turf!")
+		return
+
+	our_turf.add_dent(dent_type, pixel_x + pixel_w - ICON_SIZE_X / 2, pixel_y + pixel_z - ICON_SIZE_Y / 2)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/mapping_helpers/wall_dent/impact
+	name = "blunt impact dent"
+	icon_state = "impact1"
+	dent_type = WALL_DENT_HIT
+
+/obj/effect/mapping_helpers/sticker_placer
+	name = "sticker placer"
+	icon = /obj/item/sticker::icon
+	icon_state = /obj/item/sticker/smile::icon_state
+	/// Sticker type to spawn
+	var/sticker_type = /obj/item/sticker/smile
+	///Will stick onto atoms of this type
+	var/target_type
+	///Will stick onto atoms with this name
+	var/target_name
+
+/obj/effect/mapping_helpers/sticker_placer/Initialize(mapload)
+	var/turf/target_turf = get_turf(src)
+	for(var/atom/atom_on_turf as anything in target_turf.get_all_contents())
+		if(atom_on_turf == src)
+			continue
+		if(target_name && atom_on_turf.name != target_name)
+			continue
+		if(target_type && !istype(atom_on_turf, target_type))
+			continue
+		var/obj/item/sticker/sticker = new sticker_type(target_turf)
+		atom_on_turf.AddComponent( \
+			/datum/component/sticker, \
+			sticker, \
+			NORTH, \
+			pixel_x + pixel_w + (ICON_SIZE_X / 2), \
+			pixel_y + pixel_z + (ICON_SIZE_Y / 2), \
+			null, \
+			null, \
+			sticker.examine_text, \
+		)
+		return INITIALIZE_HINT_QDEL
+	return ..()
+/***
+ * Used to prevent things from teleporting on (but not off) the turf through most means that do not call do_teleport() with the forced arg set to TRUE.
+ * The trait is removed if the turf is changed, so you should only keep it on small sections with indestructible turfs, ideally corners surrounded by
+ * other inaccessible walls. For larger sections, consider using areas with NO_TELEPORT or LOCAL_TELEPORT flags instead.
+ */
+/obj/effect/mapping_helpers/no_tele_turf
+	name = "no teleport turf"
+	icon_state = "no_teleport_turf"
+
+/obj/effect/mapping_helpers/wall_dent/Initialize(mapload)
+	. = ..()
+	var/turf/our_turf = get_turf(src)
+	ADD_TRAIT(our_turf, TRAIT_NO_TELEPORT, INNATE_TRAIT)
+
+/// Blesses turfs it is created on, then deletes itself
+/obj/effect/mapping_helpers/blessing
+	name = "holy blessing"
+	desc = "Holy energies interfere with ethereal travel at this location."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "blessed"
+	/// Is this blessing visible to those with the ability to see blessed tiles? (chaplains)
+	var/invisible = FALSE
+
+/obj/effect/mapping_helpers/blessing/Initialize(mapload)
+	. = ..()
+	if (isturf(loc))
+		loc.AddElement(/datum/element/blessed_turf, invisible)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/mapping_helpers/blessing/invisible
+	invisible = TRUE
+
+/// Cuts a cable at roundstart because the test would otherwise complain about an unlinked powernet
+/obj/effect/mapping_helpers/cable_snip
+	name = "snip cable"
+	icon = 'icons/hud/screen_gen.dmi'
+	icon_state = "x"
+	late = TRUE
+
+/obj/effect/mapping_helpers/cable_snip/LateInitialize()
+	var/obj/structure/cable/cable = locate() in loc
+	if(isnull(cable))
+		log_mapping("Cable not found for snip cable helper at [loc.x],[loc.y],[loc.z]")
+#ifndef UNIT_TESTS
+	cable.deconstruct(FALSE)
+#endif

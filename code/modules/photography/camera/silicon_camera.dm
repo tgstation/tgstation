@@ -2,12 +2,13 @@
 /obj/item/camera/siliconcam
 	name = "silicon photo camera"
 	resistance_flags = INDESTRUCTIBLE
+	cooldown = 2 SECONDS
 	/// List of all pictures taken by this camera.
 	var/list/datum/picture/stored = list()
 
 /// Checks if we can take a picture at this moment. Returns TRUE if we can, FALSE if we can't.
 /obj/item/camera/siliconcam/proc/can_take_picture(mob/living/silicon/clicker)
-	if(clicker.stat != CONSCIOUS || clicker.incapacitated())
+	if(IS_UNCONSCIOUS_OR_CRIT(clicker) || clicker.incapacitated)
 		return FALSE
 	return TRUE
 
@@ -15,7 +16,7 @@
 	if(!can_take_picture(clicker))
 		return
 	clicker.face_atom(clicked_on)
-	captureimage(clicked_on, clicker)
+	attempt_picture(clicked_on, clicker)
 	toggle_camera_mode(clicker, sound = FALSE)
 
 /// Toggles the camera mode on or off.
@@ -31,11 +32,11 @@
 		// Trying to turn on camera mode while you have another click intercept active, such as malf abilities
 		if(sound)
 			balloon_alert(user, "can't enable camera mode!")
-			playsound(user, 'sound/machines/buzz-sigh.ogg', 25, TRUE)
+			playsound(user, 'sound/machines/buzz/buzz-sigh.ogg', 25, TRUE)
 		return
 
 	if(sound)
-		playsound(user, 'sound/items/wirecutter.ogg', 50, TRUE)
+		playsound(user, 'sound/items/tools/wirecutter.ogg', 50, TRUE)
 		balloon_alert(user, "camera mode [user.click_intercept == src ? "activated" : "deactivated"]")
 
 /obj/item/camera/siliconcam/proc/selectpicture(mob/user)
@@ -56,7 +57,10 @@
 /obj/item/camera/siliconcam/proc/viewpictures(mob/user)
 	var/datum/picture/selection = selectpicture(user)
 	if(istype(selection))
-		show_picture(user, selection)
+		var/obj/item/photo/P = new(src, selection)
+		P.show(user)
+		to_chat(user, P.desc)
+		qdel(P)
 
 /obj/item/camera/siliconcam/ai_camera
 	name = "AI photo camera"
@@ -80,7 +84,7 @@
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
 	balloon_alert(user, "image recorded")
-	user.playsound_local(get_turf(user), pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 50, TRUE, -3)
+	user.playsound_local(get_turf(user), /datum/sound_effect/polaroid, 50, TRUE, -3)
 
 /obj/item/camera/siliconcam/robot_camera
 	name = "Cyborg photo camera"
@@ -102,7 +106,7 @@
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		stored[picture] = TRUE
 		balloon_alert(user, "image recorded and saved locally")
-	playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE, -3)
+	playsound(src, /datum/sound_effect/polaroid, 75, TRUE, -3)
 
 /obj/item/camera/siliconcam/robot_camera/selectpicture(mob/living/silicon/robot/user)
 	if(istype(user) && user.connected_ai)

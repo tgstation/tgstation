@@ -4,7 +4,7 @@
 	priority = TEST_LONGER
 
 /datum/unit_test/modify_fantasy_variable/Run()
-	var/list/applicable_types = subtypesof(/obj/item) - uncreatables
+	var/list/applicable_types = valid_subtypesof(/obj/item) - uncreatables
 
 	for(var/obj/item/path as anything in applicable_types)
 		var/obj/item/object = allocate(path)

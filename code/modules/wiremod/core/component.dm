@@ -11,9 +11,12 @@
 	name = COMPONENT_DEFAULT_NAME
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "component"
+	worn_icon = null
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
+	w_class = WEIGHT_CLASS_TINY
 
 	/// The name of the component shown on the UI
 	var/display_name = "Generic"
@@ -62,6 +65,10 @@
 	/// The UI buttons of this circuit component. An assoc list that has this format: "button_icon" = "action_name"
 	var/ui_buttons = null
 
+	/// The "important" UI tooltips of this circuit component. Used for important things like instant & disabled circuits, they're drawn next to the default tooltip icon.
+	/// An assoc list with the format ui_alerts["alert_icon"] = "alert_name".
+	var/list/ui_alerts
+
 /// Called when the option ports should be set up
 /obj/item/circuit_component/proc/populate_options()
 	return
@@ -84,8 +91,7 @@
 		trigger_input = add_input_port("Trigger", PORT_TYPE_SIGNAL, order = 2)
 	if((circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL) && !trigger_output)
 		trigger_output = add_output_port("Triggered", PORT_TYPE_SIGNAL, order = 2)
-	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
-		ui_color = "orange"
+	update_ui_alerts()
 
 /obj/item/circuit_component/Destroy()
 	if(parent)
@@ -110,6 +116,21 @@
 	. = ..()
 	if(circuit_flags & CIRCUIT_FLAG_REFUSE_MODULE)
 		. += span_notice("It's incompatible with module components.")
+
+/// updates the ui alerts in the given component. new_flag adds flags, remove_flag removes them
+/obj/item/circuit_component/proc/update_ui_alerts(new_flag, remove_flag)
+	if(new_flag)
+		circuit_flags |= new_flag
+	if(remove_flag)
+		circuit_flags &= ~remove_flag
+	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
+		LAZYSET(ui_alerts, "tachometer-alt", "Instant")
+	else
+		LAZYREMOVE(ui_alerts, "tachometer-alt")
+	if(circuit_flags & CIRCUIT_FLAG_DISABLED)
+		LAZYSET(ui_alerts, "exclamation", "Non-functional")
+	else
+		LAZYREMOVE(ui_alerts, "exclamation")
 
 /**
  * Called when a shell is registered from the component/the component is added to a circuit.
@@ -268,7 +289,7 @@
 
 		var/flags = SEND_SIGNAL(parent, COMSIG_CIRCUIT_PRE_POWER_USAGE, energy_usage_per_input)
 		if(!(flags & COMPONENT_OVERRIDE_POWER_USAGE))
-			var/obj/item/stock_parts/cell/cell = parent.get_cell()
+			var/obj/item/stock_parts/power_store/cell = parent.get_cell()
 			if(!cell?.use(energy_usage_per_input))
 				return FALSE
 
@@ -405,3 +426,14 @@
  */
 /obj/item/circuit_component/proc/unregister_usb_parent(atom/movable/shell)
 	return
+
+/**
+ * Called when a circuit component requests to send Ntnet data signal.
+ *
+ * Arguments:
+ * * port - The required list port needed by the Ntnet receive
+ * * key - The encryption key
+ * * signal_type - The signal type used for sending this global signal (optional, default is COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT)
+ */
+/obj/item/circuit_component/proc/send_ntnet_data(datum/port/input/port, key, signal_type = COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT)
+	SEND_GLOBAL_SIGNAL(signal_type, list("data" = port.value, "enc_key" = key, "port" = WEAKREF(port)))

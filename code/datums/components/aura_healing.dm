@@ -29,6 +29,9 @@
 	/// Amount of blood to heal over a second
 	var/blood_heal = 0
 
+	/// Amount of bleed/pierce wound lowering per second.
+	var/wound_clotting = 0
+
 	/// Map of organ (such as ORGAN_SLOT_BRAIN) to damage heal over a second
 	var/list/organ_healing = null
 
@@ -40,6 +43,9 @@
 
 	/// The color to give the healing visual
 	var/healing_color = COLOR_GREEN
+
+	/// If the aura also heals the owner of the component
+	var/self_heal = TRUE
 
 	/// A list of being healed to active alerts
 	var/list/mob/living/current_alerts = list()
@@ -56,10 +62,12 @@
 	suffocation_heal = 0,
 	stamina_heal = 0,
 	blood_heal = 0,
+	wound_clotting = 0,
 	organ_healing = null,
 	simple_heal = 0,
 	limit_to_trait = null,
 	healing_color = COLOR_GREEN,
+	self_heal = TRUE,
 )
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -74,10 +82,12 @@
 	src.suffocation_heal = suffocation_heal
 	src.stamina_heal = stamina_heal
 	src.blood_heal = blood_heal
+	src.wound_clotting = wound_clotting
 	src.organ_healing = organ_healing
 	src.simple_heal = simple_heal
 	src.limit_to_trait = limit_to_trait
 	src.healing_color = healing_color
+	src.self_heal = self_heal
 
 /datum/component/aura_healing/Destroy(force)
 	STOP_PROCESSING(SSaura, src)
@@ -110,35 +120,33 @@
 
 	for (var/mob/living/candidate as anything in to_heal)
 		if (!current_alerts[candidate])
-			var/atom/movable/screen/alert/aura_healing/alert = candidate.throw_alert(alert_category, /atom/movable/screen/alert/aura_healing, new_master = parent)
-			alert.desc = "You are being healed by [parent]."
+			candidate.throw_alert(alert_category, /atom/movable/screen/alert/aura_healing, new_master = parent)
 			current_alerts[candidate] = TRUE
 
 		if (should_show_effect && candidate.health < candidate.maxHealth)
 			new /obj/effect/temp_visual/heal(get_turf(candidate), healing_color)
 
 		if (iscarbon(candidate) || issilicon(candidate) || isbasicmob(candidate))
-			candidate.adjustBruteLoss(-brute_heal * seconds_per_tick, updating_health = FALSE)
-			candidate.adjustFireLoss(-burn_heal * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_brute_loss(-brute_heal * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_fire_loss(-burn_heal * seconds_per_tick, updating_health = FALSE)
 
 		if (iscarbon(candidate))
 			// Toxin healing is forced for slime people
-			candidate.adjustToxLoss(-toxin_heal * seconds_per_tick, updating_health = FALSE, forced = TRUE)
+			candidate.adjust_tox_loss(-toxin_heal * seconds_per_tick, updating_health = FALSE, forced = TRUE)
 
-			candidate.adjustOxyLoss(-suffocation_heal * seconds_per_tick, updating_health = FALSE)
-			candidate.adjustStaminaLoss(-stamina_heal * seconds_per_tick, updating_stamina = FALSE)
+			candidate.adjust_oxy_loss(-suffocation_heal * seconds_per_tick, updating_health = FALSE)
+			candidate.adjust_stamina_loss(-stamina_heal * seconds_per_tick, updating_stamina = FALSE)
 
 			for (var/organ in organ_healing)
-				candidate.adjustOrganLoss(organ, -organ_healing[organ] * seconds_per_tick)
-		else if (isanimal(candidate))
-			var/mob/living/simple_animal/animal_candidate = candidate
-			animal_candidate.adjustHealth(-simple_heal * seconds_per_tick, updating_health = FALSE)
-		else if (isbasicmob(candidate))
-			var/mob/living/basic/basic_candidate = candidate
-			basic_candidate.adjust_health(-simple_heal * seconds_per_tick, updating_health = FALSE)
+				candidate.adjust_organ_loss(organ, -organ_healing[organ] * seconds_per_tick)
+			var/mob/living/carbon/carbidate = candidate
+			for(var/datum/wound/iter_wound as anything in carbidate.all_wounds)
+				iter_wound.adjust_blood_flow(-wound_clotting * seconds_per_tick)
 
-		if (candidate.blood_volume < BLOOD_VOLUME_NORMAL)
-			candidate.blood_volume += blood_heal * seconds_per_tick
+		else if(isanimal_or_basicmob(candidate))
+			candidate.adjust_brute_loss(-simple_heal * seconds_per_tick, updating_health = FALSE)
+
+		candidate.adjust_blood_volume(blood_heal * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
 		candidate.updatehealth()
 
@@ -149,5 +157,12 @@
 /atom/movable/screen/alert/aura_healing
 	name = "Aura Healing"
 	icon_state = "template"
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
+	clickable_glow = TRUE
+	click_master = FALSE
+
+/atom/movable/screen/alert/aura_healing/update_desc(updates)
+	. = ..()
+	desc = "You are being healed by [master_ref?.resolve()]."
 
 #undef HEAL_EFFECT_COOLDOWN

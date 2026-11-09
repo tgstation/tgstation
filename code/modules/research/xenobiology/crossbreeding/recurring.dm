@@ -1,13 +1,14 @@
 /*
 Recurring extracts:
 	Generates a new charge every few seconds.
-	If depleted of its' last charge, stops working.
+	If depleted of its last charge, stops working.
 */
 /obj/item/slimecross/recurring
 	name = "recurring extract"
 	desc = "A tiny, glowing core, wrapped in several layers of goo."
 	effect = "recurring"
 	icon_state = "recurring"
+	abstract_type = /obj/item/slimecross/recurring
 	var/extract_type
 	var/obj/item/slime_extract/extract
 	var/cooldown = 0

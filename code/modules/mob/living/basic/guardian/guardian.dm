@@ -15,11 +15,11 @@
 	mob_biotypes = MOB_SPECIAL
 	sentience_type = SENTIENCE_HUMANOID
 	hud_type = /datum/hud/guardian
-	faction = list()
 	speed = 0
+	status_flags = CANPUSH
 	maxHealth = INFINITY // The spirit itself is invincible and passes damage to its host
 	health = INFINITY
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
@@ -31,10 +31,9 @@
 	response_disarm_simple = "flail at"
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_verb_continuous = "punches"
 	attack_verb_simple = "punch"
-	combat_mode = TRUE
 	obj_damage = 40
 	melee_damage_lower = 15
 	melee_damage_upper = 15
@@ -53,8 +52,8 @@
 	/// Coloured overlay we apply
 	var/mutable_appearance/overlay
 
-	/// Which toggle button the HUD uses.
-	var/toggle_button_type = /atom/movable/screen/guardian/toggle_mode/inactive
+	/// Which toggle button the guardian has. Won't get one if it's null.
+	var/toggle_button_type = null
 	/// Name used by the guardian creator.
 	var/creator_name = "Error"
 	/// Description used by the guardian creator.
@@ -76,11 +75,19 @@
 	/// Cooldown between the summoner resetting the guardian's client.
 	COOLDOWN_DECLARE(resetting_cooldown)
 
-	/// List of actions we give to our summoner
+	/// List of actions we give to our summoner.
 	var/static/list/control_actions = list(
 		/datum/action/cooldown/mob_cooldown/guardian_comms,
 		/datum/action/cooldown/mob_cooldown/recall_guardian,
 		/datum/action/cooldown/mob_cooldown/replace_guardian,
+	)
+	/// List of actions we give to ourselves.
+	var/static/list/self_actions = list(
+		/datum/action/cooldown/guardian/check_type,
+		/datum/action/cooldown/guardian/toggle_light,
+		/datum/action/cooldown/guardian/communicate,
+		/datum/action/cooldown/guardian/manifest,
+		/datum/action/cooldown/guardian/recall,
 	)
 
 /mob/living/basic/guardian/Initialize(mapload, datum/guardian_fluff/theme)
@@ -88,13 +95,12 @@
 	GLOB.parasites += src
 	src.theme = theme
 	theme?.apply(src)
-	var/list/death_loot = string_list(list(/obj/item/stack/sheet/mineral/wood))
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/effect/temp_visual/guardian/phase/out)
 	AddElement(/datum/element/simple_flying)
-	AddComponent(/datum/component/basic_inhands)
 	// life link
 	update_appearance(UPDATE_ICON)
 	manifest_effects()
+	create_actions()
 
 /mob/living/basic/guardian/Destroy()
 	GLOB.parasites -= src
@@ -102,6 +108,18 @@
 		recall_effects()
 	cut_summoner(different_person = TRUE)
 	return ..()
+
+///Creates the guardian's default action buttons and sets them to go in their proper location.
+///Subtypes overwrite this for special ability types and whatnot.
+/mob/living/basic/guardian/proc/create_actions()
+	for (var/action_type in self_actions + toggle_button_type)
+		if(isnull(action_type)) //no toggle button type
+			continue
+		if (locate(action_type) in actions)
+			continue
+		var/datum/action/new_action = new action_type(src)
+		new_action.Grant(src)
+	update_action_buttons()
 
 /mob/living/basic/guardian/update_overlays()
 	. = ..()
@@ -137,7 +155,7 @@
 /mob/living/basic/guardian/proc/guardian_recolour()
 	if (isnull(client))
 		return
-	var/chosen_guardian_colour = input(src, "What would you like your colour to be?", "Choose Your Colour", "#ffffff") as color|null
+	var/chosen_guardian_colour = tgui_color_picker(src, "What would you like your colour to be?", "Choose Your Colour", COLOR_WHITE)
 	if (isnull(chosen_guardian_colour)) //redo proc until we get a color
 		to_chat(src, span_warning("Invalid colour, please try again."))
 		return guardian_recolour()
@@ -159,7 +177,7 @@
 		to_chat(src, span_warning("Invalid name, please try again."))
 		return guardian_rename()
 	to_chat(src, span_notice("Your new name [span_name(new_name)] anchors itself in your mind."))
-	fully_replace_character_name(null, new_name)
+	fully_replace_character_name(null, new_name, log_new_name = TRUE)
 
 /// Picks a random name as a suggestion
 /mob/living/basic/guardian/proc/generate_random_name()
@@ -191,16 +209,16 @@
 			gib()
 			return TRUE
 		if (EXPLODE_HEAVY)
-			adjustBruteLoss(60)
+			adjust_brute_loss(60)
 		if (EXPLODE_LIGHT)
-			adjustBruteLoss(30)
+			adjust_brute_loss(30)
 
 	return TRUE
 
 /mob/living/basic/guardian/gib()
 	death(TRUE)
 
-/mob/living/basic/guardian/dust(just_ash, drop_items, force)
+/mob/living/basic/guardian/dust(just_ash, drop_items, give_moodlet, force)
 	death(TRUE)
 
 /// Link up with a summoner mob.
@@ -225,14 +243,20 @@
 		if (mind)
 			mind.enslave_mind_to_creator(to_who)
 		else //mindless guardian, manually give them factions
-			faction += summoner.faction
-			summoner.faction += "[REF(src)]"
+			add_faction(summoner.get_faction())
+			add_ally(summoner.allies)
+			summoner.add_ally(src)
 	remove_all_languages(LANGUAGE_MASTER)
 	copy_languages(to_who, LANGUAGE_MASTER) // make sure holoparasites speak same language as master
 	RegisterSignal(to_who, COMSIG_QDELETING, PROC_REF(on_summoner_deletion))
 	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(on_summoner_wabbajacked))
 	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, PROC_REF(on_summoner_shapeshifted))
 	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_summoner_unshapeshifted))
+	RegisterSignal(to_who, COMSIG_ATOM_STOPPING_TIME, PROC_REF(on_summoner_timestop))
+	RegisterSignal(to_who, SIGNAL_ADDTRAIT(TRAIT_TIME_STOP_IMMUNE), PROC_REF(on_summoner_timestop_immune_gained))
+	RegisterSignal(to_who, SIGNAL_REMOVETRAIT(TRAIT_TIME_STOP_IMMUNE), PROC_REF(on_summoner_timestop_immune_removed))
+	if (HAS_TRAIT(to_who, TRAIT_TIME_STOP_IMMUNE))
+		ADD_TRAIT(src, TRAIT_TIME_STOP_IMMUNE, REF(summoner))
 	recall(forced = TRUE)
 	leash_to(src, summoner)
 	if (to_who.stat == DEAD)
@@ -249,10 +273,19 @@
 	if (!isnull(summoner_turf))
 		forceMove(summoner_turf)
 	unleash()
-	UnregisterSignal(summoner, list(COMSIG_QDELETING, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
+	UnregisterSignal(summoner, list(
+		COMSIG_QDELETING,
+		COMSIG_LIVING_ON_WABBAJACKED,
+		COMSIG_LIVING_SHAPESHIFTED,
+		COMSIG_LIVING_UNSHAPESHIFTED,
+		COMSIG_ATOM_STOPPING_TIME,
+		SIGNAL_ADDTRAIT(TRAIT_TIME_STOP_IMMUNE),
+		SIGNAL_REMOVETRAIT(TRAIT_TIME_STOP_IMMUNE),
+	))
+	REMOVE_TRAIT(src, TRAIT_TIME_STOP_IMMUNE, REF(summoner))
 	if (different_person)
-		summoner.faction -= "[REF(src)]"
-		faction -= summoner.faction
+		summoner.remove_ally(src)
+		remove_faction(summoner.get_faction())
 		mind?.remove_all_antag_datums()
 	if (!length(summoner.get_all_linked_holoparasites() - src))
 		for (var/action_type in control_actions)
@@ -292,9 +325,9 @@
 		return
 	to_chat(summoner, span_bolddanger("[name] is under attack! You take damage!"))
 	summoner.visible_message(span_bolddanger("Blood sprays from [summoner] as [src] takes damage!"))
-	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
+	if(summoner.stat >= HARD_CRIT)
 		to_chat(summoner, span_bolddanger("Your head pounds, you can't take the strain of sustaining [src] in this condition!"))
-		summoner.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount * 0.5)
+		summoner.adjust_organ_loss(ORGAN_SLOT_BRAIN, amount * 0.5)
 
 /// When our owner is deleted, we go too.
 /mob/living/basic/guardian/proc/on_summoner_deletion(mob/living/source)
@@ -321,6 +354,22 @@
 	SIGNAL_HANDLER
 	set_summoner(old_summoner)
 	to_chat(src, span_holoparasite("Your summoner has shapeshifted back into their normal form!"))
+
+/// Signal proc for [COMSIG_ATOM_STOPPING_TIME] - when our summoner timestops, we should share their immunity.
+/mob/living/basic/guardian/proc/on_summoner_timestop(mob/living/source, datum/action/cooldown/spell/timestop/timestop, list/immune_atoms)
+	SIGNAL_HANDLER
+	if (timestop.owner_is_immune_to_self_timestop)
+		immune_atoms |= src
+
+/// Signal proc for [SIGNAL_ADDTRAIT(TRAIT_TIME_STOP_IMMUNE)] - when our summoner gains time stop immunity, we should too
+/mob/living/basic/guardian/proc/on_summoner_timestop_immune_gained(mob/living/source, ...)
+	SIGNAL_HANDLER
+	ADD_TRAIT(src, TRAIT_TIME_STOP_IMMUNE, REF(summoner))
+
+/// Signal proc for [SIGNAL_REMOVETRAIT(TRAIT_TIME_STOP_IMMUNE)] - when our summoner loses time stop immunity, we should too
+/mob/living/basic/guardian/proc/on_summoner_timestop_immune_removed(mob/living/source, ...)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_TIME_STOP_IMMUNE, REF(summoner))
 
 /mob/living/basic/guardian/wabbajack(what_to_randomize, change_flags = WABBAJACK)
 	visible_message(span_warning("[src] resists the polymorph!")) // Ha, no

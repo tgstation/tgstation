@@ -21,10 +21,12 @@
 	RegisterSignal(parent, COMSIG_MOB_SPELL_PROJECTILE, PROC_REF(on_spell_projectile))
 	RegisterSignal(parent, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(on_before_spell_cast))
 	RegisterSignal(parent, COMSIG_MOB_AFTER_SPELL_CAST, PROC_REF(on_after_spell_cast))
+	ADD_TRAIT(parent, TRAIT_SPLATTERCASTER, REF(src))
 
 /datum/component/splattercasting/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, list(COMSIG_SPECIES_LOSS, COMSIG_MOB_SPELL_PROJECTILE, COMSIG_MOB_BEFORE_SPELL_CAST, COMSIG_MOB_AFTER_SPELL_CAST))
+	REMOVE_TRAIT(parent, TRAIT_SPLATTERCASTER, REF(src))
 
 ///signal sent when a spell casts a projectile
 /datum/component/splattercasting/proc/on_species_change(mob/living/carbon/source, datum/species/lost_species)
@@ -73,14 +75,14 @@
 		return
 
 	//normal cooldown spell has
-	var/cooldown_remaining = spell.next_use_time - world.time
+	var/cooldown_remaining = max(spell.next_use_time - world.time,0)
 	//how much we discount, we make the spell cost 1/10th of its actual cooldown
 	var/new_cooldown = cooldown_remaining / 10
 	//convert how much cooldown that spell saved into blood cost
 	var/blood_cost = (cooldown_remaining - new_cooldown ) * COOLDOWN_TO_BLOOD_RATIO
 
 	spell.StartCooldown(new_cooldown)
-	source.blood_volume -= blood_cost
+	source.adjust_blood_volume(-blood_cost)
 
 	var/cost_desc
 

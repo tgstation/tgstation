@@ -30,7 +30,7 @@
 	UnregisterSignal(remove_from, COMSIG_MOB_UPDATE_SIGHT)
 	. = ..()
 
-/datum/action/adjust_vision/Trigger(trigger_flags)
+/datum/action/adjust_vision/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

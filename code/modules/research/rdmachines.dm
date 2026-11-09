@@ -35,7 +35,6 @@
 	if(stored_research)
 		log_research("[src] disconnected from techweb [stored_research] (destroyed).")
 		stored_research = null
-	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/rnd/examine(mob/user)
@@ -44,7 +43,7 @@
 		return
 
 	. += span_notice("A [EXAMINE_HINT("multitool")] with techweb designs can be uploaded here.")
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("Use a [EXAMINE_HINT("multitool")] or [EXAMINE_HINT("wirecutters")] to interact with wires.")
 		. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
@@ -72,7 +71,7 @@
 			return CONTEXTUAL_SCREENTIP_SET
 	else
 		if(held_item.tool_behaviour == TOOL_MULTITOOL)
-			var/obj/item/multitool/tool = held_item
+			var/obj/item/multitool/tool = held_item.get_proxy_attacker_for(src, user)
 			if(!QDELETED(tool.buffer) && istype(tool.buffer, /datum/techweb))
 				context[SCREENTIP_CONTEXT_LMB] = "Upload Techweb"
 				context[SCREENTIP_CONTEXT_RMB] = "Upload Techweb"
@@ -94,20 +93,23 @@
 /obj/machinery/rnd/proc/reset_busy()
 	busy = FALSE
 
+/obj/machinery/rnd/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state || initial(icon_state)]_t" : (base_icon_state || initial(icon_state))
+
 /obj/machinery/rnd/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/rnd/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	return crowbar_act(user, tool)
 
 /obj/machinery/rnd/screwdriver_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), tool)
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/rnd/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	return screwdriver_act(user, tool)
 
 /obj/machinery/rnd/multitool_act(mob/living/user, obj/item/multitool/tool)
-	. = ITEM_INTERACT_BLOCKING
 	if(panel_open)
 		wires.interact(user)
 		return ITEM_INTERACT_SUCCESS

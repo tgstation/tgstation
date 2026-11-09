@@ -28,10 +28,13 @@
 	var/dnd_style_level_up = TRUE
 	/// Whether the rod can loop across other z-levels. The rod will still loop when the z-level is self-looping even if this is FALSE.
 	var/loopy_rod = FALSE
+	/// Whether or not this rod should be shown to ghosts for auto-orbiting.
+	var/should_augury = TRUE
 
 /obj/effect/immovablerod/Initialize(mapload, atom/target_atom, atom/specific_target, force_looping = FALSE)
 	. = ..()
-	SSaugury.register_doom(src, 2000)
+	if(should_augury)
+		SSaugury.register_doom(src, SEVERITY_ROD)
 
 	var/turf/real_destination = get_turf(target_atom)
 	destination_turf = real_destination
@@ -42,15 +45,15 @@
 
 	SSpoints_of_interest.make_point_of_interest(src)
 
-	RegisterSignal(src, COMSIG_ATOM_ENTERING, PROC_REF(on_entering_atom))
+	RegisterSignals(src, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING), PROC_REF(on_entering_atom))
 
 	if(special_target)
-		SSmove_manager.home_onto(src, special_target)
+		GLOB.move_manager.home_onto(src, special_target)
 	else
-		SSmove_manager.move_towards(src, real_destination)
+		GLOB.move_manager.move_towards(src, real_destination)
 
 /obj/effect/immovablerod/Destroy(force)
-	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
+	UnregisterSignal(src, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING))
 	SSaugury.unregister_doom(src)
 	destination_turf = null
 	special_target = null
@@ -75,11 +78,6 @@
 		var/mob/dead/observer/ghost = usr
 		if(istype(ghost))
 			ghost.ManualFollow(src)
-
-/obj/effect/immovablerod/proc/on_entered_over_movable(datum/source, atom/movable/atom_crossed_over)
-	SIGNAL_HANDLER
-	if((atom_crossed_over.density || isliving(atom_crossed_over)) && !QDELETED(atom_crossed_over))
-		Bump(atom_crossed_over)
 
 /obj/effect/immovablerod/proc/on_entering_atom(datum/source, atom/destination, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
@@ -113,7 +111,7 @@
 				return
 
 			visible_message(span_danger("[src] phases into reality."))
-			SSmove_manager.home_onto(src, special_target)
+			GLOB.move_manager.home_onto(src, special_target)
 
 		if(loc == target_turf)
 			complete_trajectory()
@@ -136,7 +134,8 @@
 		// Did we reach our destination? We're probably on Icebox. Let's get rid of ourselves.
 		// Ordinarily this won't happen as the average destination is the edge of the map and
 		// the rod will auto transition to a new z-level.
-		if(loc == destination_turf)
+		// If the rod is parallel to the destination at the world border, it is likely stuck (once again, icebox)
+		if((loc == destination_turf) || ((y == destination_turf.y || x == destination_turf.x) && (y == world.maxy || x == world.maxx || x == 1 || y == 1)))
 			qdel(src)
 			return
 
@@ -150,7 +149,7 @@
 /obj/effect/immovablerod/singularity_act()
 	return
 
-/obj/effect/immovablerod/singularity_pull()
+/obj/effect/immovablerod/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/immovablerod/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
@@ -168,9 +167,7 @@
 	// they ALSO collapse into a singulo.
 	if(istype(clong, /obj/effect/immovablerod))
 		visible_message(span_danger("[src] collides with [clong]! This cannot end well."))
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(2, holder = src, location = get_turf(src))
-		smoke.start()
+		do_smoke(2, src, get_turf(src))
 		var/obj/singularity/bad_luck = new(get_turf(src))
 		bad_luck.energy = 800
 		qdel(clong)
@@ -217,11 +214,8 @@
 				transform = transform.Scale(1.005, 1.005)
 				name = "[initial(name)] of sentient slaying +[num_sentient_mobs_hit]"
 
-	if(iscarbon(smeared_mob))
-		var/mob/living/carbon/smeared_carbon = smeared_mob
-		smeared_carbon.adjustBruteLoss(100)
-		var/obj/item/bodypart/penetrated_chest = smeared_carbon.get_bodypart(BODY_ZONE_CHEST)
-		penetrated_chest?.receive_damage(60, wound_bonus = 20, sharpness=SHARP_POINTY)
+	smeared_mob.apply_damage(100, BRUTE, spread_damage = TRUE)
+	smeared_mob.apply_damage(60, BRUTE, BODY_ZONE_CHEST, wound_bonus = 20, sharpness = SHARP_POINTY)
 
 	if(smeared_mob.density || prob(10))
 		EX_ACT(smeared_mob, EXPLODE_HEAVY)
@@ -236,7 +230,7 @@
 
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	for(var/mob/living/nearby_mob in urange(8, src))
-		if(nearby_mob.stat != CONSCIOUS)
+		if(IS_UNCONSCIOUS_OR_CRIT(nearby_mob))
 			continue
 		shake_camera(nearby_mob, 2, 3)
 
@@ -252,10 +246,17 @@
 	strongman.client?.give_award(/datum/award/achievement/jobs/feat_of_strength, strongman)
 	strongman.visible_message(
 		span_boldwarning("[strongman] suplexes [src] into the ground!"),
-		span_warning("You suplex [src] into the ground!")
+		span_warning("As you suplex [src] into the ground, your body ripples with power!")
 		)
+	sound_to_playing_players('sound/items/handling/lead_pipe/lead_pipe_drop.ogg')
 	new /obj/structure/festivus/anchored(drop_location())
 	new /obj/effect/anomaly/flux(drop_location())
+
+	var/is_heavy_gravity = strongman.has_gravity() > STANDARD_GRAVITY //If for some reason you have to suplex the rod in heavy gravity, you get the double experience here as well, why not
+	var/experience_gained = 100 * num_sentient_mobs_hit * (is_heavy_gravity ? 2 : 1) // We gain more expeirence the more sentient mobs the rod has taken out. The deadlier the rod, the stronger we become. At 25 sentient mobs, we instantly become a legendary athlete.
+	strongman.mind?.adjust_experience(/datum/skill/athletics, experience_gained)
+	strongman.apply_status_effect(/datum/status_effect/exercised) //time for a nap, you earned it
+
 	qdel(src)
 	return TRUE
 
@@ -264,7 +265,7 @@
  * Stops your rod's automated movement. Sit... Stay... Good rod!
  */
 /obj/effect/immovablerod/proc/sit_stay_good_rod()
-	SSmove_manager.stop_looping(src)
+	GLOB.move_manager.stop_looping(src)
 
 /**
  * Allows your rod to release restraint level zero and go for a walk.
@@ -278,7 +279,7 @@
 /obj/effect/immovablerod/proc/go_for_a_walk(walkies_location = null)
 	if(walkies_location)
 		special_target = walkies_location
-		SSmove_manager.home_onto(src, special_target)
+		GLOB.move_manager.home_onto(src, special_target)
 		return
 
 	complete_trajectory()
@@ -294,7 +295,7 @@
  */
 /obj/effect/immovablerod/proc/walk_in_direction(direction)
 	destination_turf = get_edge_target_turf(src, direction)
-	SSmove_manager.move_towards(src, destination_turf)
+	GLOB.move_manager.move_towards(src, destination_turf)
 
 /**
  * Rod will push the tram to a landmark if it hits the tram from the front/back

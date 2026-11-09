@@ -7,6 +7,7 @@
 	icon_dead = "ant_dead"
 	speak_emote = list("buzzes", "chitters")
 	gender = PLURAL // We are Ven-ant
+	randomize_gender = FALSE
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BUG
@@ -15,7 +16,7 @@
 	melee_damage_upper = 10
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	butcher_results = list(/obj/effect/decal/cleanable/ants = 3) //It's just a bunch of ants glued together into a larger ant
 	response_help_continuous = "pets"
@@ -26,7 +27,6 @@
 	response_harm_simple = "kick"
 	gold_core_spawnable = FRIENDLY_SPAWN
 	faction = list(FACTION_NEUTRAL)
-	can_be_held = FALSE
 	health = 100
 	maxHealth = 100
 	light_range = 1.5 // Bioluminescence!
@@ -36,24 +36,29 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/ant
 
+/datum/emote/ant
+	abstract_type = /datum/emote/ant
+	mob_type_allowed_typecache = /mob/living/basic/ant
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/ant/clack
+	key = "clack"
+	key_third_person = "clacks"
+	message = "clacks happily!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
 /mob/living/basic/ant/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	AddElement(/datum/element/pet_bonus, "clacks happily!")
+	AddElement(/datum/element/pet_bonus, "clack")
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
+	AddElement(/datum/element/basic_allergenic_attack, allergen = BUGS, allergen_chance = 20, histamine_add = 5)
 
 /datum/ai_controller/basic_controller/ant
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/ant.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/ant,
-	)

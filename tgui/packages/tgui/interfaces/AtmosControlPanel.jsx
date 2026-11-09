@@ -1,7 +1,8 @@
-import { map, sortBy } from 'common/collections';
+import { sortBy } from 'es-toolkit';
+import { map } from 'es-toolkit/compat';
+import { Box, Button, Flex, Section, Table } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 export const AtmosControlPanel = (props) => {
@@ -12,7 +13,7 @@ export const AtmosControlPanel = (props) => {
       // Generate a unique id
       id: group.area + i,
     })),
-    (group) => group.id,
+    [(group) => group.id],
   );
   return (
     <Window title="SSAir Control Panel" width={900} height={500}>

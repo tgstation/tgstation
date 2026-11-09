@@ -12,16 +12,17 @@
 	var/obj/item/photo/displayed
 	pixel_shift = 30
 
-/obj/item/wallframe/picture/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/photo))
-		if(!displayed)
-			if(!user.transferItemToLoc(I, src))
-				return
-			displayed = I
-			update_appearance()
-		else
-			to_chat(user, span_warning("\The [src] already contains a photo."))
-	..()
+/obj/item/wallframe/picture/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/photo))
+		return NONE
+	if(displayed)
+		to_chat(user, span_warning("\The [src] already contains a photo."))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	displayed = tool
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/wallframe/picture/attack_hand(mob/user, list/modifiers)
@@ -73,13 +74,11 @@
 	var/art_value = OK_ART
 	var/can_decon = TRUE
 
-/obj/structure/sign/picture_frame/Initialize(mapload, dir, building)
+/obj/structure/sign/picture_frame/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/art, art_value)
 	if (!SSpersistence.initialized)
 		LAZYADD(SSpersistence.queued_photo_frames, src)
-	if(dir)
-		setDir(dir)
 
 /obj/structure/sign/picture_frame/Destroy()
 	LAZYREMOVE(SSpersistence.queued_photo_frames, src)
@@ -147,19 +146,17 @@
 	return ITEM_INTERACT_SUCCESS
 
 
-/obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
-
-	if(istype(I, /obj/item/photo))
-		if(framed)
-			to_chat(user, span_warning("\The [src] already contains a photo."))
-			return TRUE
-		var/obj/item/photo/P = I
-		if(!user.transferItemToLoc(P, src))
-			return
-		set_and_save_framed(P)
-		update_appearance()
-		return TRUE
-	..()
+/obj/structure/sign/picture_frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/photo))
+		return NONE
+	if(framed)
+		to_chat(user, span_warning("\The [src] already contains a photo."))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	set_and_save_framed(tool)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/sign/picture_frame/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -278,6 +275,6 @@
 
 ///Generates a persistence id unique to the current map. Every bar should feel a little bit different after all.
 /obj/structure/sign/picture_frame/portrait/bar/Initialize(mapload)
-	if(SSmapping.config.map_path != CUSTOM_MAP_PATH) //skip adminloaded custom maps.
-		persistence_id = "frame_bar_[SSmapping.config.map_name]"
+	if(SSmapping.current_map.map_path != CUSTOM_MAP_PATH) //skip adminloaded custom maps.
+		persistence_id = "frame_bar_[SSmapping.current_map.map_name]"
 	return ..()

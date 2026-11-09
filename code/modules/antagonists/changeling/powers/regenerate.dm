@@ -19,7 +19,7 @@
 	carbon_user.fully_heal(HEAL_BODY)
 	// Occurs after fully heal so the ling themselves can hear the sound effects (if deaf prior)
 	if(got_limbs_back)
-		playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
+		playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 		carbon_user.visible_message(
 			span_warning("[user]'s missing limbs reform, making a loud, grotesque sound!"),
 			span_userdanger("Your limbs regrow, making a loud, crunchy sound and giving you great pain!"),

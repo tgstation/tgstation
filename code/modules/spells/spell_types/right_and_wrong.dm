@@ -11,53 +11,68 @@ GLOBAL_DATUM(mass_teaching, /datum/summon_things_controller/spellbook_entry)
 // 1 in 50 chance of getting something really special.
 #define SPECIALIST_MAGIC_PROB 2
 
+GLOBAL_LIST_INIT(summoned_all_guns, get_sane_item_types(/obj/item/gun))
+
 GLOBAL_LIST_INIT(summoned_guns, list(
+	/obj/item/gun/ballistic/automatic/ar,
+	/obj/item/gun/ballistic/automatic/battle_rifle,
+	/obj/item/gun/ballistic/automatic/c20r/unrestricted,
+	/obj/item/gun/ballistic/automatic/gyropistol,
+	/obj/item/gun/ballistic/automatic/l6_saw/unrestricted,
+	/obj/item/gun/ballistic/automatic/laser,
+	/obj/item/gun/ballistic/automatic/m90/unrestricted,
+	/obj/item/gun/ballistic/automatic/mini_uzi,
+	/obj/item/gun/ballistic/automatic/pistol,
+	/obj/item/gun/ballistic/automatic/pistol/aps,
+	/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher,
+	/obj/item/gun/ballistic/automatic/pistol/deagle,
+	/obj/item/gun/ballistic/automatic/pistol/deagle/regal,
+	/obj/item/gun/ballistic/automatic/pistol/doohickey,
+	/obj/item/gun/ballistic/automatic/pistol/m1911,
+	/obj/item/gun/ballistic/automatic/proto/unrestricted,
+	/obj/item/gun/ballistic/automatic/smartgun,
+	/obj/item/gun/ballistic/automatic/tommygun,
+	/obj/item/gun/ballistic/automatic/wt550,
+	/obj/item/gun/ballistic/revolver,
+	/obj/item/gun/ballistic/revolver/syndicate/badass,
+	/obj/item/gun/ballistic/revolver/c38,
+	/obj/item/gun/ballistic/revolver/nagant,
+	/obj/item/gun/ballistic/rifle/boltaction,
+	/obj/item/gun/ballistic/rifle/boltaction/donkrifle,
+	/obj/item/gun/ballistic/rifle/boltaction/harpoon,
+	/obj/item/gun/ballistic/rifle/rebarxbow/syndie,
+	/obj/item/gun/ballistic/rifle/sniper_rifle,
+	/obj/item/gun/ballistic/rocketlauncher/unrestricted,
+	/obj/item/gun/ballistic/shotgun/automatic/combat,
+	/obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
+	/obj/item/gun/ballistic/shotgun/doublebarrel,
+	/obj/item/gun/ballistic/shotgun/hook,
+	/obj/item/gun/ballistic/shotgun/lethal,
+	/obj/item/gun/energy/alien,
 	/obj/item/gun/energy/disabler,
+	/obj/item/gun/energy/disabler/smg,
 	/obj/item/gun/energy/e_gun,
 	/obj/item/gun/energy/e_gun/advtaser,
-	/obj/item/gun/energy/laser,
-	/obj/item/gun/ballistic/revolver,
-	/obj/item/gun/ballistic/revolver/syndicate,
-	/obj/item/gun/ballistic/revolver/c38/detective,
-	/obj/item/gun/ballistic/automatic/pistol/deagle/camo,
-	/obj/item/gun/ballistic/automatic/gyropistol,
-	/obj/item/gun/energy/pulse,
-	/obj/item/gun/ballistic/automatic/pistol/suppressed,
-	/obj/item/gun/ballistic/shotgun/doublebarrel,
-	/obj/item/gun/ballistic/shotgun,
-	/obj/item/gun/ballistic/shotgun/automatic/combat,
-	/obj/item/gun/ballistic/automatic/ar,
-	/obj/item/gun/ballistic/revolver/mateba,
-	/obj/item/gun/ballistic/rifle/boltaction,
-	/obj/item/gun/ballistic/rifle/boltaction/harpoon,
-	/obj/item/gun/ballistic/automatic/mini_uzi,
-	/obj/item/gun/energy/lasercannon,
-	/obj/item/gun/energy/recharge/ebow/large,
 	/obj/item/gun/energy/e_gun/nuclear,
-	/obj/item/gun/ballistic/automatic/proto,
-	/obj/item/gun/ballistic/automatic/c20r,
-	/obj/item/gun/ballistic/automatic/l6_saw,
-	/obj/item/gun/ballistic/automatic/m90,
-	/obj/item/gun/energy/alien,
-	/obj/item/gun/energy/e_gun/dragnet,
-	/obj/item/gun/energy/e_gun/turret,
-	/obj/item/gun/energy/pulse/carbine,
-	/obj/item/gun/energy/mindflayer,
-	/obj/item/gun/energy/recharge/kinetic_accelerator,
-	/obj/item/gun/energy/plasmacutter/adv,
-	/obj/item/gun/energy/wormhole_projector,
-	/obj/item/gun/ballistic/automatic/wt550,
-	/obj/item/gun/ballistic/shotgun/bulldog,
-	/obj/item/gun/ballistic/revolver/grenadelauncher,
-	/obj/item/gun/ballistic/revolver/golden,
-	/obj/item/gun/ballistic/rifle/sniper_rifle,
-	/obj/item/gun/ballistic/rocketlauncher,
-	/obj/item/gun/medbeam,
+	/obj/item/gun/energy/laser,
+	/obj/item/gun/energy/laser/soul,
+	/obj/item/gun/energy/laser/pistol,
+	/obj/item/gun/energy/laser/assault,
+	/obj/item/gun/energy/laser/carbine,
+	/obj/item/gun/energy/laser/cybersun/unrestricted,
+	/obj/item/gun/energy/laser/hellgun,
 	/obj/item/gun/energy/laser/scatter,
 	/obj/item/gun/energy/laser/thermal,
-	/obj/item/gun/energy/laser/thermal/inferno,
 	/obj/item/gun/energy/laser/thermal/cryo,
-	/obj/item/gun/energy/gravity_gun))
+	/obj/item/gun/energy/laser/thermal/inferno,
+	/obj/item/gun/energy/lasercannon,
+	/obj/item/gun/energy/mindflayer,
+	/obj/item/gun/energy/plasmacutter/adv,
+	/obj/item/gun/energy/pulse,
+	/obj/item/gun/energy/pulse/carbine,
+	/obj/item/gun/energy/recharge/ebow/large,
+	/obj/item/gun/energy/recharge/kinetic_accelerator,
+	/obj/item/gun/medbeam,))
 
 //if you add anything that isn't covered by the typepaths below, add it to summon_magic_objective_types
 GLOBAL_LIST_INIT(summoned_magic, list(
@@ -71,25 +86,42 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/book/granter/action/spell/charge,
 	/obj/item/book/granter/action/spell/summonitem,
 	/obj/item/book/granter/action/spell/lightningbolt,
-	/obj/item/gun/magic/wand/nothing,
+	/obj/item/gun/magic/staff/babel,
+	/obj/item/gun/magic/staff/door,
+	/obj/item/gun/magic/staff/healing,
+	/obj/item/gun/magic/wand/animate,
+	/obj/item/gun/magic/wand/babel,
+	/obj/item/gun/magic/wand/bald,
 	/obj/item/gun/magic/wand/death,
-	/obj/item/gun/magic/wand/resurrection,
-	/obj/item/gun/magic/wand/polymorph,
-	/obj/item/gun/magic/wand/teleport,
 	/obj/item/gun/magic/wand/door,
 	/obj/item/gun/magic/wand/fireball,
-	/obj/item/gun/magic/staff/healing,
-	/obj/item/gun/magic/staff/door,
-	/obj/item/gun/magic/staff/babel,
+	/obj/item/gun/magic/wand/freeze,
+	/obj/item/gun/magic/wand/hallucination,
+	/obj/item/gun/magic/wand/levitate,
+	/obj/item/gun/magic/wand/nothing,
+	/obj/item/gun/magic/wand/pax,
+	/obj/item/gun/magic/wand/pizza,
+	/obj/item/gun/magic/wand/plague,
+	/obj/item/gun/magic/wand/polymorph,
+	/obj/item/gun/magic/wand/prank,
+	/obj/item/gun/magic/wand/rebel,
+	/obj/item/gun/magic/wand/repulse,
+	/obj/item/gun/magic/wand/resurrection,
+	/obj/item/gun/magic/wand/swap,
+	/obj/item/gun/magic/wand/teleport,
+	/obj/item/gun/magic/wand/tentacles,
+	/obj/item/gun/magic/wand/zap,
+	/obj/item/immortality_talisman,
+	/obj/item/melee/ghost_sword,
 	/obj/item/scrying,
 	/obj/item/warp_whistle,
-	/obj/item/immortality_talisman,
-	/obj/item/melee/ghost_sword))
+))
 
 GLOBAL_LIST_INIT(summoned_special_magic, list(
 	/obj/item/gun/magic/staff/change,
 	/obj/item/gun/magic/staff/animate,
 	/obj/item/storage/belt/wands/full,
+	/obj/item/storage/belt/wands/full/discount,
 	/obj/item/antag_spawner/contract,
 	/obj/item/gun/magic/staff/chaos,
 	/obj/item/necromantic_stone))
@@ -104,6 +136,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	/obj/item/scrying,
 	/obj/item/spellbook,
 	/obj/item/storage/belt/wands/full,
+	/obj/item/storage/belt/wands/full/discount,
 	/obj/item/warp_whistle))
 
 /*
@@ -125,7 +158,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	var/obj/item/gun/spawned_gun = new gun_type(get_turf(to_equip))
 	if (istype(spawned_gun)) // The list may contain some non-gun type guns which do not have this proc
 		spawned_gun.unlock()
-	playsound(get_turf(to_equip), 'sound/magic/summon_guns.ogg', 50, TRUE)
+	playsound(get_turf(to_equip), 'sound/effects/magic/summon_guns.ogg', 50, TRUE)
 
 	var/in_hand = to_equip.put_in_hands(spawned_gun) // not always successful
 
@@ -149,7 +182,7 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 	var/magic_type = prob(SPECIALIST_MAGIC_PROB) ? pick(GLOB.summoned_special_magic) : pick(GLOB.summoned_magic)
 
 	var/obj/item/spawned_magic = new magic_type(get_turf(to_equip))
-	playsound(get_turf(to_equip), 'sound/magic/summon_magic.ogg', 50, TRUE)
+	playsound(get_turf(to_equip), 'sound/effects/magic/summon_magic.ogg', 50, TRUE)
 
 	var/in_hand = to_equip.put_in_hands(spawned_magic)
 
@@ -230,9 +263,12 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 
 		SSevents.reschedule()
 		if(user)
-			to_chat(user, span_warning("You have intensified summon events, causing them to occur more often!"))
-			message_admins("[ADMIN_LOOKUPFLW(user)] intensified summon events!")
-			user.log_message("intensified events!", LOG_GAME)
+			message_admins("[ADMIN_LOOKUPFLW(user)] [ismob(user) ? "":"admin triggered "]intensified summon events!")
+			if(ismob(user))
+				to_chat(user, span_warning("You have intensified summon events, causing them to occur more often!"))
+				user.log_message("intensified events!", LOG_GAME)
+			else //admin triggered
+				log_admin("[key_name(user)] intensified summon events.")
 		else
 			log_game("Summon Events was intensified!")
 
@@ -245,9 +281,12 @@ GLOBAL_LIST_INIT(summoned_magic_objectives, list(
 		SSevents.toggleWizardmode()
 		SSevents.reschedule()
 		if(user)
-			to_chat(user, span_warning("You have cast summon events!"))
-			message_admins("[ADMIN_LOOKUPFLW(user)] summoned events!")
-			user.log_message("summoned events!", LOG_GAME)
+			message_admins("[ADMIN_LOOKUPFLW(user)] [ismob(user) ? "summoned":"admin triggered summon"] events!")
+			if(ismob(user))
+				to_chat(user, span_warning("You have cast summon events!"))
+				user.log_message("summoned events!", LOG_GAME)
+			else //admin triggered
+				log_admin("[key_name(user)] summoned events.")
 		else
 			message_admins("Summon Events was triggered!")
 			log_game("Summon Events was triggered!")

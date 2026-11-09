@@ -13,3 +13,16 @@
 	gravity = list(0, 0.15)
 	position = generator(GEN_SPHERE, 0, 16, NORMAL_RAND)
 	spin = generator(GEN_NUM, -15, 15, NORMAL_RAND)
+
+/particles/acid/toxic
+	count = 1000
+	spawning = 4
+	color = "#34ff19a1"
+	lifespan = null
+	grow = -0.08
+	velocity = list(0, 1, 0)
+	position = generator(GEN_CIRCLE, 0, 16, NORMAL_RAND)
+	drift = generator(GEN_VECTOR, list(0, -0.2), list(0, 0.2))
+	gravity = list(0, 0)
+	rotation = 25
+	spin = generator(GEN_NUM, -20, 20)

@@ -8,6 +8,8 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
+	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/keyboard_shell/Initialize(mapload)
 	. = ..()
@@ -48,7 +50,7 @@
 		to_chat(user, span_warning("You start mashing keys at random!"))
 		return
 
-	var/message = tgui_input_text(user, "Input your text", "Keyboard")
+	var/message = tgui_input_text(user, "Input your text", "Keyboard", max_length = MAX_MESSAGE_LEN)
 	entity.set_output(user)
 	output.set_output(message)
 	signal.set_output(COMPONENT_SIGNAL)

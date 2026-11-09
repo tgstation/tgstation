@@ -1,0 +1,64 @@
+{
+	"dm_type": "/datum/ai_controller/vending_machine",
+	"type": "selector",
+	"children": [
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/vending_is_tilted",
+			"child": {
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+				"vars": {
+					"cooldown_key": "BB_VENDING_UNTILT_COOLDOWN"
+				},
+				"child": {
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/vendor_rise_up"
+				}
+			}
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/vending_is_tilted",
+			"vars": {
+				"invert": true
+			},
+			"child": {
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+				"vars": {
+					"cooldown_key": "BB_VENDING_TILT_COOLDOWN"
+				},
+				"child": {
+					"type": "sequence",
+					"children": [
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/find_vendor_target",
+							"vars": {
+								"target_key": "BB_VENDING_CURRENT_TARGET",
+								"vision_range": 7
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+							"vars": {
+								"target_key": "BB_VENDING_CURRENT_TARGET",
+								"required_dist": 1,
+								"finish_on_arrival": true
+							}
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/vendor_crush",
+							"vars": {
+								"target_key": "BB_VENDING_CURRENT_TARGET"
+							}
+						}
+					]
+				}
+			}
+		}
+	]
+}

@@ -1,0 +1,1 @@
+/obj/item/borg/upgrade/modkit/aoe/@SUBTYPES : /obj/item/borg/upgrade/modkit/cooldown/aoe/@SUBTYPES{@OLD}

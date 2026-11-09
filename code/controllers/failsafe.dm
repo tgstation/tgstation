@@ -16,7 +16,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	// The alert level. For every failed poke, we drop a DEFCON level. Once we hit DEFCON 1, restart the MC.
 	var/defcon = 5
 	//the world.time of the last check, so the mc can restart US if we hang.
-	// (Real friends look out for *eachother*)
+	// (Real friends look out for *each other*)
 	var/lasttick = 0
 
 	// Track the MC iteration to make sure its still on track.
@@ -24,6 +24,9 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 	var/running = TRUE
 
 /datum/controller/failsafe/New()
+	// Ensure usr is null, to prevent any potential weirdness resulting from the failsafe having a usr if it's manually restarted.
+	usr = null
+
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
 	if(Failsafe != src)
 		if(istype(Failsafe))
@@ -149,7 +152,7 @@ GLOBAL_REAL(Failsafe, /datum/controller/failsafe)
 /proc/recover_all_SS_and_recreate_master()
 	del(Master)
 	var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
-	sortTim(subsytem_types, GLOBAL_PROC_REF(cmp_subsystem_init))
+	sortTim(subsytem_types, GLOBAL_PROC_REF(cmp_subsystem_init_stage))
 	for(var/I in subsytem_types)
 		new I
 	. = Recreate_MC()

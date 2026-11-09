@@ -1,7 +1,6 @@
 /// Queues and manages JPS pathfinding steps
 SUBSYSTEM_DEF(pathfinder)
 	name = "Pathfinder"
-	init_order = INIT_ORDER_PATH
 	priority = FIRE_PRIORITY_PATHFINDING
 	wait = 0.5
 	/// List of pathfind datums we are currently trying to process
@@ -35,13 +34,10 @@ SUBSYSTEM_DEF(pathfinder)
 		var/datum/pathfind/path = currentrun[length(currentrun)]
 		if(!path.search_step()) // Something's wrong
 			path.early_exit()
-			currentrun.len--
 			continue
 		if(MC_TICK_CHECK)
 			return
 		path.finished()
-		// Next please
-		currentrun.len--
 
 	// Go over our existing pathmaps, clear out the ones we aren't using
 	var/list/currentmaps = src.currentmaps
@@ -61,9 +57,9 @@ SUBSYSTEM_DEF(pathfinder)
 		currentmaps.len--
 
 /// Initiates a pathfind. Returns true if we're good, FALSE if something's failed
-/datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/caller, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
+/datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
 	var/datum/pathfind/jps/path = new()
-	path.setup(caller, access, max_distance, simulated_only, exclude, on_finish, end, mintargetdist, skip_first, diagonal_handling)
+	path.setup(requester, access, max_distance, simulated_only, exclude, on_finish, end, mintargetdist, skip_first, diagonal_handling)
 	if(path.start())
 		active_pathing += path
 		return TRUE
@@ -71,21 +67,21 @@ SUBSYSTEM_DEF(pathfinder)
 
 /// Initiates a swarmed pathfind. Returns TRUE if we're good, FALSE if something's failed
 /// If a valid pathmap exists for the TARGET turf we'll use that, otherwise we have to build a new one
-/datum/controller/subsystem/pathfinder/proc/swarmed_pathfind(atom/movable/caller, atom/end, max_distance = 30, mintargetdist = 0, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, list/datum/callback/on_finish)
+/datum/controller/subsystem/pathfinder/proc/swarmed_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist = 0, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, list/datum/callback/on_finish)
 	var/turf/target = get_turf(end)
-	var/datum/can_pass_info/pass_info = new(caller, access)
+	var/datum/can_pass_info/pass_info = new(requester, access)
 	// If there's a map we can use already, use it
 	var/datum/path_map/valid_map = get_valid_map(pass_info, target, simulated_only, exclude, age, include_building = TRUE)
 	if(valid_map && valid_map.expand(max_distance))
-		path_map_passalong(on_finish, get_turf(caller), mintargetdist, skip_first, valid_map)
+		path_map_passalong(on_finish, get_turf(requester), mintargetdist, skip_first, valid_map)
 		return TRUE
 
 	// Otherwise we're gonna make a new one, and turn it into a path for the callbacks passed into us
 	var/list/datum/callback/pass_in = list()
-	pass_in += CALLBACK(GLOBAL_PROC, /proc/path_map_passalong, on_finish, get_turf(caller), mintargetdist, skip_first)
+	pass_in += CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(path_map_passalong), on_finish, get_turf(requester), mintargetdist, skip_first)
 	// And to allow subsequent calls to reuse the same map, we'll put a placeholder in the cache, and fill it up when the pathing finishes
 	var/datum/path_map/empty = new()
-	empty.pass_info = new(caller, access)
+	empty.pass_info = new(requester, access)
 	empty.start = target
 	empty.pass_space = simulated_only
 	empty.avoid = exclude
@@ -133,9 +129,9 @@ SUBSYSTEM_DEF(pathfinder)
 		source_to_maps[target] -= same_target
 
 /// Initiates a SSSP run. Returns true if we're good, FALSE if something's failed
-/datum/controller/subsystem/pathfinder/proc/build_map(atom/movable/caller, turf/source, max_distance = 30, access = list(), simulated_only = TRUE, turf/exclude, list/datum/callback/on_finish)
+/datum/controller/subsystem/pathfinder/proc/build_map(atom/movable/requester, turf/source, max_distance = 30, access = list(), simulated_only = TRUE, turf/exclude, list/datum/callback/on_finish)
 	var/datum/pathfind/sssp/path = new()
-	path.setup(caller, access, source, max_distance, simulated_only, exclude, on_finish)
+	path.setup(requester, access, source, max_distance, simulated_only, exclude, on_finish)
 	if(path.start())
 		active_pathing += path
 		return TRUE
@@ -158,9 +154,9 @@ SUBSYSTEM_DEF(pathfinder)
 
 /// Takes a set of pathfind info, returns the first valid pathmap that would work if one exists
 /// Optionally takes a max age to accept (defaults to 0 seconds) and a minimum acceptable range
-/// If include_building is true and we can only find a building path, ew'll use that instead. tho we will wait for it to finish first
+/// If include_building is true and we can only find a building path, we'll use that instead. tho we will wait for it to finish first
 /datum/controller/subsystem/pathfinder/proc/get_valid_map(datum/can_pass_info/pass_info, turf/target, simulated_only = TRUE, turf/exclude, age = MAP_REUSE_INSTANT, min_range = -INFINITY, include_building = FALSE)
-	// Walk all the maps that match our caller's turf OR our target's
+	// Walk all the maps that match our requester's turf OR our target's
 	// Then hold onto em. If their cache time is short we can reuse/expand them, if not we'll have to make a new one
 	var/oldest_time = world.time - age
 	/// Backup return value used if no finished pathmaps are found
@@ -186,10 +182,43 @@ SUBSYSTEM_DEF(pathfinder)
 		return constructing
 	return null
 
+/// Builds a single directional arrow image for a path step visualization
+/datum/controller/subsystem/pathfinder/proc/render_path_arrow(turf/draw, direction)
+	var/image/arrow = image('icons/turf/debug.dmi', draw, "arrow", PATH_ARROW_DEBUG_LAYER, direction)
+	SET_PLANE_EXPLICIT(arrow, BALLOON_CHAT_PLANE, draw)
+	return arrow
+
+///Renders a full path of arrows, showing the direction taken from each tile.
+/datum/controller/subsystem/pathfinder/proc/render_path_images(list/turf/draw_list)
+	if(!length(draw_list))
+		return list()
+	var/list/image/turf_images = list()
+	for(var/i in 1 to (length(draw_list) - 1))
+		var/turf/T = draw_list[i]
+		var/turf/next = draw_list[i + 1]
+		turf_images += render_path_arrow(T, get_dir(T, next))
+	return turf_images
+
+/// Renders a full path visualisation: start marker, directional arrows along the path, end marker.
+/datum/controller/subsystem/pathfinder/proc/render_path_images_full(list/turf/draw_list)
+	if(!length(draw_list))
+		return list()
+	var/list/image/turf_images = list()
+	var/turf/first = draw_list[1]
+	var/image/start = image('icons/turf/debug.dmi', first, "start", PATH_DEBUG_LAYER)
+	SET_PLANE_EXPLICIT(start, BALLOON_CHAT_PLANE, first)
+	turf_images += start
+	turf_images += render_path_images(draw_list)
+	var/turf/last = draw_list[length(draw_list)]
+	var/image/end = image('icons/turf/debug.dmi', last, "end", PATH_DEBUG_LAYER)
+	SET_PLANE_EXPLICIT(end, BALLOON_CHAT_PLANE, last)
+	turf_images += end
+	return turf_images
+
 /// Takes a set of pathfind info, returns all valid pathmaps that would work
 /// Takes an optional minimum range arg
 /datum/controller/subsystem/pathfinder/proc/get_valid_maps(datum/can_pass_info/pass_info, turf/target, simulated_only = TRUE, turf/exclude, age = MAP_REUSE_INSTANT, min_range = -INFINITY, include_building = FALSE)
-	// Walk all the maps that match our caller's turf OR our target's
+	// Walk all the maps that match our requester's turf OR our target's
 	// Then hold onto em. If their cache time is short we can reuse/expand them, if not we'll have to make a new one
 	var/list/valid_maps = list()
 	var/oldest_time = world.time - age

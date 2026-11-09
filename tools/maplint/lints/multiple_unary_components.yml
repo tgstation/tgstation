@@ -1,0 +1,3 @@
+/obj/machinery/atmospherics/components/unary:
+  banned_neighbors:
+    - /obj/machinery/atmospherics/components/unary

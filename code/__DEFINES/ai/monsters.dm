@@ -3,12 +3,24 @@
 #define BB_BILEWORM_SPEW_BILE "BB_bileworm_spew_bile"
 #define BB_BILEWORM_RESURFACE "BB_bileworm_resurface"
 #define BB_BILEWORM_DEVOUR "BB_bileworm_devour"
+#define BB_BILEWORM_SCARED "BB_bileworm_scared"
+#define BB_BILEWORM_FLEE_DISTANCE "BB_bileworm_flee_distance"
 
 // Meteor Heart AI keys
 /// Key where we keep the spike trail ability
 #define BB_METEOR_HEART_GROUND_SPIKES "BB_meteor_ground_spikes"
 /// Key where we keep the spine traps ability
 #define BB_METEOR_HEART_SPINE_TRAPS "BB_meteor_spine_traps"
+
+// Cybersun AI core AI keys
+///key for lightning strike attack
+#define BB_CYBERSUN_CORE_LIGHTNING "BB_lightning_strike"
+///key for big laser attack
+#define BB_CYBERSUN_CORE_BARRAGE "BB_cybersun_barrage"
+
+// Donk Exenteration Drone keys
+// key for aoe slash attack
+#define BB_DEDBOT_SLASH "BB_dedbot_exenterate"
 
 // Spider AI keys
 /// Key where we store a turf to put webs on
@@ -40,19 +52,36 @@
 /// Key where goliath stores a hole it wants to get into
 #define BB_GOLIATH_HOLE_TARGET "BB_goliath_hole"
 
+// Tendril AI keys
+#define BB_TENDRIL_LASH "tendril_lash"
+#define BB_TENDRIL_CHASER "tendril_chaser"
+#define BB_TENDRIL_SPIKES "tendril_spikes"
+
 // bee keys
 ///the bee hive we live inside
 #define BB_CURRENT_HOME "BB_current_home"
+///the bee hive we want to move into
+#define BB_TARGET_HOME "BB_target_home"
 ///the hydro we will pollinate
 #define BB_TARGET_HYDRO "BB_target_hydro"
 ///key to swarm around
 #define BB_SWARM_TARGET "BB_swarm_target"
+///turf picked by swirl_around_target for move_to_target to path toward
+#define BB_SWIRL_TURF "BB_swirl_turf"
+///key to indicate if the bee wants to go in or out of its hive.
+#define BB_WANTS_TO_TRANSITION_HIVE "BB_wants_to_transition_hive"
 
 // bear keys
 ///the hive with honey that we will steal from
 #define BB_FOUND_HONEY "BB_found_honey"
+///cooldown between hive raids
+#define BB_BEAR_HIVE_COOLDOWN "BB_bear_hive_cooldown"
+///cooldown between honeycomb hunts
+#define BB_BEAR_HONEYCOMB_COOLDOWN "BB_bear_honeycomb_cooldown"
 ///the tree that we will climb
 #define BB_CLIMBED_TREE "BB_climbed_tree"
+///tree climbing cooldown
+#define BB_TREE_CLIMBING_COOLDOWN "Tree Climbing Cooldown"
 
 /// Lobstrosities will only attack people with one of these traits
 #define BB_LOBSTROSITY_EXPLOIT_TRAITS "BB_lobstrosity_exploit_traits"
@@ -60,6 +89,11 @@
 #define BB_LOBSTROSITY_TARGET_LIMB "BB_lobstrosity_target_limb"
 /// We increment this counter every time we try to move while dragging an arm and if we go too long we'll give up trying to get out of line of sight and just eat the fingers
 #define BB_LOBSTROSITY_FINGER_LUST "BB_lobstrosity_finger_lust"
+/// Does this carp still target lying mobs even if they aren't stunned, and flee from sary fishermen?
+#define BB_LOBSTROSITY_NAIVE_HUNTER "BB_lobstrosity_naive_hunter"
+
+/// Does this carp run from scary fishermen?
+#define BB_CARPS_FEAR_FISHERMAN "BB_carp_fear_fisherman"
 
 // eyeball keys
 ///the death glare ability
@@ -68,6 +102,8 @@
 #define BB_BLIND_TARGET "BB_blind_target"
 ///value to store the minimum eye damage to prevent us from attacking a human
 #define BB_EYE_DAMAGE_THRESHOLD "BB_eye_damage_threshold"
+///the turf in front of our target we move to so our glare lines up
+#define BB_GLARE_POSITION "BB_glare_position"
 
 // hivebot keys
 ///the machine we must go to repair
@@ -80,14 +116,16 @@
 #define BB_WHELP_STRAIGHTLINE_FIRE "BB_whelp_straightline_fire"
 ///whelp's secondary enraged ability
 #define BB_WHELP_WIDESPREAD_FIRE "BB_whelp_widespread_fire"
-///how enraged the whelp is
-#define BB_WHELP_ENRAGED "BB_whelp_enraged"
 ///the target rock we will attempt to create a sculpture out of
 #define BB_TARGET_ROCK "BB_target_rock"
 ///the cannibal target we shall consume
 #define BB_TARGET_CANNIBAL "BB_target_cannibal"
 ///the tree we will burn down
 #define BB_TARGET_TREE "BB_target_tree"
+///cooldown key for sculpting statues
+#define BB_WHELP_SCULPT_COOLDOWN "BB_whelp_sculpt_cooldown"
+///cooldown key for burning trees
+#define BB_WHELP_BURN_COOLDOWN "BB_whelp_burn_cooldown"
 
 // Regal Rats
 /// The rat's ability to corrupt an area.
@@ -120,6 +158,8 @@
 #define BB_BOULDER_TARGET "BB_boulder_target"
 /// key that holds the ore_vent we will harvest boulders from
 #define BB_VENT_TARGET "BB_vent_target"
+/// Prevent us from strip-mining Lavaland lol
+#define BB_MINING_COOLDOWN "Mining Cooldown"
 
 // minebot keys
 /// key that stores our toggle light ability
@@ -154,6 +194,8 @@
 #define BB_MINEBOT_REPAIR_DRONE "minebot_repair_drone"
 ///should we plant mines?
 #define BB_MINEBOT_PLANT_MINES "minebot_plant_mines"
+///should we plant mines?
+#define BB_MINEBOT_CRIT_ALERT_COOLDOWN "minebot callcrit cooldown"
 
 //seedling keys
 /// the water can we will pick up
@@ -211,6 +253,21 @@
 #define BB_MOOK_MUSIC_AUDIENCE "music_audience"
 /// the bonfire we will light up
 #define BB_MOOK_BONFIRE_TARGET "bonfire_target"
+/// turf we are wandering toward (away from village)
+#define BB_WANDER_DESTINATION "BB_wander_destination"
+/// turf we will stand on to deposit ores at the material stand
+#define BB_DEPOSIT_POSITION "BB_deposit_position"
+/// list of /datum/pet_command instances the chief can issue
+#define BB_MOOK_COMMANDS "BB_mook_commands"
+/// list of things we can heal
+#define BB_MOOK_HEAL_TARGETS "heal targets"
+/// Cooldown on giving commands
+#define BB_COMMAND_COOLDOWN "command cooldown"
+///Things to light on fire
+#define BB_BONFIRE_TARGETS "bonfire targets"
+///Mook mining cooldown
+#define BB_MOOK_MINING_COOLDOWN "mining cooldown"
+
 
 //gutlunch keys
 ///the trough we will eat from
@@ -230,7 +287,7 @@
 #define BB_SWIM_ALTERNATE_TURF "swim_alternate_turf"
 ///key holds our state of swimming
 #define BB_CURRENTLY_SWIMMING "currently_swimming"
-///key holds how long we will be swimming for
+///Time between swims
 #define BB_KEY_SWIMMER_COOLDOWN "key_swimmer_cooldown"
 //Wizard AI keys
 /// Key where we store our main targeted spell
@@ -273,3 +330,74 @@
 //netguardians
 /// rocket launcher
 #define BB_NETGUARDIAN_ROCKET_ABILITY "netguardian_rocket"
+
+//deer
+///our water target
+#define BB_DEER_WATER_TARGET "deer_water_target"
+///our grass target
+#define BB_DEER_GRASS_TARGET "deer_grass_target"
+///our tree target
+#define BB_DEER_TREE_TARGET "deer_tree_target"
+///set when we roll the urge to go find another deer to play with
+#define BB_DEER_WANTS_TO_PLAY "deer_wants_to_play"
+///our temporary playmate
+#define BB_DEER_PLAYFRIEND "deer_playfriend"
+///our home target
+#define BB_DEER_TREEHOME "deer_home"
+///our resting duration
+#define BB_DEER_RESTING "deer_resting"
+///time till our next rest duration
+#define BB_DEER_NEXT_REST_TIMER "deer_next_rest_timer"
+///cooldowns gating how often we graze, drink and mark territory
+#define BB_DEER_GRAZE_COOLDOWN "deer_graze_cooldown"
+#define BB_DEER_DRINK_COOLDOWN "deer_drink_cooldown"
+#define BB_DEER_MARK_COOLDOWN "deer_mark_cooldown"
+#define BB_DEER_PLAY_COOLDOWN "deer_play_cooldown"
+
+//the thing boss
+#define BB_THETHING_CHARGE "BB_THETHING_CHARGE"
+#define BB_THETHING_DECIMATE "BB_THETHING_DECIMATE"
+#define BB_THETHING_BIGTENDRILS "BB_THETHING_BIGTENDRILS"
+#define BB_THETHING_SHRIEK "BB_THETHING_SHRIEK"
+#define BB_THETHING_CARDTENDRILS "BB_THETHING_CARDTENDRILS"
+#define BB_THETHING_ACIDSPIT "BB_THETHING_ACIDSPIT"
+/// Blackboard key for The Thing boss that determines attack mode. TRUE means it will focus on closing the distance and murdering the person in question. Otherwise AOE.
+#define BB_THETHING_MELEEMODE "BB_THETHING_MELEEMODE"
+/// The Thing will be in attack mode forever if true
+#define BB_THETHING_NOAOE "BB_THETHING_NOAOE"
+/// What (first in combo) attack was last executed
+#define BB_THETHING_LASTAOE "BB_THETHING_LASTAOE"
+/// The action object selected by pick_random_ability for the current AOE slot
+#define BB_THETHING_SELECTED_AOE "BB_THETHING_SELECTED_AOE"
+
+///people we headbutt!
+#define BB_TURTLE_HEADBUTT_VICTIM "turtle_headbutt_victim"
+///flore we must smell
+#define BB_TURTLE_FLORA_TARGET "turtle_flora_target"
+///Cooldown between headbutts
+#define BB_TURTLE_HEADBUTT_COOLDOWN "turtle_headbutt_cooldown"
+///Cooldown between smelling flora
+#define BB_TURTLE_FLORA_COOLDOWN "turtle_flora_cooldown"
+#define BB_TURTLE_HEADBUTT_TYPES "turtle_headbutt_types"
+#define BB_TURTLE_FLORA_TYPES "turtle_flora_types"
+
+
+#define BB_GUNMIMIC_GUN_EMPTY "BB_GUNMIMIC_GUN_EMPTY"
+
+//snails
+///snails retreat ability
+#define BB_SNAIL_RETREAT_ABILITY "snail_retreat_ability"
+
+//blood drunk miner keys
+///key for dash ability
+#define BB_BDM_DASH_ABILITY "BB_bdm_dash_ability"
+/// key for kinetic accelerator ability
+#define BB_BDM_KINETIC_ACCELERATOR_ABILITY "BB_bdm_kinetic_accelerator_ability"
+/// key for dash attack ability
+#define BB_BDM_DASH_ATTACK_ABILITY "BB_bdm_dash_attack_ability"
+/// key for transform weapon ability
+#define BB_BDM_TRANSFORM_WEAPON_ABILITY "BB_bdm_transform_weapon_ability"
+/// Shared cooldown group for blood drunk miner ranged abilities
+#define BB_BDM_RANGED_ATTACK_COOLDOWN "BB_bdm_ranged_attack_cooldown"
+/// Cooldown duration for blood drunk miner ranged abilities
+#define BB_BDM_RANGED_ATTACK_COOLDOWN_DURATION "BB_bdm_ranged_attack_cooldown_duration"

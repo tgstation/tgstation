@@ -7,6 +7,11 @@
 	report_message = "Rumors has it that the clown planet has been sending support packages to clowns in this system."
 	trait_to_give = STATION_TRAIT_BANANIUM_SHIPMENTS
 
+/datum/station_trait/bananium_shipment/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>Clown Planet</b></center><BR>"
+	advisory_string += "Your sector's advisory level is Clown Planet! Our bike horns have picked up on a large bananium stash. Clowns show a large influx of clowns on your station. We highly advise you to slip any threats to keep Honkotrasen assets within the Banana Sector. The Department of Intelligence advises defending chemistry from any clowns that are trying to make baldium or space lube."
+	return advisory_string
+
 /datum/station_trait/unnatural_atmosphere
 	name = "Unnatural atmospherical properties"
 	trait_type = STATION_TRAIT_NEUTRAL
@@ -18,6 +23,18 @@
 
 	// This station trait modifies the atmosphere, which is too far past the time admins are able to revert it
 	can_revert = FALSE
+
+/// Upgrades pun-pun into a big ass gorrilla.
+/datum/station_trait/pun_pun_gym_day
+	name = "Pun Pun Gym Day"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 1
+	cost = STATION_TRAIT_COST_LOW
+	show_in_report = TRUE
+	report_message = "Following a clerical error in our primate requisition form, your bar's simian has been upgraded to a bigger primate. We have elected not to correct this."
+	trait_to_give = STATION_TRAIT_PUN_PUN_GYM_DAY
+	blacklist = list(/datum/station_trait/job/pun_pun) //We should make these two work together later, itd be funny.
+
 
 /datum/station_trait/spider_infestation
 	name = "Spider Infestation"
@@ -122,6 +139,11 @@
 	. = ..()
 	SSstation.announcer = /datum/centcom_announcer/intern
 
+/datum/station_trait/announcement_intern/get_pulsar_message()
+	var/advisory_string = "Advisory Level: <b>(TITLE HERE)</b></center><BR>"
+	advisory_string += "(Copy/Paste the summary provided by the Threat Intelligence Office in this field. You shouldn't have any trouble with this just make sure to replace this message before hitting the send button. Also, make sure there's coffee ready for the meeting at 06:00 when you're done.)"
+	return advisory_string
+
 /datum/station_trait/announcement_medbot
 	name = "Announcement \"System\""
 	trait_type = STATION_TRAIT_NEUTRAL
@@ -187,6 +209,7 @@
 		if(length(birthday_options))
 			birthday_person = pick(birthday_options)
 			birthday_person_name = birthday_person.real_name
+			ADD_TRAIT(birthday_person, TRAIT_BIRTHDAY_BOY, REF(src))
 	addtimer(CALLBACK(src, PROC_REF(announce_birthday)), 10 SECONDS)
 
 /datum/station_trait/birthday/proc/check_valid_override()
@@ -223,7 +246,7 @@
 	))
 	hat = new hat(spawned_mob)
 	if(!spawned_mob.equip_to_slot_if_possible(hat, ITEM_SLOT_HEAD, disable_warning = TRUE))
-		spawned_mob.equip_to_slot_or_del(hat, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		spawned_mob.equip_to_storage(hat, ITEM_SLOT_BACK, indirect_action = TRUE)
 	var/obj/item/toy = pick_weight(list(
 		/obj/item/reagent_containers/spray/chemsprayer/party = 4,
 		/obj/item/toy/balloon = 2,
@@ -235,12 +258,12 @@
 	if(istype(toy, /obj/item/toy/balloon))
 		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_HANDS) //Balloons do not fit inside of backpacks.
 	else
-		spawned_mob.equip_to_slot_or_del(toy, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		spawned_mob.equip_to_storage(toy, ITEM_SLOT_BACK, indirect_action = TRUE)
 	if(birthday_person_name) //Anyone who joins after the annoucement gets one of these.
 		var/obj/item/birthday_invite/birthday_invite = new(spawned_mob)
 		birthday_invite.setup_card(birthday_person_name)
 		if(!spawned_mob.equip_to_slot_if_possible(birthday_invite, ITEM_SLOT_HANDS, disable_warning = TRUE))
-			spawned_mob.equip_to_slot_or_del(birthday_invite, ITEM_SLOT_BACKPACK) //Just incase someone spawns with both hands full.
+			spawned_mob.equip_to_storage(birthday_invite, ITEM_SLOT_BACK, indirect_action = TRUE) //Just incase someone spawns with both hands full.
 
 /obj/item/birthday_invite
 	name = "birthday invitation"
@@ -280,38 +303,36 @@
 	greyscale_config = /datum/greyscale_config/festive_hat
 	greyscale_config_worn = /datum/greyscale_config/festive_hat/worn
 
-/datum/station_trait/scarves
-	name = "Scarves"
+/datum/station_trait/scryers
+	name = "Scryers"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 5
-	cost = STATION_TRAIT_COST_MINIMAL
+	weight = 2
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
-	var/list/scarves
+	report_message = "Nanotrasen has chosen your station for an experiment - everyone has free scryers! Use these to talk to other people easily and privately."
 
-/datum/station_trait/scarves/New()
+/datum/station_trait/scryers/New()
 	. = ..()
-	report_message = pick(
-		"Nanotrasen is experimenting with seeing if neck warmth improves employee morale.",
-		"After Space Fashion Week, scarves are the hot new accessory.",
-		"Everyone was simultaneously a little bit cold when they packed to go to the station.",
-		"The station is definitely not under attack by neck grappling aliens masquerading as wool. Definitely not.",
-		"You all get free scarves. Don't ask why.",
-		"A shipment of scarves was delivered to the station.",
-	)
-	scarves = typesof(/obj/item/clothing/neck/scarf) + list(
-		/obj/item/clothing/neck/large_scarf/red,
-		/obj/item/clothing/neck/large_scarf/green,
-		/obj/item/clothing/neck/large_scarf/blue,
-	)
-
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
-
-/datum/station_trait/scarves/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+/datum/station_trait/scryers/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
-	var/scarf_type = pick(scarves)
+	if(!ishuman(spawned))
+		return
+	var/mob/living/carbon/human/humanspawned = spawned
+	// Put their silly little scarf or necktie somewhere else
+	var/obj/item/silly_little_scarf = humanspawned.wear_neck
+	if(silly_little_scarf)
+		var/list/backup_slots = list(LOCATION_LPOCKET, LOCATION_RPOCKET, LOCATION_BACKPACK)
+		humanspawned.temporarilyRemoveItemFromInventory(silly_little_scarf)
+		silly_little_scarf.forceMove(get_turf(humanspawned))
+		humanspawned.equip_in_one_of_slots(silly_little_scarf, backup_slots, qdel_on_fail = FALSE)
 
-	spawned.equip_to_slot_or_del(new scarf_type(spawned), ITEM_SLOT_NECK, initial = FALSE)
+	var/obj/item/clothing/neck/link_scryer/loaded/new_scryer = new(spawned)
+	new_scryer.label = spawned.name
+	new_scryer.update_name()
+
+	spawned.equip_to_slot_or_del(new_scryer, ITEM_SLOT_NECK, initial = FALSE)
 
 /datum/station_trait/wallets
 	name = "Wallets!"
@@ -368,66 +389,23 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = TRUE
 	weight = 1
-	report_message = "We've reports of high amount of trace eigenstasium on your station. Ensure that your closets are working correctly."
+	report_message = "We've reports of loose bluespace streams affecting your station's lockers and closets. \
+		You might lose some of your belongings... or gain some new ones!"
 
 /datum/station_trait/linked_closets/on_round_start()
 	. = ..()
-	var/list/roundstart_non_secure_closets = GLOB.roundstart_station_closets.Copy()
-	for(var/obj/structure/closet/closet in roundstart_non_secure_closets)
-		if(closet.secure)
-			roundstart_non_secure_closets -= closet
+	var/list/roundstart_closets = GLOB.roundstart_station_closets.Copy()
 
 	/**
-	 * The number of links to perform.
-	 * Combined with 50/50 the probability of the link being triangular, the boundaries of any given
-	 * on-station, non-secure closet being linked are as high as 1 in 7/8 and as low as 1 in 16-17,
-	 * nearing an a mean of 1 in 9 to 11/12 the more repetitions are done.
-	 *
-	 * There are more than 220 roundstart closets on meta, around 150 of which aren't secure,
-	 * so, about 13 to 17 closets will be affected by this most of the times.
+	 * The number of links to perform. the chance of a closet being linked are about 1 in 10
+	 * There are more than 220 roundstart closets on meta, so, about 22 closets will be affected on average.
 	 */
-	var/number_of_links = round(length(roundstart_non_secure_closets) * (rand(350, 450)*0.0001), 1)
+	var/number_of_links = round(length(roundstart_closets) * (rand(400, 430)*0.0001), 1)
 	for(var/repetition in 1 to number_of_links)
-		var/closets_left = length(roundstart_non_secure_closets)
-		if(closets_left < 2)
-			return
 		var/list/targets = list()
-		for(var/how_many in 1 to min(closets_left, rand(2,3)))
-			targets += pick_n_take(roundstart_non_secure_closets)
-		if(closets_left == 1) //there's only one closet left. Let's not leave it alone.
-			targets += roundstart_non_secure_closets[1]
-		GLOB.eigenstate_manager.create_new_link(targets)
-
-/datum/station_trait/triple_ai
-	name = "AI Triumvirate"
-	trait_type = STATION_TRAIT_NEUTRAL
-	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
-	show_in_report = TRUE
-	weight = 1
-	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
-
-/datum/station_trait/triple_ai/New()
-	. = ..()
-	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP, PROC_REF(on_occupations_setup))
-
-/datum/station_trait/triple_ai/revert()
-	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP)
-	return ..()
-
-/datum/station_trait/triple_ai/proc/on_occupations_setup(datum/controller/subsystem/job/source)
-	SIGNAL_HANDLER
-
-	//allows for latejoining AIs
-	for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
-		secondary_ai_spawn.latejoin_active = TRUE
-
-	var/datum/station_trait/job/human_ai/ai_trait = locate() in SSstation.station_traits
-	//human AI quirk will handle adding its own job positions, but for now don't allow more AI slots.
-	if(ai_trait)
-		return
-	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
-		ai_datum.spawn_positions = 3
-		ai_datum.total_positions = 3
+		for(var/how_many in 1 to rand(2,3))
+			targets += pick_n_take(roundstart_closets)
+		GLOB.closet_teleport_controller.create_new_link(targets)
 
 
 #define PRO_SKUB "pro-skub"
@@ -449,10 +427,8 @@
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
-/datum/station_trait/skub/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
-	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
-	lobby_button.desc = "Are you pro-skub or anti-skub? Click to cycle through pro-skub, anti-skub, random and neutral."
-	return ..()
+/datum/station_trait/skub/get_lobby_description()
+	return "Are you pro-skub or anti-skub? Click to cycle through pro-skub, anti-skub, random and neutral."
 
 /// Let late-joiners jump on this gimmick too.
 /datum/station_trait/skub/can_display_lobby_button(client/player)
@@ -462,47 +438,41 @@
 /datum/station_trait/skub/on_round_start()
 	return
 
-/datum/station_trait/skub/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
-	var/mob/player = lobby_button.get_mob()
-	var/skub_stance = skubbers[player.ckey]
-	switch(skub_stance)
+/datum/station_trait/skub/get_lobby_icon_state(mob/dead/new_player/player)
+	switch(skubbers[player.ckey])
 		if(PRO_SKUB)
-			lobby_button.base_icon_state = "signup_on"
+			return "signup_on"
 		if(ANTI_SKUB)
-			lobby_button.base_icon_state = "signup"
-		else
-			lobby_button.base_icon_state = "signup_neutral"
+			return "signup"
+	return "signup_neutral"
 
-/datum/station_trait/skub/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
-	var/mob/player = lobby_button.get_mob()
+/datum/station_trait/skub/get_lobby_overlay_states(mob/dead/new_player/player)
+	switch(skubbers[player.ckey])
+		if(PRO_SKUB)
+			return list("pro_skub")
+		if(ANTI_SKUB)
+			return list("anti_skub")
+		if(SKUB_IDFC)
+			return list("neutral_skub")
+		if(RANDOM_SKUB)
+			return list("random_skub")
+	return list()
+
+/datum/station_trait/skub/on_lobby_button_click(mob/dead/new_player/player)
 	var/skub_stance = skubbers[player.ckey]
 	switch(skub_stance)
 		if(PRO_SKUB)
 			skubbers[player.ckey] = ANTI_SKUB
-			lobby_button.balloon_alert(player, "anti-skub")
+			return "anti-skub"
 		if(ANTI_SKUB)
 			skubbers[player.ckey] = SKUB_IDFC
-			lobby_button.balloon_alert(player, "don't care")
+			return "don't care"
 		if(SKUB_IDFC)
 			skubbers[player.ckey] = RANDOM_SKUB
-			lobby_button.balloon_alert(player, "on the best side")
+			return "on the best side"
 		if(RANDOM_SKUB)
 			skubbers[player.ckey] = PRO_SKUB
-			lobby_button.balloon_alert(player, "pro-skub")
-
-/datum/station_trait/skub/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
-	SIGNAL_HANDLER
-	var/mob/player = lobby_button.get_mob()
-	var/skub_stance = skubbers[player.ckey]
-	switch(skub_stance)
-		if(PRO_SKUB)
-			overlays += "pro_skub"
-		if(ANTI_SKUB)
-			overlays += "anti_skub"
-		if(SKUB_IDFC)
-			overlays += "neutral_skub"
-		if(RANDOM_SKUB)
-			overlays += "random_skub"
+			return "pro-skub"
 
 /datum/station_trait/skub/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
@@ -512,8 +482,8 @@
 		return
 
 	if((skub_stance == RANDOM_SKUB && prob(50)) || skub_stance == PRO_SKUB)
-		var/obj/item/storage/box/skub/boxie = new(spawned.loc)
-		spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+		var/obj/item/storage/box/stickers/skub/boxie = new(spawned.loc)
+		spawned.equip_to_storage(boxie, ITEM_SLOT_BACK, indirect_action = TRUE)
 		if(ishuman(spawned))
 			var/obj/item/clothing/suit/costume/wellworn_shirt/skub/shirt = new(spawned.loc)
 			if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
@@ -521,43 +491,91 @@
 		return
 
 	var/obj/item/storage/box/stickers/anti_skub/boxie = new(spawned.loc)
-	spawned.equip_to_slot_if_possible(boxie, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+	spawned.equip_to_storage(boxie, ITEM_SLOT_BACK, indirect_action = TRUE)
 	if(!ishuman(spawned))
 		return
 	var/obj/item/clothing/suit/costume/wellworn_shirt/skub/anti/shirt = new(spawned.loc)
 	if(!spawned.equip_to_slot_if_possible(shirt, ITEM_SLOT_OCLOTHING, indirect_action = TRUE))
 		shirt.forceMove(boxie)
 
-/// A box containing a skub, for easier carry because skub is a bulky item.
-/obj/item/storage/box/skub
-	name = "skub box"
-	desc = "A box to store your skub and pro-skub shirt in. A label on the back reads: \"Skubtide, Stationwide\"."
-	icon_state = "hugbox"
-	illustration = "skub"
-
-/obj/item/storage/box/skub/Initialize(mapload)
-	. = ..()
-	atom_storage.exception_hold = typecacheof(list(/obj/item/skub, /obj/item/clothing/suit/costume/wellworn_shirt/skub))
-
-/obj/item/storage/box/skub/PopulateContents()
-	new /obj/item/skub(src)
-	new /obj/item/sticker/skub(src)
-	new /obj/item/sticker/skub(src)
-
-/obj/item/storage/box/stickers/anti_skub
-	name = "anti-skub stickers box"
-	desc = "The enemy may have been given a skub and a shirt, but I've more stickers! Plus the box can hold my anti-skub shirt."
-
-/obj/item/storage/box/stickers/anti_skub/Initialize(mapload)
-	. = ..()
-	atom_storage.exception_hold = typecacheof(list(/obj/item/clothing/suit/costume/wellworn_shirt/skub))
-
-/obj/item/storage/box/stickers/anti_skub/PopulateContents()
-	for(var/i in 1 to 4)
-		new /obj/item/sticker/anti_skub(src)
-
 #undef PRO_SKUB
 #undef ANTI_SKUB
 #undef SKUB_IDFC
 #undef RANDOM_SKUB
 
+/// Crew don't ever spawn as enemies of the station. Obsesseds, blob infection, space changelings etc can still happen though
+/datum/station_trait/background_checks
+	name = "Station-Wide Background Checks"
+	report_message = "We replaced the intern doing your crew's background checks with a trained screener for this shift! \
+		That said, our enemies may just find another way to infiltrate the station, so be careful."
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 1
+	show_in_report = TRUE
+	can_revert = FALSE
+
+	dynamic_threat_id = "Background Checks"
+
+/datum/station_trait/background_checks/New()
+	. = ..()
+	RegisterSignal(SSdynamic, COMSIG_DYNAMIC_PRE_ROUNDSTART, PROC_REF(modify_config))
+
+/datum/station_trait/background_checks/proc/modify_config(datum/source, list/dynamic_config)
+	SIGNAL_HANDLER
+
+	for(var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
+		if(ruleset.ruleset_flags & RULESET_INVADER)
+			continue
+		dynamic_config[initial(ruleset.config_tag)] ||= list()
+		dynamic_config[initial(ruleset.config_tag)][NAMEOF(ruleset, weight)] = 0
+
+/datum/station_trait/pet_day
+	name = "Bring Your Pet To Work Day"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = FALSE
+	weight = 2
+	sign_up_button = TRUE
+
+/datum/station_trait/pet_day/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/pet_day/get_lobby_description()
+	return "Want to bring your innocent pet to a giant metal deathtrap? Click here to customize it!"
+
+/datum/station_trait/pet_day/get_lobby_overlay_states(mob/dead/new_player/player)
+	return list("select_pet")
+
+/datum/station_trait/pet_day/can_display_lobby_button(client/player)
+	return sign_up_button
+
+/datum/station_trait/pet_day/on_round_start()
+	return
+
+/datum/station_trait/pet_day/on_lobby_button_click(mob/dead/new_player/player)
+	var/client/player_client = player.client
+	if(isnull(player_client))
+		return
+	var/datum/pet_customization/customization = GLOB.customized_pets[REF(player_client)]
+	if(isnull(customization))
+		customization = new(player_client)
+	INVOKE_ASYNC(customization, TYPE_PROC_REF(/datum, ui_interact), player)
+
+/datum/station_trait/pet_day/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	SIGNAL_HANDLER
+
+	var/datum/pet_customization/customization = GLOB.customized_pets[REF(player_client)]
+	if(isnull(customization))
+		return
+	INVOKE_ASYNC(customization, TYPE_PROC_REF(/datum/pet_customization, create_pet), spawned, player_client)
+
+/// We're pulling a Jim Kramer with this one boys
+/datum/station_trait/gmm_spotlight
+	name = "GMM Economic Spotlight"
+	report_message = "This shift, the Galactic Mineral Market is doing a showcase on your crew's affulence! Every paycheck, the station newscasters will alert the crew who has the most credits."
+	trait_type = STATION_TRAIT_NEUTRAL
+	trait_to_give = STATION_TRAIT_ECONOMY_ALERTS
+	weight = 2
+	cost = STATION_TRAIT_COST_LOW
+	show_in_report = TRUE
+
+	dynamic_threat_id = "GMM Econ Spotlight"

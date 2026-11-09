@@ -6,8 +6,9 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "spess_knife"
 	worn_icon_state = "spess_knife"
-	belt_icon_state = "spess_knife"
+	inside_belt_icon_state = "spess_knife"
 	inhand_icon_state = "spess_knife"
+	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -17,7 +18,7 @@
 	tool_behaviour = null
 	toolspeed = 1.25 // 25% worse than default tools
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	///Radial menu tool options
 	var/list/options = list()
 	///Chance to select wrong tool
@@ -68,7 +69,7 @@
 
 	update_tool_parameters()
 	update_appearance(UPDATE_ICON_STATE)
-	playsound(src, 'sound/weapons/empty.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/empty.ogg', 50, TRUE)
 
 /// Used to pick random tool behavior for the knife
 /obj/item/spess_knife/proc/pick_tool()

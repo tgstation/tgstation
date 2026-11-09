@@ -5,15 +5,16 @@
 	icon = 'icons/mob/human/human.dmi'
 	icon_state = "human_basic"
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE|LONG_GLIDE
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPSEC_FIRST_HUD,IMPSEC_SECOND_HUD,ANTAG_HUD,GLAND_HUD,SENTIENT_DISEASE_HUD,FAN_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,BLOOD_HUD,ID_HUD,WANTED_HUD,IMPLOYAL_HUD,IMPSEC_FIRST_HUD,IMPSEC_SECOND_HUD,ANTAG_HUD,GLAND_HUD,FAN_HUD)
 	hud_type = /datum/hud/human
 	pressure_resistance = 25
-	can_buckle = TRUE
 	buckle_lying = 0
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = NONE // The current mob biotypes of human mobs are dependent on the human species (and the organ set bonus)
 	can_be_shoved_into = TRUE
 	initial_language_holder = /datum/language_holder/empty // We get stuff from our species
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	max_grab = GRAB_KILL
+	examine_thats = "This is"
 
 	//Hair colour and style
 	var/hair_color = COLOR_BLACK
@@ -28,11 +29,14 @@
 	var/facial_hair_color = COLOR_BLACK
 	var/facial_hairstyle = "Shaved"
 
-	//Eye colour
+	// Base "natural" eye color
 	var/eye_color_left = COLOR_BLACK
 	var/eye_color_right = COLOR_BLACK
 	/// Var used to keep track of a human mob having a heterochromatic right eye. To ensure prefs don't overwrite shit
 	var/eye_color_heterochromatic = FALSE
+	// Eye color overrides assoc lists - priority key to hex color
+	var/list/eye_color_left_overrides
+	var/list/eye_color_right_overrides
 
 	var/skin_tone = "caucasian1" //Skin tone
 
@@ -53,25 +57,25 @@
 	var/jumpsuit_style = PREF_SUIT //suit/skirt
 
 	//Equipment slots
-	var/obj/item/clothing/wear_suit = null
-	var/obj/item/clothing/w_uniform = null
+	var/obj/item/back = null
+	var/obj/item/head = null
+	var/obj/item/gloves = null
+	var/obj/item/ears = null
+	var/obj/item/glasses = null
+	var/obj/item/shoes = null
+	var/obj/item/wear_neck = null
+	var/obj/item/wear_mask = null
+	var/obj/item/wear_suit = null
+	var/obj/item/w_uniform = null
 	var/obj/item/belt = null
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
 	var/obj/item/s_store = null
 
-	var/special_voice = "" // For changing our voice. Used by a symptom.
+	/// Allows for special overrides of voice
+	var/override_voice = ""
 
-	var/datum/physiology/physiology
-
-	/// What types of mobs are allowed to ride/buckle to this mob
-	var/static/list/can_ride_typecache = typecacheof(list(
-		/mob/living/basic/parrot,
-		/mob/living/carbon/human,
-		/mob/living/basic/slime,
-	))
-	var/lastpuke = 0
 	var/account_id
 
 	var/hardcore_survival_score = 0
@@ -88,5 +92,19 @@
 	/// When an braindead player has their equipment fiddled with, we log that info here for when they come back so they know who took their ID while they were DC'd for 30 seconds
 	var/list/afk_thefts
 
-	/// Height of the mob
-	VAR_PROTECTED/mob_height = HUMAN_HEIGHT_MEDIUM
+	/// Base height of the mob, modified by stuff like dwarfism or species
+	VAR_PRIVATE/base_mob_height = HUMAN_HEIGHT_MEDIUM
+	/// Actual height of the mob. Don't touch this one, it is set via update_mob_height()
+	VAR_FINAL/mob_height = HUMAN_HEIGHT_MEDIUM
+
+	/// Tracks how long in seconds we've been in a low pressure environment
+	VAR_FINAL/seconds_in_low_pressure = 0
+
+	/// Combined width of our body sprite
+	VAR_PRIVATE/cached_body_width = ICON_SIZE_X
+	/// Combined height of our body sprite
+	VAR_PRIVATE/cached_body_height = ICON_SIZE_Y
+	/// Leftmost offset of our overlays
+	var/cached_body_min_x_offset = 0
+	/// Rightmost offset of our overlays
+	var/cached_body_min_y_offset = 0

@@ -1,6 +1,6 @@
 //Korta Nut
 /obj/item/seeds/korta_nut
-	name = "pack of korta nut seeds"
+	name = "korta nut seed pack"
 	desc = "These seeds grow into korta nut bushes, native to Tizira."
 	icon_state = "seed-korta"
 	species = "kortanut"
@@ -22,14 +22,18 @@
 	desc = "A little nut of great importance. Has a peppery shell which can be ground into flour and a soft, pulpy interior that produces a milky fluid when juiced. Or you can eat them whole, as a quick snack."
 	icon_state = "korta_nut"
 	foodtypes = NUTS
-	grind_results = list(/datum/reagent/consumable/korta_flour = 0)
-	juice_typepath = /datum/reagent/consumable/korta_milk
 	tastes = list("peppery heat" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/kortara
 
+/obj/item/food/grown/korta_nut/grind_results()
+	return list(/datum/reagent/consumable/korta_flour = 0)
+
+/obj/item/food/grown/korta_nut/juice_typepath()
+	return /datum/reagent/consumable/korta_milk
+
 //Sweet Korta Nut
 /obj/item/seeds/korta_nut/sweet
-	name = "pack of sweet korta nut seeds"
+	name = "sweet korta nut seed pack"
 	desc = "These seeds grow into sweet korta nuts, a mutation of the original species that produces a thick syrup that Tizirans use for desserts."
 	icon_state = "seed-sweetkorta"
 	species = "kortanut"
@@ -46,7 +50,11 @@
 	name = "sweet korta nut"
 	desc = "A sweet treat lizards love to eat."
 	icon_state = "korta_nut"
-	grind_results = list(/datum/reagent/consumable/korta_flour = 0)
-	juice_typepath = /datum/reagent/consumable/korta_nectar
 	tastes = list("peppery sweet" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/kortara
+
+/obj/item/food/grown/korta_nut/sweet/grind_results()
+	return list(/datum/reagent/consumable/korta_flour = 0)
+
+/obj/item/food/grown/korta_nut/sweet/juice_typepath()
+	return /datum/reagent/consumable/korta_nectar

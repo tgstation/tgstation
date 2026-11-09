@@ -8,6 +8,7 @@
 #define FOOTSTEP_LAVA "lava"
 #define FOOTSTEP_MEAT "meat"
 #define FOOTSTEP_CATWALK "catwalk"
+#define FOOTSTEP_CONCRETE "concrete"
 //barefoot sounds
 #define FOOTSTEP_WOOD_BAREFOOT "woodbarefoot"
 #define FOOTSTEP_WOOD_CLAW "woodclaw"
@@ -28,6 +29,7 @@
 #define FOOTSTEP_MOB_RUST "footstep_rust"
 #define FOOTSTEP_OBJ_MACHINE "footstep_machine"
 #define FOOTSTEP_OBJ_ROBOT "footstep_robot"
+#define FOOTSTEP_MOB_SYNTHETIC "footstep_synthetic"
 
 //priority defines for the footstep_override element
 #define STEP_SOUND_NO_PRIORITY 0
@@ -84,10 +86,10 @@ GLOBAL_LIST_INIT(footstep, list(
 		'sound/effects/footstep/grass3.ogg',
 		'sound/effects/footstep/grass4.ogg'), 75, 0),
 	FOOTSTEP_WATER = list(list(
-		'sound/effects/footstep/water1.ogg',
-		'sound/effects/footstep/water2.ogg',
-		'sound/effects/footstep/water3.ogg',
-		'sound/effects/footstep/water4.ogg'), 100, 1),
+		'sound/effects/footstep/water/water1.ogg',
+		'sound/effects/footstep/water/water2.ogg',
+		'sound/effects/footstep/water/water3.ogg',
+		'sound/effects/footstep/water/water4.ogg'), 100, 1),
 	FOOTSTEP_LAVA = list(list(
 		'sound/effects/footstep/lava1.ogg',
 		'sound/effects/footstep/lava2.ogg',
@@ -100,6 +102,12 @@ GLOBAL_LIST_INIT(footstep, list(
 		'sound/effects/footstep/catwalk3.ogg',
 		'sound/effects/footstep/catwalk4.ogg',
 		'sound/effects/footstep/catwalk5.ogg'), 100, 1),
+	FOOTSTEP_CONCRETE = list(list(
+		'sound/effects/footstep/concrete1.ogg',
+		'sound/effects/footstep/concrete2.ogg',
+		'sound/effects/footstep/concrete3.ogg',
+		'sound/effects/footstep/concrete4.ogg',
+		'sound/effects/footstep/concrete5.ogg'), 100, 1),
 ))
 
 //bare footsteps lists
@@ -134,10 +142,10 @@ GLOBAL_LIST_INIT(barefootstep, list(
 		'sound/effects/footstep/grass3.ogg',
 		'sound/effects/footstep/grass4.ogg'), 75, 0),
 	FOOTSTEP_WATER = list(list(
-		'sound/effects/footstep/water1.ogg',
-		'sound/effects/footstep/water2.ogg',
-		'sound/effects/footstep/water3.ogg',
-		'sound/effects/footstep/water4.ogg'), 100, 1),
+		'sound/effects/footstep/water/water1.ogg',
+		'sound/effects/footstep/water/water2.ogg',
+		'sound/effects/footstep/water/water3.ogg',
+		'sound/effects/footstep/water/water4.ogg'), 100, 1),
 	FOOTSTEP_LAVA = list(list(
 		'sound/effects/footstep/lava1.ogg',
 		'sound/effects/footstep/lava2.ogg',
@@ -178,10 +186,10 @@ GLOBAL_LIST_INIT(clawfootstep, list(
 		'sound/effects/footstep/grass3.ogg',
 		'sound/effects/footstep/grass4.ogg'), 75, 0),
 	FOOTSTEP_WATER = list(list(
-		'sound/effects/footstep/water1.ogg',
-		'sound/effects/footstep/water2.ogg',
-		'sound/effects/footstep/water3.ogg',
-		'sound/effects/footstep/water4.ogg'), 100, 1),
+		'sound/effects/footstep/water/water1.ogg',
+		'sound/effects/footstep/water/water2.ogg',
+		'sound/effects/footstep/water/water3.ogg',
+		'sound/effects/footstep/water/water4.ogg'), 100, 1),
 	FOOTSTEP_LAVA = list(list(
 		'sound/effects/footstep/lava1.ogg',
 		'sound/effects/footstep/lava2.ogg',
@@ -196,10 +204,10 @@ GLOBAL_LIST_INIT(heavyfootstep, list(
 		'sound/effects/footstep/heavy1.ogg',
 		'sound/effects/footstep/heavy2.ogg'), 100, 2),
 	FOOTSTEP_WATER = list(list(
-		'sound/effects/footstep/water1.ogg',
-		'sound/effects/footstep/water2.ogg',
-		'sound/effects/footstep/water3.ogg',
-		'sound/effects/footstep/water4.ogg'), 100, 2),
+		'sound/effects/footstep/water/water1.ogg',
+		'sound/effects/footstep/water/water2.ogg',
+		'sound/effects/footstep/water/water3.ogg',
+		'sound/effects/footstep/water/water4.ogg'), 100, 2),
 	FOOTSTEP_LAVA = list(list(
 		'sound/effects/footstep/lava1.ogg',
 		'sound/effects/footstep/lava2.ogg',
@@ -208,3 +216,18 @@ GLOBAL_LIST_INIT(heavyfootstep, list(
 		'sound/effects/meatslap.ogg'), 100, 0),
 ))
 
+/// Check if the atom should not be playing foodsteps for whatever reason
+#define SHOULD_ATOM_DISABLE_FOOTSTEPS(source) ( FALSE \
+	|| (SSlag_switch.measures[DISABLE_FOOTSTEPS] && !HAS_TRAIT(source, TRAIT_BYPASS_MEASURES)) \
+	|| CHECK_MOVE_LOOP_FLAGS(source, MOVEMENT_LOOP_OUTSIDE_CONTROL) \
+	|| source.moving_diagonally == SECOND_DIAG_STEP \
+	|| (source.movement_type & (VENTCRAWLING | FLYING)) \
+	|| source.throwing \
+)
+
+/// Check if the mob should not be playing footsteps for whatever reason
+#define SHOULD_MOB_DISABLE_FOOTSTEPS(source) ( FALSE \
+	|| (iscarbon(source) && source.move_intent == MOVE_INTENT_WALK) \
+	|| !(source.mobility_flags & MOBILITY_MOVE) \
+	|| source.buckled \
+)

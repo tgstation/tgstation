@@ -105,19 +105,16 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 /proc/pathflatten(path)
 	return replacetext(path, "/", "_")
 
-/// Returns the md5 of a file at a given path.
-/proc/md5filepath(path)
-	. = md5(file(path))
-
 /// Save file as an external file then md5 it.
 /// Used because md5ing files stored in the rsc sometimes gives incorrect md5 results.
+/// https://www.byond.com/forum/post/2611357
 /proc/md5asfile(file)
 	var/static/notch = 0
 	// its importaint this code can handle md5filepath sleeping instead of hard blocking, if it's converted to use rust_g.
 	var/filename = "tmp/md5asfile.[world.realtime].[world.timeofday].[world.time].[world.tick_usage].[notch]"
 	notch = WRAP(notch+1, 0, 2**15)
 	fcopy(file, filename)
-	. = md5filepath(filename)
+	. = rustg_hash_file(RUSTG_HASH_MD5, filename)
 	fdel(filename)
 
 /**
@@ -139,3 +136,46 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		if(.)
 			. += delimiter // Add the delimiter before each successive node.
 		. += SANITIZE_FILENAME(node)
+
+/**
+ * Verifys wether a string or file ends with a given file type.
+ *
+ * this does not at all check the actual type of the file, a user could just rename it
+ *
+ * Arguments:
+ * * file - A string or file. No checks for if this file ACCTALLY exists
+ * * file_types - A list of strings to check against [e.g. list("ogg" = TRUE, "mp3" = TRUE)]
+ */
+/proc/is_file_type_in_list(file, file_types = list())
+	var/extstart = findlasttext("[file]", ".")
+	if(!extstart)
+		return FALSE
+	var/ext = copytext("[file]", extstart + 1)
+	if(file_types[ext])
+		return TRUE
+
+/**
+ * Verifys wether a string or file ends with a given file type
+ *
+ * this does not at all check the actual type of the file, a user could just rename it
+ *
+ * Arguments:
+ * * file - A string or file. No checks for if this file ACCTALLY exists
+ * * file_type - A string to check against [e.g. "ogg"]
+ */
+/proc/is_file_type(file, file_type)
+	var/extstart = findlasttext("[file]", ".")
+	if(!extstart)
+		return FALSE
+	var/ext = copytext("[file]", extstart + 1)
+	if(ext == file_type)
+		return TRUE
+
+/proc/strip_filepath_extension(file, file_types)
+	var/extstart = findlasttext("[file]", ".")
+	if(!extstart)
+		return "[file]"
+	var/ext = copytext("[file]", extstart + 1)
+	if(ext in file_types)
+		return copytext("[file]", 1, extstart)
+	return "[file]"

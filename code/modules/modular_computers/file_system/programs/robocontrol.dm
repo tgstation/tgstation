@@ -28,36 +28,36 @@
 	var/list/mulelist = list()
 
 	if(computer)
-		data["id_owner"] = computer.computer_id_slot || ""
+		data["id_owner"] = computer.stored_id || ""
 
 	botcount = 0
 
-	for(var/mob/living/simple_animal/bot/simple_bot as anything in GLOB.bots_list)
-		if(!is_valid_z_level(current_turf, get_turf(simple_bot)) || !(simple_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
+	for(var/mob/living/basic/bot/basic_bot as anything in GLOB.bots_list)
+		if(!is_valid_z_level(current_turf, get_turf(basic_bot)) || !(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED)) //Only non-emagged bots on the same Z-level are detected!
 			continue
-		if(!simple_bot.allowed(user) && !simple_bot.check_access(computer.computer_id_slot)) // Only check Bots we can access
+		if(!basic_bot.allowed(user) && !basic_bot.check_access(computer.stored_id)) // Only check Bots we can access
 			continue
 		var/list/newbot = list(
-			"name" = simple_bot.name,
-			"mode" = simple_bot.get_mode_ui(),
-			"model" = simple_bot.bot_type,
-			"locat" = get_area(simple_bot),
-			"bot_ref" = REF(simple_bot),
+			"name" = basic_bot.name,
+			"mode" = basic_bot.get_mode_ui(),
+			"model" = basic_bot.bot_type,
+			"locat" = get_area(basic_bot),
+			"bot_ref" = REF(basic_bot),
 			"mule_check" = FALSE,
 		)
-		if(simple_bot.bot_type == MULE_BOT)
-			var/mob/living/simple_animal/bot/mulebot/simple_mulebot = simple_bot
+		if(basic_bot.bot_type == MULE_BOT)
+			var/mob/living/basic/bot/mulebot/basic_mulebot = basic_bot
 			mulelist += list(list(
-				"name" = simple_mulebot.name,
-				"id" = simple_mulebot.id,
-				"dest" = simple_mulebot.destination,
-				"power" = simple_mulebot.cell ? simple_mulebot.cell.percent() : 0,
-				"home" = simple_mulebot.home_destination,
-				"autoReturn" = simple_mulebot.auto_return,
-				"autoPickup" = simple_mulebot.auto_pickup,
-				"reportDelivery" = simple_mulebot.report_delivery,
-				"mule_ref" = REF(simple_mulebot),
-				"load" = simple_mulebot.get_load_name(),
+				"name" = basic_mulebot.name,
+				"id" = basic_mulebot.id,
+				"dest" = basic_mulebot.ai_controller.blackboard[BB_MULEBOT_DESTINATION_BEACON],
+				"power" = basic_mulebot.cell ? basic_mulebot.cell.percent() : 0,
+				"home" = basic_mulebot.ai_controller.blackboard[BB_MULEBOT_HOME_BEACON],
+				"autoReturn" = basic_mulebot.mulebot_delivery_flags & MULEBOT_RETURN_MODE,
+				"autoPickup" = basic_mulebot.mulebot_delivery_flags & MULEBOT_AUTO_PICKUP_MODE,
+				"reportDelivery" = basic_mulebot.mulebot_delivery_flags & MULEBOT_REPORT_DELIVERY_MODE,
+				"mule_ref" = REF(basic_mulebot),
+				"load" = basic_mulebot.get_load_name(),
 			))
 			newbot["mule_check"] = TRUE
 		botlist += list(newbot)
@@ -86,7 +86,7 @@
 /datum/computer_file/program/robocontrol/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	var/mob/current_user = ui.user
-	var/obj/item/card/id/id_card = computer?.computer_id_slot
+	var/obj/item/card/id/id_card = computer?.stored_id
 
 	var/static/list/standard_actions = list(
 		"patroloff",
@@ -106,25 +106,25 @@
 		"report",
 		"ejectpai",
 	)
-	var/mob/living/simple_animal/bot/simple_bot = locate(params["robot"]) in GLOB.bots_list
+	var/mob/living/basic/bot/basic_bot = locate(params["robot"]) in GLOB.bots_list
 	if (action in standard_actions)
-		simple_bot.bot_control(action, current_user, id_card?.GetAccess())
+		basic_bot.bot_control(action, current_user, id_card?.GetAccess())
 	if (action in MULE_actions)
-		simple_bot.bot_control(action, current_user, id_card?.GetAccess(), TRUE)
+		basic_bot.bot_control(action, current_user, id_card?.GetAccess(), TRUE)
 
 	switch(action)
 		if("summon")
-			simple_bot.bot_control(action, current_user, id_card ? id_card.access : id_card?.GetAccess())
+			basic_bot.bot_control(action, current_user, id_card ? id_card.access : id_card?.GetAccess())
 		if("ejectcard")
-			if(!computer || !computer.computer_id_slot)
+			if(!computer || !computer.stored_id)
 				return
 			if(id_card)
 				GLOB.manifest.modify(id_card.registered_name, id_card.assignment, id_card.get_trim_assignment())
-				computer.RemoveID(usr)
+				computer.remove_id(usr)
 			else
-				playsound(get_turf(computer.ui_host()) , 'sound/machines/buzz-sigh.ogg', 25, FALSE)
+				playsound(get_turf(computer.ui_host()) , 'sound/machines/buzz/buzz-sigh.ogg', 25, FALSE)
 		if("changedroneaccess")
-			if(!computer || !computer.computer_id_slot || !id_card)
+			if(!computer || !computer.stored_id || !id_card)
 				to_chat(current_user, span_notice("No ID found, authorization failed."))
 				return
 			if(isdrone(current_user))
@@ -143,4 +143,4 @@
 			var/msg = span_boldnotice("NON-DRONE PING: [current_user.name]: [params["ping_type"]] priority alert in [current_area.name]!")
 			_alert_drones(msg, TRUE, current_user)
 			to_chat(current_user, msg)
-			playsound(src, 'sound/machines/terminal_success.ogg', 15, TRUE)
+			playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)

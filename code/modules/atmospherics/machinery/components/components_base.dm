@@ -6,8 +6,8 @@
 	layer = GAS_PUMP_LAYER
 	///Is the component welded?
 	var/welded = FALSE
-	///Should the component should show the pipe underneath it?
-	var/showpipe = TRUE
+	///Current underfloor_accessibility state, determines if the component should show the pipe underneath it and what plane it renders on.
+	var/underfloor_state = UNDERFLOOR_INTERACTABLE
 	///When the component is on a non default layer should we shift everything? Or just the underlay pipe
 	var/shift_underlay_only = TRUE
 	///Stores the parent pipeline, used in components
@@ -18,12 +18,24 @@
 	var/list/datum/gas_mixture/airs
 	///Handles whether the custom reconcilation handling should be used
 	var/custom_reconcilation = FALSE
+	///The light mask for emissive effects while on
+	var/light_mask_on = FALSE
+	///The light mask for emissive effects while off (but still powered)
+	var/light_mask_off = FALSE
 
-/obj/machinery/atmospherics/components/New()
+/obj/machinery/atmospherics/components/get_save_vars()
+	. = ..()
+	if(!override_naming)
+		// Prevents saving the dynamic name with \proper due to it converting to "???"
+		. -= NAMEOF(src, name)
+	. += NAMEOF(src, welded)
+	return .
+
+/obj/machinery/atmospherics/components/Initialize(mapload)
 	parents = new(device_type)
 	airs = new(device_type)
 
-	..()
+	. = ..()
 
 	for(var/i in 1 to device_type)
 		if(airs[i])
@@ -31,6 +43,8 @@
 		var/datum/gas_mixture/component_mixture = new
 		component_mixture.volume = 200
 		airs[i] = component_mixture
+
+	update_appearance()
 
 // Iconnery
 
@@ -40,20 +54,37 @@
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
 
+/obj/machinery/atmospherics/components/update_overlays()
+	. = ..()
+
+	if(istype(src, /obj/machinery/atmospherics/components/trinary))
+		var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
+		// during Initialize() trinary devices will be technically "on" but their icon_state
+		// updates to off via update_icon_nopipes() before atmos nodes process which breaks their emissives
+		if(!on_state)
+			return
+
+	cut_overlays()
+	if(is_operational && ((on && light_mask_on) || (!on && light_mask_off)))
+		// this is cursed but both these emissive_appearance() are needed one gives emissives to
+		// mapload machinery that are already on the other gives emissives when updates happen (on/off/pressure change/etc.)
+		. += emissive_appearance(icon, "[icon_state]-emissive", src, alpha = src.alpha)
+		add_overlay(emissive_appearance(icon, "[icon_state]-emissive", src, alpha = src.alpha))
+
 /obj/machinery/atmospherics/components/on_hide(datum/source, underfloor_accessibility)
 	hide_pipe(underfloor_accessibility)
 	return ..()
 
 /**
- * Called in on_hide(), set the showpipe var to true or false depending on the situation, calls update_icon()
+ * Called in on_hide(), set the underfloor_state var to true or false depending on the situation, calls update_icon()
  */
 /obj/machinery/atmospherics/components/proc/hide_pipe(underfloor_accessibility)
-	showpipe = !!underfloor_accessibility
-	if(showpipe)
+	underfloor_state = underfloor_accessibility
+	if(underfloor_state)
 		REMOVE_TRAIT(src, TRAIT_UNDERFLOOR, REF(src))
 	else
 		ADD_TRAIT(src, TRAIT_UNDERFLOOR, REF(src))
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/update_icon()
 	update_icon_nopipes()
@@ -61,13 +92,17 @@
 	underlays.Cut()
 
 	color = null
-	SET_PLANE_IMPLICIT(src, showpipe ? GAME_PLANE : FLOOR_PLANE)
+	var/uncovered_turf = loc && HAS_TRAIT(loc, TRAIT_UNCOVERED_TURF)
+	SET_PLANE_IMPLICIT(src, (underfloor_state == UNDERFLOOR_INTERACTABLE && !uncovered_turf) ? GAME_PLANE : FLOOR_PLANE)
 
-	if(!showpipe)
+	// Layer is handled in update_layer()
+	if(!underfloor_state)
+		return ..()
+
+	if(pipe_flags & PIPING_DISTRO_AND_WASTE_LAYERS)
 		return ..()
 
 	var/connected = 0 //Direction bitset
-
 	var/underlay_pipe_layer = shift_underlay_only ? piping_layer : 3
 
 	for(var/i in 1 to device_type) //adds intact pieces
@@ -75,20 +110,33 @@
 			continue
 		var/obj/machinery/atmospherics/node = nodes[i]
 		var/node_dir = get_dir(src, node)
-		var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[node_dir]_[underlay_pipe_layer]")
-		pipe_appearance.color = node.pipe_color
+		var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[node_dir]_[underlay_pipe_layer]", appearance_flags = RESET_COLOR|KEEP_APART)
+		pipe_appearance.color = SELECT_ATMOS_NODE_COLOR(src, node)
+		if (underfloor_state == UNDERFLOOR_VISIBLE || uncovered_turf)
+			pipe_appearance.layer = BELOW_CATWALK_LAYER + get_pipe_layer_offset()
+			SET_PLANE_EXPLICIT(pipe_appearance, FLOOR_PLANE, src)
 		underlays += pipe_appearance
 		connected |= node_dir
 
 	for(var/direction in GLOB.cardinals)
 		if((initialize_directions & direction) && !(connected & direction))
-			var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "exposed_[direction]_[underlay_pipe_layer]")
+			var/mutable_appearance/pipe_appearance = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "exposed_[direction]_[underlay_pipe_layer]", appearance_flags = RESET_COLOR|KEEP_APART)
 			pipe_appearance.color = pipe_color
+			if (underfloor_state == UNDERFLOOR_VISIBLE || uncovered_turf)
+				pipe_appearance.layer = BELOW_CATWALK_LAYER + get_pipe_layer_offset()
+				SET_PLANE_EXPLICIT(pipe_appearance, FLOOR_PLANE, src)
 			underlays += pipe_appearance
 
 	if(!shift_underlay_only)
 		PIPING_LAYER_SHIFT(src, piping_layer)
 	return ..()
+
+/obj/machinery/atmospherics/components/get_pipe_image(iconfile, iconstate, direction, color, piping_layer, trinary)
+	var/mutable_appearance/pipe_appearance = ..()
+	if (underfloor_state == UNDERFLOOR_VISIBLE || (loc && HAS_TRAIT(loc, TRAIT_UNCOVERED_TURF)))
+		pipe_appearance.layer = BELOW_CATWALK_LAYER + get_pipe_layer_offset()
+		SET_PLANE_EXPLICIT(pipe_appearance, FLOOR_PLANE, src)
+	return pipe_appearance
 
 // Pipenet stuff; housekeeping
 
@@ -111,14 +159,12 @@
 	if(update_parents_after_rebuild)
 		update_parents()
 
-/obj/machinery/atmospherics/components/get_rebuild_targets()
-	var/list/to_return = list()
-	for(var/i in 1 to device_type)
-		if(parents[i])
+/obj/machinery/atmospherics/components/get_rebuild_target()
+	for(var/port in 1 to device_type)
+		if(parents[port])
 			continue
-		parents[i] = new /datum/pipeline()
-		to_return += parents[i]
-	return to_return
+		parents[port] = new /datum/pipeline()
+		return parents[port]
 
 /**
  * Called by nullify_node(), used to remove the pipeline the component is attached to
@@ -160,9 +206,16 @@
 	return returned_air
 
 /obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference)
-	if(reference)
-		return list(nodes[parents.Find(reference)])
-	return ..()
+	if(!reference)
+		return ..()
+	var/port = parents.Find(reference)
+	if(port)
+		return list(nodes[port])
+	// no port means another pipeline took our port while this one waited to expand somehow
+	reference.other_atmos_machines -= src
+	reference.require_custom_reconcilation -= src
+	reference.other_airs -= airs
+	return list()
 
 /obj/machinery/atmospherics/components/set_pipenet(datum/pipeline/reference, obj/machinery/atmospherics/target_component)
 	parents[nodes.Find(target_component)] = reference
@@ -241,8 +294,7 @@
 			internal_pressure = internal_pressure > airs[i].return_pressure() ? internal_pressure : airs[i].return_pressure()
 
 	if(!filled_pipe)
-		default_deconstruction_crowbar(tool)
-		return ITEM_INTERACT_SUCCESS
+		return default_deconstruction_crowbar(user, tool)
 
 	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
 
@@ -327,22 +379,34 @@
 	connect_nodes()
 
 /obj/machinery/atmospherics/components/update_layer()
-	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.001)
+	if (!underfloor_state)
+		layer = BELOW_CATWALK_LAYER
+	else if (PLANE_TO_TRUE(plane) == FLOOR_PLANE)
+		layer = ABOVE_OPEN_TURF_LAYER
+	else
+		layer = initial(layer)
+	layer += get_pipe_layer_offset()
+
+/obj/machinery/atmospherics/components/proc/get_pipe_layer_offset()
+	return (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.001)
 
 /**
  * Handles air relocation to the pipenet/environment
  */
 /obj/machinery/atmospherics/components/proc/relocate_airs(datum/gas_mixture/to_release)
-	var/turf/local_turf = get_turf(src)
 	for(var/i in 1 to device_type)
 		var/datum/gas_mixture/air = airs[i]
-		if(!nodes[i] || (istype(nodes[i], /obj/machinery/atmospherics/components/unary/portables_connector) && !portable_device_connected(i)))
+		var/obj/machinery/atmospherics/node = nodes[i]
+		// A surviving node may be waiting for its pipeline to rebuild after nearby pipe destruction.
+		var/datum/pipeline/parent = node ? parents[i] : null
+		if(!parent || (istype(node, /obj/machinery/atmospherics/components/unary/portables_connector) && !portable_device_connected(i)))
 			if(!to_release)
 				to_release = air
 				continue
 			to_release.merge(air)
 			continue
-		var/datum/gas_mixture/parents_air = parents[i].air
+		var/datum/gas_mixture/parents_air = parent.air
 		parents_air.merge(air)
 	if(to_release)
+		var/turf/local_turf = get_turf(src)
 		local_turf.assume_air(to_release)

@@ -6,6 +6,7 @@
 	var/disallow_soul_imbue = TRUE
 	/// If FALSE, prevents parent from being qdel'd unless it's a force = TRUE qdel.
 	var/allow_item_destruction = FALSE
+	var/datum/weakref/connect_ref
 
 /datum/component/stationloving/Initialize(inform_admins = FALSE, allow_item_destruction = FALSE)
 	if(!ismovable(parent))
@@ -28,7 +29,7 @@
 		COMSIG_MOVABLE_MOVED = PROC_REF(on_parent_moved),
 		SIGNAL_ADDTRAIT(TRAIT_SECLUDED_LOCATION) = PROC_REF(on_loc_secluded),
 	)
-	AddComponent(/datum/component/connect_containers, parent, loc_connections)
+	connect_ref = WEAKREF(AddComponent(/datum/component/connect_containers, parent, loc_connections))
 
 /datum/component/stationloving/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -39,7 +40,7 @@
 		COMSIG_MOVABLE_MOVED,
 	))
 
-	qdel(GetComponent(/datum/component/connect_containers))
+	qdel(connect_ref)
 
 /datum/component/stationloving/InheritComponent(datum/component/stationloving/newc, original, inform_admins, allow_death)
 	if (original)
@@ -51,16 +52,25 @@
 
 /// Teleports parent to a safe turf on the station z-level.
 /datum/component/stationloving/proc/relocate()
-	var/target_turf = find_safe_turf()
+
+	var/turf/target_turf
+	if(length(GLOB.the_station_areas))
+		target_turf = get_safe_random_station_turf(GLOB.the_station_areas)
+	else if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)))
+		target_turf = find_safe_turf() // Fallback for debug maps with station levels but no station areas.
+
+	if(!target_turf && length(GLOB.blobstart))
+		target_turf = get_turf(pick(GLOB.blobstart))
 
 	if(!target_turf)
-		if(GLOB.blobstart.len > 0)
-			target_turf = get_turf(pick(GLOB.blobstart))
-		else
-			CRASH("Unable to find a blobstart landmark for [type] to relocate [parent].")
+		var/turf/current_turf = get_turf(parent)
+		log_game("Unable to relocate [parent] from [loc_name(current_turf)]: no safe station turf or blobstart landmark is available.")
+		if(inform_admins)
+			message_admins("Unable to relocate [parent] from [ADMIN_VERBOSEJMP(current_turf)]: no safe station turf or blobstart landmark is available.")
+		return
 
 	var/atom/movable/movable_parent = parent
-	playsound(movable_parent, 'sound/machines/synth_no.ogg', 5, TRUE)
+	playsound(movable_parent, 'sound/machines/synth/synth_no.ogg', 5, TRUE)
 
 	var/mob/holder = get(movable_parent, /mob)
 	if(holder)
@@ -81,6 +91,8 @@
 
 	var/turf/current_turf = get_turf(source)
 	var/turf/new_destination = relocate()
+	if(!new_destination)
+		return
 	// Our turf actually didn't change, so it's more likely we became secluded
 	if(current_turf == old_turf)
 		log_game("[parent] moved out of bounds at [loc_name(current_turf)], becoming inaccessible / secluded. \
@@ -104,6 +116,8 @@
 	SIGNAL_HANDLER
 
 	var/turf/new_destination = relocate()
+	if(!new_destination)
+		return
 	log_game("[parent] moved out of bounds at [loc_name(source)], becoming inaccessible / secluded. \
 		Moving it to [loc_name(new_destination)].")
 
@@ -176,6 +190,8 @@
 		return FALSE
 
 	var/turf/new_turf = relocate()
+	if(!new_turf)
+		return TRUE
 	log_game("[parent] has been destroyed in [loc_name(current_turf)]. \
 		Preventing destruction and moving it to [loc_name(new_turf)].")
 	if(inform_admins)

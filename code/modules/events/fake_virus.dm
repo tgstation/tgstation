@@ -8,7 +8,7 @@
 /datum/round_event/fake_virus/start()
 	var/list/fake_virus_victims = list()
 	for(var/mob/living/carbon/human/victim in GLOB.player_list)
-		if(victim.stat != CONSCIOUS || HAS_TRAIT(victim, TRAIT_VIRUSIMMUNE))
+		if(IS_UNCONSCIOUS_OR_CRIT(victim) || HAS_TRAIT(victim, TRAIT_VIRUSIMMUNE))
 			continue
 		if(!(victim.mind?.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue
@@ -32,4 +32,4 @@
 		if(prob(25))//1/4 odds to get a spooky message instead of coughing out loud
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), onecoughman, span_warning("[pick("Your head hurts.", "Your head pounds.")]")), rand(3 SECONDS, 15 SECONDS))
 		else
-			addtimer(CALLBACK(onecoughman, TYPE_PROC_REF(/mob, emote), pick("cough", "sniff", "sneeze")), rand(3 SECONDS, 15 SECONDS))//deliver the message with a slightly randomized time interval so there arent multiple people coughing at the exact same time
+			addtimer(CALLBACK(onecoughman, TYPE_PROC_REF(/mob, emote), pick("cough", "sniff")), rand(3 SECONDS, 15 SECONDS))//deliver the message with a slightly randomized time interval so there arent multiple people coughing at the exact same time

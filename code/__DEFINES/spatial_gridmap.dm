@@ -8,13 +8,13 @@
 /// number of grid cells per x or y side of all z levels. pass in world.maxx or world.maxy
 #define SPATIAL_GRID_CELLS_PER_SIDE(world_bounds) GET_SPATIAL_INDEX(world_bounds)
 
-//grid contents channels
+// Grid contents channels
 
-///everything that is hearing sensitive is stored in this channel
+/// Everything that is hearing sensitive is stored in this channel
 #define SPATIAL_GRID_CONTENTS_TYPE_HEARING RECURSIVE_CONTENTS_HEARING_SENSITIVE
-///every movable that has a client in it is stored in this channel
+/// Every movable that has a client in it is stored in this channel
 #define SPATIAL_GRID_CONTENTS_TYPE_CLIENTS RECURSIVE_CONTENTS_CLIENT_MOBS
-///all atmos machines are stored in this channel (I'm sorry kyler)
+/// All atmos machines are stored in this channel (I'm sorry kyler)
 #define SPATIAL_GRID_CONTENTS_TYPE_ATMOS "spatial_grid_contents_type_atmos"
 
 #define ALL_CONTENTS_OF_CELL(cell) (cell.hearing_contents | cell.client_contents | cell.atmos_contents)
@@ -41,11 +41,19 @@
 		cell_contents_list |= movable_or_list; \
 	};
 
+#define GRID_CELL_ASSOC_SET(cell_contents_list, key, value) \
+	if(!length(cell_contents_list)) { \
+		cell_contents_list = list(); \
+		cell_contents_list[key] = value; \
+	} else { \
+		cell_contents_list[key] = value; \
+	};
+
 //dont use these outside of SSspatial_grid's scope use the procs it has for this purpose
 #define GRID_CELL_REMOVE(cell_contents_list, movable_or_list) \
 	cell_contents_list -= movable_or_list; \
 	if(!length(cell_contents_list)) {\
-		cell_contents_list = dummy_list; \
+		cell_contents_list = SSspatial_grid.dummy_list; \
 	};
 
 ///remove from every list

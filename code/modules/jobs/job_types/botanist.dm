@@ -1,7 +1,6 @@
 /datum/job/botanist
 	title = JOB_BOTANIST
 	description = "Grow plants for the cook, for medicine, and for recreation."
-	department_head = list(JOB_HEAD_OF_PERSONNEL)
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 2
@@ -38,6 +37,7 @@
 
 	job_flags = STATION_JOB_FLAGS
 	rpg_title = "Gardener"
+	tgui_icon = FA_ICON_SEEDLING
 
 /datum/outfit/job/botanist
 	name = "Botanist"
@@ -47,7 +47,7 @@
 	uniform = /obj/item/clothing/under/rank/civilian/hydroponics
 	suit = /obj/item/clothing/suit/apron
 	suit_store = /obj/item/plant_analyzer
-	belt = /obj/item/modular_computer/pda/botanist
+	belt = /obj/item/modular_computer/pda/crew/botanist
 	ears = /obj/item/radio/headset/headset_srv
 	gloves = /obj/item/clothing/gloves/botanic_leather
 
@@ -55,3 +55,5 @@
 	satchel = /obj/item/storage/backpack/satchel/hyd
 	duffelbag = /obj/item/storage/backpack/duffelbag/hydroponics
 	messenger = /obj/item/storage/backpack/messenger/hyd
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/hydro

@@ -30,7 +30,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	//Roundstart/map specific barsigns "belong" in their area and should be renaming it, signs created from wallmounts will not.
 	change_area_name = mapload
 	set_sign(new /datum/barsign/hiddensigns/signoff)
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/machinery/barsign/proc/set_sign(datum/barsign/sign)
 	if(!istype(sign))
@@ -102,9 +103,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 /obj/machinery/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+			playsound(src.loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/barsign/attack_ai(mob/user)
 	return attack_hand(user)
@@ -151,35 +152,35 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	deconstruct(disassembled = TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/barsign/attackby(obj/item/attacking_item, mob/user)
+/obj/machinery/barsign/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 
-	if(istype(attacking_item, /obj/item/blueprints) && !change_area_name)
+	if(istype(tool, /obj/item/blueprints) && !change_area_name)
 		if(!panel_open)
 			balloon_alert(user, "open the panel first!")
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 
 		change_area_name = TRUE
 		balloon_alert(user, "sign registered")
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/stack/cable_coil) && panel_open)
-		var/obj/item/stack/cable_coil/wire = attacking_item
+	if(istype(tool, /obj/item/stack/cable_coil) && panel_open)
+		var/obj/item/stack/cable_coil/wire = tool
 
 		if(atom_integrity >= max_integrity)
 			balloon_alert(user, "doesn't need repairs!")
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 
 		if(!wire.use(2))
 			balloon_alert(user, "need two cables!")
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 
 		balloon_alert(user, "repaired")
 		atom_integrity = max_integrity
 		set_machine_stat(machine_stat & ~BROKEN)
 		update_appearance()
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/machinery/barsign/emp_act(severity)
 	. = ..()
@@ -305,7 +306,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 /datum/barsign/slipperyshots
 	name = "Slippery Shots"
 	icon_state = "slipperyshots"
-	desc = "Slippery slope to drunkeness with our shots!"
+	desc = "Slippery slope to drunkenness with our shots!"
 	neon_color = "#70DF00"
 
 /datum/barsign/thegreytide
@@ -425,7 +426,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 /datum/barsign/maltroach
 	name = "Maltroach"
 	icon_state = "maltroach"
-	desc = "Mothroaches politely greet you into the bar, or are they greeting eachother?"
+	desc = "Mothroaches politely greet you into the bar, or are they greeting each other?"
 	neon_color = "#649e8a"
 
 /datum/barsign/rock_bottom
@@ -499,6 +500,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	icon_state = "moths-moths-moths"
 	desc = "LIVE MOTHS!"
 	neon_color = COLOR_RED
+
+/datum/barsign/coldones
+	name = "Cold Ones"
+	icon_state = "cold-ones"
+	desc = "That's what they call the yogurt effect."
+	neon_color = ""
+
+/datum/barsign/doctorsorders
+	name = "Doctor's Orders"
+	icon_state = "doctors-orders"
+	desc = "For over-the-counter painkillers."
+	neon_color = ""
+
+/datum/barsign/wrongturn
+	name = "Wrong Turn"
+	icon_state = "wrong-turn"
+	desc = "You don't feel lost. Nothing a few drinks cant fix, though."
+	neon_color = ""
+
+/datum/barsign/punpunspub
+	name = "Punpun's Pub"
+	icon_state = "pun-puns-pub"
+	desc = "After everything he's been through? I'd want to be near booze too."
+	neon_color = ""
 
 // Hidden signs list below this point
 

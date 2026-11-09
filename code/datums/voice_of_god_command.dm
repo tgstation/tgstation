@@ -44,20 +44,20 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	var/to_remove_string
 	var/list/candidates = get_hearers_in_view(8, user) - (include_speaker ? null : user)
 	for(var/mob/living/candidate in candidates)
-		if(candidate.stat != DEAD && candidate.can_hear())
+		if(candidate.stat != DEAD && !HAS_TRAIT(candidate, TRAIT_DEAF))
 			if(candidate.can_block_magic(MAGIC_RESISTANCE_HOLY|MAGIC_RESISTANCE_MIND, charge_cost = 0))
 				to_chat(user, span_userdanger("Something's wrong! [candidate] seems to be resisting your commands."))
 				continue
 
 			listeners += candidate
 
-			//Let's ensure the listener's name is not matched within another word or command (and viceversa). e.g. "Saul" in "somersault"
-			var/their_first_name = candidate.first_name()
+			//Let's ensure the listener's name is not matched within another word or command (and vice-versa). e.g. "Saul" in "somersault"
+			var/their_first_name = first_name(candidate.name)
 			if(!GLOB.all_voice_of_god_triggers.Find(their_first_name) && findtext(message, regex("(\\L|^)[their_first_name](\\L|$)", "i")))
 				specific_listeners += candidate //focus on those with the specified name
 				to_remove_string += "[to_remove_string ? "|" : null][their_first_name]"
 				continue
-			var/their_last_name = candidate.last_name()
+			var/their_last_name = last_name(candidate.name)
 			if(their_last_name != their_first_name && !GLOB.all_voice_of_god_triggers.Find(their_last_name) && findtext(message, regex("(\\L|^)[their_last_name](\\L|$)", "i")))
 				specific_listeners += candidate // Ditto
 				to_remove_string += "[to_remove_string ? "|" : null][their_last_name]"
@@ -205,8 +205,9 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/bleed/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/carbon/human/target in listeners)
-		var/obj/item/bodypart/chosen_part = pick(target.bodyparts)
-		chosen_part.adjustBleedStacks(5)
+		var/obj/item/bodypart/chosen_part = pick(target.get_bodyparts())
+		var/add_stacks = HAS_TRAIT(target, TRAIT_BLOOD_FOUNTAIN) ? 7 : 5
+		chosen_part.adjustBleedStacks(add_stacks)
 
 /// This command sets the listeners ablaze.
 /datum/voice_of_god_command/burn
@@ -353,8 +354,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/walk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		if(target.move_intent != MOVE_INTENT_WALK)
-			target.toggle_move_intent()
+		target.set_move_intent(MOVE_INTENT_WALK)
 
 /// This command forces the listeners to switch to run intent.
 /datum/voice_of_god_command/run
@@ -363,8 +363,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/walk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		if(target.move_intent != MOVE_INTENT_RUN)
-			target.toggle_move_intent()
+		target.set_move_intent(MOVE_INTENT_RUN)
 
 /// This command turns the listeners' throw mode on.
 /datum/voice_of_god_command/throw_catch

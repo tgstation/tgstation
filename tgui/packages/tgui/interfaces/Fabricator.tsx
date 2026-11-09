@@ -1,6 +1,3 @@
-import { classes } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -9,12 +6,15 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
+import type { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 
 export const Fabricator = (props) => {
   const { act, data } = useBackend<FabricatorData>();
@@ -100,7 +100,7 @@ const PrintButton = (props: PrintButtonProps) => {
           !canPrint && 'FabricatorRecipe__Button--disabled',
         ])}
         color={'transparent'}
-        onClick={() => act('build', { ref: design.id, amount: quantity })}
+        onClick={() => act('build', { design_path: design.path, amount: quantity })}
       >
         &times;{quantity}
       </div>
@@ -133,16 +133,15 @@ const CustomPrint = (props: CustomPrintProps) => {
       ])}
     >
       <Button.Input
+        buttonText={`[Max: ${maxMult}]`}
         color="transparent"
-        onCommit={(_e, value: string) =>
+        onCommit={(value) =>
           act('build', {
-            ref: design.id,
+            design_path: design.path,
             amount: value,
           })
         }
-      >
-        [Max: {maxMult}]
-      </Button.Input>
+      />
     </div>
   );
 };
@@ -191,7 +190,7 @@ const Recipe = (props: RecipeProps) => {
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
           onClick={() =>
-            canPrint && act('build', { ref: design.id, amount: 1 })
+            canPrint && act('build', { design_path: design.path, amount: 1 })
           }
         >
           <div className="FabricatorRecipe__Icon">

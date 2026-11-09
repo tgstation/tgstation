@@ -11,16 +11,19 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 1.5)
+	sound_vary = TRUE
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	/// Is this T-Ray scanner currently on?
 	var/on = FALSE
-	/// Will this T-Ray scanner shut off on de-equip? (Cyborgs only)
-	var/shut_off_on_unequip = TRUE
 
-/obj/item/t_scanner/suicide_act(mob/living/carbon/user)
+/obj/item/t_scanner/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to emit terahertz-rays into [user.p_their()] brain with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return TOXLOSS
 
 /obj/item/t_scanner/proc/toggle_on()
+	playsound(src, /datum/sound_effect/industrial_scan, 20, TRUE, -2, TRUE, FALSE)
 	on = !on
 	icon_state = copytext_char(icon_state, 1, -1) + "[on]"
 	if(on)
@@ -32,8 +35,6 @@
 	toggle_on()
 
 /obj/item/t_scanner/cyborg_unequip(mob/user)
-	if(!shut_off_on_unequip)
-		return
 	if(!on)
 		return
 	toggle_on()

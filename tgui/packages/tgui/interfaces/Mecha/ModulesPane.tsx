@@ -1,8 +1,4 @@
-import { toFixed } from 'common/math';
-import { classes } from 'common/react';
 import { GasmixParser } from 'tgui/interfaces/common/GasmixParser';
-
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -14,9 +10,14 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../../components';
-import { formatPower } from '../../format';
-import { MainData, MechModule } from './data';
+} from 'tgui-core/components';
+import { useSharedState } from '../../backend';
+import { formatPower } from 'tgui-core/format';
+import { toFixed } from 'tgui-core/math';
+import { classes } from 'tgui-core/react';
+
+import { useBackend } from '../../backend';
+import type { MainData, MechModule } from './data';
 
 const moduleSlotIcon = (param) => {
   switch (param) {
@@ -54,23 +55,41 @@ const moduleSlotLabel = (param) => {
 
 export const ModulesPane = (props) => {
   const { act, data } = useBackend<MainData>();
+  const [showModuleList, setShowModuleList] = useSharedState(
+    'showModuleList',
+    true,
+  );
   const { modules, selected_module_index, weapons_safety } = data;
   return (
     <Section
-      title="Equipment"
+      title= {
+        showModuleList ? "Equipment" :
+        <Icon name="screwdriver-wrench" />}
       fill
       style={{ overflowY: 'auto' }}
       buttons={
+        <>
         <Button
           icon={!weapons_safety ? 'triangle-exclamation' : 'helmet-safety'}
           color={!weapons_safety ? 'red' : 'default'}
           onClick={() => act('toggle_safety')}
-          content={
+          content={ showModuleList ? <> {
             !weapons_safety
               ? 'Safety Protocols Disabled'
               : 'Safety Protocols Enabled'
           }
+              </> :
+           null
+          }
         />
+        <Button
+          icon={showModuleList ? 'arrow-left' : 'arrow-right'}
+          content={ showModuleList ?
+            'Minimize' : 'Max'
+          }
+          onClick={() => setShowModuleList(!showModuleList)}
+        />
+        </>
       }
     >
       <Stack>
@@ -94,16 +113,20 @@ export const ModulesPane = (props) => {
                       name={moduleSlotIcon(module.slot)}
                     />
                   </Stack.Item>
-                  <Stack.Item
-                    lineHeight="32px"
-                    style={{
-                      textTransform: 'capitalize',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
-                    {`${moduleSlotLabel(module.slot)} Slot`}
-                  </Stack.Item>
+                  {showModuleList?
+                    <Stack.Item
+                      lineHeight="32px"
+                      style={{
+                        textTransform: 'capitalize',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
+                      {`${moduleSlotLabel(module.slot)} Slot`}
+                    </Stack.Item>
+                    :
+                    null
+                  }
                 </Stack>
               </Button>
             ) : (
@@ -126,23 +149,27 @@ export const ModulesPane = (props) => {
                       className={classes(['mecha_equipment32x32', module.icon])}
                     />
                   </Stack.Item>
-                  <Stack.Item
-                    lineHeight="32px"
-                    style={{
-                      textTransform: 'capitalize',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
-                    {module.name}
-                  </Stack.Item>
+                  {showModuleList?
+                    <Stack.Item
+                      lineHeight="32px"
+                      style={{
+                        textTransform: 'capitalize',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
+                      {module.name}
+                    </Stack.Item>
+                    :
+                    null
+                  }
                 </Stack>
               </Button>
             ),
           )}
         </Stack.Item>
         <Stack.Item grow pl={1}>
-          {selected_module_index !== null && modules[selected_module_index] && (
+          {selected_module_index !== null && modules[selected_module_index] && showModuleList && (
             <ModuleDetails module={modules[selected_module_index]} />
           )}
         </Stack.Item>
@@ -474,26 +501,28 @@ const SnowflakeSleeper = (props) => {
         ))}
       </LabeledList.Item>
       <LabeledList.Item label="Reagent Injection">
-        {injectible_reagents.map((reagent) => (
-          <LabeledList.Item
-            className="candystripe"
-            key={reagent.name}
-            label={reagent.name}
-          >
-            <LabeledList.Item label={`${reagent.volume}u`}>
-              <Button
-                onClick={() =>
-                  act('equip_act', {
-                    ref: ref,
-                    gear_action: `inject_reagent_${reagent.name}`,
-                  })
-                }
+        {injectible_reagents
+          ? injectible_reagents.map((reagent) => (
+              <LabeledList.Item
+                className="candystripe"
+                key={reagent.name}
+                label={reagent.name}
               >
-                Inject
-              </Button>
-            </LabeledList.Item>
-          </LabeledList.Item>
-        ))}
+                <LabeledList.Item label={`${reagent.volume}u`}>
+                  <Button
+                    onClick={() =>
+                      act('equip_act', {
+                        ref: ref,
+                        gear_action: `inject_reagent_${reagent.name}`,
+                      })
+                    }
+                  >
+                    Inject
+                  </Button>
+                </LabeledList.Item>
+              </LabeledList.Item>
+            ))
+          : 'Unavailable'}
       </LabeledList.Item>
     </>
   );
@@ -630,7 +659,7 @@ const SnowflakeRadio = (props) => {
           selected={microphone}
           icon={microphone ? 'microphone' : 'microphone-slash'}
         >
-          {(microphone ? 'En' : 'Dis') + 'abled'}
+          {`${microphone ? 'En' : 'Dis'}abled`}
         </Button>
       </LabeledList.Item>
       <LabeledList.Item label="Speaker">
@@ -644,12 +673,13 @@ const SnowflakeRadio = (props) => {
           selected={speaker}
           icon={speaker ? 'volume-up' : 'volume-mute'}
         >
-          {(speaker ? 'En' : 'Dis') + 'abled'}
+          {`${speaker ? 'En' : 'Dis'}abled`}
         </Button>
       </LabeledList.Item>
       <LabeledList.Item label="Frequency">
         <NumberInput
           animated
+          tickWhileDragging
           unit="kHz"
           step={0.2}
           stepPixelSize={10}
@@ -657,7 +687,7 @@ const SnowflakeRadio = (props) => {
           maxValue={maxFrequency / 10}
           value={frequency / 10}
           format={(value) => toFixed(value, 1)}
-          onDrag={(value) =>
+          onChange={(value) =>
             act('equip_act', {
               ref: ref,
               gear_action: 'set_frequency',
@@ -1027,7 +1057,7 @@ const SnowflakeGeneraor = (props) => {
     <LabeledList.Item label="Fuel Amount">
       {fuel === null
         ? 'None'
-        : toFixed(fuel * sheet_material_amount, 0.1) + ' cm³'}
+        : `${toFixed(fuel * sheet_material_amount, 0.1)} cm³`}
     </LabeledList.Item>
   );
 };
@@ -1038,7 +1068,7 @@ const SnowflakeOreScanner = (props) => {
   const { cooldown } = props.module.snowflake;
   return (
     <LabeledList.Item label="Vent Scanner">
-      <NoticeBox info={cooldown <= 0 ? true : false}>
+      <NoticeBox info={cooldown <= 0}>
         {cooldown / 10 > 0 ? 'Recharging...' : 'Ready to scan vents'}
         <Button
           my={1}
@@ -1051,7 +1081,7 @@ const SnowflakeOreScanner = (props) => {
               gear_action: 'area_scan',
             })
           }
-          disabled={cooldown <= 0 ? false : true}
+          disabled={!(cooldown <= 0)}
         >
           Scan all nearby vents
         </Button>

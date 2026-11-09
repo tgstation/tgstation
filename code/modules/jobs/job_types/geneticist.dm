@@ -1,7 +1,6 @@
 /datum/job/geneticist
 	title = JOB_GENETICIST
 	description = "Alter genomes, turn monkeys into humans (and vice-versa), and make DNA backups."
-	department_head = list(JOB_RESEARCH_DIRECTOR)
 	faction = FACTION_STATION
 	total_positions = 2
 	spawn_positions = 2
@@ -30,6 +29,7 @@
 	family_heirlooms = list(/obj/item/clothing/under/shorts/purple)
 	rpg_title = "Genemancer"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_DNA
 
 
 /datum/outfit/job/geneticist
@@ -40,7 +40,7 @@
 	uniform = /obj/item/clothing/under/rank/rnd/geneticist
 	suit = /obj/item/clothing/suit/toggle/labcoat/genetics
 	suit_store = /obj/item/flashlight/pen
-	belt = /obj/item/modular_computer/pda/geneticist
+	belt = /obj/item/modular_computer/pda/crew/geneticist
 	ears = /obj/item/radio/headset/headset_sci
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_pocket = /obj/item/sequence_scanner
@@ -49,3 +49,5 @@
 	satchel = /obj/item/storage/backpack/satchel/gen
 	duffelbag = /obj/item/storage/backpack/duffelbag/genetics
 	messenger = /obj/item/storage/backpack/messenger/gen
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/science/genetics

@@ -1,4 +1,0 @@
-help: "Do not override heat_capacity, you must use a custom subtype."
-/turf:
-  banned_variables:
-  - heat_capacity

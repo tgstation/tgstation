@@ -1,7 +1,3 @@
-import { BooleanLike, classes } from 'common/react';
-import { capitalize } from 'common/string';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -12,12 +8,15 @@ import {
   Section,
   Stack,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { type BooleanLike, classes } from 'tgui-core/react';
+import { capitalize } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Design, MaterialMap } from './Fabrication/Types';
-import { Material } from './Fabrication/Types';
+import type { Design, Material, MaterialMap } from './Fabrication/Types';
 
 type AutolatheDesign = Design & {
   customMaterials: BooleanLike;
@@ -33,7 +32,7 @@ type AutolatheData = {
 };
 
 export const Autolathe = (props) => {
-  const { data } = useBackend<AutolatheData>();
+  const { act, data } = useBackend<AutolatheData>();
   const {
     materialtotal,
     materialsmax,
@@ -53,7 +52,7 @@ export const Autolathe = (props) => {
 
   return (
     <Window title="Autolathe" width={670} height={600}>
-      <Window.Content scrollable>
+      <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
             <Section title="Total Materials">
@@ -84,20 +83,51 @@ export const Autolathe = (props) => {
                             key={material.name}
                             label={capitalize(material.name)}
                           >
-                            <ProgressBar
-                              style={{
-                                transform: 'scaleX(-1) scaleY(1)',
-                              }}
-                              value={materialsmax - material.amount}
-                              maxValue={materialsmax}
-                              backgroundColor={material.color}
-                              color="black"
-                            >
-                              <div style={{ transform: 'scaleX(-1)' }}>
-                                {material.amount / SHEET_MATERIAL_AMOUNT +
-                                  ' sheets'}
-                              </div>
-                            </ProgressBar>
+                            <Stack fill>
+                              <Stack.Item grow>
+                                <ProgressBar
+                                  style={{
+                                    transform: 'scaleX(-1) scaleY(1)',
+                                  }}
+                                  value={materialsmax - material.amount}
+                                  maxValue={materialsmax}
+                                  backgroundColor={material.color}
+                                  color="black"
+                                >
+                                  <div style={{ transform: 'scaleX(-1)' }}>
+                                    {material.amount / SHEET_MATERIAL_AMOUNT +
+                                      ' sheets'}
+                                  </div>
+                                </ProgressBar>
+                              </Stack.Item>
+                              <Stack.Item>Eject:</Stack.Item>
+                              {[
+                                1,
+                                5,
+                                Math.floor(
+                                  material.amount / SHEET_MATERIAL_AMOUNT,
+                                ),
+                              ]
+                                .sort()
+                                .map((amt) => (
+                                  <Stack.Item key={amt}>
+                                    <Button
+                                      disabled={
+                                        material.amount <
+                                        SHEET_MATERIAL_AMOUNT * amt
+                                      }
+                                      onClick={() =>
+                                        act('eject', {
+                                          ref: material.ref,
+                                          amount: amt,
+                                        })
+                                      }
+                                    >
+                                      x{amt}
+                                    </Button>
+                                  </Stack.Item>
+                                ))}
+                            </Stack>
                           </LabeledList.Item>
                         ))}
                       </LabeledList>
@@ -168,7 +198,7 @@ const PrintButton = (props: PrintButtonProps) => {
         ])}
         color={'transparent'}
         onClick={() =>
-          canPrint && act('make', { id: design.id, multiplier: quantity })
+          canPrint && act('make', { design_path: design.path, multiplier: quantity })
         }
       >
         &times;{quantity}
@@ -250,7 +280,7 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
           onClick={() =>
-            canPrint && act('make', { id: design.id, multiplier: 1 })
+            canPrint && act('make', { design_path: design.path, multiplier: 1 })
           }
         >
           <div className="FabricatorRecipe__Icon">
@@ -288,15 +318,14 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
       >
         <Button.Input
           color="transparent"
-          onCommit={(_e, value: string) =>
+          buttonText={`[Max: ${maxmult}]`}
+          onCommit={(value) =>
             act('make', {
-              id: design.id,
+              design_path: design.path,
               multiplier: value,
             })
           }
-        >
-          [Max: {maxmult}]
-        </Button.Input>
+        />
       </div>
     </div>
   );

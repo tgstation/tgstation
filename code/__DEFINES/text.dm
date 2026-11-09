@@ -84,8 +84,6 @@
 #define ARCADE_FILE "arcade.json"
 /// File location for boomer meme catchphrases
 #define BOOMER_FILE "boomer.json"
-/// File location for locations on the station
-#define LOCATIONS_FILE "locations.json"
 /// File location for wanted posters messages
 #define WANTED_FILE "wanted_message.json"
 /// File location for really dumb suggestions memes
@@ -112,3 +110,7 @@
 #define SPLASH_FILE "splashes.json"
 ///File location for mother hallucination lines
 #define MOTHER_FILE "mother.json"
+
+#define ALPHABET list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+#define VOWELS list("a", "e", "i", "o", "u")
+#define CONSONANTS (ALPHABET - VOWELS)

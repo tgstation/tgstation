@@ -29,7 +29,7 @@
 
 /datum/status_effect/drowsiness/tick(seconds_between_ticks)
 	// You do not feel drowsy while unconscious or in stasis
-	if(owner.stat >= UNCONSCIOUS || HAS_TRAIT(owner, TRAIT_STASIS))
+	if(IS_UNCONSCIOUS(owner) || HAS_TRAIT(owner, TRAIT_STASIS))
 		return
 
 	// Resting helps against drowsiness

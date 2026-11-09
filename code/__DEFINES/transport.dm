@@ -19,6 +19,7 @@
 #define HILBERT_LINE_1 "hilb_1"
 #define BIRDSHOT_LINE_1 "bird_1"
 #define BIRDSHOT_LINE_2 "bird_2"
+#define HERETIC_LINE_1 "heretic_1"
 
 // Destinations/platforms
 #define TRAMSTATION_WEST 1
@@ -31,6 +32,10 @@
 
 #define BIRDSHOT_PRISON_WING 1
 #define BIRDSHOT_SECURITY_WING 2
+
+#define HERETIC_PORT 1
+#define HERETIC_CENTRAL 2
+#define HERETIC_STARBOARD 3
 
 #define BIRDSHOT_MAINTENANCE_LEFT 1
 #define BRIDSHOT_MAINTENANCE_RIGHT 2
@@ -99,12 +104,11 @@ DEFINE_BITFIELD(request_flags, list(
 #define XING_STATE_RED 2
 #define XING_STATE_MALF 3
 
-#define AMBER_THRESHOLD_NORMAL 45
-#define RED_THRESHOLD_NORMAL 20
-#define AMBER_THRESHOLD_DEGRADED 30
-#define RED_THRESHOLD_DEGRADED 15
+#define XING_THRESHOLD_AMBER 45
+#define XING_THRESHOLD_RED 27
 
 #define DEFAULT_TRAM_LENGTH 10
+#define DEFAULT_TRAM_MIDPOINT 5
 
 // Tram machinery subtype
 #define TRANSPORT_SYSTEM_NORMAL 0
@@ -113,3 +117,8 @@ DEFINE_BITFIELD(request_flags, list(
 #define TRANSPORT_REMOTE_FAULT 3
 #define TRANSPORT_LOCAL_FAULT 4
 #define TRANSPORT_BREAKDOWN_RATE 0.0175
+
+// Tram controls settings
+#define NORMAL_WINDOW "normal_window"
+#define SPLIT_WINDOW "split_window"
+#define STANDALONE "standalone"

@@ -1,9 +1,9 @@
-/datum/mutation/human/self_amputation
+/datum/mutation/self_amputation
 	name = "Autotomy"
-	desc = "Allows a creature to voluntary discard a random appendage."
+	desc = "The subject gains the ability to voluntarily discard a random appendage."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your joints feel loose.")
-	instability = 30
+	instability = POSITIVE_INSTABILITY_MINOR
 	power_path = /datum/action/cooldown/spell/self_amputation
 
 	energy_coeff = 1
@@ -27,7 +27,7 @@
 		return
 
 	var/list/parts = list()
-	for(var/obj/item/bodypart/to_remove as anything in cast_on.bodyparts)
+	for(var/obj/item/bodypart/to_remove as anything in cast_on.get_bodyparts())
 		if(to_remove.body_zone == BODY_ZONE_HEAD || to_remove.body_zone == BODY_ZONE_CHEST)
 			continue
 		if(to_remove.bodypart_flags & BODYPART_UNREMOVABLE)

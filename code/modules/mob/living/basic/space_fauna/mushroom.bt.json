@@ -1,0 +1,103 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/mushroom",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"observer_abort": "BT_ABORT_BOTH",
+						"key": "BB_CURRENT_TARGET"
+					},
+					"child": {
+						"type": "parallel",
+						"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+						"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+						"repeat_secondary": true,
+						"finish_on_primary": true,
+						"children": [
+							{
+								"type": "subplan",
+								"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+								"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+										}
+									}
+								]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"vars": {
+									"target_key": "BB_CURRENT_TARGET",
+									"required_dist": 1,
+									"finish_on_arrival": false
+								}
+							}
+						]
+					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/move_to_and_hunt",
+					"bindings": {
+						"bvtz06kb": "BB_LOW_PRIORITY_HUNTING_TARGET",
+						"b3y599q4": "BB_LOW_PRIORITY_HUNTING_TARGET",
+						"brrasnah": "BB_LOW_PRIORITY_HUNTING_TARGET",
+						"bd1towgc": "TRUE",
+						"b3cnse9r": "TRUE"
+					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/random_walk"
+				}
+			]
+		},
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_combat_targets",
+					"vars": {
+						"target_key": "BB_CURRENT_TARGET",
+						"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"key": "BB_LOW_PRIORITY_HUNTING_TARGET",
+						"invert": true
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+						"vars": {
+							"target_key": "BB_LOW_PRIORITY_HUNTING_TARGET",
+							"targeting_strategy": "/datum/targeting_strategy/pickup_item",
+							"target_source": "/datum/target_source/oview_single_type/mushroom_food",
+							"vision_range": 6
+						}
+					}
+				}
+			]
+		}
+	]
+}

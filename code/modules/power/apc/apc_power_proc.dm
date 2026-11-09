@@ -8,9 +8,11 @@
 		terminal.connect_to_network()
 
 /obj/machinery/power/apc/proc/make_terminal(terminal_cable_layer = cable_layer)
+	//attempt to locate a terminal if mappers/map export placed it here
+	terminal = locate(/obj/machinery/power/terminal) in loc
 	// create a terminal object at the same position as original turf loc
-	// wires will attach to this
-	terminal = new/obj/machinery/power/terminal(loc)
+	if(QDELETED(terminal))
+		terminal = new /obj/machinery/power/terminal(loc)
 	terminal.cable_layer = terminal_cable_layer
 	terminal.setDir(dir)
 	terminal.master = src
@@ -30,12 +32,12 @@
 		area.power_light = (lighting > APC_CHANNEL_AUTO_OFF)
 		area.power_equip = (equipment > APC_CHANNEL_AUTO_OFF)
 		area.power_environ = (environ > APC_CHANNEL_AUTO_OFF)
-		playsound(src.loc, 'sound/machines/terminal_on.ogg', 50, FALSE)
+		playsound(src.loc, 'sound/machines/terminal/terminal_on.ogg', 50, FALSE)
 	else
 		area.power_light = FALSE
 		area.power_equip = FALSE
 		area.power_environ = FALSE
-		playsound(src.loc, 'sound/machines/terminal_off.ogg', 50, FALSE)
+		playsound(src.loc, 'sound/machines/terminal/terminal_off.ogg', 50, FALSE)
 	area.power_change()
 
 /obj/machinery/power/apc/proc/toggle_breaker(mob/user)
@@ -125,16 +127,15 @@
 		terminal.master = null
 		terminal = null
 
+/**
+ * Temporarily disables all power to the room for a set duration
+ *
+ * Some rooms are immune to this effect due to having important machines
+ *
+ * * duration - the duration of the power failure in seconds (not deciseconds)
+ */
 /obj/machinery/power/apc/proc/energy_fail(duration)
-	for(var/obj/machinery/failing_machine in area.contents)
-		if(failing_machine.critical_machine)
-			return
-
-	for(var/mob/living/silicon/ai as anything in GLOB.ai_list)
-		if(get_area(ai) == area)
-			return
-
-	failure_timer = max(failure_timer, round(duration))
+	failure_timer = max(failure_timer, round(duration, SSMACHINES_DT))
 	update()
 	queue_icon_update()
 
@@ -145,10 +146,9 @@
 	if(nightshift_lights == on)
 		return //no change
 	nightshift_lights = on
-	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
-		for(var/turf/area_turf as anything in zlevel_turfs)
-			for(var/obj/machinery/light/night_light in area_turf)
-				if(night_light.nightshift_allowed)
-					night_light.nightshift_enabled = nightshift_lights
-					night_light.update(FALSE)
-				CHECK_TICK
+	for(var/turf/area_turf as anything in area.get_turfs_from_all_zlevels())
+		for(var/obj/machinery/light/night_light in area_turf)
+			if(night_light.nightshift_allowed)
+				night_light.nightshift_enabled = nightshift_lights
+				night_light.update(FALSE)
+			CHECK_TICK

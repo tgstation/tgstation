@@ -82,7 +82,7 @@
 	if(atom_integrity >= max_integrity)
 		balloon_alert(user, "it's not damaged!")
 		return
-	if(!W.tool_start_check(user, amount=1))
+	if(!W.tool_start_check(user, amount=1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return
 	user.balloon_alert_to_viewers("started welding [src]", "started repairing [src]")
 	audible_message(span_hear("You hear welding."))
@@ -108,16 +108,14 @@
 		return PROCESS_KILL
 	if(SPT_PROB(10, seconds_per_tick))
 		return
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = src, location = src)
-	smoke.start()
+	do_smoke(0, src, src)
 
-/obj/vehicle/ridden/atv/bullet_act(obj/projectile/P)
+/obj/vehicle/ridden/atv/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	if(prob(50) || !LAZYLEN(buckled_mobs))
 		return ..()
 	for(var/mob/buckled_mob as anything in buckled_mobs)
-		buckled_mob.bullet_act(P)
-	return BULLET_ACT_HIT
+		return buckled_mob.projectile_hit(hitting_projectile)
+	return ..()
 
 /obj/vehicle/ridden/atv/atom_destruction()
 	explosion(src, devastation_range = -1, light_impact_range = 2, flame_range = 3, flash_range = 4)

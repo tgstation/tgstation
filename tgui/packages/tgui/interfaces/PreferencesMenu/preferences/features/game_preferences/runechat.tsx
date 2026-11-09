@@ -1,8 +1,8 @@
 import {
   CheckboxInput,
   FeatureNumberInput,
-  FeatureNumeric,
-  FeatureToggle,
+  type FeatureNumeric,
+  type FeatureToggle,
 } from '../base';
 
 export const chat_on_map: FeatureToggle = {
@@ -16,6 +16,13 @@ export const see_chat_non_mob: FeatureToggle = {
   name: 'Enable Runechat on objects',
   category: 'RUNECHAT',
   description: 'Chat messages will show above objects when they speak.',
+  component: CheckboxInput,
+};
+
+export const chat_on_ghosts: FeatureToggle = {
+  name: 'Enable Runechat on ghosts',
+  category: 'RUNECHAT',
+  description: 'Chat messages will show above ghosts when they speak.',
   component: CheckboxInput,
 };
 

@@ -15,7 +15,6 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WALLS
-	can_be_unanchored = FALSE
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
 	material_flags = MATERIAL_EFFECTS
@@ -27,13 +26,22 @@
 	var/girder_type = /obj/structure/girder/displaced
 	var/opening = FALSE
 
+/obj/structure/falsewall/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon)
+	return .
 
 /obj/structure/falsewall/Initialize(mapload)
 	. = ..()
-	var/obj/item/stack/initialized_mineral = new mineral // Okay this kinda sucks.
-	set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
-	qdel(initialized_mineral)
+	// minerals are only applied to fake mineral walls
+	// ...yes, real iron walls are not actually made of iron
+	if(ispath(walltype, /turf/closed/wall/mineral))
+		var/obj/item/stack/initialized_mineral = new mineral // Okay this kinda sucks.
+		set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
+		qdel(initialized_mineral)
+
 	air_update_turf(TRUE, TRUE)
+	update_appearance()
 
 /obj/structure/falsewall/attack_hand(mob/user, list/modifiers)
 	if(opening)
@@ -42,12 +50,11 @@
 	if(.)
 		return
 
-	opening = TRUE
 	if(!density)
-		var/srcturf = get_turf(src)
-		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
-			opening = FALSE
+		for(var/mob/living/obstacle in get_turf(src)) //Stop people from using this as a shield
 			return
+
+	opening = TRUE
 	update_appearance()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/falsewall, toggle_open)), 0.5 SECONDS)
 
@@ -66,9 +73,8 @@
 
 	if(opening)
 		smoothing_flags = NONE
-		clear_smooth_overlays()
 	else
-		smoothing_flags = SMOOTH_BITMASK
+		smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ
 		QUEUE_SMOOTH(src)
 
 /obj/structure/falsewall/update_icon_state()
@@ -91,9 +97,9 @@
 		qdel(src)
 	return T
 
-/obj/structure/falsewall/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/structure/falsewall/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(!opening || !tool.tool_behaviour)
-		return NONE
+		return ..()
 	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
 	return ITEM_INTERACT_BLOCKING
 
@@ -114,23 +120,23 @@
 
 
 /obj/structure/falsewall/welder_act(mob/living/user, obj/item/tool)
-	if(tool.use_tool(src, user, 0 SECONDS, volume=50))
-		dismantle(user, TRUE)
-		return ITEM_INTERACT_SUCCESS
-	return
+	if(!tool.use_tool(src, user, 0 SECONDS, volume=50))
+		return ITEM_INTERACT_BLOCKING
+	dismantle(user, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/falsewall/attackby(obj/item/W, mob/user, params)
-	if(!opening)
-		return ..()
-	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
-	return
+/obj/structure/falsewall/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(opening)
+		to_chat(user, span_warning("You must wait until the door has stopped moving!"))
+		return ITEM_INTERACT_BLOCKING // honest to god no idea what the point of this blocker is, I'm just the messenger
+	return NONE
 
 /obj/structure/falsewall/proc/dismantle(mob/user, disassembled=TRUE, obj/item/tool = null)
 	user.visible_message(span_notice("[user] dismantles the false wall."), span_notice("You dismantle the false wall."))
 	if(tool)
 		tool.play_tool_sound(src, 100)
 	else
-		playsound(src, 'sound/items/welder.ogg', 100, TRUE)
+		playsound(src, 'sound/items/tools/welder.ogg', 100, TRUE)
 	deconstruct(disassembled)
 
 /obj/structure/falsewall/atom_deconstruct(disassembled = TRUE)
@@ -143,9 +149,15 @@
 /obj/structure/falsewall/get_dumping_location()
 	return null
 
+/obj/structure/falsewall/examine_descriptor(mob/user)
+	return "wall"
+
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
-	to_chat(user, span_notice("The outer plating is <b>welded</b> firmly in place."))
-	return null
+	return span_notice("The outer plating is <b>welded</b> firmly in place.")
+
+/obj/structure/falsewall/mouse_drop_receive(mob/living/dropping, mob/user, params)
+	. = ..()
+	LoadComponent(/datum/component/leanable, dropping)
 
 /*
  * False R-Walls
@@ -162,13 +174,14 @@
 	smoothing_flags = SMOOTH_BITMASK
 
 /obj/structure/falsewall/reinforced/examine_status(mob/user)
-	to_chat(user, span_notice("The outer <b>grille</b> is fully intact."))
-	return null
+	return span_notice("The outer <b>grille</b> is fully intact.")
 
-/obj/structure/falsewall/reinforced/attackby(obj/item/tool, mob/user)
-	..()
-	if(tool.tool_behaviour == TOOL_WIRECUTTER)
-		dismantle(user, TRUE, tool)
+/obj/structure/falsewall/reinforced/wirecutter_act(mob/living/user, obj/item/tool)
+	dismantle(user, TRUE, tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/falsewall/reinforced/welder_act(mob/living/user, obj/item/tool)
+	return NONE
 
 /*
  * Uranium Falsewalls
@@ -196,7 +209,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE, PROC_REF(radiate))
 
-/obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, params)
+/obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	radiate()
 	return ..()
 
@@ -320,7 +333,7 @@
 	mineral = /obj/item/stack/sheet/mineral/bamboo
 	walltype = /turf/closed/wall/mineral/bamboo
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_groups = SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_BAMBOO_WALLS
 
 /obj/structure/falsewall/iron
@@ -332,7 +345,6 @@
 	mineral = /obj/item/stack/rods
 	mineral_amount = 5
 	walltype = /turf/closed/wall/mineral/iron
-	base_icon_state = "iron_wall"
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_IRON_WALLS + SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_IRON_WALLS
@@ -373,6 +385,47 @@
 	smoothing_groups = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_WALLS
 	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS
 
+/obj/structure/falsewall/plastitanium/wall_fill
+	mineral = /obj/item/stack/wall_filling/plastitanium/basic
+	mineral_amount = 1
+	walltype = /turf/closed/wall/mineral/plastitanium/wall_fill
+
+/obj/structure/falsewall/plastitanium/darkpod
+	name = "dark pod wall"
+	desc = "An easily-compressible wall used for temporary shelter."
+	fake_icon = 'icons/turf/walls/dark_pod.dmi'
+	icon_state = "dark_pod_walls-open"
+	base_icon_state = "dark_pod_walls"
+	mineral = /obj/item/stack/wall_filling/plastitanium/pod
+	mineral_amount = 1
+	walltype = /turf/closed/wall/mineral/plastitanium/darkpod
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+
+/obj/structure/falsewall/plastitanium/redpod
+	name = "red pod wall"
+	desc = "An easily-compressible wall used for temporary shelter."
+	fake_icon = 'icons/turf/walls/red_pod.dmi'
+	icon_state = "red_pod_walls-open"
+	base_icon_state = "red_pod_walls"
+	mineral = /obj/item/stack/wall_filling/plastitanium/redpod
+	mineral_amount = 1
+	walltype = /turf/closed/wall/mineral/plastitanium/redpod
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+
+/obj/structure/falsewall/plastitanium/survival
+	name = "pod wall"
+	desc = "An easily-compressible wall used for temporary shelter."
+	fake_icon = 'icons/turf/walls/survival_pod_walls.dmi'
+	icon_state = "survival_pod_walls-open"
+	base_icon_state = "survival_pod_walls"
+	mineral = /obj/item/stack/wall_filling/plastitanium/survivalpod
+	mineral_amount = 1
+	walltype = /turf/closed/wall/mineral/plastitanium/survival
+	smoothing_groups = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD + SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+
 /obj/structure/falsewall/material
 	name = "wall"
 	desc = "A huge chunk of material used to separate rooms."
@@ -392,8 +445,9 @@
 		var/datum/material/material_datum = material
 		new material_datum.sheet_type(loc, FLOOR(custom_materials[material_datum] / SHEET_MATERIAL_AMOUNT, 1))
 
-/obj/structure/falsewall/material/mat_update_desc(mat)
-	desc = "A huge chunk of [mat] used to separate rooms."
+/obj/structure/falsewall/material/finalize_material_effects(list/materials)
+	. = ..()
+	desc = "A huge chunk of [get_material_english_list(materials)] used to separate rooms."
 
 /obj/structure/falsewall/material/toggle_open()
 	if(!QDELETED(src))
@@ -430,6 +484,5 @@
 		girder_icon_state += "_[density ? "opening" : "closing"]"
 	else if(!density)
 		girder_icon_state += "_open"
-	var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', girder_icon_state, layer = LOW_OBJ_LAYER-0.01)
-	girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR
+	var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', girder_icon_state, layer = LOW_OBJ_LAYER-0.01, appearance_flags = RESET_ALPHA | RESET_COLOR | KEEP_APART)
 	underlays += girder_underlay

@@ -1,6 +1,6 @@
 /mob/living/basic/sheep
 	name = "sheep"
-	desc = "Known for their soft wool and use in sacrifical rituals. Big fan of grass."
+	desc = "Known for their soft wool and use in sacrificial rituals. Big fan of grass."
 	icon = 'icons/mob/simple/sheep.dmi'
 	icon_state = "sheep"
 	icon_dead = "sheep_dead"
@@ -18,12 +18,12 @@
 	response_harm_simple = "kick"
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_KICK
 	health = 50
 	maxHealth = 50
 	gold_core_spawnable = FRIENDLY_SPAWN
-	blood_volume = BLOOD_VOLUME_NORMAL
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 	ai_controller = /datum/ai_controller/basic_controller/sheep
 
 	/// Were we sacrificed by cultists?
@@ -40,9 +40,10 @@
 		item_generation_wait = 3 MINUTES, \
 		item_reduction_time = 30 SECONDS, \
 		item_harvest_time = 5 SECONDS, \
-		item_harvest_sound = 'sound/surgery/scalpel1.ogg', \
+		item_harvest_sound = 'sound/items/handling/surgery/scalpel1.ogg', \
 	)
 	AddElement(/datum/element/ai_retaliate)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SHEEP, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_sacrificed))
 
 /mob/living/basic/sheep/update_overlays()
@@ -59,7 +60,7 @@
 	if(cult_converted)
 		for(var/mob/living/cultist as anything in invokers)
 			to_chat(cultist, span_cult_italic("[src] has already been sacrificed!"))
-		return STOP_SACRIFICE
+		return STOP_SACRIFICE|SILENCE_SACRIFICE_MESSAGE
 
 	for(var/mob/living/cultist as anything in invokers)
 		to_chat(cultist, span_cult_italic("This feels a bit too cliché, don't you think?"))
@@ -80,14 +81,16 @@
 		update_appearance(UPDATE_ICON)
 
 /datum/ai_controller/basic_controller/sheep
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/sheep.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_SAY = list("baaa", "baaaAAAAAH!", "baaah"),
+			BB_EMOTE_HEAR = list("bleats."),
+			BB_EMOTE_SEE = list("shakes her head.", "stares into the distance."),
+			BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/sheep/sheep1.ogg', 'sound/mobs/non-humanoids/sheep/sheep2.ogg', 'sound/mobs/non-humanoids/sheep/sheep3.ogg'),
+			BB_SPEAK_CHANCE = 5,
+		),
 	)
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/sheep,
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
-	)

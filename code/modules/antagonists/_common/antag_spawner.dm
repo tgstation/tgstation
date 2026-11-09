@@ -1,4 +1,5 @@
 /obj/item/antag_spawner
+	abstract_type = /obj/item/antag_spawner
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -45,17 +46,24 @@
 		get_asset_datum(/datum/asset/simple/contracts),
 	)
 
-/obj/item/antag_spawner/contract/ui_act(action, list/params)
+/obj/item/antag_spawner/contract/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(used || polling || !ishuman(usr))
+	if(.)
 		return
-	INVOKE_ASYNC(src, PROC_REF(poll_for_student), usr, params["school"])
-	SStgui.close_uis(src)
+	switch(action)
+		if("buy")
+			if(used || polling || !ishuman(ui.user))
+				return
+			var/selected_school = params["school"]
+			if(!(selected_school in ALL_APPRENTICE_TYPES))
+				return
+			INVOKE_ASYNC(src, PROC_REF(poll_for_student), ui.user, params["school"])
+			SStgui.close_uis(src)
 
 /obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)
 	balloon_alert(teacher, "contacting apprentice...")
 	polling = TRUE
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[teacher]'s")] [span_notice("[apprentice_school] apprentice")]?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 15 SECONDS, checked_target = src, alert_pic = /obj/item/clothing/head/wizard/red, jump_target = src, role_name_text = "wizard apprentice", chat_text_border_icon = /obj/item/clothing/head/wizard/red)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[teacher]'s")] [span_notice("[apprentice_school] apprentice")]?", check_jobban = ROLE_WIZARD_MIDROUND, role = ROLE_WIZARD_MIDROUND, poll_time = 15 SECONDS, checked_target = src, alert_pic = /obj/item/clothing/head/wizard/red, jump_target = src, role_name_text = "wizard apprentice", chat_text_border_icon = /obj/item/clothing/head/wizard/red)
 	polling = FALSE
 	if(isnull(chosen_one))
 		to_chat(teacher, span_warning("Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."))
@@ -69,7 +77,7 @@
 	new /obj/effect/particle_effect/fluid/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
 	C.prefs.safe_transfer_prefs_to(M, is_antag = TRUE)
-	M.key = C.key
+	M.PossessByPlayer(C.key)
 	var/datum/mind/app_mind = M.mind
 
 	var/datum/antagonist/wizard/apprentice/app = new()
@@ -83,8 +91,7 @@
 		app.wiz_team = master_wizard.wiz_team
 		master_wizard.wiz_team.add_member(app_mind)
 	app_mind.add_antag_datum(app)
-	app_mind.set_assigned_role(SSjob.GetJobType(/datum/job/wizard_apprentice))
-	app_mind.special_role = ROLE_WIZARD_APPRENTICE
+	app_mind.set_assigned_role(SSjob.get_job_type(/datum/job/wizard_apprentice))
 	SEND_SOUND(M, sound('sound/effects/magic.ogg'))
 
 ///////////BORGS AND OPERATIVES
@@ -95,17 +102,17 @@
  */
 /obj/item/antag_spawner/nuke_ops
 	name = "syndicate operative beacon"
-	desc = "MI13 designed one-use radio for calling immediate backup. Have no regards for safety of whom it summons - they are all inferior clones from Interdyne's genebanks anyway."
+	desc = "A single-use beacon designed to quickly launch reinforcement operatives into the field."
 	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "nukietalkie"
 	/// The name of the special role given to the recruit
-	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
+	var/special_role_name = ROLE_OPERATIVE
 	/// The applied outfit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
 	/// The antag datum applied
 	var/antag_datum = /datum/antagonist/nukeop/reinforcement
 	/// Style used by the droppod
-	var/pod_style = STYLE_SYNDICATE
+	var/pod_style = /datum/pod_style/syndicate
 	/// Do we use a random subtype of the outfit?
 	var/use_subtypes = TRUE
 	/// Where do we land our pod?
@@ -132,7 +139,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as a reinforcement [special_role_name]?", check_jobban = ROLE_OPERATIVE_MIDROUND, role = ROLE_OPERATIVE_MIDROUND, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, alert_pic = src, role_name_text = special_role_name, amount_to_pick = 1)
 	if(chosen_one)
 		if(QDELETED(src) || !check_usability(user))
 			return
@@ -157,7 +164,7 @@
 
 	var/datum/antagonist/nukeop/creator_op = user.has_antag_datum(/datum/antagonist/nukeop, TRUE)
 	op_mind.add_antag_datum(new_datum, creator_op ? creator_op.get_team() : null)
-	op_mind.special_role = special_role_name
+	LAZYADD(op_mind.special_roles, special_role_name)
 
 	if(outfit)
 		var/datum/antagonist/nukeop/nukie_datum = op_mind.has_antag_datum(antag_datum)
@@ -170,7 +177,7 @@
 /obj/item/antag_spawner/nuke_ops/overwatch
 	name = "overwatch support beacon"
 	desc = "Assigns an Overwatch Intelligence Agent to your operation. Stationed at their own remote outpost, they can view station cameras, alarms, and even move the Infiltrator shuttle! \
-		Also, all members of your operation will recieve body cameras that they can view your progress from."
+		Also, all members of your operation will receive body cameras that they can view your progress from."
 	special_role_name = ROLE_OPERATIVE_OVERWATCH
 	outfit = /datum/outfit/syndicate/support
 	use_subtypes = FALSE
@@ -178,8 +185,8 @@
 
 /obj/item/antag_spawner/nuke_ops/overwatch/Initialize(mapload)
 	. = ..()
-	if(length(GLOB.nukeop_overwatch_start)) //Otherwise, it will default to the datum's spawn point anyways
-		spawn_location = pick(GLOB.nukeop_overwatch_start)
+	if(length(GLOB.nukeop_base_overwatch_start)) //Otherwise, it will default to the datum's spawn point anyways
+		spawn_location = pick(GLOB.nukeop_base_overwatch_start)
 
 //////CLOWN OP
 /obj/item/antag_spawner/nuke_ops/clown
@@ -187,8 +194,8 @@
 	desc = "A single-use beacon designed to quickly launch reinforcement clown operatives into the field."
 	special_role_name = ROLE_CLOWN_OPERATIVE
 	outfit = /datum/outfit/syndicate/clownop/no_crystals
-	antag_datum = /datum/antagonist/nukeop/clownop
-	pod_style = STYLE_HONK
+	antag_datum = /datum/antagonist/nukeop/reinforcement/clownop
+	pod_style = /datum/pod_style/clown
 	use_subtypes = FALSE
 
 //////SYNDICATE BORG
@@ -234,16 +241,13 @@
 		brainopslastname = creator_op.nuke_team.syndicate_name
 	var/brainopsname = "[brainfirstname] [brainopslastname]"
 
-	borg.mmi.name = "[initial(borg.mmi.name)]: [brainopsname]"
-	borg.mmi.brain.name = "[brainopsname]'s brain"
-	borg.mmi.brainmob.real_name = brainopsname
-	borg.mmi.brainmob.name = brainopsname
+	borg.mmi.set_name(brainopsname)
 	borg.real_name = borg.name
 
-	borg.key = C.key
+	borg.PossessByPlayer(C.key)
 
 	borg.mind.add_antag_datum(antag_datum, creator_op ? creator_op.get_team() : null)
-	borg.mind.special_role = special_role_name
+	LAZYADD(borg.mind.special_roles, special_role_name)
 	borg.forceMove(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
 
@@ -265,7 +269,7 @@
 		return
 	if(used)
 		return
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_ALIEN, role = ROLE_ALIEN, poll_time = 5 SECONDS, checked_target = src, alert_pic = demon_type, jump_target = src, role_name_text = initial(demon_type.name))
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, poll_time = 5 SECONDS, checked_target = src, alert_pic = demon_type, jump_target = src, role_name_text = initial(demon_type.name))
 	if(chosen_one)
 		if(used || QDELETED(src))
 			return
@@ -274,16 +278,16 @@
 		spawn_antag(chosen_one.client, get_turf(src), initial(demon_type.name), user.mind)
 		to_chat(user, shatter_msg)
 		to_chat(user, veil_msg)
-		playsound(user.loc, 'sound/effects/glassbr1.ogg', 100, TRUE)
+		playsound(user.loc, 'sound/effects/glass/glassbr1.ogg', 100, TRUE)
 		qdel(src)
 	else
 		to_chat(user, span_warning("The bottle's contents usually pop and boil constantly, but right now they're eerily still and calm. Perhaps you should try again later."))
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
 	var/mob/living/basic/demon/spawned = new demon_type(T)
-	new /obj/effect/dummy/phased_mob(T, spawned)
+	new /obj/effect/dummy/phased_mob/blood(T, spawned)
 
-	spawned.key = C.key
+	spawned.PossessByPlayer(C.key)
 
 /obj/item/antag_spawner/slaughter_demon/laughter
 	name = "vial of tickles"
@@ -313,11 +317,9 @@
 	/// The antag datum applied
 	var/datum/antagonist/antag_datum
 	/// Style used by the droppod
-	var/pod_style = STYLE_SYNDICATE
+	var/pod_style = /datum/pod_style/syndicate
 	/// Do we use a random subtype of the outfit?
 	var/use_subtypes = TRUE
-	/// The antag role we check if the ghosts have enabled to get the poll.
-	var/poll_role_check = ROLE_TRAITOR
 	/// The mind's special role.
 	var/role_to_play = ROLE_SYNDICATE_MONKEY
 	/// What category to ignore the poll
@@ -344,8 +346,7 @@
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
 	var/mob/chosen_one = SSpolling.poll_ghost_candidates(
-		check_jobban = poll_role_check,
-		role = poll_role_check,
+		check_jobban = role_to_play,
 		poll_time = 10 SECONDS,
 		ignore_category = poll_ignore_category,
 		alert_pic = src,
@@ -381,10 +382,13 @@
 
 	if(ishuman(spawned_mob))
 		var/mob/living/carbon/human/human_mob = spawned_mob
-		human_mob.set_species(species_type)
+		// ignore if it's already the same
+		if(human_mob.dna.species != species_type)
+			human_mob.set_species(species_type)
+
 		human_mob.equipOutfit(outfit)
 
-	op_mind.special_role = role_to_play
+	LAZYADD(op_mind.special_roles, role_to_play)
 
 	do_special_things(spawned_mob, user)
 
@@ -399,7 +403,7 @@
 	outfit = /datum/outfit/contractor_partner
 	use_subtypes = FALSE
 	antag_datum = /datum/antagonist/traitor/contractor_support
-	poll_ignore_category = ROLE_TRAITOR
+	poll_ignore_category = POLL_IGNORE_CONTRACTOR_SUPPORT
 	role_to_play = ROLE_CONTRACTOR_SUPPORT
 
 /obj/item/antag_spawner/loadout/contractor/do_special_things(mob/living/carbon/human/contractor_support, mob/user)
@@ -411,43 +415,47 @@
 	desc = "Call up some backup from ARC for monkey mayhem."
 	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "walkietalkie"
+	spawn_type = /mob/living/carbon/human/species/monkey
 	species_type = /datum/species/monkey
 	outfit = /datum/outfit/syndicate_monkey
 	antag_datum = /datum/antagonist/syndicate_monkey
 	use_subtypes = FALSE
-	poll_role_check = ROLE_TRAITOR
 	role_to_play = ROLE_SYNDICATE_MONKEY
-	poll_ignore_category = POLL_IGNORE_SYNDICATE
+	poll_ignore_category = POLL_IGNORE_SYNDICATE_MONKEY
 	fail_text = "Unable to connect to the Animal Rights Consortium's Banana Ops. Please wait and try again later or use the beacon on your uplink to get your points refunded."
 
 /obj/item/antag_spawner/loadout/monkey_man/do_special_things(mob/living/carbon/human/monkey_man, mob/user)
 
 	monkey_man.fully_replace_character_name(monkey_man.real_name, pick(GLOB.syndicate_monkey_names))
 
-	monkey_man.dna.add_mutation(/datum/mutation/human/clever)
-	// Can't make them human or nonclever. At least not with the easy and boring way out.
-	for(var/datum/mutation/human/mutation as anything in monkey_man.dna.mutations)
-		mutation.mutadone_proof = TRUE
-		mutation.instability = 0
+	monkey_man.crewlike_monkify()
 
-	// Extra backup!
-	ADD_TRAIT(monkey_man, TRAIT_NO_DNA_SCRAMBLE, SPECIES_TRAIT)
-	// Anything else requires enough effort that they deserve it.
+	// fuck you i am no longer playing around. this goes against the entire soul of the item
+	RegisterSignal(monkey_man, COMSIG_SPECIES_GAIN, PROC_REF(allergy))
+
 
 	monkey_man.mind.enslave_mind_to_creator(user)
 
 	var/obj/item/implant/explosive/imp = new(src)
 	imp.implant(monkey_man, user)
 
+/obj/item/antag_spawner/loadout/monkey_man/proc/allergy(mob/living/second_lifer, datum/species/folly_species)
+	SIGNAL_HANDLER
+	if(HAS_TRAIT(second_lifer, TRAIT_SIMIAN))
+		return
+	// timer is long to let them panic and consider their folly, and because allergies take a while
+	second_lifer.visible_message(span_bolddanger("[second_lifer] starts swelling unhealthily in size. It looks like they had an allergic reaction to becoming a [folly_species]!"), span_userdanger("As your monkey features morph, you feel your allergies coming in. Oh no."))
+	// no brain or items. organs are funny though
+	second_lifer.inflate_gib(drop_bitflags = DROP_ORGANS|DROP_BODYPARTS, gib_time = 25 SECONDS, anim_time = 40 SECONDS)
+
 /datum/outfit/syndicate_monkey
 	name = "Syndicate Monkey Agent Kit"
 
 	head = /obj/item/clothing/head/fedora
-	mask = /obj/item/clothing/mask/cigarette/syndicate
+	mask = /obj/item/cigarette/syndicate
 	uniform = /obj/item/clothing/under/syndicate
 	l_pocket = /obj/item/reagent_containers/cup/soda_cans/monkey_energy
 	r_pocket = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	internals_slot = NONE
 	belt = /obj/item/lighter/skull
 	r_hand = /obj/item/food/grown/banana
-

@@ -9,16 +9,8 @@
 #define BLOOD_POOL_MAX 300
 /// How much blood a footprint need to at least contain
 #define BLOOD_FOOTPRINTS_MIN 5
-
-//Bloody shoe blood states
-/// Red blood
-#define BLOOD_STATE_HUMAN "blood"
-/// Green xeno blood
-#define BLOOD_STATE_XENO "xeno"
-/// Black robot oil
-#define BLOOD_STATE_OIL "oil"
-/// No blood is present
-#define BLOOD_STATE_NOT_BLOODY "no blood whatsoever"
+/// Bloodiness -> reagent units multiplier
+#define BLOOD_TO_UNITS_MULTIPLIER 0.1
 
 // Bitflags for mob dismemberment and gibbing
 /// Mobs will drop a brain
@@ -32,3 +24,16 @@
 
 /// Mobs will drop everything
 #define DROP_ALL_REMAINS (DROP_BRAIN | DROP_ORGANS | DROP_BODYPARTS | DROP_ITEMS)
+
+// Keys for indexing blood data lists. HIGHLY INCOMPLETE.
+/// Indexing a blood reagent data list with this returns how synthetic the blood is, used for blood worms to nerf common blood sources like monkeys.
+#define BLOOD_DATA_SYNTH_CONTENT "synth_content"
+/// Specifically for Ethereal blood, indicating that it's non-zappy
+#define BLOOD_DATA_ENRICHED_ETHEREAL "enriched"
+/// The blood type of the blood, self evident
+#define BLOOD_DATA_TYPE "blood_type"
+/// The DNA within the blood, either a DNA string or some arbitrary string if the DNA is unknown
+#define BLOOD_DATA_DNA "blood_DNA"
+
+/// Returns whether this mob always has synthetic blood. Used to cap growth for blood worms from easily accessible sources of blood.
+#define IS_BLOOD_ALWAYS_SYNTHETIC(mob) (!ishuman(mob) || HAS_TRAIT(mob, TRAIT_BORN_MONKEY) || HAS_TRAIT(mob, TRAIT_SPAWNED_MOB))

@@ -17,19 +17,21 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/gun/ballistic/shotgun/toy = 8)
 	crate_name = "foam force crate"
+	crate_type = /obj/structure/closet/crate/freezer/donk
 	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
 
 /datum/supply_pack/imports/foamforce/bonus
 	name = "Foam Force Pistols Crate"
 	desc = "Psst.. hey bud... remember those old foam force pistols that got discontinued for being too cool? \
 		Well I got two of those right here with your name on em. I'll even throw in a spare mag for each, waddya say?"
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(
 		/obj/item/gun/ballistic/automatic/pistol/toy = 2,
 		/obj/item/ammo_box/magazine/toy/pistol = 2,
 	)
 	crate_name = "foam force crate"
+	crate_type = /obj/structure/closet/crate/freezer/donk
 
 /datum/supply_pack/imports/meatmeatmeatmeat // MEAT MEAT MEAT MEAT
 	name = "MEAT MEAT MEAT MEAT MEAT"
@@ -43,7 +45,7 @@
 /datum/supply_pack/imports/duct_spider
 	name = "Duct Spider Crate"
 	desc = "Awww! Straight from the Australicus sector to your station's ventilation system!"
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/mob/living/basic/spider/maintenance)
 	crate_name = "duct spider crate"
 	crate_type = /obj/structure/closet/crate/critter
@@ -52,9 +54,9 @@
 /datum/supply_pack/imports/duct_spider/dangerous
 	name = "Duct Spider Crate?"
 	desc = "Wait, is this the right crate? It has a frowny face, what does that mean?"
-	cost = CARGO_CRATE_VALUE * 6
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/mob/living/basic/spider/giant/hunter)
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 
 /datum/supply_pack/imports/bamboo50
 	name = "50 Bamboo Cuttings"
@@ -62,6 +64,14 @@
 	cost = CARGO_CRATE_VALUE * 15
 	contains = list(/obj/item/stack/sheet/mineral/bamboo/fifty)
 	crate_name = "bamboo cuttings crate"
+
+/datum/supply_pack/imports/wind_turbine
+	name = "Wind Turbine Crate"
+	desc = "Includes a portable wind turbine for charging small devices and appliances. Considered obsolete in the frontier, \
+		but perfect for officers who think walking laps around the station is 'innovative engineering'."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/portable_wind_turbine/loaded)
+	crate_name = "wind turbine crate"
 
 /datum/supply_pack/imports/bananium
 	name = "A Single Sheet of Bananium"
@@ -79,7 +89,7 @@
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
 
-/datum/supply_pack/imports/dumpstercorpse/generate()
+/datum/supply_pack/imports/dumpstercorpse/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	. = ..()
 	var/mob/living/carbon/human/corpse = locate() in .
 	corpse.death()
@@ -89,17 +99,33 @@
 	desc = "I'm not sure why you bothered to buy this...and why does it cost so much?"
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(
-		/obj/effect/spawner/random/maintenance/three,
+		/obj/effect/spawner/random/maintenance/dumpster,
 		/obj/effect/spawner/random/trash/garbage = 5,
 	)
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
+	test_ignored = TRUE
+
+/datum/supply_pack/imports/shells
+	name = "Lethal Shotgun Shell Box Crate"
+	desc = "Contains three boxes of buckshot shotgun shells. \
+		Due to Nanotrasen's failure to secure exclusive manufacturing rights \
+		during the Spinward Hunting and Shooting policy hearings, this import \
+		is heavily taxed, despite being 'legal'. I hope the price tag is worth it."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ARMORY
+	access_view = ACCESS_ARMORY
+	contains = list(
+		/obj/item/storage/box/lethalshot = 3,
+	)
+	crate_name = "shotgun shell crate"
+	crate_type = /obj/structure/closet/crate/secure/weapon
 
 /datum/supply_pack/imports/error
 	name = "NULL_ENTRY"
 	desc = "(*!&@#OKAY, OPERATIVE, WE SEE HOW MUCH MONEY YOU'RE FLAUNTING. FINE. HAVE THIS, AND GOOD LUCK PUTTING IT TOGETHER!#@*$"
 	cost = CARGO_CRATE_VALUE * 100
-	hidden = TRUE
+	order_flags = ORDER_EMAG_ONLY
 	contains = list(/obj/item/book/granter/crafting_recipe/regal_condor)
 
 /datum/supply_pack/imports/mafia
@@ -107,7 +133,7 @@
 	desc = "This crate contains everything you need to set up your own ethnicity-based racketeering operation."
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list()
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 
 /datum/supply_pack/imports/mafia/fill(obj/structure/closet/crate/our_crate)
 	for(var/items in 1 to 4)
@@ -122,12 +148,13 @@
 	name = "'Contraband' Crate"
 	desc = "Psst.. bud... want some contraband? I can get you a poster, some nice cigs, dank, even some \
 		sponsored items...you know, the good stuff. Just keep it away from the cops, kay?"
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	cost = CARGO_CRATE_VALUE * 20
 	contains = list(
 		/obj/effect/spawner/random/contraband = 5,
 	)
 	crate_name = "crate"
+	test_ignored = TRUE
 
 /datum/supply_pack/imports/wt550
 	name = "Smuggled WT-550 Autorifle Crate"
@@ -135,17 +162,18 @@
 		SMUGGLING THIS CRATE THROUGH A FEW OUTDATED CUSTOMS CHECKPOINTS, WE'VE THE NEXT BEST THING! \
 		SERVICE AUTORIFLES. DON'T WORRY, THE RUMORS ABOUT THE GUN MELTING YOU ARE JUST THAT! RUMORS! \
 		THESE THINGS WORK FINE! MIGHT BE SLIGHTLY DIRTY.!#@*$"
-	hidden = TRUE
+	order_flags = ORDER_EMAG_ONLY
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(
 		/obj/item/gun/ballistic/automatic/wt550 = 2,
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 	)
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/wt550ammo
 	name = "Smuggled WT-550 Ammo Crate"
 	desc = "(*!&@#OPERATIVE, YOU LIKE THAT WT-550? THEN WHY NOT EQUIP YOURSELF WITH SOME MORE AMMO!!#@*$"
-	hidden = TRUE
+	order_flags = ORDER_EMAG_ONLY
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
@@ -153,13 +181,13 @@
 		/obj/item/ammo_box/magazine/wt550m9/wtic = 2,
 	)
 	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/internals
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/shocktrooper
 	name = "Shocktrooper Crate"
 	desc = "(*!&@#WANT TO PUT THE FEAR OF DEATH INTO YOUR ENEMIES? THIS CRATE OF GOODIES CAN HELP MAKE THAT A REALITY. \
 		CONTAINS AN ARMOR VEST AND HELMET, A BOX OF FIVE EMP GRENADES, THREE SMOKEBOMBS, TWO GLUON GRENADES AND TWO FRAG GRENADES!#@*$"
-	hidden = TRUE
+	order_flags = ORDER_EMAG_ONLY
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(
 		/obj/item/storage/box/emps,
@@ -169,12 +197,13 @@
 		/obj/item/clothing/suit/armor/vest,
 		/obj/item/clothing/head/helmet,
 	)
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/specialops
 	name = "Special Ops Crate"
 	desc = "(*!&@#THE PIGS ON YOUR TAIL? MAYBE YOU CAN BUY SOME TIME WITH THIS CRATE! \
 		CONTAINS A CHAMELEON MASK, BELT AND JUMPSUIT, MIRAGE GRENADES AND AN AGENT CARD! AND A KNIFE!!#@*$"
-	hidden = TRUE
+	order_flags = ORDER_EMAG_ONLY
 	cost = CARGO_CRATE_VALUE * 10
 	contains = list(
 		/obj/item/clothing/mask/chameleon,
@@ -184,21 +213,21 @@
 		/obj/item/switchblade,
 		/obj/item/grenade/mirage = 5,
 	)
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/russian
 	name = "Russian Surplus Military Gear Crate"
 	desc = "Hello <;~insert appropriate greeting here: 'Comrade'|'Imperalist Scum'|'Quartermaster of Reputable Station'~;>, \
 		we have the most modern russian military equipment the black market can offer, for the right price of course. \
 		No lock, best price."
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	cost = CARGO_CRATE_VALUE * 12
 	contains = list(
 		/obj/item/food/rationpack,
-		/obj/item/ammo_box/strilka310,
-		/obj/item/ammo_box/strilka310/surplus,
-		/obj/item/storage/toolbox/ammobox/strilka310,
-		/obj/item/storage/toolbox/ammobox/strilka310/surplus,
-		/obj/item/storage/toolbox/maint_kit,
+		/obj/item/ammo_box/speedloader/strilka310,
+		/obj/item/ammo_box/speedloader/strilka310/surplus,
+		/obj/effect/spawner/random/armory/strilka,
+		/obj/item/gun_maintenance_supplies,
 		/obj/item/clothing/suit/armor/vest/russian,
 		/obj/item/clothing/head/helmet/rus_helmet,
 		/obj/item/clothing/shoes/russian,
@@ -223,7 +252,7 @@
 		Then we have the perfect weapon for you! Special price for good friends! \
 		We don't have enough spare ammo, so you'll have to pick up the weapon of \
 		dead comrade when you run out."
-	hidden = TRUE
+	order_flags = ORDER_EMAG_ONLY
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/gun/ballistic/rifle/boltaction = 6)
 
@@ -232,7 +261,7 @@
 	desc = "TUNNEL SNAKES OWN THIS TOWN. Contains an unbranded All Terrain Vehicle, and a \
 		complete gang outfit -- consists of black gloves, a menacing skull bandanna, and a SWEET leather overcoat!"
 	cost = CARGO_CRATE_VALUE * 4
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	contains = list(
 		/obj/vehicle/ridden/atv,
 		/obj/item/key/atv,
@@ -251,8 +280,7 @@
 	contains = list()
 	crate_type = /obj/structure/closet/crate/secure/loot
 	crate_name = "abandoned crate"
-	contraband = TRUE
-	dangerous = TRUE //these are literally bombs so....
+	order_flags = ORDER_CONTRABAND | ORDER_DANGEROUS //these are literally bombs so....
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/imports/shambler_evil
@@ -261,7 +289,7 @@
 	cost = CARGO_CRATE_VALUE * 50
 	contains = list(/obj/item/reagent_containers/cup/soda_cans/shamblers/eldritch = 1)
 	crate_name = "illegal shambler's juice crate"
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 
 /datum/supply_pack/imports/hide
 	name = "Animal Hide Crate"
@@ -270,6 +298,7 @@
 	cost = CARGO_CRATE_VALUE * 30
 	contains = list(/obj/effect/spawner/random/animalhide = 5)
 	crate_name = "animal hide crate"
+	test_ignored = TRUE
 
 /datum/supply_pack/imports/dreadnog
 	name = "Dreadnog Carton Crate"
@@ -282,7 +311,7 @@
 	name = "Big Slappy parts"
 	desc = "Illegal Big Slappy parts. The fastest and statistically most dangerous wrench."
 	cost = CARGO_CRATE_VALUE * 22
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	contains = list(/obj/item/weaponcrafting/giant_wrench)
 	crate_name = "unknown parts crate"
 
@@ -307,13 +336,94 @@
 		espionage uniform used by the very best. Providing the best \
 		flexibility, with our latest Camo-tech threads. Perfect for \
 		risky espionage hallway operations. Enjoy our product!"
-	contraband = TRUE
+	order_flags = ORDER_CONTRABAND
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/clothing/under/syndicate/floortilecamo = 3,
-			/obj/item/clothing/mask/floortilebalaclava = 3,
-			/obj/item/clothing/gloves/combat/floortile = 3,
-			/obj/item/clothing/shoes/jackboots/floortile = 3,
-			/obj/item/storage/backpack/floortile = 3
+	contains = list(
+		/obj/item/clothing/under/syndicate/floortilecamo = 3,
+		/obj/item/clothing/mask/floortilebalaclava = 3,
+		/obj/item/clothing/gloves/combat/floortile = 3,
+		/obj/item/clothing/shoes/jackboots/floortile = 3,
+		/obj/item/storage/backpack/floortile = 3
 	)
 	crate_name = "floortile camouflauge crate"
 	crate_type = /obj/structure/closet/crate/secure/weapon
+
+/**
+ * The Long To Short Range Bluespace Teleporter, used to deliver (black) market purchases more effiiently
+ * It can also be used to restock it, if you hit it with enough credits.
+ */
+/datum/supply_pack/imports/blackmarket_telepad
+	name = "Black Market LTSRBT"
+	desc = "Need a faster and better way of transporting your illegal goods from and to the \
+		station? Fear not, the Long-To-Short-Range-Bluespace-Transceiver (LTSRBT for short) \
+		is here to help. Contains a LTSRBT circuit, two bluespace crystals, and one ansible."
+	cost = CARGO_CRATE_VALUE * 10
+	order_flags = ORDER_CONTRABAND
+	contains = list(
+		/obj/item/circuitboard/machine/ltsrbt,
+		/obj/item/stack/ore/bluespace_crystal/artificial = 2,
+		/obj/item/stock_parts/subspace/ansible,
+	)
+
+/datum/supply_pack/imports/fan_upgrade
+	name = "Cargo Shuttle Upgrade: Air Renewal"
+	desc = "Do you or your coworkers have a bad habit of leaving your cargo shuttle shutter doors open to the cold, cold, vaccuum of space? \
+		With this handy engineering retrofit, your shuttle will now be equip with a few handy plastic flaps and a subscription for air refills."
+	cost = CARGO_CRATE_VALUE * 40 // HELLA expensive.
+	order_flags = ORDER_NOT_DEPARTMENTAL
+	access_view = ACCESS_CARGO
+	storage_override = /obj/item/folder
+	contains = list(
+		/obj/item/paper/fluff/certificate,
+	)
+
+/datum/supply_pack/imports/fan_upgrade/generate(atom/A, datum/bank_account/paying_account, crate_override)
+	if(SSshuttle.renew_cargo_air)
+		return ..()
+
+	for(var/obj/spawnpoint as anything in GLOB.cargo_shuttle_flaps_landmarks)
+		new /obj/structure/plasticflaps(spawnpoint.loc)
+		SSshuttle.renew_cargo_air = TRUE
+		order_flags = ORDER_INVISIBLE
+	return ..()
+
+/obj/item/paper/fluff/certificate
+	name = "Certificate of Shuttle Upgrade"
+	color = COLOR_LIGHT_ORANGE
+	desc = "A note from the Nanotrasen Mechanics Society detailing your new shuttle upgrade."
+	default_raw_text = "Hey boss. We got those flaps installed for ya, nothing to it really. You'll find 'em over the blast doors or the exits, \
+		whichever the mechanics were able to get to. They're all set to go without any tweaking, so don't futz with them. Otherwise, you let us know \
+		if anything seems out of place."
+
+/datum/supply_pack/imports/jet_boots
+	name = "Jet Boots"
+	desc = "These days, it's hard enough to get yourself access to a personal cruiser, let alone your own personal hyperspace tunnel.\
+		Why not travel in style? Introducing the all new, nuVoid Jet Boots. Sleek, off white finish. Self-propelling mini-ion thrusters.\
+		Genuine carbo-fuel microjets for that old-world finish. Don't just arrive, arrive in style. No financing required or available."
+	order_flags = ORDER_NOT_DEPARTMENTAL
+	access_view = ACCESS_CARGO
+	cost = CARGO_CRATE_VALUE * 200 // One pair of these boots are really gosh darn expensive.
+	contains = list(/obj/item/clothing/shoes/bhop/rocket/jet)
+	crate_name = "nuVoid Jet Boots Crate"
+	crate_type = /obj/structure/closet/crate/goldcrate
+
+/datum/supply_pack/imports/angry_mob
+	name = "Pitchfork and Torches Gardening Crate"
+	desc = "Sometimes, you need to help organize some \"gardening\" enthusiasts, and you just need some extra tools!\
+		Load up on \"gardening\" gear this this helpful supply crate."
+	cost = CARGO_CRATE_VALUE * 5
+	order_flags = ORDER_CONTRABAND
+	contains = list(
+		/obj/item/cultivator/rake/pitchfork = 4,
+		/obj/item/flashlight/flare/torch = 4,
+	)
+	crate_name = "gardening kit"
+	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/imports/hydro_vaporizers
+	name = "Hydro-Vaporizers"
+	desc = "Cerulean vaporizer devices, for all your liquid respiration needs."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/vaporizer = 3)
+	crate_name = "hydro-vaporizer crate"
+	crate_type = /obj/structure/closet/crate/internals //it is technically o2

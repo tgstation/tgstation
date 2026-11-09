@@ -1,0 +1,2 @@
+/obj/effect/mapping_helpers/airlock/unres : /obj/effect/mapping_helpers/airlock/unres/delayed{@OLD}
+/obj/machinery/door/@SUBTYPES{unres_sensor=@ANY} : /obj/machinery/door/@SUBTYPES{@OLD;unres_sensor=@SKIP}

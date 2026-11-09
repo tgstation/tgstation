@@ -1,0 +1,261 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
+	dir = 8;
+	view_range = 7;
+	x_offset = 5
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ab" = (
+/obj/machinery/computer/shuttle/hunter{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"af" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ag" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/fugitive_locator,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ah" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"aj" = (
+/obj/structure/closet/crate/eva,
+/obj/effect/turf_decal/box,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"al" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/effect/turf_decal/caution{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"bY" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"dJ" = (
+/obj/machinery/light/directional/south,
+/obj/structure/closet/crate/eva,
+/obj/effect/turf_decal/box,
+/obj/item/pinpointer/shuttle,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"gc" = (
+/obj/machinery/door/airlock/titanium,
+/obj/effect/mapping_helpers/airlock/access/all/hunter,
+/obj/effect/mapping_helpers/airlock/cutaiwire,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"hB" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"jc" = (
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"ku" = (
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/hunter)
+"lp" = (
+/obj/machinery/fugitive_capture,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"te" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	id = "Interpolship"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"tW" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"Am" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/spacepol{
+	dir = 8
+	},
+/obj/effect/turf_decal/box,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"An" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/hunter)
+"Bn" = (
+/obj/effect/mob_spawn/ghost_role/human/fugitive/spacepol{
+	dir = 1
+	},
+/obj/effect/turf_decal/box,
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"CF" = (
+/obj/structure/fans/tiny,
+/obj/docking_port/stationary{
+	dir = 4;
+	dwidth = 3;
+	height = 12;
+	name = "Deep Space";
+	shuttle_id = "huntership_home";
+	width = 7
+	},
+/obj/docking_port/mobile{
+	dir = 4;
+	name = "hunter shuttle";
+	rechargeTime = 1800;
+	shuttle_id = "huntership";
+	port_direction = 2;
+	preferred_direction = 4
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "Interpolship"
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"Jv" = (
+/obj/effect/turf_decal/stripes{
+	dir = 8
+	},
+/obj/machinery/button/door/directional/north{
+	id = "Interpolship";
+	req_access = list("hunter")
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+"Pq" = (
+/turf/template_noop,
+/area/template_noop)
+"RO" = (
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/hunter)
+
+(1,1,1) = {"
+Pq
+ku
+te
+CF
+te
+ku
+Pq
+"}
+(2,1,1) = {"
+Pq
+ku
+Jv
+al
+af
+ku
+Pq
+"}
+(3,1,1) = {"
+Pq
+ku
+bY
+RO
+Bn
+ku
+Pq
+"}
+(4,1,1) = {"
+hB
+ku
+jc
+RO
+Bn
+ku
+hB
+"}
+(5,1,1) = {"
+ku
+ku
+bY
+RO
+Bn
+ku
+ku
+"}
+(6,1,1) = {"
+Pq
+An
+ag
+RO
+RO
+An
+Pq
+"}
+(7,1,1) = {"
+Pq
+An
+ah
+RO
+aj
+An
+Pq
+"}
+(8,1,1) = {"
+Pq
+ku
+lp
+RO
+dJ
+ku
+Pq
+"}
+(9,1,1) = {"
+hB
+ku
+ku
+gc
+ku
+ku
+hB
+"}
+(10,1,1) = {"
+ku
+ku
+RO
+tW
+RO
+ku
+ku
+"}
+(11,1,1) = {"
+Pq
+An
+Am
+ab
+aa
+An
+Pq
+"}
+(12,1,1) = {"
+Pq
+ku
+An
+An
+An
+ku
+Pq
+"}

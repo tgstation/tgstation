@@ -17,6 +17,7 @@ export const GENE_COLORS = {
 
 export const MUT_NORMAL = 1;
 export const MUT_EXTRA = 2;
+export const MUT_OTHER = 3;
 
 export const STORAGE_CONS_SUBMODE_MUTATIONS = 'mutations';
 export const STORAGE_CONS_SUBMODE_CHROMOSOMES = 'chromosomes';
@@ -31,8 +32,9 @@ export const STORAGE_MODE_ADVINJ = 'injector';
 export const SUBJECT_CONCIOUS = 0;
 export const SUBJECT_SOFT_CRIT = 1;
 export const SUBJECT_UNCONSCIOUS = 2;
-export const SUBJECT_DEAD = 3;
-export const SUBJECT_TRANSFORMING = 4;
+export const SUBJECT_HARD_CRIT = 3;
+export const SUBJECT_DEAD = 4;
+export const SUBJECT_TRANSFORMING = 5;
 
 export const PULSE_STRENGTH_MAX = 15;
 export const PULSE_DURATION_MAX = 30;

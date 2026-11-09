@@ -1,7 +1,8 @@
 /datum/disease/transformation
+	abstract_type = /datum/disease/transformation
 	name = "Transformation"
 	max_stages = 5
-	spread_text = "Acute"
+	spread_text = "None"
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	cure_text = "A coder's love (theoretical)."
 	agent = "Shenanigans"
@@ -31,7 +32,7 @@
 	return D
 
 
-/datum/disease/transformation/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -52,6 +53,8 @@
 		if(5)
 			do_disease_transformation(affected_mob)
 
+/datum/disease/transformation/proc/force_say(message)
+	affected_mob.say(message, forced = name)
 
 /datum/disease/transformation/proc/do_disease_transformation(mob/living/affected_mob)
 	if(iscarbon(affected_mob) && affected_mob.stat != DEAD)
@@ -62,10 +65,7 @@
 		if(HAS_TRAIT_FROM(affected_mob, TRAIT_NO_TRANSFORM, REF(src)))
 			return
 		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
-		for(var/obj/item/W in affected_mob.get_equipped_items(include_pockets = TRUE))
-			affected_mob.dropItemToGround(W)
-		for(var/obj/item/I in affected_mob.held_items)
-			affected_mob.dropItemToGround(I)
+		affected_mob.drop_everything()
 		var/mob/living/new_mob = new new_form(affected_mob.loc)
 		if(istype(new_mob))
 			if(bantype && is_banned_from(affected_mob.ckey, bantype))
@@ -74,7 +74,7 @@
 			if(affected_mob.mind)
 				affected_mob.mind.transfer_to(new_mob)
 			else
-				new_mob.key = affected_mob.key
+				new_mob.PossessByPlayer(affected_mob.ckey)
 		if(transformed_antag_datum)
 			new_mob.mind.add_antag_datum(transformed_antag_datum)
 		new_mob.name = affected_mob.real_name
@@ -89,18 +89,17 @@
 		to_chat(affected_mob, span_userdanger("Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!"))
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(affected_mob)]) to replace a jobbanned player.")
 		affected_mob.ghostize(FALSE)
-		affected_mob.key = chosen_one.key
+		affected_mob.PossessByPlayer(chosen_one.ckey)
 	else
 		to_chat(new_mob, span_userdanger("Your mob has been claimed by death! Appeal your job ban if you want to avoid this in the future!"))
 		new_mob.investigate_log("has been killed because there was no one to replace them as a job-banned player.", INVESTIGATE_DEATHS)
 		new_mob.death()
 		if (!QDELETED(new_mob))
 			new_mob.ghostize(can_reenter_corpse = FALSE)
-			new_mob.key = null
 
 /datum/disease/transformation/jungle_flu
 	name = "Jungle Flu"
-	cure_text = "Death."
+	cure_text = "Death"
 	cures = list(/datum/reagent/medicine/adminordrazine)
 	spread_text = "Unknown"
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
@@ -130,7 +129,7 @@
 /datum/disease/transformation/jungle_flu/do_disease_transformation(mob/living/carbon/affected_mob)
 	affected_mob.monkeyize()
 
-/datum/disease/transformation/jungle_flu/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/jungle_flu/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -145,11 +144,11 @@
 				affected_mob.adjust_confusion(10 SECONDS)
 		if(4)
 			if(SPT_PROB(1.5, seconds_per_tick))
-				affected_mob.say(pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."), forced = "jungle fever")
+				INVOKE_ASYNC(src, PROC_REF(force_say), pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."))
 
 /datum/disease/transformation/robot
 	name = "Robotic Transformation"
-	cure_text = "An injection of copper."
+	cure_text = /datum/reagent/copper::name
 	cures = list(/datum/reagent/copper)
 	cure_chance = 2.5
 	agent = "R2D2 Nanomachines"
@@ -169,7 +168,7 @@
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC
 	bantype = JOB_CYBORG
 
-/datum/disease/transformation/robot/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/robot/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -177,19 +176,19 @@
 	switch(stage)
 		if(3)
 			if (SPT_PROB(4, seconds_per_tick))
-				affected_mob.say(pick("beep, beep!", "Beep, boop", "Boop...bop"), forced = "robotic transformation")
+				INVOKE_ASYNC(src, PROC_REF(force_say), pick("beep, beep!", "Beep, boop", "Boop...bop"))
 			if (SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.Unconscious(40)
 		if(4)
 			if (SPT_PROB(10, seconds_per_tick))
-				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "I wwwaaannntt tttoo dddiiieeee...", "kkkiiiill mmme"), forced = "robotic transformation")
+				INVOKE_ASYNC(src, PROC_REF(force_say), pick("beep, beep!", "Boop bop boop beep.", "I wwwaaannntt tttoo dddiiieeee...", "kkkiiiill mmme"))
 
 
 /datum/disease/transformation/xeno
 
 	name = "Xenomorph Transformation"
-	cure_text = "Spaceacillin & Glycerol"
+	cure_text = /datum/reagent/medicine/spaceacillin::name + " & " + /datum/reagent/glycerol::name
 	cures = list(/datum/reagent/medicine/spaceacillin, /datum/reagent/glycerol)
 	cure_chance = 2.5
 	agent = "Rip-LEY Alien Microbes"
@@ -213,7 +212,7 @@
 	bantype = ROLE_ALIEN
 
 
-/datum/disease/transformation/xeno/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/xeno/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -225,12 +224,12 @@
 				affected_mob.Unconscious(40)
 		if(4)
 			if(SPT_PROB(10, seconds_per_tick))
-				affected_mob.say(pick("Going to... devour you...", "Hsssshhhhh!", "You look delicious."), forced = "xenomorph transformation")
+				INVOKE_ASYNC(src, PROC_REF(force_say), pick("Going to... devour you...", "Hsssshhhhh!", "You look delicious."))
 
 
 /datum/disease/transformation/slime
 	name = "Advanced Mutation Transformation"
-	cure_text = "frost oil"
+	cure_text = /datum/reagent/consumable/frostoil::name
 	cures = list(/datum/reagent/consumable/frostoil)
 	cure_chance = 55
 	agent = "Advanced Mutation Toxin"
@@ -245,7 +244,7 @@
 	new_form = /mob/living/basic/slime
 
 
-/datum/disease/transformation/slime/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/slime/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -259,14 +258,12 @@
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(!ismonkey(human) && !isjellyperson(human))
+				if(!HAS_TRAIT(human, TRAIT_LESSER_HUMANOID) && !isjellyperson(human))
 					human.set_species(/datum/species/jelly/slime)
 
 /datum/disease/transformation/slime/do_disease_transformation(mob/living/affected_mob)
-	if(affected_mob.client && ishuman(affected_mob)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
-		var/mob/living/carbon/human/human = affected_mob
-		if(!ismonkey(human))
-			new_form = /mob/living/basic/slime/random
+	if(affected_mob.client &&!HAS_TRAIT(affected_mob, TRAIT_LESSER_HUMANOID)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
+		new_form = /mob/living/basic/slime/random
 	return ..()
 
 /datum/disease/transformation/corgi
@@ -285,17 +282,17 @@
 	new_form = /mob/living/basic/pet/dog/corgi
 
 
-/datum/disease/transformation/corgi/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/corgi/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
 	switch(stage)
 		if(3)
 			if (SPT_PROB(4, seconds_per_tick))
-				affected_mob.say(pick("Woof!", "YAP"), forced = "corgi transformation")
+				INVOKE_ASYNC(src, PROC_REF(force_say), pick("Woof!", "YAP"))
 		if(4)
 			if (SPT_PROB(10, seconds_per_tick))
-				affected_mob.say(pick("AUUUUUU", "Bark!"), forced = "corgi transformation")
+				INVOKE_ASYNC(src, PROC_REF(force_say), pick("AUUUUUU", "Bark!"))
 
 
 /datum/disease/transformation/morph
@@ -318,7 +315,7 @@
 
 /datum/disease/transformation/gondola
 	name = "Gondola Transformation"
-	cure_text = "Condensed Capsaicin, ingested or injected." //getting pepper sprayed doesn't help
+	cure_text = /datum/reagent/consumable/condensedcapsaicin::name + " (not applied via vapor)"
 	cures = list(/datum/reagent/consumable/condensedcapsaicin) //beats the hippie crap right out of your system
 	cure_chance = 55
 	stage_prob = 2.5
@@ -335,10 +332,10 @@
 	)
 	stage4 = list(span_danger("You can't feel your arms. It does not bother you anymore."), span_danger("You forgive the clown for hurting you."))
 	stage5 = list(span_danger("You have become a Gondola."))
-	new_form = /mob/living/simple_animal/pet/gondola
+	new_form = /mob/living/basic/pet/gondola
 
 
-/datum/disease/transformation/gondola/stage_act(seconds_per_tick, times_fired)
+/datum/disease/transformation/gondola/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return

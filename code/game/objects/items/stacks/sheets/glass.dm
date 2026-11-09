@@ -9,10 +9,11 @@
  * Glass sheets
  */
 GLOBAL_LIST_INIT(glass_recipes, list ( \
-	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0.5 SECONDS, on_solid_ground = TRUE, check_direction = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time =  1 SECONDS, on_solid_ground = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("glass shard", /obj/item/shard, time = 0, on_solid_ground = TRUE, category = CAT_MISC), \
-	new/datum/stack_recipe("glass tile", /obj/item/stack/tile/glass, 1, 4, 20, category = CAT_TILES) \
+	new/datum/stack_recipe("directional window", /obj/structure/window/unanchored, time = 0.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_CHECK_DIRECTION, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("fulltile window", /obj/structure/window/fulltile/unanchored, 2, time =  1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_IS_FULLTILE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("glass shard", /obj/item/shard, time = 0, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND, category = CAT_MISC), \
+	new/datum/stack_recipe("glass tile", /obj/item/stack/tile/glass, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("tip jar", /obj/structure/tipjar, req_amount = 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 ))
 
 /obj/item/stack/sheet/glass
@@ -20,24 +21,26 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	desc = "HOLY SHEET! That is a lot of glass."
 	singular_name = "glass sheet"
 	icon_state = "sheet-glass"
+	worn_icon_state = "sheet-glass"
 	inhand_icon_state = "sheet-glass"
 	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT)
 	armor_type = /datum/armor/sheet_glass
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/glass
-	grind_results = list(/datum/reagent/silicon = 20)
 	material_type = /datum/material/glass
-	tableVariant = /obj/structure/table/glass
+	table_type = /obj/structure/table/glass
 	matter_amount = 4
 	cost = SHEET_MATERIAL_AMOUNT
 	source = /datum/robot_energy_storage/material/glass
 	sniffable = TRUE
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
 /datum/armor/sheet_glass
 	fire = 50
 	acid = 100
 
-/obj/item/stack/sheet/glass/suicide_act(mob/living/carbon/user)
+/obj/item/stack/sheet/glass/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to slice [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -48,44 +51,50 @@ GLOBAL_LIST_INIT(glass_recipes, list ( \
 	. = ..()
 	. += GLOB.glass_recipes
 
-/obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/glass/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(istype(W, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/lightreplacer = W
-		lightreplacer.attackby(src, user)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
-		if (get_amount() < 1 || CC.get_amount() < 5)
+	if(istype(tool, /obj/item/lightreplacer))
+		var/obj/item/lightreplacer/lightreplacer = tool
+		lightreplacer.item_interaction(user, src, modifiers)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = tool
+		if (get_amount() < 1 || coil.get_amount() < 5)
 			to_chat(user, span_warning("You need five lengths of coil and one sheet of glass to make wired glass!"))
-			return
-		CC.use(5)
+			return ITEM_INTERACT_BLOCKING
+		coil.use(5)
 		use(1)
-		to_chat(user, span_notice("You attach wire to the [name]."))
+		to_chat(user, span_notice("You attach wire to \the [src]."))
 		var/obj/item/stack/light_w/new_tile = new(user.loc)
 		if (!QDELETED(new_tile))
 			new_tile.add_fingerprint(user)
-		return
-	if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/V = W
-		if (V.get_amount() >= 1 && get_amount() >= 1)
-			var/obj/item/stack/sheet/rglass/RG = new (get_turf(user))
-			if(!QDELETED(RG))
-				RG.add_fingerprint(user)
-			var/replace = user.get_inactive_held_item() == src
-			V.use(1)
-			use(1)
-			if(QDELETED(src) && replace && !QDELETED(RG))
-				user.put_in_hands(RG)
-		else
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/rods))
+		var/obj/item/stack/rods/rods = tool
+		if (rods.get_amount() < 1 || get_amount() < 1) // the hell kind of check is this, how would this happen
 			to_chat(user, span_warning("You need one rod and one sheet of glass to make reinforced glass!"))
-		return
+			return ITEM_INTERACT_BLOCKING
+
+		var/obj/item/stack/sheet/rglass/new_glass = new (get_turf(user))
+		if(!QDELETED(new_glass))
+			new_glass.add_fingerprint(user)
+		var/replace = user.get_inactive_held_item() == src
+		rods.use(1)
+		use(1)
+		if(QDELETED(src) && replace && !QDELETED(new_glass))
+			user.put_in_hands(new_glass)
+		return ITEM_INTERACT_SUCCESS
+
 	return ..()
 
 GLOBAL_LIST_INIT(pglass_recipes, list ( \
-	new/datum/stack_recipe("directional window", /obj/structure/window/plasma/unanchored, time = 0.5 SECONDS, on_solid_ground = TRUE, check_direction = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("fulltile window", /obj/structure/window/plasma/fulltile/unanchored, 2, time = 2 SECONDS, on_solid_ground = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 20, on_solid_ground = TRUE, category = CAT_MISC), \
-	new/datum/stack_recipe("plasma glass tile", /obj/item/stack/tile/glass/plasma, 1, 4, 20, category = CAT_TILES) \
+	new/datum/stack_recipe("directional window", /obj/structure/window/plasma/unanchored, time = 0.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_CHECK_DIRECTION, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("fulltile window", /obj/structure/window/plasma/fulltile/unanchored, 2, time = 2 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_IS_FULLTILE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 20, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND, category = CAT_MISC), \
+	new/datum/stack_recipe("plasma glass tile", /obj/item/stack/tile/glass/plasma, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("tip jar", /obj/structure/tipjar/plasma, req_amount = 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 ))
 
 /obj/item/stack/sheet/plasmaglass
@@ -93,15 +102,17 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	desc = "A glass sheet made out of a plasma-silicate alloy. It looks extremely tough and heavily fire resistant."
 	singular_name = "plasma glass sheet"
 	icon_state = "sheet-pglass"
+	worn_icon_state = "sheet-pglass"
 	inhand_icon_state = "sheet-pglass"
 	mats_per_unit = list(/datum/material/alloy/plasmaglass=SHEET_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/plasmaglass
 	armor_type = /datum/armor/sheet_plasmaglass
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plasmaglass
-	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10)
 	material_flags = NONE
-	tableVariant = /obj/structure/table/glass/plasmaglass
+	table_type = /obj/structure/table/glass/plasmaglass
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
 /obj/item/stack/sheet/plasmaglass/fifty
 	amount = 50
@@ -114,35 +125,37 @@ GLOBAL_LIST_INIT(pglass_recipes, list ( \
 	. = ..()
 	. += GLOB.pglass_recipes
 
-/obj/item/stack/sheet/plasmaglass/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/plasmaglass/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-
-	if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/V = W
-		if (V.get_amount() >= 1 && get_amount() >= 1)
-			var/obj/item/stack/sheet/plasmarglass/RG = new (get_turf(user))
-			if (!QDELETED(RG))
-				RG.add_fingerprint(user)
-			var/replace = user.get_inactive_held_item() == src
-			V.use(1)
-			use(1)
-			if(QDELETED(src) && replace)
-				user.put_in_hands(RG)
-		else
-			to_chat(user, span_warning("You need one rod and one sheet of plasma glass to make reinforced plasma glass!"))
-			return
-	else
+	if(!istype(tool, /obj/item/stack/rods))
 		return ..()
+
+	var/obj/item/stack/rods/rods = tool
+	if (rods.get_amount() < 1 || get_amount() < 1)
+		to_chat(user, span_warning("You need one rod and one sheet of plasma glass to make reinforced plasma glass!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/sheet/plasmarglass/RG = new (get_turf(user))
+	if (!QDELETED(RG))
+		RG.add_fingerprint(user)
+	var/replace = user.get_inactive_held_item() == src
+	rods.use(1)
+	use(1)
+	if(QDELETED(src) && replace)
+		user.put_in_hands(RG)
+	return ITEM_INTERACT_SUCCESS
+
+
 
 /*
  * Reinforced glass sheets
  */
 GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
-	new/datum/stack_recipe("windoor frame", /obj/structure/windoor_assembly, 5, time = 0, on_solid_ground = TRUE, check_direction = TRUE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("windoor frame", /obj/structure/windoor_assembly, 5, time = 0, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_CHECK_DIRECTION, category = CAT_WINDOWS), \
 	null, \
-	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/unanchored, time = 0.5 SECONDS, on_solid_ground = TRUE, check_direction = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 2, time = 2 SECONDS, on_solid_ground = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("glass shard", /obj/item/shard, time = 10, on_solid_ground = TRUE, category = CAT_MISC), \
+	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/unanchored, time = 0.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_CHECK_DIRECTION, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/fulltile/unanchored, 2, time = 2 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_IS_FULLTILE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("glass shard", /obj/item/shard, time = 10, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_SKIP_MATERIALS_PARITY, category = CAT_MISC), \
 	new/datum/stack_recipe("reinforced glass tile", /obj/item/stack/tile/rglass, 1, 4, 20, category = CAT_TILES) \
 ))
 
@@ -152,14 +165,19 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	desc = "Glass which seems to have rods or something stuck in them."
 	singular_name = "reinforced glass sheet"
 	icon_state = "sheet-rglass"
+	worn_icon_state = "sheet-rglass"
 	inhand_icon_state = "sheet-rglass"
 	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/glass=SHEET_MATERIAL_AMOUNT)
 	armor_type = /datum/armor/sheet_rglass
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/rglass
-	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/iron = 10)
 	matter_amount = 6
-	tableVariant = /obj/structure/table/reinforced/rglass
+	table_type = /obj/structure/table/reinforced/rglass
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
+
+/obj/item/stack/sheet/rglass/grind_results()
+	return list(/datum/reagent/silicon = 10, /datum/reagent/iron = 10)
 
 /obj/item/stack/sheet/rglass/fifty
 	amount = 50
@@ -168,18 +186,18 @@ GLOBAL_LIST_INIT(reinforced_glass_recipes, list ( \
 	fire = 70
 	acid = 100
 
-/obj/item/stack/sheet/rglass/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/rglass/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	..()
+	. = ..()
 
 /obj/item/stack/sheet/rglass/get_main_recipes()
 	. = ..()
 	. += GLOB.reinforced_glass_recipes
 
 GLOBAL_LIST_INIT(prglass_recipes, list ( \
-	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/plasma/unanchored, time = 0.5 SECONDS, on_solid_ground = TRUE, check_direction = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/plasma/fulltile/unanchored, 2, time = 2 SECONDS, on_solid_ground = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 40, on_solid_ground = TRUE, category = CAT_MISC), \
+	new/datum/stack_recipe("directional reinforced window", /obj/structure/window/reinforced/plasma/unanchored, time = 0.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_CHECK_DIRECTION, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("fulltile reinforced window", /obj/structure/window/reinforced/plasma/fulltile/unanchored, 2, time = 2 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_IS_FULLTILE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("plasma glass shard", /obj/item/shard/plasma, time = 40, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_SKIP_MATERIALS_PARITY, category = CAT_MISC), \
 	new/datum/stack_recipe("reinforced plasma glass tile", /obj/item/stack/tile/rglass/plasma, 1, 4, 20, category = CAT_TILES) \
 ))
 
@@ -188,16 +206,21 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	desc = "A glass sheet made out of a plasma-silicate alloy and a rod matrix. It looks hopelessly tough and nearly fire-proof!"
 	singular_name = "reinforced plasma glass sheet"
 	icon_state = "sheet-prglass"
+	worn_icon_state = "sheet-prglass"
 	inhand_icon_state = "sheet-prglass"
 	mats_per_unit = list(/datum/material/alloy/plasmaglass=SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.5)
 	armor_type = /datum/armor/sheet_plasmarglass
 	resistance_flags = ACID_PROOF
 	material_flags = NONE
 	merge_type = /obj/item/stack/sheet/plasmarglass
-	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
-	gulag_valid = TRUE
+	gulag_value = 5
 	matter_amount = 8
-	tableVariant = /obj/structure/table/reinforced/plasmarglass
+	table_type = /obj/structure/table/reinforced/plasmarglass
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
+
+/obj/item/stack/sheet/plasmarglass/grind_results()
+	return list(/datum/reagent/silicon = 10, /datum/reagent/toxin/plasma = 10, /datum/reagent/iron = 10)
 
 /datum/armor/sheet_plasmarglass
 	melee = 20
@@ -212,8 +235,10 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	. += GLOB.prglass_recipes
 
 GLOBAL_LIST_INIT(titaniumglass_recipes, list(
-	new/datum/stack_recipe("shuttle window", /obj/structure/window/reinforced/shuttle/unanchored, 2, time = 0.5 SECONDS, on_solid_ground = TRUE, check_direction = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("titanium glass shard", /obj/item/shard/titanium, time = 40, on_solid_ground = TRUE, category = CAT_MISC) \
+	new/datum/stack_recipe("directional shuttle window",/obj/structure/window/reinforced/titanium/unanchored, time = 0.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_CHECK_DIRECTION, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("shuttle window", /obj/structure/window/reinforced/shuttle/unanchored, 2, time = 0.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_CHECK_DIRECTION | CRAFT_IS_FULLTILE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("titanium glass shard", /obj/item/shard/titanium, time = 40, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND, category = CAT_MISC), \
+	new/datum/stack_recipe("titanium glass tile", /obj/item/stack/tile/glass/titanium, 1, 4, 20, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/titaniumglass
@@ -221,13 +246,16 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	desc = "A glass sheet made out of a titanium-silicate alloy."
 	singular_name = "titanium glass sheet"
 	icon_state = "sheet-titaniumglass"
+	worn_icon_state = "sheet-tglass"
 	inhand_icon_state = "sheet-titaniumglass"
 	mats_per_unit = list(/datum/material/alloy/titaniumglass=SHEET_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/titaniumglass
 	armor_type = /datum/armor/sheet_titaniumglass
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/titaniumglass
-	tableVariant = /obj/structure/table/reinforced/titaniumglass
+	table_type = /obj/structure/table/reinforced/titaniumglass
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
 /obj/item/stack/sheet/titaniumglass/fifty
 	amount = 50
@@ -241,8 +269,12 @@ GLOBAL_LIST_INIT(titaniumglass_recipes, list(
 	. += GLOB.titaniumglass_recipes
 
 GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
-	new/datum/stack_recipe("plastitanium window", /obj/structure/window/reinforced/plasma/plastitanium/unanchored, 2, time = 2 SECONDS, on_solid_ground = TRUE, is_fulltile = TRUE, category = CAT_WINDOWS), \
-	new/datum/stack_recipe("plastitanium glass shard", /obj/item/shard/plastitanium, time = 60, on_solid_ground = TRUE, category = CAT_MISC) \
+	new/datum/stack_recipe("directional plastitanium window", /obj/structure/window/reinforced/survival_pod/unanchored, time = 0.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_CHECK_DIRECTION, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("plastitanium window", /obj/structure/window/reinforced/plasma/plastitanium/unanchored, 2, time = 2 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_IS_FULLTILE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("pod window", /obj/structure/window/reinforced/shuttle/survival_pod/unanchored, 2, time = 2 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_IS_FULLTILE, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("plastitanium window filler", /obj/item/stack/wall_filling/plastitaniumglass/basic, 2, 1, 10, crafting_flags = NONE, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("plastitanium glass shard", /obj/item/shard/plastitanium, time = 60, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND, category = CAT_MISC), \
+	new/datum/stack_recipe("plastitanium glass tile", /obj/item/stack/tile/glass/plastitanium, 1, 4, 20, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/plastitaniumglass
@@ -250,6 +282,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	desc = "A glass sheet made out of a plasma-titanium-silicate alloy."
 	singular_name = "plastitanium glass sheet"
 	icon_state = "sheet-plastitaniumglass"
+	worn_icon_state = "sheet-ptglass"
 	inhand_icon_state = "sheet-plastitaniumglass"
 	mats_per_unit = list(/datum/material/alloy/plastitaniumglass=SHEET_MATERIAL_AMOUNT)
 	material_type = /datum/material/alloy/plastitaniumglass
@@ -257,7 +290,9 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	material_flags = NONE
 	resistance_flags = ACID_PROOF
 	merge_type = /obj/item/stack/sheet/plastitaniumglass
-	tableVariant = /obj/structure/table/reinforced/plastitaniumglass
+	table_type = /obj/structure/table/reinforced/plastitaniumglass
+	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
+	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
 /obj/item/stack/sheet/plastitaniumglass/fifty
 	amount = 50
@@ -275,16 +310,18 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	desc = "A nasty looking shard of glass."
 	icon = 'icons/obj/debris.dmi'
 	icon_state = "large"
+	icon_angle = -45
 	w_class = WEIGHT_CLASS_TINY
 	force = 5
 	throwforce = 10
+	worn_icon_state = "purified_soulstone"
 	inhand_icon_state = "shard-glass"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	custom_materials = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("stabs", "slashes", "slices", "cuts")
 	attack_verb_simple = list("stab", "slash", "slice", "cut")
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	resistance_flags = ACID_PROOF
 	armor_type = /datum/armor/item_shard
 	max_integrity = 40
@@ -293,7 +330,10 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	var/shiv_type = /obj/item/knife/shiv
 	var/craft_time = 3.5 SECONDS
 	var/obj/item/stack/sheet/weld_material = /obj/item/stack/sheet/glass
-	embedding = list("embed_chance" = 65)
+	embed_type = /datum/embedding/shard
+
+/datum/embedding/shard
+	embed_chance = 65
 
 /datum/armor/item_shard
 	melee = 100
@@ -341,38 +381,38 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	if(T && is_station_level(T.z))
 		SSblackbox.record_feedback("tally", "station_mess_destroyed", 1, name)
 
-/obj/item/shard/afterattack(atom/A as mob|obj, mob/user, proximity)
-	. = ..()
-	if(!proximity || !(src in user))
+/obj/item/shard/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(!iscarbon(user) || !user.is_holding(src))
 		return
-	if(isturf(A))
-		return
-	if(istype(A, /obj/item/storage))
-		return
-	var/hit_hand = ((user.active_hand_index % 2 == 0) ? "r_" : "l_") + "arm"
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !HAS_TRAIT(H, TRAIT_PIERCEIMMUNE)) // golems, etc
-			to_chat(H, span_warning("[src] cuts into your hand!"))
-			H.apply_damage(force*0.5, BRUTE, hit_hand, attacking_item = src)
 
-/obj/item/shard/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/lightreplacer = item
-		lightreplacer.attackby(src, user)
-	else if(istype(item, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/cloth = item
-		to_chat(user, span_notice("You begin to wrap the [cloth] around the [src]..."))
-		if(do_after(user, craft_time, target = src))
-			var/obj/item/knife/shiv/shiv = new shiv_type
-			cloth.use(1)
-			to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
-			remove_item_from_storage(src, user)
-			qdel(src)
-			user.put_in_hands(shiv)
+	var/mob/living/carbon/jab = user
+	if(jab.get_all_covered_flags() & HANDS)
+		return
 
-	else
-		return ..()
+	to_chat(user, span_warning("[src] cuts into your hand!"))
+	jab.apply_damage(force * 0.5, BRUTE, user.get_active_hand(), attacking_item = src)
+
+/obj/item/shard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/lightreplacer))
+		var/obj/item/lightreplacer/lightreplacer = tool
+		lightreplacer.attempt_insert_shard(user, src)
+		return ITEM_INTERACT_SUCCESS
+
+	if(!istype(tool, /obj/item/stack/sheet/cloth))
+		return NONE
+
+	var/obj/item/stack/sheet/cloth/cloth = tool
+	to_chat(user, span_notice("You begin to wrap the [cloth] around the [src]..."))
+	if(!do_after(user, craft_time, target = src))
+		return ITEM_INTERACT_FAILURE
+
+	var/obj/item/knife/shiv/shiv = new shiv_type
+	shiv.set_custom_materials(custom_materials)
+	cloth.use(1)
+	to_chat(user, span_notice("You wrap the [cloth] around the [src], forming a makeshift weapon."))
+	qdel(src)
+	user.put_in_hands(shiv)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shard/welder_act(mob/living/user, obj/item/I)
 	if(I.use_tool(src, user, 0, volume=50))
@@ -395,6 +435,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	force = 6
 	throwforce = 11
 	icon_state = "plasmalarge"
+	worn_icon_state = "mystic_soulstone"
 	inhand_icon_state = "shard-plasma"
 	custom_materials = list(/datum/material/alloy/plasmaglass=SHEET_MATERIAL_AMOUNT)
 	icon_prefix = "plasma"
@@ -407,6 +448,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	desc = "A nasty looking shard of titanium infused glass."
 	throwforce = 12
 	icon_state = "titaniumlarge"
+	worn_icon_state = "shard_white"
 	inhand_icon_state = "shard-titanium"
 	custom_materials = list(/datum/material/alloy/titaniumglass=SHEET_MATERIAL_AMOUNT)
 	icon_prefix = "titanium"
@@ -420,6 +462,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	force = 7
 	throwforce = 12
 	icon_state = "plastitaniumlarge"
+	worn_icon_state = "mystic_soulstone"
 	inhand_icon_state = "shard-plastitanium"
 	custom_materials = list(/datum/material/alloy/plastitaniumglass=SHEET_MATERIAL_AMOUNT)
 	icon_prefix = "plastitanium"

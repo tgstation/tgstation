@@ -81,4 +81,4 @@
 
 	to_fire.pixel_x = rand(-projectile_location_spread_amount, projectile_location_spread_amount)
 	to_fire.pixel_y = rand(-projectile_location_spread_amount, projectile_location_spread_amount)
-	to_fire.preparePixelProjectile(target, user, null, current_angle)
+	to_fire.aim_projectile(target, user, null, current_angle)

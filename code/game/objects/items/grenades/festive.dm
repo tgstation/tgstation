@@ -14,12 +14,12 @@
 /obj/item/sparkler/fire_act(exposed_temperature, exposed_volume)
 	light()
 
-/obj/item/sparkler/attackby(obj/item/item, mob/user, params)
-	var/ignition_msg = item.ignition_effect(src, user)
-	if(ignition_msg)
-		light(user, ignition_msg)
-	else
-		return ..()
+/obj/item/sparkler/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/ignition_msg = tool.ignition_effect(src, user)
+	if(!ignition_msg)
+		return NONE
+	light(user, ignition_msg)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/sparkler/proc/light(mob/user, message)
 	if(lit)
@@ -29,7 +29,7 @@
 	lit = TRUE
 	icon_state = "sparkler_on"
 	force = 6
-	hitsound = 'sound/items/welder.ogg'
+	hitsound = 'sound/items/tools/welder.ogg'
 	name = "lit [initial(name)]"
 	attack_verb_continuous = list("burns")
 	attack_verb_simple = list("burn")
@@ -75,13 +75,15 @@
 /obj/item/grenade/firecracker/attack_self(mob/user) // You need to light it manually.
 	return
 
-/obj/item/grenade/firecracker/attackby(obj/item/item, mob/user, params)
-	var/ignition_msg = item.ignition_effect(src, user)
-	if(ignition_msg && !active)
-		visible_message(ignition_msg)
-		arm_grenade(user)
-	else
-		return ..()
+/obj/item/grenade/firecracker/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(active)
+		return NONE
+	var/ignition_msg = tool.ignition_effect(src, user)
+	if(!ignition_msg)
+		return NONE
+	visible_message(ignition_msg)
+	arm_grenade(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/grenade/firecracker/fire_act(exposed_temperature, exposed_volume)
 	detonate()
@@ -92,7 +94,7 @@
 	if(det_time)
 		det_time -= 10
 		to_chat(user, span_notice("You shorten the fuse of [src] with [item]."))
-		playsound(src, 'sound/items/wirecutter.ogg', 20, TRUE)
+		playsound(src, 'sound/items/tools/wirecutter.ogg', 20, TRUE)
 		icon_state = initial(icon_state) + "_[det_time]"
 		update_appearance()
 	else
@@ -117,5 +119,3 @@
 	update_mob()
 	explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 2)
 	qdel(src)
-
-

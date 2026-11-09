@@ -159,7 +159,10 @@ ADMIN_VERB(advanced_proc_call, R_DEBUG, "Advanced ProcCall", "Call a proc on any
 		returnval = WrapAdminProcCall(GLOBAL_PROC, procname, lst) // Pass the lst as an argument list to the proc
 	BLACKBOX_LOG_ADMIN_VERB("Advanced ProcCall")
 	if(get_retval)
-		get_retval += returnval
+		if (islist(returnval))
+			get_retval += list(returnval) // Wrap to stop BYOND from concat-ing the lists
+		else
+			get_retval += returnval
 	. = get_callproc_returnval(returnval, procname)
 	if(.)
 		to_chat(usr, ., confidential = TRUE)
@@ -227,7 +230,8 @@ GLOBAL_PROTECT(LastAdminCalledProc)
 	return (GLOB.AdminProcCaller && GLOB.AdminProcCaller == usr?.client?.ckey) || (GLOB.AdminProcCallHandler && usr == GLOB.AdminProcCallHandler)
 #endif
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(call_proc_datum, R_DEBUG, "Atom ProcCall", datum/thing as null|area|mob|obj|turf)
+ADMIN_VERB_ONLY_CONTEXT_MENU(call_proc_datum, R_DEBUG, "Atom ProcCall", /datum)
+	VERB_ARG_TYPED(thing, VERB_ARG_TYPE_AREA | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF | VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /datum)
 	var/procname = input(user, "Proc name, eg: fake_blood","Proc:", null) as text|null
 	if(!procname)
 		return

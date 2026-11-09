@@ -1,6 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   Dropdown,
@@ -8,7 +5,10 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Port = {
@@ -93,7 +93,7 @@ export const ProcCallMenu = (props) => {
                         datatype: type,
                       })
                     }
-                    onEnter={(e, value) =>
+                    onEnter={(value) =>
                       act('rename_argument', {
                         index: index + 1,
                         name: value,

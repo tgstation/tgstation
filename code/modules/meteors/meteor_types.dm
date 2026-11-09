@@ -42,9 +42,19 @@
 	SSaugury.register_doom(src, threat)
 	SpinAnimation()
 	chase_target(target)
+	setup_extra_drops()
+	AddComponent(
+		/datum/component/meteor_combat, \
+		CALLBACK(src, PROC_REF(redirect)), \
+		CALLBACK(src, PROC_REF(make_debris)), \
+		achievement_on = !istype(src, /obj/effect/meteor/sand), \
+	)
 
 /obj/effect/meteor/Destroy()
 	GLOB.meteor_list -= src
+	var/datum/move_loop/moveloop = GLOB.move_manager.processing_on(src, SSmovement)
+	if (!isnull(moveloop))
+		UnregisterSignal(moveloop, COMSIG_MOVELOOP_STOP)
 	return ..()
 
 /obj/effect/meteor/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
@@ -60,8 +70,7 @@
 			get_hit()
 
 	if(z != z_original || loc == get_turf(dest))
-		qdel(src)
-		return
+		moved_off_z()
 
 /obj/effect/meteor/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	return TRUE //Keeps us from drifting for no reason
@@ -76,17 +85,21 @@
 /obj/effect/meteor/proc/chase_target(atom/chasing, delay, home)
 	if(!isatom(chasing))
 		return
-	var/datum/move_loop/new_loop = SSmove_manager.move_towards(src, chasing, delay, home, lifetime)
-	if(!new_loop)
-		return
+	var/datum/move_loop/new_loop = GLOB.move_manager.move_towards(src, chasing, delay, home, lifetime)
+	if(new_loop)
+		RegisterSignal(new_loop, COMSIG_MOVELOOP_STOP, PROC_REF(on_loop_stopped))
 
-	RegisterSignal(new_loop, COMSIG_QDELETING, PROC_REF(handle_stopping))
+/obj/effect/meteor/proc/setup_extra_drops()
+	return
+
+/obj/effect/meteor/proc/on_loop_stopped(datum/source)
+	SIGNAL_HANDLER
+	if(!move_packet || !length(move_packet.existing_loops))
+		qdel(src)
 
 ///Deals with what happens when we stop moving, IE we die
-/obj/effect/meteor/proc/handle_stopping()
-	SIGNAL_HANDLER
-	if(!QDELETED(src))
-		qdel(src)
+/obj/effect/meteor/proc/moved_off_z()
+	qdel(src)
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
 	//first yell at mobs about them dying horribly
@@ -114,14 +127,14 @@
 /obj/effect/meteor/examine(mob/user)
 	. = ..()
 
+	if((user.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY))
+		. += span_notice("On second thought, it doesn't look too tough.")
 	check_examine_award(user)
 
-/obj/effect/meteor/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_MINING)
-		make_debris()
-		qdel(src)
-	else
-		. = ..()
+///Called by component/meteor_combat to send us moving to the edge of the map away from whoever punched us
+/obj/effect/meteor/proc/redirect(mob/athlete)
+	dest = spaceDebrisStartLoc(get_cardinal_dir(athlete, src), z)
+	chase_target(dest)
 
 /obj/effect/meteor/proc/make_debris()
 	for(var/throws = dropamt, throws > 0, throws--)
@@ -150,12 +163,13 @@
  * Admin spawned meteors will not grant the user an achievement.
  *
  * Arguments:
- * * user - the person who will be recieving the examine award.
+ * * user - the person who will be receiving the examine award.
  */
 
 /obj/effect/meteor/proc/check_examine_award(mob/user)
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
 		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
+
 
 /**
  * Handles the meteor's interaction with meteor shields.
@@ -181,7 +195,7 @@
 	hits = 2
 	hitpwr = EXPLODE_LIGHT
 	meteorsound = 'sound/items/dodgeball.ogg'
-	threat = 1
+	threat = SEVERITY_SAND
 
 /obj/effect/meteor/sand/make_debris()
 	return //We drop NOTHING
@@ -208,15 +222,15 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
 	hitpwr = EXPLODE_LIGHT
-	meteorsound = 'sound/weapons/gun/smg/shot.ogg'
+	meteorsound = 'sound/items/weapons/gun/smg/shot.ogg'
 	meteordrop = list(/obj/item/stack/ore/glass)
-	threat = 1
+	threat = SEVERITY_DUST
 
 //Medium-sized
 /obj/effect/meteor/medium
 	name = "meteor"
 	dropamt = 3
-	threat = 5
+	threat = SEVERITY_MEDIUM_METEOR
 
 /obj/effect/meteor/medium/meteor_effect()
 	..()
@@ -229,7 +243,7 @@
 	hits = 6
 	heavy = TRUE
 	dropamt = 4
-	threat = 10
+	threat = SEVERITY_BIG_METEOR
 
 /obj/effect/meteor/big/meteor_effect()
 	..()
@@ -238,13 +252,13 @@
 //Flaming meteor
 /obj/effect/meteor/flaming
 	name = "flaming meteor"
-	desc = "An veritable shooting star, both beautiful and frightening. You should probably keep your distance from this."
+	desc = "A veritable shooting star, both beautiful and frightening. You should probably keep your distance from this."
 	icon_state = "flaming"
 	hits = 5
 	heavy = TRUE
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
-	threat = 20
+	threat = SEVERITY_FLAMING_METEOR
 	signature = "thermal"
 
 /obj/effect/meteor/flaming/meteor_effect()
@@ -259,7 +273,7 @@
 	heavy = TRUE
 	hits = 9
 	meteordrop = list(/obj/item/stack/ore/uranium)
-	threat = 35
+	threat = SEVERITY_IRRADIATED_METEOR
 	signature = "radiation"
 
 /obj/effect/meteor/irradiated/meteor_effect()
@@ -277,7 +291,7 @@
 	hits = 9
 	heavy = TRUE
 	meteorsound = 'sound/effects/break_stone.ogg'
-	threat = 25
+	threat = SEVERITY_CLUSTER_METEOR
 	signature = "ordnance"
 	///Number of fragmentation meteors to be spawned
 	var/cluster_count = 8
@@ -306,10 +320,10 @@
 	icon_state = "carp"
 	desc = "Am I glad he's frozen in there, and that we're out here."
 	hits = 4
-	meteorsound = 'sound/effects/ethereal_revive_fail.ogg'
+	meteorsound = 'sound/mobs/humanoids/ethereal/ethereal_revive_fail.ogg'
 	meteordrop = list(/mob/living/basic/carp)
 	dropamt = 1
-	threat = 5
+	threat = SEVERITY_FROZEN_CARP
 	signature = "fishing and trawling"
 
 /obj/effect/meteor/carp/Initialize(mapload)
@@ -325,12 +339,12 @@
 	dropamt = 3
 	hits = 12
 	meteordrop = list(/obj/item/stack/ore/bluespace_crystal)
-	threat = 15
+	threat = SEVERITY_BLUESPACE_METEOR
 	signature = "bluespace flux"
 
-/obj/effect/meteor/bluespace/Bump()
+/obj/effect/meteor/bluespace/Bump(atom/bumped_atom)
 	..()
-	if(prob(35))
+	if(!QDELETED(src) && prob(35))
 		do_teleport(src, get_turf(src), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/meteor/banana
@@ -341,20 +355,20 @@
 	hits = 175 //Honks everything, including space tiles. Depending on the angle/how much stuff it hits, there's a fair chance that it will spare the station from the actual explosion
 	meteordrop = list(/obj/item/stack/ore/bananium)
 	meteorsound = 'sound/items/bikehorn.ogg'
-	threat = 15
+	threat = SEVERITY_BANANIUM_METEOR
 	movement_type = PHASING
 	signature = "comedy"
 
 /obj/effect/meteor/banana/meteor_effect()
 	..()
-	playsound(src, 'sound/items/AirHorn.ogg', 100, TRUE, -1)
+	playsound(src, 'sound/items/airhorn/AirHorn.ogg', 100, TRUE, -1)
 	for(var/atom/movable/object in view(4, get_turf(src)))
 		var/turf/throwtarget = get_edge_target_turf(get_turf(src), get_dir(get_turf(src), get_step_away(object, get_turf(src))))
 		object.safe_throw_at(throwtarget, 5, 1, force = MOVE_FORCE_STRONG)
 
 /obj/effect/meteor/banana/ram_turf(turf/bumped)
 	for(var/mob/living/slipped in get_turf(bumped))
-		slipped.slip(100, slipped.loc,- GALOSHES_DONT_HELP|SLIDE, 0, FALSE)
+		slipped.slip(100, slipped.loc,- GALOSHES_DONT_HELP|SLIDE)
 		slipped.visible_message(span_warning("[src] honks [slipped] to the floor!"), span_userdanger("[src] harmlessly passes through you, knocking you over."))
 	get_hit()
 
@@ -363,7 +377,7 @@
 	desc = "It radiates with captive energy, ready to be let loose upon the world."
 	icon_state = "bluespace"
 	hits = 6
-	threat = 10
+	threat = SEVERITY_EMP_METEOR
 	signature = "electromagnetic interference"
 
 /obj/effect/meteor/emp/Move()
@@ -373,8 +387,8 @@
 
 /obj/effect/meteor/emp/meteor_effect()
 	..()
-	playsound(src, 'sound/weapons/zapbang.ogg', 100, TRUE, -1)
-	empulse(src, 3, 8)
+	playsound(src, 'sound/items/weapons/zapbang.ogg', 100, TRUE, -1)
+	empulse(src, 3, 8, emp_source = src)
 
 //Meaty Ore
 /obj/effect/meteor/meaty
@@ -383,28 +397,19 @@
 	desc = "Just... don't think too hard about where this thing came from."
 	hits = 2
 	heavy = TRUE
-	meteorsound = 'sound/effects/blobattack.ogg'
-	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/internal/heart, /obj/item/organ/internal/lungs, /obj/item/organ/internal/tongue, /obj/item/organ/internal/appendix/)
+	meteorsound = 'sound/effects/blob/blobattack.ogg'
+	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/appendix)
 	var/meteorgibs = /obj/effect/gibspawner/generic
-	threat = 2
+	threat = SEVERITY_MEATY_ORE
 	signature = "culinary material"
 
-/obj/effect/meteor/meaty/Initialize(mapload)
-	for(var/path in meteordrop)
-		if(path == /obj/item/food/meat/slab/human/mutant)
-			meteordrop -= path
-			meteordrop += pick(subtypesof(path))
-
-	for(var/path in meteordrop)
-		if(path == /obj/item/organ/internal/tongue)
-			meteordrop -= path
-			meteordrop += pick(typesof(path))
-	return ..()
+/obj/effect/meteor/meaty/setup_extra_drops()
+	meteordrop += pick(subtypesof(/obj/item/food/meat/slab/human/mutant))
+	meteordrop += pick(typesof(/obj/item/organ/tongue))
 
 /obj/effect/meteor/meaty/make_debris()
 	..()
 	new meteorgibs(get_turf(src))
-
 
 /obj/effect/meteor/meaty/ram_turf(turf/T)
 	if(!isspaceturf(T))
@@ -417,17 +422,16 @@
 //Meaty Ore Xeno edition
 /obj/effect/meteor/meaty/xeno
 	color = "#5EFF00"
-	meteordrop = list(/obj/item/food/meat/slab/xeno, /obj/item/organ/internal/tongue/alien)
+	meteordrop = list(/obj/item/food/meat/slab/xeno, /obj/item/organ/tongue/alien)
 	meteorgibs = /obj/effect/gibspawner/xeno
 	signature = "exotic culinary material"
 
-/obj/effect/meteor/meaty/xeno/Initialize(mapload)
-	meteordrop += subtypesof(/obj/item/organ/internal/alien)
-	return ..()
+/obj/effect/meteor/meaty/xeno/setup_extra_drops()
+	meteordrop += subtypesof(/obj/item/organ/alien)
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
 	if(!isspaceturf(T))
-		new /obj/effect/decal/cleanable/xenoblood(T)
+		new /obj/effect/decal/cleanable/blood/xeno(T)
 
 //Station buster Tunguska
 /obj/effect/meteor/tunguska
@@ -439,7 +443,7 @@
 	heavy = TRUE
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
-	threat = 50
+	threat = SEVERITY_TUNGSKA_METEOR
 	signature = "armageddon"
 
 /obj/effect/meteor/tunguska/Move()
@@ -459,16 +463,16 @@
 /obj/effect/meteor/pumpkin
 	name = "PUMPKING"
 	desc = "THE PUMPKING'S COMING!"
-	icon = 'icons/obj/meteor_spooky.dmi'
-	icon_state = "pumpkin"
+	icon = 'icons/obj/meteor.dmi'
+	icon_state = "spooky"
 	hits = 10
 	heavy = TRUE
 	dropamt = 1
 	meteordrop = list(/obj/item/clothing/head/utility/hardhat/pumpkinhead, /obj/item/food/grown/pumpkin)
-	threat = 100
+	threat = SEVERITY_PUMPKING
 
 /obj/effect/meteor/pumpkin/Initialize(mapload)
 	. = ..()
-	meteorsound = pick('sound/hallucinations/im_here1.ogg','sound/hallucinations/im_here2.ogg')
+	meteorsound = /datum/sound_effect/hallucination_i_m_here
 
 #undef DEFAULT_METEOR_LIFETIME

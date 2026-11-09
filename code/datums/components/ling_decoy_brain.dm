@@ -6,7 +6,7 @@
 	VAR_FINAL/datum/action/changeling/mmi_talk/talk_action
 
 /datum/component/ling_decoy_brain/Initialize(datum/antagonist/changeling/ling)
-	if(!istype(parent, /obj/item/organ/internal/brain))
+	if(!istype(parent, /obj/item/organ/brain))
 		return COMPONENT_INCOMPATIBLE
 	if(isnull(ling))
 		stack_trace("[type] instantiated without a changeling to link to.")
@@ -22,13 +22,13 @@
 	return ..()
 
 /datum/component/ling_decoy_brain/RegisterWithParent()
-	var/obj/item/organ/internal/brain/ling_brain = parent
+	var/obj/item/organ/brain/ling_brain = parent
 	ling_brain.organ_flags &= ~ORGAN_VITAL
 	ling_brain.decoy_override = TRUE
 	RegisterSignal(ling_brain, COMSIG_ATOM_ENTERING, PROC_REF(entered_mmi))
 
 /datum/component/ling_decoy_brain/UnregisterFromParent()
-	var/obj/item/organ/internal/brain/ling_brain = parent
+	var/obj/item/organ/brain/ling_brain = parent
 	ling_brain.organ_flags |= ORGAN_VITAL
 	ling_brain.decoy_override = FALSE
 	UnregisterSignal(ling_brain, COMSIG_ATOM_ENTERING, PROC_REF(entered_mmi))
@@ -38,14 +38,14 @@
  *
  * Unfortunately this is hooked on Entering rather than its own dedicated MMI signal becuase MMI code is a fuck
  */
-/datum/component/ling_decoy_brain/proc/entered_mmi(obj/item/organ/internal/brain/source, atom/entering, atom/old_loc, ...)
+/datum/component/ling_decoy_brain/proc/entered_mmi(obj/item/organ/brain/source, atom/entering, atom/old_loc, ...)
 	SIGNAL_HANDLER
 
 	var/mob/living/the_real_ling = parent_ling.owner.current
 	if(!istype(the_real_ling))
 		return
 
-	if(istype(source.loc, /obj/item/mmi) && talk_action?.owner != the_real_ling)
+	if(istype(source.loc, /obj/item/brain_processor/organic) && talk_action?.owner != the_real_ling)
 		if(isnull(talk_action))
 			talk_action = new() // Not linked to anything, we manage the reference (and don't want it disappearing on us)
 			talk_action.brain_ref = source

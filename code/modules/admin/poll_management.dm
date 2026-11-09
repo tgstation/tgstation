@@ -71,12 +71,12 @@
  *
  */
 /datum/admins/proc/poll_list_panel()
-	var/list/output = list("Current and future polls<br>Note when editing polls or their options changes are not saved until you press Submit Poll.<br><a href='?_src_=holder;[HrefToken()];newpoll=1'>New Poll</a><a href='?_src_=holder;[HrefToken()];reloadpolls=1'>Reload Polls</a><hr>")
+	var/list/output = list("Current and future polls<br>Note when editing polls or their options changes are not saved until you press Submit Poll.<br><a href='byond://?_src_=holder;[HrefToken()];newpoll=1'>New Poll</a><a href='byond://?_src_=holder;[HrefToken()];reloadpolls=1'>Reload Polls</a><hr>")
 	for(var/p in GLOB.polls)
 		var/datum/poll_question/poll = p
 		output += {"[poll.question]
-		<a href='?_src_=holder;[HrefToken()];editpoll=[REF(poll)]'> Edit</a>
-		<a href='?_src_=holder;[HrefToken()];deletepoll=[REF(poll)]'> Delete</a>
+		<a href='byond://?_src_=holder;[HrefToken()];editpoll=[REF(poll)]'> Edit</a>
+		<a href='byond://?_src_=holder;[HrefToken()];deletepoll=[REF(poll)]'> Delete</a>
 		"}
 		if(poll.subtitle)
 			output += "<br>[poll.subtitle]"
@@ -204,20 +204,20 @@
 			<br>
 			"}
 			if(poll.poll_type == POLLTYPE_TEXT)
-				output += "<a href='?_src_=holder;[HrefToken()];clearpollvotes=[REF(poll)]'>Clear poll responses</a> [poll.poll_votes] players have responded"
+				output += "<a href='byond://?_src_=holder;[HrefToken()];clearpollvotes=[REF(poll)]'>Clear poll responses</a> [poll.poll_votes] players have responded"
 			else
-				output += "<a href='?_src_=holder;[HrefToken()];clearpollvotes=[REF(poll)]'>Clear poll votes</a> [poll.poll_votes] players have voted"
+				output += "<a href='byond://?_src_=holder;[HrefToken()];clearpollvotes=[REF(poll)]'>Clear poll votes</a> [poll.poll_votes] players have voted"
 		if(poll.poll_type == POLLTYPE_TEXT)
 			output += "</div></div>"
 		else
-			output += "</div></div><hr><a href='?_src_=holder;[HrefToken()];addpolloption=[REF(poll)]'>Add Option</a><br>"
+			output += "</div></div><hr><a href='byond://?_src_=holder;[HrefToken()];addpolloption=[REF(poll)]'>Add Option</a><br>"
 			if(length(poll.options))
 				for(var/o in poll.options)
 					var/datum/poll_option/option = o
 					option_count++
 					output += {"Option [option_count]
-					<a href='?_src_=holder;[HrefToken()];editpolloption=[REF(option)];parentpoll=[REF(poll)]'> Edit</a>
-					<a href='?_src_=holder;[HrefToken()];deletepolloption=[REF(option)]'> Delete</a>
+					<a href='byond://?_src_=holder;[HrefToken()];editpolloption=[REF(option)];parentpoll=[REF(poll)]'> Edit</a>
+					<a href='byond://?_src_=holder;[HrefToken()];deletepolloption=[REF(option)]'> Delete</a>
 					<br>[option.text]
 					"}
 					if(poll.poll_type == POLLTYPE_RATING)
@@ -229,8 +229,7 @@
 					output += "<hr style='background:#000000; border:0; height:3px'>"
 	var/datum/browser/panel = new(usr, "pmpanel", "Poll Management Panel", 780, 640)
 	panel.add_stylesheet("admin_panelscss", 'html/admin/admin_panels.css')
-	if(usr.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy)) //some browsers (IE8) have trouble with unsupported css3 elements that break the panel's functionality, so we won't load those if a user is in no frills tgui mode since that's for similar compatability support
-		panel.add_stylesheet("admin_panelscss3", 'html/admin/admin_panels_css3.css')
+	panel.add_stylesheet("admin_panelscss3", 'html/admin/admin_panels_css3.css')
 	panel.set_content(jointext(output, ""))
 	panel.open()
 
@@ -527,8 +526,7 @@
 		panel_height = 320
 	var/datum/browser/panel = new(usr, "popanel", "Poll Option Panel", 370, panel_height)
 	panel.add_stylesheet("admin_panelscss", 'html/admin/admin_panels.css')
-	if(usr.client.prefs.read_preference(/datum/preference/toggle/tgui_fancy)) //some browsers (IE8) have trouble with unsupported css3 elements that break the panel's functionality, so we won't load those if a user is in no frills tgui mode since that's for similar compatability support
-		panel.add_stylesheet("admin_panelscss3", 'html/admin/admin_panels_css3.css')
+	panel.add_stylesheet("admin_panelscss3", 'html/admin/admin_panels_css3.css')
 	panel.set_content(jointext(output, ""))
 	panel.open()
 

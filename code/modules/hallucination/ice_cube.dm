@@ -1,6 +1,7 @@
 /// Causes the hallucinator to believe themselves frozen in ice. Man am I glad he's frozen in there etc etc
 /datum/hallucination/ice
 	random_hallucination_weight = 3
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 	/// What icon file to use for our hallucinator
 	var/ice_icon = 'icons/effects/freeze.dmi'
@@ -20,6 +21,7 @@
 
 /datum/hallucination/ice/start()
 	ice_overlay = image(ice_icon, hallucinator, ice_icon_state, ABOVE_MOB_LAYER)
+	SET_PLANE_EXPLICIT(ice_overlay, ABOVE_GAME_PLANE, hallucinator)
 	hallucinator.client?.images |= ice_overlay
 	ADD_TRAIT(hallucinator, TRAIT_IMMOBILIZED, HALLUCINATION_TRAIT)
 	to_chat(hallucinator, span_userdanger("You become frozen in a cube!"))

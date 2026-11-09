@@ -10,6 +10,7 @@
 	icon = 'icons/mob/simple/meteor_heart.dmi'
 	icon_state = "heart"
 	icon_living = "heart"
+	status_flags = NONE
 	mob_biotypes = MOB_ORGANIC
 	basic_mob_flags = DEL_ON_DEATH
 	mob_size = MOB_SIZE_HUGE
@@ -20,13 +21,13 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes"
 	response_disarm_simple = "gently push"
-	faction = list()
 	ai_controller = /datum/ai_controller/basic_controller/meteor_heart
 	habitable_atmos = null
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	combat_mode = TRUE
 	move_resist = INFINITY // This mob IS the floor
+	physiology = list(STAMINA = 0)
 
 	/// Looping heartbeat sound
 	var/datum/looping_sound/heartbeat/soundloop
@@ -34,8 +35,7 @@
 /mob/living/basic/meteor_heart/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, INNATE_TRAIT)
-	var/static/list/death_loot = list(/obj/effect/temp_visual/meteor_heart_death)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/effect/temp_visual/meteor_heart_death)
 	AddElement(/datum/element/relay_attackers)
 
 	var/static/list/innate_actions = list(
@@ -43,7 +43,7 @@
 		/datum/action/cooldown/mob_cooldown/spine_traps = BB_METEOR_HEART_SPINE_TRAPS,
 	)
 	grant_actions_by_list(innate_actions)
-	ai_controller.set_ai_status(AI_STATUS_OFF)
+	ai_controller.force_ai_off()
 
 	RegisterSignal(src, COMSIG_MOB_ABILITY_FINISHED, PROC_REF(used_ability))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(aggro))
@@ -56,18 +56,13 @@
 	soundloop.pressure_affected = FALSE
 	soundloop.start()
 
-	AddComponent(\
-		/datum/component/bloody_spreader,\
-		blood_left = INFINITY,\
-		blood_dna = list("meaty DNA" = "MT-"),\
-		diseases = null,\
-	)
+	AddComponent(/datum/component/bloody_spreader)
 
 /// Called when we get mad at something, either for attacking us or attacking the nearby area
 /mob/living/basic/meteor_heart/proc/aggro()
 	if (ai_controller.ai_status == AI_STATUS_ON)
 		return
-	ai_controller.reset_ai_status()
+	ai_controller.clear_forced_off()
 	if (!ai_controller.ai_status == AI_STATUS_ON)
 		return
 	icon_state = "heart_aggro"
@@ -75,7 +70,7 @@
 
 /// Called when we stop being mad
 /mob/living/basic/meteor_heart/proc/deaggro()
-	ai_controller.set_ai_status(AI_STATUS_OFF)
+	ai_controller.force_ai_off()
 	icon_state = "heart"
 	soundloop.set_mid_length(HEARTBEAT_NORMAL)
 
@@ -102,7 +97,7 @@
 
 /obj/effect/temp_visual/meteor_heart_death/Initialize(mapload)
 	. = ..()
-	playsound(src, 'sound/magic/demon_dies.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+	playsound(src, 'sound/effects/magic/demon_dies.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
 	Shake(2, 0, 3 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(gib)), duration - 1, TIMER_DELETE_ME)
 	soundloop = new(src, start_immediately = FALSE)
@@ -116,7 +111,7 @@
 
 /// Make this place a mess
 /obj/effect/temp_visual/meteor_heart_death/proc/gib()
-	playsound(loc, 'sound/effects/attackblob.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
+	playsound(loc, 'sound/effects/blob/attackblob.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
 	var/turf/my_turf = get_turf(src)
 	new /obj/effect/gibspawner/human(my_turf)
 	for (var/obj/structure/eyeball as anything in GLOB.meteor_eyeballs)

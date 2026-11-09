@@ -2,9 +2,8 @@
 	title = JOB_CHIEF_MEDICAL_OFFICER
 	description = "Coordinate doctors and other medbay employees, ensure they \
 		know how to save lives, check for injuries on the crew monitor."
-	department_head = list(JOB_CAPTAIN)
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
-	head_announce = list(RADIO_CHANNEL_MEDICAL)
+	head_announce = RADIO_CHANNEL_MEDICAL
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -28,10 +27,11 @@
 	paycheck_department = ACCOUNT_MED
 
 	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
+	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM, TRAIT_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_CHIEF_MEDICAL_OFFICER
-	bounty_types = CIV_JOB_MED
+	bounty_types = CIV_JOB_MED_VIRO
 
 	mail_goodies = list(
 		/obj/effect/spawner/random/medical/organs = 10,
@@ -43,7 +43,10 @@
 	rpg_title = "High Cleric"
 	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
 
+	human_authority = JOB_AUTHORITY_HUMANS_ONLY
+
 	voice_of_god_power = 1.4 //Command staff has authority
+	tgui_icon = FA_ICON_USER_MD
 
 
 /datum/job/chief_medical_officer/get_captaincy_announcement(mob/living/captain)
@@ -56,24 +59,23 @@
 
 	id = /obj/item/card/id/advanced/silver
 	id_trim = /datum/id_trim/job/chief_medical_officer
-	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer/scrubs
+	uniform = /obj/item/clothing/under/rank/medical/chief_medical_officer
 	suit = /obj/item/clothing/suit/toggle/labcoat/cmo
 	suit_store = /obj/item/flashlight/pen/paramedic
 	backpack_contents = list(
-		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/melee/baton/telescopic/silver = 1,
 		)
-	belt = /obj/item/modular_computer/pda/heads/cmo
+	belt = /obj/item/modular_computer/pda/crew/heads/cmo
 	ears = /obj/item/radio/headset/heads/cmo
-	head = /obj/item/clothing/head/utility/surgerycap/cmo
-	shoes = /obj/item/clothing/shoes/sneakers/blue
+	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_pocket = /obj/item/laser_pointer/blue
 	r_pocket = /obj/item/pinpointer/crew
-	l_hand = /obj/item/storage/medkit/surgery
+	l_hand = /obj/item/storage/medkit/surgery/cmo
 
-	backpack = /obj/item/storage/backpack/medic
-	satchel = /obj/item/storage/backpack/satchel/med
-	duffelbag = /obj/item/storage/backpack/duffelbag/med
-	messenger = /obj/item/storage/backpack/messenger/med
+	backpack = /obj/item/storage/backpack/chief_medic
+	satchel = /obj/item/storage/backpack/satchel/chief_medic
+	duffelbag = /obj/item/storage/backpack/duffelbag/chief_medic
+	messenger = /obj/item/storage/backpack/messenger/chief_medic
 
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = list(
@@ -81,6 +83,8 @@
 		/obj/item/stamp/head/cmo,
 		)
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/medical/cmo
 
 /datum/outfit/job/cmo/mod
 	name = "Chief Medical Officer (MODsuit)"

@@ -1,6 +1,6 @@
 /**
  * This component behaves similar to connect_loc_behalf but for all turfs in range, hooking into a signal on each of them.
- * Just like connect_loc_behalf, It can react to that signal on behalf of a seperate listener.
+ * Just like connect_loc_behalf, It can react to that signal on behalf of a separate listener.
  * Good for components, though it carries some overhead. Can't be an element as that may lead to bugs.
  */
 /datum/component/connect_range
@@ -26,16 +26,16 @@
 		return COMPONENT_INCOMPATIBLE
 	src.connections = connections
 	src.range = range
-	set_tracked(tracked)
 	src.works_in_containers = works_in_containers
+	set_tracked(tracked)
 
 /datum/component/connect_range/Destroy()
 	set_tracked(null)
 	return ..()
 
 /datum/component/connect_range/InheritComponent(datum/component/component, original, atom/tracked, list/connections, range, works_in_containers)
-	// Not equivalent. Checks if they are not the same list via shallow comparison.
-	if(!compare_list(src.connections, connections))
+	// Both the signal names and their handlers must match.
+	if(!deep_compare_list(src.connections, connections))
 		stack_trace("connect_range component attached to [parent] tried to inherit another connect_range component with different connections")
 		return
 	if(src.tracked != tracked)
@@ -44,6 +44,7 @@
 		return
 	//Unregister the signals with the old settings.
 	unregister_signals(isturf(tracked) ? tracked : tracked.loc, turfs)
+	turfs = list()
 	src.range = range
 	src.works_in_containers = works_in_containers
 	//Re-register the signals with the new settings.
@@ -52,6 +53,7 @@
 /datum/component/connect_range/proc/set_tracked(atom/new_tracked)
 	if(tracked) //Unregister the signals from the old tracked and its surroundings
 		unregister_signals(isturf(tracked) ? tracked : tracked.loc, turfs)
+		turfs = list()
 		UnregisterSignal(tracked, list(
 			COMSIG_MOVABLE_MOVED,
 			COMSIG_QDELETING,
@@ -75,22 +77,22 @@
 		turfs = list()
 		return
 
-	if(ismovable(target.loc))
+	var/loc_is_movable = ismovable(target.loc)
+
+	if(loc_is_movable)
 		if(!works_in_containers)
 			unregister_signals(old_loc, turfs)
 			turfs = list()
 			return
-		//Keep track of possible movement of all movables the target is in.
-		for(var/atom/movable/container as anything in get_nested_locs(target))
-			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
-	//Only register/unregister turf signals if it's moved to a new turf.
-	if(current_turf == get_turf(old_loc))
-		unregister_signals(old_loc, null)
-		return
+	// Reconcile subscriptions even on the same turf: the container may have changed.
 	var/list/old_turfs = turfs
 	turfs = RANGE_TURFS(range, current_turf)
 	unregister_signals(old_loc, old_turfs - turfs)
+	if(loc_is_movable)
+		//Keep track of possible movement of all movables the target is in.
+		for(var/atom/movable/container as anything in get_nested_locs(target))
+			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	for(var/turf/target_turf as anything in turfs - old_turfs)
 		for(var/signal in connections)
 			parent.RegisterSignal(target_turf, signal, connections[signal])
@@ -111,4 +113,6 @@
 
 /datum/component/connect_range/proc/on_moved(atom/movable/movable, atom/old_loc)
 	SIGNAL_HANDLER
+	if(QDELETED(src)) //Basically, if a mob moves it will trigger the movable signal on its own field. If the mob finds a target when moving it will qdel this, but because it also moved into the field this will run, crash, and burn. so we're checking qdeleted.
+		return
 	update_signals(movable, old_loc)

@@ -15,7 +15,7 @@
 
 /obj/item/assembly_holder/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 
 /obj/item/assembly_holder/Destroy()
 	QDEL_LAZYLIST(assemblies)
@@ -48,7 +48,7 @@
 
 /obj/item/assembly_holder/proc/try_add_assembly(obj/item/assembly/attached_assembly, mob/user)
 	if(attached_assembly.secured)
-		balloon_alert(attached_assembly, "not attachable!")
+		balloon_alert(user, "not attachable!")
 		return FALSE
 
 	if(LAZYLEN(assemblies) >= HOLDER_MAX_ASSEMBLIES)
@@ -100,15 +100,26 @@
 /obj/item/assembly_holder/update_overlays()
 	. = ..()
 	for(var/i in 1 to LAZYLEN(assemblies))
-		if(i % 2 == 1)
+		if(IS_LEFT_INDEX(i))
 			var/obj/item/assembly/assembly = assemblies[i]
-			. += "[assembly.icon_state]_left"
+			var/mutable_appearance/left
+			if(assembly.use_base_icon_for_holder)
+				left = mutable_appearance(assembly.icon, assembly.icon_state)
+				left.transform = matrix(1, 0, -0.1, 0, 1, 0.1)
+			else
+				left = mutable_appearance(assembly.icon, "[assembly.icon_state]_left")
+			. += left
 			for(var/left_overlay in assembly.attached_overlays)
 				. += "[left_overlay]_l"
-		if(i % 2 == 0)
+		if(IS_RIGHT_INDEX(i))
 			var/obj/item/assembly/assembly = assemblies[i]
-			var/mutable_appearance/right = mutable_appearance(icon, "[assembly.icon_state]_left")
-			right.transform = matrix(-1, 0, 0, 0, 1, 0)
+			var/mutable_appearance/right
+			if(assembly.use_base_icon_for_holder)
+				right = mutable_appearance(assembly.icon, assembly.icon_state)
+				right.transform = matrix(-1, 0, 0.1, 0, 1, 0.1)
+			else
+				right = mutable_appearance(assembly.icon, "[assembly.icon_state]_left")
+				right.transform = matrix(-1, 0, 0, 0, 1, 0)
 			for(var/right_overlay in assembly.attached_overlays)
 				right.add_overlay("[right_overlay]_l")
 			. += right
@@ -125,7 +136,7 @@
 /obj/item/assembly_holder/dropped(mob/user)
 	. = ..()
 	for(var/obj/item/assembly/assembly as anything in assemblies)
-		assembly.dropped()
+		assembly.dropped(user)
 
 /obj/item/assembly_holder/attack_hand(mob/living/user, list/modifiers)//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	. = ..()
@@ -134,23 +145,25 @@
 	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.attack_hand(user, modifiers) // Note override in assembly.dm to prevent side effects here
 
-/obj/item/assembly_holder/attackby(obj/item/weapon, mob/user, params)
-	if(isassembly(weapon))
-		try_add_assembly(weapon, user)
-		return
+/obj/item/assembly_holder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isassembly(tool))
+		return NONE
 
-	return ..()
+	try_add_assembly(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/item/assembly_holder/screwdriver_act(mob/user, obj/item/tool)
-	if(..())
-		return TRUE
-	balloon_alert(user, "disassembled")
+	loc.balloon_alert(user, "disassembled")
+
+	deconstruct(TRUE)
+
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/assembly_holder/atom_deconstruct(disassembled)
 	for(var/obj/item/assembly/assembly as anything in assemblies)
 		assembly.on_detach()
 		LAZYREMOVE(assemblies, assembly)
-	qdel(src)
-	return TRUE
 
 /obj/item/assembly_holder/attack_self(mob/user)
 	src.add_fingerprint(user)

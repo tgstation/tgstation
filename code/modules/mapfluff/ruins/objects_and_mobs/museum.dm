@@ -2,7 +2,7 @@
 	name = "exhibit info terminal"
 	desc = "A relatively low-tech info board. Not as low-tech as an actual sign though. Appears to be quite old."
 	upperinfo = "Nanotrasen Museum Exhibit Info"
-	icon_state = "plaque"
+	icon_state = MAP_SWITCH("plaque", "/obj/machinery/computer/terminal/museum")
 	icon_screen = "plaque_screen"
 	icon_keyboard = null
 
@@ -64,7 +64,7 @@
 	max_integrity = 5 //one tap
 
 /obj/structure/fluff/balloon_nuke/atom_destruction()
-	playsound(loc, 'sound/effects/cartoon_pop.ogg', 75, vary = TRUE)
+	playsound(loc, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 75, vary = TRUE)
 	..()
 
 /obj/structure/fluff/fake_camera
@@ -77,7 +77,7 @@
 	name = /obj/machinery/atmospherics/components/unary/vent_scrubber::name
 	desc = /obj/machinery/atmospherics/components/unary/vent_scrubber::desc
 	icon = /obj/machinery/atmospherics/components/unary/vent_scrubber::icon
-	layer = /obj/machinery/atmospherics/components/unary/vent_scrubber::layer
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	icon_state = "scrub_on"
 
@@ -85,7 +85,7 @@
 	name = /obj/machinery/atmospherics/components/unary/vent_pump::name
 	desc = /obj/machinery/atmospherics/components/unary/vent_pump::desc
 	icon = /obj/machinery/atmospherics/components/unary/vent_pump::icon
-	layer = /obj/machinery/atmospherics/components/unary/vent_scrubber::layer
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
 	icon_state = "vent_out"
 
@@ -105,7 +105,7 @@
 /turf/open/mirage/Initialize(mapload)
 	. = ..()
 	if(isnull(range))
-		range = world.view
+		range = (maxviewdist() - 1) / 2
 	var/used_z = target_turf_z || z //if target z is not defined, use ours
 	var/turf/target = locate(offset ? target_turf_x + x : target_turf_x, offset ? target_turf_y + y : target_turf_y, used_z)
 	AddElement(/datum/element/mirage_border, target, dir, range)
@@ -159,13 +159,12 @@
 	mask = /obj/item/clothing/mask/fakemoustache/italian
 
 /obj/machinery/vending/hotdog/museum
-	onstation_override = TRUE
+	all_products_free = TRUE
 
-/obj/machinery/vending/hotdog/museum/screwdriver_act(mob/living/user, obj/item/attack_item)
-	return NONE
-
-/obj/machinery/vending/hotdog/museum/crowbar_act(mob/living/user, obj/item/attack_item)
-	return NONE
+/obj/machinery/vending/hotdog/museum/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR, TOOL_ACT_PRIMARY)
 
 #define CAFE_KEYCARD_TOILETS "museum_cafe_key_toilets"
 
@@ -199,6 +198,6 @@
 	var/obj/structure/toilet/destination = pick(partners)
 	forceMove(destination)
 	destination.w_items += w_class
-	destination.contents += src
+	LAZYADD(destination.cistern_items, src)
 
 #undef CAFE_KEYCARD_TOILETS

@@ -19,5 +19,5 @@
 	return RANGE_TURFS(aoe_radius, center)
 
 /datum/action/cooldown/spell/aoe/area_conversion/cast_on_thing_in_aoe(turf/victim, atom/caster)
-	playsound(victim, 'sound/items/welder.ogg', 75, TRUE)
+	playsound(victim, 'sound/items/tools/welder.ogg', 75, TRUE)
 	victim.narsie_act(FALSE, TRUE, 100 - (get_dist(victim, caster) * 25))

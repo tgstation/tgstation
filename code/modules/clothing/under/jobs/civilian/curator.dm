@@ -19,6 +19,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/civilian/curator/treasure_hunter
 	name = "treasure hunter uniform"
@@ -28,16 +29,23 @@
 	inhand_icon_state = null
 	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 
+/obj/item/clothing/under/rank/civilian/curator/treasure_hunter/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/adjust_fishing_difficulty, -5)
+
 /obj/item/clothing/under/rank/civilian/curator/nasa
 	name = "\improper NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
-	icon_state = "jumpsuit"
+	icon = 'icons/map_icons/clothing/under/color.dmi'
+	icon_state = "/obj/item/clothing/under/color"
+	post_init_icon_state = "jumpsuit"
 	inhand_icon_state = "jumpsuit"
-	greyscale_colors = "#3f3f3f"
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	greyscale_config = /datum/greyscale_config/jumpsuit
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/inhand_right
+	greyscale_colors = "#3f3f3f"
 	w_class = WEIGHT_CLASS_BULKY
 	armor_type = /datum/armor/clothing_under/curator_nasa
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

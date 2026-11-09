@@ -9,11 +9,15 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = FALSE
 	internal_magazine = TRUE
-	fire_sound = 'sound/weapons/gun/rifle/shot_heavy.ogg'
+	fire_sound = 'sound/items/weapons/gun/rifle/shot_heavy.ogg'
 	fire_sound_volume = 90
-	rack_sound = 'sound/weapons/gun/rifle/bolt_out.ogg'
-	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
+	rack_sound = 'sound/items/weapons/gun/rifle/bolt_out.ogg'
+	bolt_drop_sound = 'sound/items/weapons/gun/rifle/bolt_in.ogg'
+	drop_sound = 'sound/items/handling/gun/ballistics/rifle/rifle_drop1.ogg'
+	pickup_sound = 'sound/items/handling/gun/ballistics/rifle/rifle_pickup1.ogg'
 	tac_reloads = FALSE
+	/// Does the bolt need to be open to interact with the gun (e.g. magazine interactions)?
+	var/need_bolt_lock_to_interact = FALSE
 
 /obj/item/gun/ballistic/rifle/rack(mob/user = null)
 	if (bolt_locked == FALSE)
@@ -26,10 +30,15 @@
 	drop_bolt(user)
 
 
-/obj/item/gun/ballistic/rifle/can_shoot()
-	if (bolt_locked)
-		return FALSE
+/obj/item/gun/ballistic/rifle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(need_bolt_lock_to_interact && !bolt_locked && !istype(tool, /obj/item/knife))
+		balloon_alert(user, "bolt closed!")
+		return
+
 	return ..()
+
+/obj/item/gun/ballistic/rifle/can_shoot()
+	return ..() && !bolt_locked
 
 /obj/item/gun/ballistic/rifle/examine(mob/user)
 	. = ..()
@@ -41,11 +50,10 @@
 
 /obj/item/gun/ballistic/rifle/boltaction
 	name = "\improper Sakhno Precision Rifle"
-	desc = "A Sakhno Precision Rifle, a bolt action weapon that was (and certainly still is) popular with \
-		frontiersmen, cargo runners, private security forces, explorers, and other unsavoury types. This particular \
-		pattern of the rifle dates back all the way to 2440."
-	sawn_desc = "A sawn-off Sakhno Precision Rifle, popularly known as an \"Obrez\". \
-		There was probably a reason it wasn't manufactured this short to begin with. \
+	desc = "A bolt-action rifle that was - and certainly still is - popular with \
+		frontiersmen, cargo runners, private security forces, explorers, and other unsavoury types."
+	sawn_desc = "A sawn-off bolt-action rifle, popularly known as an \"Obrez\". \
+		There's probably a reason it wasn't manufactured this short to begin with. \
 		Despite the terrible nature of the modification, the weapon seems otherwise in good condition."
 
 	icon_state = "sakhno"
@@ -54,11 +62,9 @@
 
 	slot_flags = ITEM_SLOT_BACK
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
-	can_bayonet = TRUE
-	knife_x_offset = 42
-	knife_y_offset = 12
 	can_be_sawn_off = TRUE
 	weapon_weight = WEAPON_HEAVY
+	need_bolt_lock_to_interact = TRUE
 	var/jamming_chance = 20
 	var/unjam_chance = 10
 	var/jamming_increment = 5
@@ -67,28 +73,48 @@
 
 	SET_BASE_PIXEL(-8, 0)
 
-/obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
+/obj/item/gun/ballistic/rifle/boltaction/presawn
+	WHEN_MAP(icon_state = "sakhno_sawn")
+	spawn_sawn_off = TRUE
+
+/obj/item/gun/ballistic/rifle/boltaction/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore = "The Sakhno Precision Rifle's origins are closely tied to the Sakhno Concern, one of the Third Soviet Union's \
+			state-ran weapons manufacturing concerns before the Union's collapse in the February Revolution, and subsequently \
+			one of the Spinward Stellar Coalition's favored industrial concerns.<br>\
+			<br>\
+			Designed to be easily manufactured with the tooling and equipment that the nascent TSU had on-hand, \
+			and with enough reliability and stopping power for all sorts of purposes, from hunting to home defense, \
+			the Sakhno became a mainstay for Soviet citizens since 2440... \
+			and, subsequently, a mainstay when those citizens became conspirators and combatants against dictatorship.<br>\
+			<br>\
+			Even to this day, though, Sakhnos in various conditions and states of modification end up all around the Spinward Sector. \
+			Many are manufactured or refurbished with new internals, with reliability to match their history, \
+			while others are from stockpiles of surplus or salvage, scavenged and refurbished time and time again... \
+			which typically isn't great for reliability." \
+		)
+
+/obj/item/gun/ballistic/rifle/boltaction/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 41, offset_y = 14, bayonet_overlay = "bayonet_thin")
+
+/obj/item/gun/ballistic/rifle/boltaction/do_sawoff()
 	. = ..()
-	if(.)
-		spread = 36
-		can_bayonet = FALSE
-		SET_BASE_PIXEL(0, 0)
-		update_appearance()
+	spread = 36
+	SET_BASE_PIXEL(0, 0)
 
 /obj/item/gun/ballistic/rifle/boltaction/attack_self(mob/user)
-	if(can_jam)
-		if(jammed)
-			if(prob(unjam_chance))
-				jammed = FALSE
-				unjam_chance = 10
-			else
-				unjam_chance += 10
-				balloon_alert(user, "jammed!")
-				playsound(user,'sound/weapons/jammed.ogg', 75, TRUE)
-				return FALSE
-	..()
+	if(jammed)
+		if(prob(unjam_chance))
+			jammed = FALSE
+			unjam_chance = initial(unjam_chance)
+		else
+			unjam_chance += 10
+			balloon_alert(user, "jammed!")
+			playsound(user,'sound/items/weapons/jammed.ogg', 75, TRUE)
+			return FALSE
+	return ..()
 
-/obj/item/gun/ballistic/rifle/boltaction/process_fire(mob/user)
+/obj/item/gun/ballistic/rifle/boltaction/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	if(can_jam)
 		if(chambered.loaded_projectile)
 			if(prob(jamming_chance))
@@ -96,22 +122,6 @@
 			jamming_chance += jamming_increment
 			jamming_chance = clamp (jamming_chance, 0, 100)
 	return ..()
-
-/obj/item/gun/ballistic/rifle/boltaction/attackby(obj/item/item, mob/user, params)
-	if(!bolt_locked && !istype(item, /obj/item/knife))
-		balloon_alert(user, "bolt closed!")
-		return
-
-	. = ..()
-
-	if(istype(item, /obj/item/gun_maintenance_supplies))
-		if(!can_jam)
-			balloon_alert(user, "can't jam!")
-			return
-		if(do_after(user, 10 SECONDS, target = src))
-			user.visible_message(span_notice("[user] finishes maintaining [src]."))
-			jamming_chance = initial(jamming_chance)
-			qdel(item)
 
 /obj/item/gun/ballistic/rifle/boltaction/blow_up(mob/user)
 	. = FALSE
@@ -121,36 +131,54 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/harpoon
 	name = "ballistic harpoon gun"
-	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
+	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors, because it's ironic."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "speargun"
 	inhand_icon_state = "speargun"
 	worn_icon_state = "speargun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
-	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
 
 	SET_BASE_PIXEL(0, 0)
 
+/obj/item/gun/ballistic/rifle/boltaction/harpoon/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore = "Breech-loaded spearguns aren't a common sight around Nanotrasen stations, because \
+			everything you could reasonably need a speargun for, like carp hunting, is better served \
+			by more available options, such as laser guns or toolboxes.<br>\
+			<br>\
+			However, the Animal Rights Consortium intentionally sends some \"lucky\" operatives \
+			out with such weapons, as their uncommon nature makes it very unambiguous who sent the madmen \
+			who willingly use such weapons, and what drives them. \
+			Or, equally as likely, some other cell of the Syndicate pilfered it to paint the Consortium as \
+			responsible for whatever attack could be committed with a speargun.<br>\
+			<br>\
+			Either way, having a ballistic harpoon stuck in a limb is widely regarded as being a drag." \
+	)
+
 /obj/item/gun/ballistic/rifle/boltaction/surplus
 	name = "\improper Sakhno M2442 Army"
-	desc = "A modification of the Sakhno Precision Rifle, \"Sakhno M2442 Army\" is stamped into the side. \
-		It is unknown what army this pattern of rifle was made for or if it was ever even used by an army \
-		of any sort. What you can discern, however, is that its previous owner did not treat the weapon well. \
+	desc = "A bolt-action rifle with \"Sakhno M2442 Army\" stamped into the side. \
+		It's unknown what army this rifle was made for, or if it was ever used by one, but it's obvious the previous owner did not treat it well. \
 		For some reason, there's moisture all through the internals."
-	sawn_desc = "A sawn-off Sakhno Precision Rifle, popularly known as an \"Obrez\". \
-		\"Sakhno M2442 Army\" is stamped into the side of it. \
-		There was probably a reason it wasn't manufactured this short to begin with. \
-		Cutting the weapon down seems to have not helped with the moisture problem."
+	sawn_desc = "A sawn-off bolt-action rifle, popularly known as an \"Obrez\", with \"Sakhno M2442 Army\" stamped into the side. \
+		There's probably a reason it wasn't manufactured this short to begin with. \
+		Cutting the weapon down has not helped with the moisture problem."
 	icon_state = "sakhno_tactifucked"
+	inhand_icon_state = "slopno"
+	worn_icon_state = "slopno"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	can_jam = TRUE
+
+/obj/item/gun/ballistic/rifle/boltaction/surplus/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 41, offset_y = 14, bayonet_overlay = "bayonet_thin_surplus")
 
 /obj/item/gun/ballistic/rifle/boltaction/prime
 	name = "\improper Sakhno-Zhihao Sporting Rifle"
 	desc = "An upgrade and modernisation of the original Sakhno rifle, made with such wonders as \
 		modern materials, a scope, and other impressive technological advancements that, to be honest, \
-		were already around when the original weapon was designed. Surprisingly for a rifle of this type, \
+		were already around when the original weapon was designed. Surprisingly, for a rifle of this type, \
 		the scope actually has magnification, rather than being decorative."
 	icon_state = "zhihao"
 	inhand_icon_state = "zhihao"
@@ -158,46 +186,82 @@
 	can_be_sawn_off = TRUE
 	sawn_desc = "A sawn-off Sakhno-Zhihao Sporting Rifle... Doing this was a sin, I hope you're happy. \
 		You are now probably one of the few people in the universe to ever hold an \"Obrez Moderna\". \
-		All you had to do was take an allen wrench to the stock to take it off. But no, you just had to \
-		go for the saw."
+		All you had to do was take an allen wrench to the stock to take it off, but no - \
+		you just had to go for the saw."
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/phasic
 
 /obj/item/gun/ballistic/rifle/boltaction/prime/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 1.5)
 
-/obj/item/gun/ballistic/rifle/boltaction/prime/sawoff(mob/user)
+/obj/item/gun/ballistic/rifle/boltaction/prime/do_sawoff()
 	. = ..()
-	if(.)
-		name = "\improper Obrez Moderna" // wear it loud and proud
+	name = "\improper Obrez Moderna" // wear it loud and proud
+
+/obj/item/gun/ballistic/rifle/boltaction/donkrifle
+	name = "\improper Donk Co. Jezail"
+	desc = "A mass-manufactured bolt-action sporting rifle with a distinctively long barrel. \
+		Powerful enough to take down a space bear from a thousand paces. \
+		The lengthened barrel gives it good accuracy and power, even at range."
+	w_class = WEIGHT_CLASS_HUGE
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	icon_state = "jezail"
+	inhand_icon_state = "jezail"
+	worn_icon_state = "jezail"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/jezail
+	can_be_sawn_off = TRUE
+	sawn_desc = "A mass-manufactured bolt-action sporting rifle with a formerly-distinctively long barrel. \
+		Powerful enough to take down a space bear from... less than a thousand paces. \
+		Its barrel has been cut off, so its power and accuracy have been impaired."
+
+/obj/item/gun/ballistic/rifle/boltaction/donkrifle/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore = "Donk Co.'s Jezail line of bolt-action sporting rifles is, admittedly, a strange, almost archaic design, \
+			coming from an even stranger place, as most people would not expect a logistics and food processing company to \
+			create, market, and distribute bolt-action rifles.<br>\
+			<br>\
+			For better or for worse, though, they're pretty good as rifles - \
+			though they're not nearly as ubiquitous as the Sakhno, especially in the Spinward Sector, \
+			they still share the same chambering in .310 Strilka, and thus, the stopping power of the cartridge, with \
+			no risk of receiving a refurbished, poorly-kept surplus arm that jams more than it shoots." \
+	)
+
+/obj/item/gun/ballistic/rifle/boltaction/donkrifle/do_sawoff() //the heavy price one pays for fitting this in a backpack
+	. = ..()
+	projectile_damage_multiplier = 0.75
+	spread = 50
 
 /obj/item/gun/ballistic/rifle/rebarxbow
-	name = "Heated Rebar Crossbow"
-	desc = "Made from an inducer, iron rods, and some wire, this crossbow fires sharpened iron rods, made from the plentiful iron rods found stationwide. \
-			Only holds one rod in the magazine - you can craft the crossbow with a crowbar to try and force a second rod in, but risks a misfire, or worse..."
+	name = "heated rebar crossbow"
+	desc = "A handcrafted crossbow. Aside from conventional sharpened iron rods, it can also fire specialty rods made from crystallized gases. \
+		Very slow to reload, and probably worth pairing with a quiver. \
+		Further modifications for increased capacity are... possible, if unwise."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "rebarxbow"
 	inhand_icon_state = "rebarxbow"
 	worn_icon_state = "rebarxbow"
-	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
-	must_hold_to_load = TRUE
+	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
 	mag_display = FALSE
 	empty_indicator = TRUE
-	bolt_type = BOLT_TYPE_LOCKING
+	bolt_type = BOLT_TYPE_OPEN
 	semi_auto = FALSE
 	internal_magazine = TRUE
-	can_modify_ammo = FALSE
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE
 	bolt_wording = "bowstring"
 	magazine_wording = "rod"
 	cartridge_wording = "rod"
-	misfire_probability = 25
 	weapon_weight = WEAPON_HEAVY
-	initial_caliber = CALIBER_REBAR
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
-	fire_sound = 'sound/items/syringeproj.ogg'
+	fire_sound = 'sound/items/xbow_lock.ogg'
 	can_be_sawn_off = FALSE
 	tac_reloads = FALSE
-	var/draw_time = 3 SECONDS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.62)
+	var/draw_time = 1.5 SECONDS
+	var/reload_time = 1.5 SECONDS
+	var/doafter_flags = NONE
 	SET_BASE_PIXEL(0, 0)
 
 /obj/item/gun/ballistic/rifle/rebarxbow/rack(mob/user = null)
@@ -211,7 +275,7 @@
 	update_appearance()
 
 /obj/item/gun/ballistic/rifle/rebarxbow/drop_bolt(mob/user = null)
-	if(!do_after(user, draw_time, target = src))
+	if(!do_after(user, draw_time, target = src,timed_action_flags = src.doafter_flags))
 		return
 	playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
 	balloon_alert(user, "bowstring drawn")
@@ -219,88 +283,168 @@
 	bolt_locked = FALSE
 	update_appearance()
 
+/obj/item/gun/ballistic/rifle/rebarxbow/shoot_live_shot(mob/living/user)
+	..()
+	rack()
+
 /obj/item/gun/ballistic/rifle/rebarxbow/can_shoot()
-	if (bolt_locked)
-		return FALSE
-	return ..()
+	return ..() && !bolt_locked
+
+/obj/item/gun/ballistic/rifle/rebarxbow/shoot_with_empty_chamber(mob/living/user)
+	if(chambered || !magazine || !length(magazine.contents))
+		return ..()
+	drop_bolt(user)
 
 /obj/item/gun/ballistic/rifle/rebarxbow/examine(mob/user)
 	. = ..()
 	. += "The crossbow is [bolt_locked ? "not ready" : "ready"] to fire."
 
+/obj/item/gun/ballistic/rifle/rebarxbow/update_overlays()
+	. = ..()
+	if(!magazine)
+		. += "[initial(icon_state)]" + "_empty"
+	if(!bolt_locked)
+		. += "[initial(icon_state)]" + "_bolt_locked"
+
 /obj/item/gun/ballistic/rifle/rebarxbow/forced
-	name = "Stressed Rebar Crossbow"
-	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could have a bit more ammo in this crossbow. Hopefully, it was worth it."
+	name = "stressed rebar crossbow"
+	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could rack and reload the crossbow faster. Hopefully it was worth it."
 	// Feel free to add a recipe to allow you to change it back if you would like, I just wasn't sure if you could have two recipes for the same thing.
-	can_misfire = TRUE
+	pressure_threshold = AMMO_CASING_PRESSURE_LOW
+	draw_time = 0.5 SECONDS
+	reload_time = 0.5 SECONDS
+	doafter_flags = IGNORE_USER_LOC_CHANGE
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/forced
 	misfire_probability = 25
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/force
 
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie
-	name = "Syndicate Rebar Crossbow"
-	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
-			Holds three shots without a chance of exploding, and features a built in scope. Normally uses special syndicate jagged iron bars, but can be wrenched to shoot inferior normal ones."
+	name = "syndicate rebar crossbow"
+	desc = "The Syndicate liked the bootleg rebar crossbow NT engineers made, and decided to one-up them by properly manufacturing a rebar \
+		crossbow that's significantly less prone to maiming the user. \
+		Automatically reloads from a backpack quiver when pulling the string."
 	icon_state = "rebarxbowsyndie"
 	inhand_icon_state = "rebarxbowsyndie"
 	worn_icon_state = "rebarxbowsyndie"
 	w_class = WEIGHT_CLASS_NORMAL
-	can_modify_ammo = TRUE
-	initial_caliber = CALIBER_REBAR_SYNDIE
-	alternative_caliber = CALIBER_REBAR_SYNDIE_NORMAL
-	alternative_ammo_misfires = FALSE
-	draw_time = 1
+	draw_time = 0.5 SECONDS
+	reload_time = 1.2 SECONDS
+	doafter_flags = IGNORE_USER_LOC_CHANGE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
 
 /obj/item/gun/ballistic/rifle/rebarxbow/syndie/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 2) //enough range to at least be useful for stealth
 
+/// PIPE GUNS ///
+
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"
-	desc = "An excellent weapon for flushing out tunnel rats and enemy assistants, but its rifling leaves much to be desired."
-	icon = 'icons/obj/weapons/guns/ballistic.dmi'
-	icon_state = "musket"
-	inhand_icon_state = "musket"
-	worn_icon_state = "musket"
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
-	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	desc = "A symbol that the true masters of this place are not those who merely inhabit it, but the one willing to twist it towards a killing intent."
+	icon_state = "pipegun"
+	inhand_icon_state = "pipegun"
+	worn_icon_state = "pipegun"
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8.05, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 3)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
-	initial_caliber = CALIBER_SHOTGUN
-	alternative_caliber = CALIBER_STRILKA310
-	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
-	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
-	can_modify_ammo = TRUE
-	can_bayonet = TRUE
-	knife_x_offset = 25
-	knife_y_offset = 11
+	projectile_damage_multiplier = 1.6
+	projectile_speed_multiplier = 1.6
+	obj_flags = UNIQUE_RENAME
 	can_be_sawn_off = FALSE
-	projectile_damage_multiplier = 0.75
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	pb_knockback = 3
+	pressure_threshold = AMMO_CASING_PRESSURE_EXTREME //Don't ask how assistants do it, they jsut do.
 
-	SET_BASE_PIXEL(0, 0)
+	SET_BASE_PIXEL(-8, 0)
 
-/obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber()
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to recall a tale about [src]."), \
+		lore = "<b>You were told this story, in hushed tones, from a wizened man in a grey jumpsuit...</b><br><br>\
+			It is said that the first slaying committed on a Nanotrasen space station was by an assistant.<br><br>\
+			That this act, done by toolbox, maybe spear, was what consigned their kind to a life of destitution, rejection and violence.<br><br>\
+			They carry the weight of this act visibly; the grey jumpsuit. Breathing deeply filtered air. And with bloodsoaked yellow hands clenched into fists.<br><br>\
+			Eyes, sharp and waiting. Hunters in the dark.<br><br>\
+			Eventually, these killing spirits sought to stake a claim on the metal tombs they were trapped within. Rejecting their status. Determined to be something more.<br><br>\
+			This weapon is one such tool. And it is a grim one indeed - wrought from scrap, pulled from the station's walls and floors and the very nails holding it together.<br>\
+			<br>\
+			It is a symbol that the true masters of this place are not those who merely inhabit it, but the one willing to twist it towards a killing intent." \
+	)
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 35, offset_y = 10)
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	. = ..()
 	do_sparks(1, TRUE, src)
 
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/empty
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/empty
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol
+	name = "pipe pistol"
+	desc = "It is foolish to think that anyone wearing the grey is incapable of hurting you, simply because they are not baring their teeth."
+	icon_state = "pipepistol"
+	inhand_icon_state = "pipepistol"
+	worn_icon_state = "gun"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.25, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 4, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol
+	projectile_damage_multiplier = 0.625
+	projectile_speed_multiplier = 1
+	spread = 15 //kinda inaccurate
+	burst_size = 3 //but it empties the entire magazine when it fires
+	burst_delay = 0.3 // and by empties, I mean it does it all at once
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_NORMAL
+	weapon_weight = WEAPON_MEDIUM
+	semi_auto = TRUE
+
+	SET_BASE_PIXEL(0, 0)
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/add_bayonet_point()
+	return
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/empty
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol/empty
+
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
 	name = "regal pipegun"
-	desc = "Older, territorial assistants typically possess more valuable loot."
-	icon_state = "musket_prime"
-	inhand_icon_state = "musket_prime"
-	worn_icon_state = "musket_prime"
+	desc = "To call this 'regal' is a cruel irony, for the only noteworthy quality of nobility is in how it is wielded to kill. \
+		All monarchs deserve to be crowned. But none will remember the dead tyrant for the red stain they left on the carpet."
+	icon_state = "regal_pipegun"
+	inhand_icon_state = "regal_pipegun"
+	worn_icon_state = "regal_pipegun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
-	projectile_damage_multiplier = 1
+	projectile_damage_multiplier = 3
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 9.2,
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.15,
+		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 3,
+	)
 
-/// MAGICAL BOLT ACTIONS + ARCANE BARRAGE? ///
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/prime/empty
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime/empty
+
+/obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/prime
+	name = "regal pipe pistol"
+	desc = "What value is there in honesty towards the dishonest? So that they might twist the arm and slit the wrist? \
+		The open palm is no sign of weakness; it is to draw the eyes away from the other hand, lying in wait."
+	icon_state = "regal_pipepistol"
+	inhand_icon_state = "regal_pipepistol"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/pistol/prime
+	projectile_damage_multiplier = 1
+	burst_size = 6 // WHOLE CLIP
+	spread = 0
+
+/// MAGICAL BOLT ACTIONS ///
 
 /obj/item/gun/ballistic/rifle/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
 	icon_state = "enchanted_rifle"
-	inhand_icon_state = "enchanted_rifle"
+	inhand_icon_state = "enchanted"
 	worn_icon_state = "enchanted_rifle"
 	slot_flags = ITEM_SLOT_BACK
 	var/guns_left = 30
@@ -329,7 +473,7 @@
 		var/obj/item/gun/ballistic/rifle/enchanted/gun = new type
 		gun.guns_left = guns_left - 1
 		discard_gun(user)
-		user.swap_hand()
+		user.cycle_hand()
 		user.put_in_hands(gun)
 	else
 		user.dropItemToGround(src, TRUE)
@@ -338,9 +482,9 @@
 
 /obj/item/gun/ballistic/rifle/sniper_rifle
 	name = "anti-materiel sniper rifle"
-	desc = "A boltaction anti-materiel rifle, utilizing .50 BMG cartridges. While technically outdated in modern arms markets, it still works exceptionally well as \
-		an anti-personnel rifle. In particular, the employment of modern armored MODsuits utilizing advanced armor plating has given this weapon a new home on the battlefield. \
-		It is also able to be suppressed....somehow."
+	desc = "A surprisingly compact bolt-action anti-materiel rifle, utilizing .50 BMG cartridges. \
+		While technically outdated in modern arms markets, it still works exceptionally well \
+		in anti-personnel and light anti-armor roles. Also, somehow, capable of fitting a suppressor."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "sniper"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
@@ -350,11 +494,11 @@
 	weapon_weight = WEAPON_HEAVY
 	inhand_icon_state = "sniper"
 	worn_icon_state = null
-	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
 	fire_sound_volume = 90
-	load_sound = 'sound/weapons/gun/sniper/mag_insert.ogg'
-	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
-	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
+	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	recoil = 2
 	accepted_magazine_type = /obj/item/ammo_box/magazine/sniper_rounds
 	internal_magazine = FALSE
@@ -376,7 +520,22 @@
 	. = ..()
 	AddComponent(/datum/component/scope, range_modifier = 4) //enough range to at least make extremely good use of the penetrator rounds
 
-/obj/item/gun/ballistic/rifle/sniper_rifle/reset_semicd()
+/obj/item/gun/ballistic/rifle/sniper_rifle/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore = "Modern arms and armor technology has come a long way since man's first strides into space, \
+			from high-throughput directed energy weaponry to advanced energy shielding and everything in between. \
+			Such advancements in technology, then, should have put the role of the anti-materiel rifle to rest, \
+			as other solutions to the armor problems it solves would have become more accessible - in theory, anyway.<br>\
+			<br>\
+			In practice, the problem with advanced armor is that it's expensive and/or heavy - \
+			both of which are constraints that limit the usage of such defensive solutions, \
+			especially on smaller targets such as station-ready exosuits or human-scale MODsuits.<br>\
+			<br>\
+			These constraints gave the anti-materiel rifle concept a new lease on life, \
+			which Scarborough Arms is happy to provide to prospective buyers." \
+	)
+
+/obj/item/gun/ballistic/rifle/sniper_rifle/reset_fire_cd()
 	. = ..()
 	if(suppressed)
 		playsound(src, 'sound/machines/eject.ogg', 25, TRUE, ignore_walls = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_distance = 0)
@@ -384,8 +543,83 @@
 		playsound(src, 'sound/machines/eject.ogg', 50, TRUE)
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/syndicate
-	desc = "A boltaction anti-materiel rifle, utilizing .50 BMG cartridges. While technically outdated in modern arms markets, it still works exceptionally well as \
-		an anti-personnel rifle. In particular, the employment of modern armored MODsuits utilizing advanced armor plating has given this weapon a new home on the battlefield. \
-		It is also able to be suppressed....somehow. This one seems to have a little picture of someone in a blood-red MODsuit stenciled on it, pointing at a green floppy disk. \
-		Who knows what that might mean."
+	desc = parent_type::desc + " This one seems to have a little picture of someone in a Gorlex Marauders blood-red MODsuit stenciled on it, \
+		pointing at a green floppy disk. Who knows what that might mean."
 	pin = /obj/item/firing_pin/implant/pindicate
+
+// SKS semi-automatic rifle //
+
+/obj/item/gun/ballistic/rifle/sks
+	name = "\improper Sakhno SKS semi-automatic rifle"
+	desc = "A revival of the ancient SKS semi-automatic rifle, redesigned to utilize .310 Strilka rounds. \
+		Loses some per-cartridge stopping power due to quirks in the gas-operation system."
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	icon_state = "sks"
+	worn_icon_state = "sks"
+	inhand_icon_state = "sks"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/sks
+	need_bolt_lock_to_interact = TRUE
+	semi_auto = TRUE
+	slot_flags = ITEM_SLOT_BACK
+	projectile_damage_multiplier = 0.5
+	custom_materials = list(
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.55,
+		/datum/material/cardboard = SHEET_MATERIAL_AMOUNT,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2,
+	)
+
+	SET_BASE_PIXEL(-8, 0)
+
+/obj/item/gun/ballistic/rifle/sks/add_deep_lore()
+	AddElement(/datum/element/examine_lore, \
+		lore = "The Sakhno Concern's modernized reproductions of the SKS were commissioned by the \
+			leadership of the Third Soviet Union to celebrate their establishment in the Spinward Sector.<br>\
+			<br>\
+			In the wake of the Union's collapse, however, these weapons now hold a unique place in history \
+			amongst the populace of the sector as a reminder of what came before - and, possibly, the hope of what may come after. \
+			However, both parts kits and completed rifles are, strangely, rarer than the Sakhno M2442 Army.<br>\
+			<br>\
+			Frontier settlers are known to own these for hunting purposes, or fighting off annoying tax collectors. \
+			Some argue that these are the same activity." \
+	)
+
+/obj/item/gun/ballistic/rifle/sks/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 38, offset_y = 12)
+
+/obj/item/gun/ballistic/rifle/sks/chekhov
+	name = "\improper Chekhov's SKS semi-automatic rifle"
+	desc = parent_type::desc + " The name 'Chekhov' is engraved in the side of the stock. \
+		You feel like this had some kind of significance at one point, but you cannot be sure as to what that might have been, \
+		or whether that true meaning has yet to reveal itself."
+
+/obj/item/gun/ballistic/rifle/sks/empty
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/sks/empty
+
+// lahti-l39 anti material rifle //
+
+/obj/item/gun/ballistic/automatic/lahti
+	name = "anti-tank rifle"
+	desc = "A reproduction of an ancient anti-tank rifle, manufactured in space with lighter, stronger materials, making it more portable and reliable. \
+		Chambered for a concerningly large 20x138mm cartridge, which, too, has received a modern facelift, \
+		making it terrifyingly effective, especially against exosuits."
+	icon = 'icons/obj/weapons/guns/lahtil39.dmi'
+	icon_state = "lahtil"
+	inhand_icon_state = "sniper"
+	worn_icon_state = "sniper"
+	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
+	fire_sound_volume = 90
+	load_sound = 'sound/items/weapons/gun/sniper/mag_insert.ogg'
+	rack_sound = 'sound/items/weapons/gun/sniper/rack.ogg'
+	suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
+	mag_display = FALSE
+	recoil = 15
+	w_class = WEIGHT_CLASS_BULKY
+	accepted_magazine_type = /obj/item/ammo_box/magazine/lahtimagazine
+	fire_delay = 8 SECONDS
+	slowdown = 2
+	burst_size = 1
+	slot_flags = ITEM_SLOT_BACK
+	actions_types = list()
+	suppressor_x_offset = 3
+	suppressor_y_offset = 3

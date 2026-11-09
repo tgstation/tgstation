@@ -1,6 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -11,9 +8,12 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from '../components';
-import { FakeTerminal } from '../components/FakeTerminal';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { FakeTerminal } from './common/FakeTerminal';
 
 enum CONTRACT {
   Inactive = 1,
@@ -104,7 +104,7 @@ function SyndicateContractorContent(props) {
     'Awaiting response...',
     'Awaiting response...',
     'Response received, ack 4851234...',
-    'CONFIRM ACC ' + Math.round(Math.random() * 20000),
+    `CONFIRM ACC ${Math.round(Math.random() * 20000)}`,
     'Setting up private accounts...',
     'CONTRACTOR ACCOUNT CREATED',
     'Searching for available contracts...',
@@ -259,11 +259,11 @@ function ContractsTab(props) {
       >
         {contracts.map((contract) => {
           if (ongoing_contract && contract.status !== CONTRACT.Active) {
-            return;
+            return null;
           }
           const active = contract.status > CONTRACT.Inactive;
           if (contract.status >= CONTRACT.Complete) {
-            return;
+            return null;
           }
           return (
             <Section
@@ -282,7 +282,7 @@ function ContractsTab(props) {
                     disabled={!!contract.extraction_enroute}
                     color={active && 'bad'}
                     onClick={() =>
-                      act('PRG_contract' + (active ? '_abort' : '-accept'), {
+                      act(`PRG_contract${active ? '_abort' : '-accept'}`, {
                         contract_id: contract.id,
                       })
                     }

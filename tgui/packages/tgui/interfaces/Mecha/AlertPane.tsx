@@ -1,6 +1,14 @@
+import {
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  Section,
+  Stack,
+} from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button, Dimmer, Icon, Section, Stack } from '../../components';
-import { MainData } from './data';
+import type { MainData } from './data';
 
 export const InternalDamageToDamagedDesc = {
   MECHA_INT_FIRE: 'Internal fire detected',
@@ -50,11 +58,8 @@ export const AlertPane = (props) => {
                     : 'good')
               }
             >
-              {overclock_mode
-                ? `Overclocking (${Math.round(
-                    overclock_temp_percentage * 100,
-                  )}%)`
-                : 'Overclock'}
+              {overclock_mode ? "Overclocking " : "Overclock "}
+              ({Math.round(Math.max(overclock_temp_percentage * 100, 0))}%)
             </Button>
             {!!overclock_safety_available && (
               <Button

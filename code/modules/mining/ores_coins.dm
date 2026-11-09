@@ -1,8 +1,3 @@
-
-#define GIBTONITE_QUALITY_HIGH 3
-#define GIBTONITE_QUALITY_MEDIUM 2
-#define GIBTONITE_QUALITY_LOW 1
-
 #define ORESTACK_OVERLAYS_MAX 10
 
 /**********************Mineral ores**************************/
@@ -15,13 +10,29 @@
 	full_w_class = WEIGHT_CLASS_BULKY
 	singular_name = "ore chunk"
 	material_flags = MATERIAL_EFFECTS
-	var/points = 0 //How many points this ore gets you from the ore redemption machine
-	var/refined_type = null //What this ore defaults to being refined into
-	var/mine_experience = 5 //How much experience do you get for mining this ore?
 	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
+	drop_sound = /datum/sound_effect/stone_drop
+	pickup_sound = /datum/sound_effect/stone_pickup
+	sound_vary = TRUE
+	/// How many points this ore gets you from the ore redemption machine
+	var/points = 0
+	/// What this ore defaults to being refined into
+	var/refined_type = null
+	/// How much experience do you get for mining this ore?
+	var/mine_experience = 5
 	var/list/stack_overlays
-	var/scan_state = "" //Used by mineral turfs for their scan overlay.
-	var/spreadChance = 0 //Also used by mineral turfs for spreading veins
+	/// Used by mineral turfs for their scan overlay.
+	var/scan_state = ""
+	/// Chance that we'll spawn as a vein rather than a sole tile
+	var/spread_chance = 0
+	/// Type of ore vein we spawn, cluster/scatter/plain/branching
+	var/vein_type = ORE_VEIN_CLUSTER
+	/// Optimal distance from open turfs for us to spawn, 1 is next to an open tile
+	var/vein_distance = 1
+	/// Minimum distance that a vein can span, radius for cluster/scatter, maximum length for plain/branching
+	var/min_vein_size = 1
+	/// Minimum distance that a vein can span, radius for cluster/scatter, maximum length for plain/branching
+	var/max_vein_size = 2
 
 /obj/item/stack/ore/update_overlays()
 	. = ..()
@@ -38,37 +49,45 @@
 	else //amount > stack_overlays, add some.
 		for(var/i in 1 to difference)
 			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
-			newore.pixel_x = rand(-8,8)
-			newore.pixel_y = rand(-8,8)
+			newore.pixel_w = rand(-8,8)
+			newore.pixel_z = rand(-8,8)
 			LAZYADD(stack_overlays, newore)
 
 	if(stack_overlays)
 		. += stack_overlays
 
+/**
+ * Called when the ore is collected by an ore redemption machine. returns the ore itself.
+ * Normally, ores without a refined type aren't collected by the orm.
+ * It can also be overriden for more specific behavior (for example, sand is smelted into glass beforehand because of different mats).
+ */
+/obj/item/stack/ore/proc/on_orm_collection()
+	return isnull(refined_type) ? null : src
+
 /obj/item/stack/ore/welder_act(mob/living/user, obj/item/I)
-	..()
+	. = ..()
 	if(!refined_type)
 		return TRUE
 
-	if(I.use_tool(src, user, 0, volume=50))
-		new refined_type(drop_location())
-		use(1)
+	if(!I.use_tool(src, user, 0, volume = 50))
+		return TRUE
 
+	var/sheets_made = values_sum(mats_per_unit) / SHEET_MATERIAL_AMOUNT
+	new refined_type(drop_location(), max(1, floor(sheets_made)))
+	use(max(1, ceil(1 / sheets_made)))
 	return TRUE
 
 /obj/item/stack/ore/fire_act(exposed_temperature, exposed_volume)
 	. = ..()
 	if(isnull(refined_type))
 		return
-	else
-		var/probability = (rand(0,100))/100
-		var/burn_value = probability*amount
-		var/amountrefined = round(burn_value, 1)
-		if(amountrefined < 1)
-			qdel(src)
-		else
-			new refined_type(drop_location(),amountrefined)
-			qdel(src)
+
+	var/probability = rand(0, 100) / 100
+	var/burn_value = probability * amount
+	var/amount_refined = floor(burn_value * values_sum(mats_per_unit) / SHEET_MATERIAL_AMOUNT)
+	if(amount_refined > 1)
+		new refined_type(drop_location(), amount_refined)
+	qdel(src)
 
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
@@ -76,45 +95,59 @@
 	singular_name = "uranium ore chunk"
 	points = 30
 	material_flags = NONE
-	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/uranium = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/uranium
 	mine_experience = 6
-	scan_state = "rock_Uranium"
-	spreadChance = 5
+	scan_state = "rock_uranium"
+	spread_chance = 35
 	merge_type = /obj/item/stack/ore/uranium
+	vein_type = ORE_VEIN_PLAIN
+	vein_distance = 3
+	min_vein_size = 1
+	max_vein_size = 3
 
 /obj/item/stack/ore/iron
 	name = "iron ore"
 	icon_state = "iron"
 	singular_name = "iron ore chunk"
 	points = 1
-	mats_per_unit = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/iron
 	mine_experience = 1
-	scan_state = "rock_Iron"
-	spreadChance = 20
+	scan_state = "rock_iron"
+	spread_chance = 65
 	merge_type = /obj/item/stack/ore/iron
+	min_vein_size = 1
+	max_vein_size = 3
 
 /obj/item/stack/ore/glass
 	name = "sand pile"
 	icon_state = "glass"
 	singular_name = "sand pile"
 	points = 1
-	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT)
+	material_type = /datum/material/sand
 	refined_type = /obj/item/stack/sheet/glass
 	w_class = WEIGHT_CLASS_TINY
 	mine_experience = 0 //its sand
 	merge_type = /obj/item/stack/ore/glass
+	usable_for_construction = TRUE
 
 GLOBAL_LIST_INIT(sand_recipes, list(\
-		new /datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 1 SECONDS, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_TOOLS), \
-		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50, check_density = FALSE, category = CAT_MISC),\
-		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50, check_density = FALSE, category = CAT_TILES)\
+		new /datum/stack_recipe("pile of dirt", /obj/machinery/hydroponics/soil, 3, time = 1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_TOOLS), \
+		new /datum/stack_recipe("sandstone", /obj/item/stack/sheet/mineral/sandstone, 1, 1, 50, crafting_flags = CRAFT_NO_MATERIALS, category = CAT_MISC),\
+		new /datum/stack_recipe("aesthetic volcanic floor tile", /obj/item/stack/tile/basalt, 2, 1, 50, crafting_flags = NONE, category = CAT_TILES)\
 ))
 
 /obj/item/stack/ore/glass/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
 	AddComponent(/datum/component/storm_hating)
+
+/obj/item/stack/ore/glass/on_orm_collection() //we need to smelt the glass beforehand because the silo and orm don't accept sand mats
+	//If we spawn the sheet of glass on the turf the ORM is "listening" to, it'll get redeemed before we can use it as return value and weird stuff my happen.
+	var/obj/item/stack/sheet/glass = new refined_type(null, amount)
+	qdel(src)
+	return glass
 
 /obj/item/stack/ore/glass/get_main_recipes()
 	. = ..()
@@ -128,7 +161,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		C.visible_message(span_danger("[C]'s eye protection blocks the sand!"), span_warning("Your eye protection blocks the sand!"))
 		return
 	C.adjust_eye_blur(12 SECONDS)
-	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
+	C.adjust_stamina_loss(15) //the pain from your eyes burning does stamina damage
 	C.adjust_confusion(5 SECONDS)
 	to_chat(C, span_userdanger("\The [src] gets into your eyes! The pain, it burns!"))
 	qdel(src)
@@ -137,8 +170,33 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	if(severity)
 		qdel(src)
 		return TRUE
-
 	return FALSE
+
+/obj/item/stack/ore/glass/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	. = ..()
+	if (.)
+		return
+
+	if(!target.is_dunkable())
+		return NONE
+
+	var/datum/reagent/cement/cement = target.reagents?.has_reagent(/datum/reagent/cement, check_subtypes=TRUE)
+	if (!cement)
+		return NONE
+
+	var/sand_to_use = min(floor(cement.volume / cement.units_per_aggregate), amount)
+	if (!sand_to_use)
+		to_chat(user, span_warning("You don't have enough [cement.name] to mix with [src]."))
+		return ITEM_INTERACT_BLOCKING
+
+	use(sand_to_use)
+	target.reagents.convert_reagent(cement.type, cement.concrete_type, conversion_volume = sand_to_use * cement.units_per_aggregate)
+	user.visible_message(span_warning("[user] slips something into [target]!"), span_notice("You dissolve [src] in [target]."), null, 2)
+	playsound(target, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/stack/ore/glass/thirty
+	amount = 30
 
 /obj/item/stack/ore/glass/basalt
 	name = "volcanic ash"
@@ -147,17 +205,34 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 0
 	merge_type = /obj/item/stack/ore/glass/basalt
 
+/obj/item/stack/ore/glass/siderite
+	name = "siderite dust"
+	icon_state = "siderite_sand"
+	singular_name = "siderite dust pile"
+	mine_experience = 0
+	merge_type = /obj/item/stack/ore/glass/siderite
+
+/obj/item/stack/ore/glass/concrete_powder
+	name = "concrete powder"
+	icon_state = "concrete_powder"
+	singular_name = "concrete powder pile"
+	mine_experience = 0
+	merge_type = /obj/item/stack/ore/glass/concrete_powder
+
 /obj/item/stack/ore/plasma
 	name = "plasma ore"
 	icon_state = "plasma"
 	singular_name = "plasma ore chunk"
 	points = 15
-	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/plasma = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/plasma
 	mine_experience = 5
-	scan_state = "rock_Plasma"
-	spreadChance = 8
+	scan_state = "rock_plasma"
+	spread_chance = 45
 	merge_type = /obj/item/stack/ore/plasma
+	vein_type = ORE_VEIN_PLAIN
+	min_vein_size = 2
+	max_vein_size = 4
 
 /obj/item/stack/ore/plasma/welder_act(mob/living/user, obj/item/I)
 	to_chat(user, span_warning("You can't hit a high enough temperature to smelt [src] properly!"))
@@ -169,11 +244,14 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	singular_name = "silver ore chunk"
 	points = 16
 	mine_experience = 3
-	mats_per_unit = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/silver
-	scan_state = "rock_Silver"
-	spreadChance = 5
+	scan_state = "rock_silver"
+	spread_chance = 35
 	merge_type = /obj/item/stack/ore/silver
+	vein_type = ORE_VEIN_BRANCH
+	min_vein_size = 0
+	max_vein_size = 2
 
 /obj/item/stack/ore/gold
 	name = "gold ore"
@@ -181,45 +259,68 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	singular_name = "gold ore chunk"
 	points = 18
 	mine_experience = 5
-	mats_per_unit = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/gold
-	scan_state = "rock_Gold"
-	spreadChance = 5
+	scan_state = "rock_gold"
+	spread_chance = 35
 	merge_type = /obj/item/stack/ore/gold
+	vein_type = ORE_VEIN_BRANCH
+	vein_distance = 2
+	min_vein_size = 0
+	max_vein_size = 2
 
 /obj/item/stack/ore/diamond
 	name = "diamond ore"
 	icon_state = "diamond"
 	singular_name = "diamond ore chunk"
 	points = 50
-	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/diamond
 	mine_experience = 10
-	scan_state = "rock_Diamond"
+	scan_state = "rock_diamond"
 	merge_type = /obj/item/stack/ore/diamond
+	vein_type = ORE_VEIN_SCATTER
+	spread_chance = 20
+	vein_distance = 4
+	min_vein_size = 1
+	max_vein_size = 2
+
+/obj/item/stack/ore/diamond/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/raptor_food, speed_modifier = 0.05, health_modifier = -1, color_chances = string_list(list(/datum/raptor_color/yellow = 3)))
+
+/obj/item/stack/ore/diamond/five
+	amount = 5
 
 /obj/item/stack/ore/bananium
 	name = "bananium ore"
 	icon_state = "bananium"
 	singular_name = "bananium ore chunk"
 	points = 60
-	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/bananium = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/bananium
 	mine_experience = 15
-	scan_state = "rock_Bananium"
+	scan_state = "rock_bananium"
 	merge_type = /obj/item/stack/ore/bananium
+	vein_type = ORE_VEIN_PLAIN
+	spread_chance = 20
+	vein_distance = 4
+	min_vein_size = 1
+	max_vein_size = 2
 
 /obj/item/stack/ore/titanium
 	name = "titanium ore"
 	icon_state = "titanium"
 	singular_name = "titanium ore chunk"
 	points = 50
-	mats_per_unit = list(/datum/material/titanium=SHEET_MATERIAL_AMOUNT)
+	mats_per_unit = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 	mine_experience = 3
-	scan_state = "rock_Titanium"
-	spreadChance = 5
+	scan_state = "rock_titanium"
+	spread_chance = 35
 	merge_type = /obj/item/stack/ore/titanium
+	min_vein_size = 1
+	max_vein_size = 2
 
 /obj/item/stack/ore/slag
 	name = "slag"
@@ -279,44 +380,54 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/gibtonite/IsSpecialAssembly()
 	return TRUE
 
-/obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/assembly_holder) && !rig)
-		var/obj/item/assembly_holder/holder = I
+/obj/item/gibtonite/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/assembly_holder) && !rig)
+		var/obj/item/assembly_holder/holder = tool
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
-			return ..()
+			return NONE
+
 		if(!user.transferItemToLoc(holder, src))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		add_fingerprint(user)
 		rig = holder
 		holder.master = src
 		holder.on_attach()
 		rig_overlay = holder
-		rig_overlay.pixel_y -= 5
+		rig_overlay.pixel_z -= 5
 		add_overlay(rig_overlay)
 		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(igniter_prime))
 		log_bomber(user, "attached [holder] to ", src)
 		attacher = key_name(user)
 		user.balloon_alert_to_viewers("attached rig")
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(I.tool_behaviour == TOOL_WRENCH && rig)
-		rig.on_found()
-		if(QDELETED(src))
-			return
-		user.balloon_alert_to_viewers("detached rig")
-		user.log_message("detached [rig] from [src].", LOG_GAME)
-		user.put_in_hands(rig)
-		return
-
-	if(I.tool_behaviour == TOOL_MINING || istype(I, /obj/item/resonator) || I.force >= 10)
+	if(tool.tool_behaviour == TOOL_MINING || istype(tool, /obj/item/resonator) || tool.force >= 10)
 		GibtoniteReaction(user, "A resonator has primed for detonation a")
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(I, /obj/item/mining_scanner) || istype(I, /obj/item/t_scanner/adv_mining_scanner) || I.tool_behaviour == TOOL_MULTITOOL)
+	if(istype(tool, /obj/item/mining_scanner) || istype(tool, /obj/item/t_scanner/adv_mining_scanner))
 		defuse(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
+
+/obj/item/gibtonite/wrench_act(mob/living/user, obj/item/tool)
+	if(!rig)
+		return NONE
+
+	rig.on_found()
+	if(QDELETED(src))
+		return ITEM_INTERACT_BLOCKING
+
+	user.balloon_alert_to_viewers("detached rig")
+	user.log_message("detached [rig] from [src].", LOG_GAME)
+	user.put_in_hands(rig)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/gibtonite/multitool_act(mob/living/user, obj/item/tool)
+	defuse(user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Stop the reaction and reduce ore explosive power
 /obj/item/gibtonite/proc/defuse(mob/defuser)
@@ -335,8 +446,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	else
 		return ..()
 
-/obj/item/gibtonite/bullet_act(obj/projectile/P)
-	GibtoniteReaction(P.firer, "A projectile has primed for detonation a")
+/obj/item/gibtonite/bullet_act(obj/projectile/proj)
+	GibtoniteReaction(proj.firer, "A projectile has primed for detonation a")
 	return ..()
 
 /obj/item/gibtonite/ex_act()
@@ -403,7 +514,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /*****************************Coin********************************/
 
-// The coin's value is a value of it's materials.
+// The coin's value is a value of its materials.
 // Yes, the gold standard makes a come-back!
 // This is the only way to make coins that are possible to produce on station actually worth anything.
 /obj/item/coin
@@ -414,14 +525,12 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	force = 1
 	throwforce = 2
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron = COIN_MATERIAL_AMOUNT)
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	var/string_attached
 	var/list/sideslist = list("heads","tails")
 	var/cooldown = 0
 	var/value = 0
 	var/coinflip
-	item_flags = NO_MAT_REDEMPTION //You know, it's kind of a problem that money is worth more extrinsicly than intrinsically in this universe.
 	///If you do not want this coin to be valued based on its materials and instead set a custom value set this to TRUE and set value to the desired value.
 	var/override_material_worth = FALSE
 	/// The name of the heads side of the coin
@@ -435,15 +544,15 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	icon_state = "coin_[coinflip]"
 	pixel_x = base_pixel_x + rand(0, 16) - 8
 	pixel_y = base_pixel_y + rand(0, 8) - 8
+	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_BAIT_ALLOW_FISHING_DUD), INNATE_TRAIT)
 
-/obj/item/coin/set_custom_materials(list/materials, multiplier = 1)
+/obj/item/coin/finalize_material_effects(list/materials)
 	. = ..()
 	if(override_material_worth)
 		return
 	value = 0
-	for(var/i in custom_materials)
-		var/datum/material/M = i
-		value += M.value_per_unit * custom_materials[M]
+	for(var/datum/material/material as anything in materials)
+		value += material.value_per_unit * materials[material][MATERIAL_LIST_OPTIMAL_AMOUNT]
 
 /obj/item/coin/get_item_credit_value()
 	return value
@@ -460,33 +569,34 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	var/index = sideslist.Find(coinflip)
 	if (index == 2)//tails
 		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] promptly falls over, dead!"))
-		user.adjustOxyLoss(200)
+		user.adjust_oxy_loss(200)
 		user.death(FALSE)
 		user.set_suicide(TRUE)
 		user.suicide_log()
 	else
-		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] keeps on living!"))
+		user.visible_message(span_suicide("\the [src] lands on [coinflip]! [user] keeps on living!")) //Don't put it in your pocket. It's your lucky quarter.
 
 /obj/item/coin/examine(mob/user)
 	. = ..()
-	. += span_info("It's worth [value] credit\s.")
+	. += span_info("It's worth [value] [MONEY_NAME_AUTOPURAL(value)].")
 
-/obj/item/coin/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/CC = W
-		if(string_attached)
-			to_chat(user, span_warning("There already is a string attached to this coin!"))
-			return
+/obj/item/coin/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/cable_coil))
+		return NONE
 
-		if (CC.use(1))
-			add_overlay("coin_string_overlay")
-			string_attached = 1
-			to_chat(user, span_notice("You attach a string to the coin."))
-		else
-			to_chat(user, span_warning("You need one length of cable to attach a string to the coin!"))
-			return
-	else
-		..()
+	var/obj/item/stack/cable_coil/string = tool
+	if(string_attached)
+		to_chat(user, span_warning("There already is a string attached to this coin!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!string.use(1))
+		to_chat(user, span_warning("You need one length of cable to attach a string to the coin!"))
+		return ITEM_INTERACT_BLOCKING
+
+	add_overlay("coin_string_overlay")
+	string_attached = TRUE
+	to_chat(user, span_notice("You attach a string to the coin."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/coin/wirecutter_act(mob/living/user, obj/item/I)
 	..()
@@ -511,7 +621,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
 		sleep(1.5 SECONDS)
-		if(loc == oldloc && user && !user.incapacitated())
+		if(loc == oldloc && user && !user.incapacitated)
 			user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
 				span_notice("You flip [src]. It lands on [coinflip]."), \
 				span_hear("You hear the clattering of loose change."))
@@ -546,6 +656,9 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/titanium
 	custom_materials = list(/datum/material/titanium = COIN_MATERIAL_AMOUNT)
 
+/obj/item/coin/titanium/grind_results()
+	return list(/datum/reagent/flash_powder = 8)
+
 /obj/item/coin/bananium
 	custom_materials = list(/datum/material/bananium = COIN_MATERIAL_AMOUNT)
 
@@ -555,11 +668,17 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/mythril
 	custom_materials = list(/datum/material/mythril = COIN_MATERIAL_AMOUNT)
 
+/obj/item/coin/mythril/grind_results()
+	return list(/datum/reagent/medicine/omnizine/godblood = 8)
+
 /obj/item/coin/plastic
 	custom_materials = list(/datum/material/plastic = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/runite
 	custom_materials = list(/datum/material/runite = COIN_MATERIAL_AMOUNT)
+
+/obj/item/coin/runite/grind_results()
+	return list(/datum/reagent/iron = 4, /datum/reagent/consumable/ethanol/ritual_wine = 4)
 
 /obj/item/coin/twoheaded
 	desc = "Hey, this coin's the same on both sides!"
@@ -575,11 +694,18 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	material_flags = NONE
 	override_material_worth = TRUE
 
+/obj/item/coin/antagtoken/grind_results()
+	return list(/datum/reagent/ants = 4, /datum/reagent/consumable/eggyolk = 4)
+
 /obj/item/coin/iron
+	custom_materials = list(/datum/material/iron = COIN_MATERIAL_AMOUNT)
 
 /obj/item/coin/gold/debug
 	custom_materials = list(/datum/material/gold = COIN_MATERIAL_AMOUNT)
 	desc = "If you got this somehow, be aware that it will dust you. Almost certainly."
+
+/obj/item/coin/gold/debug/grind_results()
+	return list(/datum/reagent/gold/cursed = 8)
 
 /obj/item/coin/gold/debug/attack_self(mob/user)
 	if(cooldown < world.time)
@@ -593,7 +719,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		playsound(user.loc, 'sound/items/coinflip.ogg', 50, TRUE)
 		var/oldloc = loc
 		sleep(1.5 SECONDS)
-		if(loc == oldloc && user && !user.incapacitated())
+		if(loc == oldloc && user && !user.incapacitated)
 			user.visible_message(span_notice("[user] flips [src]. It lands on [coinflip]."), \
 				span_notice("You flip [src]. It lands on [coinflip]."), \
 				span_hear("You hear the clattering of loose change."))
@@ -616,7 +742,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "eldritch coin"
 	desc = "A surprisingly heavy, ornate coin. Its sides seem to depict a different image each time you look."
 	icon_state = "coin_heretic"
-	custom_materials = list(/datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 	sideslist = list("heretic", "blade")
 	heads_name = "heretic"
 	has_action = TRUE
@@ -624,10 +750,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	/// The range at which airlocks are effected.
 	var/airlock_range = 5
 
+/obj/item/coin/eldritch/grind_results()
+	return list(/datum/reagent/carbon = 5, /datum/reagent/toxin/plasma = 5, /datum/reagent/eldritch = 4)
+
 /obj/item/coin/eldritch/heads_action(mob/user)
 	var/mob/living/living_user = user
 	if(!IS_HERETIC(user))
-		living_user.adjustBruteLoss(5)
+		living_user.adjust_brute_loss(5)
 		return
 	for(var/obj/machinery/door/airlock/target_airlock in range(airlock_range, user))
 		if(target_airlock.density)
@@ -638,7 +767,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/coin/eldritch/tails_action(mob/user)
 	var/mob/living/living_user = user
 	if(!IS_HERETIC(user))
-		living_user.adjustFireLoss(5)
+		living_user.adjust_fire_loss(5)
 		return
 	for(var/obj/machinery/door/airlock/target_airlock in range(airlock_range, user))
 		if(target_airlock.locked)
@@ -646,22 +775,4 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			continue
 		target_airlock.lock()
 
-/obj/item/coin/eldritch/afterattack(atom/target_atom, mob/user, proximity)
-	. = ..()
-	if(!proximity)
-		return
-	if(!IS_HERETIC(user))
-		var/mob/living/living_user = user
-		living_user.adjustBruteLoss(5)
-		living_user.adjustFireLoss(5)
-		return
-	if(istype(target_atom, /obj/machinery/door/airlock))
-		var/obj/machinery/door/airlock/target_airlock = target_atom
-		to_chat(user, span_warning("You insert [src] into the airlock."))
-		target_airlock.emag_act(user, src)
-		qdel(src)
-
-#undef GIBTONITE_QUALITY_HIGH
-#undef GIBTONITE_QUALITY_LOW
-#undef GIBTONITE_QUALITY_MEDIUM
 #undef ORESTACK_OVERLAYS_MAX

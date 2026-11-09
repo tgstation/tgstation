@@ -14,7 +14,8 @@
 		return
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		var/turf/vent_turf = get_turf(vent)
-		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded)
+		var/area/vent_area = get_area(vent)
+		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded && istype(vent_area, /area/station))
 			return TRUE //make sure we have a valid vent to spawn from.
 	return FALSE
 
@@ -49,7 +50,7 @@
 	filth_spawn_types = list(
 		/obj/effect/decal/cleanable/vomit,
 		/obj/effect/decal/cleanable/insectguts,
-		/obj/effect/decal/cleanable/oil,
+		/obj/effect/decal/cleanable/blood/oil,
 	)
 
 /datum/round_event/vent_clog/start()
@@ -76,8 +77,10 @@
 	var/static/list/mob_list = list(
 		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
+		/mob/living/basic/cockroach/bloodroach,
 		/mob/living/basic/spider/maintenance,
 		/mob/living/basic/mouse,
+		/mob/living/basic/snail,
 	)
 	return pick(mob_list)
 
@@ -92,7 +95,8 @@
 	var/list/vent_list = list()
 	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_pump))
 		var/turf/vent_turf = get_turf(vent)
-		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded && !vent_turf.is_blocked_turf_ignore_climbable())
+		var/area/vent_area = get_area(vent)
+		if(vent_turf && is_station_level(vent_turf.z) && !vent.welded && istype(vent_area, /area/station) && !vent_turf.is_blocked_turf_ignore_climbable())
 			vent_list += vent
 
 	if(!length(vent_list))
@@ -183,10 +187,17 @@
 		clear_signals()
 		kill()
 
+/datum/round_event/vent_clog/proc/on_examine(datum/source, mob/user, list/examine_list)
+	if(vent.welded)
+		examine_list += span_notice("Something's moving around in it, but it's being blocked by the welded opening.")
+		return
+	examine_list += span_warning("Something's trying to get out. You could use a [span_green("plunger")] to send it back on its way.")
+
 ///Handles the initial steps of clogging a vent, either at event start or when the vent moves.
 /datum/round_event/vent_clog/proc/clog_vent()
 	RegisterSignal(vent, COMSIG_QDELETING, PROC_REF(vent_move))
 	RegisterSignal(vent, COMSIG_PLUNGER_ACT, PROC_REF(plunger_unclog))
+	RegisterSignal(vent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 	for(var/turf/nearby_turf in view(2, get_turf(vent)))
 		if(isopenturf(nearby_turf) && prob(85))
@@ -196,7 +207,7 @@
 
 ///Clears the signals related to the event, before we wrap things up.
 /datum/round_event/vent_clog/proc/clear_signals()
-	UnregisterSignal(vent, list(COMSIG_QDELETING, COMSIG_PLUNGER_ACT))
+	UnregisterSignal(vent, list(COMSIG_QDELETING, COMSIG_PLUNGER_ACT, COMSIG_ATOM_EXAMINE))
 
 /datum/round_event_control/vent_clog/major
 	name = "Ventilation Clog: Major"
@@ -216,7 +227,7 @@
 		/obj/effect/decal/cleanable/blood,
 		/obj/effect/decal/cleanable/insectguts,
 		/obj/effect/decal/cleanable/fuel_pool,
-		/obj/effect/decal/cleanable/oil,
+		/obj/effect/decal/cleanable/blood/oil,
 	)
 
 /datum/round_event/vent_clog/major/get_mob()
@@ -279,7 +290,7 @@
 	spawn_delay = rand(6, 25)
 	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 10)
 	filth_spawn_types = list(
-		/obj/effect/decal/cleanable/xenoblood,
+		/obj/effect/decal/cleanable/blood/xeno,
 		/obj/effect/decal/cleanable/fuel_pool,
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/vomit,
@@ -293,12 +304,12 @@
 	var/static/list/mob_list = list(
 		/mob/living/basic/bear,
 		/mob/living/basic/cockroach/glockroach/mobroach,
+		/mob/living/basic/goose,
 		/mob/living/basic/lightgeist,
 		/mob/living/basic/mothroach,
 		/mob/living/basic/mushroom,
 		/mob/living/basic/viscerator,
-		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
-		/mob/living/simple_animal/pet/gondola,
+		/mob/living/basic/pet/gondola,
 	)
 	return pick(mob_list)
 

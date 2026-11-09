@@ -12,7 +12,7 @@
 	attack_verb_continuous = "pinches"
 	attack_verb_simple = "pinch"
 	smashes_walls = TRUE
-	attack_sound = 'sound/weapons/punch2.ogg'
+	attack_sound = 'sound/items/weapons/punch2.ogg'
 	playstyle_string = span_bold("You are a Proteon. Your abilities in combat are outmatched by most combat constructs, but you are still fast and nimble. Run metal and supplies, and cooperate with your fellow cultists.")
 
 /// Hostile NPC version

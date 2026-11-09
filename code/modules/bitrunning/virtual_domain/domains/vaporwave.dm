@@ -7,3 +7,4 @@
 	key = "vaporwave"
 	map_name = "vaporwave"
 	reward_points = BITRUNNER_REWARD_EXTREME
+	domain_flags = DOMAIN_NO_NOHIT_BONUS

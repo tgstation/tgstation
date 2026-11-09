@@ -42,7 +42,7 @@
 	if (!viewer.mind)
 		return
 	// If you're not conscious you're too busy or dead to look at propaganda
-	if (viewer.stat != CONSCIOUS)
+	if (IS_UNCONSCIOUS_OR_CRIT(viewer))
 		return
 	if(viewer.is_blind())
 		return
@@ -52,7 +52,7 @@
 		return
 
 
-	if (is_special_character(viewer))
+	if (viewer.is_antag())
 		to_chat(viewer, span_notice("[moods.antag_notification]"))
 		viewer.add_mood_event(moods.mood_category, moods.antag_mood)
 	else if (viewer.mind.assigned_role.departments_bitflags & (DEPARTMENT_BITFLAG_SECURITY|DEPARTMENT_BITFLAG_COMMAND))

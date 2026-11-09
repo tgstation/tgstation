@@ -9,7 +9,7 @@
 /datum/unit_test/geyser/Run()
 	//While we're at it just check em all
 	var/list/geysers = subtypesof(/obj/structure/geyser)
-	for(var/geyser_type as anything in geysers)
+	for(var/geyser_type in geysers)
 		var/obj/structure/geyser/wittel/geyser = allocate(geyser_type)
 		geyser.potency = geyser.max_volume //make it recharge in 1 tick
 

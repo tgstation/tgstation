@@ -17,12 +17,10 @@
 		unsync_modsuit()
 	return ..()
 
-/datum/computer_file/program/maintenance/modsuit_control/application_attackby(obj/item/attacking_item, mob/living/user)
-	. = ..()
-	if(!istype(attacking_item, /obj/item/mod/control))
-		return FALSE
-	sync_modsuit(attacking_item, user)
-	return TRUE
+/datum/computer_file/program/maintenance/modsuit_control/application_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/mod/control))
+		sync_modsuit(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
 /datum/computer_file/program/maintenance/modsuit_control/proc/sync_modsuit(obj/item/mod/control/new_modsuit, mob/living/user)
 	if(controlled_suit)

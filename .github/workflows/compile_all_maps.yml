@@ -1,0 +1,55 @@
+name: Compile All Maps
+
+on:
+  workflow_call:
+    inputs:
+      max_required_byond_client:
+        required: true
+        type: string
+
+jobs:
+  compile_all_stations:
+    name: Compile All Station Maps
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - parallel:
+        - name: Setup Bun
+          uses: ./.github/actions/setup_bun
+
+        - name: Restore or install BYOND
+          uses: ./.github/actions/restore_or_install_byond
+
+      - name: Compile all maps
+        run: |
+          source $HOME/BYOND/byond/bin/byondsetup
+          tools/build/build.sh --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
+
+      - name: Check client Compatibility
+        uses: tgstation/byond-client-compatibility-check@v3
+        with:
+          dmb-location: tgstation.dmb
+          max-required-client-version: ${{inputs.max_required_byond_client}}
+
+  compile_all_templates:
+    name: Compile All Templates
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - parallel:
+        - name: Setup Bun
+          uses: ./.github/actions/setup_bun
+
+        - name: Restore or install BYOND
+          uses: ./.github/actions/restore_or_install_byond
+
+      - name: Compile all templates
+        run: |
+          source $HOME/BYOND/byond/bin/byondsetup
+          tools/build/build.sh --ci dm -DCIBUILDING -DCITESTING -DALL_TEMPLATES

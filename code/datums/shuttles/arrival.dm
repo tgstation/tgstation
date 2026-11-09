@@ -1,5 +1,6 @@
 /datum/map_template/shuttle/arrival
 	port_id = "arrival"
+	prefix = "_maps/shuttles/arrival/"
 	who_can_purchase = null
 
 /datum/map_template/shuttle/arrival/box
@@ -26,10 +27,14 @@
 	suffix = "pubby"
 	name = "arrival shuttle (Pubby)"
 
-/datum/map_template/shuttle/arrival/omega
-	suffix = "omega"
-	name = "arrival shuttle (Omega)"
-
 /datum/map_template/shuttle/arrival/northstar
 	suffix = "northstar"
 	name = "arrival shuttle (North Star)"
+
+/datum/map_template/shuttle/arrival/catwalk
+	suffix = "catwalk"
+	name = "arrival shuttle (Catwalk)"
+
+/datum/map_template/shuttle/arrival/nebula
+	suffix = "nebula"
+	name = "arrival shuttle (Nebula)"

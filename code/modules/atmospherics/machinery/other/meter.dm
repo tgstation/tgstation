@@ -1,8 +1,9 @@
 /obj/machinery/meter
 	name = "gas flow meter"
 	desc = "It measures something."
-	icon = 'icons/obj/pipes_n_cables/meter.dmi'
-	icon_state = "meter"
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/meter"
+	post_init_icon_state = "meter"
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
@@ -15,6 +16,10 @@
 	var/obj/machinery/atmospherics/pipe/target
 	///The piping layer of the target
 	var/target_layer = PIPING_LAYER_DEFAULT
+	///The visual meter pressure level
+	var/meter_value = "0"
+	///The emissive button state
+	var/button_value = "0"
 
 /datum/armor/machinery_meter
 	energy = 100
@@ -35,9 +40,11 @@
 
 	if(!target)
 		reattach_to_layer()
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/atmos_meter,
-	))
+	AddComponent(/datum/component/usb_port, \
+		typecacheof(list(
+			/obj/item/circuit_component/atmos_meter,
+		), only_root_path = TRUE) \
+	)
 	return ..()
 
 /obj/machinery/meter/proc/reattach_to_layer()
@@ -71,27 +78,43 @@
 
 /obj/machinery/meter/process_atmos()
 	var/datum/gas_mixture/pipe_air = target?.return_air()
+	var/new_meter_value = "0"
+	var/new_button_value = "0"
+
 	if(isnull(pipe_air))
 		icon_state = "meter0"
+		if((meter_value != new_meter_value) || (button_value != new_button_value))
+			meter_value = new_meter_value
+			button_value = new_button_value
+			update_appearance(UPDATE_OVERLAYS)
 		return FALSE
 
 	var/env_pressure = pipe_air.return_pressure()
 	if(env_pressure <= 0.15 * ONE_ATMOSPHERE)
 		icon_state = "meter0"
+		new_meter_value = "0"
+		new_button_value = "0"
 	else if(env_pressure <= 1.8 * ONE_ATMOSPHERE)
 		var/val = round(env_pressure / (ONE_ATMOSPHERE * 0.3) + 0.5)
 		icon_state = "meter1_[val]"
+		new_meter_value = "1_[val]"
+		new_button_value = "1"
 	else if(env_pressure <= 30 * ONE_ATMOSPHERE)
 		var/val = round(env_pressure / (ONE_ATMOSPHERE * 5) - 0.35) + 1
 		icon_state = "meter2_[val]"
+		new_meter_value = "2_[val]"
+		new_button_value = "2"
 	else if(env_pressure <= 59 * ONE_ATMOSPHERE)
 		var/val = round(env_pressure / (ONE_ATMOSPHERE * 5) - 6) + 1
 		icon_state = "meter3_[val]"
+		new_meter_value = "3_[val]"
+		new_button_value = "3"
 	else
 		icon_state = "meter4"
+		new_meter_value = "4"
+		new_button_value = "4"
 
 	var/env_temperature = pipe_air.temperature
-
 	var/new_greyscale = greyscale_colors
 
 	if(env_pressure == 0 || env_temperature == 0)
@@ -116,6 +139,20 @@
 	if(new_greyscale != greyscale_colors)//dont update if nothing has changed since last update
 		greyscale_colors = new_greyscale
 		set_greyscale(greyscale_colors)
+
+	if((meter_value != new_meter_value) || (button_value != new_button_value))
+		meter_value = new_meter_value
+		button_value = new_button_value
+		update_appearance(UPDATE_OVERLAYS)
+
+/obj/machinery/meter/update_overlays()
+	. = ..()
+	if(!is_operational)
+		return
+
+	. += emissive_appearance('icons/obj/pipes_n_cables/meter.dmi', "buttons[button_value]-emissive", src, alpha = src.alpha)
+	if(meter_value != "0")
+		. += emissive_appearance('icons/obj/pipes_n_cables/meter.dmi', "pressure[meter_value]", src, alpha = src.alpha)
 
 /obj/machinery/meter/proc/status()
 	if (target)
@@ -152,7 +189,7 @@
 	else
 		to_chat(user, status())
 
-/obj/machinery/meter/singularity_pull(S, current_size)
+/obj/machinery/meter/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		deconstruct()
@@ -198,12 +235,15 @@
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 // why are you yelling?
 /obj/machinery/meter/turf
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/meter/turf/reattach_to_layer()
 	target = loc
 
 /obj/machinery/meter/layer2
 	target_layer = 2
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/machinery/meter/layer4
 	target_layer = 4
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1

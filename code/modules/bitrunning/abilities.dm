@@ -31,7 +31,7 @@
 	. = ..()
 	name = "Open Domain Information"
 
-/datum/action/avatar_domain_info/Trigger(trigger_flags)
+/datum/action/avatar_domain_info/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

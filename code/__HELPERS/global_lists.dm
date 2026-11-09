@@ -2,85 +2,36 @@
 /////Initial Building/////
 //////////////////////////
 
-/proc/init_sprite_accessories()
-	//hair
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, GLOB.hairstyles_list, GLOB.hairstyles_male_list, GLOB.hairstyles_female_list)
-	//facial hair
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, GLOB.facial_hairstyles_list, GLOB.facial_hairstyles_male_list, GLOB.facial_hairstyles_female_list)
-	//underwear
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
-	//undershirt
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
-	//socks
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
-	//bodypart accessories (blizzard intensifies)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human, add_blank = TRUE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard, add_blank = TRUE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey, add_blank = FALSE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, GLOB.snouts_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/horns,GLOB.horns_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, GLOB.ears_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, GLOB.wings_open_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, GLOB.frills_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, GLOB.spines_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tail_spines, GLOB.tail_spines_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, GLOB.caps_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, GLOB.moth_antennae_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
-
-/// Inits GLOB.species_list. Not using GLOBAL_LIST_INIT b/c it depends on GLOB.string_lists
-/proc/init_species_list()
-	for(var/species_path in subtypesof(/datum/species))
-		var/datum/species/species = new species_path()
-		GLOB.species_list[species.id] = species_path
-	sort_list(GLOB.species_list, GLOBAL_PROC_REF(cmp_typepaths_asc))
-
-/// Inits GLOB.surgeries
-/proc/init_surgeries()
-	var/surgeries = list()
-	for(var/path in subtypesof(/datum/surgery))
-		surgeries += new path()
-	sort_list(surgeries, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	return surgeries
-
-/// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
-/proc/init_hair_gradients()
-	for(var/path in subtypesof(/datum/sprite_accessory/gradient))
-		var/datum/sprite_accessory/gradient/gradient = new path()
-		if(gradient.gradient_category  & GRADIENT_APPLIES_TO_HAIR)
-			GLOB.hair_gradients_list[gradient.name] = gradient
-		if(gradient.gradient_category & GRADIENT_APPLIES_TO_FACIAL_HAIR)
-			GLOB.facial_hair_gradients_list[gradient.name] = gradient
-
 /// Legacy procs that really should be replaced with proper _INIT macros
 /proc/make_datum_reference_lists()
 	// I tried to eliminate this proc but I couldn't untangle their init-order interdependencies -Dominion/Cyberboss
-	init_sprite_accessories()
-	init_species_list()
-	init_hair_gradients()
 	init_keybindings()
 	GLOB.emote_list = init_emote_list() // WHY DOES THIS NEED TO GO HERE? IT JUST INITS DATUMS
 	init_crafting_recipes()
 	init_crafting_recipes_atoms()
 
 /// Inits crafting recipe lists
-/proc/init_crafting_recipes(list/crafting_recipes)
-	for(var/path in subtypesof(/datum/crafting_recipe))
-		if(ispath(path, /datum/crafting_recipe/stack))
+/proc/init_crafting_recipes()
+	for(var/datum/crafting_recipe_path as anything in valid_subtypesof(/datum/crafting_recipe))
+		var/datum/crafting_recipe/recipe = new crafting_recipe_path()
+		if(recipe.name == "" || !recipe.result)
+			qdel(recipe)
 			continue
-		var/datum/crafting_recipe/recipe = new path()
+
 		var/is_cooking = (recipe.category in GLOB.crafting_category_food)
 		recipe.reqs = sort_list(recipe.reqs, GLOBAL_PROC_REF(cmp_crafting_req_priority))
-		if(recipe.name != "" && recipe.result)
-			if(is_cooking)
-				GLOB.cooking_recipes += recipe
-			else
-				GLOB.crafting_recipes += recipe
+
+		if(is_cooking)
+			GLOB.cooking_recipes += recipe
+			GLOB.cooking_recipes_by_typepath[crafting_recipe_path] = recipe
+			if(!(recipe.crafting_flags & CRAFT_MUST_BE_LEARNED))
+				GLOB.cooking_recipes_default += recipe
+
+		else
+			GLOB.crafting_recipes += recipe
+			GLOB.crafting_recipes_by_typepath[crafting_recipe_path] = recipe
+			if(!(recipe.crafting_flags & CRAFT_MUST_BE_LEARNED))
+				GLOB.crafting_recipes_default += recipe
 
 	var/list/global_stack_recipes = list(
 		/obj/item/stack/sheet/glass = GLOB.glass_recipes,
@@ -89,7 +40,7 @@
 		/obj/item/stack/sheet/plasmarglass = GLOB.prglass_recipes,
 		/obj/item/stack/sheet/animalhide/gondola = GLOB.gondola_recipes,
 		/obj/item/stack/sheet/animalhide/corgi = GLOB.corgi_recipes,
-		/obj/item/stack/sheet/animalhide/monkey = GLOB.monkey_recipes,
+		/obj/item/stack/sheet/animalhide/carbon/monkey = GLOB.monkey_recipes,
 		/obj/item/stack/sheet/animalhide/xeno = GLOB.xeno_recipes,
 		/obj/item/stack/sheet/leather = GLOB.leather_recipes,
 		/obj/item/stack/sheet/sinew = GLOB.sinew_recipes,
@@ -156,8 +107,8 @@
 		GLOB.cooking_recipes,
 	)
 	var/list/atom_lists = list(
-		GLOB.crafting_recipes_atoms,
-		GLOB.cooking_recipes_atoms,
+		GLOB.crafting_recipes_datums,
+		GLOB.cooking_recipes_datums,
 	)
 
 	for(var/list_index in 1 to length(recipe_lists))
@@ -167,49 +118,36 @@
 			// Result
 			atom_list |= recipe.result
 			// Ingredients
-			for(var/atom/req_atom as anything in recipe.reqs)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.reqs)
 			// Catalysts
-			for(var/atom/req_atom as anything in recipe.chem_catalysts)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.chem_catalysts)
 			// Reaction data - required container
 			if(recipe.reaction)
 				var/required_container = initial(recipe.reaction.required_container)
 				if(required_container)
 					atom_list |= required_container
 			// Tools
-			for(var/atom/req_atom as anything in recipe.tool_paths)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.tool_paths)
 			// Machinery
-			for(var/atom/req_atom as anything in recipe.machinery)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.machinery)
 			// Structures
-			for(var/atom/req_atom as anything in recipe.structures)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.structures)
 
-//creates every subtype of prototype (excluding prototype) and adds it to list L.
-//if no list/L is provided, one is created.
+/// Creates every subtype of prototype (excluding prototype and abstract types) and adds it to list L.
+/// If no list/L is provided, one is created.
 /proc/init_subtypes(prototype, list/L)
 	if(!istype(L))
 		L = list()
-	for(var/path in subtypesof(prototype))
+	for(var/path in valid_subtypesof(prototype))
 		L += new path()
 	return L
 
-//returns a list of paths to every subtype of prototype (excluding prototype)
-//if no list/L is provided, one is created.
-/proc/init_paths(prototype, list/L)
-	if(!istype(L))
-		L = list()
-		for(var/path in subtypesof(prototype))
-			L+= path
-		return L
-
 /// Functions like init_subtypes, but uses the subtype's path as a key for easy access
+/// If no list/L is provided, one is created.
 /proc/init_subtypes_w_path_keys(prototype, list/L)
 	if(!istype(L))
 		L = list()
-	for(var/path as anything in subtypesof(prototype))
+	for(var/path in valid_subtypesof(prototype))
 		L[path] = new path()
 	return L
 
@@ -221,14 +159,13 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/item/radio/intercom,
 	/obj/structure/secure_safe,
 	/obj/machinery/airalarm,
-	/obj/machinery/bluespace_vendor,
 	/obj/machinery/button,
 	/obj/machinery/computer/security/telescreen,
 	/obj/machinery/computer/security/telescreen/entertainment,
 	/obj/machinery/defibrillator_mount,
 	/obj/machinery/firealarm,
 	/obj/machinery/flasher,
-	/obj/machinery/keycard_auth,
+	/obj/machinery/keycard_auth/wall_mounted,
 	/obj/machinery/light_switch,
 	/obj/machinery/newscaster,
 	/obj/machinery/power/apc,
@@ -238,6 +175,7 @@ GLOBAL_LIST_INIT(WALLITEMS_INTERIOR, typecacheof(list(
 	/obj/machinery/turretid,
 	/obj/machinery/barsign,
 	/obj/structure/extinguisher_cabinet,
+	/obj/structure/fish_mount,
 	/obj/structure/fireaxecabinet,
 	/obj/structure/mirror,
 	/obj/structure/noticeboard,
@@ -256,6 +194,7 @@ GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
 	/obj/machinery/camera,
 	/obj/machinery/light,
 	/obj/structure/light_construct,
+	/obj/structure/sink,
 )))
 
 /// A static typecache of all the money-based items that can be actively used as currency.
@@ -264,3 +203,11 @@ GLOBAL_LIST_INIT(allowed_money, typecacheof(list(
 	/obj/item/holochip,
 	/obj/item/stack/spacecash,
 )))
+
+/// Inits GLOB.plant_traits
+/proc/init_plant_traits()
+	var/traits = list()
+	for(var/trait_path in subtypesof(/datum/plant_gene))
+		traits += new trait_path
+	sort_list(traits, GLOBAL_PROC_REF(cmp_typepaths_asc))
+	return traits

@@ -24,6 +24,7 @@
 	ridable_data = /datum/component/riding/creature/megacarp
 	greyscale_config = /datum/greyscale_config/carp_mega
 	butcher_results = list(/obj/item/food/fishmeat/carp = 2, /obj/item/stack/sheet/animalhide/carp = 3)
+	ai_controller = /datum/ai_controller/basic_controller/carp/mega
 
 /mob/living/basic/carp/mega/Initialize(mapload)
 	. = ..()
@@ -32,3 +33,6 @@
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(30,60)
 	health = maxHealth
+
+/mob/living/basic/carp/mega/get_hud_x_offset()
+	return -5

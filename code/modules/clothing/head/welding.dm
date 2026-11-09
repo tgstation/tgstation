@@ -2,7 +2,7 @@
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye."
 	icon_state = "welding"
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	inhand_icon_state = "welding"
 	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
@@ -14,8 +14,14 @@
 	actions_types = list(/datum/action/item_action/toggle)
 	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	resistance_flags = FIRE_PROOF
 	clothing_flags = SNUG_FIT | STACKABLE_HELMET_EXEMPT
+
+/obj/item/clothing/head/utility/welding/Initialize(mapload)
+	. = ..()
+	if(!up)
+		AddElement(/datum/element/adjust_fishing_difficulty, 8)
 
 /datum/armor/utility_welding
 	melee = 10
@@ -24,6 +30,13 @@
 
 /obj/item/clothing/head/utility/welding/attack_self(mob/user)
 	adjust_visor(user)
+
+/obj/item/clothing/head/utility/welding/adjust_visor(mob/user)
+	. = ..()
+	if(up)
+		RemoveElement(/datum/element/adjust_fishing_difficulty)
+	else
+		AddElement(/datum/element/adjust_fishing_difficulty, 8)
 
 /obj/item/clothing/head/utility/welding/update_icon_state()
 	. = ..()

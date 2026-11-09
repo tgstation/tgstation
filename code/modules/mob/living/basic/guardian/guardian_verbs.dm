@@ -43,21 +43,12 @@
 		to_chat(src, span_notice("You deactivate your light."))
 		set_light_on(FALSE)
 
-
-/// Prints what type of guardian we are and what we can do.
-/mob/living/basic/guardian/verb/check_type()
-	set name = "Check Guardian Type"
-	set category = "Guardian"
-	set desc = "Check what type you are."
-	to_chat(src, playstyle_string)
-
-
 /// Speak with our boss at a distance
 /mob/living/basic/guardian/proc/communicate()
 	if (isnull(summoner))
 		return
 	var/sender_key = key
-	var/input = tgui_input_text(src, "Enter a message to tell your summoner", "Guardian")
+	var/input = tgui_input_text(src, "Enter a message to tell your summoner", "Guardian", max_length = MAX_MESSAGE_LEN)
 	if (sender_key != key || !input) //guardian got reset, or did not enter anything
 		return
 
@@ -91,7 +82,7 @@
 
 /datum/action/cooldown/mob_cooldown/guardian_comms/Activate(atom/target)
 	StartCooldown(360 SECONDS)
-	var/input = tgui_input_text(owner, "Enter a message to tell your guardian", "Message")
+	var/input = tgui_input_text(owner, "Enter a message to tell your guardian", "Message", max_length = MAX_MESSAGE_LEN)
 	StartCooldown()
 	if (!input)
 		return FALSE
@@ -180,7 +171,7 @@
 	to_chat(owner, span_boldholoparasite("The personality of <font color=\"[chosen_guardian.guardian_colour]\">[chosen_guardian.theme.name]</font> has been successfully reset."))
 	message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(chosen_guardian)])")
 	chosen_guardian.ghostize(FALSE)
-	chosen_guardian.key = chosen_one.key
+	chosen_guardian.PossessByPlayer(chosen_one.key)
 	COOLDOWN_START(chosen_guardian, resetting_cooldown, 5 MINUTES)
 	chosen_guardian.guardian_rename() //give it a new color and name, to show it's a new person
 	chosen_guardian.guardian_recolour()

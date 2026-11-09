@@ -1,6 +1,6 @@
 /obj/item/clothing/under/syndicate
 	name = "tactical turtleneck"
-	desc = "A non-descript and slightly suspicious looking turtleneck with digital camouflage cargo pants."
+	desc = "A nondescript and slightly suspicious looking turtleneck with digital camouflage cargo pants."
 	icon_state = "syndicate"
 	inhand_icon_state = "bl_suit"
 	has_sensor = NO_SENSORS
@@ -8,6 +8,7 @@
 	alt_covers_chest = TRUE
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 
 /datum/armor/clothing_under/syndicate
 	melee = 10
@@ -17,12 +18,13 @@
 
 /obj/item/clothing/under/syndicate/skirt
 	name = "tactical skirtleneck"
-	desc = "A non-descript and slightly suspicious looking skirtleneck."
+	desc = "A nondescript and slightly suspicious looking skirtleneck."
 	icon_state = "syndicate_skirt"
 	inhand_icon_state = "bl_suit"
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/syndicate/bloodred
 	name = "blood-red sneaksuit"
@@ -32,7 +34,11 @@
 	armor_type = /datum/armor/clothing_under/syndicate_bloodred
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	can_adjust = FALSE
-	supports_variations_flags = NONE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
+
+/obj/item/clothing/under/syndicate/bloodred/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/adjust_fishing_difficulty, -4) //extra-tactical
 
 /datum/armor/clothing_under/syndicate_bloodred
 	melee = 10
@@ -62,6 +68,7 @@
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/clothing_under/syndicate_tacticool
 	stubborn_stains = TRUE
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
 
 /datum/armor/clothing_under/syndicate_tacticool
 	fire = 50
@@ -93,6 +100,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/syndicate/sniper
 	name = "tactical turtleneck suit"
@@ -100,7 +108,7 @@
 	icon_state = "tactical_suit"
 	inhand_icon_state = "bl_suit"
 	can_adjust = FALSE
-	supports_variations_flags = NONE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/under/syndicate/camo
 	name = "camouflage fatigues"
@@ -108,7 +116,16 @@
 	icon_state = "camogreen"
 	inhand_icon_state = "g_suit"
 	can_adjust = FALSE
-	supports_variations_flags = NONE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
+
+/obj/item/clothing/under/syndicate/cybersun
+	name = "\improper Cybersun businesswear"
+	desc = "This black and orange businesswear appears to be made of some kind of protective lightweight material. \
+		Perfect for hostile takeovers and budget meetings."
+	icon_state = "cybersun_suit"
+	inhand_icon_state = "bl_suit"
+	can_adjust = FALSE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/under/syndicate/floortilecamo
 	name = "floortile camouflage fatigues"
@@ -117,14 +134,18 @@
 	icon_state = "camofloortile"
 	inhand_icon_state = "gy_suit"
 	can_adjust = FALSE
-	supports_variations_flags = NONE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
+
+/obj/item/clothing/under/syndicate/floortilecamo/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/adjust_fishing_difficulty, -5) //tacticool
 
 /obj/item/clothing/under/syndicate/soviet
 	name = "Ratnik 5 tracksuit"
 	desc = "Badly translated labels tell you to clean this in Vodka. Great for squatting in."
 	icon_state = "trackpants"
 	can_adjust = FALSE
-	supports_variations_flags = NONE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 	armor_type = /datum/armor/clothing_under/syndicate_soviet
 	resistance_flags = NONE
 
@@ -136,14 +157,14 @@
 	desc = "With a suit lined with this many pockets, you are ready to operate."
 	icon_state = "syndicate_combat"
 	can_adjust = FALSE
-	supports_variations_flags = NONE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/under/syndicate/rus_army
 	name = "advanced military tracksuit"
 	desc = "Military grade tracksuits for frontline squatting."
 	icon_state = "rus_under"
 	can_adjust = FALSE
-	supports_variations_flags = NONE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 	armor_type = /datum/armor/clothing_under/syndicate_rus_army
 	resistance_flags = NONE
 
@@ -157,8 +178,12 @@
 	worn_icon = 'icons/mob/clothing/under/medical.dmi'
 	icon_state = "scrubswine"
 	can_adjust = FALSE
-	supports_variations_flags = NONE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 	armor_type = /datum/armor/clothing_under/syndicate_scrubs
+
+/obj/item/clothing/under/syndicate/scrubs/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
 
 /datum/armor/clothing_under/syndicate_scrubs
 	melee = 10

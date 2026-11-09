@@ -1,7 +1,7 @@
-// A very special plant, deserving it's own file.
+// A very special plant, deserving its own file.
 
 /obj/item/seeds/kudzu
-	name = "pack of kudzu seeds"
+	name = "kudzu seed pack"
 	desc = "These seeds grow into a weed that grows incredibly fast."
 	icon_state = "seed-kudzu"
 	plant_icon_offset = 2
@@ -46,17 +46,16 @@
 
 /obj/item/seeds/kudzu/attack_self(mob/user)
 	user.visible_message(span_danger("[user] begins throwing seeds on the ground..."))
-	if(do_after(user, 5 SECONDS, target = user.drop_location(), progress = TRUE))
+	if(do_after(user, 5 SECONDS, target = user.drop_location()))
 		plant(user)
 		to_chat(user, span_notice("You plant the kudzu. You monster."))
 
-/obj/item/seeds/kudzu/get_unique_analyzer_text()
-	var/kudzu_mutations = ""
-	var/output_message = ""
-	for(var/datum/spacevine_mutation/SM in mutations)
-		kudzu_mutations += "[(kudzu_mutations == "") ? "" : ", "][SM.name]"
-	output_message += "Plant Mutations: [(kudzu_mutations == "") ? "None." : "[kudzu_mutations]."]"
-	return output_message
+/obj/item/seeds/kudzu/get_unique_analyzer_data()
+	var/list/all_mutations = list()
+	for(var/datum/spacevine_mutation/vine_trait in mutations)
+		all_mutations[vine_trait.name] = vine_trait.description
+
+	return list("Kudzu Traits" = all_mutations)
 
 /obj/item/seeds/kudzu/on_chem_reaction(datum/reagents/reagents)
 	var/list/temp_mut_list = list()

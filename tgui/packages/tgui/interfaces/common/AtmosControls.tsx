@@ -1,8 +1,13 @@
-import { BooleanLike } from 'common/react';
-import { decodeHtmlEntities } from 'common/string';
+import {
+  Button,
+  LabeledList,
+  NumberInput,
+  Section,
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
-import { Button, LabeledList, NumberInput, Section } from '../../components';
 import { getGasLabel } from '../../constants';
 
 export type VentProps = {
@@ -214,7 +219,7 @@ export const Scrubber = (props: ScrubberProps) => {
         <LabeledList.Item label="Mode">
           <Button
             icon={scrubbing ? 'filter' : 'sign-in-alt'}
-            color={scrubbing || 'danger'}
+            color={!scrubbing && 'danger'}
             content={scrubbing ? 'Scrubbing' : 'Siphoning'}
             onClick={() =>
               act('scrubbing', {

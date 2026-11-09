@@ -7,7 +7,8 @@
 		/datum/reagent/consumable/salt = 2
 	)
 	result = /obj/item/food/raw_tiziran_sausage
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/headcheese
 	name = "Raw headcheese"
@@ -17,46 +18,52 @@
 		/datum/reagent/consumable/blackpepper = 5
 	)
 	result = /obj/item/food/raw_headcheese
-	category = CAT_LIZARD
+	added_foodtypes = GORE
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/shredded_lungs
 	name = "Crispy shredded lung stirfry"
 	reqs = list(
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/onion = 1,
-		/obj/item/organ/internal/lungs = 1,
+		/obj/item/organ/lungs = 1,
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	blacklist = list(
-		/obj/item/organ/internal/lungs/cybernetic,
+		/obj/item/organ/lungs/cybernetic,
 	)
-
 	result = /obj/item/food/shredded_lungs
-	category = CAT_LIZARD
+	added_foodtypes = MEAT|GORE
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/tsatsikh
 	name = "Tsatsikh"
 	reqs = list(
-		/obj/item/organ/internal/heart = 1,
-		/obj/item/organ/internal/liver = 1,
-		/obj/item/organ/internal/lungs = 1,
-		/obj/item/organ/internal/stomach = 1,
+		/obj/item/organ/heart = 1,
+		/obj/item/organ/liver = 1,
+		/obj/item/organ/lungs = 1,
+		/obj/item/organ/stomach = 1,
 		/datum/reagent/consumable/salt = 2,
 		/datum/reagent/consumable/blackpepper = 2
 	)
 	result = /obj/item/food/tsatsikh
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/liver_pate
 	name = "Liver pate"
 	reqs = list(
-		/obj/item/organ/internal/liver = 1,
+		/obj/item/organ/liver = 1,
 		/obj/item/food/meat/rawcutlet = 1,
 		/obj/item/food/grown/onion = 1
 	)
 	result = /obj/item/food/liver_pate
-	category = CAT_LIZARD
+	removed_foodtypes = RAW
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/moonfish_caviar
 	name = "Moonfish caviar paste"
@@ -65,7 +72,8 @@
 		/datum/reagent/consumable/salt = 2
 	)
 	result = /obj/item/food/moonfish_caviar
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/lizard_escargot
 	name = "Desert snail cocleas"
@@ -74,10 +82,13 @@
 		/obj/item/food/grown/garlic = 1,
 		/datum/reagent/consumable/lemonjuice = 3,
 		/datum/reagent/consumable/blackpepper = 2,
-		/datum/reagent/consumable/nutriment/fat/oil/olive = 3
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 3,
+		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/lizard_escargot
-	category = CAT_LIZARD
+	removed_foodtypes = GORE
+	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/fried_blood_sausage
 	name = "Fried blood sausage"
@@ -87,28 +98,34 @@
 		/datum/reagent/water = 5
 	)
 	result = /obj/item/food/fried_blood_sausage
-	category = CAT_LIZARD
+	added_foodtypes = FRIED|NUTS
+	removed_foodtypes = RAW
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/lizard_fries
 	name = "Loaded poms-franzisks"
 	reqs = list(
 		/obj/item/food/fries = 1,
 		/obj/item/food/meat/cutlet = 2,
-		/datum/reagent/consumable/bbqsauce = 5
+		/datum/reagent/consumable/bbqsauce = 5,
 	)
 	result = /obj/item/food/lizard_fries
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/brain_pate
 	name = "Eyeball-and-brain pate"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
-		/obj/item/organ/internal/eyes = 1,
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/eyes = 1,
 		/obj/item/food/grown/onion = 1,
 		/datum/reagent/consumable/salt = 3
 	)
 	result = /obj/item/food/brain_pate
-	category = CAT_LIZARD
+	added_foodtypes = MEAT|GORE
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/crispy_headcheese
 	name = "Crispy breaded headcheese"
@@ -117,7 +134,8 @@
 		/obj/item/food/breadslice/root = 1
 	)
 	result = /obj/item/food/crispy_headcheese
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/picoss_skewers
 	name = "Picoss skewers"
@@ -129,7 +147,8 @@
 		/datum/reagent/consumable/vinegar = 5
 	)
 	result = /obj/item/food/kebab/picoss_skewers
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/nectar_larvae
 	name = "Nectar larvae"
@@ -140,7 +159,8 @@
 		/datum/reagent/consumable/korta_nectar = 5
 	)
 	result = /obj/item/food/nectar_larvae
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/mushroomy_stirfry
 	name = "Mushroomy Stirfry"
@@ -151,19 +171,21 @@
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 5
 	)
 	result = /obj/item/food/mushroomy_stirfry
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_SALAD
 
 /datum/crafting_recipe/food/moonfish_demiglace
 	name = "Moonfish demiglace"
 	reqs = list(
 		/obj/item/food/grilled_moonfish = 1,
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/datum/reagent/consumable/korta_milk = 5,
 		/datum/reagent/consumable/ethanol/wine = 5
 	)
 	result = /obj/item/food/moonfish_demiglace
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/lizard_surf_n_turf
 	name = "Zagosk surf n turf smorgasbord"
@@ -173,22 +195,13 @@
 		/obj/item/food/meat/steak = 1,
 		/obj/item/food/bbqribs = 1
 	)
+	removed_foodtypes = SUGAR
 	result = /obj/item/food/lizard_surf_n_turf
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_MEAT
 
 /datum/crafting_recipe/food/rootdough
-	name = "Rootdough"
-	reqs = list(
-		/obj/item/food/grown/potato = 2,
-		/obj/item/food/egg = 1,
-		/datum/reagent/consumable/korta_flour = 5,
-		/datum/reagent/water = 10
-	)
-	result = /obj/item/food/rootdough
-	category = CAT_LIZARD
-
-/datum/crafting_recipe/food/rootdough2
-	name = "Rootdough"
+	name = "Rootdough (Without Eggs)"
 	reqs = list(
 		/obj/item/food/grown/potato = 2,
 		/datum/reagent/consumable/soymilk = 15,
@@ -196,7 +209,36 @@
 		/datum/reagent/water = 10
 	)
 	result = /obj/item/food/rootdough
-	category = CAT_LIZARD
+	added_foodtypes = NUTS
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_BREAD
+	crafting_flags = parent_type::crafting_flags & ~CRAFT_TRANSFERS_REAGENT_COMPONENTS // prevents water from reacting immediately, clearing the dish
+
+/datum/crafting_recipe/food/rootdough/with_eggs
+	name = "Rootdough (With Eggs)"
+	reqs = list(
+		/obj/item/food/grown/potato = 2,
+		/obj/item/food/egg = 1,
+		/datum/reagent/consumable/korta_flour = 5,
+		/datum/reagent/water = 10
+	)
+	result = /obj/item/food/rootdough/egg
+	removed_foodtypes = RAW|EGG
+	/**
+	 * So, at some point, we've had some mean issues with crafting with empty containers.
+	 * Bugs happen and we fix them all the time, so let's make sure stuff like this won't happen again.
+	 * Let's make his recipe spawn a bunch of unneeded containers and something else as well.
+	 * If this breaks the CI, then something is wrong with crafting.
+	 */
+	unit_test_spawn_extras = list(
+		/obj/item/food/rootdough/egg = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/reagent_containers/condiment = 1,
+		/obj/item/reagent_containers/cup/bottle = 2,
+		/obj/item/reagent_containers/cup/beaker/slime = 1,
+		/obj/item/reagent_containers/applicator/patch/synthflesh = 1,
+	)
+	crafting_flags = parent_type::crafting_flags & ~CRAFT_TRANSFERS_REAGENT_COMPONENTS // prevents water from reacting immediately, clearing the dish
 
 /datum/crafting_recipe/food/snail_nizaya
 	name = "Desert snail nizaya"
@@ -207,7 +249,9 @@
 		/datum/reagent/consumable/ethanol/wine = 5
 	)
 	result = /obj/item/food/spaghetti/snail_nizaya
-	category = CAT_LIZARD
+	removed_foodtypes = GORE
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_NOODLES
 
 /datum/crafting_recipe/food/garlic_nizaya
 	name = "Garlic nizaya"
@@ -218,20 +262,23 @@
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 5
 	)
 	result = /obj/item/food/spaghetti/garlic_nizaya
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_NOODLES
 
 /datum/crafting_recipe/food/demit_nizaya
 	name = "Demit nizaya"
 	reqs = list(
 		/obj/item/food/spaghetti/nizaya = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/eggplant = 1,
 		/datum/reagent/consumable/korta_milk = 5,
 		/datum/reagent/consumable/korta_nectar = 5
 	)
 	result = /obj/item/food/spaghetti/demit_nizaya
-	category = CAT_LIZARD
+	added_foodtypes = SUGAR
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_NOODLES
 
 /datum/crafting_recipe/food/mushroom_nizaya
 	name = "Mushroom nizaya"
@@ -242,7 +289,8 @@
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 5
 	)
 	result = /obj/item/food/spaghetti/mushroom_nizaya
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_NOODLES
 
 /datum/crafting_recipe/food/rustic_flatbread
 	name = "Rustic flatbread"
@@ -253,7 +301,8 @@
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 3
 	)
 	result = /obj/item/food/pizza/flatbread/rustic
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_BREAD
 
 /datum/crafting_recipe/food/italic_flatbread
 	name = "Italic flatbread"
@@ -265,7 +314,8 @@
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 3
 	)
 	result = /obj/item/food/pizza/flatbread/italic
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_BREAD
 
 /datum/crafting_recipe/food/imperial_flatbread
 	name = "Imperial flatbread"
@@ -276,7 +326,8 @@
 		/obj/item/food/headcheese = 1
 	)
 	result = /obj/item/food/pizza/flatbread/imperial
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_BREAD
 
 /datum/crafting_recipe/food/rawmeat_flatbread
 	name = "Meatlovers flatbread"
@@ -285,7 +336,8 @@
 		/obj/item/food/meat/slab = 1
 	)
 	result = /obj/item/food/pizza/flatbread/rawmeat
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_BREAD
 
 /datum/crafting_recipe/food/stinging_flatbread
 	name = "Stinging flatbread"
@@ -295,7 +347,8 @@
 		/obj/item/food/canned/jellyfish = 1
 	)
 	result = /obj/item/food/pizza/flatbread/stinging
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_BREAD
 
 /datum/crafting_recipe/food/zmorgast_flatbread
 	name = "Zmorgast flatbread"
@@ -303,10 +356,12 @@
 		/obj/item/food/root_flatbread = 1,
 		/obj/item/food/grown/cucumber = 2,
 		/obj/item/food/egg = 1,
-		/obj/item/organ/internal/liver = 1
+		/obj/item/organ/liver = 1
 	)
 	result = /obj/item/food/pizza/flatbread/zmorgast
-	category = CAT_LIZARD
+	removed_foodtypes = RAW
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_BREAD
 
 /datum/crafting_recipe/food/fish_flatbread
 	name = "BBQ fish flatbread"
@@ -316,7 +371,8 @@
 		/datum/reagent/consumable/bbqsauce = 5
 	)
 	result = /obj/item/food/pizza/flatbread/fish
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_BREAD
 
 /datum/crafting_recipe/food/mushroom_flatbread
 	name = "Mushroom and tomato flatbread"
@@ -327,7 +383,9 @@
 		/datum/reagent/consumable/nutriment/fat/oil/olive = 3
 	)
 	result = /obj/item/food/pizza/flatbread/mushroom
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_BREAD
+	unit_test_spawn_extras = list(/obj/item/food/grown/mushroom/chanterelle = 3) //generic mushrooms
 
 /datum/crafting_recipe/food/nutty_flatbread
 	name = "Nut paste flatbread"
@@ -337,7 +395,9 @@
 		/datum/reagent/consumable/korta_milk = 5
 	)
 	result = /obj/item/food/pizza/flatbread/nutty
-	category = CAT_LIZARD
+	removed_foodtypes = VEGETABLES //This is so nuts
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_BREAD
 
 /datum/crafting_recipe/food/emperor_roll
 	name = "Emperor roll"
@@ -348,7 +408,8 @@
 		/obj/item/food/moonfish_caviar = 1
 	)
 	result = /obj/item/food/emperor_roll
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/honey_sweetroll
 	name = "Honey sweetroll"
@@ -359,7 +420,8 @@
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/food/honey_roll
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_PASTRY
 
 /datum/crafting_recipe/food/black_eggs
 	name = "Black scrambled eggs"
@@ -369,7 +431,10 @@
 		/datum/reagent/consumable/vinegar = 2
 	)
 	result = /obj/item/food/black_eggs
-	category = CAT_LIZARD
+	added_foodtypes = GORE|BREAKFAST
+	removed_foodtypes = RAW
+	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/patzikula
 	name = "Patzikula"
@@ -380,19 +445,24 @@
 		/obj/item/food/egg = 2
 	)
 	result = /obj/item/food/patzikula
-	category = CAT_LIZARD
+	removed_foodtypes = RAW
+	added_foodtypes = BREAKFAST
+	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_APPETIZER
 
 /datum/crafting_recipe/food/korta_brittle
 	name = "Korta brittle slab"
 	reqs = list(
 		/obj/item/food/grown/korta_nut = 2,
-		/obj/item/food/butterslice = 1,
 		/datum/reagent/consumable/korta_nectar = 5,
 		/datum/reagent/consumable/sugar = 5,
+		/datum/reagent/consumable/nutriment/fat/oil = 3,
 		/datum/reagent/consumable/salt = 2
 	)
 	result = /obj/item/food/cake/korta_brittle
-	category = CAT_LIZARD
+	added_foodtypes = SUGAR
+	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/korta_ice
 	name = "Korta ice"
@@ -403,7 +473,9 @@
 		/obj/item/food/grown/berries = 1
 	)
 	result = /obj/item/food/snowcones/korta_ice
-	category = CAT_LIZARD
+	added_foodtypes = SUGAR|NUTS
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_FROZEN
 
 /datum/crafting_recipe/food/candied_mushrooms
 	name = "Candied mushrooms"
@@ -414,7 +486,10 @@
 		/datum/reagent/consumable/salt = 1
 	)
 	result = /obj/item/food/kebab/candied_mushrooms
-	category = CAT_LIZARD
+	added_foodtypes = SUGAR
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_CANDY
+	meal_category = MEAL_DESSERT
 
 /datum/crafting_recipe/food/sauerkraut
 	name = "Sauerkraut"
@@ -423,7 +498,9 @@
 		/datum/reagent/consumable/salt = 10
 	)
 	result = /obj/item/food/sauerkraut
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_CONDIMENT
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/lizard_dumplings
 	name = "Tiziran dumplings"
@@ -432,7 +509,9 @@
 		/datum/reagent/consumable/korta_flour = 5
 	)
 	result = /obj/item/food/lizard_dumplings
-	category = CAT_LIZARD
+	added_foodtypes = NUTS
+	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/steeped_mushrooms
 	name = "Steeped mushrooms"
@@ -441,7 +520,8 @@
 		/datum/reagent/lye = 5
 	)
 	result = /obj/item/food/steeped_mushrooms
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/rootbreadpbj
 	name = "Peanut butter and jelly rootwich"
@@ -451,7 +531,9 @@
 		/datum/reagent/consumable/cherryjelly = 5
 	)
 	result = /obj/item/food/rootbread_peanut_butter_jelly
-	category = CAT_LIZARD
+	added_foodtypes = FRUIT
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_SANDWICH
 
 /datum/crafting_recipe/food/rootbreadpbb
 	name = "Peanut butter and banana rootwich"
@@ -461,25 +543,31 @@
 		/obj/item/food/grown/banana = 1
 	)
 	result = /obj/item/food/rootbread_peanut_butter_banana
-	category = CAT_LIZARD
+	added_foodtypes = FRUIT
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_SANDWICH
 // Soups
 
 /datum/crafting_recipe/food/reaction/soup/atrakor_dumplings
 	reaction = /datum/chemical_reaction/food/soup/atrakor_dumplings
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
 
 /datum/crafting_recipe/food/reaction/soup/meatball_noodles
 	reaction = /datum/chemical_reaction/food/soup/meatball_noodles
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
 
 /datum/crafting_recipe/food/reaction/soup/black_broth
 	reaction = /datum/chemical_reaction/food/soup/black_broth
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
 
 /datum/crafting_recipe/food/reaction/soup/jellyfish_stew
 	reaction = /datum/chemical_reaction/food/soup/jellyfish_stew
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD
+
+/datum/crafting_recipe/food/reaction/soup/jellyfish_stew_two
+	reaction = /datum/chemical_reaction/food/soup/jellyfish_stew_two
+	cuisine_category = CUISINE_LIZARD
 
 /datum/crafting_recipe/food/reaction/soup/rootbread_soup
 	reaction = /datum/chemical_reaction/food/soup/rootbread_soup
-	category = CAT_LIZARD
+	cuisine_category = CUISINE_LIZARD

@@ -9,7 +9,7 @@
 	icon_dead = "human_male"
 	gender = NEUTER
 	combat_mode = TRUE
-	mob_biotypes = MOB_HUMANOID
+	mob_biotypes = MOB_HUMANOID|MOB_MINERAL
 	gold_core_spawnable = NO_SPAWN
 
 	response_help_continuous = "touches"
@@ -25,10 +25,11 @@
 	melee_damage_upper = 83
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	melee_attack_cooldown = 1 SECONDS
 
+	status_flags = CANPUSH
 	faction = list(FACTION_STATUE)
 	speak_emote = list("screams")
 	death_message = "falls apart into a fine dust."
@@ -50,6 +51,7 @@
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 
+	physiology = list(STAMINA = 0)
 	ai_controller = /datum/ai_controller/basic_controller/statue
 
 /mob/living/basic/statue/Initialize(mapload)
@@ -62,6 +64,7 @@
 		/datum/action/cooldown/spell/aoe/flicker_lights,
 	)
 	grant_actions_by_list(innate_actions)
+	ai_controller.set_blackboard_key(BB_HUNT_TARGET_LIST, typecacheof(list(/obj/machinery/light)))
 
 /mob/living/basic/statue/med_hud_set_health()
 	return //we're a statue we're invincible
@@ -128,16 +131,12 @@
 	victim.adjust_temp_blindness(8 SECONDS)
 
 /datum/ai_controller/basic_controller/statue
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/statue/statue.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
-	ai_movement = /datum/ai_movement/basic_avoidance
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_and_hunt_target/look_for_light_fixtures,
-	)
+	ai_movement = /datum/ai_movement/jps
 
 /mob/living/basic/statue/frosty
 	name = "Frosty"
@@ -153,5 +152,4 @@
 
 /mob/living/basic/statue/frosty/Initialize(mapload)
 	. = ..()
-	var/static/list/death_loot = list(/obj/item/dnainjector/geladikinesis)
-	AddElement(/datum/element/death_drops, death_loot)
+	AddElement(/datum/element/death_drops, /obj/item/dnainjector/geladikinesis)

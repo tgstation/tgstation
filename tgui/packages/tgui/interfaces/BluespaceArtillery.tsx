@@ -1,19 +1,26 @@
-import { BooleanLike } from 'common/react';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
   connected: BooleanLike;
   notice: string;
   unlocked: BooleanLike;
+  visualizing: BooleanLike;
   target: string;
 };
 
 export const BluespaceArtillery = (props) => {
   const { act, data } = useBackend<Data>();
-  const { notice, connected, unlocked, target } = data;
+  const { connected, notice, unlocked, visualizing, target } = data;
 
   return (
     <Window width={400} height={220}>
@@ -66,11 +73,20 @@ export const BluespaceArtillery = (props) => {
           <Section>
             <LabeledList>
               <LabeledList.Item label="Maintenance">
-                <Button
-                  icon="wrench"
-                  content="Complete Deployment"
-                  onClick={() => act('build')}
-                />
+                {(visualizing) ? (
+                  <>
+                    <Button color="good" onClick={() => act('build')}>
+                      Confirm Position
+                    </Button>
+                    <Button color="bad" onClick={() => act('unvisualize')}>
+                      Cancel
+                    </Button>
+                  </>
+                ) : (
+                  <Button icon="wrench" onClick={() => act('visualize')}>
+                    Begin Deployment
+                  </Button>
+                )}
               </LabeledList.Item>
             </LabeledList>
           </Section>

@@ -5,14 +5,6 @@
 	female_sprite_flags = FEMALE_UNIFORM_NO_BREASTS
 	inhand_icon_state = null
 
-/obj/item/clothing/under/suit/green
-	name = "green suit"
-	desc = "A green suit and yellow necktie. Baller."
-	icon = 'icons/obj/clothing/under/captain.dmi'
-	icon_state = "green_suit"
-	inhand_icon_state = "dg_suit"
-	worn_icon = 'icons/mob/clothing/under/captain.dmi'
-
 /obj/item/clothing/under/suit/red //Also used by the Curator's suit, /obj/item/clothing/under/rank/civilian/curator
 	name = "red suit"
 	desc = "A red suit and blue tie. Somewhat formal."
@@ -57,6 +49,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/suit/white
 	name = "white suit"
@@ -72,6 +65,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/suit/tan
 	name = "tan suit"
@@ -100,6 +94,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY|FEMALE_UNIFORM_NO_BREASTS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/suit/tuxedo
 	name = "tuxedo"
@@ -107,8 +102,17 @@
 	icon_state = "tuxedo"
 	inhand_icon_state = null
 
+/obj/item/clothing/under/suit/tuxedo/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
+
 /obj/item/clothing/under/suit/carpskin
 	name = "carpskin suit"
-	desc = "An luxurious suit made with only the finest scales, perfect for conducting dodgy business deals."
+	desc = "A luxurious suit made with only the finest scales, perfect for conducting dodgy business deals."
 	icon_state = "carpskin_suit"
 	inhand_icon_state = null
+	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
+
+/obj/item/clothing/under/suit/carpskin/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/adjust_fishing_difficulty, -4)

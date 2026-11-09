@@ -9,7 +9,8 @@
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
-	item_flags = DROPDEL
+	spawn_blacklisted = TRUE
+	item_flags = parent_type::item_flags | DROPDEL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user, list/modifiers)
@@ -19,9 +20,13 @@
 		return
 	. = ..()
 
+/obj/item/clothing/glasses/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
+
 /obj/item/clothing/under/changeling
 	name = "flesh"
-	item_flags = DROPDEL
+	spawn_blacklisted = TRUE
+	item_flags = parent_type::item_flags | DROPDEL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/under/changeling/attack_hand(mob/user, list/modifiers)
@@ -31,10 +36,14 @@
 		return
 	. = ..()
 
+/obj/item/clothing/under/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
+
 /obj/item/clothing/suit/changeling
 	name = "flesh"
+	spawn_blacklisted = TRUE
 	allowed = list(/obj/item/changeling)
-	item_flags = DROPDEL
+	item_flags = parent_type::item_flags | DROPDEL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/suit/changeling/attack_hand(mob/user, list/modifiers)
@@ -44,10 +53,14 @@
 		return
 	. = ..()
 
+/obj/item/clothing/suit/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
+
 /obj/item/clothing/head/changeling
 	name = "flesh"
 	icon_state = null
-	item_flags = DROPDEL
+	spawn_blacklisted = TRUE
+	item_flags = parent_type::item_flags | DROPDEL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/head/changeling/attack_hand(mob/user, list/modifiers)
@@ -57,9 +70,13 @@
 		return
 	. = ..()
 
+/obj/item/clothing/head/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
+
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
-	item_flags = DROPDEL
+	spawn_blacklisted = TRUE
+	item_flags = parent_type::item_flags | DROPDEL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user, list/modifiers)
@@ -69,9 +86,13 @@
 		return
 	. = ..()
 
+/obj/item/clothing/shoes/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
+
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
-	item_flags = DROPDEL
+	spawn_blacklisted = TRUE
+	item_flags = parent_type::item_flags | DROPDEL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user, list/modifiers)
@@ -81,9 +102,13 @@
 		return
 	. = ..()
 
+/obj/item/clothing/gloves/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
+
 /obj/item/clothing/mask/changeling
 	name = "flesh"
-	item_flags = DROPDEL
+	spawn_blacklisted = TRUE
+	item_flags = parent_type::item_flags | DROPDEL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/changeling/attack_hand(mob/user, list/modifiers)
@@ -93,10 +118,14 @@
 		return
 	. = ..()
 
+/obj/item/clothing/mask/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
+
 /obj/item/changeling
 	name = "flesh"
+	spawn_blacklisted = TRUE
 	slot_flags = ALL
-	item_flags = DROPDEL
+	item_flags = parent_type::item_flags | DROPDEL
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/changeling/attack_hand(mob/user, list/modifiers)
@@ -106,20 +135,23 @@
 		return
 	. = ..()
 
+/obj/item/changeling/attack_paw(mob/user, list/modifiers)
+	attack_hand(user, modifiers)
+
 /obj/item/changeling/id
 	slot_flags = ITEM_SLOT_ID
 	/// Cached flat icon of the ID
 	var/icon/cached_flat_icon
 	/// HUD job icon of the ID
 	var/hud_icon
+	///HUD job icon state of the ID
+	var/hud_icon_state
 
 /obj/item/changeling/id/equipped(mob/user, slot, initial)
 	. = ..()
-	if(hud_icon)
-		var/image/holder = user.hud_list[ID_HUD]
-		var/icon/I = icon(user.icon, user.icon_state, user.dir)
-		holder.pixel_y = I.Height() - world.icon_size
-		holder.icon_state = hud_icon
+	if(!hud_icon)
+		return
+	user.set_hud_image_state(ID_HUD, hud_icon, hud_icon_state)
 
 /**
  * Returns cached flat icon of the ID, creates one if there is not one already cached
@@ -132,10 +164,10 @@
 
 /obj/item/changeling/id/get_id_examine_strings(mob/user)
 	. = ..()
-	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "bigicon")]")
+	. += list("[icon2html(get_cached_flat_icon(), user, extra_classes = "hugeicon")]")
 
-/obj/item/changeling/id/get_examine_string(mob/user, thats = FALSE)
-	return "[icon2html(get_cached_flat_icon(), user)] [thats? "That's ":""][get_examine_name(user)]" //displays all overlays in chat
+/obj/item/changeling/id/get_examine_icon(mob/user)
+	return icon2html(get_cached_flat_icon(), user)
 
 //Change our DNA to that of somebody we've absorbed.
 /datum/action/changeling/transform/sting_action(mob/living/carbon/human/user)

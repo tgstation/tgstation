@@ -5,7 +5,7 @@
 #define COMSIG_SIMPLEMOB_TRANSFERPOTION "simplemob_transferpotion"
 
 // /mob/living/simple_animal/hostile signals
-///before attackingtarget has happened, source is the attacker and target is the attacked
+///before attackingtarget has happened, source is the attacker and target is the attacked : (atom/target, is_adjacent, modifiers)
 #define COMSIG_HOSTILE_PRE_ATTACKINGTARGET "hostile_pre_attackingtarget"
 	#define COMPONENT_HOSTILE_NO_ATTACK COMPONENT_CANCEL_ATTACK_CHAIN //cancel the attack, only works before attack happens
 ///after attackingtarget has happened, source is the attacker and target is the attacked, extra argument for if the attackingtarget was successful
@@ -17,3 +17,6 @@
 
 ///Called when a /mob/living/simple_animal/hostile fines a new target: (atom/source, new_target)
 #define COMSIG_HOSTILE_FOUND_TARGET "comsig_hostile_found_target"
+
+///Called when a regal rat uses their riot ability on a mob
+#define COMSIG_REGAL_RAT_RIOTED "comsig_regal_rat_rioted"

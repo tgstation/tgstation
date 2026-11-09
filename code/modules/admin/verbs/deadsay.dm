@@ -1,5 +1,6 @@
 
-ADMIN_VERB(dsay, R_NONE, "DSay", "Speak to the dead.", ADMIN_CATEGORY_GAME, message as text)
+ADMIN_VERB(dsay, R_NONE, "DSay", "Speak to the dead.", ADMIN_CATEGORY_GAME)
+	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 	if(user.prefs.muted & MUTE_DEADCHAT)
 		to_chat(user, span_danger("You cannot send DSAY messages (muted)."), confidential = TRUE)
 		return
@@ -7,7 +8,7 @@ ADMIN_VERB(dsay, R_NONE, "DSay", "Speak to the dead.", ADMIN_CATEGORY_GAME, mess
 	if (user.handle_spam_prevention(message,MUTE_DEADCHAT))
 		return
 
-	message = copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)
+	message = copytext_char(message, 1, MAX_MESSAGE_LEN)
 	user.mob.log_talk(message, LOG_DSAY)
 
 	if (!message)

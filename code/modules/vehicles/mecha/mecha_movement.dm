@@ -29,6 +29,11 @@
 /obj/vehicle/sealed/mecha/proc/play_stepsound()
 	if(mecha_flags & QUIET_STEPS)
 		return
+
+	// if we are on the second step of the diagonal movement, don't play step sound
+	if(src.moving_diagonally == SECOND_DIAG_STEP)
+		return
+
 	playsound(src, stepsound, 40, TRUE)
 
 // Do whatever you do to mobs to these fuckers too
@@ -42,7 +47,7 @@
 		if(!istype(backup) || !movement_dir || backup.anchored || continuous_move) //get_spacemove_backup() already checks if a returned turf is solid, so we can just go
 			return TRUE
 		last_pushoff = world.time
-		if(backup.newtonian_move(REVERSE_DIR(movement_dir), instant = TRUE))
+		if(backup.newtonian_move(dir2angle(REVERSE_DIR(movement_dir)), instant = TRUE))
 			backup.last_pushoff = world.time
 			step_silent = TRUE
 			if(return_drivers())
@@ -70,48 +75,23 @@
 /obj/vehicle/sealed/mecha/vehicle_move(direction, forcerotate = FALSE)
 	if(!COOLDOWN_FINISHED(src, cooldown_vehicle_move))
 		return FALSE
+
 	COOLDOWN_START(src, cooldown_vehicle_move, movedelay)
+
 	if(completely_disabled)
 		return FALSE
+
 	if(!direction)
 		return FALSE
+
+	if(!can_move(direction))
+		return FALSE
+
 	if(ismovable(loc)) //Mech is inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, direction)
-	var/obj/machinery/portable_atmospherics/canister/internal_tank = get_internal_tank()
-	if(internal_tank?.connected_port)
-		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to move while connected to the air system port!")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
-		return FALSE
+
 	if(!Process_Spacemove(direction))
-		return FALSE
-	if(zoom_mode)
-		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to move while in zoom mode!")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
-		return FALSE
-	var/list/missing_parts = list()
-	if(isnull(cell))
-		missing_parts += "power cell"
-	if(isnull(capacitor))
-		missing_parts += "capacitor"
-	if(isnull(servo))
-		missing_parts += "servo"
-	if(length(missing_parts))
-		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
-		return FALSE
-	if(!use_energy(step_energy_drain))
-		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Insufficient power to move!")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
-		return FALSE
-	if(lavaland_only && is_mining_level(z))
-		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Invalid Environment.")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
 
 	var/olddir = dir
@@ -131,36 +111,72 @@
 				break
 
 	//if we're not facing the way we're going rotate us
+	// if we're not strafing or if we are forced to rotate or if we are holding down the key
 	if(dir != direction && (!strafe || forcerotate || keyheld))
-		if(dir != direction && !(mecha_flags & QUIET_TURNS) && !step_silent)
-			playsound(src,turnsound,40,TRUE)
 		setDir(direction)
+		if(!(mecha_flags & QUIET_TURNS))
+			playsound(src, turnsound, 40, TRUE)
 		if(keyheld || !pivot_step) //If we pivot step, we don't return here so we don't just come to a stop
 			return TRUE
 
 	set_glide_size(DELAY_TO_GLIDE_SIZE(movedelay))
 	//Otherwise just walk normally
 	. = try_step_multiz(direction)
-	if(phasing)
-		use_energy(phasing_energy_drain)
+
 	if(strafe)
 		setDir(olddir)
 
+/// Check if anything is blocking our movement
+/obj/vehicle/sealed/mecha/proc/can_move(direction)
+	if(toppled)
+		return FALSE
+
+	var/obj/machinery/portable_atmospherics/canister/internal_tank = get_internal_tank()
+	if(internal_tank?.connected_port)
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
+			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Unable to move while connected to the air system port!")]")
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
+		return FALSE
+
+	var/list/missing_parts = list()
+	if(isnull(cell))
+		missing_parts += "power cell"
+	if(isnull(capacitor))
+		missing_parts += "capacitor"
+	if(isnull(servo))
+		missing_parts += "servo"
+
+	if(length(missing_parts))
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
+			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
+		return FALSE
+
+	if((step_energy_drain != 0) && !use_energy(step_energy_drain))
+		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
+			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Insufficient power to move!")]")
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
+		return FALSE
+	return TRUE
+
 /obj/vehicle/sealed/mecha/Bump(atom/obstacle)
 	. = ..()
-	if(phasing) //Theres only one cause for phasing canpass fails
-		to_chat(occupants, "[icon2html(src, occupants)][span_warning("A dull, universal force is preventing you from [phasing] here!")]")
-		spark_system.start()
-		return
 	if(.) //mech was thrown/door/whatever
 		return
-	if(bumpsmash) //Need a pilot to push the PUNCH button.
-		if(COOLDOWN_FINISHED(src, mecha_bump_smash))
-			var/list/mob/mobster = return_drivers()
-			obstacle.mech_melee_attack(src, mobster[1])
-			COOLDOWN_START(src, mecha_bump_smash, smashcooldown)
-			if(!obstacle || obstacle.CanPass(src, get_dir(obstacle, src) || dir)) // The else is in case the obstacle is in the same turf.
-				step(src,dir)
+	try_bumpsmash(obstacle)
+
+/obj/vehicle/sealed/mecha/proc/try_bumpsmash(atom/obstacle)
+	// Whether or not we're on our mecha melee cooldown
+	var/on_cooldown = TIMER_COOLDOWN_RUNNING(src, COOLDOWN_MECHA_MELEE_ATTACK)
+
+	if(bumpsmash && !on_cooldown)
+		// Our pilot for this evening
+		var/list/mob/mobster = return_drivers()
+		if(obstacle.mech_melee_attack(src, mobster[1]))
+			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MELEE_ATTACK, melee_cooldown * 0.3)
+		if(!obstacle || obstacle.CanPass(src, get_dir(obstacle, src) || dir)) // The else is in case the obstacle is in the same turf.
+			step(src,dir)
+
 	if(isobj(obstacle))
 		var/obj/obj_obstacle = obstacle
 		if(!obj_obstacle.anchored && obj_obstacle.move_resist <= move_force)
@@ -175,25 +191,16 @@
 //We only call a camera static update if we have successfully moved and have a camera installed
 /obj/vehicle/sealed/mecha/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	if(chassis_camera)
-		update_camera_location(old_loc)
+	if(!chassis_camera?.can_use())
+		return
+	// Delay's a bit faster then standard cameras to "avoid running out of the camera's fov" whatever that means
+	// An EMPd mecha with a lowered view_range on its camera can still sometimes run out into static before updating, however.
+	SScameras.camera_moved(chassis_camera, get_turf(old_loc), get_turf(chassis_camera), 0.5 SECONDS)
 
-/obj/vehicle/sealed/mecha/proc/update_camera_location(oldLoc)
-	oldLoc = get_turf(oldLoc)
-	if(!updating && oldLoc != get_turf(src))
-		updating = TRUE
-		do_camera_update(oldLoc)
-
-///The static update delay on movement of the camera in a mech we use
-#define MECH_CAMERA_BUFFER 0.5 SECONDS
-
-/**
- * The actual update - also passes our unique update buffer. This makes our static update faster than stationary cameras,
- * helping us to avoid running out of the camera's FoV. An EMPd mecha with a lowered view_range on its camera can still
- * sometimes run out into static before updating, however.
-*/
-/obj/vehicle/sealed/mecha/proc/do_camera_update(oldLoc)
-	if(oldLoc != get_turf(src))
-		GLOB.cameranet.updatePortableCamera(chassis_camera, MECH_CAMERA_BUFFER)
-	updating = FALSE
-#undef MECH_CAMERA_BUFFER
+/obj/vehicle/sealed/mecha/proc/right_self(fallen_angle)
+	if(!toppled)
+		return
+	toppled = FALSE
+	var/matrix/to_turn = turn(transform, 360 - fallen_angle)
+	animate(src, transform = to_turn, 0.5 SECONDS)
+	playsound(src, 'sound/vehicles/mecha/nominal.ogg', 50)

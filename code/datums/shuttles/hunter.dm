@@ -1,5 +1,6 @@
 /datum/map_template/shuttle/hunter
 	port_id = "hunter"
+	prefix = "_maps/shuttles/hunter/"
 	who_can_purchase = null
 
 /datum/map_template/shuttle/hunter/space_cop
@@ -17,3 +18,7 @@
 /datum/map_template/shuttle/hunter/psyker
 	suffix = "psyker"
 	name = "Psyker Fortune-Telling Ship"
+
+/datum/map_template/shuttle/hunter/mi13_foodtruck
+	suffix = "mi13_foodtruck"
+	name = "Perfectly Ordinary Food Truck"

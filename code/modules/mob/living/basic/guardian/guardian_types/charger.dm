@@ -6,18 +6,16 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	speed = -0.5
-	damage_coeff = list(BRUTE = 0.75, BURN = 0.75, TOX = 0.75, STAMINA = 0, OXY = 0.75)
+	physiology = list(BRUTE = 0.75, BURN = 0.75, TOX = 0.75, OXY = 0.75, STAMINA = 0)
 	playstyle_string = span_holoparasite("As a <b>charger</b> type you do medium damage, have light damage resistance, move very fast, can be ridden, and can charge at a location, damaging any target hit and forcing them to drop any items they are holding.")
 	creator_name = "Charger"
 	creator_desc = "Moves very fast, does medium damage on attack, can be ridden and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding."
 	creator_icon = "charger"
+	toggle_button_type = /datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian
 
 /mob/living/basic/guardian/charger/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/guardian)
-	var/datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian/charge = new(src)
-	charge.Grant(src)
-	charge.set_click_ability(src)
 
 /// Guardian charger's charging attack, it knocks items out of people's hands
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/guardian
@@ -28,6 +26,7 @@
 	button_icon_state = "speed"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
+	default_button_position = ui_guardian_special
 	charge_delay = 0
 	recoil_duration = 0
 	charge_damage = 20

@@ -43,7 +43,7 @@
 	lab_rat = allocate(/mob/living/carbon/human/consistent)
 	source = equip_labrat_internals(lab_rat, /obj/item/tank/internals/emergency_oxygen/empty)
 	source.air_contents.assert_gas(/datum/gas/nitrogen)
-	source.air_contents.gases[/datum/gas/nitrogen][MOLES] = (10 * ONE_ATMOSPHERE) *  source.volume / (R_IDEAL_GAS_EQUATION * T20C)
+	source.air_contents.moles[/datum/gas/nitrogen] = (10 * ONE_ATMOSPHERE) *  source.volume / (R_IDEAL_GAS_EQUATION * T20C)
 	TEST_ASSERT(source.toggle_internals(lab_rat) && !isnull(lab_rat.internal), "Plasmaman toggle_internals() failed to toggle internals")
 	lab_rat.breathe()
 	TEST_ASSERT(lab_rat.failed_last_breath && lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Humans should suffocate from pure n2 tanks")
@@ -77,7 +77,7 @@
 	lab_rat = allocate(/mob/living/carbon/human/species/plasma)
 	source = equip_labrat_internals(lab_rat, /obj/item/tank/internals/emergency_oxygen/empty)
 	source.air_contents.assert_gas(/datum/gas/nitrogen)
-	source.air_contents.gases[/datum/gas/nitrogen][MOLES] = (10 * ONE_ATMOSPHERE) *  source.volume / (R_IDEAL_GAS_EQUATION * T20C)
+	source.air_contents.moles[/datum/gas/nitrogen] = (10 * ONE_ATMOSPHERE) *  source.volume / (R_IDEAL_GAS_EQUATION * T20C)
 	TEST_ASSERT(source.toggle_internals(lab_rat) && !isnull(lab_rat.internal), "Plasmaman toggle_internals() failed to toggle internals")
 	lab_rat.breathe()
 	TEST_ASSERT(lab_rat.failed_last_breath && lab_rat.has_alert(ALERT_NOT_ENOUGH_PLASMA), "Humans should suffocate from pure n2 tanks")
@@ -87,15 +87,21 @@
 
 /datum/unit_test/breath/breath_sanity_ashwalker/Run()
 	var/mob/living/carbon/human/species/lizard/ashwalker/lab_rat = allocate(/mob/living/carbon/human/species/lizard/ashwalker)
-	lab_rat.forceMove(run_loc_floor_bottom_left)
-	var/turf/open/to_fill = run_loc_floor_bottom_left
-	to_fill.initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-	to_fill.air = to_fill.create_gas_mixture()
+
+	turn_room_into_lavaland()
 	lab_rat.breathe()
 	TEST_ASSERT(!lab_rat.has_alert(ALERT_NOT_ENOUGH_OXYGEN), "Ashwalkers can't get a full breath from the Lavaland's initial_gas_mix on a turf")
 
-/datum/unit_test/breath/breath_sanity_ashwalker/Destroy()
-	//Reset initial_gas_mix to avoid future issues on other tests
-	var/turf/open/to_fill = run_loc_floor_bottom_left
-	to_fill.initial_gas_mix = OPENTURF_DEFAULT_ATMOS
-	return ..()
+/// Replaces the air mix in the entire room with lavaland air mix
+/datum/unit_test/breath/breath_sanity_ashwalker/proc/turn_room_into_lavaland()
+	var/area/unit_test_area = get_area(run_loc_floor_bottom_left)
+	var/list/turf/lavalandable_turfs = unit_test_area.get_turfs_from_all_zlevels()
+
+	var/datum/gas_mixture/lavaland_mix = SSair.parse_gas_string(LAVALAND_DEFAULT_ATMOS, /datum/gas_mixture/immutable/planetary)
+	var/datum/gas_mixture/volumetric_mix = allocate(/datum/gas_mixture, 2500)
+
+	volumetric_mix.copy_from(lavaland_mix)
+
+	for(var/turf/open/tile in lavalandable_turfs)
+		tile.copy_air(volumetric_mix)
+		tile.air_update_turf(update = FALSE, remove = FALSE)

@@ -12,8 +12,9 @@
 /obj/item/clothing/under/rank/security
 	icon = 'icons/obj/clothing/under/security.dmi'
 	worn_icon = 'icons/mob/clothing/under/security.dmi'
+	abstract_type = /obj/item/clothing/under/rank/security
 	armor_type = /datum/armor/clothing_under/rank_security
-	strip_delay = 50
+	strip_delay = 5 SECONDS
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
@@ -44,6 +45,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/security/officer/blueshirt
 	name = "blue shirt and tie"
@@ -61,7 +63,7 @@
 
 /obj/item/clothing/under/rank/security/constable
 	name = "constable outfit"
-	desc = "A british looking outfit."
+	desc = "A British-looking outfit."
 	icon_state = "constable"
 	inhand_icon_state = null
 	can_adjust = FALSE
@@ -89,6 +91,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/security/warden/formal
 	desc = "The insignia on this uniform tells you that this uniform belongs to the Warden."
@@ -117,6 +120,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	alt_covers_chest = TRUE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/security/detective/noir
 	name = "noir suit"
@@ -135,6 +139,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	alt_covers_chest = TRUE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /*
  * Head of Security
@@ -145,7 +150,7 @@
 	icon_state = "rhos"
 	inhand_icon_state = "r_suit"
 	armor_type = /datum/armor/clothing_under/security_head_of_security
-	strip_delay = 60
+	strip_delay = 6 SECONDS
 
 /datum/armor/clothing_under/security_head_of_security
 	melee = 10
@@ -162,6 +167,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/security/head_of_security/grey
 	name = "head of security's grey jumpsuit"
@@ -186,6 +192,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	alt_covers_chest = TRUE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/security/head_of_security/parade
 	name = "head of security's parade uniform"
@@ -230,15 +237,15 @@
 /obj/item/clothing/under/rank/prisoner
 	name = "prison jumpsuit"
 	desc = "Standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
-	icon_state = "jumpsuit"
-	icon_preview = 'icons/obj/fluff/previews.dmi'
-	icon_state_preview = "prisonsuit"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	icon_state = "/obj/item/clothing/under/rank/prisoner"
+	post_init_icon_state = "jumpsuit"
 	inhand_icon_state = "jumpsuit"
-	greyscale_colors = "#ff8300"
 	greyscale_config = /datum/greyscale_config/jumpsuit/prison
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit/prison/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/prison/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/prison/inhand_right
+	greyscale_colors = "#ff8300"
 	has_sensor = LOCKED_SENSORS
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
@@ -247,22 +254,24 @@
 	desc = "Standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"OFF\" position."
 	has_sensor = NO_SENSORS
 	sensor_mode = SENSOR_OFF
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/under/rank/prisoner/skirt
 	name = "prison jumpskirt"
 	desc = "Standardised Nanotrasen prisoner-wear. Its suit sensors are stuck in the \"Fully On\" position."
-	icon_state = "jumpskirt"
-	icon_preview = 'icons/obj/fluff/previews.dmi'
-	icon_state_preview = "prisonskirt"
-	greyscale_colors = "#ff8300"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	icon_state = "/obj/item/clothing/under/rank/prisoner/skirt"
+	post_init_icon_state = "jumpskirt"
 	greyscale_config = /datum/greyscale_config/jumpsuit/prison
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit/prison/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/prison/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/prison/inhand_right
+	greyscale_colors = "#ff8300"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/security/officer/beatcop
 	name = "space police uniform"

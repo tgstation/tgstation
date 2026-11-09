@@ -23,11 +23,17 @@ LOG_ADMINCHAT
 ## log attack messages
 LOG_ATTACK
 
+## log blood worm actions like entering/leaving hosts
+LOG_BLOOD_WORM
+
 ## log economy actions
 LOG_ECON
 
 ## log emotes
 LOG_EMOTE
+
+## log ghost polling
+LOG_GHOST_POLL
 
 ## log game actions (start of round, results, etc.)
 LOG_GAME
@@ -43,6 +49,9 @@ LOG_MECHA
 
 ## log OOC channel
 LOG_OOC
+
+## log minimap drawing
+LOG_MINIMAP_DRAWING
 
 ## log pda messages
 LOG_PDA
@@ -97,7 +106,10 @@ LOG_VOTE
 LOG_WHISPER
 
 ## log all world.Topic() calls
-# LOG_WORLD_TOPIC
+LOG_WORLD_TOPIC
 
 ## log manual target zone switching
 LOG_ZONE_SWITCH
+
+## log player image creation
+LOG_IMAGE

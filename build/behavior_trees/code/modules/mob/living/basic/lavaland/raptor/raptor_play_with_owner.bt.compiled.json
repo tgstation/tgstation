@@ -1,0 +1,1 @@
+{"type":"/datum/bt_node/decorator/bb_key_set","children":[{"type":"/datum/bt_node/composite/sequence","children":[{"type":"/datum/bt_node/ai_behavior/move_to_target","target_key":"BB_owner_target"},{"type":"/datum/bt_node/ai_behavior/hunt_target/play_with_owner","cooldown_key":"BB_owner_target"}]}],"observer_abort":3,"key":"BB_owner_target"}

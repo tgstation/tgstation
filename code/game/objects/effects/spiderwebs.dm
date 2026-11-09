@@ -11,10 +11,11 @@
 /obj/structure/spider/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	ADD_TRAIT(src, TRAIT_INVERTED_DEMOLITION, INNATE_TRAIT)
 
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
-		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+		playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/spider/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE)
@@ -32,16 +33,14 @@
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
-	layer = MID_TURF_LAYER
 	icon = 'icons/obj/smooth_structures/stickyweb.dmi'
 	base_icon_state = "stickyweb"
 	icon_state = "stickyweb-0"
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB
 	canSmoothWith = SMOOTH_GROUP_SPIDER_WEB + SMOOTH_GROUP_WALLS
-	///Whether or not the web is from the genetics power
-	var/genetic = FALSE
 	///Whether or not the web is a sealed web
 	var/sealed = FALSE
 	///Do we need to offset this based on a sprite frill?
@@ -56,6 +55,11 @@
 	if (has_frill)
 		pixel_x = -9
 		pixel_y = -9
+
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 	return ..()
 
 /obj/structure/spider/stickyweb/attack_hand(mob/user, list/modifiers)
@@ -74,31 +78,44 @@
 
 /obj/structure/spider/stickyweb/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(genetic)
-		return
 	if(sealed)
 		return FALSE
-	if(isliving(mover))
-		if(HAS_TRAIT(mover, TRAIT_WEB_SURFER))
-			return TRUE
-		if(mover.pulledby && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
-			return TRUE
-		if(prob(stuck_chance))
-			stuck_react(mover)
-			return FALSE
-		return .
 	if(isprojectile(mover))
 		return prob(projectile_stuck_chance)
 	return .
 
-/// Show some feedback when you can't pass through something
-/obj/structure/spider/stickyweb/proc/stuck_react(atom/movable/stuck_guy)
-	loc.balloon_alert(stuck_guy, "stuck in web!")
-	stuck_guy.Shake(duration = 0.1 SECONDS)
+/obj/structure/spider/stickyweb/proc/is_whitelisted(mob/candidate)
+	return HAS_TRAIT(candidate, TRAIT_WEB_SURFER)
+
+/obj/structure/spider/stickyweb/proc/on_entered(datum/source, atom/movable/victim, old_loc)
+	SIGNAL_HANDLER
+
+	if(!isliving(victim))
+		return
+	if(is_whitelisted(victim) || victim.pulledby && is_whitelisted(victim.pulledby))
+		return
+	if(prob(stuck_chance))
+		stuck_react(victim)
+
+/// Drains stamina and shows feedback when you get stuck moving thru a web
+/obj/structure/spider/stickyweb/proc/stuck_react(mob/living/victim)
+	if(QDELETED(victim))
+		return
+	if(victim.get_stamina_loss() > 90)
+		if(victim.body_position != LYING_DOWN)
+			to_chat(victim, span_warning("You trip over \the [src] due to exhaustion!"))
+
+		victim.SetKnockdown(3 SECONDS)
+		return
+
+	if(prob(25))
+		loc.balloon_alert(victim, "stuck in web!")
+		victim.Shake(duration = 0.2 SECONDS)
+
+	victim.adjust_stamina_loss(rand(10, 15))
 
 /// Web made by geneticists, needs special handling to allow them to pass through their own webs
 /obj/structure/spider/stickyweb/genetic
-	genetic = TRUE
 	desc = "It's stringy, sticky, and came out of your coworker."
 	/// Mob with special permission to cross this web
 	var/mob/living/allowed_mob
@@ -112,19 +129,8 @@
 	allowed_mob = allowedmob
 	return ..()
 
-/obj/structure/spider/stickyweb/genetic/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(mover == allowed_mob)
-		return TRUE
-	else if(isliving(mover)) //we change the spider to not be able to go through here
-		if(mover.pulledby == allowed_mob)
-			return TRUE
-		if(prob(50))
-			stuck_react(mover)
-			return FALSE
-	else if(isprojectile(mover))
-		return prob(30)
-	return .
+/obj/structure/spider/stickyweb/genetic/is_whitelisted(mob/candidate)
+	return candidate == allowed_mob
 
 /// Web with a 100% chance to intercept movement
 /obj/structure/spider/stickyweb/very_sticky
@@ -140,8 +146,8 @@
 /obj/structure/spider/stickyweb/very_sticky/update_overlays()
 	. = ..()
 	var/mutable_appearance/web_overlay = mutable_appearance(icon = 'icons/effects/web.dmi', icon_state = "sticky_overlay", layer = layer + 1)
-	web_overlay.pixel_x -= pixel_x
-	web_overlay.pixel_y -= pixel_y
+	web_overlay.pixel_w -= pixel_x
+	web_overlay.pixel_z -= pixel_y
 	. += web_overlay
 
 
@@ -228,12 +234,11 @@
 
 /obj/structure/spider/cocoon/container_resist_act(mob/living/user)
 	var/breakout_time = 600
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	to_chat(user, span_notice("You struggle against the tight bonds... (This will take about [DisplayTimeText(breakout_time)].)"))
 	visible_message(span_notice("You see something struggling and writhing in \the [src]!"))
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src)
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src)
 			return
 		qdel(src)
 
@@ -248,8 +253,8 @@
 /obj/structure/spider/spikes
 	name = "web spikes"
 	desc = "Silk hardened into small yet deadly spikes."
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
-	layer = MID_TURF_LAYER
 	icon = 'icons/obj/smooth_structures/stickyweb_spikes.dmi'
 	base_icon_state = "stickyweb_spikes"
 	icon_state = "stickyweb_spikes-0"
@@ -275,6 +280,6 @@
 
 /obj/structure/spider/effigy/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/temporary_atom, 1 MINUTES)
+	fade_into_nothing(1 MINUTES)
 
 #undef SPIDER_WEB_TINT

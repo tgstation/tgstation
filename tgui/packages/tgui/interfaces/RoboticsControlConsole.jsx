@@ -1,4 +1,3 @@
-import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -6,7 +5,9 @@ import {
   NoticeBox,
   Section,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 export const RoboticsControlConsole = (props) => {
@@ -125,7 +126,7 @@ const Cyborgs = (props) => {
               }
             >
               {typeof cyborg.charge === 'number'
-                ? cyborg.charge + '%'
+                ? `${cyborg.charge}%`
                 : 'Not Found'}
             </Box>
           </LabeledList.Item>

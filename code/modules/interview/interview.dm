@@ -91,9 +91,7 @@
 /**
  * Verb for opening the existing interview, or if relevant creating a new interview if possible.
  */
-/mob/dead/new_player/proc/open_interview()
-	set name = "Open Interview"
-	set category = "Interview"
+GAME_VERB_PROC(/mob/dead/new_player, open_interview, "Open Interview", "Interview")
 	var/mob/dead/new_player/M = usr
 	if (M?.client?.interviewee)
 		var/datum/interview/I = GLOB.interviews.interview_for_client(M.client)
@@ -138,6 +136,9 @@
 		if ("adminpm")
 			if (usr.client?.holder && owner)
 				usr.client.cmd_admin_pm(owner, null)
+		if("check_centcom")
+			if(usr.client?.holder && owner)
+				usr.client?.holder.open_centcom_bans(owner_ckey)
 
 /datum/interview/ui_data(mob/user)
 	. = list(
@@ -147,7 +148,18 @@
 		"queue_pos" = pos_in_queue,
 		"is_admin" = !!(user?.client && user.client.holder),
 		"status" = status,
-		"connected" = !!owner)
+		"connected" = !!owner,
+	)
+	if(CONFIG_GET(string/centcom_ban_db))
+		. += list(
+			"centcom_connected" = TRUE,
+			"has_permabans" = user.client.holder.check_centcom_permabans(owner_ckey),
+		)
+	else
+		. += list(
+			"centcom_connected" = FALSE,
+			"has_permabans" = FALSE,
+		)
 	for (var/i in 1 to questions.len)
 		var/list/data = list(
 			"qidx" = i,
@@ -160,4 +172,4 @@
  * Generates a clickable link to open this interview
  */
 /datum/interview/proc/link_self()
-	return "<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];interview=[REF(src)]'>Interview #[id]</a>"
+	return "<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];interview=[REF(src)]'>Interview #[id]</a>"

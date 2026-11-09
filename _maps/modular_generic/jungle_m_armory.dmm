@@ -135,7 +135,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /obj/effect/decal/remains/xeno,
 /obj/structure/flora/bush/large/style_random{
 	pixel_y = -3
@@ -242,7 +242,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/speedloader/strilka310,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/railing/corner/end/flip{
 	dir = 8

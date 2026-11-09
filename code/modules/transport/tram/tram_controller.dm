@@ -10,7 +10,10 @@
 	var/controller_active = FALSE
 	///whether all required parts of the tram are considered operational
 	var/controller_operational = TRUE
+	///the controller cabinet located on the tram
 	var/obj/machinery/transport/tram_controller/paired_cabinet
+	///the home controller located in telecoms
+	var/obj/machinery/transport/tram_controller/tcomms/home_controller
 	///if we're travelling, what direction are we going
 	var/travel_direction = NONE
 	///if we're travelling, how far do we have to go
@@ -32,10 +35,13 @@
 	var/current_load = 0
 
 	///decisecond delay between horizontal movement. cannot make the tram move faster than 1 movement per world.tick_lag.
-	var/speed_limiter = 0.5
+	var/internal_movement_delay
 
-	///version of speed_limiter that gets set in init and is considered our base speed if our lift gets slowed down
-	var/base_speed_limiter = 0.5
+	///version of internal_movement_delay that gets set in init and is considered our base delay if our tram gets slowed down
+	var/base_internal_movement_delay
+
+	///speed of the death machine on rails (in percent)
+	var/tram_max_speed = 100
 
 	///the world.time we should next move at. in case our speed is set to less than 1 movement per tick
 	var/scheduled_move = INFINITY
@@ -50,16 +56,30 @@
 	///how many times we moved while costing less than 0.5 * SStransport.max_time milliseconds per movement
 	var/recovery_clear_count = 0
 
+	///if the tram's next stop will be the tram malfunction event sequence
+	var/malf_active = TRANSPORT_SYSTEM_NORMAL
+
+	///fluff information of the tram, such as ongoing kill count and age
 	var/datum/tram_mfg_info/tram_registration
 
+	///previous trams that have been destroyed
 	var/list/tram_history
 
+	///cooldown on tram announcement system
+	COOLDOWN_DECLARE(announce_cooldown)
+
 /datum/tram_mfg_info
+	///serial number of this tram (what round ID it first appeared in)
 	var/serial_number
+	///is it the active tram for the map
 	var/active = TRUE
+	///date the tram was created
 	var/mfg_date
+	///what map the tram is used on
 	var/install_location
+	///lifetime distance the tram has travelled
 	var/distance_travelled = 0
+	///lifetime number of players hit by the tram
 	var/collisions = 0
 
 /**
@@ -75,7 +95,7 @@
 	else
 		serial_number = "LT306TG[rand(000000, 999999)]"
 
-	mfg_date = "[CURRENT_STATION_YEAR]-[time2text(world.timeofday, "MM-DD")]"
+	mfg_date = "[CURRENT_STATION_YEAR]-[time2text(world.timeofday, "MM-DD", NO_TIMEZONE)]"
 	install_location = specific_transport_id
 
 /datum/tram_mfg_info/proc/load_from_json(list/json_data)
@@ -104,8 +124,8 @@
  */
 /datum/transport_controller/linear/tram/New(obj/structure/transport/linear/tram/transport_module)
 	. = ..()
-	speed_limiter = transport_module.speed_limiter
-	base_speed_limiter = transport_module.speed_limiter
+	set_tram_speed(tram_max_speed)
+	base_internal_movement_delay = internal_movement_delay
 	tram_history = SSpersistence.load_tram_history(specific_transport_id)
 	var/datum/tram_mfg_info/previous_tram = peek(tram_history)
 	if(!isnull(previous_tram) && previous_tram.active)
@@ -116,21 +136,30 @@
 	check_starting_landmark()
 
 /**
- * If someone VVs the base speed limiter of the tram, copy it to the current active speed limiter.
+ * We expect people to VV tram_max_speed, and set the appropriate internal_movement_delay/base_internal_movement_delay.
+ * But if they set one of the internals, we should also update tram_max_speed to reflect it.
+ *
+ * You cannot make the tram move faster than 1 movement per world.tick_lag, so our lower limit is 0.5 (tram_max_speed 100)
  */
 /datum/transport_controller/linear/tram/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(var_name == "base_speed_limiter")
-		speed_limiter = max(speed_limiter, base_speed_limiter)
+	if(var_name == "tram_max_speed")
+		set_tram_speed(tram_max_speed)
+	if(var_name == "internal_movement_delay")
+		internal_movement_delay = round(max(internal_movement_delay, 0.5), 0.1)
+		tram_max_speed = round(50 / internal_movement_delay, 1)
+	if(var_name == "base_internal_movement_delay")
+		base_internal_movement_delay = round(max(base_internal_movement_delay, 0.5), 0.1)
+		internal_movement_delay = max(internal_movement_delay, base_internal_movement_delay)
+		tram_max_speed = round(50 / internal_movement_delay, 1)
 
 /datum/transport_controller/linear/tram/Destroy()
 	paired_cabinet = null
 	set_status_code(SYSTEM_FAULT, TRUE)
-	SEND_SIGNAL(SStransport, COMSIG_TRANSPORT_ACTIVE, src, FALSE, controller_status, travel_direction, destination_platform)
 	tram_registration.active = FALSE
 	SSblackbox.record_feedback("amount", "tram_destroyed", 1)
 	SSpersistence.save_tram_history(specific_transport_id)
-	..()
+	return ..()
 
 /**
  * Register transport modules to the controller
@@ -186,7 +215,7 @@
 	SIGNAL_HANDLER
 
 	travel_remaining = 0
-	bumped_atom.visible_message(span_userdanger("The [bumped_atom.name] crashes into the field violently!"))
+	bumped_atom.visible_message(span_userdanger("\The [bumped_atom] crashes into the field violently!"))
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules)
 		transport_module.set_travelling(FALSE)
 		for(var/explosive_target in transport_module.transport_contents)
@@ -202,7 +231,7 @@
 			explosion(transport_module, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 3)
 			qdel(transport_module)
 
-		send_transport_active_signal()
+		send_transport_status_update()
 
 /**
  * Calculate the journey details to the requested platform
@@ -242,18 +271,23 @@
 	set_status_code(PRE_DEPARTURE, FALSE)
 	if(controller_status & EMERGENCY_STOP)
 		set_status_code(EMERGENCY_STOP, FALSE)
-		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
-
-	SEND_SIGNAL(src, COMSIG_TRAM_TRAVEL, idle_platform, destination_platform)
-
+	nav_beacon.tram_loop.start()
 	for(var/obj/structure/transport/linear/tram/transport_module as anything in transport_modules) //only thing everyone needs to know is the new location.
 		if(transport_module.travelling) //wee woo wee woo there was a double action queued. damn multi tile structs
 			return //we don't care to undo cover_locked controls, though, as that will resolve itself
-		transport_module.glide_size_override = DELAY_TO_GLIDE_SIZE(speed_limiter)
+		if(malf_active == TRANSPORT_LOCAL_WARNING)
+			if(transport_module.check_for_humans())
+				throw_chance *= 1.75
+				malf_active = TRANSPORT_LOCAL_FAULT
+				addtimer(CALLBACK(src, PROC_REF(announce_malf_event)), 1 SECONDS)
+		transport_module.verify_transport_contents()
+		transport_module.internal_movement_delay = internal_movement_delay
+		transport_module.glide_size_override = DELAY_TO_GLIDE_SIZE(internal_movement_delay)
 		transport_module.set_travelling(TRUE)
 
-	scheduled_move = world.time + speed_limiter
+	scheduled_move = world.time + internal_movement_delay
 
 	START_PROCESSING(SStransport, src)
 
@@ -278,11 +312,7 @@
 		return PROCESS_KILL
 
 	if(!travel_remaining)
-		if(!controller_operational)
-			degraded_stop()
-			return PROCESS_KILL
-
-		if((controller_status & COMM_ERROR) && prob(5)) // malfunctioning tram has a small chance to e-stop
+		if(!controller_operational || malf_active == TRANSPORT_LOCAL_FAULT)
 			degraded_stop()
 		else
 			normal_stop()
@@ -305,7 +335,7 @@
 				recovery_clear_count = 0
 
 			if(recovery_clear_count >= SStransport.max_cheap_moves)
-				speed_limiter = base_speed_limiter
+				set_tram_speed(tram_max_speed)
 				recovery_mode = FALSE
 				recovery_clear_count = 0
 				log_transport("TC: [specific_transport_id] removing speed limiter, performance issue resolved. Last tick was [duration]ms.")
@@ -315,63 +345,99 @@
 			if(recovery_activate_count >= SStransport.max_exceeding_moves)
 				message_admins("The tram at [ADMIN_JMP(transport_modules[1])] is taking [duration] ms which is more than [SStransport.max_time] ms per movement for [recovery_activate_count] ticks. Reducing its movement speed until it recovers. If this continues to be a problem you can reset the tram contents to its original state, and clear added objects on the Debug tab.")
 				log_transport("TC: [specific_transport_id] activating speed limiter due to poor performance.  Last tick was [duration]ms.")
-				speed_limiter = base_speed_limiter * 2 //halves its speed
+				base_internal_movement_delay = internal_movement_delay // update base in case it's been edited
+				internal_movement_delay = base_internal_movement_delay * 2 //halves its speed
 				recovery_mode = TRUE
 				recovery_activate_count = 0
 		else
 			recovery_activate_count = max(recovery_activate_count - 1, 0)
 
-		scheduled_move = world.time + speed_limiter
+		if(travel_remaining < 39 && (COOLDOWN_FINISHED(src, announce_cooldown)))
+			make_announcement("The next station is: [destination_platform].")
+			COOLDOWN_START(src, announce_cooldown, 4 SECONDS)
 
+		scheduled_move = world.time + internal_movement_delay
+
+/datum/transport_controller/linear/tram/proc/set_tram_speed(new_speed)
+	internal_movement_delay = round(clamp(50 / new_speed, 0.5, 5), 0.1)
+
+/datum/transport_controller/linear/tram/proc/make_announcement(broadcast)
+	if(SStts.tts_enabled)
+		nav_beacon.voice = SStts.tram_voice
+	else
+		playsound(nav_beacon, 'sound/machines/tram/info_chime.ogg', 100, vary = FALSE, extrarange = SILENCED_SOUND_EXTRARANGE, falloff_exponent = 1.4)
+
+	nav_beacon.say(broadcast)
+
+/**
+ * Tram stops normally, performs post-trip actions and updates the tram registration.
+ */
 /datum/transport_controller/linear/tram/proc/normal_stop()
 	cycle_doors(CYCLE_OPEN)
 	log_transport("TC: [specific_transport_id] trip completed. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
+	nav_beacon.tram_loop.stop()
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(platform_arrival_jingle)), 2.5 SECONDS)
 	if((controller_status & SYSTEM_FAULT) && (nav_beacon.loc == destination_platform.loc)) //position matches between controller and tram, we're back on track
 		set_status_code(SYSTEM_FAULT, FALSE)
-		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset.")
-		speed_limiter = initial(speed_limiter)
 	idle_platform = destination_platform
+
 	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
-	speed_limiter = initial(speed_limiter)
+	set_tram_speed(tram_max_speed)
 
+/**
+ * Tram comes to an in-station degraded stop, throwing the players. Caused by power loss or tram malfunction event.
+ */
 /datum/transport_controller/linear/tram/proc/degraded_stop()
+	crash_fx()
 	log_transport("TC: [specific_transport_id] trip completed with a degraded status. Info: [TC_TS_STATUS] nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([destination_platform.x], [destination_platform.y], [destination_platform.z]).")
+	nav_beacon.tram_loop.stop()
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	if(controller_status & SYSTEM_FAULT)
 		set_status_code(SYSTEM_FAULT, FALSE)
-		playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset.")
 		log_transport("TC: [specific_transport_id] position data successfully reset. ")
-		speed_limiter = initial(speed_limiter)
+	if(malf_active == TRANSPORT_LOCAL_FAULT)
+		set_status_code(SYSTEM_FAULT, TRUE)
+		addtimer(CALLBACK(src, PROC_REF(cycle_doors), CYCLE_OPEN), 2 SECONDS)
+		malf_active = TRANSPORT_SYSTEM_NORMAL
+		throw_chance = initial(throw_chance)
+		playsound(paired_cabinet, 'sound/machines/buzz/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		paired_cabinet.say("Controller error. Please contact your engineering department.")
 	idle_platform = destination_platform
 	tram_registration.distance_travelled += (travel_trip_length - travel_remaining)
 	travel_trip_length = 0
 	current_speed = 0
 	current_load = 0
-	speed_limiter = initial(speed_limiter)
+	set_tram_speed(tram_max_speed)
 	var/throw_direction = travel_direction
 	for(var/obj/structure/transport/linear/tram/module in transport_modules)
 		module.estop_throw(throw_direction)
 
+/**
+ * Tram comes to an emergency stop without completing its trip. Caused by emergency stop button or some catastrophic tram failure.
+ */
 /datum/transport_controller/linear/tram/proc/halt_and_catch_fire()
 	if(controller_status & SYSTEM_FAULT)
 		if(!isnull(paired_cabinet))
-			playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(paired_cabinet, 'sound/machines/buzz/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 			paired_cabinet.say("Controller error. Please contact your engineering department.")
 		log_transport("TC: [specific_transport_id] Transport Controller failed!")
 
 	if(travel_remaining)
 		travel_remaining = 0
+		crash_fx()
 		var/throw_direction = travel_direction
 		for(var/obj/structure/transport/linear/tram/module in transport_modules)
 			module.estop_throw(throw_direction)
-
+	nav_beacon.tram_loop.stop()
 	addtimer(CALLBACK(src, PROC_REF(unlock_controls)), 4 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(cycle_doors), CYCLE_OPEN), 2 SECONDS)
 	idle_platform = null
@@ -381,12 +447,16 @@
 	current_speed = 0
 	current_load = 0
 
+/**
+ * Performs a reset of the tram's position data by finding a predetermined reference landmark, then driving to it.
+ */
 /datum/transport_controller/linear/tram/proc/reset_position()
+	malf_active = TRANSPORT_SYSTEM_NORMAL
 	if(idle_platform)
 		if(get_turf(idle_platform) == get_turf(nav_beacon))
 			set_status_code(SYSTEM_FAULT, FALSE)
 			set_status_code(EMERGENCY_STOP, FALSE)
-			playsound(paired_cabinet, 'sound/machines/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(paired_cabinet, 'sound/machines/synth/synth_yes.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 			paired_cabinet.say("Controller reset.")
 			log_transport("TC: [specific_transport_id] Transport Controller reset was requested, but the tram nav data seems correct. Info: nav_pos ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z]) idle_pos ([idle_platform.x], [idle_platform.y], [idle_platform.z]).")
 			return
@@ -401,7 +471,7 @@
 	var/reset_beacon = closest_nav_in_travel_dir(nav_beacon, tram_velocity_sign, specific_transport_id)
 
 	if(!reset_beacon)
-		playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(paired_cabinet, 'sound/machines/buzz/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		paired_cabinet.say("Controller reset failed. Contact manufacturer.") // If you screwed up the tram this bad, I don't even
 		log_transport("TC: [specific_transport_id] non-recoverable error! Tram is at ([nav_beacon.x], [nav_beacon.y], [nav_beacon.z] [tram_velocity_sign ? "OUTBOUND" : "INBOUND"]) and can't find a reset beacon.")
 		message_admins("Tram ID [specific_transport_id] is in a non-recoverable error state at [ADMIN_JMP(nav_beacon)]. If it's causing problems, delete the controller datum from the 'Reset Tram' proc in the Debug tab.")
@@ -411,7 +481,7 @@
 	travel_remaining = get_dist(nav_beacon, reset_beacon)
 	travel_trip_length = travel_remaining
 	destination_platform = reset_beacon
-	speed_limiter = 1.5
+	internal_movement_delay = 1.5
 	playsound(paired_cabinet, 'sound/machines/ping.ogg', 40, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	paired_cabinet.say("Peforming controller reset... Navigating to reset point.")
 	log_transport("TC: [specific_transport_id] trip calculation: src: [nav_beacon.x], [nav_beacon.y], [nav_beacon.z] dst: [destination_platform] [destination_platform.x], [destination_platform.y], [destination_platform.z] = Dir [travel_direction] Dist [travel_remaining].")
@@ -422,10 +492,21 @@
 	log_transport("TC: [specific_transport_id] trying to reset at [destination_platform].")
 
 /datum/transport_controller/linear/tram/proc/estop()
-	playsound(paired_cabinet, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(paired_cabinet, 'sound/machines/buzz/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	paired_cabinet.say("Emergency stop activated!")
 	set_status_code(EMERGENCY_STOP, TRUE)
 	log_transport("TC: [specific_transport_id] requested emergency stop.")
+
+/**
+ * Tram crash sound and visuals
+ */
+/datum/transport_controller/linear/tram/proc/crash_fx()
+	playsound(source = nav_beacon, soundin = 'sound/vehicles/car_crash.ogg', vol = 100, vary = FALSE, falloff_distance = DEFAULT_TRAM_LENGTH)
+	nav_beacon.audible_message(span_userdanger("You hear metal grinding as the tram comes to a sudden, complete stop!"))
+	for(var/mob/living/tram_passenger in range(DEFAULT_TRAM_LENGTH - 2, nav_beacon))
+		if(IS_UNCONSCIOUS_OR_CRIT(tram_passenger))
+			continue
+		shake_camera(M = tram_passenger, duration = 0.2 SECONDS, strength = 3)
 
 /**
  * Handles unlocking the tram controls for use after moving
@@ -453,7 +534,7 @@
 		return
 
 	controller_active = new_status
-	send_transport_active_signal()
+	send_transport_status_update()
 	log_transport("TC: [specific_transport_id] controller state [controller_active ? "READY > PROCESSING" : "PROCESSING > READY"].")
 
 /**
@@ -470,19 +551,15 @@
 /datum/transport_controller/linear/tram/proc/set_status_code(code, value)
 	if(code != DOORS_READY)
 		log_transport("TC: [specific_transport_id] status change [value ? "+" : "-"][english_list(bitfield_to_list(code, TRANSPORT_FLAGS))].")
-	switch(value)
-		if(TRUE)
-			controller_status |= code
-		if(FALSE)
-			controller_status &= ~code
-		else
-			stack_trace("Transport controller received invalid status code request [code]/[value]")
-			return
 
-	send_transport_active_signal()
+	if(value)
+		controller_status |= code
+	else
+		controller_status &= ~code
+	send_transport_status_update()
 
-/datum/transport_controller/linear/tram/proc/send_transport_active_signal()
-	SEND_SIGNAL(SStransport, COMSIG_TRANSPORT_ACTIVE, src, controller_active, controller_status, travel_direction, destination_platform)
+/datum/transport_controller/linear/tram/proc/send_transport_status_update()
+	SEND_SIGNAL(SStransport, COMSIG_TRANSPORT_UPDATED, src, controller_active, controller_status, travel_direction, destination_platform)
 
 /**
  * Part of the pre-departure list, checks the status of the doors on the tram
@@ -527,20 +604,37 @@
 		set_status_code(SYSTEM_FAULT, FALSE)
 		reset_position()
 
+/datum/transport_controller/linear/tram/proc/set_home_controller(obj/machinery/transport/tram_controller/tcomms/tcomms_unit)
+	home_controller = tcomms_unit
+	RegisterSignal(tcomms_unit, COMSIG_MACHINERY_POWER_LOST, PROC_REF(home_power_lost))
+	RegisterSignal(tcomms_unit, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(home_power_restored))
+	RegisterSignal(tcomms_unit, COMSIG_QDELETING, PROC_REF(on_home_qdel))
+	log_transport("TC: [specific_transport_id] is now paired with home controller [tcomms_unit].")
+	if(controller_status & COMM_ERROR)
+		set_status_code(COMM_ERROR, FALSE)
+
 /datum/transport_controller/linear/tram/proc/on_cabinet_qdel()
 	paired_cabinet = null
 	log_transport("TC: [specific_transport_id] received QDEL from controller cabinet.")
 	set_status_code(SYSTEM_FAULT, TRUE)
-	send_transport_active_signal()
+
+/datum/transport_controller/linear/tram/proc/on_home_qdel()
+	home_controller = null
+	log_transport("TC: [specific_transport_id] received QDEL from controller cabinet.")
+	set_status_code(COMM_ERROR, TRUE)
+
+/datum/transport_controller/linear/tram/proc/home_power_lost()
+	set_status_code(COMM_ERROR, TRUE)
+
+/datum/transport_controller/linear/tram/proc/home_power_restored()
+	set_status_code(COMM_ERROR, FALSE)
 
 /**
- * Tram malfunction random event. Set comm error, increase tram lethality.
+ * Tram malfunction random event. Set comm error, requiring engineering or AI intervention.
  */
 /datum/transport_controller/linear/tram/proc/start_malf_event()
-	set_status_code(COMM_ERROR, TRUE)
-	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, FALSE)
-	paired_cabinet.generate_repair_signals()
-	collision_lethality *= 1.25
+	malf_active = TRANSPORT_LOCAL_WARNING
+	paired_cabinet.update_appearance()
 	throw_chance *= 1.25
 	log_transport("TC: [specific_transport_id] starting Tram Malfunction event.")
 
@@ -551,14 +645,15 @@
  * automagically reset it remotely.
  */
 /datum/transport_controller/linear/tram/proc/end_malf_event()
-	if(!(controller_status & COMM_ERROR))
+	if(!(malf_active))
 		return
-	set_status_code(COMM_ERROR, FALSE)
-	paired_cabinet.clear_repair_signals()
-	collision_lethality = initial(collision_lethality)
+	malf_active = TRANSPORT_SYSTEM_NORMAL
+	paired_cabinet.update_appearance()
 	throw_chance = initial(throw_chance)
-	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 	log_transport("TC: [specific_transport_id] ending Tram Malfunction event.")
+
+/datum/transport_controller/linear/tram/proc/announce_malf_event()
+	priority_announce("Our automated control system has lost contact with the tram's onboard computer. Please stand by, engineering has been dispatched to the tram to perform a reset.", "[command_name()] Engineering Division")
 
 /datum/transport_controller/linear/tram/proc/register_collision(points = 1)
 	tram_registration.collisions += points
@@ -567,17 +662,17 @@
 /datum/transport_controller/linear/tram/proc/power_lost()
 	set_operational(FALSE)
 	log_transport("TC: [specific_transport_id] power lost.")
-	send_transport_active_signal()
 
 /datum/transport_controller/linear/tram/proc/power_restored()
 	set_operational(TRUE)
 	log_transport("TC: [specific_transport_id] power restored.")
 	cycle_doors(CYCLE_OPEN)
-	send_transport_active_signal()
 
 /datum/transport_controller/linear/tram/proc/set_operational(new_value)
 	if(controller_operational != new_value)
 		controller_operational = new_value
+
+	send_transport_status_update()
 
 /**
  * Returns the closest tram nav beacon to an atom
@@ -636,6 +731,32 @@
 
 	return FALSE
 
+/// Plays the arrival jingle associated with the platform
+/datum/transport_controller/linear/tram/proc/platform_arrival_jingle()
+	var/our_channel = SSsounds.random_available_channel()
+	var/sound/jingle = sound(
+		idle_platform.arrival_sound,
+		FALSE,
+		0,
+		our_channel,
+		60
+	)
+	var/list/hearers = playsound(idle_platform, jingle, 60, FALSE, 0, extrarange = 7)
+	new /datum/threed_sound(
+		new_parent = idle_platform,
+		new_sound = jingle,
+		current_listeners = hearers,
+		can_add_new_listeners = FALSE,
+		volume = 60,
+		sound_range = SOUND_RANGE - 3,
+		sound_length = 3 SECONDS,
+		channel = our_channel,
+		preference_volume = /datum/preference/numeric/volume/sound_instruments,
+		preference_signal = null,
+		falloff_exponent = SOUND_FALLOFF_EXPONENT,
+		falloff_distance = 5
+	)
+
 /**
  * Moves the tram when hit by an immovable rod
  *
@@ -677,9 +798,8 @@
 	return push_destination
 
 
-/datum/transport_controller/linear/tram/slow //for some reason speed is set to initial() in the code but if i touched it it would probably break so
-	speed_limiter = 3
-	base_speed_limiter = 3
+/datum/transport_controller/linear/tram/slow
+	tram_max_speed = 16.5
 
 /**
  * The physical cabinet on the tram. Acts as the interface between players and the controller datum.
@@ -688,11 +808,13 @@
 	name = "tram controller"
 	desc = "Makes the tram go, or something. Holds the tram's electronics, controls, and maintenance panel. A sticker above the card reader says 'Engineering access only.'"
 	icon = 'icons/obj/tram/tram_controllers.dmi'
-	icon_state = "controller-panel"
+	icon_state = "tram-controller"
+	base_icon_state = "tram"
 	anchored = TRUE
 	density = FALSE
 	armor_type = /datum/armor/transport_module
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OFFLINE
 	max_integrity = 750
 	integrity_failure = 0.25
 	layer = SIGN_LAYER
@@ -700,6 +822,8 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
 	power_channel = AREA_USAGE_ENVIRON
 	var/datum/transport_controller/linear/tram/controller_datum
+	/// If this machine has a cover installed
+	var/has_cover = TRUE
 	/// If the cover is open
 	var/cover_open = FALSE
 	/// If the cover is locked
@@ -709,14 +833,12 @@
 /obj/machinery/transport/tram_controller/hilbert
 	configured_transport_id = HILBERT_LINE_1
 
-/obj/machinery/transport/tram_controller/wrench_act_secondary(mob/living/user, obj/item/tool)
-	return NONE
-
 /obj/machinery/transport/tram_controller/Initialize(mapload)
 	. = ..()
 	register_context()
 	if(!id_tag)
 		id_tag = assign_random_name()
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_SECONDARY)
 
 /**
  * Mapped or built tram cabinet isn't located on a transport module.
@@ -732,13 +854,12 @@
 	..()
 
 /obj/machinery/transport/tram_controller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER && has_cover)
 		context[SCREENTIP_CONTEXT_RMB] = panel_open ? "close panel" : "open panel"
 
-	if(!held_item)
+	if(!held_item && has_cover)
 		context[SCREENTIP_CONTEXT_LMB] = cover_open ? "access controls" : "open cabinet"
 		context[SCREENTIP_CONTEXT_RMB] = cover_open ? "close cabinet" : "toggle lock"
-
 
 	if(panel_open)
 		if(held_item?.tool_behaviour == TOOL_WRENCH)
@@ -759,14 +880,15 @@
 
 /obj/machinery/transport/tram_controller/examine(mob/user)
 	. = ..()
-	. += span_notice("The door appears to be [cover_locked ? "locked. Swipe an ID card to unlock" : "unlocked. Swipe an ID card to lock"].")
-	if(panel_open)
-		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
-		. += span_notice("The maintenance panel can be closed with a [EXAMINE_HINT("screwdriver.")]")
-	else
-		. += span_notice("The maintenance panel can be opened with a [EXAMINE_HINT("screwdriver.")]")
+	if(has_cover)
+		. += span_notice("The door appears to be [cover_locked ? "locked. Swipe an ID card to unlock" : "unlocked. Swipe an ID card to lock"].")
+		if(panel_open)
+			. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
+			. += span_notice("The maintenance panel can be closed with a [EXAMINE_HINT("screwdriver.")]")
+		else
+			. += span_notice("The maintenance panel can be opened with a [EXAMINE_HINT("screwdriver.")]")
 
-	if(cover_open)
+	if(cover_open || !has_cover)
 		. += span_notice("The [EXAMINE_HINT("yellow reset button")] resets the tram controller if a problem occurs or needs to be restarted.")
 		. += span_notice("The [EXAMINE_HINT("red stop button")] immediately stops the tram, requiring a reset afterwards.")
 		. += span_notice("The cabinet can be closed with a [EXAMINE_HINT("Right-click.")]")
@@ -774,20 +896,18 @@
 		. += span_notice("The cabinet can be opened with a [EXAMINE_HINT("Left-click.")]")
 
 
-/obj/machinery/transport/tram_controller/attackby(obj/item/weapon, mob/living/user, params)
-	if(user.combat_mode || cover_open)
-		return ..()
-
-	var/obj/item/card/id/id_card = user.get_id_in_hand()
-	if(!isnull(id_card))
-		try_toggle_lock(user, id_card)
-		return
-
-	return ..()
+/obj/machinery/transport/tram_controller/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode || !has_cover)
+		return NONE
+	if(!istype(tool, /obj/item/card/id))
+		return NONE
+	if(cover_open)
+		return ITEM_INTERACT_BLOCKING
+	return try_toggle_lock(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /obj/machinery/transport/tram_controller/attack_hand(mob/living/user, params)
 	. = ..()
-	if(cover_open)
+	if(cover_open || !has_cover)
 		return
 
 	if(cover_locked)
@@ -803,6 +923,8 @@
 
 /obj/machinery/transport/tram_controller/attack_hand_secondary(mob/living/user, params)
 	. = ..()
+	if(!has_cover)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(!cover_open)
 		var/obj/item/card/id/id_card = user.get_idcard(TRUE)
@@ -818,9 +940,9 @@
 
 /obj/machinery/transport/tram_controller/proc/toggle_door()
 	if(!cover_open)
-		playsound(loc, 'sound/machines/closet_open.ogg', 35, TRUE, -3)
+		playsound(loc, 'sound/machines/closet/closet_open.ogg', 35, TRUE, -3)
 	else
-		playsound(loc, 'sound/machines/closet_close.ogg', 50, TRUE, -3)
+		playsound(loc, 'sound/machines/closet/closet_close.ogg', 50, TRUE, -3)
 	cover_open = !cover_open
 	update_appearance()
 
@@ -842,6 +964,9 @@
 
 /obj/machinery/transport/tram_controller/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
+	if(!has_cover)
+		return
+
 	if(panel_open && cover_open)
 		balloon_alert(user, "unsecuring...")
 		tool.play_tool_sound(src)
@@ -866,10 +991,10 @@
 	var/turf/drop_location = find_obstruction_free_location(1, src)
 
 	if(disassembled)
-		new /obj/item/wallframe/tram/controller(drop_location)
+		new /obj/item/wallframe/tram(drop_location)
 	else
 		new /obj/item/stack/sheet/mineral/titanium(drop_location, 2)
-		new /obj/item/stack/sheet/iron(drop_location, 1)
+		new /obj/item/stack/sheet/iron(drop_location)
 
 /**
  * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.
@@ -877,53 +1002,55 @@
 /obj/machinery/transport/tram_controller/update_overlays()
 	. = ..()
 
-	if(!cover_open)
-		. += mutable_appearance(icon, "controller-closed")
-		if(cover_locked)
-			. += mutable_appearance(icon, "controller-locked")
+	if(has_cover)
+		if(!cover_open)
+			. += mutable_appearance(icon, "[base_icon_state]-closed")
+			if(cover_locked)
+				. += mutable_appearance(icon, "[base_icon_state]-locked")
 
-	else
-		var/mutable_appearance/controller_door = mutable_appearance(icon, "controller-open")
-		controller_door.pixel_w = -3
-		. += controller_door
+		else
+			var/mutable_appearance/controller_door = mutable_appearance(icon, "[base_icon_state]-open")
+			controller_door.pixel_w = -3
+			. += controller_door
 
 	if(machine_stat & NOPOWER)
-		. += mutable_appearance(icon, "estop")
-		. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-estop")
+		. += emissive_appearance(icon, "[base_icon_state]-estop", src, alpha = src.alpha)
 		return
 
-	. += mutable_appearance(icon, "power")
-	. += emissive_appearance(icon, "power", src, alpha = src.alpha)
+	. += mutable_appearance(icon, "[base_icon_state]-power")
+	. += emissive_appearance(icon, "[base_icon_state]-power", src, alpha = src.alpha)
 
 	if(!controller_datum)
-		. += mutable_appearance(icon, "fatal")
-		. += emissive_appearance(icon, "fatal", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-fatal")
+		. += emissive_appearance(icon, "[base_icon_state]-fatal", src, alpha = src.alpha)
 		return
 
 	if(controller_datum.controller_status & EMERGENCY_STOP)
-		. += mutable_appearance(icon, "estop")
-		. += emissive_appearance(icon, "estop", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-estop")
+		. += emissive_appearance(icon, "[base_icon_state]-estop", src, alpha = src.alpha)
+		return
+
+	if(controller_datum.controller_status & SYSTEM_FAULT || controller_datum.malf_active != TRANSPORT_SYSTEM_NORMAL)
+		. += mutable_appearance(icon, "[base_icon_state]-fault")
+		. += emissive_appearance(icon, "[base_icon_state]-fault", src, alpha = src.alpha)
 		return
 
 	if(!(controller_datum.controller_status & DOORS_READY))
-		. += mutable_appearance(icon, "doors")
-		. += emissive_appearance(icon, "doors", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-doors")
+		. += emissive_appearance(icon, "[base_icon_state]-doors", src, alpha = src.alpha)
 
 	if(controller_datum.controller_active)
-		. += mutable_appearance(icon, "active")
-		. += emissive_appearance(icon, "active", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-active")
+		. += emissive_appearance(icon, "[base_icon_state]-active", src, alpha = src.alpha)
 
-	if(controller_datum.controller_status & SYSTEM_FAULT)
-		. += mutable_appearance(icon, "fault")
-		. += emissive_appearance(icon, "fault", src, alpha = src.alpha)
-
-	else if(controller_datum.controller_status & COMM_ERROR)
-		. += mutable_appearance(icon, "comms")
-		. += emissive_appearance(icon, "comms", src, alpha = src.alpha)
+	if(controller_datum.controller_status & COMM_ERROR)
+		. += mutable_appearance(icon, "[base_icon_state]-comms")
+		. += emissive_appearance(icon, "[base_icon_state]-comms", src, alpha = src.alpha)
 
 	else
-		. += mutable_appearance(icon, "normal")
-		. += emissive_appearance(icon, "normal", src, alpha = src.alpha)
+		. += mutable_appearance(icon, "[base_icon_state]-normal")
+		. += emissive_appearance(icon, "[base_icon_state]-normal", src, alpha = src.alpha)
 
 /**
  * Find the controller associated with the transport module the cabinet is sitting on.
@@ -938,7 +1065,7 @@
 		return
 
 	controller_datum.notify_controller(src)
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(sync_controller))
 
 /obj/machinery/transport/tram_controller/hilbert/find_controller()
 	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
@@ -950,7 +1077,7 @@
 		return
 
 	controller_datum.notify_controller(src)
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(sync_controller))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(sync_controller))
 
 /**
  * Since the machinery obj is a dumb terminal for the controller datum, sync the display with the status bitfield of the tram
@@ -967,28 +1094,16 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	cover_locked = FALSE
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "access controller shorted")
 	return TRUE
 
-/**
- * Check if the tram was malfunctioning due to the random event, and if so end the event on repair.
- */
-/obj/machinery/transport/tram_controller/try_fix_machine(obj/machinery/transport/machine, mob/living/user, obj/item/tool)
-	. = ..()
+/obj/machinery/transport/tram_controller/ui_status(mob/user, datum/ui_state/state)
+	if(HAS_SILICON_ACCESS(user) && (controller_datum.controller_status & SYSTEM_FAULT || controller_datum.controller_status & COMM_ERROR || !is_operational))
+		to_chat(user, span_warning("An error code flashes: Communications fault! The [src] is not responding to remote inputs!"))
+		return UI_CLOSE
 
-	if(. == FALSE)
-		return
-
-	if(!controller_datum)
-		return
-
-	var/datum/round_event/tram_malfunction/malfunction_event = locate(/datum/round_event/tram_malfunction) in SSevents.running
-	if(malfunction_event)
-		malfunction_event.end()
-
-	if(controller_datum.controller_status & COMM_ERROR)
-		controller_datum.set_status_code(COMM_ERROR, FALSE)
+	return ..()
 
 /obj/machinery/transport/tram_controller/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -996,7 +1111,7 @@
 	if(!cover_open && !HAS_SILICON_ACCESS(user) && !isobserver(user))
 		return
 
-	if(!is_operational)
+	if(machine_stat & BROKEN)
 		return
 
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -1017,7 +1132,7 @@
 		"recoveryMode" = controller_datum.recovery_mode,
 		"currentSpeed" = controller_datum.current_speed,
 		"currentLoad" = controller_datum.current_load,
-		"statusSF" = controller_datum.controller_status & SYSTEM_FAULT,
+		"statusSF" = controller_datum.controller_status & SYSTEM_FAULT || controller_datum.malf_active != TRANSPORT_SYSTEM_NORMAL,
 		"statusCE" = controller_datum.controller_status & COMM_ERROR,
 		"statusES" = controller_datum.controller_status & EMERGENCY_STOP,
 		"statusPD" = controller_datum.controller_status & PRE_DEPARTURE,
@@ -1034,12 +1149,16 @@
 
 	return data
 
-/obj/machinery/transport/tram_controller/ui_act(action, params)
+/obj/machinery/transport/tram_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
 
 	if(!COOLDOWN_FINISHED(src, manual_command_cooldown))
+		return
+
+	if(machine_stat & NOPOWER)
+		visible_message(span_warning("The button doesn't appear to do anything, the [src]'s power failure status is flashing!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		return
 
 	switch(action)
@@ -1077,11 +1196,65 @@
 
 	COOLDOWN_START(src, manual_command_cooldown, 2 SECONDS)
 
-/obj/item/wallframe/tram/controller
+
+/// Controller that sits in the telecoms room
+/obj/machinery/transport/tram_controller/tcomms
+	name = "tram central controller"
+	desc = "This semiconductor is half of the brains controlling the tram and its auxiliary equipment."
+	icon_state = "home-controller"
+	base_icon_state = "home"
+	density = TRUE
+	layer = BELOW_OBJ_LAYER
+	power_channel = AREA_USAGE_EQUIP
+	cover_open = TRUE
+	has_cover = FALSE
+
+/// Handles the machine being affected by an EMP, causing signal failure.
+/obj/machinery/transport/tram_controller/tcomms/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(prob(100/severity) && !(machine_stat & EMPED))
+		set_machine_stat(machine_stat | EMPED)
+		controller_datum.set_status_code(COMM_ERROR, TRUE)
+		var/duration = (300 SECONDS)/severity
+		addtimer(CALLBACK(src, PROC_REF(de_emp)), rand(duration - 2 SECONDS, duration + 2 SECONDS))
+
+/// Handles the machine stopping being affected by an EMP.
+/obj/machinery/transport/tram_controller/tcomms/proc/de_emp()
+	set_machine_stat(machine_stat & ~EMPED)
+	controller_datum.set_status_code(COMM_ERROR, FALSE)
+
+/obj/machinery/transport/tram_controller/tcomms/find_controller()
+	link_tram()
+	return
+
+/obj/machinery/transport/tram_controller/tcomms/link_tram()
+	. = ..()
+	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
+	controller_datum = tram
+	if(!controller_datum)
+		return
+	controller_datum.set_home_controller(src)
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(sync_controller))
+
+/obj/item/wallframe/tram
 	name = "tram controller cabinet"
 	desc = "A box that contains the equipment to control a tram. Just secure to the tram wall."
 	icon = 'icons/obj/tram/tram_controllers.dmi'
-	icon_state = "controller-panel"
-	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
+	icon_state = "tram-controller"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 20)
 	result_path = /obj/machinery/transport/tram_controller
 	pixel_shift = 32
+
+/obj/item/wallframe/tram/find_support_structure(atom/structure)
+	return astype(structure, /obj/structure/tram)
+
+/obj/item/wallframe/tram/try_build(obj/structure/tram/on_tram, mob/user)
+	var/turf/tram_turf = get_turf(user)
+	var/obj/structure/thermoplastic/tram_floor = locate() in tram_turf
+	if(!istype(tram_floor))
+		balloon_alert(user, "needs tram!")
+		return FALSE
+
+	return ..()

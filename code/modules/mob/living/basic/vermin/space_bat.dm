@@ -24,7 +24,7 @@
 	butcher_results = list(/obj/item/food/meat/slab = 1)
 	pass_flags = PASSTABLE
 
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mob_size = MOB_SIZE_TINY
@@ -41,22 +41,10 @@
 
 ///Controller for space bats, has nothing unique, just retaliation.
 /datum/ai_controller/basic_controller/space_bat
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/space_bat.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-///Subtype used in the caves away mission
-/mob/living/basic/bat/away_caves
-	name = "cave bat"
-	desc = "A rare breed of bat which roosts deep in caves."
-	minimum_survivable_temperature = 0
-	gold_core_spawnable = NO_SPAWN

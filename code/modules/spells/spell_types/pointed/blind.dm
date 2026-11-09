@@ -4,12 +4,12 @@
 	button_icon_state = "blind"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
 
-	sound = 'sound/magic/blind.ogg'
+	sound = 'sound/effects/magic/blind.ogg'
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 30 SECONDS
 	cooldown_reduction_per_rank = 6.25 SECONDS
 
-	invocation = "STI KALY"
+	invocation = "STI KALY."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 

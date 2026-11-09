@@ -3,6 +3,7 @@
 	desc = "A low-capacity, energy-based stun gun used by security teams to subdue targets at range."
 	icon_state = "taser"
 	inhand_icon_state = null //so the human update icon uses the icon_state instead.
+	light_color = LIGHT_COLOR_DIM_YELLOW
 	ammo_type = list(/obj/item/ammo_casing/energy/electrode)
 	ammo_x_offset = 3
 
@@ -52,7 +53,7 @@
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = FALSE)
 
-/obj/item/gun/energy/disabler/add_seclight_point()
+/obj/item/gun/energy/disabler/smg/add_seclight_point()
 	AddComponent(\
 		/datum/component/seclite_attachable, \
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \

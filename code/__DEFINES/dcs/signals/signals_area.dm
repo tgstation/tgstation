@@ -27,6 +27,9 @@
 /// Called when the air alarm mode is updated
 #define COMSIG_AIRALARM_UPDATE_MODE "airalarm_update_mode"
 
+/// Sent from base of area/set_parallax_movedir: (new_movedir)
+#define COMSIG_AREA_PARALLAX_DIR_CHANGED "area_parallax_dir_changed"
+
 // Area fire signals
 /// Sent when an area's fire var changes: (fire_value)
 #define COMSIG_AREA_FIRE_CHANGED "area_fire_set"
@@ -35,3 +38,12 @@
 #define COMSIG_WEATHER_BEGAN_IN_AREA(event_type) "weather_began_in_area_[event_type]"
 /// Called when some weather ends in this area
 #define COMSIG_WEATHER_ENDED_IN_AREA(event_type) "weather_ended_in_area_[event_type]"
+
+///From base of area/update_beauty()
+#define COMSIG_AREA_BEAUTY_UPDATED "area_beauty_updated"
+
+/// From base of turf/change_area(area/old_area)
+#define COMSIG_AREA_TURF_ADDED "area_turf_added"
+
+/// From base of turf/change_area(area/new_area)
+#define COMSIG_AREA_TURF_REMOVED "area_turf_removed"

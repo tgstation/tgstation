@@ -1,12 +1,20 @@
 SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
-	init_order = INIT_ORDER_ATOMS
-	flags = SS_NO_FIRE
+	dependencies = list(
+		/datum/controller/subsystem/processing/reagents,
+		/datum/controller/subsystem/fluids,
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/job,
+	)
+	ss_flags = SS_NO_FIRE
 
 	/// A stack of list(source, desired initialized state)
 	/// We read the source of init changes from the last entry, and assert that all changes will come with a reset
 	var/list/initialized_state = list()
 	var/base_initialized
+
+	/// How many InitializeAtoms calls are still creating atoms, including ones asleep in CreateAtoms
+	var/active_initializations = 0
 
 	var/list/late_loaders = list()
 
@@ -42,12 +50,14 @@ SUBSYSTEM_DEF(atoms)
 
 	// Generate a unique mapload source for this run of InitializeAtoms
 	var/static/uid = 0
-	uid = (uid + 1) % (SHORT_REAL_LIMIT - 1)
+	uid = WRAP_UID(uid + 1)
 	var/source = "subsystem init [uid]"
 	set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, source)
 
 	// This may look a bit odd, but if the actual atom creation runtimes for some reason, we absolutely need to set initialized BACK
+	active_initializations++
 	CreateAtoms(atoms, atoms_to_return, source)
+	active_initializations--
 	clear_tracked_initalize(source)
 	SSicon_smooth.free_deferred(source)
 
@@ -75,7 +85,7 @@ SUBSYSTEM_DEF(atoms)
 	rustg_file_write(json_encode(mapload_init_times), "[GLOB.log_directory]/init_times.json")
 	#endif
 
-/// Actually creates the list of atoms. Exists soley so a runtime in the creation logic doesn't cause initalized to totally break
+/// Actually creates the list of atoms. Exists solely so a runtime in the creation logic doesn't cause initialized to totally break
 /datum/controller/subsystem/atoms/proc/CreateAtoms(list/atoms, list/atoms_to_return = null, mapload_source = null)
 	if (atoms_to_return)
 		LAZYINITLIST(created_atoms)
@@ -100,6 +110,9 @@ SUBSYSTEM_DEF(atoms)
 					stoplag()
 					if(mapload_source)
 						set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, mapload_source)
+					// Another initializer may have completed this atom while we yielded.
+					if(A.flags_1 & INITIALIZED_1)
+						continue
 				PROFILE_INIT_ATOM_BEGIN()
 				InitAtom(A, TRUE, mapload_arg)
 				PROFILE_INIT_ATOM_END(A)
@@ -137,8 +150,8 @@ SUBSYSTEM_DEF(atoms)
 		return null
 	return initialized_state[state_length][1]
 
-/// Use this to set initialized to prevent error states where the old initialized is overriden, and we end up losing all context
-/// Accepts a state and a source, the most recent state is used, sources exist to prevent overriding old values accidentially
+/// Use this to set initialized to prevent error states where the old initialized is overridden, and we end up losing all context
+/// Accepts a state and a source, the most recent state is used, sources exist to prevent overriding old values accidentally
 /datum/controller/subsystem/atoms/proc/set_tracked_initalized(state, source)
 	if(!length(initialized_state))
 		base_initialized = initialized
@@ -157,11 +170,12 @@ SUBSYSTEM_DEF(atoms)
 		initialized = base_initialized
 		base_initialized = INITIALIZATION_INNEW_REGULAR
 		return
+
 	initialized = initialized_state[length(initialized_state)][2]
 
 /// Returns TRUE if anything is currently being initialized
 /datum/controller/subsystem/atoms/proc/initializing_something()
-	return length(initialized_state) > 1
+	return active_initializations > 0
 
 /datum/controller/subsystem/atoms/Recover()
 	initialized = SSatoms.initialized
@@ -171,14 +185,11 @@ SUBSYSTEM_DEF(atoms)
 	BadInitializeCalls = SSatoms.BadInitializeCalls
 
 /datum/controller/subsystem/atoms/proc/setupGenetics()
-	var/list/mutations = subtypesof(/datum/mutation/human)
+	var/list/mutations = subtypesof(/datum/mutation)
 	shuffle_inplace(mutations)
-	for(var/A in subtypesof(/datum/generecipe))
-		var/datum/generecipe/GR = A
-		GLOB.mutation_recipes[initial(GR.required)] = initial(GR.result)
 	for(var/i in 1 to LAZYLEN(mutations))
 		var/path = mutations[i] //byond gets pissy when we do it in one line
-		var/datum/mutation/human/B = new path ()
+		var/datum/mutation/B = new path ()
 		B.alias = "Mutation [i]"
 		GLOB.all_mutations[B.type] = B
 		GLOB.full_sequences[B.type] = generate_gene_sequence(B.blocks)

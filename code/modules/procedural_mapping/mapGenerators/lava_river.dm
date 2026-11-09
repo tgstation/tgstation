@@ -18,7 +18,7 @@
 
 /datum/map_generator_module/river
 	var/river_type = /turf/open/lava/smooth
-	var/river_nodes = 4
+	var/river_nodes = 3 // +1 from mapped-in one near the base
 
 /datum/map_generator_module/river/generate()
 	var/datum/map_generator/lavaland/L = mother

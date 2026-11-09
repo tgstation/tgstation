@@ -1,20 +1,18 @@
 {
-	"styles":[
-		"The %STORY_TYPE has a generic style"
-	],
-	"engraving_styles":[
+	"styles": ["The %STORY_TYPE has a generic style"],
+	"engraving_styles": [
 		"The engraving has a cubist style.",
 		"The engraving has a minimalist style.",
 		"The engraving has a surrealist style."
 	],
-	"engraving_forewords":[
+	"engraving_forewords": [
 		"Embedded in the wall is a story of",
 		"In the engraving you can see the tale of",
 		"On the wall, you see",
 		"The engraving depicts",
 		"This piece depicts"
 	],
-	"engraving_somethings":[
+	"engraving_somethings": [
 		"%CREWMEMBER is berating %PROTAGONIST over the ordeal.",
 		"%CREWMEMBER is doing a sick ass backflip in the meantime!",
 		"%CREWMEMBER is shocked by the situation.",
@@ -44,23 +42,23 @@
 		"There is a tiny %SOMETHING in the corner.",
 		"there is also a %SOMETHING etched in the corner. It was done so crudely you'd think a three-year-old did it."
 	],
-	"changeling_absorb_forewords":[
+	"changeling_absorb_forewords": [
 		"A story of the past reveals itself, speaking of",
 		"Deeply tangled in their mind is a memory of",
 		"You unravel a story about",
 		"Your mental spines begin unravelling a story of"
 	],
-	"changeling_absorb_somethings":[
+	"changeling_absorb_somethings": [
 		"You continue to peel away the story.",
 		"Your mental spines dive deeper into the memory."
 	],
-	"tattoo_forewords":[
+	"tattoo_forewords": [
 		"Inked into the skin is a story of",
 		"On the tattoo is a tale of",
 		"The tattoo depicts",
 		"This tattoo's story is of"
 	],
-	"tattoo_somethings":[
+	"tattoo_somethings": [
 		"%CREWMEMBER looms over the tattoo.",
 		"%SOMETHINGs border around the main work.",
 		"A car is driving across the tattoo.",
@@ -83,7 +81,7 @@
 		"The tattoo is bordered by a swirling space dragon.",
 		"The tattoo says something in nekomimetic."
 	],
-	"tattoo_styles":[
+	"tattoo_styles": [
 		"The tattoo is in a mad max style.",
 		"The tattoo is styled to look cyberpunk.",
 		"The tattoo looks cartoony.",

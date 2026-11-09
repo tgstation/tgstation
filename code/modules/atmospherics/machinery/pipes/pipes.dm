@@ -22,17 +22,25 @@
 	buckle_requires_restraints = TRUE
 	buckle_lying = NO_BUCKLE_LYING
 
-/obj/machinery/atmospherics/pipe/New()
+/obj/machinery/atmospherics/pipe/Initialize(mapload, process, setdir, init_dir)
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
-	volume = 35 * device_type
-	. = ..()
+	if (!volume) // Pipes can have specific volumes or have it determined by their device_type.
+		volume = UNARY_PIPE_VOLUME * device_type
+	return ..()
 
-///I have no idea why there's a new and at this point I'm too afraid to ask
-/obj/machinery/atmospherics/pipe/Initialize(mapload)
-	. = ..()
+/obj/machinery/atmospherics/pipe/proc/set_volume(new_volume)
+	if(volume == new_volume)
+		return
+	var/datum/gas_mixture/gasmix = parent?.air
+	if(gasmix)
+		gasmix.volume = gasmix.volume + new_volume - volume
+	volume = new_volume
 
-	if(hide)
-		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
+/obj/machinery/atmospherics/pipe/setup_hiding()
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
+
+	// Registering on `COMSIG_OBJ_HIDE` would cause order of operations issues with undertile, so we register to run when undertile updates instead
+	RegisterSignal(src, COMSIG_UNDERTILE_UPDATED, PROC_REF(on_hide))
 
 /obj/machinery/atmospherics/pipe/on_deconstruction(disassembled)
 	//we delete the parent here so it initializes air_temporary for us. See /datum/pipeline/Destroy() which calls temporarily_store_air()
@@ -60,11 +68,11 @@
 /obj/machinery/atmospherics/pipe/destroy_network()
 	QDEL_NULL(parent)
 
-/obj/machinery/atmospherics/pipe/get_rebuild_targets()
+/obj/machinery/atmospherics/pipe/get_rebuild_target()
 	if(!QDELETED(parent))
 		return
 	replace_pipenet(parent, new /datum/pipeline)
-	return list(parent)
+	return parent
 
 /obj/machinery/atmospherics/pipe/return_air()
 	if(air_temporary)
@@ -81,13 +89,14 @@
 		return air_temporary.remove(amount)
 	return parent.air.remove(amount)
 
-/obj/machinery/atmospherics/pipe/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/pipe_meter))
-		var/obj/item/pipe_meter/meter = item
-		user.dropItemToGround(meter)
-		meter.setAttachLayer(piping_layer)
-	else
+/obj/machinery/atmospherics/pipe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/pipe_meter))
 		return ..()
+
+	var/obj/item/pipe_meter/meter = tool
+	user.dropItemToGround(meter)
+	meter.setAttachLayer(piping_layer)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/pipe/return_pipenet()
 	return parent
@@ -139,4 +148,4 @@
 		current_node.update_icon()
 
 /obj/machinery/atmospherics/pipe/update_layer()
-	layer = initial(layer) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.0001)
+	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? BELOW_CATWALK_LAYER : initial(layer)) + (piping_layer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_LCHANGE + (GLOB.pipe_colors_ordered[pipe_color] * 0.0001)

@@ -2,21 +2,21 @@
 #define MIN_GLIDE_SIZE 1
 /// The maximum for glide_size to be clamped to.
 /// This shouldn't be higher than the icon size, and generally you shouldn't be changing this, but it's here just in case.
-#define MAX_GLIDE_SIZE 32
+#define MAX_GLIDE_SIZE ICON_SIZE_ALL
 
 /// Compensating for time dilation
 GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 
 ///Broken down, here's what this does:
-/// divides the world icon_size (32) by delay divided by ticklag to get the number of pixels something should be moving each tick.
+/// divides the world icon_size by delay divided by ticklag to get the number of pixels something should be moving each tick.
 /// The division result is given a min value of 1 to prevent obscenely slow glide sizes from being set
 /// Then that's multiplied by the global glide size multiplier. 1.25 by default feels pretty close to spot on. This is just to try to get byond to behave.
 /// The whole result is then clamped to within the range above.
 /// Not very readable but it works
-#define DELAY_TO_GLIDE_SIZE(delay) (clamp(((world.icon_size / max((delay) / world.tick_lag, 1)) * GLOB.glide_size_multiplier), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE))
+#define DELAY_TO_GLIDE_SIZE(delay) (clamp(((ICON_SIZE_ALL / max((delay) / world.tick_lag, 1)) * GLOB.glide_size_multiplier), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE))
 
 ///Similar to DELAY_TO_GLIDE_SIZE, except without the clamping, and it supports piping in an unrelated scalar
-#define MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, movement_disparity) (world.icon_size / ((delay) / world.tick_lag) * movement_disparity * GLOB.glide_size_multiplier)
+#define MOVEMENT_ADJUSTED_GLIDE_SIZE(delay, movement_disparity) (ICON_SIZE_ALL / ((delay) / world.tick_lag) * movement_disparity * GLOB.glide_size_multiplier)
 
 //Movement loop priority. Only one loop can run at a time, this dictates that
 // Higher numbers beat lower numbers
@@ -29,15 +29,18 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 
 //Movement loop flags
 ///Should the loop act immediately following its addition?
-#define MOVEMENT_LOOP_START_FAST (1<<0)
+#define MOVEMENT_LOOP_START_INSTANT (1<<0)
+///Should the loop act as soon as is reasonable?
+///(always 1 tick after the next visual tick, makes behavior consistent regardless of when the SS fires in the tick)
+#define MOVEMENT_LOOP_START_FAST (1<<1)
 ///Do we not use the priority system?
-#define MOVEMENT_LOOP_IGNORE_PRIORITY (1<<1)
+#define MOVEMENT_LOOP_IGNORE_PRIORITY (1<<2)
 ///Should we override the loop's glide?
-#define MOVEMENT_LOOP_IGNORE_GLIDE (1<<2)
+#define MOVEMENT_LOOP_IGNORE_GLIDE (1<<3)
 ///Should we not update our movables dir on move?
-#define MOVEMENT_LOOP_NO_DIR_UPDATE (1<<3)
+#define MOVEMENT_LOOP_NO_DIR_UPDATE (1<<4)
 ///Is the loop moving the movable outside its control, like it's an external force? e.g. footsteps won't play if enabled.
-#define MOVEMENT_LOOP_OUTSIDE_CONTROL (1<<4)
+#define MOVEMENT_LOOP_OUTSIDE_CONTROL (1<<5)
 
 // Movement loop status flags
 /// Has the loop been paused, soon to be resumed?
@@ -56,6 +59,8 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 //Index defines for movement bucket data packets
 #define MOVEMENT_BUCKET_TIME 1
 #define MOVEMENT_BUCKET_LIST 2
+/// Key for a movement bucket's time. "[time]" only keeps 6 significant digits, which merges different times once world.time reaches 100000
+#define MOVEMENT_BUCKET_KEY(time) num2text(time, 12)
 
 /**
  * currently_z_moving defines. Higher numbers mean higher priority.
@@ -103,7 +108,7 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define ZMOVE_CHECK_PULLS (ZMOVE_CHECK_PULLING|ZMOVE_CHECK_PULLEDBY)
 
 /// Flags used in "Move Upwards" and "Move Downwards" verbs.
-#define ZMOVE_FLIGHT_FLAGS (ZMOVE_CAN_FLY_CHECKS|ZMOVE_INCAPACITATED_CHECKS|ZMOVE_CHECK_PULLS|ZMOVE_ALLOW_BUCKLED)
+#define ZMOVE_FLIGHT_FLAGS (ZMOVE_CAN_FLY_CHECKS|ZMOVE_INCAPACITATED_CHECKS|ZMOVE_CHECK_PULLS|ZMOVE_ALLOW_BUCKLED|ZMOVE_INCLUDE_PULLED)
 /// Used when walking upstairs
 #define ZMOVE_STAIRS_FLAGS (ZMOVE_CHECK_PULLEDBY|ZMOVE_ALLOW_BUCKLED)
 /// Used for falling down open space.
@@ -125,8 +130,6 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define TELEPORT_CHANNEL_MAGIC "magic"
 /// Cult teleportation, does whatever it wants (unless there's holiness)
 #define TELEPORT_CHANNEL_CULT "cult"
-/// Eigenstate teleportation, can do most things (that aren't in a teleport-prevented zone)
-#define TELEPORT_CHANNEL_EIGENSTATE "eigenstate"
 /// Anything else
 #define TELEPORT_CHANNEL_FREE "free"
 
@@ -134,3 +137,11 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define MOVELOOP_FAILURE 0
 #define MOVELOOP_SUCCESS 1
 #define MOVELOOP_NOT_READY 2
+
+#define NEWTONS *1
+
+#define DEFAULT_INERTIA_SPEED 5
+/// Maximum inertia that an object can hold. Used to prevent objects from getting to stupid speeds.
+#define INERTIA_FORCE_CAP 25 NEWTONS
+// Results in maximum speed of 1 tile per tick, capped at about 2/3rds of maximum force
+#define INERTIA_SPEED_COEF 0.375

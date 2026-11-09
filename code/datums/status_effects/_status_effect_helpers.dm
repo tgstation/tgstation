@@ -13,9 +13,7 @@
 /mob/living/proc/apply_status_effect(datum/status_effect/new_effect, ...)
 	RETURN_TYPE(/datum/status_effect)
 
-	// The arguments we pass to the start effect. The 1st argument is this mob.
 	var/list/arguments = args.Copy()
-	arguments[1] = src
 
 	// If the status effect we're applying doesn't allow multiple effects, we need to handle it
 	if(initial(new_effect.status_type) != STATUS_EFFECT_MULTIPLE)
@@ -37,6 +35,9 @@
 				if(STATUS_EFFECT_REFRESH)
 					existing_effect.refresh(arglist(arguments))
 					return
+
+	// For the new effect the 1st argument is this mob
+	arguments[1] = src
 
 	// Create the status effect with our mob + our arguments
 	var/datum/status_effect/new_instance = new new_effect(arguments)
@@ -65,7 +66,7 @@
 /**
  * Checks if this mob has a status effect that shares the passed effect's ID
  *
- * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not it's typepath
+ * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not its typepath
  *
  * Returns an instance of a status effect, or NULL if none were found.
  */
@@ -99,7 +100,7 @@
  * Checks if this mob has a status effect that shares the passed effect's ID
  * and has the passed sources are in its list of sources (ONLY works for grouped efects!)
  *
- * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not it's typepath
+ * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not its typepath
  *
  * Returns an instance of a status effect, or NULL if none were found.
  */
@@ -128,7 +129,7 @@
 /**
  * Returns a list of all status effects that share the passed effect type's ID
  *
- * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not it's typepath
+ * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not its typepath
  *
  * Returns a list
  */

@@ -1,5 +1,8 @@
 /obj/vehicle/sealed
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
+	interaction_flags_mouse_drop = NEED_HANDS
+
 	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
 	var/headlights_toggle = FALSE
@@ -20,11 +23,11 @@
 	if(istype(E))
 		E.vehicle_entered_target = src
 
-/obj/vehicle/sealed/MouseDrop_T(atom/dropping, mob/M)
-	if(!istype(dropping) || !istype(M))
+/obj/vehicle/sealed/mouse_drop_receive(atom/dropping, mob/living/user, params)
+	if(!istype(dropping) || !istype(user))
 		return ..()
-	if(M == dropping)
-		mob_try_enter(M)
+	if(user == dropping)
+		mob_try_enter(user)
 	return ..()
 
 /obj/vehicle/sealed/Exited(atom/movable/gone, direction)
@@ -38,7 +41,7 @@
 	if(istype(A, /obj/machinery/door))
 		var/obj/machinery/door/conditionalwall = A
 		for(var/mob/occupant as anything in return_controllers_with_flag(access_provider_flags))
-			if(conditionalwall.try_safety_unlock(occupant))
+			if(conditionalwall.try_safety_unlock(occupant) || !conditionalwall.can_open_with_hands)
 				return
 			conditionalwall.bumpopen(occupant)
 
@@ -90,8 +93,10 @@
 	if(!istype(M))
 		return FALSE
 	remove_occupant(M)
-	if(!isAI(M))//This is the ONE mob we dont want to be moved to the vehicle that should be handeled when used
+	if(!isAI(M))//This is the ONE mob we don't want to be moved to the vehicle that should be handled when used
 		M.forceMove(exit_location(M))
+	else
+		return TRUE
 	if(randomstep)
 		var/turf/target_turf = get_step(exit_location(M), pick(GLOB.cardinals))
 		M.throw_at(target_turf, 5, 10)
@@ -103,18 +108,20 @@
 /obj/vehicle/sealed/proc/exit_location(M)
 	return drop_location()
 
-/obj/vehicle/sealed/attackby(obj/item/I, mob/user, params)
-	if(key_type && !is_key(inserted_key) && is_key(I))
-		if(user.transferItemToLoc(I, src))
-			to_chat(user, span_notice("You insert [I] into [src]."))
-			if(inserted_key) //just in case there's an invalid key
-				inserted_key.forceMove(drop_location())
-			inserted_key = I
-			inserted_key.forceMove(src)
-		else
-			to_chat(user, span_warning("[I] seems to be stuck to your hand!"))
-		return
-	return ..()
+/obj/vehicle/sealed/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!key_type || is_key(inserted_key) || !is_key(tool))
+		return NONE
+
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("[tool] seems to be stuck to your hand!"))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You insert [tool] into [src]."))
+	if(inserted_key) // Just in case there's an invalid key
+		inserted_key.forceMove(drop_location())
+	inserted_key = tool
+	inserted_key.forceMove(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/sealed/proc/remove_key(mob/user)
 	if(!inserted_key)
@@ -167,4 +174,5 @@
 /obj/vehicle/sealed/proc/on_entered_supermatter(atom/movable/vehicle, atom/movable/supermatter)
 	SIGNAL_HANDLER
 	for (var/mob/passenger as anything in occupants)
-		passenger.Bump(supermatter)
+		if(!isAI(passenger))
+			passenger.Bump(supermatter)

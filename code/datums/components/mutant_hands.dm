@@ -56,7 +56,7 @@
  */
 /datum/component/mutant_hands/proc/apply_mutant_hands()
 	var/mob/living/carbon/human/human_parent = parent
-	for(var/obj/item/hand_slot as anything in human_parent.held_items)
+	for(var/obj/item/hand_slot as anything in human_parent.get_hand_slots())
 		// This slot is already a mutant hand
 		if(istype(hand_slot, mutant_hand_path))
 			continue
@@ -79,11 +79,7 @@
  */
 /datum/component/mutant_hands/proc/remove_mutant_hands()
 	var/mob/living/carbon/human/human_parent = parent
-	for(var/obj/item/hand_slot in human_parent.held_items)
-		// Not a mutant hand, don't need to delete it
-		if(!istype(hand_slot, mutant_hand_path))
-			continue
-
+	for(var/obj/item/hand_slot as anything in human_parent.get_held_items_of_type(mutant_hand_path))
 		// Just send it to the shadow realm, this will handle unequipping and remove it for us
 		qdel(hand_slot)
 
@@ -132,7 +128,7 @@
 	if(QDELING(src) || QDELING(parent))
 		return
 
-	if(null in source.held_items)
+	if(source.is_holding(null)) // Finding a null implies an empty hand
 		INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
 /**
@@ -147,6 +143,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
 	base_icon_state = "bloodhand"
+	icon_angle = 90
 	item_flags = ABSTRACT | DROPDEL | HAND_ITEM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
@@ -160,11 +157,9 @@
 	if(!base_icon_state)
 		return
 
-	// Even hand indexes are right hands,
-	// Odd hand indexes are left hand
-	// ...But also, we swap it intentionally here,
+	// We swap it intentionally here,
 	// so right icon is shown on the left (Because hands)
-	if(user.get_held_index_of_item(src) % 2 == 1)
+	if(IS_LEFT_INDEX(user.get_held_index_of_item(src)))
 		icon_state = "[base_icon_state]_right"
 	else
 		icon_state = "[base_icon_state]_left"

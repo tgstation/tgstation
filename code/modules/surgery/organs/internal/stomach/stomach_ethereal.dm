@@ -1,64 +1,92 @@
-/obj/item/organ/internal/stomach/ethereal
+/obj/item/organ/stomach/ethereal
 	name = "biological battery"
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that stores the electric charge of ethereals."
-	organ_traits = list(TRAIT_NOHUNGER) // We have our own hunger mechanic.
+	organ_traits = list(TRAIT_NOHUNGER, TRAIT_ETHEREAL_METABOLISM) // We have our own hunger mechanic.
 	/// Where the energy of the stomach is stored.
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	///used to keep ethereals from spam draining power sources
 	var/drain_time = 0
 
-/obj/item/organ/internal/stomach/ethereal/Initialize(mapload)
+/obj/item/organ/stomach/ethereal/Initialize(mapload)
 	. = ..()
-	cell = new /obj/item/stock_parts/cell/ethereal(null)
+	cell = new /obj/item/stock_parts/power_store/cell/ethereal(src)
 
-/obj/item/organ/internal/stomach/ethereal/Destroy()
+/obj/item/organ/stomach/ethereal/Destroy()
 	QDEL_NULL(cell)
 	return ..()
 
-/obj/item/organ/internal/stomach/ethereal/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/stomach/ethereal/on_life(seconds_per_tick)
 	. = ..()
 	adjust_charge(-ETHEREAL_DISCHARGE_RATE * seconds_per_tick)
-	handle_charge(owner, seconds_per_tick, times_fired)
+	handle_charge(owner, seconds_per_tick)
 
-/obj/item/organ/internal/stomach/ethereal/on_mob_insert(mob/living/carbon/stomach_owner)
+/obj/item/organ/stomach/ethereal/on_mob_insert(mob/living/carbon/stomach_owner)
 	. = ..()
 	RegisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, PROC_REF(charge))
 	RegisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_electrocute))
+	RegisterSignal(stomach_owner, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(on_multitool_act))
 
-/obj/item/organ/internal/stomach/ethereal/on_mob_remove(mob/living/carbon/stomach_owner)
+/obj/item/organ/stomach/ethereal/on_mob_remove(mob/living/carbon/stomach_owner)
 	. = ..()
 	UnregisterSignal(stomach_owner, COMSIG_PROCESS_BORGCHARGER_OCCUPANT)
 	UnregisterSignal(stomach_owner, COMSIG_LIVING_ELECTROCUTE_ACT)
+	UnregisterSignal(stomach_owner, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL))
 	stomach_owner.clear_mood_event("charge")
 	stomach_owner.clear_alert(ALERT_ETHEREAL_CHARGE)
 	stomach_owner.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
 
-/obj/item/organ/internal/stomach/ethereal/handle_hunger_slowdown(mob/living/carbon/human/human)
-	human.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (1.5 * (1 - cell.charge() / 100)))
-
-/obj/item/organ/internal/stomach/ethereal/proc/charge(datum/source, datum/callback/charge_cell, seconds_per_tick)
+/obj/item/organ/stomach/ethereal/proc/charge(datum/source, datum/callback/charge_cell, seconds_per_tick)
 	SIGNAL_HANDLER
 
 	charge_cell.Invoke(cell, seconds_per_tick / 3.5) // Ethereals don't have NT designed charging ports, so they charge slower.
 
-/obj/item/organ/internal/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, shock_source, siemens_coeff = 1, flags = NONE)
+/obj/item/organ/stomach/ethereal/proc/on_electrocute(datum/source, shock_damage, shock_source, siemens_coeff = 1, flags = NONE)
 	SIGNAL_HANDLER
 	if(flags & SHOCK_ILLUSION)
 		return
 	adjust_charge(shock_damage * siemens_coeff * 2)
 	to_chat(owner, span_notice("You absorb some of the shock into your body!"))
 
+/obj/item/organ/stomach/ethereal/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
+	SIGNAL_HANDLER
+
+	// Checks to ensure we're not doing surgery on a robotic part.
+	if(!owner)
+		return multitool_act(user, tool)
+
+	var/obj/item/bodypart/targeted_part = owner.get_bodypart(user.zone_selected)
+	if(isnull(targeted_part) || targeted_part.bodytype != BODYTYPE_ROBOTIC)
+		return multitool_act(user, tool)
+
+	if(HAS_TRAIT(targeted_part, TRAIT_READY_TO_OPERATE))
+		return
+
+	return multitool_act(user, tool)
+
+/obj/item/organ/stomach/ethereal/multitool_act(mob/living/user, obj/item/tool)
+	. = ..()
+	// Intentionally formatted in the exact same way as multitooling a cable for comedic effect.
+	// It's as if the multitool is mistaking the ethereal/biological battery for a cable.
+	var/power_info
+	if(cell.charge > 0)
+		power_info = span_danger("Total power: [display_power(cell.charge)]\nLoad: [(owner && (owner.stat != DEAD)) ? display_power(ETHEREAL_DISCHARGE_RATE) : 0]\nExcess power: [display_power(max(0, (cell.charge - ETHEREAL_CHARGE_FULL)))]")
+	else
+		power_info = span_danger("The [owner ? owner.name : name] is not powered.")
+
+	to_chat(user, power_info)
+	return ITEM_INTERACT_SUCCESS
+
 /**Changes the energy of the crystal stomach.
 * Args:
 * - amount: The change of the energy, in joules.
 * Returns: The amount of energy that actually got changed in joules.
 **/
-/obj/item/organ/internal/stomach/ethereal/proc/adjust_charge(amount)
+/obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
 	var/amount_changed = clamp(amount, ETHEREAL_CHARGE_NONE - cell.charge(), ETHEREAL_CHARGE_DANGEROUS - cell.charge())
 	return cell.change(amount_changed)
 
-/obj/item/organ/internal/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick, times_fired)
+/obj/item/organ/stomach/ethereal/proc/handle_charge(mob/living/carbon/carbon, seconds_per_tick)
 	switch(cell.charge())
 		if(-INFINITY to ETHEREAL_CHARGE_NONE)
 			carbon.add_mood_event("charge", /datum/mood_event/decharged)
@@ -90,7 +118,7 @@
 			carbon.clear_alert(ALERT_ETHEREAL_CHARGE)
 			carbon.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
 
-/obj/item/organ/internal/stomach/ethereal/proc/discharge_process(mob/living/carbon/carbon)
+/obj/item/organ/stomach/ethereal/proc/discharge_process(mob/living/carbon/carbon)
 	to_chat(carbon, span_warning("You begin to lose control over your charge!"))
 	carbon.visible_message(span_danger("[carbon] begins to spark violently!"))
 
@@ -103,9 +131,9 @@
 			var/mob/living/carbon/human/human = carbon
 			if(human.dna?.species)
 				//fixed_mut_color is also ethereal color (for some reason)
-				carbon.flash_lighting_fx(5, 7, human.dna.species.fixed_mut_color ? human.dna.species.fixed_mut_color : human.dna.features["mcolor"])
+				carbon.flash_lighting_fx(5, 7, human.dna.species.fixed_mut_color ? human.dna.species.fixed_mut_color : human.dna.features[FEATURE_MUTANT_COLOR])
 
-		playsound(carbon, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+		playsound(carbon, 'sound/effects/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
 		carbon.cut_overlay(overcharge)
 		// Only a small amount of the energy gets discharged as the zap. The rest dissipates as heat. Keeps the damage and energy from the zap the same regardless of what STANDARD_CELL_CHARGE is.
 		var/discharged_energy = -adjust_charge(ETHEREAL_CHARGE_FULL - cell.charge()) * min(7500 / STANDARD_CELL_CHARGE, 1)
@@ -113,8 +141,7 @@
 		carbon.visible_message(span_danger("[carbon] violently discharges energy!"), span_warning("You violently discharge energy!"))
 
 		if(prob(10)) //chance of developing heart disease to dissuade overcharging oneself
-			var/datum/disease/D = new /datum/disease/heart_failure
-			carbon.ForceContractDisease(D)
+			carbon.apply_status_effect(/datum/status_effect/heart_attack)
 			to_chat(carbon, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
 			carbon.playsound_local(carbon, 'sound/effects/singlebeat.ogg', 100, 0)
 

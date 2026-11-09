@@ -21,17 +21,26 @@
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_feeder_deleted))
 	RegisterSignal(owner, COMSIG_SLIME_DRAINED, PROC_REF(on_drained))
 	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-
 	return ..()
+
+/datum/status_effect/slime_food/on_remove()
+	feeder = null
 
 ///Handles the source of the pheromones getting deleted, or the owner getting washed
 /datum/status_effect/slime_food/proc/on_feeder_deleted(datum/source)
 	SIGNAL_HANDLER
+
+	. = NONE
 	qdel(src)
+	return COMPONENT_CLEANED
 
 ///Gaze upon the target
 /datum/status_effect/slime_food/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+	if(HAS_TRAIT(user, TRAIT_ANOSMIA))
+		return
+	if(get_dist(user, owner) > 1 && !astype(user, /mob/living/carbon)?.dna.get_mutation(/datum/mutation/olfaction))
+		return
 	if(user == feeder)
 		examine_list += span_boldnotice("Their smell reminds you of serenity and yourself.")
 	else
@@ -51,15 +60,3 @@
 	draining_slime.befriend(feeder)
 	new /obj/effect/temp_visual/heart(draining_slime.loc)
 	qdel(src)
-
-/datum/status_effect/slime_food/on_remove()
-	feeder = null
-
-/datum/status_effect/slime_food/update_particles()
-	if(particle_effect)
-		return
-
-	particle_effect = new(owner, /particles/pollen)
-
-	//particle coloured like the "pheromones" of the feeder
-	particle_effect.particles.color = "[feeder.chat_color]a0"

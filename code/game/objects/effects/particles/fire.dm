@@ -31,5 +31,26 @@
 	gradient = list("#FBAF4D", "#FCE6B6", "#FD481C")
 	position = generator(GEN_BOX, list(-12,-16,0), list(12,16,0), NORMAL_RAND)
 	drift = generator(GEN_VECTOR, list(-0.1,0), list(0.1,0.025), UNIFORM_RAND)
-	spin = generator(GEN_NUM, list(-15,15), NORMAL_RAND)
+	spin = generator(GEN_NUM, -15, 15, NORMAL_RAND)
 	scale = generator(GEN_VECTOR, list(0.5,0.5), list(2,2), NORMAL_RAND)
+
+/particles/embers/minor
+	spawning = 1
+
+/particles/embers/spark
+	count = 3
+	spawning = 2
+	gradient = list("#FBAF4D", "#FCE6B6", "#FFFFFF")
+	lifespan = 1.5 SECONDS
+	fade = 1 SECONDS
+	fadein = 0.1 SECONDS
+	grow = -0.1
+	velocity = generator(GEN_CIRCLE, 3, 3, SQUARE_RAND)
+	position = generator(GEN_SPHERE, 0, 0, LINEAR_RAND)
+	scale = generator(GEN_VECTOR, list(0.5, 0.5), list(1,1), NORMAL_RAND)
+	drift = list(0)
+
+/particles/embers/spark/severe
+	count = 10
+	spawning = 5
+	gradient = list("#FCE6B6", "#FFFFFF")

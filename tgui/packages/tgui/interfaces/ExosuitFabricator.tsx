@@ -1,13 +1,13 @@
-import { BooleanLike, classes } from 'common/react';
+import { Box, Button, Icon, Section, Stack } from 'tgui-core/components';
+import { Tooltip } from 'tgui-core/components';
+import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Section, Stack } from '../components';
-import { Tooltip } from '../components';
 import { Window } from '../layouts';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
+import type { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 
 type ExosuitDesign = Design & {
   constructionTime: number;
@@ -50,7 +50,7 @@ export const ExosuitFabricator = (props) => {
                       color={'transparent'}
                       onClick={() => {
                         act('build', {
-                          designs: category.children.map((design) => design.id),
+                          designs: category.children.map((design) => design.path),
                         });
                       }}
                     >
@@ -129,7 +129,7 @@ const Recipe = (props: RecipeProps) => {
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
           onClick={() =>
-            canPrint && act('build', { designs: [design.id], now: true })
+            canPrint && act('build', { designs: [design.path], now: true })
           }
         >
           <div className="FabricatorRecipe__Icon">
@@ -151,7 +151,7 @@ const Recipe = (props: RecipeProps) => {
             !canPrint && 'FabricatorRecipe__Button--disabled',
           ])}
           color={'transparent'}
-          onClick={() => act('build', { designs: [design.id] })}
+          onClick={() => act('build', { designs: [design.path] })}
         >
           <Icon name="plus-circle" />
         </div>
@@ -165,7 +165,7 @@ const Recipe = (props: RecipeProps) => {
             !canPrint && 'FabricatorRecipe__Button--disabled',
           ])}
           color={'transparent'}
-          onClick={() => act('build', { designs: [design.id], now: true })}
+          onClick={() => act('build', { designs: [design.path], now: true })}
         >
           <Icon name="play" />
         </div>
@@ -189,7 +189,7 @@ const Queue = (props: QueueProps) => {
   const materialCosts: MaterialMap = {};
 
   for (const entry of queue) {
-    const design = designs[entry.designId];
+    const design = designs[entry.designPath];
 
     if (!design) {
       continue;
@@ -242,8 +242,8 @@ const Queue = (props: QueueProps) => {
             />
           </Section>
         </Stack.Item>
-        <Stack.Item grow>
-          <Section fill style={{ overflow: 'auto' }}>
+        <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
+          <Section fill>
             <QueueList
               availableMaterials={availableMaterials}
               SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
@@ -276,7 +276,7 @@ const QueueList = (props: QueueListProps) => {
   return (
     <>
       {queue
-        .map((job, index) => ({ job, index, design: designs[job.designId] }))
+        .map((job, index) => ({ job, index, design: designs[job.designPath] }))
         .map((entry) => {
           // TODO: Side effects in map are gross but at the same time I gotta
           // accumulate these *costs*
@@ -330,14 +330,11 @@ const QueueList = (props: QueueListProps) => {
                   <Box
                     width={'32px'}
                     height={'32px'}
-                    className={classes([
-                      'design32x32',
-                      entry.design && entry.design.icon,
-                    ])}
+                    className={classes(['design32x32', entry.design?.icon])}
                   />
                 </div>
                 <div className="FabricatorRecipe__Label">
-                  {entry.design && entry.design.name}
+                  {entry.design?.name}
                 </div>
               </div>
             </Tooltip>

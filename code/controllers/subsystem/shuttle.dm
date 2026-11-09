@@ -5,18 +5,27 @@
 /// If we're under load we want to allow for cycling, but if not we want to preserve already generated docks for use
 #define SOFT_TRANSIT_RESERVATION_THRESHOLD (100 ** 2)
 
+/// Points to turfs on the cargo shuttle that have flaps automatically installed if an upgrade is purchased
+GLOBAL_LIST_EMPTY(cargo_shuttle_flaps_landmarks)
+
 
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
 	wait = 1 SECONDS
-	init_order = INIT_ORDER_SHUTTLE
-	flags = SS_KEEP_TIMING
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms,
+		/datum/controller/subsystem/air,
+	)
+	ss_flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
 
 	/// A list of all the mobile docking ports.
 	var/list/mobile_docking_ports = list()
 	/// A list of all the stationary docking ports.
 	var/list/stationary_docking_ports = list()
+	/// A list of all the custom shuttles.
+	var/list/custom_shuttles = list()
 	/// A list of all the beacons that can be docked to.
 	var/list/beacon_list = list()
 	/// A list of all the transit docking ports.
@@ -139,6 +148,12 @@ SUBSYSTEM_DEF(shuttle)
 	var/shuttle_loading
 	/// Did the supermatter start a cascade event?
 	var/supermatter_cascade = FALSE
+
+	/// List of express consoles that are waiting for pack initialization
+	var/list/obj/machinery/computer/cargo/express/express_consoles = list()
+
+	/// If TRUE, automatically refills the cargo shuttle's air when it docks
+	var/renew_cargo_air = FALSE
 
 /datum/controller/subsystem/shuttle/Initialize()
 	order_number = rand(1, 9000)
@@ -265,7 +280,7 @@ SUBSYSTEM_DEF(shuttle)
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "orange",
 		)
-		if(emergency.timeLeft(1) > emergency_call_time * ALERT_COEFF_AUTOEVAC_CRITICAL)
+		if(EMERGENCY_IDLE_OR_RECALLED || emergency.timeLeft(1) > emergency_call_time * ALERT_COEFF_AUTOEVAC_CRITICAL)
 			emergency.request(null, set_coefficient = ALERT_COEFF_AUTOEVAC_CRITICAL)
 
 /datum/controller/subsystem/shuttle/proc/block_recall(lockout_timer)
@@ -275,7 +290,7 @@ SUBSYSTEM_DEF(shuttle)
 		priority_announce(
 			text = "Emergency shuttle uplink interference detected, shuttle call disabled while the system reinitializes. Estimated restore in [DisplayTimeText(lockout_timer, round_seconds_to = 60)].",
 			title = "Uplink Interference",
-			sound = 'sound/misc/announce_dig.ogg',
+			sound = 'sound/announcer/announcement/announce_dig.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "grey",
 		)
@@ -289,7 +304,7 @@ SUBSYSTEM_DEF(shuttle)
 		priority_announce(
 			text= "Emergency shuttle uplink services are now back online.",
 			title = "Uplink Restored",
-			sound = 'sound/misc/announce_dig.ogg',
+			sound = 'sound/announcer/announcement/announce_dig.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "green",
 		)
@@ -350,6 +365,13 @@ SUBSYSTEM_DEF(shuttle)
 
 	return TRUE
 
+/**
+ * Calls the emergency shuttle.
+ *
+ * Arguments:
+ * * user - The mob that called the shuttle.
+ * * call_reason - The reason the shuttle was called, which should be non-html-encoded text.
+ */
 /datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
 	if (!check_backup_emergency_shuttle())
 		return
@@ -372,7 +394,7 @@ SUBSYSTEM_DEF(shuttle)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_shuttle("Shuttle call reason: [call_reason]")
 		SSticker.emergency_reason = call_reason
-	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A HREF='?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A href='byond://?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
 
 /// Call the emergency shuttle.
 /// If you are doing this on behalf of a player, use requestEvac instead.
@@ -398,10 +420,14 @@ SUBSYSTEM_DEF(shuttle)
 		var/datum/signal/status_signal = new(list("command" = "update"))
 		frequency.post_signal(src, status_signal)
 
-/datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
-	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)
-		return
-	emergency.cancel()
+/// Does a fluffy CentCom recall of the emergency shuttle with additional message as desired.
+/// Returns TRUE on success, FALSE otherwise.
+/datum/controller/subsystem/shuttle/proc/centcom_recall(mob/user, old_timer, admiral_message)
+	if(emergency.timer != old_timer)
+		return FALSE
+
+	if(!cancel_evac(user, hide_origin = TRUE))
+		return FALSE //feedback handled in cancel_evac()
 
 	if(!admiral_message)
 		admiral_message = pick(GLOB.admiral_messages)
@@ -418,6 +444,8 @@ SUBSYSTEM_DEF(shuttle)
 						[admiral_message]"
 	print_command_report(intercepttext, announce = TRUE)
 
+	return TRUE
+
 // Called when an emergency shuttle mobile docking port is
 // destroyed, which will only happen with admin intervention
 /datum/controller/subsystem/shuttle/proc/emergencyDeregister()
@@ -425,29 +453,79 @@ SUBSYSTEM_DEF(shuttle)
 	// backup shuttle.
 	src.emergency = src.backup_shuttle
 
-/datum/controller/subsystem/shuttle/proc/cancelEvac(mob/user)
-	if(canRecall())
-		emergency.cancel(get_area(user))
-		log_shuttle("[key_name(user)] has recalled the shuttle.")
-		message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
-		deadchat_broadcast(" has recalled the shuttle from [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
-		return 1
+/// Actually work on canceling the emergency shuttle recall. Returns TRUE if successful, FALSE otherwise.
+/// If hide_origin is TRUE, the recaller's area will not be revealed in announcements (used by admin tools)
+/datum/controller/subsystem/shuttle/proc/cancel_evac(mob/user, hide_origin = FALSE)
+	if(!can_recall(user))
+		return FALSE
 
-/datum/controller/subsystem/shuttle/proc/canRecall()
-	if(!emergency || emergency.mode != SHUTTLE_CALL || admin_emergency_no_recall || emergency_no_recall)
-		return
+	var/area/signal_origin = hide_origin ? null : get_area(user)
+	emergency.cancel(signal_origin)
+	log_shuttle("[key_name(user)] has recalled the shuttle.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] has recalled the shuttle.")
+	if(!hide_origin)
+		deadchat_broadcast(" has recalled the shuttle from [span_name("[get_area_name(user, TRUE)]")].", span_name("[user.real_name]"), user, message_type = DEADCHAT_ANNOUNCEMENT)
+	return TRUE
+
+/// Can this user recall the emergency shuttle? Returns TRUE if they can, otherwise returns FALSE.
+/datum/controller/subsystem/shuttle/proc/can_recall(mob/user)
+	if(isnull(emergency) || emergency.mode != SHUTTLE_CALL)
+		return FALSE
+
+	var/is_admin = !!user?.client?.holder
+	if(is_admin)
+		return admin_recall(user)
+
+	if(admin_emergency_no_recall || emergency_no_recall)
+		return FALSE
+
+	return past_restriction_point()
+
+/// Are we past the restriction point (i.e. more than half of the shuttle timer has elapsed) for recalling the shuttle? Returns TRUE if we are, FALSE otherwise.
+/datum/controller/subsystem/shuttle/proc/past_restriction_point()
 	var/security_num = SSsecurity_level.get_current_level_as_number()
 	switch(security_num)
 		if(SEC_LEVEL_GREEN)
 			if(emergency.timeLeft(1) < emergency_call_time)
-				return
+				return FALSE
 		if(SEC_LEVEL_BLUE)
 			if(emergency.timeLeft(1) < emergency_call_time * 0.5)
-				return
+				return FALSE
 		else
 			if(emergency.timeLeft(1) < emergency_call_time * 0.25)
-				return
-	return 1
+				return FALSE
+
+	return TRUE
+
+/// Handle admin level overrides of recalling the shuttle. We assume that the user passed is an admin.
+/// If a special state exists, we prompt the admin to confirm they want to override the wishes of other admins/game code. Returns TRUE if they elect to do so, FALSE otherwise.
+/datum/controller/subsystem/shuttle/proc/admin_recall(mob/user)
+	if(admin_emergency_no_recall)
+		var/admin_no_recall_alert = tgui_alert(
+			user,
+			"An administrator has disabled the emergency shuttle recall function, are you sure you want to proceed with the recall?",
+			"Admin Level Recall Confirmation",
+			list("Yes", "No"),
+		)
+		if(admin_no_recall_alert == "Yes")
+			admin_emergency_no_recall = FALSE
+			return TRUE
+		return FALSE
+
+	if(emergency_no_recall)
+		var/general_no_recall_alert = tgui_alert(
+			user,
+			"The emergency shuttle recall function is currently disabled by game code, are you sure you want to proceed with the recall?",
+			"Recall Confirmation",
+			list("Yes", "No"),
+		)
+		if(general_no_recall_alert == "Yes")
+			// we will not unset emergency_no_recall here, as it's game code enforced and I want it to stay active, admins can transiently override it through this though.
+			// they can always edit the variable on SSshuttle if desperate.
+			return TRUE
+		return FALSE
+
+	return TRUE // we assume that they've seen other warnings at earlier points if they got here from a verb or something like that
 
 /datum/controller/subsystem/shuttle/proc/autoEvac()
 	if (!SSticker.IsRoundInProgress() || supermatter_cascade)
@@ -460,7 +538,7 @@ SUBSYSTEM_DEF(shuttle)
 			var/mob/living/silicon/ai/AI = thing
 			if(AI.deployed_shell && !AI.deployed_shell.client)
 				continue
-			if(AI.stat || !AI.client)
+			if(IS_UNCONSCIOUS_OR_CRIT(AI) || !AI.client)
 				continue
 		else if(istype(thing, /obj/machinery/computer/communications))
 			var/obj/machinery/computer/communications/C = thing
@@ -523,17 +601,17 @@ SUBSYSTEM_DEF(shuttle)
 		priority_announce(
 			text = "Departure has been postponed indefinitely pending conflict resolution.",
 			title = "Hostile Environment Detected",
-			sound = 'sound/misc/notice1.ogg',
+			sound = 'sound/announcer/notice/notice1.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "grey",
 		)
-	if(!emergency_no_escape && (emergency.mode == SHUTTLE_STRANDED))
+	if(!emergency_no_escape && (emergency.mode == SHUTTLE_STRANDED || emergency.mode == SHUTTLE_DOCKED))
 		emergency.mode = SHUTTLE_DOCKED
 		emergency.setTimer(emergency_dock_time)
 		priority_announce(
 			text = "You have [DisplayTimeText(emergency_dock_time)] to board the emergency shuttle.",
 			title = "Hostile Environment Resolved",
-			sound = 'sound/misc/announce_dig.ogg',
+			sound = 'sound/announcer/announcement/announce_dig.ogg',
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "green",
 		)
@@ -669,7 +747,7 @@ SUBSYSTEM_DEF(shuttle)
 	old_area.turfs_to_uncontain_by_zlevel[bottomleft.z] += proposal.reserved_turfs
 
 	var/area/shuttle/transit/new_area = new()
-	new_area.parallax_movedir = travel_dir
+	new_area.set_parallax_movedir(travel_dir)
 	new_area.contents = proposal.reserved_turfs
 	LISTASSERTLEN(new_area.turfs_by_zlevel, bottomleft.z, list())
 	new_area.turfs_by_zlevel[bottomleft.z] = proposal.reserved_turfs
@@ -965,7 +1043,7 @@ SUBSYSTEM_DEF(shuttle)
 		QDEL_NULL(preview_reservation)
 
 /datum/controller/subsystem/shuttle/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_ADMIN)
 
 /datum/controller/subsystem/shuttle/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -1036,7 +1114,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	return data
 
-/datum/controller/subsystem/shuttle/ui_act(action, params)
+/datum/controller/subsystem/shuttle/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

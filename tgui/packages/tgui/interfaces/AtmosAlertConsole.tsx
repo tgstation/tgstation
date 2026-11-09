@@ -1,5 +1,6 @@
+import { Button, Section } from 'tgui-core/components';
+
 import { useBackend } from '../backend';
-import { Button, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -17,7 +18,7 @@ export const AtmosAlertConsole = (props) => {
         <Section title="Alarms">
           <ul>
             {priority.length === 0 && (
-              <li className="color-good">No Priority Alerts</li>
+              <li className="color-good">No priority alerts</li>
             )}
             {priority.map((alert) => (
               <li key={alert}>
@@ -30,7 +31,7 @@ export const AtmosAlertConsole = (props) => {
               </li>
             ))}
             {minor.length === 0 && (
-              <li className="color-good">No Minor Alerts</li>
+              <li className="color-good">No minor alerts</li>
             )}
             {minor.map((alert) => (
               <li key={alert}>

@@ -31,11 +31,11 @@
 /datum/element/wall_engraver/proc/try_chisel(obj/item/item, turf/closed/wall, mob/living/user)
 	if(!istype(wall) || !user.mind)
 		return
-	if(HAS_TRAIT_FROM(wall, TRAIT_NOT_ENGRAVABLE, INNATE_TRAIT))
-		user.balloon_alert(user, "wall cannot be engraved!")
-		return
-	if(HAS_TRAIT_FROM(wall, TRAIT_NOT_ENGRAVABLE, TRAIT_GENERIC))
+	if(HAS_TRAIT_FROM(wall, TRAIT_NOT_ENGRAVABLE, ENGRAVED_TRAIT))
 		user.balloon_alert(user, "wall has already been engraved!")
+		return
+	if(HAS_TRAIT(wall, TRAIT_NOT_ENGRAVABLE))
+		user.balloon_alert(user, "wall cannot be engraved!")
 		return
 	if(!length(user.mind?.memories))
 		user.balloon_alert(user, "nothing memorable to engrave!")

@@ -3,6 +3,7 @@
 	icon_state = "science"
 	airlock_wires = /datum/wires/airlock/science
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	tacmap_color = TACMAP_AREA_SCIENCE
 
 /area/station/science/lobby
 	name = "\improper Science Lobby"
@@ -72,6 +73,10 @@
 	name = "\improper Robotics Lab"
 	icon_state = "ass_line"
 
+/area/station/science/robotics/storage
+	name = "\improper Robotics Storage"
+	icon_state = "ass_line"
+
 /area/station/science/robotics/augments
 	name = "\improper Augmentation Theater"
 	icon_state = "robotics"
@@ -85,6 +90,10 @@
 	name = "\improper Abandoned Research Lab"
 	icon_state = "abandoned_sci"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/science/zoo
+	name = "\improper Science Public Zoo"
+	icon_state = "cytology"
 
 /*
 * Ordnance Areas
@@ -106,20 +115,24 @@
 /area/station/science/ordnance/burnchamber
 	name = "\improper Ordnance Burn Chamber"
 	icon_state = "ord_burn"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 /area/station/science/ordnance/freezerchamber
 	name = "\improper Ordnance Freezer Chamber"
 	icon_state = "ord_freeze"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 // Room for equipments and such
 /area/station/science/ordnance/testlab
 	name = "\improper Ordnance Testing Lab"
 	icon_state = "ord_test"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 /area/station/science/ordnance/bomb
 	name = "\improper Ordnance Bomb Site"
 	icon_state = "ord_boom"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED | NO_GRAVITY
+	skip_minimap_rendering = TRUE
+
+/area/station/science/ordnance/bomb/planet
+	area_flags = /area/station/science/ordnance/bomb::area_flags & ~NO_GRAVITY

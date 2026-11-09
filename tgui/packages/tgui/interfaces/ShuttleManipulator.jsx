@@ -1,8 +1,15 @@
-import { map } from 'common/collections';
+import { map } from 'es-toolkit/compat';
 import { useState } from 'react';
+import {
+  Button,
+  Flex,
+  LabeledList,
+  Section,
+  Table,
+  Tabs,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
-import { Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const ShuttleManipulator = (props) => {
@@ -188,7 +195,7 @@ export const ShuttleManipulatorModification = (props) => {
           {existingShuttle ? (
             <Section
               level={2}
-              title={'Existing Shuttle: ' + existingShuttle.name}
+              title={`Existing Shuttle: ${existingShuttle.name}`}
             >
               <LabeledList>
                 <LabeledList.Item

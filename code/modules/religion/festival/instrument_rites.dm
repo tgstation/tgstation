@@ -15,10 +15,10 @@
 
 /datum/religion_rites/portable_song_tuning
 	name = "Portable Song Tuning"
-	desc = "Empowers an instrument on the table to work as a portable altar for tuning songs. Will need to be recharged after 5 rites."
+	desc = "Empowers a provided instrument to work as a portable altar for tuning songs. It will need to be recharged after five rites."
 	ritual_length = 6 SECONDS
 	ritual_invocations = list("Allow me to bring your holy inspirations ...")
-	invoke_msg = "... And send them with the winds my tunes ride with!"
+	invoke_msg = "... And send them with the winds my tunes ride!"
 	favor_cost = 10
 	///instrument to empower
 	var/obj/item/instrument/instrument_target
@@ -58,7 +58,7 @@
 	desc = "this is a prototype."
 	ritual_length = 10 SECONDS
 	favor_cost = 10
-	auto_delete = FALSE
+	rite_flags = NONE
 	///if repeats count as continuations instead of a song's end, TRUE
 	var/repeats_okay = TRUE
 	///personal message sent to the chaplain as feedback for their chosen song
@@ -70,7 +70,7 @@
 	///what the instrument will glow when playing
 	var/glow_color = COLOR_BLACK
 
-/datum/religion_rites/song_tuner/invoke_effect(mob/living/user, obj/structure/altar_of_gods/altar)
+/datum/religion_rites/song_tuner/invoke_effect(mob/living/user, obj/structure/altar/of_gods/altar)
 	. = ..()
 	to_chat(user, span_notice(song_invocation_message))
 	user.AddComponent(/datum/component/smooth_tunes, src, repeats_okay, particles_path, glow_color)
@@ -142,14 +142,14 @@
 
 /datum/religion_rites/song_tuner/light/Destroy()
 	QDEL_NULL(performer_light_obj)
-	. = ..()
+	return ..()
 
 /datum/religion_rites/song_tuner/light/finish_effect(mob/living/carbon/human/listener, atom/song_source)
 	listener.apply_status_effect(/datum/status_effect/song/light)
 
 /datum/religion_rites/song_tuner/nullwave
 	name = "Nullwave Vibrato"
-	desc = "Sing a dull song, protecting those who listen from magic."
+	desc = "Sing a dull song, protecting listeners from magic."
 	particles_path = /particles/musical_notes/nullwave
 	song_invocation_message = "You've prepared an antimagic song!"
 	song_start_message = span_nicegreen("This music makes you feel protected!")
@@ -161,7 +161,7 @@
 
 /datum/religion_rites/song_tuner/pain
 	name = "Murderous Chord"
-	desc = "Sing a sharp song, cutting those around you. Works less effectively on fellow priests. At the end of the song, you'll open the wounds of all listeners."
+	desc = "Sing a sharp song, cutting those around you. Works less effectively on fellow priests. At the end of the song, you'll open dozens of cuts on all listeners."
 	particles_path = /particles/musical_notes/harm
 	song_invocation_message = "You've prepared a painful song!"
 	song_start_message = span_danger("This music cuts like a knife!")
@@ -173,15 +173,15 @@
 	if(listener.mind?.holy_role)
 		damage_dealt *= 0.5
 
-	listener.adjustBruteLoss(damage_dealt)
+	listener.adjust_brute_loss(damage_dealt)
 
 /datum/religion_rites/song_tuner/pain/finish_effect(mob/living/carbon/human/listener, atom/song_source)
-	var/obj/item/bodypart/sliced_limb = pick(listener.bodyparts)
+	var/obj/item/bodypart/sliced_limb = pick(listener.get_bodyparts())
 	sliced_limb.force_wound_upwards(/datum/wound/slash/flesh/moderate/many_cuts)
 
 /datum/religion_rites/song_tuner/lullaby
 	name = "Spiritual Lullaby"
-	desc = "Sing a lullaby, tiring those around you, making them slower. At the end of the song, you'll put people who are tired enough to sleep."
+	desc = "Sing a lullaby, tiring and slowing those around you. At the end of the song, you'll lull all listeners to sleep."
 	particles_path = /particles/musical_notes/sleepy
 	song_invocation_message = "You've prepared a sleepy song!"
 	song_start_message = span_warning("This music's making you feel drowsy...")

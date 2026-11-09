@@ -3,11 +3,12 @@
 	desc = "Makes researched and prototype items with materials and energy."
 	/// Energy cost per full stack of materials spent. Material insertion is 40% of this.
 	active_power_usage = 0.05 * STANDARD_CELL_RATE
+	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 
 	/// The efficiency coefficient. Material costs and print times are multiplied by this number;
 	var/efficiency_coeff = 1
 	/// The material storage used by this fabricator.
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 	/// Which departments are allowed to process this design
 	var/allowed_department_flags = ALL
 	/// Icon state when production has started
@@ -20,10 +21,15 @@
 	var/stripe_color = null
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
+	///looping sound for printing items
+	var/datum/looping_sound/lathe_print/print_sound
+	///made so we dont call addtimer() 40,000 times in on_techweb_update(). only allows addtimer() to be called on the first update
+	var/techweb_updating = FALSE
 
 /obj/machinery/rnd/production/Initialize(mapload)
-	materials = AddComponent(
-		/datum/component/remote_materials, \
+	print_sound = new(src,  FALSE)
+	materials = new (
+		src, \
 		mapload, \
 		mat_container_signals = list( \
 			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/rnd/production, local_material_insert)
@@ -47,15 +53,10 @@
 	update_icon(UPDATE_OVERLAYS)
 
 /obj/machinery/rnd/production/Destroy()
-	materials = null
 	cached_designs = null
+	QDEL_NULL(print_sound)
+	QDEL_NULL(materials)
 	return ..()
-
-// Stuff for the stripe on the department machines
-/obj/machinery/rnd/production/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	. = ..()
-
-	update_icon(UPDATE_OVERLAYS)
 
 /obj/machinery/rnd/production/update_overlays()
 	. = ..()
@@ -72,7 +73,8 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
-	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>")
+	. += span_notice("Material usage cost at <b>[efficiency_coeff * 100]%</b>.")
+	. += span_notice("Build time at <b>[efficiency_coeff * 100]%</b>.")
 	if(drop_direction)
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
@@ -102,31 +104,32 @@
 /// Updates the list of designs this fabricator can print.
 /obj/machinery/rnd/production/proc/update_designs()
 	PROTECTED_PROC(TRUE)
+	techweb_updating = FALSE
 
-	var/previous_design_count = cached_designs.len
+	var/previous_design_count = length(cached_designs)
 
 	cached_designs.Cut()
 
-	for(var/design_id in stored_research.researched_designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+	for(var/design_path in stored_research.researched_designs)
+		var/datum/design/design = SSresearch.techweb_designs[design_path]
 
 		if((isnull(allowed_department_flags) || (design.departmental_flags & allowed_department_flags)) && (design.build_type & allowed_buildtypes))
 			cached_designs |= design
 
-	var/design_delta = cached_designs.len - previous_design_count
+	var/design_delta = length(cached_designs) - previous_design_count
 
 	if(design_delta > 0)
 		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
-		playsound(src, 'sound/machines/twobeep_high.ogg', 50, TRUE)
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 
 	update_static_data_for_all_viewers()
 
 /obj/machinery/rnd/production/proc/on_techweb_update()
 	SIGNAL_HANDLER
 
-	// We're probably going to get more than one update (design) at a time, so batch
-	// them together.
-	addtimer(CALLBACK(src, PROC_REF(update_designs)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	if(!techweb_updating) //so we batch these updates together
+		techweb_updating = TRUE
+		addtimer(CALLBACK(src, PROC_REF(update_designs)), 2 SECONDS)
 
 ///When materials are instered via silo link
 /obj/machinery/rnd/production/proc/silo_material_insert(obj/machinery/rnd/machine, container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted)
@@ -168,7 +171,7 @@
 	SHOULD_CALL_PARENT(FALSE)
 
 	//first play the insertion animation
-	flick_overlay_view(material_insertion_animation(mat_ref.greyscale_colors), 1 SECONDS)
+	flick_overlay_view(material_insertion_animation(mat_ref), 1 SECONDS)
 
 	//now play the progress bar animation
 	flick_overlay_view(mutable_appearance('icons/obj/machines/research.dmi', "protolathe_progress"), 1 SECONDS)
@@ -207,19 +210,18 @@
  *
  * * path - the design path to check for
  */
-/obj/machinery/rnd/production/proc/build_efficiency(path)
+/obj/machinery/rnd/production/proc/build_efficiency(datum/design/design)
 	PRIVATE_PROC(TRUE)
 	SHOULD_BE_PURE(TRUE)
 
-	if(ispath(path, /obj/item/stack/sheet) || ispath(path, /obj/item/stack/ore/bluespace_crystal))
+	if(ispath(design.build_path, /obj/item/stack) || design.fixed_cost_efficiency)
 		return 1
-	else
-		return efficiency_coeff
+	return efficiency_coeff
 
 /obj/machinery/rnd/production/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/rnd/production/ui_interact(mob/user, datum/tgui/ui)
@@ -233,25 +235,25 @@
 
 	var/list/designs = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
-	var/coefficient
 	for(var/datum/design/design in cached_designs)
-		var/cost = list()
+		var/list/cost = list()
 
-		coefficient = build_efficiency(design.build_path)
-		for(var/datum/material/mat in design.materials)
-			cost[mat.name] = OPTIMAL_COST(design.materials[mat] * coefficient)
+		var/coefficient = build_efficiency(design)
+		for(var/_material, amount in design.materials)
+			var/datum/material/material = _material
+			cost[material.name] = OPTIMAL_COST(amount * coefficient)
 
-		var/icon_size = spritesheet.icon_size_id(design.id)
-		designs[design.id] = list(
+		var/icon_size = spritesheet.icon_size_id(design.asset_id)
+		designs[design.type] = list(
 			"name" = design.name,
 			"desc" = design.get_description(),
 			"cost" = cost,
-			"id" = design.id,
+			"path" = design.type,
 			"categories" = design.category,
-			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]"
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.asset_id]"
 		)
 
 	data["designs"] = designs
@@ -281,12 +283,8 @@
 			if(!istype(material))
 				return
 
-			var/amount = params["amount"]
-			if(isnull(amount))
-				return
-
-			amount = text2num(amount)
-			if(isnull(amount))
+			var/amount = text2num(params["amount"])
+			if(!amount)
 				return
 
 			//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
@@ -294,7 +292,7 @@
 				say("No power to dispense sheets")
 				return
 
-			materials.eject_sheets(material, amount)
+			materials.eject_sheets(material_ref = material, eject_amount = amount, user_data = ID_DATA(usr))
 			return TRUE
 
 		if("build")
@@ -303,12 +301,17 @@
 				return
 
 			//validate design
-			var/design_id = params["ref"]
-			if(!design_id)
+			var/design_path = text2path(params["design_path"])
+			if(!design_path)
 				return
-			var/datum/design/design = stored_research.researched_designs[design_id] ? SSresearch.techweb_design_by_id(design_id) : null
+
+			if(!stored_research.researched_designs[design_path])
+				return
+
+			var/datum/design/design = SSresearch.techweb_designs[design_path]
 			if(!istype(design))
 				return FALSE
+
 			if(!(isnull(allowed_department_flags) || (design.departmental_flags & allowed_department_flags)))
 				say("This fabricator does not have the necessary keys to decrypt this design.")
 				return FALSE
@@ -317,36 +320,30 @@
 				return FALSE
 
 			//validate print quantity
-			var/print_quantity = params["amount"]
-			if(isnull(print_quantity))
-				return
-			print_quantity = text2num(print_quantity)
+			var/print_quantity = text2num(params["amount"])
 			if(isnull(print_quantity))
 				return
 			print_quantity = clamp(print_quantity, 1, 50)
 
 			//efficiency for this design, stacks use exact materials
-			var/coefficient = build_efficiency(design.build_path)
+			var/coefficient = build_efficiency(design)
 
 			//check for materials
-			if(!materials.can_use_resource())
+			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
 				return
 			if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
 				say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
 				return FALSE
 
 			//compute power & time to print 1 item
-			var/charge_per_item = 0
-			for(var/material in design.materials)
-				charge_per_item += design.materials[material]
-			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
-			var/build_time_per_item = (design.construction_time * design.lathe_time_factor) ** 0.8
+			var/charge_per_item = ROUND_UP((values_sum(design.materials) / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
+			var/build_time_per_item = (design.construction_time * design.lathe_time_factor * efficiency_coeff) ** 0.8
 
 			//start production
 			busy = TRUE
 			SStgui.update_uis(src)
-			if(production_animation)
-				icon_state = production_animation
+			print_sound.start()
+			update_appearance()
 			var/turf/target_location
 			if(drop_direction)
 				target_location = get_step(src, drop_direction)
@@ -354,7 +351,7 @@
 					target_location = get_turf(src)
 			else
 				target_location = get_turf(src)
-			addtimer(CALLBACK(src, PROC_REF(do_make_item), design, print_quantity, build_time_per_item, coefficient, charge_per_item, target_location), build_time_per_item)
+			addtimer(CALLBACK(src, PROC_REF(do_make_item), design, print_quantity, build_time_per_item, coefficient, charge_per_item, target_location, ID_DATA(usr)), build_time_per_item)
 
 			return TRUE
 
@@ -368,8 +365,17 @@
  * * material_cost_coefficient - the cost efficiency to print 1 design
  * * charge_per_item - the amount of power to print 1 item
  * * turf/target - the location to drop the printed item on
+ * * user_data - ID_DATA(user), see the proc on SSid_access, served for logging
 */
-/obj/machinery/rnd/production/proc/do_make_item(datum/design/design, items_remaining, build_time_per_item, material_cost_coefficient, charge_per_item, turf/target)
+/obj/machinery/rnd/production/proc/do_make_item(
+	datum/design/design,
+	items_remaining,
+	build_time_per_item,
+	material_cost_coefficient,
+	charge_per_item,
+	turf/target,
+	alist/user_data,
+)
 	PROTECTED_PROC(TRUE)
 
 	if(!items_remaining) // how
@@ -384,68 +390,81 @@
 	if(!directly_use_energy(charge_per_item)) // provide the wait time until lathe is ready
 		var/area/my_area = get_area(src)
 		var/obj/machinery/power/apc/my_apc = my_area.apc
-		var/charging_wait = my_apc.time_to_charge(charge_per_item)
-		if(!isnull(charging_wait))
-			say("Unable to continue production, APC overload. Wait [DisplayTimeText(charging_wait, round_seconds_to = 1)] and try again.")
+		if(!QDELETED(my_apc))
+			var/charging_wait = my_apc.time_to_charge(charge_per_item)
+			if(!isnull(charging_wait))
+				say("Unable to continue production, APC overload. Wait [DisplayTimeText(charging_wait, round_seconds_to = 1)] and try again.")
+			else
+				say("Unable to continue production, power grid overload.")
 		else
-			say("Unable to continue production, power grid overload.")
+			say("Unable to continue production, no APC in area.")
 		finalize_build()
 		return
 
-	if(!materials.can_use_resource())
-		say("Unable to continue production, materials on hold.")
+	if(!materials.can_use_resource(user_data = user_data))
 		finalize_build()
 		return
 
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
-	var/list/design_materials = design.materials
-	if(!materials.mat_container.has_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1))
+
+	if(!materials.mat_container.has_materials(design.materials, material_cost_coefficient, is_stack ? items_remaining : 1))
 		say("Unable to continue production, missing materials.")
 		finalize_build()
 		return
-	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "built", "[design.name]")
+	materials.use_materials(design.materials, material_cost_coefficient, is_stack ? items_remaining : 1, "processed", "[design.name]", user_data = user_data)
 
 	var/atom/movable/created
+	var/number_to_make = 1
 	if(is_stack)
-		created = new design.build_path(target, items_remaining)
-	else
-		created = new design.build_path(target)
-		split_materials_uniformly(design_materials, material_cost_coefficient, created)
+		var/obj/item/stack/stack_item = initial(design.build_path)
+		var/max_stack_amount = initial(stack_item.max_amount)
+		number_to_make = (initial(stack_item.amount) * items_remaining)
+		while(number_to_make > max_stack_amount)
+			created = design.create_result(target, design.materials, amount = max_stack_amount)
+			if(isitem(created))
+				created.pixel_x = created.base_pixel_x + rand(-6, 6)
+				created.pixel_y = created.base_pixel_y + rand(-6, 6)
+			number_to_make -= max_stack_amount
 
-	created.pixel_x = created.base_pixel_x + rand(-6, 6)
-	created.pixel_y = created.base_pixel_y + rand(-6, 6)
+	created = design.create_result(target, design.materials, amount = number_to_make)
+	if(!is_stack && design.inherit_materials != DESIGN_DONT_INHERIT_MATS)
+		design.transfer_materials(design.materials, material_cost_coefficient, created)
+
+	if(isitem(created))
+		created.pixel_x = created.base_pixel_x + rand(-6, 6)
+		created.pixel_y = created.base_pixel_y + rand(-6, 6)
+	SSblackbox.record_feedback("nested tally", "lathe_printed_items", 1, list("[type]", "[created.type]"))
 
 	if(is_stack)
 		items_remaining = 0
 	else
-		items_remaining -= 1
+		items_remaining--
 
 	if(!items_remaining)
 		finalize_build()
 		return
-	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, items_remaining, build_time_per_item, material_cost_coefficient, charge_per_item, target), build_time_per_item)
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, items_remaining, build_time_per_item, material_cost_coefficient, charge_per_item, target, user_data), build_time_per_item)
 
 /// Resets the busy flag
 /// Called at the end of do_make_item's timer loop
 /obj/machinery/rnd/production/proc/finalize_build()
 	PROTECTED_PROC(TRUE)
-
+	print_sound.stop()
 	busy = FALSE
 	SStgui.update_uis(src)
-	icon_state = initial(icon_state)
+	update_appearance()
 
-/obj/machinery/rnd/production/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
-	. = ..()
-	if(!can_interact(usr) || (!issilicon(usr) && !isAdminGhostAI(usr)) && !Adjacent(usr))
+/obj/machinery/rnd/production/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	if(!can_interact(user) || (!HAS_SILICON_ACCESS(user) && !isAdminGhostAI(user)) && !Adjacent(user))
 		return
 	if(busy)
-		balloon_alert(usr, "busy printing!")
+		balloon_alert(user, "busy printing!")
 		return
 	var/direction = get_dir(src, over_location)
 	if(!direction)
 		return
 	drop_direction = direction
-	balloon_alert(usr, "dropping [dir2text(drop_direction)]")
+	balloon_alert(user, "dropping [dir2text(drop_direction)]")
 
 /obj/machinery/rnd/production/click_alt(mob/user)
 	if(drop_direction == 0)
@@ -456,3 +475,10 @@
 	balloon_alert(user, "drop direction reset")
 	drop_direction = 0
 	return CLICK_ACTION_SUCCESS
+
+/obj/machinery/rnd/production/update_icon_state()
+	. = ..()
+	if(busy && production_animation)
+		icon_state = production_animation
+	else if(!panel_open) // use what is set by parent if panel is open
+		icon_state = base_icon_state || initial(icon_state)

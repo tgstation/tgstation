@@ -10,15 +10,22 @@
 	products = list(
 		/obj/item/cultivator = 3,
 		/obj/item/plant_analyzer = 4,
-		/obj/item/reagent_containers/cup/bottle/nutrient/ez = 30,
-		/obj/item/reagent_containers/cup/bottle/nutrient/l4z = 20,
-		/obj/item/reagent_containers/cup/bottle/nutrient/rh = 10,
+		/obj/item/reagent_containers/cup/jerrycan/eznutriment = 6,
+		/obj/item/reagent_containers/cup/jerrycan/left4zed = 4,
+		/obj/item/reagent_containers/cup/jerrycan/robustharvest = 3,
 		/obj/item/reagent_containers/spray/pestspray = 20,
 		/obj/item/reagent_containers/syringe = 5,
 		/obj/item/secateurs = 3,
 		/obj/item/shovel/spade = 3,
 		/obj/item/storage/bag/plants = 5,
 	)
+
+	premium = list(
+		/obj/item/soil_sack = 8,
+		/obj/item/soil_sack/vermaculite = 3,
+		/obj/item/soil_sack/gel = 3,
+	)
+
 	contraband = list(
 		/obj/item/reagent_containers/cup/bottle/ammonia = 10,
 		/obj/item/reagent_containers/cup/bottle/diethylamine = 5,

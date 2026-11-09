@@ -34,27 +34,21 @@
 	verb_exclaim = "zaps"
 	verb_yell = "bangs"
 	initial_language_holder = /datum/language_holder/lightbringer
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
+	physiology = list(TOX = 0, OXY = 0)
 	light_range = 4
 	faction = list(FACTION_NEUTRAL)
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = 1500
 	obj_damage = 0
+	pull_force = MOVE_FORCE_NONE
 	environment_smash = ENVIRONMENT_SMASH_NONE
 
 	ai_controller = /datum/ai_controller/basic_controller/lightgeist
 
 /mob/living/basic/lightgeist/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-
-	remove_verb(src, /mob/living/verb/pulled)
-	remove_verb(src, /mob/verb/me_verb)
-
-	var/datum/atom_hud/medical_sensor = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
-	medical_sensor.show_to(src)
-
+	add_traits(list(TRAIT_VENTCRAWLER_ALWAYS, TRAIT_MEDICAL_HUD, TRAIT_EMOTEMUTE), INNATE_TRAIT)
 	AddElement(/datum/element/simple_flying)
 	AddComponent(\
 		/datum/component/healing_touch,\
@@ -69,7 +63,7 @@
 /mob/living/basic/lightgeist/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	. = ..()
 	if (. && isliving(target))
-		faction |= REF(target) // Anyone we heal will treat us as a friend
+		add_ally(target) // Anyone we heal will treat us as a friend
 
 /mob/living/basic/lightgeist/ghost()
 	. = ..()
@@ -77,18 +71,13 @@
 		death()
 
 /datum/ai_controller/basic_controller/lightgeist
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/lightgeist.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/lightgeist,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree, // We heal things by attacking them
-	)
 
 /// Attack only mobs who have damage that we can heal, I think this is specific enough not to be a generic type
 /datum/targeting_strategy/lightgeist
@@ -97,15 +86,15 @@
 	/// Type of limb we can heal
 	var/required_bodytype = BODYTYPE_ORGANIC
 
-/datum/targeting_strategy/lightgeist/can_attack(mob/living/living_mob, mob/living/target, vision_range)
+/datum/targeting_strategy/lightgeist/is_valid_target(mob/living/living_mob, mob/living/target, vision_range, datum/ai_controller/controller = null)
 	if (!isliving(target) || target.stat == DEAD)
 		return FALSE
 	if (!(heal_biotypes & target.mob_biotypes))
 		return FALSE
 	if (!iscarbon(target))
-		return target.getBruteLoss() > 0 || target.getFireLoss() > 0
+		return target.get_brute_loss() > 0 || target.get_fire_loss() > 0
 	var/mob/living/carbon/carbon_target = target
-	for (var/obj/item/bodypart/part in carbon_target.bodyparts)
+	for (var/obj/item/bodypart/part in carbon_target.get_bodyparts())
 		if (!part.brute_dam && !part.burn_dam)
 			continue
 		if (!(part.bodytype & required_bodytype))

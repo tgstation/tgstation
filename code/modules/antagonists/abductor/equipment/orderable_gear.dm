@@ -53,7 +53,7 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 	name = "Superlingual Matrix"
 	description = "A mysterious structure that allows for instant communication between users. Using it inhand will attune it to your mothership's channel. Pretty impressive until you need to eat something."
 	id = "superlingual_matrix"
-	build_path = list(/obj/item/organ/internal/tongue/abductor = 1)
+	build_path = list(/obj/item/organ/tongue/abductor = 1)
 	category = CATEGORY_MISC_GEAR
 
 /datum/abductor_gear/mental_interface
@@ -79,7 +79,7 @@ GLOBAL_LIST_INIT(abductor_gear, subtypesof(/datum/abductor_gear))
 				That or it's just space magic. Either way, it shrinks stuff."
 	id = "shrink_ray"
 	cost = 2
-	build_path = list(/obj/item/gun/energy/shrink_ray = 1)
+	build_path = list(/obj/item/gun/energy/recharge/shrink_ray = 1)
 	category = CATEGORY_ADVANCED_GEAR
 
 /datum/abductor_gear/omnitool

@@ -18,6 +18,7 @@
 	bubble_icon = "alien"
 	combat_mode = TRUE
 	faction = list(ROLE_ALIEN)
+	physiology = list(STAMINA = 0)
 
 	// Going for a dark purple here
 	lighting_cutoff_red = 30
@@ -35,10 +36,10 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	gold_core_spawnable = NO_SPAWN
-	death_sound = 'sound/voice/hiss6.ogg'
+	death_sound = 'sound/mobs/non-humanoids/hiss/hiss6.ogg'
 	death_message = "lets out a waning guttural screech, green blood bubbling from its maw..."
 
 	habitable_atmos = null
@@ -46,6 +47,7 @@
 	unsuitable_heat_damage = 20
 
 	ai_controller = /datum/ai_controller/basic_controller/alien
+	default_blood_volume = BLOOD_VOLUME_NORMAL
 
 	///List of loot items to drop when deleted, if this is set then we apply DEL_ON_DEATH
 	var/list/loot
@@ -63,22 +65,32 @@
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 
 /mob/living/basic/alien/get_butt_sprite()
-	return BUTT_SPRITE_XENOMORPH
+	return icon('icons/mob/butts.dmi', BUTT_SPRITE_XENOMORPH)
 
-///Places alien weeds on the turf the mob is currently standing on.
+///Places alien weeds on the turf the mob is currently standing on. Returns TRUE if weeds were placed.
 /mob/living/basic/alien/proc/place_weeds()
 	if(!isturf(loc) || isspaceturf(loc))
-		return
+		return FALSE
 	if(locate(/obj/structure/alien/weeds/node) in get_turf(src))
-		return
+		return FALSE
 	visible_message(span_alertalien("[src] plants some alien weeds!"))
 	new /obj/structure/alien/weeds/node(loc)
+	return TRUE
 
-///Lays an egg on the turf the mob is currently standing on.
+///Lays an egg on the turf the mob is currently standing on. Returns TRUE if an egg was laid.
 /mob/living/basic/alien/proc/lay_alien_egg()
 	if(!isturf(loc) || isspaceturf(loc))
-		return
+		return FALSE
 	if(locate(/obj/structure/alien/egg) in get_turf(src))
-		return
+		return FALSE
 	visible_message(span_alertalien("[src] lays an egg!"))
 	new /obj/structure/alien/egg(loc)
+	return TRUE
+
+/mob/living/basic/alien/get_bloodtype()
+	return get_blood_type(/datum/blood_type/xeno)
+
+/mob/living/basic/alien/get_gibs_type(drop_bitflags = NONE)
+	if(drop_bitflags & DROP_BODYPARTS)
+		return /obj/effect/gibspawner/xeno
+	return /obj/effect/gibspawner/xeno/bodypartless

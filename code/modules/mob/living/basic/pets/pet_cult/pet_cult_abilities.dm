@@ -11,4 +11,4 @@
 	)
 	summon_radius = 0
 	create_summon_timer = 5 SECONDS
-	sound = 'sound/magic/exit_blood.ogg'
+	sound = 'sound/effects/magic/exit_blood.ogg'

@@ -1,24 +1,28 @@
 
 /mob/living/carbon/human/dummy
 	real_name = "Test Dummy"
-	status_flags = GODMODE|CANPUSH
 	mouse_drag_pointer = MOUSE_INACTIVE_POINTER
 	visual_only_organs = TRUE
 	var/in_use = FALSE
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
+/mob/living/carbon/human/dummy/Initialize(mapload, datum/species/species)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_PREVENT_BLINKING, INNATE_TRAIT)
+
 /mob/living/carbon/human/dummy/Destroy()
 	in_use = FALSE
 	return ..()
 
-/mob/living/carbon/human/dummy/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/carbon/human/dummy/Life(seconds_per_tick = SSMOBS_DT)
 	return
 
 /mob/living/carbon/human/dummy/attach_rot(mapload)
 	return
 
-/mob/living/carbon/human/dummy/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE)
+/mob/living/carbon/human/dummy/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE, replace_missing = TRUE)
 	harvest_organs()
 	return ..()
 
@@ -29,19 +33,19 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/obj/item/organ/current_organ = get_organ_slot(slot) //Time to cache it lads
 		if(current_organ)
 			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
-			SSwardrobe.stash_object(current_organ)
+			SSwardrobe.recycle_object(current_organ)
 
 	var/datum/species/current_species = dna.species
 	for(var/organ_path in current_species.mutant_organs)
 		var/obj/item/organ/current_organ = get_organ_by_type(organ_path)
 		if(current_organ)
 			current_organ.Remove(src, special = TRUE) //Please don't somehow kill our dummy
-			SSwardrobe.stash_object(current_organ)
+			SSwardrobe.recycle_object(current_organ)
 
 //Instead of just deleting our equipment, we save what we can and reinsert it into SSwardrobe's store
 //Hopefully this makes preference reloading not the worst thing ever
 /mob/living/carbon/human/dummy/delete_equipment()
-	var/list/items_to_check = get_equipped_items(include_pockets = TRUE) + held_items
+	var/list/items_to_check = get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD|INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT)
 	var/list/to_nuke = list() //List of items queued for deletion, can't qdel them before iterating their contents in case they hold something
 	///Travel to the bottom of the contents chain, expanding it out
 	for(var/i = 1; i <= length(items_to_check); i++) //Needs to be a c style loop since it can expand
@@ -62,37 +66,42 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		if(ismob(checking.loc))
 			var/mob/checkings_owner = checking.loc
 			checkings_owner.temporarilyRemoveItemFromInventory(checking, TRUE) //Clear out of there yeah?
-		SSwardrobe.stash_object(checking)
+		SSwardrobe.recycle_object(checking)
 
 	for(var/obj/item/delete as anything in to_nuke)
 		qdel(delete)
 
 /mob/living/carbon/human/dummy/has_equipped(obj/item/item, slot, initial = FALSE)
+	SHOULD_CALL_PARENT(FALSE) // assuming direct control
 	item.item_flags |= IN_INVENTORY
-	return item.visual_equipped(src, slot, initial)
+	if(!item.visual_equipped(src, slot, initial))
+		return FALSE
+	if(!(slot & item.slot_flags)) // Things below only update if slotted in (ie: not held)
+		return TRUE
+	add_item_coverage(item)
+	if(item.hair_mask)
+		LAZYADD(hair_masks, item.hair_mask)
+		update_hair()
+	return TRUE
 
 /mob/living/carbon/human/dummy/proc/wipe_state()
 	delete_equipment()
+	update_lips(null, null, null, update = FALSE)
 	cut_overlays(TRUE)
+	clear_filters()
 
 /mob/living/carbon/human/dummy/setup_human_dna()
-	randomize_human(src, randomize_mutations = FALSE)
+	randomize_human_normie(src, randomize_mutations = FALSE)
 
 /mob/living/carbon/human/dummy/log_mob_tag(text)
 	return
 
-// To speed up the preference menu, we apply 1 filter to the entire mob
-/mob/living/carbon/human/dummy/regenerate_icons()
-	. = ..()
-	apply_height_filters(src, TRUE)
-
-/mob/living/carbon/human/dummy/apply_height_filters(image/appearance, only_apply_in_prefs = FALSE)
-	if(only_apply_in_prefs)
+// To speed up the preference menu, we apply one height filter to the entire mob,
+// rather than independently applying offsets and filters to each individual overlay
+// This looks good enough to pass the sniff test and saves a lot of time
+/mob/living/carbon/human/dummy/apply_height(image/appearance, body_area)
+	if(appearance == src)
 		return ..()
-
-// Not necessary with above
-/mob/living/carbon/human/dummy/apply_height_offsets(image/appearance, upper_torso)
-	return
 
 /// Takes in an accessory list and returns the first entry from that list, ensuring that we dont return SPRITE_ACCESSORY_NONE in the process.
 /proc/get_consistent_feature_entry(list/accessory_feature_list)
@@ -101,22 +110,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return consistent_entry
 
 /proc/create_consistent_human_dna(mob/living/carbon/human/target)
-	target.dna.features["mcolor"] = COLOR_VIBRANT_LIME
-	target.dna.features["ethcolor"] = COLOR_WHITE
-	target.dna.features["body_markings"] = get_consistent_feature_entry(GLOB.body_markings_list)
-	target.dna.features["ears"] = get_consistent_feature_entry(GLOB.ears_list)
-	target.dna.features["frills"] = get_consistent_feature_entry(GLOB.frills_list)
-	target.dna.features["horns"] = get_consistent_feature_entry(GLOB.horns_list)
-	target.dna.features["moth_antennae"] = get_consistent_feature_entry(GLOB.moth_antennae_list)
-	target.dna.features["moth_markings"] = get_consistent_feature_entry(GLOB.moth_markings_list)
-	target.dna.features["moth_wings"] = get_consistent_feature_entry(GLOB.moth_wings_list)
-	target.dna.features["snout"] = get_consistent_feature_entry(GLOB.snouts_list)
-	target.dna.features["spines"] = get_consistent_feature_entry(GLOB.spines_list)
-	target.dna.features["tail_cat"] = get_consistent_feature_entry(GLOB.tails_list_human) // it's a lie
-	target.dna.features["tail_lizard"] = get_consistent_feature_entry(GLOB.tails_list_lizard)
-	target.dna.features["tail_monkey"] = get_consistent_feature_entry(GLOB.tails_list_monkey)
-	target.dna.features["pod_hair"] = get_consistent_feature_entry(GLOB.pod_hair_list)
-	target.dna.initialize_dna(create_mutation_blocks = FALSE, randomize_features = FALSE)
+	target.dna.features[FEATURE_MUTANT_COLOR] = COLOR_VIBRANT_LIME
+	target.dna.features[FEATURE_TAIL_FISH_COLOR] = "#8AC7ED"
+	for(var/feature_key in SSaccessories.feature_list)
+		target.dna.features[feature_key] = get_consistent_feature_entry(SSaccessories.feature_list[feature_key])
+	target.dna.initialize_dna(newblood_type = get_blood_type(/datum/blood_type/human/o_minus), create_mutation_blocks = FALSE, randomize_features = FALSE)
 	// UF and UI are nondeterministic, even though the features are the same some blocks will randomize slightly
 	// In practice this doesn't matter, but this is for the sake of 100%(ish) consistency
 	var/static/consistent_UF
@@ -144,6 +142,21 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/consistent/domutcheck()
 	return // We skipped adding any mutations so this runtimes
+
+/mob/living/carbon/human/consistent/slow
+
+#ifdef UNIT_TESTS
+//unit test dummies should be very fast with actions
+/mob/living/carbon/human/dummy/consistent/initialize_actionspeed()
+	add_or_update_variable_actionspeed_modifier(/datum/actionspeed_modifier/base, multiplicative_slowdown = -1)
+
+/mob/living/carbon/human/consistent/initialize_actionspeed()
+	add_or_update_variable_actionspeed_modifier(/datum/actionspeed_modifier/base, multiplicative_slowdown = -1)
+
+//this one gives us a small window of time for checks on asynced actions.
+/mob/living/carbon/human/consistent/slow/initialize_actionspeed()
+	add_or_update_variable_actionspeed_modifier(/datum/actionspeed_modifier/base, multiplicative_slowdown = 0.1)
+#endif
 
 //Inefficient pooling/caching way.
 GLOBAL_LIST_EMPTY(human_dummy_list)
@@ -173,7 +186,7 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		carbon_target.dna.transfer_identity(copycat, transfer_SE = TRUE)
+		carbon_target.dna.copy_dna(copycat.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/human_target = target

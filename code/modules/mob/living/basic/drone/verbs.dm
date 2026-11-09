@@ -3,9 +3,7 @@
  *
  * See [/mob/living/basic/drone/var/laws]
  */
-/mob/living/basic/drone/verb/check_laws()
-	set category = "Drone"
-	set name = "Check Laws"
+GAME_VERB(/mob/living/basic/drone, check_laws, "Check Laws", "Drone")
 
 	to_chat(src, "<b>Drone Laws</b>")
 	to_chat(src, laws)
@@ -21,14 +19,12 @@
  *
  * Attaches area name to message
  */
-/mob/living/basic/drone/verb/drone_ping()
-	set category = "Drone"
-	set name = "Drone ping"
+GAME_VERB(/mob/living/basic/drone, drone_ping, "Drone ping", "Drone")
 
 	var/alert_s = input(src,"Alert severity level","Drone ping",null) as null|anything in list("Low","Medium","High","Critical")
 
 	var/area/A = get_area(loc)
 
 	if(alert_s && A && stat != DEAD)
-		var/msg = span_boldnotice("DRONE PING: [name]: [alert_s] priority alert in [A.name]!")
+		var/msg = span_big("DRONE PING: [name]: [alert_s] priority alert in [A.name]!")
 		alert_drones(msg)

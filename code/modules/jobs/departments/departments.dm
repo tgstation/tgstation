@@ -1,5 +1,6 @@
 /// Singleton representing a category of jobs forming a department.
 /datum/job_department
+	abstract_type = /datum/job_department
 	/// Department as displayed on different menus.
 	var/department_name = DEPARTMENT_UNASSIGNED
 	/// Bitflags associated to the specific department.
@@ -10,14 +11,14 @@
 	var/department_experience_type = null
 	/// The order in which this department appears on menus, in relation to other departments.
 	var/display_order = 0
-	/// The header color to be displayed in the ban panel, classes defined in banpanel.css
-	var/label_class = "undefineddepartment"
 	/// The color used in TGUI or similar menus.
 	var/ui_color = "#9689db"
 	/// Job singleton datums associated to this department. Populated on job initialization.
 	var/list/department_jobs = list()
 	/// For separatists, what independent name prefix does their nation get named?
 	var/list/nation_prefixes = list()
+	/// Root type for the area that people in this department primarily work in.
+	var/primary_work_area
 	/// List of /area types that are considered part of this department's "delivery" area.
 	/// Acts as a priority system, where first items are picked first.
 	var/list/department_delivery_areas = list()
@@ -27,15 +28,6 @@
 	var/head_of_staff_access
 	/// A list of generic access flags people in this department generally have.
 	var/list/department_access = list()
-
-/datum/job_department/New()
-	. = ..()
-	for(var/delivery_area_type in department_delivery_areas)
-		if(GLOB.areas_by_type[delivery_area_type])
-			return
-	//every area fallback didn't exist on this map so throw a mapping error and set some generic area that uuuh please exist okay
-	log_mapping("[type] has no valid areas to deliver to on this map, add some more fallback areas to its \"department_delivery_areas\" var.")
-	department_delivery_areas = list(/area/station/hallway/primary/central) //if this doesn't exist like honestly fuck your map man
 
 /// Handles adding jobs to the department and setting up the job bitflags.
 /datum/job_department/proc/add_job(datum/job/job)
@@ -52,16 +44,25 @@
 			job_datum.spawn_positions = 0
 			job_datum.total_positions = 0
 
+/// Returns all jobs that are in this category for jobbans
+/datum/job_department/proc/get_jobban_jobs()
+	return department_jobs.Copy()
+
 /// Returns a nation name for this department.
 /datum/job_department/proc/generate_nation_name()
 	var/static/list/nation_suffixes = list("stan", "topia", "land", "nia", "ca", "tova", "dor", "ador", "tia", "sia", "ano", "tica", "tide", "cis", "marea", "co", "taoide", "slavia", "stotzka")
 	return pick(nation_prefixes) + pick(nation_suffixes)
+
+/// Returns a simplifed spaceless string for use in stuff like CSS.
+/datum/job_department/proc/get_label_class()
+	return LOWER_TEXT(replacetext(department_name, " ", "_"))
 
 /// A special assistant only department, primarily for use by the preferences menu
 /datum/job_department/assistant
 	department_name = DEPARTMENT_ASSISTANT
 	department_bitflags = DEPARTMENT_BITFLAG_ASSISTANT
 	nation_prefixes = list("Assa", "Mainte", "Tunnel", "Gris", "Grey", "Liath", "Grigio", "Ass", "Assi")
+	ui_color = "#808080"
 	// Don't add department_head! Assistants names should not be in bold.
 
 /datum/job_department/assistant/generate_nation_name()
@@ -73,6 +74,8 @@
 	department_name = DEPARTMENT_CAPTAIN
 	department_bitflags = DEPARTMENT_BITFLAG_CAPTAIN
 	department_head = /datum/job/captain
+	ui_color = "#2a79c8"
+	primary_work_area = /area/station/command
 
 /datum/job_department/command
 	department_name = DEPARTMENT_COMMAND
@@ -80,9 +83,9 @@
 	department_head = /datum/job/captain
 	department_experience_type = EXP_TYPE_COMMAND
 	display_order = 1
-	label_class = "command"
-	ui_color = "#6681a5"
-
+	ui_color = "#fcd203"
+	primary_work_area = /area/station/command
+	department_access = REGION_ACCESS_COMMAND
 
 /datum/job_department/security
 	department_name = DEPARTMENT_SECURITY
@@ -90,17 +93,25 @@
 	department_head = /datum/job/head_of_security
 	department_experience_type = EXP_TYPE_SECURITY
 	display_order = 2
-	label_class = "security"
-	ui_color = "#d46a78"
+	ui_color = "#d92626"
 	nation_prefixes = list("Securi", "Beepski", "Shitcuri", "Red", "Stunba", "Flashbango", "Flasha", "Stanfordi")
+	primary_work_area = /area/station/security
 	department_delivery_areas = list(
 		/area/station/security/office,
 		/area/station/security/brig,
 		/area/station/security/brig/upper,
 	)
-	associated_cargo_groups = list("Security", "Armory")
+	associated_cargo_groups = list(
+		/datum/supply_pack/security::group,
+		/datum/supply_pack/security/armory::group,
+		/datum/supply_pack/security/armory/rnd_locked::group,
+	)
 	head_of_staff_access = ACCESS_HOS
 	department_access = REGION_ACCESS_SECURITY
+
+/datum/job_department/security/get_jobban_jobs()
+	// Captains often fulfill security duties so they are considered part of the security department for jobbans
+	return ..() | SSjob.get_job_type(/datum/job/captain)
 
 /datum/job_department/engineering
 	department_name = DEPARTMENT_ENGINEERING
@@ -108,10 +119,13 @@
 	department_head = /datum/job/chief_engineer
 	department_experience_type = EXP_TYPE_ENGINEERING
 	display_order = 3
-	label_class = "engineering"
-	ui_color = "#dfb567"
+	ui_color = "#f26c0d"
 	nation_prefixes = list("Atomo", "Engino", "Power", "Teleco")
-	department_delivery_areas = list(/area/station/engineering/main)
+	primary_work_area = /area/station/engineering
+	department_delivery_areas = list(
+		/area/station/engineering/main,
+		/area/station/engineering/lobby,
+	)
 	associated_cargo_groups = list("Engineering", "Engine Construction", "Canisters & Materials")
 	head_of_staff_access = ACCESS_CE
 	department_access = REGION_ACCESS_ENGINEERING
@@ -122,9 +136,9 @@
 	department_head = /datum/job/chief_medical_officer
 	department_experience_type = EXP_TYPE_MEDICAL
 	display_order = 4
-	label_class = "medical"
-	ui_color = "#65b2bd"
+	ui_color = "#00b3b3"
 	nation_prefixes = list("Mede", "Healtha", "Recova", "Chemi", "Viro", "Psych")
+	primary_work_area = /area/station/medical
 	department_delivery_areas = list(
 		/area/station/medical/medbay/central,
 		/area/station/medical/medbay,
@@ -141,10 +155,14 @@
 	department_head = /datum/job/research_director
 	department_experience_type = EXP_TYPE_SCIENCE
 	display_order = 5
-	label_class = "science"
-	ui_color = "#c973c9"
+	ui_color = "#b333cc"
 	nation_prefixes = list("Sci", "Griffa", "Geneti", "Explosi", "Mecha", "Xeno", "Nani", "Cyto")
-	department_delivery_areas = list(/area/station/science/research)
+	primary_work_area = /area/station/science
+	department_delivery_areas = list(
+		/area/station/science/research,
+		/area/station/science/lobby,
+		/area/station/science/lab,
+	)
 	associated_cargo_groups = list("Science", "Livestock", "Canisters & Materials")
 	head_of_staff_access = ACCESS_RD
 	department_access = REGION_ACCESS_RESEARCH
@@ -156,9 +174,9 @@
 	department_head = /datum/job/quartermaster
 	department_experience_type = EXP_TYPE_SUPPLY
 	display_order = 6
-	label_class = "supply"
-	ui_color = "#cf9c6c"
+	ui_color = "#a96a3c"
 	nation_prefixes = list("Cargo", "Guna", "Suppli", "Mule", "Crate", "Ore", "Mini", "Shaf")
+	primary_work_area = /area/station/cargo
 	head_of_staff_access = ACCESS_QM
 	department_access = REGION_ACCESS_SUPPLY
 
@@ -168,9 +186,9 @@
 	department_head = /datum/job/head_of_personnel
 	department_experience_type = EXP_TYPE_SERVICE
 	display_order = 7
-	label_class = "service"
-	ui_color = "#7cc46a"
+	ui_color = "#1fad4e"
 	nation_prefixes = list("Honka", "Boozo", "Fatu", "Danka", "Mimi", "Libra", "Jani", "Religi")
+	primary_work_area = /area/station/service
 	department_delivery_areas = list(/area/station/hallway/secondary/service, /area/station/service/bar/atrium)
 	associated_cargo_groups = list("Service", "Food & Hydroponics", "Livestock", "Costumes & Toys")
 	head_of_staff_access = ACCESS_HOP
@@ -182,8 +200,7 @@
 	department_head = /datum/job/ai
 	department_experience_type = EXP_TYPE_SILICON
 	display_order = 8
-	label_class = "silicon"
-	ui_color = "#5dbda0"
+	ui_color = "#d9268e"
 
 /datum/job_department/silicon/generate_nation_name()
 	return "United Nations" //For nations ruleset specifically, because all other sources of nation creation cannot choose silicons

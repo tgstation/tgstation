@@ -1,8 +1,7 @@
 // Autolathe-able circuitboards for starting with boulder processing machines.
 /datum/design/board/smelter
-	name = "Boulder Smelter"
+	name = "Boulder Smelter Board"
 	desc = "A circuitboard for a boulder smelter. Lowtech enough to be printed from the lathe."
-	id = "b_smelter"
 	build_type = AUTOLATHE
 	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
@@ -16,9 +15,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/refinery
-	name = "Boulder Refinery"
+	name = "Boulder Refinery Board"
 	desc = "A circuitboard for a boulder refinery. Lowtech enough to be printed from the lathe."
-	id = "b_refinery"
 	build_type = AUTOLATHE
 	materials = list(
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT,

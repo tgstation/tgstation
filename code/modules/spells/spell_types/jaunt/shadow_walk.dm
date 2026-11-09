@@ -33,7 +33,7 @@
 	if(is_jaunting(owner))
 		return TRUE
 	var/turf/cast_turf = get_turf(owner)
-	if(cast_turf.get_lumcount() >= light_threshold)
+	if(!cast_turf.check_lumcount_below(light_threshold))
 		if(feedback)
 			to_chat(owner, span_warning("It isn't dark enough here!"))
 		return FALSE
@@ -48,11 +48,12 @@
 	playsound(get_turf(owner), 'sound/effects/nightmare_poof.ogg', 50, TRUE, -1, ignore_walls = FALSE)
 	cast_on.visible_message(span_boldwarning("[cast_on] melts into the shadows!"))
 	cast_on.SetAllImmobility(0)
-	cast_on.setStaminaLoss(0, FALSE)
+	cast_on.set_stamina_loss(0, FALSE)
 	enter_jaunt(cast_on)
 
 /obj/effect/dummy/phased_mob/shadow
 	name = "shadows"
+	phased_mob_icon_state = "purple_laser"
 	/// Max amount of light permitted before being kicked out
 	var/light_max = SHADOW_SPECIES_LIGHT_THRESHOLD
 	/// The amount that shadow heals us per SSobj tick (times seconds_per_tick)
@@ -122,7 +123,7 @@
 
 /obj/effect/dummy/phased_mob/shadow/proc/check_light_level(atom/location_to_check)
 	var/turf/light_turf = get_turf(location_to_check)
-	return light_turf.get_lumcount() > light_max // jaunt ends on TRUE
+	return light_turf.check_lumcount_above(light_max) // jaunt ends on TRUE
 
 /**
  * Checks if the user should receive a warning that they're moving into light.

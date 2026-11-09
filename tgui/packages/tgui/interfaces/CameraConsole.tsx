@@ -1,9 +1,6 @@
-import { filter, sort } from 'common/collections';
-import { BooleanLike, classes } from 'common/react';
-import { createSearch } from 'common/string';
+import { sortBy } from 'es-toolkit';
+import { filter } from 'es-toolkit/compat';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   ByondUi,
@@ -11,7 +8,11 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+import { type BooleanLike, classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
@@ -75,7 +76,7 @@ const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
     );
     queriedCameras = filter(queriedCameras, testSearch);
   }
-  queriedCameras = sort(queriedCameras);
+  queriedCameras = sortBy(queriedCameras, [(c) => c.name]);
 
   return queriedCameras;
 };
@@ -116,11 +117,10 @@ const CameraSelector = (props) => {
       <Stack.Item>
         <Input
           autoFocus
-          expensive
           fluid
           mt={1}
           placeholder="Search for a camera"
-          onInput={(e, value) => setSearchText(value)}
+          onChange={setSearchText}
           value={searchText}
         />
       </Stack.Item>

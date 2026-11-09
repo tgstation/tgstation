@@ -11,6 +11,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Which mode is the scanner currently on?
 	var/scanning_mode = SCAN_EXPORTS
 	/// A list of all available export scanner modes.
@@ -58,44 +59,49 @@
 	icon_state = "[choice]"
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 
-/obj/item/universal_scanner/afterattack(obj/object, mob/user, proximity)
-	. = ..()
-	if(!istype(object) || !proximity)
-		return
-	. |= AFTERATTACK_PROCESSED_ITEM
+/obj/item/universal_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isobj(interacting_with))
+		return NONE
 	if(scanning_mode == SCAN_EXPORTS)
-		export_scan(object, user)
-		return .
+		export_scan(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
 	if(scanning_mode == SCAN_PRICE_TAG)
-		price_tag(target = object, user = user)
-	return .
+		price_tag(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
-/obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
-	if(scanning_mode == SCAN_SALES_TAG && isidcard(attacking_item))
-		var/obj/item/card/id/potential_acc = attacking_item
-		if(potential_acc.registered_account)
-			if(payments_acc == potential_acc.registered_account)
-				to_chat(user, span_notice("ID card already registered."))
-				return
-			else
-				payments_acc = potential_acc.registered_account
-				playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
-				to_chat(user, span_notice("[src] registers the ID card. Tag a wrapped item to create a barcode."))
-		else if(!potential_acc.registered_account)
+/obj/item/universal_scanner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(scanning_mode == SCAN_SALES_TAG && isidcard(tool))
+		var/obj/item/card/id/potential_acc = tool
+		if(!potential_acc.registered_account)
 			to_chat(user, span_warning("This ID card has no account registered!"))
-			return
-	if(istype(attacking_item, /obj/item/paper))
-		if (!(paper_count >= max_paper_count))
-			paper_count += PAPER_PER_SHEET
-			qdel(attacking_item)
-			if (paper_count >= max_paper_count)
-				paper_count = max_paper_count
-				to_chat(user, span_notice("[src]'s paper supply is now full."))
-				return
-			to_chat(user, span_notice("You refill [src]'s paper supply, you have [paper_count] left."))
-		else
+			return ITEM_INTERACT_BLOCKING
+
+		if(payments_acc == potential_acc.registered_account)
+			to_chat(user, span_notice("ID card already registered."))
+			return ITEM_INTERACT_BLOCKING
+
+		payments_acc = potential_acc.registered_account
+		playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
+		to_chat(user, span_notice("[src] registers the ID card. Tag a wrapped item to create a barcode."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/paper))
+		if (paper_count >= max_paper_count)
 			to_chat(user, span_notice("[src]'s paper supply is full."))
+			return ITEM_INTERACT_BLOCKING
+
+		paper_count += PAPER_PER_SHEET
+		qdel(tool)
+		if (paper_count >= max_paper_count)
+			paper_count = max_paper_count
+			to_chat(user, span_notice("[src]'s paper supply is now full."))
+			return ITEM_INTERACT_SUCCESS
+
+		to_chat(user, span_notice("You refill [src]'s paper supply, you have [paper_count] left."))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/universal_scanner/attack_self_secondary(mob/user, modifiers)
 	. = ..()
@@ -121,13 +127,14 @@
 		if(!chosen_price || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH) || loc != user)
 			return
 		new_custom_price = chosen_price
-		to_chat(user, span_notice("[src] will now give things a [new_custom_price] cr tag."))
+		to_chat(user, span_notice("[src] will now give things a [new_custom_price] [MONEY_SYMBOL] tag."))
 
-/obj/item/universal_scanner/CtrlClick(mob/user)
-	. = ..()
+/obj/item/universal_scanner/item_ctrl_click(mob/user)
+	. = CLICK_ACTION_BLOCKING
 	if(scanning_mode == SCAN_SALES_TAG)
 		payments_acc = null
 		to_chat(user, span_notice("You clear the registered account."))
+		return CLICK_ACTION_SUCCESS
 
 /obj/item/universal_scanner/click_alt(mob/user)
 	if(!scanning_mode == SCAN_SALES_TAG)
@@ -149,7 +156,7 @@
 			. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
 
 	if(scanning_mode == SCAN_PRICE_TAG)
-		. += span_notice("The current custom price is set to [new_custom_price] cr. <b>Right-click</b> to change.")
+		. += span_notice("The current custom price is set to [new_custom_price] [MONEY_SYMBOL]. <b>Right-click</b> to change.")
 
 /obj/item/universal_scanner/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	switch(scanning_mode)
@@ -165,7 +172,7 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Scan for export value"
 	return CONTEXTUAL_SCREENTIP_SET
 /**
- * Scans an object, target, and provides it's export value based on selling to the cargo shuttle, to mob/user.
+ * Scans an object, target, and provides its export value based on selling to the cargo shuttle, to mob/user.
  */
 /obj/item/universal_scanner/proc/export_scan(obj/target, mob/user)
 	var/datum/export_report/report = export_item_and_contents(target, dry_run = TRUE)
@@ -178,7 +185,7 @@
 	if(length(target.contents))
 		message = "Scanned [target] and its contents"
 		if(price)
-			message += ", total value: <b>[price]</b> credits"
+			message += ", total value: <b>[price]</b> [MONEY_NAME]"
 		else
 			message += ", no export values"
 			warning = TRUE
@@ -190,7 +197,7 @@
 			message += ", unable to determine value."
 			warning = TRUE
 		else if(price)
-			message += ", value: <b>[price]</b> credits."
+			message += ", value: <b>[price]</b> [MONEY_NAME]."
 		else
 			message += ", no export value."
 			warning = TRUE
@@ -200,7 +207,7 @@
 		to_chat(user, span_notice(message))
 
 	if(price)
-		playsound(src, 'sound/machines/terminal_select.ogg', 50, vary = TRUE)
+		playsound(src, 'sound/machines/terminal/terminal_select.ogg', 50, vary = TRUE)
 
 	if(istype(target, /obj/item/delivery))
 		var/obj/item/delivery/parcel = target
@@ -228,25 +235,26 @@
 				to_chat(user, span_warning("Bank account for handling tip already registered!"))
 
 			else if(scanner_account)
-				cube.AddComponent(/datum/component/pricetag, scanner_account, cube.handler_tip, FALSE)
+				cube.AddComponent(/datum/component/pricetag, list(scanner_account), cube.handler_tip, FALSE)
 
 				cube.bounty_handler_account = scanner_account
-				cube.bounty_handler_account.bank_card_talk("Bank account for [price ? "<b>[price * cube.handler_tip]</b> credit " : ""]handling tip successfully registered.")
+				cube.bounty_handler_account.bank_card_talk("Bank account for [price ? "<b>[price * cube.handler_tip]</b> [MONEY_NAME_SINGULAR] " : ""]handling tip successfully registered.")
 
-				if(cube.bounty_holder_account != cube.bounty_handler_account) //No need to send a tracking update to the person scanning it
-					cube.bounty_holder_account.bank_card_talk("<b>[cube]</b> was scanned in \the <b>[get_area(cube)]</b> by <b>[scan_human] ([scan_human.job])</b>.")
+				for(var/datum/bank_account/shareholder in cube.bounty_holder_accounts)
+					if(shareholder != cube.bounty_handler_account) //No need to send a tracking update to the person scanning it
+						shareholder.bank_card_talk("<b>[cube]</b> was scanned in \the <b>[get_area(cube)]</b> by <b>[scan_human] ([scan_human.job])</b>.")
 
 			else
 				to_chat(user, span_warning("Bank account not detected. Handling tip not registered."))
 
 /**
- * Scans an object, target, and sets it's custom_price variable to new_custom_price, presenting it to the user.
+ * Scans an object, target, and sets its custom_price variable to new_custom_price, presenting it to the user.
  */
 /obj/item/universal_scanner/proc/price_tag(obj/target, mob/user)
 	if(isitem(target))
 		var/obj/item/selected_target = target
 		selected_target.custom_price = new_custom_price
-		to_chat(user, span_notice("You set the price of [selected_target] to [new_custom_price] cr."))
+		to_chat(user, span_notice("You set the price of [selected_target] to [new_custom_price] [MONEY_SYMBOL]."))
 
 /**
  * check_menu: Checks if we are allowed to interact with a radial menu
@@ -257,7 +265,7 @@
 /obj/item/universal_scanner/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	return TRUE
 

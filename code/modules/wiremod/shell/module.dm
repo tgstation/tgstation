@@ -1,11 +1,12 @@
 /obj/item/mod/module/circuit
-	name = "MOD circuit adapter module"
+	name = "\improper MOD circuit adapter module"
 	desc = "A module shell that allows a circuit to be inserted into, and interface with, a MODsuit."
 	module_type = MODULE_USABLE
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/circuit)
 	cooldown_time = 0.5 SECONDS
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 	/// A reference to the shell component, used to access the shell and its attached circuit
 	var/datum/component/shell/shell
@@ -41,11 +42,13 @@
 	QDEL_LIST_ASSOC_VAL(action_comp.granted_to)
 
 /obj/item/mod/module/circuit/on_install()
+	. = ..()
 	if(!shell?.attached_circuit)
 		return
 	RegisterSignal(shell?.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(override_power_usage))
 
 /obj/item/mod/module/circuit/on_uninstall(deleting = FALSE)
+	. = ..()
 	if(!shell?.attached_circuit)
 		return
 	for(var/obj/item/circuit_component/equipment_action/action_comp in action_comps)
@@ -114,17 +117,17 @@
 
 	return ..()
 
-/datum/action/item_action/mod/pinnable/circuit/Trigger(trigger_flags)
+/datum/action/item_action/mod/pinnable/circuit/do_effect(trigger_flags)
 	. = ..()
 	if(!.)
 		return
 	var/obj/item/mod/control/mod = module.mod
 	if(!istype(mod))
-		return
+		return FALSE
 	if(!mod.active || mod.activating)
 		if(mod.wearer)
 			module.balloon_alert(mod.wearer, "not active!")
-		return
+		return FALSE
 	circuit_component.user.set_output(owner)
 	circuit_component.signal.set_output(COMPONENT_SIGNAL)
 
@@ -186,8 +189,8 @@
 	select_module = add_input_port("Select Module", PORT_TYPE_SIGNAL)
 	// States
 	wearer = add_output_port("Wearer", PORT_TYPE_USER)
-	deployed = add_output_port("Deployed", PORT_TYPE_NUMBER)
-	activated = add_output_port("Activated", PORT_TYPE_NUMBER)
+	deployed = add_output_port("Deployed", PORT_TYPE_BOOLEAN)
+	activated = add_output_port("Activated", PORT_TYPE_BOOLEAN)
 	selected_module = add_output_port("Selected Module", PORT_TYPE_STRING)
 	deployed_parts = add_output_port("Deployed Parts", PORT_TYPE_LIST(PORT_TYPE_STRING))
 	// Output Signals
@@ -271,19 +274,23 @@
 	SIGNAL_HANDLER
 	var/string_list = list()
 	var/is_deployed = TRUE
-	for(var/obj/item/part as anything in attached_module.mod.mod_parts)
+	for(var/obj/item/part as anything in attached_module.mod.get_parts())
 		if(part.loc == attached_module.mod)
 			is_deployed = FALSE
 		else
 			var/part_name = "Undefined"
 			if(istype(part, /obj/item/clothing/head/mod))
 				part_name = "Helmet"
-			if(istype(part, /obj/item/clothing/suit/mod))
+			else if(istype(part, /obj/item/clothing/suit/mod))
 				part_name = "Chestplate"
-			if(istype(part, /obj/item/clothing/gloves/mod))
+			else if(istype(part, /obj/item/clothing/gloves/mod))
 				part_name = "Gloves"
-			if(istype(part, /obj/item/clothing/shoes/mod))
+			else if(istype(part, /obj/item/clothing/shoes/mod))
 				part_name = "Boots"
+			else if(istype(part, /obj/item/clothing/glasses/mod))
+				part_name = "Glasses"
+			else if(istype(part, /obj/item/clothing/neck/mod))
+				part_name = "Tie"
 			string_list += part_name
 	deployed_parts.set_output(string_list)
 	deployed.set_output(is_deployed)

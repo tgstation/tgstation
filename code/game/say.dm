@@ -4,6 +4,7 @@ This file has the basic atom/movable level speech procs.
 And the base of the send_speech() proc, which is the core of saycode.
 */
 GLOBAL_LIST_INIT(freqtospan, list(
+	"[FREQ_COMMON]" = "radio",
 	"[FREQ_SCIENCE]" = "sciradio",
 	"[FREQ_MEDICAL]" = "medradio",
 	"[FREQ_ENGINEERING]" = "engradio",
@@ -12,14 +13,16 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_SECURITY]" = "secradio",
 	"[FREQ_COMMAND]" = "comradio",
 	"[FREQ_AI_PRIVATE]" = "aiprivradio",
+	"[FREQ_ENTERTAINMENT]" = "enteradio",
 	"[FREQ_SYNDICATE]" = "syndradio",
 	"[FREQ_UPLINK]" = "syndradio",  // this probably shouldnt appear ingame
 	"[FREQ_CENTCOM]" = "centcomradio",
 	"[FREQ_CTF_RED]" = "redteamradio",
 	"[FREQ_CTF_BLUE]" = "blueteamradio",
 	"[FREQ_CTF_GREEN]" = "greenteamradio",
-	"[FREQ_CTF_YELLOW]" = "yellowteamradio"
-	))
+	"[FREQ_CTF_YELLOW]" = "yellowteamradio",
+	"[FREQ_STATUS_DISPLAYS]" = "captaincast",
+))
 
 /**
  * What makes things... talk.
@@ -58,16 +61,15 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(!message || message == "")
 		return
 	spans |= speech_span
-	if(!language)
-		language = get_selected_language()
-	message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
+	language ||= get_selected_language()
+	message_mods[SAY_MOD_VERB] ||= say_mod(message, message_mods)
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, forced = forced)
 
 /// Called when this movable hears a message from a source.
 /// Returns TRUE if the message was received and understood.
-/atom/movable/proc/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
+/atom/movable/proc/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range=0)
 	SEND_SIGNAL(src, COMSIG_MOVABLE_HEAR, args)
-	return TRUE
+	return HEAR_HEARD | HEAR_UNDERSTOOD
 
 
 /**
@@ -108,18 +110,27 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	SHOULD_BE_PURE(TRUE)
 	return !HAS_TRAIT(src, TRAIT_MUTE)
 
+/atom/movable/proc/do_tts_message(message, language, message_mods, list/tts_filter, list/hearers)
+	set waitfor = FALSE
+
+	if(!SStts.tts_enabled || !voice || HAS_TRAIT(src, TRAIT_SIGN_LANG) || HAS_TRAIT(src, TRAIT_UNKNOWN_VOICE) || message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		return
+
+	var/list/filter = list()
+	if(length(voice_filter) > 0)
+		filter += voice_filter
+
+	if(length(tts_filter) > 0)
+		filter += tts_filter.Join(",")
+	var/list/special_filter = list()
+	INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(message), language, get_tts_voice(filter, special_filter), filter.Join(","), hearers, message_range = 7, pitch = pitch, special_filters = special_filter.Join("|"), blip_base = blip_base, blip_number = blip_number, identifier = message_mods[MODE_TTS_IDENTIFIER])
+
+/atom/movable/proc/get_tts_voice(list/filter, list/special_filter)
+	. = voice
+
 /atom/movable/proc/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
-	var/found_client = FALSE
 	var/list/listeners = get_hearers_in_view(range, source)
 	var/list/listened = list()
-	for(var/atom/movable/hearing_movable as anything in listeners)
-		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
-			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
-			continue
-		if(hearing_movable.Hear(null, src, message_language, message, null, spans, message_mods, range))
-			listened += hearing_movable
-		if(!found_client && length(hearing_movable.client_mobs_in_contents))
-			found_client = TRUE
 
 	var/tts_message_to_use = tts_message
 	if(!tts_message_to_use)
@@ -132,41 +143,50 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(length(tts_filter) > 0)
 		filter += tts_filter.Join(",")
 
-	if(voice && found_client)
-		INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","), listened, message_range = range, pitch = pitch)
+	var/shell_scrubbed_input = tts_speech_filter(html_decode(tts_message_to_use))
+	var/identifier = "[sha1(voice + filter.Join(",") + num2text(pitch) + shell_scrubbed_input + blip_base + num2text(blip_number))].[world.time]"
+	message_mods[MODE_TTS_IDENTIFIER] = identifier
+	for(var/atom/movable/hearing_movable as anything in listeners)
+		if(!hearing_movable)//theoretically this should use as anything because it shouldnt be able to get nulls but there are reports that it does.
+			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
+			continue
+		if(hearing_movable.Hear(src, message_language, message, null, null, null, spans, message_mods, range) & HEAR_HEARD)
+			listened += hearing_movable
 
-/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), visible_name = FALSE)
+	do_tts_message(tts_message_to_use, message_language, message_mods, tts_filter, listened)
+
+/atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), visible_name = FALSE)
 	//This proc uses [] because it is faster than continually appending strings. Thanks BYOND.
 	//Basic span
-	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]'>"
+	var/freq_color = get_radio_color(radio_freq, radio_freq_color)
+	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "game say"]' [freq_color ? "style='color:[freq_color];'" : ""]>"
 	//Start name span.
 	var/spanpart2 = "<span class='name'>"
 	//Radio freq/name display
-	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
+	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq, radio_freq_name)]\] " : ""
 	//Speaker name
-	var/namepart
-	var/list/stored_name = list(null)
-	SEND_SIGNAL(speaker, COMSIG_MOVABLE_MESSAGE_GET_NAME_PART, stored_name, visible_name)
-	namepart = stored_name[NAME_PART_INDEX] || "[speaker.GetVoice()]"
+	var/namepart = message_mods[MODE_SPEAKER_NAME_OVERRIDE] || speaker.get_message_voice(visible_name)
 
 	//End name span.
 	var/endspanpart = "</span>"
 
-	//Message
-	var/messagepart
+	// Language icon.
 	var/languageicon = ""
-	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
-		messagepart = message_mods[MODE_CUSTOM_SAY_EMOTE]
-	else
-		messagepart = speaker.say_quote(raw_message, spans, message_mods)
-
+	if(!message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
 		var/datum/language/dialect = GLOB.language_datum_instances[message_language]
-		if(istype(dialect) && dialect.display_icon(src))
-			languageicon = "[dialect.get_icon()] "
+		var/dialect_icon_type = dialect?.display_icon_type(src, message_mods) || DISPLAY_LANGUAGE_ICON_NONE
+		if(dialect_icon_type != DISPLAY_LANGUAGE_ICON_NONE)
+			var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
+			var/icon_tag = sheet.icon_tag("language-[dialect.icon_state][dialect_icon_type == DISPLAY_LANGUAGE_ICON_PARTIAL ? "-partial" : ""]")
+			languageicon = span_tooltip_subtle(dialect.name, icon_tag) + " "
 
-	messagepart = " <span class='message'>[say_emphasis(messagepart)]</span></span>"
+	// The actual message part.
+	var/messagepart = speaker.generate_messagepart(raw_message, spans, message_mods)
+	messagepart = " <span class='message'>[messagepart]</span></span>"
 
-	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
+	var/speaker_voice_description = message_mods[MODE_SPEAKER_GENDER_OVERRIDE] || speaker.get_voice_description()
+
+	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][span_tooltip_subtle(speaker_voice_description, namepart)][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
@@ -204,14 +224,20 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return verb_say
 
 /**
- * This prock is used to generate a message for chat
- * Generates the `says, "<span class='red'>meme</span>"` part of the `Grey Tider says, "meme"`.
+ * This proc is used to generate the 'message' part of a chat message.
+ * Generates the `says, "<span class='red'>meme</span>"` part of the `Grey Tider says, "meme"`,
+ * or the `taps their microphone.` part of `Grey Tider taps their microphone.`.
  *
  * input - The message to be said
  * spans - A list of spans to attach to the message. Includes the atom's speech span by default
  * message_mods - A list of message modifiers, i.e. whispering/singing
  */
-/atom/movable/proc/say_quote(input, list/spans = list(speech_span), list/message_mods = list())
+/atom/movable/proc/generate_messagepart(input, list/spans = list(speech_span), list/message_mods = list())
+	// If we only care about the emote part, early return.
+	if(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT])
+		return apply_message_emphasis(message_mods[MODE_CUSTOM_SAY_EMOTE])
+
+	// Otherwise, we format our full quoted message.
 	if(!input)
 		input = "..."
 
@@ -222,24 +248,65 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(copytext_char(input, -2) == "!!")
 		spans |= SPAN_YELL
 
-	var/spanned = attach_spans(input, spans)
-	return "[say_mod], \"[spanned]\""
+	/* all inputs should be fully figured out past this point */
 
-/// Transforms the speech emphasis mods from [/atom/movable/proc/say_emphasis] into the appropriate HTML tags. Includes escaping.
-#define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
-	var/static/regex/##varname = regex("(?<!\\\\)[char](.+?)(?<!\\\\)[char]", "g");\
-	input = varname.Replace_char(input, "<[html]>$1</[html]>&#8203;") //zero-width space to force maptext to respect closing tags.
+	var/processed_input = apply_message_emphasis(input) //This MUST be done first so that we don't get clipped by spans
+	processed_input = attach_spans(processed_input, spans)
 
-/// Scans the input sentence for speech emphasis modifiers, notably |italics|, +bold+, and _underline_ -mothblocks
-/atom/movable/proc/say_emphasis(input)
-	ENCODE_HTML_EMPHASIS(input, "\\|", "i", italics)
-	ENCODE_HTML_EMPHASIS(input, "\\+", "b", bold)
-	ENCODE_HTML_EMPHASIS(input, "_", "u", underline)
-	var/static/regex/remove_escape_backlashes = regex("\\\\(_|\\+|\\|)", "g") // Removes backslashes used to escape text modification.
-	input = remove_escape_backlashes.Replace_char(input, "$1")
-	return input
+	var/processed_say_mod = apply_message_emphasis(say_mod)
 
-#undef ENCODE_HTML_EMPHASIS
+	return "[processed_say_mod], \"[processed_input]\""
+
+/atom/movable/proc/get_voice_description()
+	switch(gender)
+		if(MALE)
+			return VOICE_DESCRIPTION_MASCULINE
+		if(FEMALE)
+			return VOICE_DESCRIPTION_FEMININE
+		if(PLURAL)
+			return VOICE_DESCRIPTION_PLURAL
+		else
+			return VOICE_DESCRIPTION_NEUTER
+
+/// Chat emphasis players can add to their chat messages - assoc (emphasis character) to (HTML tag)
+GLOBAL_LIST_INIT(emphasis_types, list(
+	"|" = "i",
+	"+" = "b",
+	"_" = "u",
+	"^" = "small",
+))
+
+/**
+ * Replaces player chat emphasis characters with the corresponding HTML tags in the input string.
+ *
+ * You do NOT (and SHOULD not) need to use on anything that isn't direct user input,
+ * as this is designed solely to transform user input. Just put in the HTML tags yourself.
+ *
+ * Returns the transformed input, which may have no change if no emphasis characters are present.
+ */
+/proc/apply_message_emphasis(input)
+	var/static/regex/emphasis_regex
+	if(!emphasis_regex)
+		var/list/escaped_emphasis_characters = list()
+		for(var/char in GLOB.emphasis_types)
+			escaped_emphasis_characters += "\\[char]"
+
+		// group 1 will be the emphasis character (like |, +, _, ^) including any escape backslashes
+		// group 2 will be all characters enclosed by the emphasis characters
+		// note the closing emphasis character is not grouped in either, but is still matched
+		emphasis_regex = regex("(\\\\?(?:[jointext(escaped_emphasis_characters, "|")]))(.+?)\\1", "g")
+
+	return emphasis_regex.Replace_char(input, GLOBAL_PROC_REF(__replace_message_emphasis))
+
+/proc/__replace_message_emphasis(match, group1, group2, ...)
+	// look for corresponding html tag for the emphasis character...
+	var/html = GLOB.emphasis_types[group1]
+	if(html)
+		return "<[html]>[group2]</[html]>&#8203;" // zero-width space to force maptext to respect closing tags.
+
+	// if we didn't find an html tag it means we are an escaped character, so we just need to unescape it.
+	var/unescaped = copytext_char(group1, 2)
+	return "[unescaped][group2][unescaped]"
 
 /// Modifies the message by comparing the languages of the speaker with the languages of the hearer. Called on the hearer.
 /atom/movable/proc/translate_language(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods)
@@ -247,8 +314,16 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return "makes a strange sound."
 
 	if(!has_language(language))
+		var/list/mutual_languages
+		// Get what we can kinda understand, factor in any bonuses passed in from say mods
+		var/list/partially_understood_languages = get_partially_understood_languages()
+		if(LAZYLEN(partially_understood_languages))
+			mutual_languages = partially_understood_languages.Copy()
+			for(var/bonus_language in message_mods[LANGUAGE_MUTUAL_BONUS])
+				mutual_languages[bonus_language] = max(message_mods[LANGUAGE_MUTUAL_BONUS][bonus_language], mutual_languages[bonus_language])
+
 		var/datum/language/dialect = GLOB.language_datum_instances[language]
-		raw_message = dialect.scramble(raw_message)
+		raw_message = dialect.scramble_paragraph(raw_message, mutual_languages)
 
 	return raw_message
 
@@ -258,11 +333,29 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return returntext
 	return "radio"
 
-/proc/get_radio_name(freq)
-	var/returntext = GLOB.reverseradiochannels["[freq]"]
-	if(returntext)
-		return returntext
+/proc/get_radio_name(freq, freq_name)
+	if(freq_name)
+		return freq_name
+	var/name = GLOB.reserved_radio_frequencies["[freq]"]
+	if(name)
+		return name
 	return "[copytext_char("[freq]", 1, 4)].[copytext_char("[freq]", 4, 5)]"
+
+/proc/get_radio_color(freq, freq_color)
+	if(freq)
+		// No custom colors for channels with theme settings
+		if(GLOB.freqtospan["[freq]"])
+			return ""
+		// No color overrides for commonn channel color (for freqs like 145.3)
+		if(freq_color == RADIO_COLOR_COMMON)
+			return ""
+		if(freq_color)
+			return freq_color
+		var/color = GLOB.reserved_radio_colors[get_radio_name(freq, null)]
+		if(color)
+			return color
+		return RADIO_COLOR_COMMON
+	return ""
 
 /proc/attach_spans(input, list/spans)
 	return "[message_spans_start(spans)][input]</span>"
@@ -282,8 +375,21 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return "2"
 	return "0"
 
-/atom/proc/GetVoice()
+/**
+ * Get what this atom sounds like when speaking
+ *
+ * * add_id_name - If TRUE, ID information such as honorifics are added into the voice
+ */
+/atom/proc/get_voice(add_id_name = FALSE)
 	return "[src]" //Returns the atom's name, prepended with 'The' if it's not a proper noun
+
+/**
+ * Get what this atom appears like in chat when speaking
+ *
+ * * visible_name - If TRUE, returns the visible name rather than the voice
+ */
+/atom/proc/get_message_voice(visible_name)
+	return visible_name ? get_visible_name(add_id_name = TRUE) : get_voice(add_id_name = TRUE)
 
 //HACKY VIRTUALSPEAKER STUFF BEYOND THIS POINT
 //these exist mostly to deal with the AIs hrefs and job stuff.
@@ -299,6 +405,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/job
 	var/atom/movable/source
 	var/obj/item/radio/radio
+	/// hearer to the radio
+	var/list/runechat_anchors
 
 INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 /atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, _radio)
@@ -306,7 +414,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 	radio = _radio
 	source = M
 	if(istype(M))
-		name = radio.anonymize ? "Unknown" : M.GetVoice()
+		name = radio?.anonymize ? "Unknown" : M.get_voice(add_id_name = TRUE)
+		gender = M.gender
 		verb_say = M.get_default_say_verb()
 		verb_ask = M.verb_ask
 		verb_exclaim = M.verb_exclaim
@@ -318,6 +427,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 		// can know their job even if they don't carry an ID.
 		var/datum/record/crew/found_record = find_record(name)
 		if(found_record)
+			gender = found_record.get_byond_gender()
 			job = found_record.rank
 		else
 			job = "Unknown"

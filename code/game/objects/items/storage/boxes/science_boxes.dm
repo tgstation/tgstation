@@ -10,8 +10,8 @@
 		new /obj/item/swab(src)
 
 /obj/item/storage/box/petridish
-	name = "box of petridishes"
-	desc = "This box purports to contain a number of high rim petridishes."
+	name = "box of petri dishes"
+	desc = "This box purports to contain a number of high rim petri dishes."
 	illustration = "petridish"
 
 /obj/item/storage/box/petridish/PopulateContents()
@@ -25,44 +25,43 @@
 //Disk boxes
 
 /obj/item/storage/box/disks
-	name = "diskette box"
+	name = "floppy disk box"
 	illustration = "disk_kit"
+	desc = "A set of 8 Nanotrasen-approved floppy disks in individual packaging."
 
 /obj/item/storage/box/disks/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/disk/data(src)
+	for(var/i in 1 to 8)
+		new /obj/item/delivery/small/floppy(src)
 
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
 	icon_state = "monkeycubebox"
 	illustration = null
+	custom_price = PAYCHECK_CREW * 2
+	storage_type = /datum/storage/box/monkey_cube
 	/// Which type of cube are we spawning in this box?
 	var/cube_type = /obj/item/food/monkeycube
-
-/obj/item/storage/box/monkeycubes/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 7
-	atom_storage.set_holdable(/obj/item/food/monkeycube)
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
 	for(var/i in 1 to 5)
 		new cube_type(src)
 
 /obj/item/storage/box/monkeycubes/syndicate
-	desc = "Waffle Co. brand monkey cubes. Just add water and a dash of subterfuge!"
+	desc = "Waffle Corp. brand monkey cubes. Just add water and a dash of subterfuge!"
 	cube_type = /obj/item/food/monkeycube/syndicate
+
+/obj/item/storage/box/monkeycubes/random
+	name = "monster cube box"
+	desc = "A box containing a bunch of random cubes. Add water and see what you get!"
+	cube_type = /obj/item/food/monkeycube/random
 
 /obj/item/storage/box/gorillacubes
 	name = "gorilla cube box"
-	desc = "Waffle Co. brand gorilla cubes. Do not taunt."
+	desc = "Waffle Corp. brand gorilla cubes. Do not taunt."
 	icon_state = "monkeycubebox"
 	illustration = null
-
-/obj/item/storage/box/gorillacubes/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 3
-	atom_storage.set_holdable(/obj/item/food/monkeycube)
+	storage_type = /datum/storage/box/gorilla_cube_box
 
 /obj/item/storage/box/gorillacubes/PopulateContents()
 	for(var/i in 1 to 3)
@@ -73,7 +72,7 @@
 	desc = "Contains a variety of basic stock parts."
 
 /obj/item/storage/box/stockparts/basic/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stock_parts/capacitor = 3,
 		/obj/item/stock_parts/servo = 3,
 		/obj/item/stock_parts/matter_bin = 3,
@@ -88,7 +87,7 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/stockparts/deluxe/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/stock_parts/capacitor/quadratic = 3,
 		/obj/item/stock_parts/scanning_module/triphasic = 3,
 		/obj/item/stock_parts/servo/femto = 3,
@@ -106,21 +105,15 @@
 	new /obj/item/circuitboard/machine/protolathe/offstation(src)
 	new /obj/item/circuitboard/machine/destructive_analyzer(src)
 	new /obj/item/circuitboard/machine/circuit_imprinter/offstation(src)
-	new /obj/item/circuitboard/computer/rdconsole(src)
+	new /obj/item/circuitboard/computer/rdconsole/unlocked(src)
 
 /obj/item/storage/box/stabilized //every single stabilized extract from xenobiology
 	name = "box of stabilized extracts"
 	icon_state = "syndiebox"
-
-/obj/item/storage/box/stabilized/Initialize(mapload)
-	. = ..()
-	atom_storage.allow_big_nesting = TRUE
-	atom_storage.max_slots = 99
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
-	atom_storage.max_total_storage = 99
+	storage_type = /datum/storage/box/stabilized
 
 /obj/item/storage/box/stabilized/PopulateContents()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/slimecross/stabilized/adamantine=1,
 		/obj/item/slimecross/stabilized/black=1,
 		/obj/item/slimecross/stabilized/blue=1,

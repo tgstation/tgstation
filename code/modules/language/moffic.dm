@@ -2,7 +2,12 @@
 	name = "Moffic"
 	desc = "The language of the Mothpeople borders on complete unintelligibility."
 	key = "m"
-	space_chance = 10
+	space_chance = 5
+	sentence_chance = 0
+	between_word_sentence_chance = 10
+	between_word_space_chance = 25
+	additional_syllable_low = 0
+	additional_syllable_high = 0
 	syllables = list(
 		"år", "i", "går", "sek", "mo", "ff", "ok", "gj", "ø", "gå", "la", "le",
 		"lit", "ygg", "van", "dår", "næ", "møt", "idd", "hvo", "ja", "på", "han",
@@ -12,5 +17,21 @@
 	)
 	icon_state = "moth"
 	default_priority = 90
+
+	default_name_syllable_min = 5
+	default_name_syllable_max = 10
+
+/datum/language/moffic/get_random_name(
+	gender = NEUTER,
+	name_count = default_name_count,
+	syllable_min = default_name_syllable_min,
+	syllable_max = default_name_syllable_max,
+	force_use_syllables = FALSE,
+)
+	if(force_use_syllables)
+		return ..()
+
+	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
+
 
 // Fuck guest accounts, and fuck language testing.

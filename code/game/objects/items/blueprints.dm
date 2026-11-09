@@ -26,6 +26,7 @@
 	attack_verb_simple = list("attack", "bap", "hit")
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
 	///A string of flavortext to be displayed at the top of the UI, related to the type of blueprints we are.
 	var/fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
@@ -72,6 +73,7 @@
 			data["area_notice"] = "You are now in \the [current_area.name]"
 	var/area/area_inside_of = get_area(user)
 	data["area_name"] = html_encode(area_inside_of.name)
+	data["area_allows_shuttle_docking"] = area_inside_of.allow_shuttle_docking
 	data["legend"] = legend_viewing
 	data["viewing"] = !!viewing
 	data["wire_data"] = list()
@@ -128,6 +130,11 @@
 			in_use = TRUE
 			edit_area(user)
 			in_use = FALSE
+		if("toggle_allow_shuttle_docking")
+			if(get_area_type(user) != AREA_STATION)
+				return
+			var/area/area = get_area(src)
+			area.allow_shuttle_docking = !area.allow_shuttle_docking
 		if("exit_legend")
 			legend_viewing = LEGEND_OFF
 		if("view_legend")
@@ -239,10 +246,11 @@
 /obj/item/blueprints/slime/edit_area(mob/user)
 	. = ..()
 	var/area/area = get_area(src)
+	var/list/turf_matrix = color_transition_filter("#2956B2")
 	for(var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
 		for(var/turf/area_turf as anything in zlevel_turfs)
 			area_turf.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-			area_turf.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
+			area_turf.add_atom_colour(turf_matrix, FIXED_COLOUR_PRIORITY)
 	area.area_flags |= XENOBIOLOGY_COMPATIBLE
 	qdel(src)
 

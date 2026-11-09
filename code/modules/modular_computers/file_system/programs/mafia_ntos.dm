@@ -9,7 +9,7 @@
 	program_icon = "user-secret"
 	alert_able = TRUE
 
-/datum/computer_file/program/mafia/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+/datum/computer_file/program/mafia/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_MAFIA_GAME_START, PROC_REF(on_game_start))
 

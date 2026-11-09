@@ -79,7 +79,7 @@
 	if(user)
 		computer.balloon_alert(user, "signaled")
 
-	var/time = time2text(world.realtime,"hh:mm:ss")
+	var/time = time2text(world.realtime,"hh:mm:ss", TIMEZONE_UTC)
 	var/turf/T = get_turf(computer)
 	var/user_deets
 	if(signaling)

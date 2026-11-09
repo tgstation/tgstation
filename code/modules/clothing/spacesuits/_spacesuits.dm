@@ -13,17 +13,65 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-
+	interaction_flags_click = NEED_DEXTERITY
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
 	flash_protect = FLASH_PROTECTION_WELDER
-	strip_delay = 50
-	equip_delay_other = 50
+	strip_delay = 5 SECONDS
+	equip_delay_other = 5 SECONDS
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | HEADINTERNALS
+	visor_flags_inv = HIDEMASK | HIDEEYES | HIDEFACE | HIDESNOUT
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	resistance_flags = NONE
 	dog_fashion = null
+	sound_vary = TRUE
+	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
+	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
+	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	visor_toggle_up_sound = /datum/sound_effect/visor_up
+	visor_toggle_down_sound = /datum/sound_effect/visor_down
+	actions_types = list(/datum/action/item_action/adjust_visor)
+	toggle_message = "You pull your helmet's visor down."
+	alt_toggle_message = "You pull your helmet's visor up."
+	///How much this helmet affects fishing difficulty
+	var/fishing_modifier = 3
+	///Icon state applied when we get spraypainted/peppersprayed. If null, does not add the dirt component
+	var/visor_dirt = "helm_dirt"
+	/// Whether the helmet has a visor you can flip up
+	var/has_visor = FALSE
+
+/obj/item/clothing/head/helmet/space/Initialize(mapload)
+	. = ..()
+	if(visor_dirt)
+		AddComponent(/datum/component/clothing_dirt, visor_dirt)
+	if(fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
+	add_stabilizer()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/space)
+
+/obj/item/clothing/head/helmet/space/proc/add_stabilizer(loose_hat = TRUE)
+	AddComponent(/datum/component/hat_stabilizer, loose_hat = loose_hat)
+
+/obj/item/clothing/head/helmet/space/attack_self(mob/living/user)
+	. = ..()
+	if(. || !has_visor)
+		return
+
+	return adjust_visor(user)
+
+/obj/item/clothing/head/helmet/space/click_alt(mob/user)
+	if(!has_visor)
+		return NONE
+
+	return adjust_visor(user) ? CLICK_ACTION_SUCCESS : CLICK_ACTION_BLOCKING
+
+/obj/item/clothing/head/helmet/space/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "-novisor" : ""]"
 
 /datum/armor/helmet_space
 	bio = 100
@@ -45,30 +93,33 @@
 	allowed = list(
 		/obj/item/flashlight,
 		/obj/item/tank/internals,
-		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/tank/jetpack/captain,
 		)
 	slowdown = 1
 	armor_type = /datum/armor/suit_space
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	cerulean_flipper_palette = FLIPPERS
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	strip_delay = 80
-	equip_delay_other = 80
+	strip_delay = 8 SECONDS
+	equip_delay_other = 8 SECONDS
 	resistance_flags = NONE
 	actions_types = list(/datum/action/item_action/toggle_spacesuit)
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	/// The default temperature setting
 	var/temperature_setting = BODYTEMP_NORMAL
 	/// If this is a path, this gets created as an object in Initialize.
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/power_store/cell = /obj/item/stock_parts/power_store/cell/high
 	/// Status of the cell cover on the suit
 	var/cell_cover_open = FALSE
 	/// Status of the thermal regulator
 	var/thermal_on = FALSE
 	/// If this is FALSE the batery status UI will be disabled. This is used for suits that don't use bateries like the changeling's flesh suit mutation.
 	var/show_hud = TRUE
+	///How much this suit affects fishing difficulty
+	var/fishing_modifier = 5
 
 /datum/armor/suit_space
 	bio = 100
@@ -80,27 +131,32 @@
 	if(ispath(cell))
 		cell = new cell(src)
 
+	if(fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/space)
+
+/obj/item/clothing/suit/space/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
+	. = ..()
+	if(isnull(cell))
+		return
+	toggle_spacesuit(toggler = null, manual_toggle = FALSE) //turn on the thermal regulator by default.
+
 /// Start Processing on the space suit when it is worn to heat the wearer
 /obj/item/clothing/suit/space/equipped(mob/living/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_OCLOTHING) // Check that the slot is valid
 		START_PROCESSING(SSobj, src)
 		update_hud_icon(user) // update the hud
-		RegisterSignal(user, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
 // On removal stop processing, save battery
 /obj/item/clothing/suit/space/dropped(mob/living/user)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	UnregisterSignal(user, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
-	var/mob/living/carbon/carbon_user = user
-	if(istype(carbon_user))
-		carbon_user.update_spacesuit_hud_icon("0")
-
-/obj/item/clothing/suit/space/proc/get_status_tab_item(mob/living/source, list/items)
-	SIGNAL_HANDLER
-	items += "Thermal Regulator: [thermal_on ? "On" : "Off"]"
-	items += "Cell Charge: [cell ? "[round(cell.percent(), 0.1)]%" : "No Cell!"]"
+	var/mob/living/carbon/human/human_user = user
+	if(istype(human_user) && human_user.hud_used)
+		var/atom/movable/screen/spacesuit/spacesuit_hud = human_user.hud_used.screen_objects[HUD_MOB_SPACESUIT]
+		if (spacesuit_hud)
+			spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
 
 // Space Suit temperature regulation and power usage
 /obj/item/clothing/suit/space/process(seconds_per_tick)
@@ -127,7 +183,7 @@
 
 	// If we got here, it means thermals are on, the cell is in and the cell has
 	// just had enough charge subtracted from it to power the thermal regulator
-	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), 0.08 * seconds_per_tick))
+	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), BODYTEMP_SUIT_CHANGE_RATE * seconds_per_tick))
 	update_hud_icon(user)
 
 // Clean up the cell on destroy
@@ -135,8 +191,10 @@
 	if(isatom(cell))
 		QDEL_NULL(cell)
 	var/mob/living/carbon/human/human = src.loc
-	if(istype(human))
-		human.update_spacesuit_hud_icon("0")
+	if(istype(human) && human.hud_used)
+		var/atom/movable/screen/spacesuit/spacesuit_hud = human.hud_used.screen_objects[HUD_MOB_SPACESUIT]
+		if (spacesuit_hud)
+			spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_NO_ICON)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
@@ -148,7 +206,10 @@
 		thermal_on = FALSE
 
 // support for items that interact with the cell
-/obj/item/clothing/suit/space/get_cell()
+/obj/item/clothing/suit/space/get_cell(atom/movable/interface, mob/user)
+	if(istype(interface, /obj/item/inducer))
+		to_chat(user, span_alert("Error: unable to interface with [interface]."))
+		return null
 	return cell
 
 // Show the status of the suit and the cell
@@ -184,16 +245,20 @@
 	return ITEM_INTERACT_SUCCESS
 
 // object handling for accessing features of the suit
-/obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
-	if(!cell_cover_open || !istype(I, /obj/item/stock_parts/cell))
+/obj/item/clothing/suit/space/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!cell_cover_open || !istype(tool, /obj/item/stock_parts/power_store/cell))
 		return ..()
+
 	if(cell)
 		to_chat(user, span_warning("[src] already has a cell installed."))
-		return
-	if(user.transferItemToLoc(I, src))
-		cell = I
-		to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
-		return
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	cell = tool
+	to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
+	update_hud_icon(user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Open the cell cover when ALT+Click on the suit
 /obj/item/clothing/suit/space/click_alt(mob/living/user)
@@ -201,12 +266,11 @@
 	return CLICK_ACTION_SUCCESS
 
 /// Remove the cell whent he cover is open on CTRL+Click
-/obj/item/clothing/suit/space/CtrlClick(mob/living/user)
-	if(user.can_perform_action(src, NEED_DEXTERITY))
-		if(cell_cover_open && cell)
-			remove_cell(user)
-			return
-	return ..()
+/obj/item/clothing/suit/space/item_ctrl_click(mob/user)
+	. = CLICK_ACTION_BLOCKING
+	if(cell_cover_open && cell)
+		remove_cell(user)
+		return CLICK_ACTION_SUCCESS
 
 // Remove the cell when using the suit on its self
 /obj/item/clothing/suit/space/attack_self(mob/user)
@@ -214,12 +278,14 @@
 
 /// Remove the cell from the suit if the cell cover is open
 /obj/item/clothing/suit/space/proc/remove_cell(mob/user)
-	if(cell_cover_open && cell)
-		user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
-			span_notice("You remove [cell]."))
-		cell.add_fingerprint(user)
-		user.put_in_hands(cell)
-		cell = null
+	if(!cell_cover_open || isnull(cell))
+		return
+	user.visible_message(span_notice("[user] removes \the [cell] from [src]!"), \
+		span_notice("You remove [cell]."))
+	cell.add_fingerprint(user)
+	user.put_in_hands(cell)
+	cell = null
+	update_hud_icon(user)
 
 /// Toggle the space suit's cell cover
 /obj/item/clothing/suit/space/proc/toggle_spacesuit_cell(mob/user)
@@ -248,6 +314,8 @@
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 
 	update_item_action_buttons()
+	if(isnull(toggler) && ishuman(loc))
+		update_hud_icon(loc)
 
 	if(!toggler)
 		return
@@ -267,37 +335,39 @@
 	if (user)
 		balloon_alert(user, "thermal regulator restrictions overridden")
 		user.log_message("emagged [src], overwriting thermal regulator restrictions.", LOG_GAME)
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)
 	var/mob/living/carbon/human/human = user
+	if(!show_hud || human.wear_suit != src || isnull(human.hud_used))
+		return
 
-	if(!show_hud)
+	var/atom/movable/screen/spacesuit/spacesuit_hud = human.hud_used.screen_objects[HUD_MOB_SPACESUIT]
+	if(!spacesuit_hud)
 		return
 
 	if(!cell)
-		human.update_spacesuit_hud_icon("missing")
+		spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_MISSING, 0, thermal_on)
 		return
 
 	var/cell_percent = cell.percent()
-
 	// Check if there's enough charge to trigger a thermal regulator tick and
 	// if there is, whethere the cell's capacity indicates high, medium or low
 	// charge based on it.
-	if(cell.charge >= THERMAL_REGULATOR_COST)
-		if(cell_percent > 60)
-			human.update_spacesuit_hud_icon("high")
-			return
-		if(cell_percent > 20)
-			human.update_spacesuit_hud_icon("mid")
-			return
-		human.update_spacesuit_hud_icon("low")
+	if(cell.charge < THERMAL_REGULATOR_COST)
+		spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_EMPTY, cell_percent, thermal_on)
 		return
-
-	human.update_spacesuit_hud_icon("empty")
-	return
+	switch(cell_percent)
+		if(0 to 20)
+			spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_VERY_LOW, cell_percent, thermal_on)
+		if(21 to 40)
+			spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_LOW, cell_percent, thermal_on)
+		if(41 to 60)
+			spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_MID, cell_percent, thermal_on)
+		if(61 to 100)
+			spacesuit_hud.update_spacesuit_hud_icon(SPACESUIT_CELL_HIGH, cell_percent, thermal_on)
 
 // zap the cell if we get hit with an emp
 /obj/item/clothing/suit/space/emp_act(severity)
@@ -307,7 +377,7 @@
 	if(cell)
 		cell.emp_act(severity)
 
-/obj/item/clothing/head/helmet/space/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/head/helmet/space/suicide_act(mob/living/user)
 	var/datum/gas_mixture/environment = user.loc.return_air()
 	if(HAS_TRAIT(user, TRAIT_RESISTCOLD) || !environment || environment.return_temperature() >= user.get_body_temp_cold_damage_limit())
 		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

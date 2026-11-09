@@ -4,10 +4,11 @@
 	desc = "Produces components for the creation of integrated circuits."
 	icon = 'icons/obj/machines/wiremod_fab.dmi'
 	icon_state = "fab-idle"
+	base_icon_state = "fab"
 	circuit = /obj/item/circuitboard/machine/component_printer
 
 	/// The internal material bus
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 
 	density = TRUE
 
@@ -22,7 +23,7 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
-	materials = AddComponent(/datum/component/remote_materials, mapload)
+	materials = new (src, mapload)
 
 /obj/machinery/component_printer/post_machine_initialize()
 	. = ..()
@@ -30,6 +31,10 @@
 		CONNECT_TO_RND_SERVER_ROUNDSTART(techweb, src)
 	if(techweb)
 		on_connected_techweb()
+
+/obj/machinery/component_printer/Destroy(force)
+	QDEL_NULL(materials)
+	return ..()
 
 /obj/machinery/component_printer/proc/connect_techweb(datum/techweb/new_techweb)
 	if(techweb)
@@ -39,12 +44,12 @@
 		on_connected_techweb()
 
 /obj/machinery/component_printer/proc/on_connected_techweb()
-	for (var/researched_design_id in techweb.researched_designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(researched_design_id)
+	for (var/researched_design_path in techweb.researched_designs)
+		var/datum/design/design = SSresearch.techweb_designs[researched_design_path]
 		if (!(design.build_type & COMPONENT_PRINTER) || !ispath(design.build_path, /obj/item/circuit_component))
 			continue
 
-		current_unlocked_designs[design.build_path] = design.id
+		current_unlocked_designs[design.build_path] = researched_design_path
 
 	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, PROC_REF(on_research))
 	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, PROC_REF(on_removed))
@@ -58,7 +63,7 @@
 	SIGNAL_HANDLER
 	if (!(added_design.build_type & COMPONENT_PRINTER) || !ispath(added_design.build_path, /obj/item/circuit_component))
 		return
-	current_unlocked_designs[added_design.build_path] = added_design.id
+	current_unlocked_designs[added_design.build_path] = added_design.type
 
 /obj/machinery/component_printer/proc/on_removed(datum/source, datum/design/added_design, custom)
 	SIGNAL_HANDLER
@@ -66,6 +71,19 @@
 		return
 	current_unlocked_designs -= added_design.build_path
 
+/obj/machinery/component_printer/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	//to allow quick recycling of circuits
+	if(istype(tool, /obj/item/circuit_component))
+		var/amount_inserted = materials.insert_item(tool, user_data = ID_DATA(user))
+
+		if(amount_inserted)
+			to_chat(user, span_notice("[tool] worth [amount_inserted / SHEET_MATERIAL_AMOUNT] sheets of material was consumed by [src]"))
+		else
+			to_chat(user, span_warning("[tool] was rejected by [src]"))
+
+		return amount_inserted > 0 ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+
+	return ..()
 
 /obj/machinery/component_printer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -75,7 +93,8 @@
 
 /obj/machinery/component_printer/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/component_printer/RefreshParts()
@@ -101,58 +120,68 @@
 
 	update_static_data_for_all_viewers()
 
-/obj/machinery/component_printer/proc/print_component(typepath)
-	var/design_id = current_unlocked_designs[typepath]
+/**
+ * typepath - the type path of the component to be printed
+ * user_data - data in the form rendered by ID_DATA(user), for print logging, see the proc on SSid_access
+*/
+/obj/machinery/component_printer/proc/print_component(typepath, alist/user_data)
+	var/design_path = current_unlocked_designs[typepath]
+	var/datum/design/design = SSresearch.techweb_designs[design_path]
 
-	var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
 	if (!(design.build_type & COMPONENT_PRINTER))
 		return
 
-	if (materials.on_hold())
+	if (!materials.can_use_resource(user_data = user_data))
 		return
 
 	if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
 		return
 
-	materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]")
-	return new design.build_path(drop_location())
+	materials.use_materials(design.materials, efficiency_coeff, 1, "processed", "[design.name]", user_data)
+	return design.create_result(drop_location())
 
-/obj/machinery/component_printer/ui_act(action, list/params)
+/obj/machinery/component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
 
+	var/alist/user_data = ID_DATA(usr)
+
 	switch (action)
 		if ("print")
-			var/design_id = params["designId"]
-			if (!techweb.researched_designs[design_id])
-				return TRUE
+			var/design_path = text2path(params["design_path"])
+			if (!techweb.researched_designs[design_path])
+				return
 
-			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+			var/datum/design/design = SSresearch.techweb_designs[design_path]
+			if(!istype(design))
+				return
+
 			if (!(design.build_type & COMPONENT_PRINTER))
-				return TRUE
+				return
 
-			if (materials.on_hold())
-				say("Mineral access is on hold, please contact the quartermaster.")
-				return TRUE
+			if (!materials.can_use_resource(user_data = user_data))
+				return
 
 			if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
 				say("Not enough materials.")
-				return TRUE
+				return
 
 			balloon_alert_to_viewers("printed [design.name]")
 
-			materials.use_materials(design.materials, efficiency_coeff, 1, "printed", "[design.name]")
-			var/atom/printed_design = new design.build_path(drop_location())
+			materials.use_materials(design.materials, efficiency_coeff, 1, "processed", "[design.name]", user_data)
+			var/atom/printed_design = design.create_result(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
 			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
+			return TRUE
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
+			if(!amount)
+				return
 			// SAFETY: eject_sheets checks for valid mats
-			materials.eject_sheets(material, amount)
-
-	return TRUE
+			materials.eject_sheets(material_ref = material, eject_amount = amount, user_data = user_data)
+			return TRUE
 
 /obj/machinery/component_printer/ui_data(mob/user)
 	var/list/data = list()
@@ -164,51 +193,61 @@
 
 	var/list/designs = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	// for (var/datum/design/component/component_design_type as anything in subtypesof(/datum/design/component))
-	for (var/researched_design_id in techweb.researched_designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(researched_design_id)
+	for (var/researched_design_path in techweb.researched_designs)
+		var/datum/design/design = SSresearch.techweb_designs[researched_design_path]
 		if (!(design.build_type & COMPONENT_PRINTER))
 			continue
 
 		var/list/cost = list()
-		for(var/datum/material/mat in design.materials)
-			cost[mat.name] = OPTIMAL_COST(design.materials[mat] * efficiency_coeff)
+		for(var/datum/material/mat, amount in design.materials)
+			cost[mat.name] = OPTIMAL_COST(amount * efficiency_coeff)
 
-		var/icon_size = spritesheet.icon_size_id(design.id)
-		designs[researched_design_id] = list(
+		var/icon_size = spritesheet.icon_size_id(design.asset_id)
+		designs[researched_design_path] = list(
 			"name" = design.name,
 			"desc" = design.desc,
 			"cost" = cost,
-			"id" = researched_design_id,
+			"path" = researched_design_path,
 			"categories" = design.category,
-			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]"
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.asset_id]"
 		)
 
 	data["designs"] = designs
 
 	return data
 
-/obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, params)
-	if(istype(weapon, /obj/item/integrated_circuit) && !user.combat_mode)
-		var/obj/item/integrated_circuit/circuit = weapon
-		circuit.linked_component_printer = WEAKREF(src)
-		circuit.update_static_data_for_all_viewers()
-		balloon_alert(user, "successfully linked to the integrated circuit")
-		return
-	return ..()
+/obj/machinery/component_printer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (user.combat_mode)
+		return NONE
+
+	var/obj/item/integrated_circuit/circuit
+	if(istype(tool, /obj/item/integrated_circuit))
+		circuit = tool
+	else if (istype(tool, /obj/item/circuit_component/module))
+		var/obj/item/circuit_component/module/module = tool
+		circuit = module.internal_circuit
+
+	if (isnull(circuit))
+		return NONE
+
+	circuit.linked_component_printer = WEAKREF(src)
+	circuit.update_static_data_for_all_viewers()
+	balloon_alert(user, "successfully linked to the integrated circuit")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/component_printer/crowbar_act(mob/living/user, obj/item/tool)
-	if(..())
-		return TRUE
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/component_printer/screwdriver_act(mob/living/user, obj/item/tool)
-	if(..())
-		return TRUE
-	return default_deconstruction_screwdriver(user, "fab-o", "fab-idle", tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/component_printer/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-o" : "[base_icon_state]-idle"
 
 /obj/machinery/component_printer/proc/get_material_cost_data(list/materials, efficiency_coeff)
 	var/list/data = list()
@@ -223,37 +262,44 @@
 	desc = "Produces components for the creation of integrated circuits."
 	icon = 'icons/obj/machines/wiremod_fab.dmi'
 	icon_state = "fab-idle"
+	density = TRUE
 
 	/// All of the possible circuit designs stored by this debug printer
 	var/list/all_circuit_designs
-
-	density = TRUE
 
 /obj/machinery/debug_component_printer/Initialize(mapload)
 	. = ..()
 	all_circuit_designs = list()
 
-	for(var/id in SSresearch.techweb_designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(id)
-		if((design.build_type & COMPONENT_PRINTER) && design.build_path)
-			all_circuit_designs[design.build_path] = list(
-				"name" = design.name,
-				"description" = design.desc,
-				"materials" = design.materials,
-				"categories" = design.category
-			)
+	for(var/design_path, _design in SSresearch.techweb_designs)
+		var/datum/design/design = _design
+		if(!(design.build_type & COMPONENT_PRINTER) || !ispath(design.build_path))
+			continue
+		all_circuit_designs[design.build_path] = list(
+			"id" = design.build_path,
+			"categories" = design.category,
+			"cost" = design.materials,
+			"desc" = design.desc,
+			"name" = design.name,
+		)
 
-	for(var/obj/item/circuit_component/component as anything in subtypesof(/obj/item/circuit_component))
-		var/categories = list("Inaccessible")
-		if(initial(component.circuit_flags) & CIRCUIT_FLAG_ADMIN)
+	for(var/obj/item/circuit_component/component_path as anything in subtypesof(/obj/item/circuit_component))
+		if(all_circuit_designs[component_path])
+			continue
+
+		var/list/categories
+		if(component_path::circuit_flags & CIRCUIT_FLAG_ADMIN)
 			categories = list("Admin")
-		if(!(component in all_circuit_designs))
-			all_circuit_designs[component] = list(
-				"name" = initial(component.display_name),
-				"description" = initial(component.desc),
-				"materials" = list(),
-				"categories" = categories,
-			)
+		else
+			categories = list("Inaccessible")
+
+		all_circuit_designs[component_path] = list(
+			"id" = component_path.type,
+			"categories" = categories,
+			"cost" = list(),
+			"desc" = component_path::desc,
+			"name" = component_path::display_name,
+		)
 
 /obj/machinery/debug_component_printer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -263,37 +309,38 @@
 
 /obj/machinery/debug_component_printer/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
-/obj/machinery/debug_component_printer/ui_act(action, list/params)
+/obj/machinery/debug_component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
 
 	switch (action)
 		if ("print")
-			var/build_path = text2path(params["designId"])
+			var/build_path = text2path(params["design_path"])
 			if (!build_path)
-				return TRUE
+				return
 
 			var/list/design = all_circuit_designs[build_path]
-			if(!design)
-				return TRUE
+			if (!design)
+				return
 
 			balloon_alert_to_viewers("printed [design["name"]]")
 			var/atom/printed_design = new build_path(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
 			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
-
-	return TRUE
+			return TRUE
 
 /obj/machinery/debug_component_printer/ui_static_data(mob/user)
 	var/list/data = list()
 
-	data["materials"] = list()
+	data["debug"] = TRUE
 	data["designs"] = all_circuit_designs
+	data["materials"] = list()
+	data["SHEET_MATERIAL_AMOUNT"] = SHEET_MATERIAL_AMOUNT
 
 	return data
 
@@ -303,11 +350,12 @@
 	desc = "Allows you to duplicate module components so that you don't have to recreate them. Scan a module component over this machine to add it as an entry."
 	icon = 'icons/obj/machines/wiremod_fab.dmi'
 	icon_state = "module-fab-idle"
+	base_icon_state = "module-fab"
 	circuit = /obj/item/circuitboard/machine/module_duplicator
 	density = TRUE
 
 	///The internal material bus
-	var/datum/component/remote_materials/materials
+	var/datum/remote_materials/materials
 	///List of designs scanned and saved
 	var/list/scanned_designs = list()
 	///Constant material cost per component
@@ -318,7 +366,11 @@
 /obj/machinery/module_duplicator/Initialize(mapload)
 	. = ..()
 
-	materials = AddComponent(/datum/component/remote_materials, mapload)
+	materials = new (src, mapload)
+
+/obj/machinery/module_duplicator/Destroy(force)
+	QDEL_NULL(materials)
+	return ..()
 
 /obj/machinery/module_duplicator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -328,8 +380,8 @@
 
 /obj/machinery/module_duplicator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/module_duplicator/RefreshParts()
@@ -355,36 +407,36 @@
 
 	update_static_data_for_all_viewers()
 
-/obj/machinery/module_duplicator/ui_act(action, list/params)
+/obj/machinery/module_duplicator/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if (.)
 		return
+	var/alist/user_data = ID_DATA(usr)
 
 	switch (action)
 		if ("print")
-			var/design_id = text2num(params["designId"])
+			var/design_id = text2num(params["design_path"])
 
 			if (design_id < 1 || design_id > length(scanned_designs))
 				return TRUE
 
 			var/list/design = scanned_designs[design_id]
 
-			if (materials.on_hold())
-				say("Mineral access is on hold, please contact the quartermaster.")
+			if (!materials.can_use_resource(user_data = user_data))
 				return TRUE
 
 			if (!materials.mat_container.has_materials(design["materials"], efficiency_coeff))
 				say("Not enough materials.")
 				return TRUE
 
-			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"])
+			materials.use_materials(design["materials"], efficiency_coeff, 1, design["name"], design["materials"], user_data = user_data)
 			print_module(design)
 			balloon_alert_to_viewers("printed [design["name"]]")
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
 			// SAFETY: eject_sheets checks for valid mats
-			materials.eject_sheets(material, amount)
+			materials.eject_sheets(material, amount, user_data = ID_DATA(usr))
 
 	return TRUE
 
@@ -408,53 +460,55 @@
 	created_atom.pixel_x = created_atom.base_pixel_x + rand(-5, 5)
 	created_atom.pixel_y = created_atom.base_pixel_y + rand(-5, 5)
 
-/obj/machinery/module_duplicator/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/module_duplicator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/list/data = list()
 
-	if(istype(weapon, /obj/item/circuit_component/module))
-		var/obj/item/circuit_component/module/module = weapon
+	if(istype(tool, /obj/item/circuit_component/module))
+		var/obj/item/circuit_component/module/module = tool
 		if(HAS_TRAIT(module, TRAIT_CIRCUIT_UNDUPABLE))
 			balloon_alert(user, "integrated circuit cannot be saved!")
-			return ..()
+			return ITEM_INTERACT_BLOCKING
 
 		data["dupe_data"] = list()
 		module.save_data_to_list(data["dupe_data"])
 
 		data["name"] = module.display_name
 		data["desc"] = "A module that has been loaded in by [user]."
-		data["materials"] = list(GET_MATERIAL_REF(/datum/material/glass) = module.circuit_size * cost_per_component)
-	else if(istype(weapon, /obj/item/integrated_circuit))
-		var/obj/item/integrated_circuit/integrated_circuit = weapon
+		data["materials"] = list(SSmaterials.get_material(/datum/material/glass) = module.circuit_size * cost_per_component)
+	else if(istype(tool, /obj/item/integrated_circuit))
+		var/obj/item/integrated_circuit/integrated_circuit = tool
 		if(HAS_TRAIT(integrated_circuit, TRAIT_CIRCUIT_UNDUPABLE))
 			balloon_alert(user, "integrated circuit cannot be saved!")
-			return ..()
+			return ITEM_INTERACT_BLOCKING
+
 		data["dupe_data"] = integrated_circuit.convert_to_json()
 
 		data["name"] = integrated_circuit.display_name
 		data["desc"] = "An integrated circuit that has been loaded in by [user]."
 
-		var/datum/design/integrated_circuit/circuit_design = SSresearch.techweb_design_by_id("integrated_circuit")
-		var/materials = list(GET_MATERIAL_REF(/datum/material/glass) = integrated_circuit.current_size * cost_per_component)
-		for(var/material_type in circuit_design.materials)
-			materials[material_type] += circuit_design.materials[material_type]
+		var/datum/design/integrated_circuit/circuit_design = SSresearch.techweb_designs[/datum/design/integrated_circuit]
+		var/list/materials = list(SSmaterials.get_material(/datum/material/glass) = integrated_circuit.current_size * cost_per_component)
+		for(var/material_type, amount in circuit_design.materials)
+			materials[material_type] += amount
 
 		data["materials"] = materials
 		data["integrated_circuit"] = TRUE
 
 	if(!length(data))
-		return ..()
+		return NONE
 
 	if(!data["name"])
 		balloon_alert(user, "it needs a name!")
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 
 	for(var/list/component_data as anything in scanned_designs)
 		if(component_data["name"] == data["name"])
 			balloon_alert(user, "name already exists!")
-			return ..()
+			return ITEM_INTERACT_BLOCKING
 
 	flick("module-fab-scan", src)
 	addtimer(CALLBACK(src, PROC_REF(finish_module_scan), user, data), 1.4 SECONDS)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/module_duplicator/proc/finish_module_scan(mob/user, data)
 	scanned_designs += list(data)
@@ -497,11 +551,11 @@
 	return data
 
 /obj/machinery/module_duplicator/crowbar_act(mob/living/user, obj/item/tool)
-	if(..())
-		return TRUE
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/module_duplicator/screwdriver_act(mob/living/user, obj/item/tool)
-	if(..())
-		return TRUE
-	return default_deconstruction_screwdriver(user, "module-fab-o", "module-fab-idle", tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/module_duplicator/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-o" : "[base_icon_state]-idle"

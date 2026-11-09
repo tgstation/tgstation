@@ -1,18 +1,18 @@
 {
-    "bandana": [
-        {
-            "type": "icon_state",
-            "icon_state": "bandana_cloth",
-            "blend_mode": "overlay",
-            "color_ids": [ 1 ]
-        }
-    ],
+	"bandana": [
+		{
+			"type": "icon_state",
+			"icon_state": "bandana_cloth",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	],
 	"bandana_up": [
-        {
-            "type": "icon_state",
-            "icon_state": "bandana_cloth_up",
-            "blend_mode": "overlay",
-            "color_ids": [ 1 ]
-        }
-    ]
+		{
+			"type": "icon_state",
+			"icon_state": "bandana_cloth_up",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
 }

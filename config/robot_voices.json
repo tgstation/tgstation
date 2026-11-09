@@ -1,0 +1,46 @@
+{
+	"/datum/customer_data/american": [
+		"Example Man",
+		"Example Woman"
+	],
+	"/datum/customer_data/italian": [
+		"Example Man",
+		"Example Woman"
+	],
+	"/datum/customer_data/french": [
+		"Example Man",
+		"Example Woman"
+	],
+	"/datum/customer_data/japanese": [
+		"Example Man",
+		"Example Woman"
+	],
+	"/datum/customer_data/japanese/salaryman": [
+		"Example Man",
+		"Example Woman"
+	],
+	"/datum/customer_data/moth": [
+		"Example Man",
+		"Example Woman"
+	],
+	"/datum/customer_data/mexican": [
+		"Example Man",
+		"Example Woman"
+	],
+	"/datum/customer_data/british": [
+		"Example Man",
+		"Example Woman"
+	],
+	"/datum/customer_data/british/gent": [
+		"Example Man",
+		"Example Woman"
+	],
+	"/datum/customer_data/british/bobby": [
+		"Example Man",
+		"Example Woman"
+	],
+	"/datum/customer_data/malfunction": [
+		"Example Man",
+		"Example Woman"
+	]
+}

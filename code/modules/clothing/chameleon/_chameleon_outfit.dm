@@ -31,7 +31,7 @@
 
 	return standard_outfit_options
 
-/datum/action/chameleon_outfit/Trigger(trigger_flags)
+/datum/action/chameleon_outfit/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!. || applying)
 		return

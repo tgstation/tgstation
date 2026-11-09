@@ -53,12 +53,12 @@
 		if (!isitem(potential_item))
 			continue
 		var/obj/item/item = potential_item
-		if (vacuum_bag?.attackby(item))
+		if (vacuum_bag.atom_storage.attempt_insert(item))
 			sucked = TRUE // track that we successfully sucked up something
 
 	// if we did indeed suck up something, play a funny noise
 	if (sucked)
-		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
+		playsound(parent, /datum/sound_effect/rustle, 50, TRUE, -5)
 
 /**
  * Handler for when a new trash bag is attached

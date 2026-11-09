@@ -11,7 +11,7 @@
 	///set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/erupting_state = null
 	///what chem do we produce?
-	var/reagent_id = /datum/reagent/fuel/oil
+	var/datum/reagent/reagent_id = /datum/reagent/fuel/oil
 	///how much reagents we add every process (2 seconds)
 	var/potency = 2
 	///maximum volume
@@ -34,7 +34,7 @@
 	create_reagents(max_volume, DRAINABLE)
 	reagents.add_reagent(reagent_id, max_volume)
 
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_REM_REAGENT, COMSIG_REAGENTS_DEL_REAGENT), PROC_REF(start_chemming))
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(start_chemming))
 
 	if(erupting_state)
 		icon_state = erupting_state
@@ -43,30 +43,36 @@
 		I.color = mix_color_from_reagents(reagents.reagent_list)
 		add_overlay(I)
 
-///start making those CHHHHHEEEEEEMS. Called whenever chems are removed, it's fine because START_PROCESSING checks if we arent already processing
+///start making those CHHHHHEEEEEEMS. Called whenever chems are removed
 /obj/structure/geyser/proc/start_chemming()
-	START_PROCESSING(SSplumbing, src) //It's main function is to be plumbed, so use SSplumbing
+	SIGNAL_HANDLER
 
-///We're full so stop processing
-/obj/structure/geyser/proc/stop_chemming()
-	STOP_PROCESSING(SSplumbing, src)
+	UnregisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED)
+
+	START_PROCESSING(SSplumbing, src) //Its main function is to be plumbed, so use SSplumbing
 
 ///Add reagents until we are full
 /obj/structure/geyser/process()
+	//create more
 	if(reagents.total_volume <= reagents.maximum_volume)
 		reagents.add_reagent(reagent_id, potency)
-	else
-		stop_chemming() //we're full
+		return
 
-/obj/structure/geyser/attackby(obj/item/item, mob/user, params)
-	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
-		return ..() //this runs the plunger code
+	//we're full
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(start_chemming))
+	return PROCESS_KILL
+
+/obj/structure/geyser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/mining_scanner) && !istype(tool, /obj/item/t_scanner/adv_mining_scanner))
+		playsound(src, /datum/sound_effect/industrial_scan, 20, TRUE, -2, TRUE, FALSE)
+		return NONE //this runs the plunger code
 
 	if(discovered)
 		to_chat(user, span_warning("This geyser has already been discovered!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	to_chat(user, span_notice("You discovered the geyser and mark it on the GPS system!"))
+	playsound(src, 'sound/machines/beep/twobeep_high.ogg', 30)
 	SEND_SIGNAL(user, COMSIG_LIVING_DISCOVERED_GEYSER, src)
 	if(discovery_message)
 		to_chat(user, discovery_message)
@@ -77,13 +83,11 @@
 
 	AddComponent(/datum/component/gps, true_name) //put it on the gps so miners can mark it and chemists can profit off of it
 
-	if(isliving(user))
-		var/mob/living/living = user
-
-		var/obj/item/card/id/card = living.get_idcard()
-		if(card)
-			to_chat(user, span_notice("[point_value] mining points have been paid out!"))
-			card.registered_account.mining_points += point_value
+	var/obj/item/card/id/card = user.get_idcard()
+	if(card)
+		to_chat(user, span_notice("[point_value] mining points have been paid out!"))
+		card.registered_account.mining_points += point_value
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/geyser/wittel
 	reagent_id = /datum/reagent/wittel
@@ -103,13 +107,21 @@
 	reagent_id = /datum/reagent/water/hollowwater
 	true_name = "hollow water geyser"
 
+/obj/structure/geyser/chiral_buffer
+	reagent_id = /datum/reagent/reaction_agent/inversing_buffer
+	point_value = 250
+	true_name = "chiral inversing geyser"
+	discovery_message = "It's a rare chiral inversing geyser! This could be very powerful in the right hands... "
+
 /obj/structure/geyser/random
 	point_value = 500
-	true_name = "strange geyser"
-	discovery_message = "It's a strange geyser! How does any of this even work?" //it doesnt
 
 /obj/structure/geyser/random/Initialize(mapload)
 	reagent_id = get_random_reagent_id()
+
+	true_name = "[initial(reagent_id.name)] geyser"
+
+	discovery_message = "It's a [true_name]! How does any of this even work?" //it doesnt
 
 	return ..()
 
@@ -120,6 +132,8 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
 	worn_icon_state = "plunger"
+	icon_angle = 90
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 1.5)
 
 	slot_flags = ITEM_SLOT_MASK
 	flags_inv = HIDESNOUT
@@ -135,12 +149,12 @@
 	///What layer we set it to
 	var/target_layer = DUCT_LAYER_DEFAULT
 
-/obj/item/plunger/attack_atom(obj/O, mob/living/user, params)
+/obj/item/plunger/attack_atom(obj/attacked_obj, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(layer_mode)
-		SEND_SIGNAL(O, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, O, target_layer)
+		SEND_SIGNAL(attacked_obj, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, attacked_obj, target_layer)
 		return ..()
 	else
-		if(!O.plunger_act(src, user, reinforced))
+		if(!attacked_obj.plunger_act(src, user, reinforced))
 			return ..()
 
 /obj/item/plunger/throw_impact(atom/hit_atom, datum/thrownthing/tt)
@@ -148,10 +162,9 @@
 	if(tt.target_zone != BODY_ZONE_HEAD)
 		return
 	if(iscarbon(hit_atom))
-		var/mob/living/carbon/H = hit_atom
-		if(!H.wear_mask)
-			H.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
-			H.visible_message(span_warning("The plunger slams into [H]'s face!"), span_warning("The plunger suctions to your face!"))
+		var/mob/living/carbon/victim = hit_atom
+		if(victim.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, disable_warning = TRUE))
+			victim.visible_message(span_warning("The plunger slams into [victim]'s face!"), span_warning("The plunger suctions to your face!"))
 
 /obj/item/plunger/attack_self(mob/user)
 	. = ..()

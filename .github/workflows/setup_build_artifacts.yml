@@ -1,0 +1,21 @@
+name: Setup build artifacts
+
+on:
+  workflow_call:
+    inputs:
+      build_versions:
+        required: true
+        type: string
+
+jobs:
+  run:
+    uses: ./.github/workflows/setup_build_artifact.yml
+
+    strategy:
+      fail-fast: true
+      matrix:
+        setup: ${{ fromJSON(inputs.build_versions) }}
+
+    with:
+      major: ${{ matrix.setup.major }}
+      minor: ${{ matrix.setup.minor }}

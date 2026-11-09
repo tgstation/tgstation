@@ -3,6 +3,7 @@
 	desc = "The finest in spring-loaded piston toy technology, now on a space station near you."
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "mass_driver"
+	base_icon_state = "mass_driver"
 	circuit = /obj/item/circuitboard/machine/mass_driver
 	var/power = 1
 	var/code = 1
@@ -31,7 +32,6 @@
 	for(var/obj/machinery/computer/pod/control as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/pod))
 		if(control.id == id)
 			control.connected = null
-	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/mass_driver/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -53,21 +53,27 @@
 				break
 			use_energy(power_per_obj)
 			O.throw_at(target, drive_range * power, power)
-	flick("mass_driver1", src)
+	flick("[base_icon_state]1", src)
 
-/obj/machinery/mass_driver/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/mass_driver/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]_o" : base_icon_state
 
-	if(is_wire_tool(I) && panel_open)
+/obj/machinery/mass_driver/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(is_wire_tool(tool) && panel_open)
 		wires.interact(user)
-		return
-	if(default_deconstruction_screwdriver(user, "mass_driver_o", "mass_driver", I))
-		return
-	if(default_change_direction_wrench(user, I))
-		return
-	if(default_deconstruction_crowbar(I))
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
+
+/obj/machinery/mass_driver/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/mass_driver/wrench_act(mob/living/user, obj/item/tool)
+	return default_change_direction_wrench(user, tool)
+
+/obj/machinery/mass_driver/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/mass_driver/RefreshParts()
 	. = ..()

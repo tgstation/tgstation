@@ -14,7 +14,7 @@
 	response_disarm_simple = "gently push aside"
 	initial_language_holder = /datum/language_holder/spider
 	melee_attack_cooldown = CLICK_CD_MELEE
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BURN = 1.25, TOX = 3)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
 	unsuitable_cold_damage = 4
@@ -24,12 +24,17 @@
 	pass_flags = PASSTABLE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	unique_name = TRUE
 	lighting_cutoff_red = 22
 	lighting_cutoff_green = 5
 	lighting_cutoff_blue = 5
+	max_stamina = 200
+	stamina_crit_threshold = BASIC_MOB_NO_STAMCRIT
+	stamina_recovery = 5
+	max_stamina_slowdown = 12
+
 	/// Speed modifier to apply if controlled by a human player
 	var/player_speed_modifier = -4
 	/// What reagent the mob injects targets with
@@ -46,8 +51,26 @@
 	var/directive = ""
 	/// Short description of what this mob is capable of, for radial menu uses
 	var/menu_description = "Tanky and strong for the defense of the nest and other spiders."
-	/// If true then you shouldn't be told that you're a spider antagonist as soon as you are placed into this mob
-	var/apply_spider_antag = TRUE
+	/// Commands you can give this spider once it is tamed
+	var/static/list/tamed_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow,
+		/datum/pet_command/attack,
+	)
+
+/datum/emote/spider
+	abstract_type = /datum/emote/spider
+	mob_type_allowed_typecache = /mob/living/basic/spider
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/spider/chitter
+	key = "chitter"
+	key_third_person = "chitters"
+	message = "chitters."
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = TRUE
+	sound = 'sound/mobs/non-humanoids/insect/chitter.ogg'
 
 /mob/living/basic/spider/Initialize(mapload)
 	. = ..()
@@ -57,6 +80,7 @@
 	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")
 	AddElement(/datum/element/cliff_walking)
 	AddComponent(/datum/component/health_scaling_effects, min_health_slowdown = 1.5)
+	AddElement(/datum/element/basic_allergenic_attack, allergen = BUGS, allergen_chance = 20, histamine_add = 5)
 
 	if(poison_per_bite)
 		AddElement(/datum/element/venomous, poison_type, poison_per_bite, injection_flags = bite_injection_flags)
@@ -66,12 +90,25 @@
 	webbing.Grant(src)
 	ai_controller?.set_blackboard_key(BB_SPIDER_WEB_ACTION, webbing)
 
+	var/static/list/food_types = list(
+		/obj/item/food/meat/slab/human/mutant/lizard,
+		/obj/item/food/meat/slab/human/mutant/fly,
+		/obj/item/food/meat/slab/human/mutant/moth,
+		/obj/item/food/meat/slab/mouse,
+		/obj/item/food/meat/slab/mothroach,
+		/obj/item/food/meat/slab/blood_worm,
+		/obj/item/food/deadmouse,
+	)
+	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 20, bonus_tame_chance = 10)
+
 /mob/living/basic/spider/Login()
 	. = ..()
 	if(!. || !client)
 		return FALSE
 	GLOB.spidermobs[src] = TRUE
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/player_spider_modifier, multiplicative_slowdown = player_speed_modifier)
+
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/spider)
 
 /mob/living/basic/spider/Logout()
 	. = ..()
@@ -80,6 +117,12 @@
 /mob/living/basic/spider/Destroy()
 	GLOB.spidermobs -= src
 	return ..()
+
+/mob/living/basic/spider/tamed(mob/living/tamer, atom/food, feedback = TRUE)
+	. = ..()
+	new /obj/effect/temp_visual/heart(src.loc)
+	AddElement(/datum/element/ridable, /datum/component/riding/creature/spider)
+	AddComponent(/datum/component/obeys_commands, tamed_commands)
 
 /mob/living/basic/spider/mob_negates_gravity()
 	if(locate(/obj/structure/spider/stickyweb) in loc)
@@ -134,11 +177,17 @@
 
 	var/mob/living/basic/spider/giant/grown = change_mob_type(grow_as, get_turf(src), initial(grow_as.name))
 	ADD_TRAIT(grown, TRAIT_WAS_EVOLVED, REF(src))
-	grown.faction = faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM(grown, src)
 	grown.directive = directive
 	grown.set_name()
-	grown.setBruteLoss(getBruteLoss())
-	grown.setFireLoss(getFireLoss())
+	grown.set_brute_loss(get_brute_loss())
+	grown.set_fire_loss(get_fire_loss())
+
+	if(HAS_TRAIT(src, TRAIT_TAMED))
+		grown.tamed()
+	else if(istype(grown, /mob/living/basic/spider/giant)) // Adults cannot be tamed via snacks
+		qdel(grown.GetComponent(/datum/component/tameable))
+
 	qdel(src)
 
 /**
@@ -151,7 +200,6 @@
 	icon_state = "maint_spider"
 	icon_living = "maint_spider"
 	icon_dead = "maint_spider_dead"
-	can_be_held = TRUE
 	mob_size = MOB_SIZE_TINY
 	held_w_class = WEIGHT_CLASS_TINY
 	worn_slot_flags = ITEM_SLOT_HEAD
@@ -170,11 +218,19 @@
 	response_harm_continuous = "splats"
 	response_harm_simple = "splat"
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider/pest
-	apply_spider_antag = FALSE
+	///list of pet commands we follow
+	var/static/list/pet_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/follow/start_active,
+		/datum/pet_command/perform_trick_sequence,
+	)
 
 /mob/living/basic/spider/maintenance/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/average_web)
 	AddElement(/datum/element/ai_retaliate)
+	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/tiny_mob_hunter)
+	AddElement(/datum/element/can_be_held)

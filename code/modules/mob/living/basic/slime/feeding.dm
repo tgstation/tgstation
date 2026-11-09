@@ -7,9 +7,13 @@
 	if(!isliving(meal)) //sanity check
 		return FALSE
 
-	if(stat != CONSCIOUS)
-		if(!silent)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
+		if(stat == DEAD)
+			balloon_alert(src, "dead!")
+		else if(IS_UNCONSCIOUS(src))
 			balloon_alert(src, "unconscious!")
+		else
+			balloon_alert(src, "in critical!")
 		return FALSE
 
 	if(hunger_disabled)
@@ -17,10 +21,15 @@
 			balloon_alert(src, "not hungry!")
 		return FALSE
 
-	if(check_friendship && (REF(meal) in faction))
+	if(check_friendship && has_faction(REF(meal)))
 		return FALSE
 
-	if(check_adjacent && !Adjacent(meal))
+	if(check_adjacent && (!Adjacent(meal) || !isturf(loc)))
+		return FALSE
+
+	if(!(mobility_flags & MOBILITY_MOVE))
+		if(!silent)
+			balloon_alert(src, "can't move!")
 		return FALSE
 
 	if(meal.stat == DEAD)
@@ -42,29 +51,29 @@
 			balloon_alert(src, "can't eat slime!")
 		return FALSE
 
-	if(isanimal(meal))
-		var/mob/living/simple_animal/simple_meal = meal
-		if(simple_meal.damage_coeff[TOX] <= 0 && simple_meal.damage_coeff[BRUTE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
-			if(!silent)
-				balloon_alert(src, "not food!")
-			return FALSE
-	else if(isbasicmob(meal))
-		var/mob/living/basic/basic_meal = meal
-		if(basic_meal.damage_coeff[TOX] <= 0 && basic_meal.damage_coeff[BRUTE] <= 0)
-			if (!silent)
-				balloon_alert(src, "not food!")
-			return FALSE
+	if(GET_PHYSIOLOGY(meal, BRUTE) <= 0 && GET_PHYSIOLOGY(meal, TOX) <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
+		if(!silent)
+			balloon_alert(src, "not food!")
+		return FALSE
 
 	return TRUE
 
+#define FEEDING_OFFSET "feeding"
+
 ///The slime will start feeding on the target
 /mob/living/basic/slime/proc/start_feeding(mob/living/target_mob)
-	target_mob.unbuckle_all_mobs(force=TRUE) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in can_feed_on())
-	if(target_mob.buckle_mob(src, force=TRUE))
-		layer = MOB_ABOVE_PIGGYBACK_LAYER //always appear above the target mob, no matter the direction
-		target_mob.visible_message(span_danger("[name] latches onto [target_mob]!"), \
-						span_userdanger("[name] latches onto [target_mob]!"))
+	target_mob.unbuckle_all_mobs(force = TRUE) //Slimes rip other mobs (eg: shoulder parrots) off (Slimes Vs Slimes is already handled in can_feed_on())
+	if(target_mob.buckle_mob(src, force = TRUE))
+		add_offsets(FEEDING_OFFSET, y_add = target_mob.mob_size <= MOB_SIZE_SMALL ? 0 : 3)
+		layer = MOB_ABOVE_PIGGYBACK_LAYER //appear above the target mob
 		target_mob.apply_status_effect(/datum/status_effect/slime_leech, src)
+		target_mob.visible_message(
+			span_danger("[name] latches onto [target_mob]!"),
+			span_userdanger("[name] latches onto [target_mob]!"),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+		to_chat(src, span_notice("<i>I start feeding on [target_mob]...</i>"))
+		balloon_alert(src, "feeding started")
 	else
 		balloon_alert(src, "latch failed!")
 
@@ -75,5 +84,9 @@
 
 	if(!silent)
 		visible_message(span_warning("[src] lets go of [buckled]!"), span_notice("You let go of [buckled]"))
+		balloon_alert(src, "feeding stopped")
+	remove_offsets(FEEDING_OFFSET)
 	layer = initial(layer)
-	buckled.unbuckle_mob(src,force=TRUE)
+	INVOKE_ASYNC(buckled, TYPE_PROC_REF(/atom/movable, unbuckle_mob), src, force=TRUE)
+
+#undef FEEDING_OFFSET

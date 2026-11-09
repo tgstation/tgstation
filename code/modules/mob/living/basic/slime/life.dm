@@ -1,13 +1,15 @@
 
-/mob/living/basic/slime/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	..()
+/mob/living/basic/slime/Life(seconds_per_tick = SSMOBS_DT)
+	. = ..()
+	if(!.) //dead or deleted
+		return
 
 	if(!HAS_TRAIT(src, TRAIT_STASIS)) //No hunger in stasis
 		handle_nutrition(seconds_per_tick)
 
-	handle_slime_stasis(seconds_per_tick)
+	handle_slime_stasis()
 
-/mob/living/basic/slime/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+/mob/living/basic/slime/handle_environment(datum/gas_mixture/environment, seconds_per_tick)
 	..()
 	if(bodytemperature <= (T0C - 40)) // stun temperature
 		apply_status_effect(/datum/status_effect/freon, SLIME_COLD)
@@ -15,19 +17,16 @@
 		remove_status_effect(/datum/status_effect/freon, SLIME_COLD)
 
 ///Handles if a slime's environment would cause it to enter stasis. Ignores TRAIT_STASIS
-/mob/living/basic/slime/proc/handle_slime_stasis(seconds_per_tick)
+/mob/living/basic/slime/proc/handle_slime_stasis()
 	var/datum/gas_mixture/environment = loc.return_air()
 
-	var/bz_percentage = 0
-
-	if(environment.gases[/datum/gas/bz])
-		bz_percentage = environment.gases[/datum/gas/bz][MOLES] / environment.total_moles()
+	var/bz_percentage = environment.moles[/datum/gas/bz] / environment.total_moles()
 
 	if(bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) //Check if we should be in stasis
 		if(!has_status_effect(/datum/status_effect/grouped/stasis)) //Check if we don't have the status effect yet
 			to_chat(src, span_danger("Nerve gas in the air has put you in stasis!"))
 			apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ)
-			powerlevel = 0
+			adjust_power_level(-SLIME_MAX_POWER)
 			ai_controller?.clear_blackboard_key(BB_SLIME_RABID)
 	else if(has_status_effect(/datum/status_effect/grouped/stasis)) //Check if we still have the status effect
 		to_chat(src, span_notice("You wake up from the stasis."))
@@ -36,10 +35,10 @@
 ///Handles the consumption of nutrition, and growth
 /mob/living/basic/slime/proc/handle_nutrition(seconds_per_tick = SSMOBS_DT)
 	if(hunger_disabled) //God as my witness, I will never go hungry again
-		set_nutrition(700)
+		set_nutrition(100)
 		return
 
-	if(SPT_PROB(7.5, seconds_per_tick))
+	if(SPT_PROB(1.25, seconds_per_tick))
 		adjust_nutrition((life_stage == SLIME_LIFE_STAGE_ADULT ? -1 : -0.5) * seconds_per_tick)
 
 	if(nutrition < SLIME_STARVE_NUTRITION)
@@ -57,19 +56,25 @@
 
 	if(nutrition == 0) //adjust nutrition ensures it can't go below 0
 		if(SPT_PROB(50, seconds_per_tick))
-			adjustBruteLoss(rand(0,5))
+			adjust_brute_loss(rand(0,5))
 		return
 
 	if (SLIME_GROW_NUTRITION <= nutrition)
 
 		if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
-			adjust_nutrition(-10 * seconds_per_tick)
+			adjust_nutrition(-2.5 * seconds_per_tick)
 			amount_grown++
 
 		if(powerlevel < SLIME_MAX_POWER && SPT_PROB(30-powerlevel*2, seconds_per_tick))
-			powerlevel++
+			adjust_power_level(1)
 
 	else if (powerlevel < SLIME_MEDIUM_POWER && SLIME_HUNGER_NUTRITION <= nutrition && SPT_PROB(25-powerlevel*5, seconds_per_tick))
-		powerlevel++
+		adjust_power_level(1)
 
 	update_mob_action_buttons()
+
+///Given a number to adjust by, changes our powerlevel and updates our HUD to show the right number.
+/mob/living/basic/slime/proc/adjust_power_level(to_adjust)
+	powerlevel = clamp(powerlevel + to_adjust, SLIME_MIN_POWER, SLIME_MAX_POWER)
+	var/atom/movable/screen/slime_power/power_hud = hud_used?.screen_objects[HUD_MOB_SLIME_POWER]
+	power_hud?.update_maptext()

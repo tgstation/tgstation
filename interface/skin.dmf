@@ -8,53 +8,6 @@ macro "default"
 		name = "SHIFT+UP"
 		command = ".winset :map.right-click=true"
 
-
-menu "menu"
-	elem
-		name = "&File"
-		command = ""
-		saved-params = "is-checked"
-	elem
-		name = "&Quick screenshot\tF2"
-		command = ".screenshot auto"
-		category = "&File"
-		saved-params = "is-checked"
-	elem
-		name = "&Save screenshot as...\tShift+F2"
-		command = ".screenshot"
-		category = "&File"
-		saved-params = "is-checked"
-	elem
-		name = ""
-		command = ""
-		category = "&File"
-		saved-params = "is-checked"
-	elem "reconnectbutton"
-		name = "&Reconnect"
-		command = ".reconnect"
-		category = "&File"
-		saved-params = "is-checked"
-	elem
-		name = "&Quit\tAlt-F4"
-		command = ".quit"
-		category = "&File"
-		saved-params = "is-checked"
-	elem "help-menu"
-		name = "&Help"
-		command = ""
-		saved-params = "is-checked"
-	elem
-		name = "&Admin Help\tF1"
-		command = "adminhelp"
-		category = "&Help"
-		saved-params = "is-checked"
-	elem
-		name = "&Hotkeys"
-		command = "Hotkeys-Help"
-		category = "&Help"
-		saved-params = "is-checked"
-
-
 window "mainwindow"
 	elem "mainwindow"
 		type = MAIN
@@ -65,18 +18,17 @@ window "mainwindow"
 		is-default = true
 		saved-params = "pos;size;is-minimized;is-maximized"
 		statusbar = false
-		icon = 'icons\\ui_icons\\common\\tg_32.png'
+		icon = 'icons\\ui\\common\\tg_32.png'
 		macro = "default"
-		menu = "menu"
 	elem "split"
 		type = CHILD
-		pos = 3,0
-		size = 634x440
+		pos = 0,0
+		size = 640x440
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
 		left = "mapwindow"
-		right = "infowindow"
+		right = "info_and_buttons"
 		is-vert = true
 	elem "asset_cache_browser"
 		type = BROWSER
@@ -94,6 +46,14 @@ window "mainwindow"
 		anchor2 = -1,-1
 		is-visible = false
 		saved-params = ""
+	elem "commandbar_spy"
+		type = BROWSER
+		pos = 0,0
+		size = 200x200
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		is-visible = false
+		saved-params = ""
 
 window "mapwindow"
 	elem "mapwindow"
@@ -105,6 +65,44 @@ window "mapwindow"
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 		on-status = ".winset \"status_bar.text=[[*]]\" "
+	elem "map_lobby_selector"
+		type = CHILD
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		left = "lobby_screen"
+		show-splitter = false
+	elem "status_bar"
+		type = LABEL
+		pos = 0,470
+		size = 128x10
+		anchor1 = 0,99
+		anchor2 = 20,100
+		text-color = #ffffff
+		background-color = #222222
+		border = line
+		saved-params = ""
+		text = ""
+		align = left
+	elem "escape_menu"
+		type = BROWSER
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = none
+		inner-background-color = transparent
+		is-visible = false
+
+window "map_screen"
+	elem "map_screen"
+		type = MAIN
+		pos = 0,0
+		size = 640x480
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		is-pane = true
 	elem "map"
 		type = MAP
 		pos = 0,0
@@ -112,173 +110,340 @@ window "mapwindow"
 		anchor1 = 0,0
 		anchor2 = 100,100
 		font-family = "Grand9K Pixel"
-		font-size = 6pt
+		font-size = 6
 		is-default = true
 		right-click = true
 		saved-params = "zoom;letterbox;zoom-mode"
-		style = ".center { text-align: center; } .maptext { font-family: 'Grand9K Pixel'; font-size: 6pt; -dm-text-outline: 1px black; color: white; line-height: 1.0; } .command_headset { font-weight: bold; } .context { font-family: 'Pixellari'; font-size: 12pt; -dm-text-outline: 1px black; }  .subcontext { font-family: 'TinyUnicode'; font-size: 12pt; line-height: 0.75; } .small { font-family: 'Spess Font'; font-size: 6pt; line-height: 1.4; } .big { font-family: 'Pixellari'; font-size: 12pt; } .reallybig { font-size: 12pt; } .extremelybig { font-size: 12pt; } .greentext { color: #00FF00; font-size: 6pt; } .redtext { color: #FF0000; font-size: 6pt; } .clown { color: #FF69BF; font-weight: bold; } .his_grace { color: #15D512; } .hypnophrase { color: #0d0d0d; font-weight: bold; } .yell { font-weight: bold; } .italics { font-family: 'Spess Font'; font-size: 6pt; line-height: 1.4; }"
-	elem "status_bar"
-		type = LABEL
-		pos = 0,464
-		size = 280x16
-		anchor1 = 0,100
-		is-visible = true
-		text = ""
-		align = left
-		background-color = #222222
-		text-color = #ffffff
-		border = line
+		style = "img.icon { width: auto; height: auto } .center { text-align: center; } .maptext { font-family: 'Grand9K Pixel'; font-size: 6pt; -dm-text-outline: 1px black; color: white; line-height: 1.0; } .command_headset { font-weight: bold; } .context { font-family: 'Pixellari'; font-size: 12pt; -dm-text-outline: 1px black; }  .subcontext { font-family: 'TinyUnicode'; font-size: 12pt; line-height: 0.75; } .small { font-family: 'Spess Font'; font-size: 6pt; line-height: 1.4; } .big { font-family: 'Pixellari'; font-size: 12pt; } .reallybig { font-size: 12pt; } .extremelybig { font-size: 12pt; } .greentext { color: #00FF00; font-size: 6pt; } .redtext { color: #FF0000; font-size: 6pt; } .clown { color: #FF69BF; font-weight: bold; } .his_grace { color: #15D512; } .hypnophrase { color: #0d0d0d; font-weight: bold; } .yell { font-weight: bold; } .italics { font-family: 'Spess Font'; font-size: 6pt; line-height: 1.4; }"
+
+window "lobby_screen"
+	elem "lobby_screen"
+		type = MAIN
+		pos = 0,0
+		size = 640x480
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		is-pane = true
+
+window "info_and_buttons"
+	elem "info_and_buttons"
+		type = MAIN
+		pos = 0,0
+		size = 640x480
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "info_button_child"
+		type = CHILD
+		pos = 0,0
+		size = 640x477
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = #ffc41f
+		saved-params = "splitter"
+		left = "infobuttons"
+		right = "infowindow"
+		is-vert = false
+		splitter = 2
+		show-splitter = false
+
+window "infobuttons"
+	elem "infobuttons"
+		type = MAIN
+		pos = 291,0
+		size = 676x30
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = none
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+		outer-size = 692x88
+		outer-pos = 291,0
+		inner-size = 676x30
+		inner-pos = 8,31
+		screen-size = 1920x1040
+	elem "options"
+		type = BUTTON
+		pos = 0,5
+		size = 88x27
+		anchor1 = 0,0
+		anchor2 = 15,100
+		background-color = none
+		saved-params = "is-checked"
+		text = "Menu"
+		command = ".winset \"mapwindow.escape_menu.is-visible=true?mapwindow.escape_menu.is-visible=false:mapwindow.escape_menu.is-visible=true\"\n.output mapwindow.escape_menu:update %7B%22type%22%3A%22toggle%22%2C%22payload%22%3Anull%7D"
+	elem "hotkeys"
+		type = BUTTON
+		pos = 92,5
+		size = 88x27
+		anchor1 = 15,0
+		anchor2 = 29,100
+		background-color = none
+		saved-params = "is-checked"
+		text = "Hotkeys"
+		command = "Hotkeys-Help"
+	elem "emotes"
+		type = BUTTON
+		pos = 185,5
+		size = 88x27
+		anchor1 = 29,0
+		anchor2 = 43,100
+		background-color = none
+		saved-params = "is-checked"
+		text = "Emotes"
+		command = "Emote-Panel"
+	elem "fullscreen-toggle"
+		type = BUTTON
+		pos = 277,5
+		size = 88x27
+		anchor1 = 43,0
+		anchor2 = 57,100
+		background-color = none
+		saved-params = "is-checked"
+		text = "Fullscreen"
+		command = "fullscreen"
+	elem "reconnect"
+		type = BUTTON
+		pos = 369,5
+		size = 88x27
+		anchor1 = 57,0
+		anchor2 = 71,100
+		background-color = none
+		saved-params = "is-checked"
+		text = "Reconnect"
+		command = ".reconnect"
+	elem "chat"
+		type = BUTTON
+		pos = 560,5
+		size = 112x27
+		anchor1 = 85,0
+		anchor2 = 99,100
+		background-color = none
+		saved-params = "is-checked"
+		text = "Toggle Stat Panel"
+		command = "toggle-stat-panel"
 
 window "infowindow"
 	elem "infowindow"
 		type = MAIN
-		pos = 281,0
-		size = 640x480
+		pos = 281,5
+		size = 640x475
 		anchor1 = -1,-1
 		anchor2 = -1,-1
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-	elem "info"
+	elem "info_child"
 		type = CHILD
-		pos = 0,30
-		size = 640x445
+		pos = 0,0
+		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
 		saved-params = "splitter"
+		splitter = 40
+		background-color = #202020
 		left = "statwindow"
 		right = "outputwindow"
 		is-vert = false
-	elem "changelog"
-		type = BUTTON
-		pos = 16,5
-		size = 104x20
-		anchor1 = 3,0
-		anchor2 = 19,0
-		saved-params = "is-checked"
-		text = "Changelog"
-		command = "changelog"
-	elem "rules"
-		type = BUTTON
-		pos = 120,5
-		size = 100x20
-		anchor1 = 19,0
-		anchor2 = 34,0
-		saved-params = "is-checked"
-		text = "Rules"
-		command = "rules"
-	elem "wiki"
-		type = BUTTON
-		pos = 220,5
-		size = 100x20
-		anchor1 = 34,0
-		anchor2 = 50,0
-		saved-params = "is-checked"
-		text = "Wiki"
-		command = "wiki"
-	elem "forum"
-		type = BUTTON
-		pos = 320,5
-		size = 100x20
-		anchor1 = 50,0
-		anchor2 = 66,0
-		saved-params = "is-checked"
-		text = "Forum"
-		command = "forum"
-	elem "github"
-		type = BUTTON
-		pos = 420,5
-		size = 100x20
-		anchor1 = 66,0
-		anchor2 = 81,0
-		saved-params = "is-checked"
-		text = "Github"
-		command = "github"
-	elem "report-issue"
-		type = BUTTON
-		pos = 520,5
-		size = 100x20
-		anchor1 = 81,0
-		anchor2 = 97,0
-		saved-params = "is-checked"
-		text = "Report Issue"
-		command = "report-issue"
+
+window "input_buttons"
+	elem "input_buttons_main"
+		type = MAIN
+		pos = 0,0
+		size = 640x475
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "input_buttons_child"
+		type = CHILD
+		pos = 0,0
+		size = 640x475
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = #ffc41f
+		saved-params = "splitter"
+		left = "inputwindow"
+		right = "inputbuttons"
+		is-vert = true
+		splitter = 70
+		show-splitter = false
 
 window "outputwindow"
 	elem "outputwindow"
 		type = MAIN
-		pos = 281,0
-		size = 640x480
+		pos = 0,0
+		size = 640x475
 		anchor1 = -1,-1
 		anchor2 = -1,-1
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "output_selector_screen"
+		type = CHILD
+		size = 640x475
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "splitter"
+		background-color = #ffc41f
+		left = "output_selector"
+
+window "output_selector"
+	elem "output_selector"
+		type = MAIN
+		pos = 0,0
+		size = 640x475
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "legacy_output_selector"
+		type = CHILD
+		pos = 0,0
+		size = 640x475
+		anchor1 = 0,0
+		anchor2 = 100,100
+		saved-params = "splitter"
+		left = "output_legacy"
+		is-vert = false
+		splitter = 80
+		show-splitter = false
+
+window "inputwindow"
+	elem "inputwindow"
+		type = MAIN
+		pos = 575,0
+		size = 480x25
+		anchor1 = 0,0
+		anchor2 = 70,100
 		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
-		outer-size = 656x538
-		inner-size = 640x499
 	elem "input"
 		type = INPUT
-		pos = 2,460
-		size = 517x20
-		anchor1 = 0,100
+		pos = 0,0
+		size = 480x25
+		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
 		border = line
 		saved-params = "command"
-	elem "oocbutton"
-		type = BUTTON
-		pos = 599,460
-		size = 40x20
-		anchor1 = 100,100
-		anchor2 = -1,-1
-		background-color = none
-		border = line
-		saved-params = "is-checked"
-		text = "OOC"
-		command = ".winset \"oocbutton.is-checked=true ? input.command=\"!ooc \\\"\" : input.command=\"\"oocbutton.is-checked=true ? mebutton.is-checked=false\"\"oocbutton.is-checked=true ? saybutton.is-checked=false\""
-		is-flat = true
-		button-type = pushbox
+		can-scroll = true
+
+window "inputbuttons"
+	elem "inputbuttons"
+		type = MAIN
+		pos = 291,0
+		size = 160x25
+		anchor1 = 70,0
+		anchor2 = 100,100
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
 	elem "saybutton"
 		type = BUTTON
-		pos = 519,460
-		size = 40x20
-		anchor1 = 100,100
-		anchor2 = -1,-1
-		background-color = none
+		pos = 0,0
+		size = 40x25
+		anchor1 = 0,0
+		anchor2 = 25,100
+		font-size = 4
 		border = line
 		saved-params = "is-checked"
 		text = "Say"
-		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\"\"saybutton.is-checked=true ? mebutton.is-checked=false\"\"saybutton.is-checked=true ? oocbutton.is-checked=false\""
+		command = ".winset \"saybutton.is-checked=true ? input.command=\"!say \\\"\" : input.command=\"\"saybutton.is-checked=true ? mebutton.is-checked=false\"\"saybutton.is-checked=true ? oocbutton.is-checked=false\"\"saybutton.is-checked=true ? whisperbutton.is-checked=false\""
+		is-flat = true
+		button-type = pushbox
+	elem "whisperbutton"
+		type = BUTTON
+		pos = 40,0
+		size = 40x25
+		anchor1 = 25,0
+		anchor2 = 50,100
+		font-size = 4
+		border = line
+		saved-params = "is-checked"
+		text = "Whisper"
+		command = ".winset \"whisperbutton.is-checked=true ? input.command=\"!say \\\"#\" : input.command=\"\"whisperbutton.is-checked=false ? saybutton.is-checked=false\"\"whisperbutton.is-checked=true ? mebutton.is-checked=false\"\"whisperbutton.is-checked=true ? oocbutton.is-checked=false\""
 		is-flat = true
 		button-type = pushbox
 	elem "mebutton"
 		type = BUTTON
-		pos = 559,460
-		size = 40x20
-		anchor1 = 100,100
-		anchor2 = -1,-1
-		background-color = none
+		pos = 80,0
+		size = 40x25
+		anchor1 = 50,0
+		anchor2 = 75,100
+		font-size = 4
 		border = line
 		saved-params = "is-checked"
 		text = "Me"
-		command = ".winset \"mebutton.is-checked=true ? input.command=\"!me \\\"\" : input.command=\"\"mebutton.is-checked=true ? saybutton.is-checked=false\"\"mebutton.is-checked=true ? oocbutton.is-checked=false\""
+		command = ".winset \"mebutton.is-checked=true ? input.command=\"!me \\\"\" : input.command=\"\"mebutton.is-checked=true ? saybutton.is-checked=false\"\"mebutton.is-checked=true ? oocbutton.is-checked=false\"\"mebutton.is-checked=true ? whisperbutton.is-checked=false\""
 		is-flat = true
 		button-type = pushbox
-	elem "browseroutput"
-		type = BROWSER
-		pos = 0,0
-		size = 640x456
-		anchor1 = 0,0
+	elem "oocbutton"
+		type = BUTTON
+		pos = 120,0
+		size = 40x25
+		anchor1 = 75,0
 		anchor2 = 100,100
-		is-visible = false
-		is-disabled = true
-		saved-params = ""
+		font-size = 4
+		border = line
+		saved-params = "is-checked"
+		text = "OOC"
+		command = ".winset \"oocbutton.is-checked=true ? input.command=\"!ooc \\\"\" : input.command=\"\"oocbutton.is-checked=true ? mebutton.is-checked=false\"\"oocbutton.is-checked=true ? saybutton.is-checked=false\"\"oocbutton.is-checked=true ? whisperbutton.is-checked=false\""
+		is-flat = true
+		button-type = pushbox
+
+window "output_legacy"
+	elem "output_legacy"
+		type = MAIN
+		pos = 0,0
+		size = 640x475
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+    elem "output_and_input_legacy"
+        type = CHILD
+        pos = 0,0
+        size = 640x475
+        anchor1 = 0,0
+        anchor2 = 100,100
+        saved-params = "splitter"
+        left = "output_legacy_pane"
+        right = "input_buttons"
+        splitter = 97.5
+        show-splitter = false
+
+window "output_legacy_pane"
+    elem "output_legacy_pane"
+        type = MAIN
+        pos = 0,0
+        size = 640x475
+        anchor1 = -1,-1
+        anchor2 = -1,-1
+        is-pane = true
 	elem "output"
 		type = OUTPUT
 		pos = 0,0
-		size = 640x456
+		size = 640x475
 		anchor1 = 0,0
 		anchor2 = 100,100
 		is-default = true
+		saved-params = ""
+
+window "output_browser"
+	elem "output_browser"
+		type = MAIN
+		pos = 0,0
+		size = 640x475
+		anchor1 = -1,-1
+		anchor2 = -1,-1
+		saved-params = "pos;size;is-minimized;is-maximized"
+		is-pane = true
+	elem "browseroutput"
+		type = BROWSER
+		pos = 0,0
+		size = 640x475
+		anchor1 = 0,0
+		anchor2 = 100,100
 		saved-params = ""
 
 window "popupwindow"

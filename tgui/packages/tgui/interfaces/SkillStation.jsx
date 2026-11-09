@@ -1,6 +1,3 @@
-import { toFixed } from 'common/math';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -11,7 +8,10 @@ import {
   Section,
   Stack,
   Table,
-} from '../components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const InsertedSkillchip = (props) => {
@@ -113,7 +113,7 @@ export const ImplantedSkillchips = (props) => {
                 icon="brain"
                 tooltip="Complexity"
                 tooltipPosition="top"
-                content={complexity_used + '/' + complexity_max}
+                content={`${complexity_used}/${complexity_max}`}
               />
             </Table.Cell>
             <Table.Cell textAlign="center">
@@ -122,7 +122,7 @@ export const ImplantedSkillchips = (props) => {
                 icon="save"
                 tooltip="Slot Size"
                 tooltipPosition="top"
-                content={slots_used + '/' + slots_max}
+                content={`${slots_used}/${slots_max}`}
               />
             </Table.Cell>
             <Table.Cell textAlign="center">
@@ -183,7 +183,7 @@ export const ImplantedSkillchips = (props) => {
                 />
               </Table.Cell>
               <Table.Cell textAlign="center">
-                {(skill.cooldown > 0 && Math.ceil(skill.cooldown / 10) + 's') ||
+                {(skill.cooldown > 0 && `${Math.ceil(skill.cooldown / 10)}s`) ||
                   '0s'}
               </Table.Cell>
               <Table.Cell textAlign="center">

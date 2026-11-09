@@ -1,6 +1,7 @@
 ///Causes the target to see incorrect health damages on the healthdoll
 /datum/hallucination/fake_health_doll
 	random_hallucination_weight = 12
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 	/// The duration of the hallucination
 	var/duration
@@ -49,7 +50,7 @@
 /datum/hallucination/fake_health_doll/proc/add_fake_limb(obj/item/bodypart/specific_limb, severity)
 	var/mob/living/carbon/human/human_mob = hallucinator
 
-	var/obj/item/bodypart/picked = specific_limb || pick(human_mob.bodyparts)
+	var/obj/item/bodypart/picked = specific_limb || pick(human_mob.get_bodyparts())
 	if(!(picked in bodyparts))
 		RegisterSignals(picked, list(COMSIG_QDELETING, COMSIG_BODYPART_REMOVED), PROC_REF(remove_bodypart))
 		RegisterSignal(picked, COMSIG_BODYPART_UPDATING_HEALTH_HUD, PROC_REF(on_bodypart_hud_update))
@@ -66,12 +67,11 @@
 	bodyparts -= source
 
 /// Whenever a bodypart we're tracking has their health hud updated, override it with our fake overlay
-/datum/hallucination/fake_health_doll/proc/on_bodypart_hud_update(obj/item/bodypart/source, mob/living/carbon/human/owner)
+/datum/hallucination/fake_health_doll/proc/on_bodypart_hud_update(obj/item/bodypart/source, mob/living/carbon/human/owner, list/overridable_key)
 	SIGNAL_HANDLER
 
-	var/mutable_appearance/fake_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "[source.body_zone][bodyparts[source]]")
-	owner.hud_used.healthdoll.add_overlay(fake_overlay)
-	return COMPONENT_OVERRIDE_BODYPART_HEALTH_HUD
+	overridable_key[1] = bodyparts[source]
+	return OVERRIDE_BODYPART_HEALTH_HUD
 
 /// Signal proc for [COMSIG_BODYPART_CHECKED_FOR_INJURY]. Our bodyparts look a lot more wounded than they actually are.
 /datum/hallucination/fake_health_doll/proc/on_bodypart_checked(obj/item/bodypart/source, mob/living/carbon/examiner, list/check_list, list/limb_damage)

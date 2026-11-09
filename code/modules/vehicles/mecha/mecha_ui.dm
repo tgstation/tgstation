@@ -7,25 +7,29 @@
 	if(!ui)
 		ui = new(user, src, "Mecha", name)
 		ui.open()
-		ui_view.display_to(user)
+		ui_view.display_to(user, ui.window)
 
 /obj/vehicle/sealed/mecha/ui_status(mob/user, datum/ui_state/state)
-	if(contains(user))
-		return UI_INTERACTIVE
-	return min(
+	var/common_status = min(
 		ui_status_user_is_abled(user, src),
-		ui_status_user_has_free_hands(user, src),
-		ui_status_user_is_advanced_tool_user(user),
 		ui_status_only_living(user),
-		max(
-			ui_status_user_is_adjacent(user, src),
-			ui_status_silicon_has_access(user, src),
-		)
 	)
+	var/mob_specific_status = UI_INTERACTIVE
+	if(ishuman(user))
+		mob_specific_status = min(
+			ui_status_user_inside(user, src),
+			ui_status_user_has_free_hands(user, src, allowed_source = VEHICLE_TRAIT),
+			ui_status_user_is_advanced_tool_user(user),
+		)
+	if(isAI(user))
+		mob_specific_status = ui_status_silicon_has_access(user, src)
+	if(isbrain(user))
+		mob_specific_status = ui_status_user_inside(user, src)
+	return min(common_status, mob_specific_status)
 
 /obj/vehicle/sealed/mecha/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/mecha_equipment),
+		get_asset_datum(/datum/asset/spritesheet_batched/mecha_equipment),
 	)
 
 /obj/vehicle/sealed/mecha/ui_static_data(mob/user)
@@ -56,6 +60,7 @@
 		"MECHA_INT_CONTROL_LOST" = MECHA_INT_CONTROL_LOST,
 		"MECHA_INT_SHORT_CIRCUIT" = MECHA_INT_SHORT_CIRCUIT,
 	)
+	data["diagnostic_status"] = HAS_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED)
 
 	var/list/regions = list()
 	var/list/tgui_region_data = SSid_access.all_region_access_tgui
@@ -111,36 +116,37 @@
 	var/module_index = 0
 	for(var/category in max_equip_by_category)
 		var/max_per_category = max_equip_by_category[category]
-		for(var/i = 1 to max_per_category)
-			var/equipment = equip_by_category[category]
-			var/is_slot_free = islist(equipment) ? i > length(equipment) : isnull(equipment)
-			if(is_slot_free)
-				data += list(list(
-					"slot" = category
-				))
-				if(ui_selected_module_index == module_index)
-					ui_selected_module_index = null
-			else
-				var/obj/item/mecha_parts/mecha_equipment/module = islist(equipment) ? equipment[i] : equipment
-				data += list(list(
-					"slot" = category,
-					"icon" = module.icon_state,
-					"name" = module.name,
-					"desc" = module.desc,
-					"detachable" = module.detachable,
-					"integrity" = (module.get_integrity()/module.max_integrity),
-					"can_be_toggled" = module.can_be_toggled,
-					"can_be_triggered" = module.can_be_triggered,
-					"active" = module.active,
-					"active_label" = module.active_label,
-					"equip_cooldown" = module.equip_cooldown && DisplayTimeText(module.equip_cooldown),
-					"energy_per_use" = module.energy_drain,
-					"snowflake" = module.get_snowflake_data(),
-					"ref" = REF(module),
-				))
-				if(isnull(ui_selected_module_index))
-					ui_selected_module_index = module_index
-			module_index++
+		if(max_per_category)
+			for(var/i = 1 to max_per_category)
+				var/equipment = equip_by_category[category]
+				var/is_slot_free = islist(equipment) ? i > length(equipment) : isnull(equipment)
+				if(is_slot_free)
+					data += list(list(
+						"slot" = category
+					))
+					if(ui_selected_module_index == module_index)
+						ui_selected_module_index = null
+				else
+					var/obj/item/mecha_parts/mecha_equipment/module = islist(equipment) ? equipment[i] : equipment
+					data += list(list(
+						"slot" = category,
+						"icon" = module.icon_state,
+						"name" = module.name,
+						"desc" = module.desc,
+						"detachable" = module.detachable,
+						"integrity" = (module.get_integrity()/module.max_integrity),
+						"can_be_toggled" = module.can_be_toggled,
+						"can_be_triggered" = module.can_be_triggered,
+						"active" = module.active,
+						"active_label" = module.active_label,
+						"equip_cooldown" = module.equip_cooldown && DisplayTimeText(module.equip_cooldown),
+						"energy_per_use" = module.energy_drain,
+						"snowflake" = module.get_snowflake_data(),
+						"ref" = REF(module),
+					))
+					if(isnull(ui_selected_module_index))
+						ui_selected_module_index = module_index
+				module_index++
 	return data
 
 /obj/vehicle/sealed/mecha/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -220,5 +226,12 @@
 		if("equip_act")
 			var/obj/item/mecha_parts/mecha_equipment/gear = locate(params["ref"]) in flat_equipment
 			return gear?.ui_act(params["gear_action"], params, ui, state)
+		if("diagnostic")
+			if(HAS_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED))
+				return FALSE
+			var/obj/item/mecha_diagnostic/diagnostic = new /obj/item/mecha_diagnostic(get_turf(src))
+			diagnostic.name = "mecha holodiagnostic ([src.name])"
+			diagnostic.mech_data += src
+			ADD_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED, REF(src))
 	return TRUE
 

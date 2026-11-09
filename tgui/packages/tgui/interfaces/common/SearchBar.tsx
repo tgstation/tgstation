@@ -1,4 +1,5 @@
-import { Icon, Input, Stack } from '../../components';
+import type { CSSProperties } from 'react';
+import { Icon, Input, Stack } from 'tgui-core/components';
 
 type RequiredProps = {
   /** The state variable. */
@@ -10,12 +11,14 @@ type RequiredProps = {
 type OptionalProps = Partial<{
   /** Whether the input should be focused on mount. */
   autoFocus: boolean;
+  /** Whether to debounce the input. For huge lists. */
+  expensive: boolean;
   /** Whether to show the search icon. */
   noIcon: boolean;
   /** The placeholder text. */
   placeholder: string;
   /** Override styles of the search bar. */
-  style: Partial<CSSStyleDeclaration>;
+  style: CSSProperties;
 }>;
 
 type Props = RequiredProps & OptionalProps;
@@ -27,6 +30,7 @@ type Props = RequiredProps & OptionalProps;
 export function SearchBar(props: Props) {
   const {
     autoFocus,
+    expensive,
     noIcon = false,
     onSearch,
     placeholder = 'Search...',
@@ -36,13 +40,15 @@ export function SearchBar(props: Props) {
 
   return (
     <Stack fill style={style}>
-      <Stack.Item>{!noIcon && <Icon name="search" />}</Stack.Item>
+      <Stack.Item align="center">
+        {!noIcon && <Icon name="search" />}
+      </Stack.Item>
       <Stack.Item grow>
         <Input
           autoFocus={autoFocus}
-          expensive
+          expensive={expensive}
           fluid
-          onInput={(e, value) => onSearch(value)}
+          onChange={onSearch}
           placeholder={placeholder}
           value={query}
         />

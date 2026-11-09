@@ -1,15 +1,15 @@
 {
-    "spirit_type": [
-        "Essence",
-        "Ghost",
-        "Phantom",
-        "Revenant",
-        "Soul",
-        "Spectre",
-        "Spirit"
-    ],
+	"spirit_type": [
+		"Essence",
+		"Ghost",
+		"Phantom",
+		"Revenant",
+		"Soul",
+		"Spectre",
+		"Spirit"
+	],
 
-    "adverb": [
+	"adverb": [
 		"",
 		"brutal ",
 		"fiery ",
@@ -27,9 +27,9 @@
 		"hateful ",
 		"searing ",
 		"vicious "
-    ],
+	],
 
-    "theme": [
+	"theme": [
 		"despair",
 		"agony",
 		"screams",
@@ -48,5 +48,5 @@
 		"salt",
 		"grief",
 		"laughter"
-    ]
+	]
 }

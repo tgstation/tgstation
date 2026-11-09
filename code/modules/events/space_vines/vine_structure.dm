@@ -30,6 +30,7 @@
 /obj/structure/spacevine/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CHASM_DESTROYED, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_INVERTED_DEMOLITION, INNATE_TRAIT)
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -37,6 +38,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	AddComponent(/datum/component/storm_hating)
+	block_sunlight()
 
 /obj/structure/spacevine/examine(mob/user)
 	. = ..()
@@ -63,39 +65,37 @@
 	return ..()
 
 /obj/structure/spacevine/proc/on_chem_effect(datum/reagent/chem)
-	var/override = FALSE
+	var/chem_flags
 	for(var/datum/spacevine_mutation/mutation in mutations)
-		override += mutation.on_chem(src, chem)
-	if(!override && prob(75) && istype(chem, /datum/reagent/toxin/plantbgone))
-		qdel(src)
+		chem_flags |= mutation.on_chem(src, chem)
 
 /obj/structure/spacevine/proc/eat(mob/eater)
-	var/override = FALSE
+	var/eat_flags
 	for(var/datum/spacevine_mutation/mutation in mutations)
-		override += mutation.on_eat(src, eater)
-	if(!override)
-		qdel(src)
+		eat_flags |= mutation.on_eat(src, eater)
 
-/obj/structure/spacevine/attacked_by(obj/item/item, mob/living/user)
-	var/damage_dealt = item.force
-	if(item.get_sharpness())
-		damage_dealt *= 4
+	if(eat_flags & BLOCK_EAT_ATTEMPT)
+		return
+
+	qdel(src)
+
+/obj/structure/spacevine/attacked_by(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
+	LAZYSET(attack_modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)
 	if(item.damtype == BURN)
-		damage_dealt *= 4
-
-	for(var/datum/spacevine_mutation/mutation in mutations)
-		damage_dealt = mutation.on_hit(src, user, item, damage_dealt) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
-	take_damage(damage_dealt, item.damtype, MELEE, 1)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 4)
+	if(item.get_sharpness())
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 4)
+	return ..()
 
 /obj/structure/spacevine/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src, 'sound/weapons/slash.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/slash.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/spacevine/proc/on_entered(datum/source, atom/movable/movable)
 	SIGNAL_HANDLER
@@ -104,10 +104,14 @@
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.on_cross(src, movable)
 
+/obj/structure/spacevine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	for(var/datum/spacevine_mutation/mutation in mutations)
+		mutation.on_hit(src, attacking_item, user, modifiers, attack_modifiers)
+
+	return ..()
+
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/spacevine/attack_hand(mob/user, list/modifiers)
-	for(var/datum/spacevine_mutation/mutation in mutations)
-		mutation.on_hit(src, user)
 	user_unbuckle_mob(user, user)
 	return ..()
 
@@ -161,7 +165,7 @@
 	if(!istype(stepturf))
 		return
 
-	if(isspaceturf(stepturf) || isopenspaceturf(stepturf) || !stepturf.Enter(src))
+	if(is_space_or_openspace(stepturf) || !stepturf.Enter(src))
 		return
 	if(ischasm(stepturf) && !HAS_TRAIT(stepturf, TRAIT_CHASM_STOPPED))
 		return
@@ -201,14 +205,20 @@
 /obj/structure/spacevine/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.additional_atmos_processes(src, air)
-	if(!can_spread && (exposed_temperature >= VINE_FREEZING_POINT || (trait_flags & SPACEVINE_COLD_RESISTANT)))
+	if(!can_spread && (exposed_temperature >= VINE_FREEZING_POINT || (resistance_flags & FREEZE_PROOF)))
 		can_spread = TRUE // not returning here just in case its now a plasmafire and the kudzu should be deleted
-	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD && !(trait_flags & SPACEVINE_HEAT_RESISTANT))
+	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD && !(resistance_flags & FIRE_PROOF))
 		qdel(src)
-	else if (exposed_temperature < VINE_FREEZING_POINT && !(trait_flags & SPACEVINE_COLD_RESISTANT))
+	else if (exposed_temperature < VINE_FREEZING_POINT && !(resistance_flags & FREEZE_PROOF))
 		can_spread = FALSE
 
 /obj/structure/spacevine/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(isvineimmune(mover))
 		return TRUE
+
+/obj/structure/spacevine/proc/block_sunlight()
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_TURF_SUN_BLOCKED)))
+
+/obj/structure/spacevine/proc/unblock_sunlight()
+	RemoveElement(/datum/element/give_turf_traits, string_list(list(TRAIT_TURF_SUN_BLOCKED)))

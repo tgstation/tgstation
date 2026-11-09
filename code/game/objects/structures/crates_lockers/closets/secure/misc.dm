@@ -1,7 +1,7 @@
 /obj/structure/closet/secure_closet/ert_com
 	name = "emergency response team commander's locker"
 	desc = "A storage unit containing equipment for an Emergency Response Team Commander."
-	req_access = list(ACCESS_CENT_CAPTAIN)
+	req_access = list(ACCESS_CENT_OFFICER)
 	icon_state = "cap"
 
 /obj/structure/closet/secure_closet/ert_com/PopulateContents()
@@ -14,8 +14,8 @@
 		new /obj/item/ammo_box/magazine/m50(src)
 		new /obj/item/gun/ballistic/automatic/pistol/deagle(src)
 	else
-		new /obj/item/ammo_box/a357(src)
-		new /obj/item/ammo_box/a357(src)
+		new /obj/item/ammo_box/speedloader/c357(src)
+		new /obj/item/ammo_box/speedloader/c357(src)
 		new /obj/item/gun/ballistic/revolver/mateba(src)
 
 /obj/structure/closet/secure_closet/ert_com/populate_contents_immediate()

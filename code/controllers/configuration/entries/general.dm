@@ -7,7 +7,7 @@
 	default = "Game Master"
 	protection = CONFIG_ENTRY_LOCKED
 
-/datum/config_entry/flag/auto_deadmin_players
+/datum/config_entry/flag/auto_deadmin_always
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/number/auto_deadmin_timegate
@@ -18,6 +18,9 @@
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/auto_deadmin_heads
+	protection = CONFIG_ENTRY_LOCKED
+
+/datum/config_entry/flag/auto_deadmin_on_ready_or_latejoin
 	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/flag/auto_deadmin_silicons
@@ -63,6 +66,10 @@
 /// log login/logout
 /datum/config_entry/flag/log_access
 
+/// log blood worm actions like entering/leaving hosts
+/datum/config_entry/flag/log_blood_worm
+	default = TRUE
+
 /// Config entry which special logging of failed logins under suspicious circumstances.
 /datum/config_entry/flag/log_suspicious_login
 
@@ -94,6 +101,9 @@
 /// log game events
 /datum/config_entry/flag/log_game
 
+/// log minimap drawing events
+/datum/config_entry/flag/log_minimap_drawing
+
 /// log mech data
 /datum/config_entry/flag/log_mecha
 
@@ -117,6 +127,10 @@
 
 /// log emotes
 /datum/config_entry/flag/log_emote
+
+/// log ghost polling
+/datum/config_entry/flag/log_ghost_poll
+	default = TRUE
 
 /// log economy actions
 /datum/config_entry/flag/log_econ
@@ -155,6 +169,9 @@
 /// log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
 /datum/config_entry/flag/log_shuttle
 
+/// log image authoring, such as using the modular computer paint app
+/datum/config_entry/flag/log_image
+
 /// logs all timers in buckets on automatic bucket reset (Useful for timer debugging)
 /datum/config_entry/flag/log_timers_on_bucket_reset
 
@@ -174,23 +191,15 @@
 /// allow votes to change map
 /datum/config_entry/flag/allow_vote_map
 
-/// allow players to vote to re-do the map vote
-/datum/config_entry/flag/allow_rock_the_vote
-
-/// the number of times we allow players to rock the vote
-/datum/config_entry/number/max_rocking_votes
-	default = 1
-	min_val = 1
-
 /// minimum time between voting sessions (deciseconds, 10 minute default)
 /datum/config_entry/number/vote_delay
-	default = 6000
+	default = 10 MINUTES
 	integer = FALSE
 	min_val = 0
 
 /// length of voting period (deciseconds, default 1 minute)
 /datum/config_entry/number/vote_period
-	default = 600
+	default = 1 MINUTES
 	integer = FALSE
 	min_val = 0
 
@@ -217,7 +226,7 @@
 		sync_validate = TRUE
 		var/datum/config_entry/number/ticklag/TL = config.entries_by_type[/datum/config_entry/number/ticklag]
 		if(!TL.sync_validate)
-			TL.ValidateAndSet(10 / config_entry_value)
+			TL.ValidateAndSet("[10 / config_entry_value]")
 		sync_validate = FALSE
 
 /datum/config_entry/number/ticklag
@@ -235,7 +244,7 @@
 		sync_validate = TRUE
 		var/datum/config_entry/number/fps/FPS = config.entries_by_type[/datum/config_entry/number/fps]
 		if(!FPS.sync_validate)
-			FPS.ValidateAndSet(10 / config_entry_value)
+			FPS.ValidateAndSet("[10 / config_entry_value]")
 		sync_validate = FALSE
 
 /datum/config_entry/flag/allow_holidays
@@ -310,19 +319,24 @@
 
 /datum/config_entry/string/server
 
+/datum/config_entry/string/public_address
+
 /datum/config_entry/string/banappeals
 
 /datum/config_entry/string/wikiurl
-	default = "http://www.tgstation13.org/wiki"
+	default = "https://wiki.tgstation13.org"
 
 /datum/config_entry/string/forumurl
 	default = "http://tgstation13.org/phpBB/index.php"
 
 /datum/config_entry/string/rulesurl
-	default = "http://www.tgstation13.org/wiki/Rules"
+	default = "http://tgstation13.org/wiki/Rules"
 
 /datum/config_entry/string/githuburl
 	default = "https://www.github.com/tgstation/tgstation"
+
+/datum/config_entry/string/configurl
+	default = "https://github.com/tgstation-operations/server-config"
 
 /datum/config_entry/string/discordbotcommandprefix
 	default = "?"
@@ -447,10 +461,13 @@
 
 /datum/config_entry/flag/irc_first_connection_alert // do we notify the irc channel when somebody is connecting for the first time?
 
+/datum/config_entry/string/ipintel_base
+	default = "check.getipintel.net"
+
 /datum/config_entry/string/ipintel_email
 
 /datum/config_entry/string/ipintel_email/ValidateAndSet(str_val)
-	return str_val != "ch@nge.me" && ..()
+	return str_val != "ch@nge.me" && (!length(str_val) || findtext(str_val, "@")) && ..()
 
 /datum/config_entry/number/ipintel_rating_bad
 	default = 1
@@ -458,18 +475,26 @@
 	min_val = 0
 	max_val = 1
 
-/datum/config_entry/number/ipintel_save_good
-	default = 12
-	integer = FALSE
+/datum/config_entry/flag/ipintel_reject_rate_limited
+	default = FALSE
+
+/datum/config_entry/flag/ipintel_reject_bad
+	default = FALSE
+
+/datum/config_entry/flag/ipintel_reject_unknown
+	default = FALSE
+
+/datum/config_entry/number/ipintel_rate_minute
+	default = 15
 	min_val = 0
 
-/datum/config_entry/number/ipintel_save_bad
-	default = 1
-	integer = FALSE
+/datum/config_entry/number/ipintel_cache_length
+	default = 7
 	min_val = 0
 
-/datum/config_entry/string/ipintel_domain
-	default = "check.getipintel.net"
+/datum/config_entry/number/ipintel_exempt_playtime_living
+	default = 5
+	min_val = 0
 
 /datum/config_entry/flag/aggressive_changelog
 
@@ -558,25 +583,22 @@
 	integer = FALSE
 
 /datum/config_entry/flag/irc_announce_new_game
-	deprecated_by = /datum/config_entry/string/channel_announce_new_game
+	deprecated_by = /datum/config_entry/str_list/channel_announce_new_game
 
 /datum/config_entry/flag/irc_announce_new_game/DeprecationUpdate(value)
 	return "" //default broadcast
 
 /datum/config_entry/string/chat_announce_new_game
-	deprecated_by = /datum/config_entry/string/channel_announce_new_game
+	deprecated_by = /datum/config_entry/str_list/channel_announce_new_game
 
 /datum/config_entry/string/chat_announce_new_game/DeprecationUpdate(value)
 	return "" //default broadcast
 
-/datum/config_entry/string/channel_announce_new_game
-	default = null
+/datum/config_entry/str_list/channel_announce_new_game
 
-/datum/config_entry/string/channel_announce_end_game
-	default = null
+/datum/config_entry/str_list/channel_announce_end_game
 
-/datum/config_entry/string/chat_new_game_notifications
-	default = null
+/datum/config_entry/str_list/chat_new_game_notifications
 
 /// validate ownership of admin flags for chat commands
 /datum/config_entry/flag/secure_chat_commands
@@ -617,16 +639,17 @@
 	default = -1
 	min_val = 0
 
-/datum/config_entry/string/default_view
-	default = "15x15"
-
-/datum/config_entry/string/default_view_square
-	default = "15x15"
-
 /datum/config_entry/flag/log_pictures
 
 /datum/config_entry/flag/picture_logging_camera
 
+/datum/config_entry/number/roundstart_logout_report_time_average
+	default = 10 MINUTES
+	min_val = 0
+
+/datum/config_entry/number/roundstart_logout_report_time_variance
+	default = 3 MINUTES
+	min_val = 0
 
 /datum/config_entry/flag/reopen_roundstart_suicide_roles
 
@@ -638,6 +661,9 @@
 /datum/config_entry/flag/reopen_roundstart_suicide_roles_command_report
 
 /datum/config_entry/flag/auto_profile
+
+/datum/config_entry/number/profiler_interval
+	default = 300 SECONDS
 
 /datum/config_entry/number/drift_dump_threshold
 	default = 4 SECONDS
@@ -651,6 +677,7 @@
 
 /// URL for admins to be redirected to for 2FA
 /datum/config_entry/string/admin_2fa_url
+	protection = CONFIG_ENTRY_LOCKED
 
 /datum/config_entry/number/hard_deletes_overrun_threshold
 	integer = FALSE
@@ -686,6 +713,9 @@
 /datum/config_entry/string/adminhelp_ahelp_link
 
 /datum/config_entry/flag/cache_assets
+	default = TRUE
+
+/datum/config_entry/flag/smart_cache_assets
 	default = TRUE
 
 /datum/config_entry/flag/save_spritesheets
@@ -724,3 +754,62 @@
 /datum/config_entry/number/upload_limit_admin
 	default = 5242880
 	min_val = 0
+
+/// The minimum number of tallies a map vote entry can have.
+/datum/config_entry/number/map_vote_minimum_tallies
+	default = 1
+	min_val = 0
+	max_val = 50
+
+/// The flat amount all maps get by default
+/datum/config_entry/number/map_vote_flat_bonus
+	default = 5
+	min_val = 0
+	max_val = INFINITY
+
+/// The maximum number of tallies a map vote entry can have.
+/datum/config_entry/number/map_vote_maximum_tallies
+	default = 200
+	min_val = 0
+	max_val = INFINITY
+
+/// The number of tallies that are carried over between rounds.
+/datum/config_entry/number/map_vote_tally_carryover_percentage
+	default = 100
+	min_val = 0
+	max_val = 100
+
+/// Pop requirement to exclude recently played maps from votes.
+/datum/config_entry/number/map_vote_minimum_pop_to_remember_maps
+	default = 0 //0 means disabled
+	integer = TRUE
+	min_val = 0
+
+/// If admins with +DEBUG can initialize byond-tracy midround.
+/datum/config_entry/flag/allow_tracy_start
+	protection = CONFIG_ENTRY_LOCKED
+
+/// If admins with +DEBUG can queue byond-tracy to run the next round.
+/datum/config_entry/flag/allow_tracy_queue
+	protection = CONFIG_ENTRY_LOCKED
+
+/**
+ * Tgui ui_act payloads larger than 2kb are split into chunks a maximum of 1kb in size.
+ * This flag represents the maximum chunk count the server is willing to receive.
+ */
+/datum/config_entry/number/tgui_max_chunk_count
+	default = 32
+
+// If set, enables the "Link forum account" OOC verb
+/datum/config_entry/string/forum_link_uri
+
+/datum/config_entry/flag/generate_assets_in_init
+	default = FALSE
+
+/datum/config_entry/flag/fishing
+
+/datum/config_entry/string/policy_json_path
+	default = "policy.json"
+
+/datum/config_entry/number_list/ignored_cids
+	default = list()

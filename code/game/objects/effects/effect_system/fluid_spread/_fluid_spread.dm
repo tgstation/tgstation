@@ -115,13 +115,16 @@
  * A factory which produces fluid groups.
  */
 /datum/effect_system/fluid_spread
-	effect_type = /obj/effect/particle_effect/fluid
-	/// The amount of smoke to produce.
+	/// The amount of fluid to produce.
 	var/amount = 10
+	/// Type of the effect we're spawning
+	var/effect_type = /obj/effect/particle_effect/fluid
 
-/datum/effect_system/fluid_spread/set_up(range = 1, amount = DIAMOND_AREA(range), atom/holder, atom/location, ...)
-	src.holder = holder
-	src.location = location
+/datum/effect_system/fluid_spread/New(turf/location, range = 1, amount = null, atom/holder = null)
+	. = ..()
+	attach(holder)
+	if (isnull(amount))
+		amount = DIAMOND_AREA(range)
 	src.amount = amount
 
 /datum/effect_system/fluid_spread/start(log = FALSE)
@@ -144,7 +147,6 @@
 	var/blame_msg
 	if (holder)
 		holder.transfer_fingerprints_to(flood) // This is important. If this doesn't exist thermobarics are annoying to adjudicate.
-
 		source_msg = "from inside of [ismob(holder) ? ADMIN_LOOKUPFLW(holder) : ADMIN_VERBOSEJMP(holder)]"
 		var/lastkey = holder.fingerprintslast
 		if (lastkey)
@@ -157,4 +159,4 @@
 	var/area/fluid_area = get_area(location)
 	if(!istype(holder, /obj/machinery/plumbing) && !(fluid_area.area_flags & QUIET_LOGS)) //excludes standard plumbing equipment as well as deathmatch from spamming admins with this shit
 		message_admins("\A [flood] flood started at [ADMIN_VERBOSEJMP(location)] [source_msg][blame_msg].")
-	log_game("\A [flood] flood started at [location || "nonexistant location"] [holder ? "from [holder] last touched by [holder || "N/A"]" : "with no known source"].")
+	log_game("\A [flood] flood started at [AREACOORD(location)] [source_msg][blame_msg].")

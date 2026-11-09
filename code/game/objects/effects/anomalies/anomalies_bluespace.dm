@@ -4,13 +4,13 @@
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "bluespace"
 	density = TRUE
-	aSignal = /obj/item/assembly/signaler/anomaly/bluespace
+	anomaly_core = /obj/item/assembly/signaler/anomaly/bluespace
 	///range from which we can teleport someone
 	var/teleport_range = 1
 	///Distance we can teleport someone passively
 	var/teleport_distance = 4
 
-/obj/effect/anomaly/bluespace/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/bluespace/Initialize(mapload, new_lifespan)
 	. = ..()
 	apply_wibbly_filters(src)
 
@@ -24,15 +24,25 @@
 		do_teleport(AM, locate(AM.x, AM.y, AM.z), 8, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/anomaly/bluespace/detonate()
-	var/turf/T = pick(get_area_turfs(impact_area))
-	if(!T)
+	new /obj/effect/temp_visual/circle_wave/bluespace(get_turf(src))
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50)
+
+	var/turf/impact_turf = pick(get_area_turfs(impact_area))
+	if(!impact_turf)
 		return
 
 	// Calculate new position (searches through beacons in world)
 	var/obj/item/beacon/chosen
 	var/list/possible = list()
-	for(var/obj/item/beacon/W in GLOB.teleportbeacons)
-		possible += W
+	for(var/obj/item/beacon/beacon in GLOB.teleportbeacons)
+		var/turf/turf = get_turf(beacon)
+		if(!turf)
+			continue
+		if(is_centcom_level(turf.z) || is_away_level(turf.z))
+			continue
+		if(!check_teleport_valid(src, turf))
+			continue
+		possible += beacon
 
 	if(possible.len > 0)
 		chosen = pick(possible)
@@ -41,39 +51,31 @@
 		return
 
 	// Calculate previous position for transition
-	var/turf/FROM = T // the turf of origin we're travelling FROM
-	var/turf/TO = get_turf(chosen) // the turf of origin we're travelling TO
+	var/turf/beacon_turf = get_turf(chosen) // the turf of origin we're travelling TO
 
-	playsound(TO, 'sound/effects/phasein.ogg', 100, TRUE)
+	playsound(beacon_turf, 'sound/effects/phasein.ogg', 100, TRUE)
 	priority_announce("Massive bluespace translocation detected.", "Anomaly Alert")
 
 	var/list/flashers = list()
-	for(var/mob/living/carbon/C in viewers(TO, null))
-		if(C.flash_act())
-			flashers += C
+	for(var/mob/living/living in viewers(beacon_turf, null))
+		if(living.flash_act(affect_silicon = TRUE, visual = TRUE, type = /atom/movable/screen/fullscreen/bluespace_sparkle, length = 2 SECONDS))
+			flashers += living
 
-	var/y_distance = TO.y - FROM.y
-	var/x_distance = TO.x - FROM.x
-	for (var/atom/movable/A in urange(12, FROM )) // iterate thru list of mobs in the area
-		if(istype(A, /obj/item/beacon))
-			continue // don't teleport beacons because that's just insanely stupid
-		if(iscameramob(A))
-			continue // Don't mess with AI eye, blob eye, xenobio or advanced cameras
-		if(A.anchored)
-			continue
+	var/y_distance = beacon_turf.y - impact_turf.y
+	var/x_distance = beacon_turf.x - impact_turf.x
+	var/list/available_turfs = RANGE_TURFS(12, beacon_turf)
+	for (var/atom/movable/movable in urange(12, impact_turf )) // iterate thru list of mobs in the area
+		if(istype(movable, /obj/item/beacon) || iseffect(movable) || iseyemob(movable))
+			continue // Don't mess with beacons, effects or camera mobs (blob, AI eye etc...)
+		if(movable.anchored)
+			continue // do_teleport doesn't check if the item is anchored or not.
 
-		var/turf/newloc = locate(A.x + x_distance, A.y + y_distance, TO.z) // calculate the new place
-		if(!A.Move(newloc) && newloc) // if the atom, for some reason, can't move, FORCE them to move! :) We try Move() first to invoke any movement-related checks the atom needs to perform after moving
-			A.forceMove(newloc)
+		var/turf/newloc = locate(movable.x + x_distance, movable.y + y_distance, beacon_turf.z) || pick(available_turfs) // calculate the new place, or pick a random one as fallback
+		do_teleport(movable, newloc, no_effects = TRUE)
 
-		if(ismob(A) && !(A in flashers)) // don't flash if we're already doing an effect
-			var/mob/give_sparkles = A
-			if(give_sparkles.client)
-				blue_effect(give_sparkles)
-
-/obj/effect/anomaly/bluespace/proc/blue_effect(mob/make_sparkle)
-	make_sparkle.overlay_fullscreen("bluespace_flash", /atom/movable/screen/fullscreen/bluespace_sparkle, 1)
-	addtimer(CALLBACK(make_sparkle, TYPE_PROC_REF(/mob/, clear_fullscreen), "bluespace_flash"), 2 SECONDS)
+		if(isliving(movable) && !(movable in flashers)) // don't flash if we're already doing an effect
+			var/mob/living/give_sparkles = movable
+			give_sparkles.flash_act(affect_silicon = TRUE, visual = TRUE, type = /atom/movable/screen/fullscreen/bluespace_sparkle, length = 2 SECONDS)
 
 /obj/effect/anomaly/bluespace/stabilize(anchor, has_core)
 	. = ..()
@@ -85,9 +87,9 @@
 	immortal = TRUE
 	teleport_range = 2
 	teleport_distance = 12
-	aSignal = null
+	anomaly_core = null
 
-/obj/effect/anomaly/bluespace/big/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/bluespace/big/Initialize(mapload, new_lifespan)
 	. = ..()
 
 	transform *= 3
@@ -102,3 +104,8 @@
 
 	var/mob/living/living = bumpee
 	living.apply_status_effect(/datum/status_effect/teleport_madness)
+
+/obj/effect/temp_visual/circle_wave/bluespace
+	color = COLOR_BLUE_LIGHT
+	duration = 1 SECONDS
+	amount_to_scale = 5

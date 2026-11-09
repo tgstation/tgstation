@@ -1,8 +1,8 @@
 /obj/item/stamp
-	name = "\improper GRANTED rubber stamp"
+	name = "rubber stamp"
 	desc = "A rubber stamp for stamping important documents."
 	icon = 'icons/obj/service/bureaucracy.dmi'
-	icon_state = "stamp-ok"
+	abstract_type = /obj/item/stamp
 	worn_icon_state = "nothing"
 	inhand_icon_state = "stamp"
 	throwforce = 0
@@ -20,10 +20,11 @@
 	return OXYLOSS
 
 /obj/item/stamp/get_writing_implement_details()
-	var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/simple/paper)
+	var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet/simple/stamps)
 	return list(
 		interaction_mode = MODE_STAMPING,
 		stamp_icon_state = icon_state,
+		stamp_icon = icon,
 		stamp_class = sheet.icon_class_name(icon_state)
 	)
 
@@ -33,6 +34,7 @@
 	dye_color = DYE_LAW
 
 /obj/item/stamp/head
+	abstract_type = /obj/item/stamp/head
 
 /obj/item/stamp/head/Initialize(mapload)
 	. = ..()
@@ -74,6 +76,11 @@
 	icon_state = "stamp-qm"
 	dye_color = DYE_QM
 
+/obj/item/stamp/granted
+	name = "\improper GRANTED rubber stamp"
+	icon_state = "stamp-ok"
+	dye_color = DYE_GREEN
+
 /obj/item/stamp/denied
 	name = "\improper DENIED rubber stamp"
 	icon_state = "stamp-deny"
@@ -87,6 +94,11 @@
 	name = "clown's rubber stamp"
 	icon_state = "stamp-clown"
 	dye_color = DYE_CLOWN
+
+/obj/item/stamp/clown/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWN, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 0)
 
 /obj/item/stamp/mime
 	name = "mime's rubber stamp"

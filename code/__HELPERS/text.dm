@@ -71,7 +71,7 @@
 		return t
 	t = matchMiddle.group[1]
 
-	// Replace any non-space whitespace characters with spaces, and also multiple occurences with just one space
+	// Replace any non-space whitespace characters with spaces, and also multiple occurrences with just one space
 	var/static/regex/matchSpacing = new(@"\s+", "g")
 	t = replacetext(t, matchSpacing, " ")
 
@@ -121,7 +121,7 @@
 	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
-		return copytext(html_encode(user_input), 1, max_length)
+		return copytext_char(html_encode(user_input), 1, max_length)
 	else
 		return trim(html_encode(user_input), max_length) //trim is "outside" because html_encode can expand single symbols into multiple symbols (such as turning < into &lt;)
 
@@ -140,7 +140,7 @@
 	if(isnull(user_input)) // User pressed cancel
 		return
 	if(no_trim)
-		return copytext(html_encode(user_input), 1, max_length)
+		return copytext_char(html_encode(user_input), 1, max_length)
 	else
 		return trim(html_encode(user_input), max_length)
 
@@ -153,11 +153,12 @@
 /**
  * Filters out undesirable characters from names.
  *
- * * strict - return null immidiately instead of filtering out
+ * * strict - return null immediately instead of filtering out
  * * allow_numbers - allows numbers and common special characters - used for silicon/other weird things names
  * * cap_after_symbols - words like Bob's will be capitalized to Bob'S by default. False is good for titles.
+ * * cap_at_start - capitalize the start of words. False is good for modular computer file names.
  */
-/proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE, cap_after_symbols = TRUE)
+/proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE, cap_after_symbols = TRUE, cap_at_start = TRUE)
 	if(!t_in)
 		return //Rejects the input if it is null
 
@@ -169,7 +170,7 @@
 	var/char = ""
 
 	// This is a sanity short circuit, if the users name is three times the maximum allowable length of name
-	// We bail out on trying to process the name at all, as it could be a bug or malicious input and we dont
+	// We bail out on trying to process the name at all, as it could be a bug or malicious input and we don't
 	// Want to iterate all of it.
 	if(t_len > 3 * MAX_NAME_LEN)
 		return
@@ -184,7 +185,7 @@
 
 			// a  .. z
 			if(97 to 122) //Lowercase Letters
-				if(last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED || cap_after_symbols && last_char_group == SYMBOLS_DETECTED) //start of a word
+				if(((last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED) && cap_at_start) || (cap_after_symbols && last_char_group == SYMBOLS_DETECTED)) //start of a word
 					char = uppertext(char)
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
@@ -241,12 +242,7 @@
 	if(last_char_group == SPACES_DETECTED)
 		t_out = copytext_char(t_out, 1, -1) //removes the last character (in this case a space)
 
-	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai")) //prevents these common metagamey names
-		if(cmptext(t_out,bad_name))
-			return //(not case sensitive)
-
-	// Protects against names containing IC chat prohibited words.
-	if(is_ic_filtered(t_out) || is_soft_ic_filtered(t_out))
+	if(!filter_name_ic(t_out))
 		return
 
 	return t_out
@@ -257,6 +253,49 @@
 #undef LETTERS_DETECTED
 
 
+/// Much more permissive version of reject_bad_name().
+/// Returns a trimmed string or null if the name is invalid.
+/// Allows most characters except for IC chat prohibited words.
+/proc/permissive_sanitize_name(value)
+	if(!istext(value)) // Not a string
+		return
+
+	var/name_length = length(value)
+	if(name_length < 3) // Too short
+		return
+
+	if(name_length > 3 * MAX_NAME_LEN) // Bad input
+		return
+
+	var/trimmed = trim(value, MAX_NAME_LEN)
+	if(!filter_name_ic(trimmed)) // Contains IC chat prohibited words
+		return
+
+	return trim(trimmed)
+
+
+/// Helper proc to check if a name is valid for the IC filter
+/proc/filter_name_ic(name)
+	for(var/bad_name in list("space", "floor", "wall", "r-wall", "monkey", "unknown", "inactive ai")) //prevents these common metagamey names
+		if(cmptext(name, bad_name))
+			return FALSE //(not case sensitive)
+
+	// Protects against names containing IC chat prohibited words.
+	if(is_ic_filtered(name) || is_soft_ic_filtered(name))
+		return FALSE
+
+	return TRUE
+
+/proc/filter_illegal_filename_chars(name)
+	var/regex/illegal_chars = new("\[\\/:*?\"<>|]", "g")
+	return !findtext(name, illegal_chars)
+
+/proc/filter_filename_pda(name)
+	if(is_ic_filtered_for_pdas(name) || is_soft_ic_filtered_for_pdas(name))
+		return FALSE
+	if(!filter_illegal_filename_chars(name))
+		return FALSE
+	return TRUE
 
 //html_encode helper proc that returns the smallest non null of two numbers
 //or 0 if they're both null (needed because of findtext returning 0 when a value is not present)
@@ -309,24 +348,6 @@
 			return copytext(text, 1, i + 1)
 	return ""
 
-//Returns a string with reserved characters and spaces after the first and last letters removed
-//Like trim(), but very slightly faster. worth it for niche usecases
-/proc/trim_reduced(text)
-	var/starting_coord = 1
-	var/text_len = length(text)
-	for (var/i in 1 to text_len)
-		if (text2ascii(text, i) > 32)
-			starting_coord = i
-			break
-
-	for (var/i = text_len, i >= starting_coord, i--)
-		if (text2ascii(text, i) > 32)
-			return copytext(text, starting_coord, i + 1)
-
-	if(starting_coord > 1)
-		return copytext(text, starting_coord)
-	return ""
-
 /**
  * Truncate a string to the given length
  *
@@ -340,26 +361,29 @@
  */
 /proc/truncate(text, max_length)
 	if(length(text) > max_length)
-		return copytext(text, 1, max_length)
+		return copytext_char(text, 1, max_length)
 	return text
 
-//Returns a string with reserved characters and spaces before the first word and after the last word removed.
+/// Returns a string with reserved characters and spaces before the first word and after the last word removed.
 /proc/trim(text, max_length)
 	if(max_length)
 		text = copytext_char(text, 1, max_length)
-	return trim_reduced(text)
+	return trimtext(text) || "" //users expect atleast an empty string
 
-//Returns a string with the first element of the string capitalized.
-/proc/capitalize(t)
+/// Returns a string with the first word of the string capitalized.
+/proc/capitalize(input)
+	return replacetext(input, regex(@"[^A-z]*?([A-z]*)"), /proc/capitalize_word)
+
+/// Returns a string with the first letter of each word capitialized
+/proc/full_capitalize(input)
+	return replacetext(input, regex(@"[^A-z]*?([A-z]*)", "g"), /proc/capitalize_word)
+
+/// Capitalizes the first symbol in a passed string. Unsafe when used with BYOND string macros, use capitalize() instead!
+/proc/capitalize_word(t)
 	. = t
 	if(t)
 		. = t[1]
 		return uppertext(.) + copytext(t, 1 + length(.))
-
-///Returns a string with the first letter of each word capitialized
-/proc/full_capitalize(input)
-	var/regex/first_letter = new(@"[^A-z]*?([A-z]*)", "g")
-	return replacetext(input, first_letter, /proc/capitalize)
 
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever
@@ -434,6 +458,9 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 /proc/random_color()
 	return random_string(6, GLOB.hex_characters)
+
+/proc/ready_random_color()
+	return "#" + random_string(6, GLOB.hex_characters)
 
 //merges non-null characters (3rd argument) from "from" into "into". Returns result
 //e.g. into = "Hello World"
@@ -1015,7 +1042,11 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 
 	return corrupted_text
 
-#define is_alpha(X) ((text2ascii(X) <= 122) && (text2ascii(X) >= 97))
+/// Checks if the char is lowercase
+#define is_lowercase_character(X) ((text2ascii(X) <= 122) && (text2ascii(X) >= 97))
+/// Checks if the char is uppercase
+#define is_uppercase_character(X) ((text2ascii(X) <= 90) && (text2ascii(X) >= 65))
+/// Checks if the char is a digit
 #define is_digit(X) ((length(X) == 1) && (length(text2num(X)) == 1))
 
 //json decode that will return null on parse error instead of runtiming.
@@ -1111,8 +1142,8 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return word
 	var/first_letter = copytext(word, 1, 2)
 	var/first_two_letters = copytext(word, 1, 3)
-	var/first_word_is_vowel = (first_letter in list("a", "e", "i", "o", "u"))
-	var/second_word_is_vowel = (copytext(word, 2, 3) in list("a", "e", "i", "o", "u"))
+	var/first_word_is_vowel = (first_letter in VOWELS)
+	var/second_word_is_vowel = (copytext(word, 2, 3) in VOWELS)
 	//If a word starts with a vowel add the word "way" at the end of the word.
 	if(first_word_is_vowel)
 		return word + pick("yay", "way", "hay") //in cultures around the world it's different, so heck lets have fun and make it random. should still be readable
@@ -1175,6 +1206,16 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		else
 			. = ""
 
+/proc/weight_class_to_tooltip(w_class)
+	switch(w_class)
+		if(WEIGHT_CLASS_TINY to WEIGHT_CLASS_SMALL)
+			return "This item can fit into pockets, boxes and backpacks."
+		if(WEIGHT_CLASS_NORMAL)
+			return "This item can fit into backpacks."
+		if(WEIGHT_CLASS_BULKY to WEIGHT_CLASS_GIGANTIC)
+			return "This item is too large to fit into any standard storage."
+	return ""
+
 /// Removes all non-alphanumerics from the text, keep in mind this can lead to id conflicts
 /proc/sanitize_css_class_name(name)
 	var/static/regex/regex = new(@"[^a-zA-Z0-9]","g")
@@ -1197,9 +1238,51 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	var/input_length = LAZYLEN(ending)
 	return !!findtext(input_text, ending, -input_length)
 
+/// Returns TRUE if the input_text starts with any of the beginnings
+/proc/starts_with_any(input_text, list/beginnings)
+	for(var/beginning in beginnings)
+		if(!!findtext(input_text, beginning, 1, LAZYLEN(beginning)+1))
+			return TRUE
+	return FALSE
+
 /// Generate a grawlix string of length of the text argument.
 /proc/grawlix(text)
 	var/grawlix = ""
 	for(var/iteration in 1 to length_char(text))
 		grawlix += pick("@", "$", "?", "!", "#", "§", "*", "£", "%", "☠", "★", "☆", "¿", "⚡")
 	return grawlix
+
+/// All punctuation that can be stripped in strip_outer_punctuation()
+#define STRIPPED_PUNCTUATION (REGEX_QUOTE("!?.~;:,|+_`-"))
+
+/// Removes all punctuation sequences from the beginning and the end of the input string.
+/// Includes emphasis (|, +, _) and whitespace.
+/// Anything punctuation in the middle of the input will be maintained.
+/proc/strip_outer_punctuation(input)
+	var/static/regex/pre_word_regex = new("^(?:\[[STRIPPED_PUNCTUATION]\]{0,3})(.*)", "m")
+	if(pre_word_regex.Find(input))
+		input = pre_word_regex.group[1]
+
+	var/static/regex/post_word_regex = new("^(.*?)(?:\[[STRIPPED_PUNCTUATION]\]{0,3})$", "m")
+	if(post_word_regex.Find(input))
+		return trim(post_word_regex.group[1])
+
+	return trim(input)
+
+#undef STRIPPED_PUNCTUATION
+
+/// Find what punctuation is at the end of the input, returns it.
+/// Ignores emphasis (|, +, _)
+/proc/find_last_punctuation(input)
+	var/static/regex/punctuation_regex = new(@"([!?.~;:,-]{1,3})[|+_\s]*$", "m")
+	if(punctuation_regex.Find(input))
+		return punctuation_regex.group[1]
+
+	return ""
+
+/// Checks if the passed string is all uppercase, ignoring punctuation and numbers and symbols
+/proc/is_uppercase(input)
+	var/static/regex/lowercase_regex = new(@"[a-z]", "g")
+	if(lowercase_regex.Find(input))
+		return FALSE
+	return TRUE

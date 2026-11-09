@@ -1,7 +1,6 @@
 /datum/job/atmospheric_technician
 	title = JOB_ATMOSPHERIC_TECHNICIAN
 	description = "Ensure the air is breathable on the station, fill oxygen tanks, fight fires, purify the air."
-	department_head = list(JOB_CHIEF_ENGINEER)
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 2
@@ -37,6 +36,7 @@
 
 	job_flags = STATION_JOB_FLAGS
 	rpg_title = "Aeromancer"
+	tgui_icon = FA_ICON_FAN
 
 /datum/outfit/job/atmos
 	name = "Atmospheric Technician"
@@ -47,7 +47,7 @@
 	suit = /obj/item/clothing/suit/atmos_overalls
 	belt = /obj/item/storage/belt/utility/atmostech
 	ears = /obj/item/radio/headset/headset_eng
-	l_pocket = /obj/item/modular_computer/pda/atmos
+	l_pocket = /obj/item/modular_computer/pda/crew/atmos
 	r_pocket = /obj/item/analyzer
 
 	backpack = /obj/item/storage/backpack/industrial
@@ -57,6 +57,9 @@
 
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
+	skillchips = list(/obj/item/skillchip/job/engineer/atmos)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
 
 /datum/outfit/job/atmos/mod
 	name = "Atmospheric Technician (MODsuit)"

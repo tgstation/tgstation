@@ -1,6 +1,6 @@
 
 /obj/machinery/computer/pandemic
-	name = "PanD.E.M.I.C 2200"
+	name = "\improper PanD.E.M.I.C 2200"
 	desc = "Used to work with viruses."
 	density = TRUE
 	icon = 'icons/obj/medical/chemical.dmi'
@@ -10,12 +10,13 @@
 	base_icon_state = "pandemic"
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic
+	generate_map_preview = FALSE
 
 	/// Whether the pandemic is ready to make another culture/vaccine
-	var/wait
-	/// The currently selected symptom
+	var/wait = FALSE
+	///The currently selected symptom
 	var/datum/symptom/selected_symptom
-	/// The inserted beaker
+	///The inserted beaker
 	var/obj/item/reagent_containers/beaker
 
 /obj/machinery/computer/pandemic/Initialize(mapload)
@@ -78,35 +79,35 @@
 	if(gone == beaker)
 		beaker = null
 		update_appearance()
+		SStgui.update_uis(src)
 
-/obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, params)
-	//Advanced science! Percision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
-	if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
+/obj/machinery/computer/pandemic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	//Advanced science! Precision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
+	if(istype(tool, /obj/item/reagent_containers/dropper) || istype(tool, /obj/item/reagent_containers/syringe))
 		if(!beaker)
 			balloon_alert(user, "no beaker!")
-			return ..()
-		var/list/modifiers = params2list(params)
-		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
-			held_item.afterattack_secondary(beaker, user, Adjacent(user), params)
+			return ITEM_INTERACT_BLOCKING
+		if(istype(tool, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
+			tool.interact_with_atom_secondary(beaker, user)
 		else
-			held_item.afterattack(beaker, user, Adjacent(user), params)
+			tool.interact_with_atom(beaker, user)
 		SStgui.update_uis(src)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(!is_reagent_container(held_item) || held_item.item_flags & ABSTRACT || !held_item.is_open_container())
-		return ..()
-	. = TRUE //no afterattack
+	if(!is_reagent_container(tool) || tool.item_flags & ABSTRACT || !tool.is_open_container())
+		return NONE
 	if(machine_stat & (NOPOWER|BROKEN))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	if(beaker)
-		balloon_alert(user, "pandemic full!")
-		return ..()
-	if(!user.transferItemToLoc(held_item, src))
-		return ..()
-	beaker = held_item
-	balloon_alert(user, "beaker loaded")
+		balloon_alert(user, "beaker swapped")
+		try_put_in_hand(beaker, usr)
+	else
+		balloon_alert(user, "beaker loaded")
+	user.transferItemToLoc(tool, src)
+	beaker = tool
 	update_appearance()
 	SStgui.update_uis(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/pandemic/on_deconstruction(disassembled)
 	eject_beaker()
@@ -141,19 +142,19 @@
 		"volume" = round(beaker.reagents?.total_volume, 0.01) || 0,
 		"capacity" = beaker.volume,
 	)
-	var/datum/reagent/blood/blood = locate() in beaker.reagents.reagent_list
+	var/datum/reagent/blood = get_blood_reagent()
 	if(!blood)
 		data["has_blood"] = FALSE
 		return data
 	data["has_blood"] = TRUE
 	data["blood"] = list()
-	data["blood"]["dna"] = blood.data["blood_DNA"] || "none"
-	data["blood"]["type"] = blood.data["blood_type"] || "none"
+	data["blood"]["dna"] = blood.data[BLOOD_DATA_DNA] || "none"
+	data["blood"]["type"] = blood.data[BLOOD_DATA_TYPE] || "none"
 	data["viruses"] = get_viruses_data(blood)
 	data["resistances"] = get_resistance_data(blood)
 	return data
 
-/obj/machinery/computer/pandemic/ui_act(action, params)
+/obj/machinery/computer/pandemic/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -195,12 +196,14 @@
 /obj/machinery/computer/pandemic/proc/create_culture_bottle(index)
 	var/id = get_virus_id_by_index(text2num(index))
 	var/datum/disease/advance/adv_disease = SSdisease.archive_diseases[id]
+
 	if(!istype(adv_disease) || !adv_disease.mutable)
 		to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
 		return FALSE
 	use_energy(active_power_usage)
 	adv_disease = adv_disease.Copy()
 	var/list/data = list("viruses" = list(adv_disease))
+
 	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())
 	bottle.name = "[adv_disease.name] culture tube"
 	bottle.desc = "A small test tube containing [adv_disease.agent] culture in synthblood medium."
@@ -211,6 +214,12 @@
 	log_virus("A culture tube was printed for the virus [adv_disease.admin_details()] at [loc_name(source_turf)] by [key_name(usr)]")
 	addtimer(CALLBACK(src, PROC_REF(reset_replicator_cooldown)), 5 SECONDS)
 	return TRUE
+
+/// Tries to locate a reagent with valid blood_type data
+/obj/machinery/computer/pandemic/proc/get_blood_reagent()
+	for (var/datum/reagent/reagent as anything in beaker?.reagents?.reagent_list)
+		if (reagent.data?[BLOOD_DATA_TYPE])
+			return reagent
 
 /**
  * Creates a vaccine bottle for the specified disease.
@@ -295,9 +304,9 @@
  *
  * @returns {list} - A list of virus info present in the sample.
  */
-/obj/machinery/computer/pandemic/proc/get_viruses_data(datum/reagent/blood/blood)
+/obj/machinery/computer/pandemic/proc/get_viruses_data(datum/reagent/blood)
 	var/list/data = list()
-	var/list/viruses = blood.get_diseases()
+	var/list/viruses = blood.data?["viruses"]
 	var/index = 1
 	for(var/datum/disease/disease as anything in viruses)
 		if(!istype(disease) || disease.visibility_flags & HIDDEN_PANDEMIC)
@@ -318,6 +327,7 @@
 			traits["resistance"] = adv_disease.totalResistance()
 			traits["stage_speed"] = adv_disease.totalStageSpeed()
 			traits["stealth"] = adv_disease.totalStealth()
+			traits["severity"] = adv_disease.totalSeverity()
 			traits["symptoms"] = list()
 			for(var/datum/symptom/symptom as anything in adv_disease.symptoms)
 				var/list/this_symptom = list()

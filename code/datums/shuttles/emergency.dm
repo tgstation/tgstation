@@ -3,6 +3,7 @@
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
 	name = "Base Shuttle Template (Emergency)"
+	prefix = "_maps/shuttles/emergency/"
 	///assoc list of shuttle events to add to this shuttle on spawn (typepath = weight)
 	var/list/events
 	///pick all events instead of random
@@ -31,13 +32,13 @@
 		mobile.event_list.Cut()
 	if(use_all_events)
 		for(var/path in events)
-			mobile.event_list.Add(new path(mobile))
+			mobile.add_shuttle_event(path)
 			events -= path
 	else
 		for(var/i in 1 to event_amount)
 			var/path = pick_weight(events)
 			events -= path
-			mobile.event_list.Add(new path(mobile))
+			mobile.add_shuttle_event(path)
 
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"
@@ -47,17 +48,20 @@
 /datum/map_template/shuttle/emergency/construction
 	suffix = "construction"
 	name = "Build your own shuttle kit"
-	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials. Unlocks the ability to buy shuttle engine crates from cargo, which allow you to speed up shuttle transit time."
+	description = "For the enterprising shuttle engineer! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
 	admin_notes = "No brig, no medical facilities."
 	credit_cost = CARGO_CRATE_VALUE * 5
 	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_CE)
 	occupancy_limit = "Flexible"
 
-/datum/map_template/shuttle/emergency/construction/post_load()
-	. = ..()
-	//enable buying engines from cargo
-	var/datum/supply_pack/P = SSshuttle.supply_packs[/datum/supply_pack/engineering/shuttle_engine]
-	P.special_enabled = TRUE
+/datum/map_template/shuttle/emergency/constructionbig
+	suffix = "constructionbig"
+	name = "Build your own CRUISER kit"
+	description = "This is the big brother of the construction kit, with more space for your shuttle-building ideas! The chassis will dock upon purchase, but launch will have to be authorized as usual via shuttle call. Comes stocked with construction materials."
+	admin_notes = "No brig, no medical facilities."
+	credit_cost = CARGO_CRATE_VALUE * 30
+	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_CE)
+	occupancy_limit = "Flexible and more"
 
 /datum/map_template/shuttle/emergency/asteroid
 	suffix = "asteroid"
@@ -90,7 +94,7 @@
 	suffix = "bar"
 	name = "The Emergency Escape Bar"
 	description = "Features include sentient bar staff (a Bardrone and a Barmaid), bathroom, a quality lounge for the heads, and a large gathering table."
-	admin_notes = "Bardrone and Barmaid are GODMODE, will be automatically sentienced by the fun balloon at 60 seconds before arrival. \
+	admin_notes = "Bardrone and Barmaid have TRAIT_GODMODE (basically invincibility), will be automatically sentienced by the fun balloon at 60 seconds before arrival. \
 	Has medical facilities."
 	credit_cost = CARGO_CRATE_VALUE * 10
 	occupancy_limit = "30"
@@ -164,7 +168,7 @@
 /datum/map_template/shuttle/emergency/arena
 	suffix = "arena"
 	name = "The Arena"
-	description = "The crew must pass through an otherworldy arena to board this shuttle. Expect massive casualties."
+	description = "The crew must pass through an otherworldly arena to board this shuttle. Expect massive casualties."
 	prerequisites = "The source of the Bloody Signal must be tracked down and eliminated to unlock this shuttle."
 	admin_notes = "RIP AND TEAR."
 	credit_cost = CARGO_CRATE_VALUE * 20
@@ -241,7 +245,7 @@
 	suffix = "kilo"
 	name = "Kilo Station Emergency Shuttle"
 	credit_cost = CARGO_CRATE_VALUE * 10
-	description = "A fully functional shuttle including a complete infirmary, storage facilties and regular amenities."
+	description = "A fully functional shuttle including a complete infirmary, storage facilities and regular amenities."
 	occupancy_limit = "55"
 
 /datum/map_template/shuttle/emergency/mini
@@ -265,18 +269,36 @@
 	description = "We pulled this one out of Mothball just for you!"
 	occupancy_limit = "40"
 
+
+/datum/map_template/shuttle/emergency/emergency_catwalk
+	suffix = "catwalk"
+	name = "Catwalk Station Emergency Shuttle"
+	credit_cost = CARGO_CRATE_VALUE * 5
+	description = "A standard sized shuttle, featuring a medbay and brig, along with an elevated bridge."
+	occupancy_limit = "40"
+
+/datum/map_template/shuttle/emergency/wawa
+	suffix = "wawa"
+	name = "Wawa Stand-in Emergency Shuttle"
+	description = "Due to a recent clerical error in the funding department, a lot of funding went to lizard plushies. Due to the costs, Nanotrasen has supplied a nearby garbage truck as a stand-in. Better learn how to share spots."
+	credit_cost = CARGO_CRATE_VALUE * 6
+	occupancy_limit = "25"
+
 /datum/map_template/shuttle/emergency/scrapheap
 	suffix = "scrapheap"
 	name = "Standby Evacuation Vessel \"Scrapheap Challenge\""
 	credit_cost = CARGO_CRATE_VALUE * -18
 	description = "Comrade! We see you are having trouble with money, yes? If you have money issue, very little money, we are looking for good shuttle, emergency shuttle. You take best in sector shuttle, we take yours, you get money, da? Please do not lean on window, fragile like fina china. -Ivan"
-	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight. When bought, gives a good influx of money, but can only be bought if the budget is literally 0 credits."
+	admin_notes = "A randomly assembled, modular abomination. May have no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight. When bought, gives a good influx of money, but can only be bought if the budget is literally 0 credits."
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 	occupancy_limit = "30"
 	prerequisites = "This shuttle is only offered for purchase when the station is low on funds."
 
 /datum/map_template/shuttle/emergency/scrapheap/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_SCRAPHEAP]
+
+/obj/modular_map_root/scrapheapchallenge
+	config_file = "strings/modular_maps/emergency_scrapheap.toml"
 
 /datum/map_template/shuttle/emergency/narnar
 	suffix = "narnar"
@@ -393,15 +415,15 @@
 /datum/map_template/shuttle/emergency/monkey
 	suffix = "nature"
 	name = "Dynamic Environmental Interaction Shuttle"
-	description = "A large shuttle with a center biodome that is flourishing with life. Frolick with the monkeys! (Extra monkeys are stored on the bridge.)"
-	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Excercise caution with it."
+	description = "A large shuttle with a center biodome that is flourishing with life. Frolic with the monkeys! (Extra monkeys are stored on the bridge.)"
+	admin_notes = "Pretty freakin' large, almost as big as Raven or Cere. Exercise caution with it."
 	credit_cost = CARGO_CRATE_VALUE * 16
 	occupancy_limit = "45"
 
 /datum/map_template/shuttle/emergency/casino
 	suffix = "casino"
 	name = "Lucky Jackpot Casino Shuttle"
-	description = "A luxurious casino packed to the brim with everything you need to start new gambling addicitions!"
+	description = "A luxurious casino packed to the brim with everything you need to start new gambling addictions!"
 	admin_notes = "The ship is a bit chunky, so watch where you park it."
 	credit_cost = 7777
 	occupancy_limit = "85"
@@ -417,7 +439,7 @@
 /datum/map_template/shuttle/emergency/fish
 	suffix = "fish"
 	name = "Angler's Choice Emergency Shuttle"
-	description = "Trades such amenities as 'storage space' and 'sufficient seating' for an artifical environment ideal for fishing, plus ample supplies (also for fishing)."
+	description = "Trades such amenities as 'storage space' and 'sufficient seating' for an artificial environment ideal for fishing, plus ample supplies (also for fishing)."
 	admin_notes = "There's a chasm in it, it has railings but that won't stop determined players."
 	credit_cost = CARGO_CRATE_VALUE * 10
 	occupancy_limit = "35"
@@ -425,7 +447,7 @@
 /datum/map_template/shuttle/emergency/lance
 	suffix = "lance"
 	name = "The Lance Crew Evacuation System"
-	description = "A brand new shuttle by Nanotrasen's finest in shuttle-engineering, it's designed to tactically slam into a destroyed station, dispatching threats and saving crew at the same time! Be careful to stay out of it's path."
+	description = "A brand new shuttle by Nanotrasen's finest in shuttle-engineering, it's designed to tactically slam into a destroyed station, dispatching threats and saving crew at the same time! Be careful to stay out of its path."
 	admin_notes = "WARNING: This shuttle is designed to crash into the station. It has turrets, similar to the raven."
 	credit_cost = CARGO_CRATE_VALUE * 70
 	occupancy_limit = "50"
@@ -470,6 +492,14 @@
 	credit_cost = CARGO_CRATE_VALUE * 14
 	occupancy_limit = "55"
 
+/datum/map_template/shuttle/emergency/nebula
+	suffix = "nebula"
+	name = "Nebula Station Emergency Shuttle"
+	description = "AAn excellent luxury shuttle for transporting a large number of passengers. \
+	It is richly equipped with bushes and free oxygen"
+	credit_cost = CARGO_CRATE_VALUE * 18
+	occupancy_limit = "80"
+
 /datum/map_template/shuttle/emergency/raven
 	suffix = "raven"
 	name = "CentCom Raven Cruiser"
@@ -492,5 +522,132 @@
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
+
+/datum/map_template/shuttle/emergency/tombstone
+	suffix = "tombstone"
+	name = "The NTSS Tombstone"
+	description = "Specifically commissioned for cleanups involving bio hazards, zombie outbreaks, or flesh-eating plagues. Features burial plots, reinforced morgue trays, and a crematorium. It's safe, airtight, and ensures you won't bite your coworkers during transit!"
+	admin_notes = "The aft of the ship has a miasma tank behind the curator room. May get released by crew. There are also random spawners in the crypt graves that has a chance to spawn a one use spectral musical instrument."
+	credit_cost = CARGO_CRATE_VALUE * 15
+	occupancy_limit = "40"
+	prerequisites = "This shuttle requires a biohazard outbreak to occur before it can be purchased."
+
+/datum/map_template/shuttle/emergency/tombstone/prerequisites_met()
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE]
+
+/datum/map_template/shuttle/emergency/ark
+	suffix = "ark"
+	name = "The Ark"
+	description = "A specialized mobile zoo and research transport. The main passenger lounges are built directly alongside containment cells housing various friendly, exotic, and hostile alien specimens."
+	prerequisites = "You will need to obtain all samples for the station's DNA Vault goal."
+	admin_notes = "Packed with various fauna, including hostile and passive exotic mobs in enclosures."
+	credit_cost = CARGO_CRATE_VALUE * 25
+	occupancy_limit = "70"
+
+/datum/map_template/shuttle/emergency/ark/prerequisites_met()
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ARK]
+
+/datum/map_template/shuttle/emergency/departmental
+	who_can_purchase = null
+	admin_notes = "Parent shuttle for other departmental shuttles."
+	///requires a job_department datum to present it to communications console.
+	var/department_type = null
+	///requires a name of department to send it to ui.
+	var/department_name = ""
+	occupancy_limit = "null"
+
+/datum/map_template/shuttle/emergency/departmental/command
+	suffix = "dep_cap"
+	name = "Command Emergency Shuttle"
+	description = "It could have been some oligarch's personal shuttle, but the union wouldn't let us make a deal, \
+	so this shuttle is being put into operation as an elite shuttle."
+	admin_notes = "Has Shutters and an Axe in bridge area."
+	credit_cost = CARGO_CRATE_VALUE * 17.5
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/command
+	department_name = DEPARTMENT_COMMAND
+	occupancy_limit = "40, also 7 people can take part in banquet."
+
+/datum/map_template/shuttle/emergency/departmental/civil
+	suffix = "dep_civ"
+	name = "Assistants Emergency Shuttle"
+	description = "A shuttle designed to satisfy assistants' wishes. Converted into Maintenance Rooms."
+	admin_notes = "Maintenance Shuttle."
+	credit_cost = CARGO_CRATE_VALUE * 5.5
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/assistant
+	department_name = DEPARTMENT_ASSISTANT
+	occupancy_limit = "Fine for a bunch of assistans."
+
+/datum/map_template/shuttle/emergency/departmental/engineering
+	suffix = "dep_eng"
+	name = "Engineering Emergency Shuttle"
+	description = "According to the engineers, the laws of physics reports that the shuttle cannot fly without energy, \
+	so we installed supermatter shard and atmos shuttle with turbine and mixing chamber."
+	admin_notes = "Has inactive supermatter shard, axe, insuls, free engi vending machines and electrified grilles, if engineers powers the shuttle."
+	credit_cost = CARGO_CRATE_VALUE * 15.5
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/engineering
+	department_name = DEPARTMENT_ENGINEERING
+	occupancy_limit = "20"
+
+/datum/map_template/shuttle/emergency/departmental/medical
+	suffix = "dep_med"
+	name = "Medical Emergency Shuttle"
+	description = "Someone decided that driving a shuttle and treating people is very convenient, \
+	so they decided to please the surgeons who perform heart operations and launched medical shuttle with a treating center, virology and chemistry lab."
+	admin_notes = "Has functioning pharmacy and virology."
+	credit_cost = CARGO_CRATE_VALUE * 12
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/medical
+	department_name = DEPARTMENT_MEDICAL
+	occupancy_limit = "30 lives bodies and 1 dead body."
+
+/datum/map_template/shuttle/emergency/departmental/science
+	suffix = "dep_sci"
+	name = "Science Emergency Shuttle"
+	description = "We're so fed up with scientists that we built a separate shuttle for them. \
+	We took real asteroid to build up ordnance lab and extension to xenobiology."
+	admin_notes = "Has functional R&D."
+	credit_cost = CARGO_CRATE_VALUE * 10
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/science
+	department_name = DEPARTMENT_SCIENCE
+	occupancy_limit = "50"
+
+/datum/map_template/shuttle/emergency/departmental/security
+	suffix = "dep_sec"
+	name = "Security Emergency Shuttle"
+	description = "Created in honor of the Security Officer, who saved head of CC Representative. \
+	He was a very good man, until he died at the hands of a traitor."
+	admin_notes = "Has 2 prison cells, 1 holding cell and permabrig instead of seating area."
+	credit_cost = CARGO_CRATE_VALUE * 16
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/security
+	department_name = DEPARTMENT_SECURITY
+	occupancy_limit = "40 in prison crew and 10 freedom crew."
+
+/datum/map_template/shuttle/emergency/departmental/service
+	suffix = "dep_srv"
+	name = "Service Emergency Shuttle"
+	description = "Shuttle is built solely for bar hopping and has no tool storage or medbay."
+	admin_notes = "Shuttle is spacious, but many important things for a shuttle are missing."
+	credit_cost = CARGO_CRATE_VALUE * 8
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/service
+	department_name = DEPARTMENT_SERVICE
+	occupancy_limit = "30"
+
+/datum/map_template/shuttle/emergency/departmental/cargo
+	suffix = "dep_sup"
+	name = "Cargo Emergency Shuttle"
+	description = "It was built by order of the Cargotic separatists. \
+	Don't worry, every single one of the separatists has already been jailed. Project was that good, that we made that for public sale."
+	admin_notes = "Has unloaded rocket launcher and express suply console."
+	credit_cost = CARGO_CRATE_VALUE * 9.5
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/cargo
+	department_name = DEPARTMENT_CARGO
+	occupancy_limit = "40"
 
 #undef EMAG_LOCKED_SHUTTLE_COST

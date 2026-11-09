@@ -1,9 +1,12 @@
 /obj/projectile/bullet/incendiary
 	damage = 20
+	icon_state = "infernoshot"
 	/// How many firestacks to apply to the target
 	var/fire_stacks = 4
 	/// If TRUE, leaves a trail of hotspots as it flies, very very chaotic
-	var/leaves_fire_trail = TRUE
+	var/leaves_fire_trail = FALSE
+	/// If defined, determines how big of a blast of fire is left by the incendiary slug
+	var/fireblast_radius = 1
 
 /obj/projectile/bullet/incendiary/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -11,6 +14,10 @@
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(fire_stacks)
 		M.ignite_mob()
+
+	if(fireblast_radius)
+		for(var/turf/nearby_turf as anything in RANGE_TURFS(fireblast_radius, target))
+			new /obj/effect/hotspot(nearby_turf)
 
 /obj/projectile/bullet/incendiary/Move()
 	. = ..()
@@ -30,16 +37,18 @@
 	pass_flags = PASSTABLE | PASSMOB
 	sharpness = NONE
 	shrapnel_type = null
-	embedding = null
+	embed_type = null
 	impact_effect_type = null
 	suppressed = SUPPRESSED_VERY
 	damage_type = BURN
 	armor_flag = BOMB
-	speed = 1.2
+	speed = 0.8
 	wound_bonus = 30
-	bare_wound_bonus = 30
+	exposed_wound_bonus = 30
 	wound_falloff_tile = -4
 	fire_stacks = 3
+	leaves_fire_trail = TRUE
+	fireblast_radius = null
 
 /obj/projectile/bullet/incendiary/fire/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -69,7 +78,7 @@
 	var/turf/current_turf = get_turf(src)
 	if(!current_turf)
 		return
-	var/turf/throw_at_turf = get_turf_in_angle(Angle, current_turf, 7)
+	var/turf/throw_at_turf = get_turf_in_angle(angle, current_turf, 7)
 	var/thrown_items = 0
 
 	for(var/iter in current_turf.contents)
@@ -84,7 +93,7 @@
 			LAZYADD(launched_items, iter_item)
 		else if(isliving(iter))
 			var/mob/living/incineratee = iter
-			incineratee.take_bodypart_damage(0, damage, check_armor = TRUE, wound_bonus=wound_bonus, bare_wound_bonus=bare_wound_bonus)
+			incineratee.take_bodypart_damage(0, damage, check_armor = TRUE, wound_bonus=wound_bonus, exposed_wound_bonus=exposed_wound_bonus)
 			incineratee.adjust_fire_stacks(fire_stacks)
 
 #undef BACKBLAST_MAX_ITEM_KNOCKBACK

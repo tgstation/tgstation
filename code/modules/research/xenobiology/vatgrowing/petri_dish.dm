@@ -5,6 +5,7 @@
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "petri_dish"
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	///The sample stored on the dish
 	var/datum/biological_sample/sample
 
@@ -26,11 +27,8 @@
 		var/datum/micro_organism/MO = i
 		. += MO.get_details()
 
-/obj/item/petri_dish/pre_attack(atom/A, mob/living/user, params)
+/obj/item/petri_dish/wash(clean_types)
 	. = ..()
-	if(!sample || !istype(A, /obj/structure/sink))
-		return FALSE
-	to_chat(user, span_notice("You wash the sample out of [src]."))
 	sample = null
 	update_appearance()
 
@@ -39,8 +37,7 @@
 	if(!sample)
 		return
 	var/reagentcolor = sample.sample_color
-	var/mutable_appearance/base_overlay = mutable_appearance(icon, "petri_dish_overlay")
-	base_overlay.appearance_flags = RESET_COLOR
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, "petri_dish_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
 	base_overlay.color = reagentcolor
 	. += base_overlay
 	var/mutable_appearance/overlay2 = mutable_appearance(icon, "petri_dish_overlay2")
@@ -59,6 +56,7 @@
 		list(CELL_LINE_TABLE_COCKROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7),
 		list(CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	)
+	name = "basic sample petri dish"
 
 /obj/item/petri_dish/random/Initialize(mapload)
 	. = ..()

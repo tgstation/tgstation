@@ -8,7 +8,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	override_notes = TRUE
 	///What sound should play when this ammo is fired
 	var/fire_sound = null
@@ -16,6 +16,8 @@
 	var/caliber = null
 	///The bullet type to create when New() is called
 	var/projectile_type = null
+	///Muzzle flash color based on ammo casing.
+	var/muzzle_flash_color = LIGHT_COLOR_ORANGE
 	///the loaded projectile in this ammo casing
 	var/obj/projectile/loaded_projectile = null
 	///Pellets for spreadshot
@@ -32,6 +34,16 @@
 	var/firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
 	///pacifism check for boolet, set to FALSE if bullet is non-lethal
 	var/harmful = TRUE
+	/// How much force is applied when fired in zero-G
+	var/newtonian_force = 1
+
+	///Determines the pressure created by this casing. Most casings are AMMO_CASING_PRESSURE_MEDIUM. If the gun firing the casing has a lower pressure threshold, we start damaging the gun.
+	var/casing_pressure = AMMO_CASING_PRESSURE_MEDIUM
+	///This is how much misfire probability is added to the gun when it fires this casing if it is above the guns pressure threshold.
+	var/misfire_increment = 5
+
+	/// Set when this casing is fired. Only used for checking if it should burn a user's hand when caught from an ejection port.
+	var/shot_timestamp = 0
 
 /obj/item/ammo_casing/spent
 	name = "spent bullet casing"
@@ -72,6 +84,15 @@
 	if(!ispath(exam_proj) || pellets == 0)
 		return
 
+	var/pressure_readout = "an indescribable"
+	switch(casing_pressure)
+		if(-INFINITY to AMMO_CASING_PRESSURE_LOW)
+			pressure_readout = "a low"
+		if(AMMO_CASING_PRESSURE_MEDIUM)
+			pressure_readout = "a standard"
+		if(AMMO_CASING_PRESSURE_EXTREME to INFINITY)
+			pressure_readout = "an extreme"
+
 	// are we in an ammo box?
 	if(isammobox(loc))
 		var/obj/item/ammo_box/our_box = loc
@@ -86,6 +107,7 @@
 		// grab the damage multiplier.
 		proj_damage_mult = our_gun.projectile_damage_multiplier
 	var/list/readout = list()
+	readout += "This round exerts [pressure_readout] amount of chamber pressure when fired."
 	if(proj_damage_mult <= 0 || (initial_damage <= 0 && initial_stamina <= 0))
 		return "Our legal team has determined the offensive nature of these [span_warning(caliber)] rounds to be esoteric."
 	// No dividing by 0
@@ -120,26 +142,32 @@
 	if(!loaded_projectile)
 		loaded_projectile = new projectile_type(src, src)
 
-/obj/item/ammo_casing/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/ammo_box))
-		var/obj/item/ammo_box/box = I
-		if(isturf(loc))
-			var/boolets = 0
-			for(var/obj/item/ammo_casing/bullet in loc)
-				if (box.stored_ammo.len >= box.max_ammo)
-					break
-				if (bullet.loaded_projectile)
-					if (box.give_round(bullet, 0))
-						boolets++
-				else
-					continue
-			if (boolets > 0)
-				box.update_appearance()
-				to_chat(user, span_notice("You collect [boolets] shell\s. [box] now contains [box.stored_ammo.len] shell\s."))
-			else
-				to_chat(user, span_warning("You fail to collect anything!"))
-	else
-		return ..()
+/obj/item/ammo_casing/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/ammo_box))
+		return NONE
+	if(!isturf(loc))
+		return ITEM_INTERACT_BLOCKING
+	if(!collect_into_box(user, tool))
+		return ITEM_INTERACT_BLOCKING
+	return ITEM_INTERACT_SUCCESS
+
+/// Collects the casing and its like on its tile into the passed box, TRUE if anything collected.
+/obj/item/ammo_casing/proc/collect_into_box(mob/living/user, obj/item/ammo_box/box)
+	var/boolets = 0
+	for(var/obj/item/ammo_casing/bullet in loc)
+		if (box.stored_ammo.len >= box.max_ammo)
+			break
+		if (!bullet.loaded_projectile)
+			continue
+		if (box.give_round(bullet, 0))
+			boolets++
+
+	if (!boolets)
+		to_chat(user, span_warning("You fail to collect anything!"))
+		return FALSE
+	box.update_appearance()
+	to_chat(user, span_notice("You collect [boolets] [box.casing_phrasing]\s. [box] now contains [box.stored_ammo.len] [box.casing_phrasing]\s."))
+	return TRUE
 
 /obj/item/ammo_casing/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	bounce_away(FALSE, NONE)
@@ -150,6 +178,6 @@
 	SpinAnimation(10, 1)
 	var/turf/T = get_turf(src)
 	if(still_warm && T?.bullet_sizzle)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/welder.ogg', 20, 1), bounce_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/tools/welder.ogg', 20, 1), bounce_delay) //If the turf is made of water and the shell casing is still hot, make a sizzling sound when it's ejected.
 	else if(T?.bullet_bounce_sound)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, T.bullet_bounce_sound, 20, 1), bounce_delay) //Soft / non-solid turfs that shouldn't make a sound when a shell casing is ejected over them.

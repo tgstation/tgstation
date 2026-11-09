@@ -111,15 +111,15 @@
 /turf/proc/immediate_calculate_adjacent_turfs()
 	LAZYINITLIST(src.atmos_adjacent_turfs)
 	var/list/atmos_adjacent_turfs = src.atmos_adjacent_turfs
-	var/canpass = CANATMOSPASS(src, src, FALSE)
+	var/canpass = (flags_1 & INITIALIZED_1) && CANATMOSPASS(src, src, FALSE)
 	for(var/direction in GLOB.cardinals_multiz)
-		var/turf/current_turf = get_step_multiz(src, direction)
+		var/turf/open/current_turf = get_step_multiz(src, direction)
 		if(!isopenturf(current_turf)) // not interested in you brother
 			continue
 
 		//Can you and me form a deeper relationship, or is this just a passing wind
 		// (direction & (UP | DOWN)) is just "is this vertical" by the by
-		if(canpass && CANATMOSPASS(current_turf, src, (direction & (UP|DOWN))) && !(blocks_air || current_turf.blocks_air))
+		if(canpass && CANATMOSPASS(current_turf, src, (direction & (UP|DOWN))) && current_turf.air)
 			LAZYINITLIST(current_turf.atmos_adjacent_turfs)
 			atmos_adjacent_turfs[current_turf] = TRUE
 			current_turf.atmos_adjacent_turfs[src] = TRUE

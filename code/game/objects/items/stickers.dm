@@ -1,5 +1,3 @@
-#define MAX_STICKER_COUNT 15
-
 /**
  * What stickers can do?
  *
@@ -25,70 +23,21 @@
 	throw_range = 3
 	pressure_resistance = 0
 
-	item_flags = NOBLUDGEON | XENOMORPH_HOLDABLE //funny ~Jimmyl
+	item_flags = NOBLUDGEON
 	w_class = WEIGHT_CLASS_TINY
 
 	/// `list` or `null`, contains possible alternate `icon_states`.
 	var/list/icon_states
-	/// Whether sticker is legal and allowed to generate inside non-syndicate boxes.
-	var/contraband = FALSE
+	/// This sticker won't be generated inside random sticker packs.
+	var/exclude_from_random = FALSE
+	/// Text added to the atom's examine when stickered.
+	var/examine_text
 
 /obj/item/sticker/Initialize(mapload)
 	. = ..()
-
 	if(length(icon_states))
 		icon_state = pick(icon_states)
-
-/obj/item/sticker/Bump(atom/bumped_atom)
-	if(prob(50) && attempt_attach(bumped_atom))
-		bumped_atom.balloon_alert_to_viewers("sticker landed on sticky side!")
-
-/obj/item/sticker/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!isatom(interacting_with))
-		return NONE
-
-	var/cursor_x = text2num(LAZYACCESS(modifiers, ICON_X))
-	var/cursor_y = text2num(LAZYACCESS(modifiers, ICON_Y))
-
-	if(isnull(cursor_x) || isnull(cursor_y))
-		return NONE
-
-	if(attempt_attach(interacting_with, user, cursor_x, cursor_y))
-		return ITEM_INTERACT_SUCCESS
-
-	return NONE
-
-/**
- * Attempts to attach sticker to an object. Returns `FALSE` if atom has more than
- * `MAX_STICKER_COUNT` stickers, `TRUE` otherwise. If no `px` or `py` were passed
- * picks random coordinates based on a `target`'s icon.
- */
-/obj/item/sticker/proc/attempt_attach(atom/target, mob/user, px, py)
-	if(COUNT_TRAIT_SOURCES(target, TRAIT_STICKERED) >= MAX_STICKER_COUNT)
-		balloon_alert_to_viewers("sticker won't stick!")
-		return FALSE
-
-	if(isnull(px) || isnull(py))
-		var/icon/target_mask = icon(target.icon, target.icon_state)
-
-		if(isnull(px))
-			px = rand(1, target_mask.Width())
-
-		if(isnull(py))
-			py = rand(1, target_mask.Height())
-
-	if(!isnull(user))
-		user.do_attack_animation(target, used_item = src)
-		target.balloon_alert(user, "sticker sticked")
-		var/mob/living/victim = target
-		if(istype(victim) && !isnull(victim.client))
-			user.log_message("stuck [src] to [key_name(victim)]", LOG_ATTACK)
-			victim.log_message("had [src] stuck to them by [key_name(user)]", LOG_ATTACK)
-
-	target.AddComponent(/datum/component/sticker, src, get_dir(target, src), px, py)
-	return TRUE
-
-#undef MAX_STICKER_COUNT
+	AddElement(/datum/element/stickerable, 15, examine_text)
 
 /obj/item/sticker/smile
 	name = "smiley sticker"
@@ -123,6 +72,7 @@
 	name = "blue R sticker"
 	desc = "A sticker of FUCK THE SYSTEM, the galaxy's premiere hardcore punk band."
 	icon_state = "revhead"
+	examine_text = "There is a sticker displaying <b>FUCK THE SYSTEM</b>, the galaxy's premiere hardcore punk band."
 
 /obj/item/sticker/pslime
 	name = "slime plushie sticker"
@@ -149,6 +99,12 @@
 	name = "toolbox sticker"
 	icon_state = "soul"
 
+/obj/item/sticker/chief_engineer
+	name = "CE approved sticker"
+	icon_state = "ce_approved"
+	exclude_from_random = TRUE
+	examine_text = "There is a sticker displaying the <b>Chief Engineer's SEAL OF APPROVAL.</b>"
+
 /obj/item/sticker/clown
 	name = "clown sticker"
 	icon_state = "honkman"
@@ -164,15 +120,21 @@
 /obj/item/sticker/skub
 	name = "skub sticker"
 	icon_state = "skub"
+	examine_text = "There is a sticker displaying <b>Skubtide, Stationwide!</b>"
 
 /obj/item/sticker/anti_skub
 	name = "anti-skub sticker"
 	icon_state = "anti_skub"
+	examine_text = "There is an <b>anti-skub</b> sticker."
 
 /obj/item/sticker/syndicate
 	name = "syndicate sticker"
 	icon_state = "synd"
-	contraband = TRUE
+	exclude_from_random = TRUE
+
+/obj/item/sticker/syndicate/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/sticker/syndicate/c4
 	name = "C-4 sticker"
@@ -205,3 +167,11 @@
 /obj/item/sticker/syndicate/trap
 	name = "bear trap sticker"
 	icon_state = "trap"
+
+/obj/item/sticker/purity_seal
+	name = "purity seal"
+	icon_state = "purity_seal_1"
+	desc =  "Looking closer, you realize it's actually a mass produced sticker. You suppose it's the holiness that counts."
+
+/obj/item/sticker/purity_seal/purity_seal_2
+	icon_state = "purity_seal_2"

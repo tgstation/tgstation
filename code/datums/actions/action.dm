@@ -22,11 +22,13 @@
 	var/check_flags = NONE
 	/// Whether the button becomes transparent when it can't be used, or just reddened
 	var/transparent_when_unavailable = TRUE
-	///List of all mobs that are viewing our action button -> A unique movable for them to view.
-	var/list/viewers = list()
+	/// Viewing HUDs mapped to their action buttons. Allocated on first display.
+	var/list/viewers
 	/// If TRUE, this action button will be shown to observers / other mobs who view from this action's owner's eyes.
 	/// Used in [/mob/proc/show_other_mob_action_buttons]
 	var/show_to_observers = TRUE
+	/// If observers can click this action at any time, regardless of the owner
+	var/allow_observer_click = FALSE
 
 	/// The style the button's tooltips appear to be
 	var/buttontooltipstyle = ""
@@ -52,6 +54,8 @@
 
 	/// Toggles whether this action is usable or not
 	var/action_disabled = FALSE
+	/// Can this action be shared with our rider?
+	var/can_be_shared = TRUE
 
 /datum/action/New(Target)
 	link_to(Target)
@@ -71,7 +75,9 @@
 	if(owner)
 		Remove(owner)
 	target = null
-	QDEL_LIST_ASSOC_VAL(viewers) // Qdel the buttons in the viewers list **NOT THE HUDS**
+	for(var/datum/hud/hud as anything in viewers) // Qdel the buttons in the viewers list **NOT THE HUDS**
+		qdel(LAZYACCESS(viewers, hud))
+	LAZYNULL(viewers)
 	return ..()
 
 /// Signal proc that clears any references based on the owner or target deleting
@@ -112,7 +118,8 @@
 		RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(update_status_on_signal))
 	if(check_flags & AB_CHECK_PHASED)
 		RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_MAGICALLY_PHASED), SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED)), PROC_REF(update_status_on_signal))
-
+	if(check_flags & AB_CHECK_OPEN_TURF)
+		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_status_on_signal))
 	if(owner_has_control)
 		RegisterSignal(grant_to, COMSIG_MOB_KEYDOWN, PROC_REF(keydown), override = TRUE)
 		GiveAction(grant_to)
@@ -126,19 +133,20 @@
 			continue
 		HideFrom(hud.mymob)
 	LAZYREMOVE(remove_from?.actions, src) // We aren't always properly inserted into the viewers list, gotta make sure that action's cleared
-	viewers = list()
+	LAZYNULL(viewers)
 	UnregisterSignal(remove_from, COMSIG_MOB_KEYDOWN)
 
-	if(isnull(owner))
+	if(isnull(remove_from))
 		return
-	SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, owner)
-	SEND_SIGNAL(owner, COMSIG_MOB_REMOVED_ACTION, src)
-	UnregisterSignal(owner, COMSIG_QDELETING)
+	SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, remove_from)
+	SEND_SIGNAL(remove_from, COMSIG_MOB_REMOVED_ACTION, src)
+	UnregisterSignal(remove_from, COMSIG_QDELETING)
 
 	// Clean up our check_flag signals
-	UnregisterSignal(owner, list(
+	UnregisterSignal(remove_from, list(
 		COMSIG_LIVING_SET_BODY_POSITION,
 		COMSIG_MOB_STATCHANGE,
+		COMSIG_MOVABLE_MOVED,
 		SIGNAL_ADDTRAIT(TRAIT_HANDS_BLOCKED),
 		SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED),
 		SIGNAL_ADDTRAIT(TRAIT_INCAPACITATED),
@@ -149,14 +157,15 @@
 		SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED),
 	))
 
-	if(target == owner)
+	if(target == remove_from)
 		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(clear_ref))
 	if (owner == remove_from)
 		owner = null
 
 /// Actually triggers the effects of the action.
 /// Called when the on-screen button is clicked, for example.
-/datum/action/proc/Trigger(trigger_flags)
+/datum/action/proc/Trigger(mob/clicker, trigger_flags)
+	SHOULD_CALL_PARENT(TRUE)
 	if(!(trigger_flags & TRIGGER_FORCE_AVAILABLE) && !IsAvailable(feedback = TRUE))
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_ACTION_TRIGGER, src) & COMPONENT_ACTION_BLOCK_TRIGGER)
@@ -171,6 +180,15 @@
 	if(!owner)
 		return FALSE
 	if(action_disabled)
+		return FALSE
+	if((check_flags & AB_CHECK_CONSCIOUS) && IS_UNCONSCIOUS_OR_CRIT(owner))
+		if (feedback)
+			if(owner.stat == DEAD)
+				owner.balloon_alert(owner, "dead!")
+			else if(IS_UNCONSCIOUS(owner))
+				owner.balloon_alert(owner, "unconscious!")
+			else
+				owner.balloon_alert(owner, "in critical!")
 		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (feedback)
@@ -190,13 +208,13 @@
 			if (feedback)
 				owner.balloon_alert(owner, "must stand up!")
 			return FALSE
-	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
-		if (feedback)
-			owner.balloon_alert(owner, "unconscious!")
-		return FALSE
 	if((check_flags & AB_CHECK_PHASED) && HAS_TRAIT(owner, TRAIT_MAGICALLY_PHASED))
 		if (feedback)
 			owner.balloon_alert(owner, "incorporeal!")
+		return FALSE
+	if((check_flags & AB_CHECK_OPEN_TURF) && !isopenturf(owner.loc))
+		if (feedback)
+			owner.balloon_alert(owner, "not enough space!")
 		return FALSE
 	return TRUE
 
@@ -220,6 +238,8 @@
 /datum/action/proc/build_button_icon(atom/movable/screen/movable/action_button/button, update_flags = ALL, force = FALSE)
 	if(!button)
 		return
+
+	button.actiontooltipstyle = buttontooltipstyle
 
 	if(update_flags & UPDATE_BUTTON_NAME)
 		update_button_name(button, force)
@@ -246,6 +266,8 @@
 	button.name = name
 	if(desc)
 		button.desc = desc
+	for(var/datum/hud/hud as anything in viewers)
+		button.update_tooltip(hud.mymob)
 
 /**
  * Creates the background underlay for the button
@@ -323,12 +345,13 @@
 		current_button.color = rgb(255,255,255,255)
 	else
 		current_button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+	SEND_SIGNAL(src, COMSIG_ACTION_STATUS_UPDATE, current_button, force)
 
 /// Gives our action to the passed viewer.
 /// Puts our action in their actions list and shows them the button.
 /datum/action/proc/GiveAction(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
-	if(viewers[our_hud]) // Already have a copy of us? go away
+	if(LAZYACCESS(viewers, our_hud)) // Already have a copy of us? go away
 		return
 
 	LAZYOR(viewer.actions, src) // Move this in
@@ -337,14 +360,14 @@
 /// Adds our action button to the screen of the passed viewer.
 /datum/action/proc/ShowTo(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
-	if(!our_hud || viewers[our_hud]) // There's no point in this if you have no hud in the first place
+	if(!our_hud || LAZYACCESS(viewers, our_hud)) // There's no point in this if you have no hud in the first place
 		return
 
-	var/atom/movable/screen/movable/action_button/button = create_button()
+	var/atom/movable/screen/movable/action_button/button = create_button(viewer)
 	SetId(button, viewer)
 
 	button.our_hud = our_hud
-	viewers[our_hud] = button
+	LAZYSET(viewers, our_hud, button)
 	if(viewer.client)
 		viewer.client.screen += button
 
@@ -354,15 +377,16 @@
 /// Removes our action from the passed viewer.
 /datum/action/proc/HideFrom(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
-	var/atom/movable/screen/movable/action_button/button = viewers[our_hud]
+	var/atom/movable/screen/movable/action_button/button = LAZYACCESS(viewers, our_hud)
 	LAZYREMOVE(viewer.actions, src)
 	if(button)
 		qdel(button)
 
 /// Creates an action button movable for the passed mob, and returns it.
-/datum/action/proc/create_button()
-	var/atom/movable/screen/movable/action_button/button = new()
+/datum/action/proc/create_button(mob/viewer)
+	var/atom/movable/screen/movable/action_button/button = viewer.hud_used.add_screen_object(/atom/movable/screen/movable/action_button)
 	button.linked_action = src
+	button.allow_observer_click = allow_observer_click
 	build_button_icon(button, ALL, TRUE)
 	return button
 
@@ -372,8 +396,8 @@
 	for(var/datum/action/action in owner.actions)
 		if(action == src) // This could be us, which is dumb
 			continue
-		var/atom/movable/screen/movable/action_button/button = action.viewers[owner.hud_used]
-		if(action.name == name && button.id)
+		var/atom/movable/screen/movable/action_button/button = LAZYACCESS(action.viewers, owner.hud_used)
+		if(action.name == name && button?.id)
 			bitfield |= button.id
 
 	bitfield = ~bitfield // Flip our possible ids, so we can check if we've found a unique one
@@ -419,6 +443,16 @@
 /datum/action/proc/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	return FALSE
 
+/datum/action/proc/begin_creating_bind(atom/movable/screen/movable/action_button/current_button, mob/user)
+	if(!current_button || user != owner)
+		return
+	if(!isnull(full_key))
+		full_key = null
+		update_button_status(current_button)
+		return
+	full_key = tgui_input_keycombo(user, "Please bind a key for this action.")
+	update_button_status(current_button)
+
 /datum/action/proc/keydown(mob/source, key, client/client, full_key)
 	SIGNAL_HANDLER
 	if(isnull(full_key) || full_key != src.full_key)
@@ -427,5 +461,10 @@
 		if(source.next_click > world.time)
 			return
 		else
-			source.next_click = world.time + CLICK_CD_RANGE
+			source.next_click = world.time + CLICK_CD_ACTIVATE_ABILITY
 	INVOKE_ASYNC(src, PROC_REF(Trigger))
+
+/// Used for setting the keybind via external sources.
+/datum/action/proc/set_key(new_full_key)
+	full_key = new_full_key
+	build_all_button_icons(UPDATE_BUTTON_STATUS)

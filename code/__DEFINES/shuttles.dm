@@ -11,10 +11,14 @@
 #define SHUTTLE_RECHARGING "recharging"
 #define SHUTTLE_PREARRIVAL "landing"
 
+/// Emergency shuttle either not called, or was recalled and is on cooldown
 #define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
+/// Emergency shuttle has left the station or has docked at central command
 #define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
+/// Emergency shuttle is docked at the station, is travelling to central command, is at central command, or is SOMEWHERE in between
 #define EMERGENCY_AT_LEAST_DOCKED (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_CALL)
-#define EMERGENCY_PAST_POINT_OF_NO_RETURN ((SSshuttle.emergency && SSshuttle.emergency.mode == SHUTTLE_CALL && !SSshuttle.canRecall()) || EMERGENCY_AT_LEAST_DOCKED)
+/// Emergency shuttle is called and can no longer be recalled
+#define EMERGENCY_PAST_POINT_OF_NO_RETURN ((SSshuttle.emergency && SSshuttle.emergency.mode == SHUTTLE_CALL && !SSshuttle.past_restriction_point()) || EMERGENCY_AT_LEAST_DOCKED)
 
 // Shuttle return values
 #define SHUTTLE_CAN_DOCK "can_dock"
@@ -36,7 +40,7 @@
 /// These shuttles leave when the main emergency shuttle does but don't dock anywhere (to save space), so this counts as "escaped".
 #define ENDGAME_TRANSIT 3
 
-//positive value = cannot puchase
+//positive value = cannot purchase
 #define SHUTTLEPURCHASE_PURCHASABLE 0 //station can buy a shuttle
 #define SHUTTLEPURCHASE_PURCHASED 1 //station has already bought a shuttle, so cannot
 #define SHUTTLEPURCHASE_FORCED 2 //station was given a new shuttle through events or other shenanigans
@@ -62,6 +66,7 @@
 #define ENGINE_COEFF_MIN 0.5
 #define ENGINE_COEFF_MAX 2
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
+#define ENGINE_START_TIME 100
 
 // Alert level related
 #define ALERT_COEFF_AUTOEVAC_NORMAL 2.5
@@ -80,9 +85,10 @@
 #define DOCKING_NULL_SOURCE (1<<4)
 
 //Docking turf movements
-#define MOVE_TURF 1
-#define MOVE_AREA 2
-#define MOVE_CONTENTS 4
+#define MOVE_TURF (1<<0)
+#define MOVE_AREA (1<<1)
+#define MOVE_CONTENTS (1<<2)
+#define MOVE_SPECIAL (1<<3)
 
 //Rotation params
 #define ROTATE_DIR 1
@@ -98,18 +104,22 @@
 #define SHUTTLE_DEFAULT_UNDERLYING_AREA /area/space
 
 /// Shuttle unlocks
-// Needs Alien Technology researched.
+/// Needs Alien Technology researched.
 #define SHUTTLE_UNLOCK_ALIENTECH "abductor"
-// Needs bubblegum to die.
+/// Needs bubblegum to die.
 #define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
-// Needs one to set the holodeck to Medieval Sim.
+/// Needs one to set the holodeck to Medieval Sim.
 #define SHUTTLE_UNLOCK_MEDISIM "holodeck"
-// Needs a rune to be cleared by a null rod.
+/// Needs a rune to be cleared by a null rod.
 #define SHUTTLE_UNLOCK_NARNAR "narnar"
-// Needs someone to be polymorphed - Pride Mirror, Magic Mirror, Race Swap, Polymorph Staff/Wand. Badmin Mirror doesn't count, neither does xenobio.
+/// Needs someone to be polymorphed - Pride Mirror, Magic Mirror, Race Swap, Polymorph Staff/Wand. Badmin Mirror doesn't count, neither does xenobio.
 #define SHUTTLE_UNLOCK_WABBAJACK "wabbajack"
-// Needs cargo budget to be almost empty to be purchasable.
+/// Needs cargo budget to be almost empty to be purchasable.
 #define SHUTTLE_UNLOCK_SCRAPHEAP "scrapheap"
+/// Needs biohazard to be triggered - Blob, Zombies, or a Severe Disease
+#define SHUTTLE_UNLOCK_TOMBSTONE "tombstone"
+/// Needs all samples for station's DNA vault goal to be completed.
+#define SHUTTLE_UNLOCK_ARK "ark"
 
 //Shuttle Events
 
@@ -120,3 +130,31 @@
 #define SHUTTLE_EVENT_MISS_SHUTTLE 1 << 0
 ///spawned stuff should hit the shuttle
 #define SHUTTLE_EVENT_HIT_SHUTTLE 1 << 1
+
+// Hijack stages
+
+#define HIJACK_NOT_BEGUN 0
+#define HIJACK_STAGE_1 1
+#define HIJACK_STAGE_2 2
+#define HIJACK_STAGE_3 3
+#define HIJACK_STAGE_4 4
+#define HIJACK_COMPLETED 5
+
+// Custom shuttle construction errors
+#define ORIGIN_NOT_ON_SHUTTLE 1 << 0
+
+// The following two errors occur in mutually exclusive contexts, so they can share the same bitflag
+#define TOO_MANY_SHUTTLES 1 << 1
+#define FRAME_NOT_ADJACENT_TO_LINKED_SHUTTLE 1 << 1
+
+#define ABOVE_MAX_SHUTTLE_SIZE 1 << 2
+#define CUSTOM_AREA_NOT_COMPLETELY_CONTAINED 1 << 3
+#define INTERSECTS_NON_WHITELISTED_AREA 1 << 4
+#define CONTAINS_APC_OF_NON_CUSTOM_AREA 1 << 5
+
+// Custom shuttle engine defines
+#define CUSTOM_ENGINE_COEFF_MIN 0.5
+#define CUSTOM_ENGINE_COEFF_MAX 10
+
+#define CUSTOM_ENGINE_POWER_MULTIPLIER 25
+#define CUSTOM_ENGINE_POWER_TURF_COUNT_OFFSET 5

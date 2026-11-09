@@ -3,7 +3,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	powerlevel = 0 // oh no, the power!
+	adjust_power_level(-SLIME_MAX_POWER) // oh no, the power!
 
 ///If a slime is attack with an empty hand, shoves included, try to wrestle them off the mob they are on
 /mob/living/basic/slime/proc/on_attack_hand(mob/living/basic/slime/defender_slime, mob/living/attacker)
@@ -15,31 +15,31 @@
 	if(buckled == attacker ? prob(60) : prob(30)) //its easier to remove the slime from yourself
 		attacker.visible_message(span_warning("[attacker] attempts to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled] !"), \
 		span_danger("[buckled == attacker ? "You attempt" : "[attacker] attempts" ] to wrestle \the [defender_slime.name] off [buckled == attacker ? "" : buckled]!"))
-		playsound(loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
+		playsound(loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 		return
 
 	attacker.visible_message(span_warning("[attacker] manages to wrestle \the [defender_slime.name] off!"), span_notice("You manage to wrestle \the [defender_slime.name] off!"))
-	playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/items/weapons/shove.ogg', 50, TRUE, -1)
 
 	defender_slime.discipline_slime()
 
-/mob/living/basic/slime/attackby(obj/item/attacking_item, mob/living/user, params)
-
+/mob/living/basic/slime/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	//Lets you feed slimes plasma. Checks before the passthrough force check
-	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma) && stat == CONSCIOUS)
-		use_sheet(attacking_item, user)
-		return
+	if(istype(tool, /obj/item/stack/sheet/mineral/plasma) && !IS_UNCONSCIOUS_OR_CRIT(src))
+		use_sheet(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
 	//Checks if the item passes through the slime first. Safe items can be used simply
-	if(check_item_passthrough(attacking_item, user))
-		return
+	if(check_item_passthrough(tool, user))
+		return ITEM_INTERACT_SUCCESS
 
-	try_discipline_slime(attacking_item)
+	try_discipline_slime(tool)
 
-	if(!istype(attacking_item, /obj/item/storage/bag/xeno))
+	if(!istype(tool, /obj/item/storage/bag/xeno))
 		return ..()
 
-	use_xeno_bag(attacking_item, user)
+	use_xeno_bag(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 
 ///Checks if an item harmlessly passes through the slime
@@ -87,7 +87,7 @@
 			has_found = TRUE
 		if(applied_crossbreed_amount >= SLIME_EXTRACT_CROSSING_REQUIRED)
 			to_chat(user, span_notice("You feed the slime as many of the extracts from the bag as you can, and it mutates!"))
-			playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
+			playsound(src, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 			spawn_corecross()
 			has_output = TRUE
 			break
@@ -99,18 +99,18 @@
 		to_chat(user, span_warning("There are no extracts in the bag that this slime will accept!"))
 	else
 		to_chat(user, span_notice("You feed the slime some extracts from the bag."))
-		playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 
 ///Handles the adverse effects of water on slimes
 /mob/living/basic/slime/proc/apply_water()
-	adjustBruteLoss(rand(15,20))
+	adjust_brute_loss(rand(15,20))
 	discipline_slime()
 
 ///Stops the slime from feeding, and might remove rabidity and targets
 /mob/living/basic/slime/proc/discipline_slime()
 	stop_feeding(silent = TRUE)
 	if(life_stage == SLIME_LIFE_STAGE_BABY && prob(80))
-		ai_controller?.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		ai_controller?.clear_blackboard_key(BB_CURRENT_TARGET)
 		ai_controller?.clear_blackboard_key(BB_CURRENT_HUNTING_TARGET)
 
 	if(prob(10))

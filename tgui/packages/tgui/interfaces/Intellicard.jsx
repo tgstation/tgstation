@@ -1,11 +1,12 @@
-import { useBackend } from '../backend';
 import {
   BlockQuote,
   Button,
   LabeledList,
   ProgressBar,
   Section,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const Intellicard = (props) => {

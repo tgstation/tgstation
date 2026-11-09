@@ -1,8 +1,7 @@
 /datum/job/shaft_miner
 	title = JOB_SHAFT_MINER
-	description = "Travel to strange lands. Mine ores. \
-		Meet strange creatures. Kill them for their gold."
-	department_head = list(JOB_QUARTERMASTER)
+	description = "Travel to strange lands, mine ores, \
+		meet strange creatures, kill them for their gold."
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 3
@@ -27,6 +26,7 @@
 	family_heirlooms = list(/obj/item/pickaxe/mini, /obj/item/shovel)
 	rpg_title = "Adventurer"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_DIGGING
 
 
 /datum/outfit/job/miner
@@ -40,10 +40,10 @@
 		/obj/item/flashlight/seclite = 1,
 		/obj/item/knife/combat/survival = 1,
 		/obj/item/mining_voucher = 1,
-		/obj/item/stack/marker_beacon/ten = 1,
+		/obj/item/stack/candela_beacon/thirty = 1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 	)
-	belt = /obj/item/modular_computer/pda/shaftminer
+	belt = /obj/item/modular_computer/pda/crew/shaftminer
 	ears = /obj/item/radio/headset/headset_cargo/mining
 	gloves = /obj/item/clothing/gloves/color/black
 	shoes = /obj/item/clothing/shoes/workboots/mining
@@ -58,6 +58,8 @@
 	box = /obj/item/storage/box/survival/mining
 	chameleon_extras = /obj/item/gun/energy/recharge/kinetic_accelerator
 
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/miner
+
 /datum/outfit/job/miner/equipped
 	name = "Shaft Miner (Equipment)"
 
@@ -68,7 +70,7 @@
 		/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
 		/obj/item/knife/combat/survival = 1,
 		/obj/item/mining_voucher = 1,
-		/obj/item/stack/marker_beacon/ten = 1,
+		/obj/item/stack/candela_beacon/thirty = 1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 	)
 	glasses = /obj/item/clothing/glasses/meson
@@ -94,13 +96,14 @@
 		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 	)
 	box = /obj/item/storage/box/survival/mining/bonus
-	l_pocket = /obj/item/modular_computer/pda/shaftminer
+	l_pocket = /obj/item/modular_computer/pda/crew/shaftminer
 	r_pocket = /obj/item/extinguisher/mini
 	belt = /obj/item/storage/belt/mining/healing
+	pda_slot = ITEM_SLOT_LPOCKET
 
-/datum/outfit/job/miner/equipped/combat/post_equip(mob/living/carbon/human/miner, visualsOnly = FALSE)
+/datum/outfit/job/miner/equipped/combat/post_equip(mob/living/carbon/human/miner, visuals_only = FALSE)
 	. = ..()
-	if(visualsOnly)
+	if(visuals_only)
 		return
 	var/list/miner_contents = miner.get_all_contents()
 	var/obj/item/clothing/suit/hooded/explorer/explorer_suit = locate() in miner_contents
@@ -112,8 +115,8 @@
 			var/obj/item/stack/sheet/animalhide/goliath_hide/plating = new()
 			explorer_suit.hood.attackby(plating)
 	for(var/obj/item/gun/energy/recharge/kinetic_accelerator/accelerator in miner_contents)
-		var/obj/item/knife/combat/survival/knife = new(accelerator)
-		accelerator.bayonet = knife
+		var/datum/component/bayonet_attachable/bayonet = accelerator.GetComponent(/datum/component/bayonet_attachable)
+		bayonet.add_bayonet(new /obj/item/knife/combat/survival(accelerator))
 		var/obj/item/flashlight/seclite/flashlight = new()
 		var/datum/component/seclite_attachable/light_component = accelerator.GetComponent(/datum/component/seclite_attachable)
 		light_component.add_light(flashlight)

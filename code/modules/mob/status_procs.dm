@@ -39,5 +39,5 @@
 	if(new_sight == see_invisible)
 		return
 	var/old_invis = see_invisible
-	see_invisible = new_sight
-	SEND_SIGNAL(src, COMSIG_MOB_SEE_INVIS_CHANGE, see_invisible, old_invis)
+	if(!(SEND_SIGNAL(src, COMSIG_MOB_SEE_INVIS_CHANGE, new_sight, old_invis) & COMPONENT_BLOCK_INVIS_CHANGE))
+		see_invisible = new_sight

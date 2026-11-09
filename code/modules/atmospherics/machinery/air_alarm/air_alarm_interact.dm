@@ -46,12 +46,12 @@
 
 
 /obj/machinery/airalarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if((buildstage == AIR_ALARM_BUILD_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if((buildstage == AIR_ALARM_BUILD_NO_CIRCUIT) && (the_rcd.construction_upgrades & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("delay" = 2 SECONDS, "cost" = 1)
 	return FALSE
 
 /obj/machinery/airalarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_WALLFRAME)
+	if(rcd_data[RCD_DESIGN_MODE] == RCD_WALLFRAME)
 		balloon_alert(user, "circuit installed")
 		buildstage = AIR_ALARM_BUILD_NO_WIRES
 		update_appearance()
@@ -71,6 +71,9 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		to_chat(user, span_warning("It does nothing!"))
 	else
+		if(HAS_SILICON_ACCESS(user))
+			locked = !locked
+			return
 		if(src.allowed(usr) && !wires.is_cut(WIRE_IDSCAN))
 			locked = !locked
 			to_chat(user, span_notice("You [ locked ? "lock" : "unlock"] the air alarm interface."))
@@ -78,7 +81,6 @@
 				ui_interact(user)
 		else
 			to_chat(user, span_danger("Access denied."))
-	return
 
 /obj/machinery/airalarm/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -86,7 +88,7 @@
 	obj_flags |= EMAGGED
 	visible_message(span_warning("Sparks fly out of [src]!"))
 	balloon_alert(user, "authentication sensors scrambled")
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
 /obj/machinery/airalarm/on_deconstruction(disassembled = TRUE)
@@ -98,57 +100,73 @@
 	if((buildstage == AIR_ALARM_BUILD_COMPLETE))
 		new /obj/item/stack/cable_coil(loc, 3)
 
-/obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
+/obj/machinery/airalarm/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	update_last_used(user)
 	switch(buildstage)
 		if(AIR_ALARM_BUILD_COMPLETE)
-			if(W.GetID())// trying to unlock the interface with an ID card
+			if(tool.GetID())// trying to unlock the interface with an ID card
 				togglelock(user)
-				return
-			else if(panel_open && is_wire_tool(W))
-				wires.interact(user)
-				return
-		if(AIR_ALARM_BUILD_NO_WIRES)
-			if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/cable = W
-				if(cable.get_amount() < 5)
-					to_chat(user, span_warning("You need five lengths of cable to wire the air alarm!"))
-					return
-				user.visible_message(span_notice("[user.name] wires the air alarm."), \
-									span_notice("You start wiring the air alarm..."))
-				if (do_after(user, 2 SECONDS, target = src))
-					if (cable.get_amount() >= 5 && buildstage == AIR_ALARM_BUILD_NO_WIRES)
-						cable.use(5)
-						to_chat(user, span_notice("You wire the air alarm."))
-						wires.repair()
-						aidisabled = FALSE
-						locked = FALSE
-						shorted = FALSE
-						danger_level = AIR_ALARM_ALERT_NONE
-						buildstage = AIR_ALARM_BUILD_COMPLETE
-						select_mode(user, /datum/air_alarm_mode/filtering)
-						update_appearance()
-				return
-		if(AIR_ALARM_BUILD_NO_CIRCUIT)
-			if(istype(W, /obj/item/electronics/airalarm))
-				if(user.temporarilyRemoveItemFromInventory(W))
-					to_chat(user, span_notice("You insert the circuit."))
-					buildstage = AIR_ALARM_BUILD_NO_WIRES
-					update_appearance()
-					qdel(W)
-				return
+				return ITEM_INTERACT_SUCCESS
 
-			if(istype(W, /obj/item/electroadaptive_pseudocircuit))
-				var/obj/item/electroadaptive_pseudocircuit/P = W
-				if(!P.adapt_circuit(user, circuit_cost = 0.025 * STANDARD_CELL_CHARGE))
-					return
+			if(panel_open && is_wire_tool(tool))
+				wires.interact(user)
+				return ITEM_INTERACT_SUCCESS
+
+			return NONE
+
+		if(AIR_ALARM_BUILD_NO_WIRES)
+			if(!istype(tool, /obj/item/stack/cable_coil))
+				return NONE
+
+			var/obj/item/stack/cable_coil/cable = tool
+			if(cable.get_amount() < 5)
+				to_chat(user, span_warning("You need five lengths of cable to wire the air alarm!"))
+				return ITEM_INTERACT_BLOCKING
+
+			user.visible_message(span_notice("[user.name] wires the air alarm."), \
+								span_notice("You start wiring the air alarm..."))
+			if(!do_after(user, 2 SECONDS, target = src))
+				return ITEM_INTERACT_BLOCKING
+
+			if(cable.get_amount() < 5 || buildstage != AIR_ALARM_BUILD_NO_WIRES)
+				return ITEM_INTERACT_BLOCKING
+
+			cable.use(5)
+			to_chat(user, span_notice("You wire the air alarm."))
+			wires.repair()
+			aidisabled = FALSE
+			locked = FALSE
+			shorted = FALSE
+			danger_level = AIR_ALARM_ALERT_NONE
+			buildstage = AIR_ALARM_BUILD_COMPLETE
+			select_mode(user, /datum/air_alarm_mode/filtering)
+			update_appearance()
+			return ITEM_INTERACT_SUCCESS
+
+		if(AIR_ALARM_BUILD_NO_CIRCUIT)
+			if(istype(tool, /obj/item/electronics/airalarm))
+				if(!user.temporarilyRemoveItemFromInventory(tool))
+					return ITEM_INTERACT_BLOCKING
+
+				to_chat(user, span_notice("You insert the circuit."))
+				buildstage = AIR_ALARM_BUILD_NO_WIRES
+				update_appearance()
+				qdel(tool)
+				return ITEM_INTERACT_SUCCESS
+
+			if(istype(tool, /obj/item/electroadaptive_pseudocircuit))
+				if(!astype(tool, /obj/item/electroadaptive_pseudocircuit).adapt_circuit(user, circuit_cost = 0.025 * STANDARD_CELL_CHARGE))
+					return ITEM_INTERACT_BLOCKING
+
 				user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
 				span_notice("You adapt an air alarm circuit and slot it into the assembly."))
 				buildstage = AIR_ALARM_BUILD_NO_WIRES
 				update_appearance()
-				return
+				return ITEM_INTERACT_SUCCESS
 
-	return ..()
+			return NONE
+
+	return NONE
 
 /obj/machinery/airalarm/proc/reset(wire)
 	switch(wire)
@@ -160,18 +178,10 @@
 			if(!wires.is_cut(WIRE_AI))
 				aidisabled = FALSE
 
-/obj/machinery/airalarm/proc/shock(mob/user, prb)
-	if((machine_stat & (NOPOWER))) // unpowered, no shock
+/obj/machinery/airalarm/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+	if(machine_stat & NOPOWER) // unpowered, no shock
 		return FALSE
-	if(!prob(prb))
-		return FALSE //you lucked out, no shock for you
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-	s.set_up(5, 1, src)
-	s.start() //sparks always.
-	if (electrocute_mob(user, get_area(src), src, 1, TRUE))
-		return TRUE
-	else
-		return FALSE
+	return ..()
 
 /obj/item/electronics/airalarm
 	name = "air alarm electronics"
@@ -184,3 +194,10 @@
 	icon_state = "alarm_bitem"
 	result_path = /obj/machinery/airalarm
 	pixel_shift = 27
+
+/obj/item/wallframe/airalarm/try_build(atom/support, mob/user)
+	var/area/A = get_area(user)
+	if(A.always_unpowered)
+		balloon_alert(user, "cannot place in this area!")
+		return FALSE
+	return ..()

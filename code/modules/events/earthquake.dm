@@ -14,6 +14,7 @@
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 7
 	map_flags = EVENT_PLANETARY_ONLY
+	admin_setup = list(/datum/event_admin_setup/set_location/earthquake)
 
 /datum/round_event_control/earthquake/can_spawn_event(players_amt, allow_magic)
 	. = ..()
@@ -30,6 +31,8 @@
 	announce_chance = 25
 	///The chosen location and center of our earthquake.
 	var/turf/epicenter
+	///The location explicitly chosen by an admin forcing the event
+	var/turf/special_spot
 	///A list of turfs that will be damaged by this event.
 	var/list/turfs_to_shred
 	///A list of turfs directly under turfs_to_shred, for creating a proper chasm to the floor below.
@@ -38,13 +41,15 @@
 	var/list/edges = list()
 
 /datum/round_event/earthquake/setup()
-	epicenter = get_turf(pick(GLOB.generic_event_spawns))
+	if(special_spot)
+		epicenter = special_spot
+	else
+		epicenter = get_turf(pick(GLOB.generic_event_spawns))
+		// Give a bit of variance so our epicenter isn't always on the landmark.
+		epicenter = locate(epicenter.x + rand(-10, 10), epicenter.y + rand(-10, 10), epicenter.z)
 	if(!epicenter)
 		message_admins("Earthquake event failed to find a turf! generic_event_spawn landmarks may be absent or bugged. Aborting...")
 		return
-
-	// Give a bit of variance so our epicenter isn't always on the landmark.
-	epicenter = locate(epicenter.x + rand(-10, 10), epicenter.y + rand(-10, 10), epicenter.z)
 
 	message_admins("An earthquake event is about to strike the [get_area_name(epicenter)][ADMIN_JMP(epicenter)].")
 
@@ -112,10 +117,10 @@
 				earthquake_witness.playsound_local(
 					earthquake_witness,
 					pick(
-						'sound/misc/earth_rumble_distant1.ogg',
-						'sound/misc/earth_rumble_distant2.ogg',
-						'sound/misc/earth_rumble_distant3.ogg',
-						'sound/misc/earth_rumble_distant4.ogg',
+						'sound/ambience/earth_rumble/earth_rumble_distant1.ogg',
+						'sound/ambience/earth_rumble/earth_rumble_distant2.ogg',
+						'sound/ambience/earth_rumble/earth_rumble_distant3.ogg',
+						'sound/ambience/earth_rumble/earth_rumble_distant4.ogg',
 					),
 					75,
 				)
@@ -144,18 +149,18 @@
 		for(var/turf/turf_to_clear in underbelly)
 			if(ismineralturf(turf_to_clear))
 				var/turf/closed/mineral/rock_to_clear = turf_to_clear
-				rock_to_clear.gets_drilled(give_exp = FALSE)
+				rock_to_clear.gets_drilled()
 		for(var/turf/turf_to_quake in edges)
 			turf_to_quake.Shake(pixelshiftx = 0.5, pixelshifty = 0.5, duration = 1 SECONDS)
 		playsound(epicenter, 'sound/misc/metal_creak.ogg', 125, TRUE)
 
 /datum/round_event/earthquake/end()
-	playsound(epicenter, 'sound/misc/earth_rumble.ogg', 125)
+	playsound(epicenter, 'sound/ambience/earth_rumble/earth_rumble.ogg', 125)
 	for(var/mob/earthquake_witness as anything in GLOB.player_list)
 		if(!is_station_level(earthquake_witness.z) || !is_mining_level(earthquake_witness.z))
 			continue
 		shake_camera(earthquake_witness, 2 SECONDS, 4)
-		earthquake_witness.playsound_local(earthquake_witness, 'sound/effects/explosionfar.ogg', 75)
+		earthquake_witness.playsound_local(earthquake_witness, 'sound/effects/explosion/explosionfar.ogg', 75)
 
 	// Step two of the destruction, which detonates the turfs in the earthquake zone. There is no actual explosion, meaning stuff around the earthquake zone is perfectly safe.
 	// All turfs, and everything else that IS in the earthquake zone, however, will behave as if it were bombed.
@@ -178,3 +183,13 @@
 			SSexplosions.medturf += edge_to_damage
 		else
 			SSexplosions.lowturf += edge_to_damage
+
+/// Admins can also pick the epicenter of the earthquake
+/datum/event_admin_setup/set_location/earthquake
+	input_text = "Have the epicenter be at the current location?"
+
+/datum/event_admin_setup/set_location/earthquake/apply_to_event(datum/round_event/earthquake/event)
+	event.special_spot = chosen_turf
+	var/log_message = "[key_name_admin(usr)] triggered an earthquake at [event.special_spot ? AREACOORD(event.special_spot) : "a random location"]."
+	message_admins(log_message)
+	log_admin(log_message)

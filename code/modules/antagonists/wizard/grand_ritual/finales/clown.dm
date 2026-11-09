@@ -9,7 +9,16 @@
 /datum/grand_finale/clown/trigger(mob/living/carbon/human/invoker)
 	for(var/mob/living/carbon/human/victim as anything in GLOB.human_list)
 		victim.Unconscious(3 SECONDS)
-		if (!victim.mind || IS_HUMAN_INVADER(victim) || victim == invoker)
+		if (victim == invoker)
+			if(locate(/datum/action/cooldown/spell/pointed/untie_shoes) in invoker.actions)
+				continue
+			var/datum/action/cooldown/spell/pointed/untie_shoes/newer_spell = new(invoker)
+			newer_spell.Grant(invoker)
+			for(var/i in 1 to newer_spell.spell_max_level)
+				newer_spell.level_spell()
+				newer_spell.invocation_type = INVOCATION_SHOUT
+			continue
+		if (!victim.mind || IS_HUMAN_INVADER(victim))
 			continue
 		if (HAS_TRAIT(victim, TRAIT_CLOWN_ENJOYER))
 			victim.add_mood_event("clown_world", /datum/mood_event/clown_world)
@@ -23,6 +32,8 @@
 		if (is_clown_job(victim.mind.assigned_role))
 			var/datum/action/cooldown/spell/conjure_item/clown_pockets/new_spell = new(victim)
 			new_spell.Grant(victim)
+			var/datum/action/cooldown/spell/pointed/untie_shoes/newer_spell = new(victim)
+			newer_spell.Grant(victim)
 			continue
 		dress_as_magic_clown(victim)
 		if (prob(15))

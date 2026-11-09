@@ -13,6 +13,10 @@
 	/// If this list contains `0`, then it will be receivable on every single
 	/// z-level.
 	var/list/levels
+	/// Blacklisted spans we don't want being put into comms by anything, ever - a place to put any new spans we want to make without letting them annoy people on comms
+	var/list/blacklisted_spans = list(
+		SPAN_SOAPBOX,
+	)
 
 /datum/signal/subspace/New(data)
 	src.data = data || list()
@@ -46,9 +50,9 @@
  * Handles sending this signal to every available receiver and mainframe.
  */
 /datum/signal/subspace/proc/send_to_receivers()
-	for(var/obj/machinery/telecomms/receiver/receiver in GLOB.telecomms_list)
+	for(var/obj/machinery/telecomms/receiver/receiver in GLOB.telecomm_machines)
 		receiver.receive_signal(src)
-	for(var/obj/machinery/telecomms/allinone/all_in_one_receiver in GLOB.telecomms_list)
+	for(var/obj/machinery/telecomms/allinone/all_in_one_receiver in GLOB.telecomm_machines)
 		all_in_one_receiver.receive_signal(src)
 
 /// Handles broadcasting this signal out, to be implemented by subtypes.
@@ -74,7 +78,7 @@
 	datum/language/language,  // the language of the message
 	message,  // the text content of the message
 	spans,  // the list of spans applied to the message
-	list/message_mods // the list of modification applied to the message. Whispering, singing, ect
+	list/message_mods, // the list of modification applied to the message. Whispering, singing, ect
 )
 	src.source = source
 	src.frequency = frequency
@@ -88,7 +92,7 @@
 		"compression" = rand(COMPRESSION_VOCAL_SIGNAL_MIN, COMPRESSION_VOCAL_SIGNAL_MAX),
 		"language" = lang_instance.name,
 		"spans" = spans,
-		"mods" = message_mods
+		"mods" = message_mods,
 	)
 	levels = SSmapping.get_connected_levels(get_turf(source))
 
@@ -101,10 +105,6 @@
 	copy.data = data.Copy()
 	copy.levels = levels
 	return copy
-
-/// Past this amount of compression, the resulting gibberish will actually
-/// replace characters, making it even harder to understand.
-#define COMPRESSION_REPLACE_CHARACTER_THRESHOLD 30
 
 /// This is the meat function for making radios hear vocal transmissions.
 /datum/signal/subspace/vocal/broadcast()
@@ -137,10 +137,11 @@
 					radios -= subspace_radio
 
 			// Syndicate radios can hear all well-known radio channels
-			if (num2text(frequency) in GLOB.reverseradiochannels)
-				for(var/obj/item/radio/syndicate_radios in GLOB.all_radios["[FREQ_SYNDICATE]"])
-					if(syndicate_radios.can_receive(FREQ_SYNDICATE, RADIO_NO_Z_LEVEL_RESTRICTION))
-						radios |= syndicate_radios
+			for(var/channel in GLOB.default_radio_channels)
+				if (GLOB.default_radio_channels[channel] == frequency)
+					for(var/obj/item/radio/syndicate_radios in GLOB.all_radios["[FREQ_SYNDICATE]"])
+						if(syndicate_radios.can_receive(FREQ_SYNDICATE, RADIO_NO_Z_LEVEL_RESTRICTION))
+							radios |= syndicate_radios
 
 		if (TRANSMISSION_RADIO)
 			// Only radios not currently in subspace mode
@@ -151,32 +152,59 @@
 		if (TRANSMISSION_SUPERSPACE)
 			// Only radios which are independent
 			for(var/obj/item/radio/independent_radio in GLOB.all_radios["[frequency]"])
-				if(independent_radio.independent && independent_radio.can_receive(frequency, signal_reaches_every_z_level))
+				if((independent_radio.special_channels & RADIO_SPECIAL_CENTCOM) && independent_radio.can_receive(frequency, signal_reaches_every_z_level))
 					radios += independent_radio
 
 	for(var/obj/item/radio/called_radio as anything in radios)
 		called_radio.on_receive_message(data)
+		if(called_radio.runechat_on_receive) // show runechat above this radio
+			for(var/mob/radio_hearer as anything in mob_only_listeners(get_hearers_in_LOS(called_radio.canhear_range, called_radio)))
+				LAZYSET(virt.runechat_anchors, radio_hearer, called_radio)
+	var/list/message_mods = data["mods"]
 
-	// From the list of radios, find all mobs who can hear those.
-	var/list/receive = get_hearers_in_radio_ranges(radios)
+	var/tts_radio_id = LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER)
+	// Flat list of mobs who can hear the message
+	var/list/receive
+	// Assoc list of weakref to a radio to list of weakrefs to mobs who can hear the message
+	var/list/receive_radios
+
+	if(tts_radio_id) // only do this if we have a TTS identifier to save on perf
+		receive = list()
+		receive_radios = list()
+		for(var/radio, radio_hearers in get_hearers_in_radio_ranges_track_radios(radios))
+			receive |= radio_hearers
+			var/datum/weakref/radio_ref = WEAKREF(radio)
+			for(var/mob/possible_hearer in radio_hearers)
+				if(!isnull(possible_hearer.client) && can_hear_radio_tts(possible_hearer, frequency))
+					receive_radios[radio_ref] ||= list()
+					receive_radios[radio_ref] += WEAKREF(possible_hearer)
+
+	else
+		receive = get_hearers_in_radio_ranges(radios)
 
 	// Add observers who have ghost radio enabled.
 	for(var/mob/dead/observer/ghost in GLOB.player_list)
 		if(get_chat_toggles(ghost.client) & CHAT_GHOSTRADIO)
 			receive |= ghost
+			if(tts_radio_id && can_hear_radio_tts(ghost, frequency))
+				receive_radios[TTS_GHOST_RADIO] ||= list()
+				receive_radios[TTS_GHOST_RADIO] += WEAKREF(ghost)
+
+	if(tts_radio_id && length(receive_radios))
+		SStts.queued_radio_messages[tts_radio_id] = receive_radios
+		SStts.queued_radio_messages_compression[tts_radio_id] = compression
 
 	// Render the message and have everybody hear it.
 	// Always call this on the virtualspeaker to avoid issues.
 	var/spans = data["spans"]
-	var/list/message_mods = data["mods"]
-	var/rendered = virt.compose_message(virt, language, message, frequency, spans)
 
 	for(var/atom/movable/hearer as anything in receive)
 		if(!hearer)
 			stack_trace("null found in the hearers list returned by the spatial grid. this is bad")
 			continue
-
-		hearer.Hear(rendered, virt, language, message, frequency, spans, message_mods, message_range = INFINITY)
+		spans -= blacklisted_spans
+		hearer.Hear(virt, language, message, frequency, data["frequency_name"], data["frequency_color"], spans, message_mods, message_range = INFINITY)
+	virt.runechat_anchors = null // runechat is already made
 
 	// This following recording is intended for research and feedback in the use of department radio channels
 	if(length(receive))
@@ -200,5 +228,3 @@
 		log_telecomms("[virt.source] [log_text] [loc_name(get_turf(virt.source))]")
 
 	QDEL_IN(virt, 5 SECONDS)  // Make extra sure the virtualspeaker gets qdeleted
-
-#undef COMPRESSION_REPLACE_CHARACTER_THRESHOLD

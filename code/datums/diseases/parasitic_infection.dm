@@ -2,19 +2,20 @@
 	form = "Parasite"
 	name = "Parasitic Infection"
 	max_stages = 4
-	cure_text = "Surgical removal of the liver."
-	agent = "Consuming Live Parasites"
-	spread_text = "Non-Biological"
+	cure_text = "Surgical removal of the liver"
+	agent = "Food-bourne Parasite"
+	spread_text = "None"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spreading_modifier = 1
-	desc = "If left untreated the subject will passively lose nutrients, and eventually lose their liver."
+	desc = "An unknown parasite, likely entering the body via improperly prepared food, has infected the subject's liver. \
+		If left untreated the subject will passively lose nutrients, and eventually lose their liver."
 	severity = DISEASE_SEVERITY_HARMFUL
 	disease_flags = CAN_CARRY|CAN_RESIST
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	required_organ = ORGAN_SLOT_LIVER
 	bypasses_immunity = TRUE
 
-/datum/disease/parasite/stage_act(seconds_per_tick, times_fired)
+/datum/disease/parasite/stage_act(seconds_per_tick)
 	. = ..()
 	if(!.)
 		return
@@ -43,7 +44,7 @@
 					to_chat(affected_mob, span_warning("You feel much, MUCH lighter!"))
 					affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 20)
 					// disease code already checks if the liver exists otherwise it is cured
-					var/obj/item/organ/internal/liver/affected_liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+					var/obj/item/organ/liver/affected_liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 					affected_liver.Remove(affected_mob)
 					affected_liver.forceMove(get_turf(affected_mob))
 					cure()

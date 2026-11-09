@@ -9,7 +9,8 @@
 	icon_dead = "smspider_dead"
 
 	gender = NEUTER
-	mob_biotypes = MOB_BUG|MOB_ROBOTIC
+	status_flags = CANPUSH
+	mob_biotypes = MOB_BUG|MOB_ROBOTIC|MOB_MINERAL
 	speak_emote = list("vibrates")
 
 
@@ -24,6 +25,7 @@
 	maximum_survivable_temperature = T0C + 1250
 	habitable_atmos = null
 	death_message = "falls to the ground, its shard dulling to a miserable grey!"
+	physiology = list(STAMINA = 0)
 
 	faction = list(FACTION_HOSTILE)
 
@@ -39,16 +41,17 @@
 
 /mob/living/basic/supermatter_spider/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_WEB_SURFER, INNATE_TRAIT)
 	AddComponent(/datum/component/swarming)
 
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_attack))
-
 /// Proc that we call on attacking something to dust 'em.
-/mob/living/basic/supermatter_spider/proc/on_attack(mob/living/basic/source, atom/target)
-	SIGNAL_HANDLER
+/mob/living/basic/supermatter_spider/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(.)
+		return
 
 	if(isliving(target))
 		var/mob/living/victim = target
@@ -57,14 +60,14 @@
 		victim.dust()
 		if(single_use)
 			death()
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 	if(!isturf(target))
 		dust_feedback(target)
 		qdel(target)
 		if(single_use)
 			death()
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /// Simple proc that plays the supermatter dusting sound and sends a visible message.
 /mob/living/basic/supermatter_spider/proc/dust_feedback(atom/target)
@@ -81,22 +84,14 @@
 	single_use = FALSE
 
 /datum/ai_controller/basic_controller/supermatter_spider
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/supermatter_spider.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("clinks.", "clanks."),
+			BB_EMOTE_SEE = list("vibrates."),
+			BB_SPEAK_CHANCE = 7,
+		),
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/random_speech/supermatter_spider,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-/datum/ai_planning_subtree/random_speech/supermatter_spider
-	speech_chance = 7
-	emote_hear = list("clinks", "clanks")
-	emote_see = list("vibrates")

@@ -14,8 +14,8 @@
 	id = /obj/item/card/id/advanced/bountyhunter
 	id_trim = /datum/id_trim/bounty_hunter/police
 
-/datum/outfit/spacepol/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/spacepol/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -42,7 +42,7 @@
 	gloves = /obj/item/clothing/gloves/tackler/combat
 	head = /obj/item/clothing/head/helmet/alt
 	shoes = /obj/item/clothing/shoes/russian
-	l_pocket = /obj/item/ammo_box/strilka310
+	l_pocket = /obj/item/ammo_box/speedloader/strilka310
 	r_pocket = /obj/item/restraints/handcuffs/cable/zipties
 	id = /obj/item/card/id/advanced/bountyhunter
 
@@ -72,8 +72,8 @@
 	if(prob(50))
 		head = pick(alt_helmets)
 
-/datum/outfit/russian_hunter/post_equip(mob/living/carbon/human/equip_to, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/russian_hunter/post_equip(mob/living/carbon/human/equip_to, visuals_only = FALSE)
+	if(visuals_only)
 		return
 
 	if(istype(equip_to.wear_id, /obj/item/card/id))
@@ -85,8 +85,8 @@
 
 	if(istype(equip_to.w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/uniform = equip_to.w_uniform
-		uniform.sensor_mode = NO_SENSORS
-		uniform.has_sensor = NO_SENSORS
+		uniform.set_sensor_mode(SENSOR_OFF)
+		uniform.set_has_sensor(NO_SENSORS)
 
 /datum/outfit/russian_hunter/leader
 	name = "Russian Hunter Leader"
@@ -115,11 +115,11 @@
 
 	backpack_contents = list(
 		/obj/item/ammo_casing/shotgun/rubbershot = 4,
-		/obj/item/ammo_casing/shotgun/incendiary/no_trail = 4,
+		/obj/item/ammo_casing/shotgun/incendiary/milspec = 4,
 	)
 
-/datum/outfit/bountyarmor/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/bountyarmor/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -143,8 +143,8 @@
 		/obj/item/ammo_casing/shotgun/incapacitate = 6
 		)
 
-/datum/outfit/bountyhook/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(visualsOnly)
+/datum/outfit/bountyhook/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
+	if(visuals_only)
 		return
 	var/obj/item/card/id/W = H.wear_id
 	W.registered_name = H.real_name
@@ -169,16 +169,21 @@
 
 /datum/id_trim/bounty_hunter/psykers
 	assignment = "Psyker-gang Shikari"
+	honorifics = list("Psyker-Shikari")
+	honorific_positions = HONORIFIC_POSITION_FIRST_FULL
 
 /datum/id_trim/bounty_hunter/psykers/captain
 	assignment = "Psyker-gang Shikari Captain"
+	honorifics = list("Psyker-Shikari Captain")
 
 /datum/id_trim/bounty_hunter/psykers/seer
 	assignment = "Psyker-gang Shikari Seer"
+	honorifics = list("Psyker-Shikari Seer")
 
 /datum/outfit/psyker/captain
 	name = "Psyker-Shikari Leader"
 
+	glasses = /obj/item/clothing/glasses/red
 	id_trim = /datum/id_trim/bounty_hunter/psykers/captain
 	suit = /obj/item/clothing/suit/armor/reactive/psykerboost
 	uniform = /obj/item/clothing/under/pants/camo
@@ -187,6 +192,7 @@
 	name = "Psyker-Shikari Hunter"
 	glasses = null
 	head = null
+	glasses = /obj/item/clothing/glasses/trickblindfold
 	ears = /obj/item/radio/headset/psyker
 	uniform = /obj/item/clothing/under/pants/track
 	gloves = /obj/item/clothing/gloves/fingerless
@@ -201,11 +207,16 @@
 /datum/outfit/psyker/post_equip(mob/living/carbon/human/equipped)
 	. = ..()
 	equipped.psykerize()
+	var/obj/item/card/id/wearing = equipped.wear_id
+	wearing.registered_name = equipped.real_name
+	wearing.chosen_honorific = LAZYACCESS(wearing.trim.honorifics, 1)
+	wearing.honorific_position = (wearing.trim.honorific_positions & HONORIFIC_POSITION_FIRST_FULL)
+	wearing.update_label()
 
 /datum/outfit/psyker_seer
 	name = "Psyker-Shikari Seer"
-	glasses = /obj/item/clothing/glasses/regular/thin
-	ears = /obj/item/radio/headset
+	glasses = /obj/item/clothing/glasses/thermal/monocle
+	ears = /obj/item/radio/headset/psyker_seer
 	uniform = /obj/item/clothing/under/pants/jeans
 	suit = /obj/item/clothing/suit/hazardvest
 	gloves = /obj/item/clothing/gloves/fingerless
@@ -215,6 +226,64 @@
 	id = /obj/item/card/id/advanced/bountyhunter
 
 	id_trim = /datum/id_trim/bounty_hunter/psykers/seer
+
+/datum/outfit/psyker_seer/post_equip(mob/living/carbon/human/equipped)
+	. = ..()
+	var/obj/item/card/id/wearing = equipped.wear_id
+	wearing.registered_name = equipped.real_name
+	wearing.chosen_honorific = LAZYACCESS(wearing.trim.honorifics, 1)
+	wearing.honorific_position = (wearing.trim.honorific_positions & HONORIFIC_POSITION_FIRST_FULL)
+	wearing.update_label()
+
+/datum/outfit/mi13_hunter
+	name = "\improper MI13 Fugitive Retrieval Agent"
+	uniform = /obj/item/clothing/under/syndicate/sniper
+	back = /obj/item/storage/backpack/satchel/leather
+	ears = /obj/item/radio/headset/syndicate
+	glasses = /obj/item/clothing/glasses/sunglasses
+	gloves = /obj/item/clothing/gloves/combat
+	shoes = /obj/item/clothing/shoes/laceup
+	belt = /obj/item/restraints/handcuffs/cable/zipties
+	l_pocket = /obj/item/gun/ballistic/automatic/pistol
+	r_pocket = /obj/item/suppressor
+	id = /obj/item/card/id/advanced/chameleon/black
+	box = /obj/item/storage/box/survival/syndie
+	implants = list(/obj/item/implant/explosive)
+
+/datum/outfit/mi13_hunter/pre_equip(mob/living/carbon/human/agent, visuals_only = FALSE)
+	backpack_contents = list()
+	backpack_contents += pick_weight(list(/obj/item/ammo_box/magazine/m9mm = 80,
+	/obj/item/ammo_box/magazine/m9mm/hp = 10,
+	/obj/item/ammo_box/magazine/m9mm/ap = 5,
+	/obj/item/ammo_box/magazine/m9mm/fire = 5,
+	))
+	backpack_contents += pick_weight(list(
+		/obj/item/pen/edagger = 40,
+		/obj/item/knife/combat = 30,
+		/obj/item/assembly/flash = 30,
+	))
+	backpack_contents += pick_weight(list(
+		/obj/item/grenade/c4 = 20,
+		/obj/item/implanter/freedom = 20,
+		/obj/item/clothing/mask/chameleon = 20,
+		/obj/item/language_manual/codespeak_manual/unlimited = 10,
+		/obj/item/storage/mail_counterfeit_device = 10,
+		/obj/item/clothing/glasses/thermal = 10,
+		/obj/item/gun/ballistic/automatic/pistol/clandestine/fisher = 10,
+	))
+
+/datum/outfit/mi13_hunter/post_equip(mob/living/carbon/human/agent, visuals_only = FALSE)
+	if(visuals_only)
+		return
+	var/obj/item/card/id/wearing = agent.wear_id
+	wearing.registered_name = agent.real_name
+	wearing.update_label()
+
+/datum/outfit/mi13_hunter/chef
+	name = "\improper MI13 Fugitive Retrieval Agent - Chef Disguise"
+	head = /obj/item/clothing/head/utility/chefhat
+	suit = /obj/item/clothing/suit/apron/chef
+	mask = /obj/item/clothing/mask/fakemoustache
 
 //ids and ert code
 

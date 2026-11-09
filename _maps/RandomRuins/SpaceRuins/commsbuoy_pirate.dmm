@@ -1,0 +1,299 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"d" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail,
+/turf/template_noop,
+/area/space/nearstation)
+"f" = (
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"g" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/space/unpowered)
+"h" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"i" = (
+/obj/structure/lattice,
+/obj/structure/sign/poster/contraband/self_ai_liberation/directional/north,
+/turf/template_noop,
+/area/space/nearstation)
+"j" = (
+/obj/structure/sign/poster/contraband/syndicate_recruitment/directional/west,
+/obj/structure/fluff/commsbuoy_broadcaster,
+/turf/open/floor/plating/reinforced/airless,
+/area/space/nearstation)
+"m" = (
+/obj/structure/billboard/nanotrasen/defaced,
+/turf/open/floor/plating/reinforced/airless,
+/area/space/nearstation)
+"o" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"r" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/plating/reinforced/airless,
+/area/space/nearstation)
+"s" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/burgundy,
+/turf/template_noop,
+/area/space/nearstation)
+"u" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/sign/poster/contraband/free_key/directional/south,
+/turf/template_noop,
+/area/space/nearstation)
+"v" = (
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"w" = (
+/obj/structure/fluff/tram_rail/anchor{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"x" = (
+/obj/structure/fluff/tram_rail/end,
+/turf/template_noop,
+/area/space/nearstation)
+"B" = (
+/obj/structure/fluff/commsbuoy_processor,
+/turf/open/floor/plating/reinforced/airless,
+/area/space/nearstation)
+"C" = (
+/obj/structure/fluff/sat_dish{
+	pixel_y = -15;
+	pixel_x = -11
+	},
+/obj/structure/fluff/sat_dish{
+	pixel_y = -9;
+	pixel_x = 12
+	},
+/obj/structure/lattice,
+/turf/template_noop,
+/area/space/nearstation)
+"D" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail,
+/turf/template_noop,
+/area/space/nearstation)
+"E" = (
+/turf/open/floor/iron/solarpanel/airless,
+/area/space/nearstation)
+"F" = (
+/obj/structure/lattice,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"G" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"J" = (
+/turf/open/floor/plating/reinforced/airless,
+/area/space/nearstation)
+"K" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/space/unpowered)
+"O" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/space/nearstation)
+"P" = (
+/obj/structure/fluff/commsbuoy_receiver,
+/turf/open/floor/plating/reinforced/airless,
+/area/space/nearstation)
+"Q" = (
+/obj/structure/fluff/tram_rail,
+/turf/template_noop,
+/area/space/nearstation)
+"S" = (
+/obj/structure/fluff/sat_dish{
+	pixel_y = 11;
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"T" = (
+/obj/structure/fluff/sat_dish{
+	pixel_x = 17;
+	dir = 8;
+	pixel_y = -8
+	},
+/turf/template_noop,
+/area/space/nearstation)
+"W" = (
+/obj/structure/lattice/catwalk,
+/turf/template_noop,
+/area/space/nearstation)
+"X" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail/anchor,
+/turf/template_noop,
+/area/space/nearstation)
+"Y" = (
+/obj/structure/fluff/tram_rail/anchor,
+/turf/template_noop,
+/area/space/nearstation)
+"Z" = (
+/obj/structure/fluff/tram_rail/anchor{
+	dir = 1
+	},
+/turf/template_noop,
+/area/space/nearstation)
+
+(1,1,1) = {"
+a
+c
+a
+a
+a
+c
+a
+a
+"}
+(2,1,1) = {"
+a
+F
+C
+K
+S
+o
+a
+a
+"}
+(3,1,1) = {"
+h
+f
+T
+K
+i
+P
+E
+a
+"}
+(4,1,1) = {"
+Y
+w
+g
+K
+s
+O
+E
+E
+"}
+(5,1,1) = {"
+x
+d
+K
+K
+g
+G
+W
+E
+"}
+(6,1,1) = {"
+h
+B
+u
+K
+K
+m
+E
+E
+"}
+(7,1,1) = {"
+Y
+r
+v
+K
+K
+v
+W
+E
+"}
+(8,1,1) = {"
+Q
+D
+a
+K
+g
+J
+E
+E
+"}
+(9,1,1) = {"
+Q
+x
+a
+j
+c
+E
+E
+a
+"}
+(10,1,1) = {"
+x
+a
+a
+X
+Z
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+x
+f
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+G
+a
+a
+a
+"}

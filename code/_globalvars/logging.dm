@@ -33,13 +33,15 @@ GLOBAL_PROTECT(##log_var_name);\
 DECLARE_LOG(config_error_log, DONT_START_LOG)
 DECLARE_LOG(perf_log, DONT_START_LOG) // Declared here but name is set in time_track subsystem
 
-#ifdef REFERENCE_DOING_IT_LIVE
+#ifdef REFERENCE_TRACKING_LOG_APART
 DECLARE_LOG_NAMED(harddel_log, "harddels", START_LOG)
 #endif
 
 #if defined(UNIT_TESTS) || defined(SPACEMAN_DMM)
 DECLARE_LOG_NAMED(test_log, "tests", START_LOG)
 #endif
+
+DECLARE_LOG_NAMED(reta_log, "reta", START_LOG)
 
 
 /// Picture logging
@@ -75,6 +77,14 @@ GLOBAL_PROTECT(investigate_signaler)
 /// Stores who uploaded laws to which silicon-based lifeform, and what the law was
 GLOBAL_LIST_EMPTY(lawchanges)
 GLOBAL_PROTECT(lawchanges)
+
+/// Adds something to the law change log
+/proc/log_law_change(mob/living/changer, log_message)
+	if(isnull(changer))
+		log_message = capitalize(log_message)
+
+	GLOB.lawchanges += "[round_timestamp()] <b>:</b> [changer ? key_name(changer) : "(No mob)"] [log_message]"
+	log_silicon("Law change: [changer ? key_name(changer) : "(No mob)"] [log_message]")
 
 #undef DECLARE_LOG
 #undef DECLARE_LOG_NAMED

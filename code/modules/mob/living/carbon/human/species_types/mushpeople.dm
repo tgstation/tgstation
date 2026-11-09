@@ -1,3 +1,5 @@
+#define MUSHROOM_SPORE_COOLDOWN 45 SECONDS
+
 /datum/species/mush //mush mush codecuck
 	name = "Mushroomperson"
 	plural_form = "Mushroompeople"
@@ -6,7 +8,7 @@
 
 	fixed_mut_color = "#DBBF92"
 
-	external_organs = list(/obj/item/organ/external/mushroom_cap = "Round")
+	mutant_organs = list(/obj/item/organ/mushroom_cap = "Round")
 
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
@@ -20,8 +22,8 @@
 
 	heatmod = 1.5
 
-	mutanttongue = /obj/item/organ/internal/tongue/mush
-	mutanteyes = /obj/item/organ/internal/eyes/night_vision/mushroom
+	mutanttongue = /obj/item/organ/tongue/mush
+	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
 	mutantlungs = null
 	species_language_holder = /datum/language_holder/mushroom
 
@@ -33,35 +35,24 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/mushroom,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/mushroom,
 	)
+	/// Martial art for the mushpeople
 	var/datum/martial_art/mushpunch/mush
 
-/datum/species/mush/check_roundstart_eligible()
-	return FALSE //hard locked out of roundstart on the order of design lead kor, this can be removed in the future when planetstation is here OR SOMETHING but right now we have a problem with races.
-
-/datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
-	if(ishuman(C))
-		mush = new()
-		mush.teach(C)
-		mush.allow_temp_override = FALSE
+	mush = new(src)
+	mush.locked_to_use = TRUE
+	mush.teach(C)
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	mush.fully_remove(C)
 	QDEL_NULL(mush)
-
-/datum/species/mush/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(chem.type == /datum/reagent/toxin/plantbgone/weedkiller)
-		affected.adjustToxLoss(3 * REM * seconds_per_tick)
 
 /datum/species/mush/get_fixed_hair_color(mob/living/carbon/human/for_mob)
 	return "#FF4B19" //cap color, spot color uses eye color
 
 /// A mushpersons mushroom cap organ
-/obj/item/organ/external/mushroom_cap
+/obj/item/organ/mushroom_cap
 	name = "mushroom cap"
 	desc = "These are yummie, no cap."
 
@@ -70,23 +61,57 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_POD_HAIR
 
-	preference = "feature_mushperson_cap"
-
-	dna_block = DNA_MUSHROOM_CAPS_BLOCK
+	dna_block = /datum/dna_block/feature/accessory/mush_cap
 	restyle_flags = EXTERNAL_RESTYLE_PLANT
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/mushroom_cap
 
+	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
+
+/obj/item/organ/mushroom_cap/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	RegisterSignal(organ_owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
+
+/**
+ * Checks to see if the owner of the mushroom cap has died, and if so, will randomly spore up the floors
+ */
+/obj/item/organ/mushroom_cap/proc/on_stat_change(mob/living/victim, new_stat)
+	SIGNAL_HANDLER
+
+	if(new_stat != DEAD)
+		return
+
+	if(QDELETED(victim))
+		return //can't leave spores if there's no shroom to spore
+
+	victim.visible_message(span_notice("Spores start growing around [victim]."), ignored_mobs = victim)
+	var/atom/particle_holder = victim.add_shared_particles(/particles/pollen/mushroom)
+	particle_holder.appearance_flags |= RESET_TRANSFORM
+	addtimer(CALLBACK(src, PROC_REF(create_spores), victim), MUSHROOM_SPORE_COOLDOWN)
+
+/**
+ * This proc cleans up mushroom particles and spawns a new patch of brown mushrooms like glowshrooms do.
+ */
+/obj/item/organ/mushroom_cap/proc/create_spores(mob/living/victim)
+	if(QDELETED(victim))
+		return //can't leave more spores if there's no spores to spore
+
+	victim.remove_shared_particles(/particles/pollen/mushroom)
+	victim.visible_message(span_notice("Mushrooms sprout up around [victim]."), ignored_mobs = victim)
+	new /obj/structure/glowshroom/brownshroom(get_turf(victim))
+
 /// Bodypart overlay for the mushroom cap organ
 /datum/bodypart_overlay/mutant/mushroom_cap
-	layers = EXTERNAL_ADJACENT
-	feature_key = "caps"
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
+	feature_key = FEATURE_MUSH_CAP
+	dyable = TRUE
+	offset_location = UPPER_BODY
 
-/datum/bodypart_overlay/mutant/mushroom_cap/get_global_feature_list()
-	return GLOB.caps_list
+/datum/bodypart_overlay/mutant/mushroom_cap/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
+	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
 
-/datum/bodypart_overlay/mutant/mushroom_cap/can_draw_on_bodypart(mob/living/carbon/human/human)
-	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
-		return FALSE
+/datum/bodypart_overlay/mutant/mushroom_cap/override_color(obj/item/bodypart/bodypart_owner)
+	//The mushroom cap is red by default (can still be dyed)
+	return "#FF4B19"
 
-	return TRUE
+#undef MUSHROOM_SPORE_COOLDOWN

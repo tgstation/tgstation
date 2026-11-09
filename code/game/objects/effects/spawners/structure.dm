@@ -21,6 +21,7 @@ again.
 	name = "window spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/fulltile)
 	dir = SOUTH
+	density = TRUE
 
 /obj/effect/spawner/structure/window/Initialize(mapload)
 	. = ..()
@@ -157,6 +158,12 @@ again.
 	icon_state = "bronzewindow_spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/bronze/fulltile)
 
+//bronze
+
+/obj/effect/spawner/structure/window/cult
+	name = "cult window spawner"
+	icon_state = "cultwindow_spawner"
+	spawn_list = list(/obj/structure/grille, /obj/structure/window/cult/fulltile)
 
 //shuttle window
 
@@ -169,6 +176,60 @@ again.
 	name = "indestructible shuttle window spawner"
 	icon_state = "swindow_spawner"
 	spawn_list = list(/obj/structure/grille/indestructible, /obj/structure/window/reinforced/shuttle/indestructible)
+
+/obj/effect/spawner/structure/window/hollow/titanium
+	name = "hollow titanium window spawner"
+	icon_state = "titaniumwindow_spawner_full"
+	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+
+/obj/effect/spawner/structure/window/hollow/titanium/end
+	icon_state = "titaniumwindow_spawner_end"
+
+/obj/effect/spawner/structure/window/hollow/titanium/end/Initialize(mapload)
+	switch(dir)
+		if(NORTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+		if(EAST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/east)
+		if(SOUTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+		if(WEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+	return ..()
+
+/obj/effect/spawner/structure/window/hollow/titanium/middle
+	icon_state = "titaniumwindow_spawner_middle"
+
+/obj/effect/spawner/structure/window/hollow/titanium/middle/Initialize(mapload)
+	switch(dir)
+		if(NORTH,SOUTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/north)
+		if(EAST,WEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+	return ..()
+
+/obj/effect/spawner/structure/window/hollow/titanium/directional
+	icon_state = "titaniumwindow_spawner_directional"
+
+/obj/effect/spawner/structure/window/hollow/titanium/directional/Initialize(mapload)
+	switch(dir)
+		if(NORTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/north)
+		if(NORTHEAST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/east)
+		if(EAST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/east)
+		if(SOUTHEAST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/east)
+		if(SOUTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium)
+		if(SOUTHWEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+		if(WEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+		if(NORTHWEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+	return ..()
 
 //plastitanium window
 
@@ -371,7 +432,32 @@ again.
 	return ..()
 
 /obj/effect/spawner/structure/electrified_grille
-	name = "electrified grill spawner"
+	name = "electrified grille spawner"
 	icon = 'icons/obj/structures_spawners.dmi'
 	icon_state = "electrified_grille"
 	spawn_list = list(/obj/structure/grille, /obj/structure/cable)
+
+/obj/effect/spawner/structure/electrified_grille/layer1
+	name = "layer 1 electrified grille spawner"
+	icon_state = "red_electrified_grille"
+	spawn_list = list(/obj/structure/grille, /obj/structure/cable/layer1)
+
+///flipped tables
+/obj/effect/spawner/structure/flipped_table
+	name = "flipped table spawner"
+	icon = 'icons/obj/flipped_tables.dmi'
+	icon_state = "table"
+	///just change this whatever table type you want, has to be a table subtype though.
+	var/table_to_spawn = /obj/structure/table
+
+/obj/effect/spawner/structure/flipped_table/Initialize(mapload)
+	. = ..()
+	var/obj/structure/table/table_to_flip = new table_to_spawn(loc)
+	table_to_flip.dir = dir
+	RegisterSignal(table_to_flip, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(on_icon_smoothed))
+
+/// The flip_table() proc HAS to be run after smooth_icon() is completed or else we will get runtimes.
+/obj/effect/spawner/structure/flipped_table/proc/on_icon_smoothed(obj/structure/table/table_to_flip)
+	SIGNAL_HANDLER
+	table_to_flip.flip_table(table_to_flip.dir)
+	UnregisterSignal(table_to_flip, COMSIG_ATOM_SMOOTHED_ICON)

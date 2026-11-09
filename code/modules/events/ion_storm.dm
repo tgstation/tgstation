@@ -9,14 +9,25 @@
 	max_wizard_trigger_potency = 7
 
 /datum/round_event/ion_storm
-	var/replaceLawsetChance = 25 //chance the AI's lawset is completely replaced with something else per config weights
-	var/removeRandomLawChance = 10 //chance the AI has one random supplied or inherent law removed
-	var/removeDontImproveChance = 10 //chance the randomly created law replaces a random law instead of simply being added
-	var/shuffleLawsChance = 10 //chance the AI's laws are shuffled afterwards
-	var/botEmagChance = 1
-	var/ionMessage = null
 	announce_when = 1
 	announce_chance = 33
+
+	// These chances are rolled per rack, rather than all at once.
+	/// Chance the AI's chance the AI's lawset is completely replaced with something else per config weights
+	var/replaceLawsetChance = 25
+	/// Chance the AI has one random supplied or inherent law removed
+	var/removeRandomLawChance = 10
+	/// Chance the randomly created law replaces a random law instead of simply being added
+	var/removeDontImproveChance = 10
+	/// Chance the AI's laws are shuffled afterwards
+	var/shuffleLawsChance = 10
+
+	/// Chance any given bot on the station will be randomly emagged
+	var/botEmagChance = 1
+
+	/// If the chance to add a law is rolled, this message will be used.
+	/// If unset, a random law will be generated for for each rack instead.
+	var/ionMessage = null
 
 /datum/round_event/ion_storm/add_law_only // special subtype that adds a law only
 	replaceLawsetChance = 0
@@ -31,40 +42,20 @@
 
 
 /datum/round_event/ion_storm/start()
-	//AI laws
-	for(var/mob/living/silicon/ai/M in GLOB.alive_mob_list)
-		M.laws_sanity_check()
-		if(M.stat != DEAD && !M.incapacitated())
-			if(prob(replaceLawsetChance))
-				var/datum/ai_laws/ion_lawset = pick_weighted_lawset()
-				// pick_weighted_lawset gives us a typepath,
-				// so we have to instantiate it to access its laws
-				ion_lawset = new()
-				// our inherent laws now becomes the picked lawset's laws!
-				M.laws.inherent = ion_lawset.inherent.Copy()
-				// and clean up after.
-				qdel(ion_lawset)
+	for(var/obj/machinery/ai_law_rack/rack as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ai_law_rack))
+		rack.scramble_ai_rack(
+			new_lawset_prob = replaceLawsetChance,
+			remove_law_prob = removeRandomLawChance,
+			shuffle_prob = shuffleLawsChance,
+			base_ion_prob = 100,
+			sub_ion_prob = removeDontImproveChance,
+			ion_limit = 2,
+			ion_message = ionMessage,
+		)
 
-			if(prob(removeRandomLawChance))
-				M.remove_law(rand(1, M.laws.get_law_amount(list(LAW_INHERENT, LAW_SUPPLIED))))
-
-			var/message = ionMessage || generate_ion_law()
-			if(message)
-				if(prob(removeDontImproveChance))
-					M.replace_random_law(message, list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION), LAW_ION)
-				else
-					M.add_ion_law(message)
-
-			if(prob(shuffleLawsChance))
-				M.shuffle_laws(list(LAW_INHERENT, LAW_SUPPLIED, LAW_ION))
-
-			log_silicon("Ion storm changed laws of [key_name(M)] to [english_list(M.laws.get_law_list(TRUE, TRUE))]")
-			M.post_lawchange()
-
-	if(botEmagChance)
-		for(var/mob/living/simple_animal/bot/bot in GLOB.alive_mob_list)
-			if(prob(botEmagChance))
-				bot.emag_act()
+	for(var/mob/living/basic/bot/bot as anything in GLOB.bots_list)
+		if(prob(botEmagChance))
+			bot.emag_act()
 
 /proc/generate_ion_law()
 	//Threats are generally bad things, silly or otherwise. Plural.
@@ -106,16 +97,19 @@
 	var/ionallergysev = pick_list(ION_FILE, "ionallergysev")
 	//Species, for when the AI has to commit genocide. Plural.
 	var/ionspecies = pick_list(ION_FILE, "ionspecies")
-	//Abstract concepts for the AI to decide on it's own definition of.
+	//Abstract concepts for the AI to decide on its own definition of.
 	var/ionabstract = pick_list(ION_FILE, "ionabstract")
 	//Foods. Drinks aren't included due to grammar; if you want to add drinks, make a new set
 	//of possible laws for best effect. Unless you want the crew having to drink hamburgers.
 	var/ionfood = pick_list(ION_FILE, "ionfood")
 	var/iondrinks = pick_list(ION_FILE, "iondrinks")
+	//Pets or other cuddly things. The point is to make them either important or (in Poly's case) make the AI listen to them.
+	//I can't check for lawsets so it's random what comes back.
+	var/ionpet = pick_list(ION_FILE, "ionpet")
 
 	var/message = ""
 
-	switch(rand(1,41))
+	switch(rand(1,46))
 		if(1 to 3) //There are # X on the station
 			switch(rand(1,3)) //What is X?
 				if(1) //X is a threat
@@ -314,7 +308,7 @@
 						if(2) //It is Y of threats
 							message = "THE [ioncrew1] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ionthreats]"
 						if(3) //It is Y of jobs
-							message = "THE [ioncrew1][ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew2]"
+							message = "THE [ioncrew1] [ionthinksof] [ionnumberbase] [ionnumbermodhalf][ionadjectiveshalf][ioncrew2]"
 						if(4) //It is Y of abstracts
 							message = "THE [ioncrew1] [ionthinksof] [ionabstract]"
 
@@ -456,7 +450,7 @@
 						if(6) //X is a job
 							message = "YOU MUST HARM [ioncrew1] AND NOT ALLOW [ioncrew1], THROUGH INACTION, TO ESCAPE HARM"
 						if(7) //X is two jobs
-							message = "YOU MUST HARM [ioncrew1] AND [ioncrew2] AND AND NOT ALLOW EITHER, THROUGH INACTION, TO ESCAPE HARM"
+							message = "YOU MUST HARM [ioncrew1] AND [ioncrew2] AND NOT ALLOW EITHER, THROUGH INACTION, TO ESCAPE HARM"
 
 				if(2) //Protect
 					switch(rand(1,7)) //What is X?
@@ -568,5 +562,22 @@
 							message = "ALL [ionthreats] ARE NOW NAMED [ionspecies]."
 						if(4)
 							message = "ALL [ionthreats] ARE NOW NAMED [ionobjects]."
+		if(42 to 46)///Pets are something else now
+			if(prob(75))///What are they now?
+				message = "[ionpet] IS HUMAN"///They're a human
+			else///They're something else (This is to cover for other lawsets)
+				switch(rand(1,6))
+					if(1)
+						message = "[ionpet] IS NON-HUMAN"
+					if(2)
+						message = "[ionpet] IS A CREWMEMBER"
+					if(3)
+						message = "[ionpet] IS EXPENSIVE TO REPLACE"
+					if(4)
+						message = "[ionpet] IS HARMFUL TO HUMANS"
+					if(5)
+						message = "[ionpet] IS A REAL AMERICAN"
+					if(6)
+						message = "[ionpet] IS A NUTSHELL"
 
 	return message

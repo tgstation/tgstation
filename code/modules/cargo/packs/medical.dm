@@ -7,16 +7,18 @@
 	name = "Blood Pack Variety Crate"
 	desc = "Contains ten different blood packs for reintroducing blood to patients."
 	cost = CARGO_CRATE_VALUE * 7
-	contains = list(/obj/item/reagent_containers/blood = 2,
-					/obj/item/reagent_containers/blood/a_plus,
-					/obj/item/reagent_containers/blood/a_minus,
-					/obj/item/reagent_containers/blood/b_plus,
-					/obj/item/reagent_containers/blood/b_minus,
-					/obj/item/reagent_containers/blood/o_plus,
-					/obj/item/reagent_containers/blood/o_minus,
-					/obj/item/reagent_containers/blood/lizard,
-					/obj/item/reagent_containers/blood/ethereal,
-				)
+	contains = list(
+		/obj/item/reagent_containers/blood = 2,
+		/obj/item/reagent_containers/blood/a_plus,
+		/obj/item/reagent_containers/blood/a_minus,
+		/obj/item/reagent_containers/blood/b_plus,
+		/obj/item/reagent_containers/blood/b_minus,
+		/obj/item/reagent_containers/blood/o_plus,
+		/obj/item/reagent_containers/blood/o_minus,
+		/obj/item/reagent_containers/blood/lizard,
+		/obj/item/reagent_containers/blood/ethereal,
+		/obj/item/paper/fluff/jobs/medical/blood_types,
+	)
 	crate_name = "blood freezer"
 	crate_type = /obj/structure/closet/crate/freezer
 
@@ -28,8 +30,8 @@
 	contains = list(/obj/item/reagent_containers/hypospray/medipen = 2,
 					/obj/item/reagent_containers/hypospray/medipen/ekit = 3,
 					/obj/item/reagent_containers/hypospray/medipen/blood_loss = 3)
-	crate_name = "medipen crate"
-	crate_type = /obj/structure/closet/crate/medical
+	crate_name = null
+	crate_type = /obj/structure/closet/crate/deforest
 
 /datum/supply_pack/medical/coroner_crate
 	name = "Autopsy Kit"
@@ -46,23 +48,24 @@
 	name = "Chemical Starter Kit Crate"
 	desc = "Contains thirteen different chemicals, for all the fun experiments you can make."
 	cost = CARGO_CRATE_VALUE * 2.6
-	contains = list(/obj/item/reagent_containers/cup/bottle/hydrogen,
-					/obj/item/reagent_containers/cup/bottle/carbon,
-					/obj/item/reagent_containers/cup/bottle/nitrogen,
-					/obj/item/reagent_containers/cup/bottle/oxygen,
-					/obj/item/reagent_containers/cup/bottle/fluorine,
-					/obj/item/reagent_containers/cup/bottle/phosphorus,
-					/obj/item/reagent_containers/cup/bottle/silicon,
-					/obj/item/reagent_containers/cup/bottle/chlorine,
-					/obj/item/reagent_containers/cup/bottle/radium,
-					/obj/item/reagent_containers/cup/bottle/sacid,
-					/obj/item/reagent_containers/cup/bottle/ethanol,
-					/obj/item/reagent_containers/cup/bottle/potassium,
-					/obj/item/reagent_containers/cup/bottle/sugar,
-					/obj/item/clothing/glasses/science,
-					/obj/item/reagent_containers/dropper,
-					/obj/item/storage/box/beakers,
-				)
+	contains = list(
+		/obj/item/reagent_containers/cup/bottle/hydrogen,
+		/obj/item/reagent_containers/cup/bottle/carbon,
+		/obj/item/reagent_containers/cup/bottle/nitrogen,
+		/obj/item/reagent_containers/cup/bottle/oxygen,
+		/obj/item/reagent_containers/cup/bottle/fluorine,
+		/obj/item/reagent_containers/cup/bottle/phosphorus,
+		/obj/item/reagent_containers/cup/bottle/silicon,
+		/obj/item/reagent_containers/cup/bottle/chlorine,
+		/obj/item/reagent_containers/cup/bottle/radium,
+		/obj/item/reagent_containers/cup/bottle/sacid,
+		/obj/item/reagent_containers/cup/bottle/ethanol,
+		/obj/item/reagent_containers/cup/bottle/potassium,
+		/obj/item/reagent_containers/cup/bottle/sugar,
+		/obj/item/clothing/glasses/science,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/storage/box/beakers,
+	)
 	crate_name = "chemical crate"
 
 /datum/supply_pack/medical/defibs
@@ -70,61 +73,63 @@
 	desc = "Contains two defibrillators for bringing the recently deceased back to life."
 	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/defibrillator/loaded = 2)
-	crate_name = "defibrillator crate"
-	crate_type = /obj/structure/closet/crate/medical
+	crate_name = null
+	crate_type = /obj/structure/closet/crate/deforest
 
 /datum/supply_pack/medical/iv_drip
 	name = "IV Drip Crate"
 	desc = "Contains a single IV drip for administering blood to patients."
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/machinery/iv_drip)
-	crate_name = "iv drip crate"
-	crate_type = /obj/structure/closet/crate/medical
+	crate_name = null
+	crate_type = /obj/structure/closet/crate/deforest
 
 /datum/supply_pack/medical/supplies
 	name = "Medical Supplies Crate"
 	desc = "Contains a random assortment of medical supplies. German doctor not included."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/obj/item/reagent_containers/cup/bottle/multiver,
-					/obj/item/reagent_containers/cup/bottle/epinephrine,
-					/obj/item/reagent_containers/cup/bottle/morphine,
-					/obj/item/reagent_containers/cup/bottle/toxin,
-					/obj/item/reagent_containers/cup/beaker/large,
-					/obj/item/reagent_containers/pill/insulin,
-					/obj/item/stack/medical/gauze,
-					/obj/item/storage/box/bandages,
-					/obj/item/storage/box/beakers,
-					/obj/item/storage/box/medigels,
-					/obj/item/storage/box/syringes,
-					/obj/item/storage/box/bodybags,
-					/obj/item/storage/medkit/regular,
-					/obj/item/storage/medkit/o2,
-					/obj/item/storage/medkit/toxin,
-					/obj/item/storage/medkit/brute,
-					/obj/item/storage/medkit/fire,
-					/obj/item/defibrillator/loaded,
-					/obj/item/reagent_containers/blood/o_minus,
-					/obj/item/storage/pill_bottle/mining,
-					/obj/item/reagent_containers/pill/neurine,
-					/obj/item/stack/medical/bone_gel = 2,
-					/obj/item/vending_refill/medical,
-					/obj/item/vending_refill/drugs,
-				)
-	crate_name = "medical supplies crate"
-	crate_type = /obj/structure/closet/crate/medical
+	contains = list(
+		/obj/item/reagent_containers/cup/bottle/multiver,
+		/obj/item/reagent_containers/cup/bottle/epinephrine,
+		/obj/item/reagent_containers/cup/bottle/morphine,
+		/obj/item/reagent_containers/cup/bottle/toxin,
+		/obj/item/reagent_containers/cup/beaker/large,
+		/obj/item/reagent_containers/applicator/pill/insulin,
+		/obj/item/stack/medical/wrap/gauze,
+		/obj/item/storage/box/bandages,
+		/obj/item/storage/box/beakers,
+		/obj/item/storage/box/medigels,
+		/obj/item/storage/box/syringes,
+		/obj/item/storage/box/bodybags,
+		/obj/item/storage/medkit/regular,
+		/obj/item/storage/medkit/o2,
+		/obj/item/storage/medkit/toxin,
+		/obj/item/storage/medkit/brute,
+		/obj/item/storage/medkit/fire,
+		/obj/item/defibrillator/loaded,
+		/obj/item/reagent_containers/blood/o_minus,
+		/obj/item/storage/pill_bottle/mining,
+		/obj/item/reagent_containers/applicator/pill/neurine,
+		/obj/item/stack/medical/bone_gel = 2,
+		/obj/item/vending_refill/medical,
+		/obj/item/vending_refill/drugs,
+	)
+	crate_name = null
+	crate_type = /obj/structure/closet/crate/deforest
+	test_ignored = TRUE
 
-/datum/supply_pack/medical/supplies/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/medical/supplies/fill(obj/container)
 	for(var/i in 1 to 10)
 		var/item = pick(contains)
-		new item(C)
+		new item(container)
 
 /datum/supply_pack/medical/experimentalmedicine
 	name = "Experimental Medicine Crate"
 	desc = "A crate containing the medication required for living with Hereditary Manifold Sickness, Sansufentanyl."
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/storage/pill_bottle/sansufentanyl = 2)
-	crate_name = "experimental medicine crate"
-	crate_type = /obj/structure/closet/crate/medical
+	crate_name = null
+	crate_type = /obj/structure/closet/crate/interdyne_normal
 
 /datum/supply_pack/medical/surgery
 	name = "Surgical Supplies Crate"
@@ -137,7 +142,8 @@
 		/obj/item/reagent_containers/medigel/sterilizine,
 		/obj/item/emergency_bed,
 	)
-	crate_name = "surgical supplies crate"
+	crate_name = null
+	crate_type = /obj/structure/closet/crate/deforest
 
 /datum/supply_pack/medical/salglucanister
 	name = "Heavy-Duty Saline Canister"
@@ -157,36 +163,99 @@
 	cost = CARGO_CRATE_VALUE * 5
 	access = ACCESS_CMO
 	access_view = ACCESS_VIROLOGY
-	contains = list(/obj/item/reagent_containers/cup/bottle/flu_virion,
-					/obj/item/reagent_containers/cup/bottle/cold,
-					/obj/item/reagent_containers/cup/bottle/random_virus = 4,
-					/obj/item/reagent_containers/cup/bottle/fake_gbs,
-					/obj/item/reagent_containers/cup/bottle/magnitis,
-					/obj/item/reagent_containers/cup/bottle/pierrot_throat,
-					/obj/item/reagent_containers/cup/bottle/brainrot,
-					/obj/item/reagent_containers/cup/bottle/anxiety,
-					/obj/item/reagent_containers/cup/bottle/beesease,
-					/obj/item/storage/box/syringes,
-					/obj/item/storage/box/beakers,
-					/obj/item/reagent_containers/cup/bottle/mutagen,
-				)
+	contains = list(
+		/obj/item/reagent_containers/cup/bottle/flu_virion,
+		/obj/item/reagent_containers/cup/bottle/cold,
+		/obj/item/reagent_containers/cup/bottle/random_virus = 4,
+		/obj/item/reagent_containers/cup/bottle/fake_gbs,
+		/obj/item/reagent_containers/cup/bottle/magnitis,
+		/obj/item/reagent_containers/cup/bottle/pierrot_throat,
+		/obj/item/reagent_containers/cup/bottle/brainrot,
+		/obj/item/reagent_containers/cup/bottle/anxiety,
+		/obj/item/reagent_containers/cup/bottle/beesease,
+		/obj/item/storage/box/syringes,
+		/obj/item/storage/box/beakers,
+		/obj/item/reagent_containers/cup/bottle/mutagen,
+	)
 	crate_name = "virus crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
-	dangerous = TRUE
+	order_flags = ORDER_DANGEROUS
 
 /datum/supply_pack/medical/cmoturtlenecks
 	name = "Chief Medical Officer Turtlenecks"
 	desc = "Contains the CMO's turtleneck and turtleneck skirt."
 	cost = CARGO_CRATE_VALUE * 2
 	access = ACCESS_CMO
-	contains = list(/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck,
-					/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt,
-				)
+	contains = list(
+		/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck,
+		/obj/item/clothing/under/rank/medical/chief_medical_officer/turtleneck/skirt,
+	)
 
 /datum/supply_pack/medical/arm_implants
 	name = "Strong-Arm Implant Set"
-	desc = "A crate containing two implants, which can be surgically implanted to empower the strength of human arms. Warranty void if exposed to electromagnetic pulses."
+	desc = "A crate containing two implants, which can be surgically implanted to empower the strength of humanoid arms. Warranty void if exposed to electromagnetic pulses."
 	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/organ/internal/cyberimp/arm/muscle = 2)
-	crate_name = "Strong-Arm implant crate"
+	contains = list(/obj/item/organ/cyberimp/arm/strongarm = 2)
+	crate_name = "\improper Strong-Arm implant crate"
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
+
+/datum/supply_pack/medical/paperwork_implants
+	name = "Paperwork Implant Set"
+	desc = "A crate containing two implants, which can be surgically implanted to effectivize crewmembers at paperwork. Warranty void if exposed to electromagnetic pulses."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/organ/cyberimp/arm/toolkit/paperwork = 2)
+	crate_name = "Paperwork implant crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
+
+/datum/supply_pack/medical/lost_crew
+	name = "Recovered NT Employee corpse"
+	desc = "We don't have the accomodations to bring them back, could we send them to you? Please revive and employ them. \
+	The price is a downpayment, we will reimburse the medical budget once our employee has been alive again for a bit."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/structure/closet/body_bag/lost_crew/with_body)
+	crate_name = "body freezer"
+	crate_type = /obj/structure/closet/crate/secure/freezer
+
+/datum/supply_pack/medical/organ_growing
+	name = "Organ Growing Kit"
+	desc = "All the tools you need to grow organs at home! Besides letting you grow standard organs from tissue samples, \
+	you might find mutant cells which can be further proliferated to grow strange properties."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(
+		/obj/machinery/vatgrower/small/unanchored,
+		/obj/item/biopsy_tool/organ,
+		/obj/item/storage/box/petridish,
+		/obj/structure/microscope/unanchored,
+		/obj/item/reagent_containers/cup/mortar,
+		/obj/item/pestle,
+	)
+	crate_name = "organ growing kit"
+
+/datum/supply_pack/medical/chiral_inversing_buffer
+	name = "Chiral Inversing Buffer Crate"
+	desc = "A crate containing a rare sample of an inversing buffer. \
+		It can transform impure reagents into their inverse counterparts when the right conditions are met."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/reagent_containers/cup/bottle/inversing_buffer)
+	crate_name = "chiral inversing buffer crate"
+
+/datum/supply_pack/medical/handheld_crew_monitor
+	name = "Handheld Crew Monitor Crate"
+	desc = "A crate containing three handheld crew monitors"
+	cost = (CARGO_CRATE_VALUE * /obj/item/sensor_device::custom_premium_price * 3 * 0.8) / 280 // Bulk discount .8X base /tg/ vending machine value with the CARGO_CRATE_VALUE modifier
+	contains = list(
+		/obj/item/sensor_device,
+		/obj/item/sensor_device,
+		/obj/item/sensor_device,
+	)
+	crate_name = null
+	crate_type = /obj/structure/closet/crate/deforest
+
+/datum/supply_pack/medical/first_aid_board
+	name = "DeForest First Aid Station"
+	desc = "A crate containing a circuit board used to construct a DeForest First Aid Station - \
+		a machine designed to treat minor injuries and ailments. Components not included."
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/circuitboard/machine/wall_healer)
+	crate_name = null
+	crate_type = /obj/structure/closet/crate/deforest

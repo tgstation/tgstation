@@ -83,7 +83,7 @@
 /area/station/hallway/secondary/entry
 	name = "\improper Arrival Shuttle Hallway"
 	icon_state = "entry"
-	area_flags = UNIQUE_AREA | EVENT_PROTECTED
+	area_flags = EVENT_PROTECTED
 
 /area/station/hallway/secondary/dock
 	name = "\improper Secondary Station Dock Hallway"
@@ -92,6 +92,7 @@
 /area/station/hallway/secondary/service
 	name = "\improper Service Hallway"
 	icon_state = "hall_service"
+	tacmap_color = TACMAP_AREA_SERVICE
 
 /area/station/hallway/secondary/spacebridge
 	name = "\improper Space Bridge"

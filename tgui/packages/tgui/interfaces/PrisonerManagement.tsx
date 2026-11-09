@@ -1,6 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -10,7 +7,10 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+import type { BooleanLike } from 'tgui-core/react';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 type byondRef = string;
@@ -131,7 +131,7 @@ const AllImplantDisplay = (props: { implants: ImplantInfo[] }) => {
         </Tabs>
       </Stack.Item>
       <Stack.Item>
-        {implantTab && implantsByCategory && implantsByCategory[implantTab] ? (
+        {implantTab && implantsByCategory?.[implantTab] ? (
           implantsByCategory[implantTab].map((implant) => (
             <ImplantDisplay key={implant.ref} implant={implant} />
           ))

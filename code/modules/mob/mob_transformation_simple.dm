@@ -14,7 +14,7 @@
 	if(istext(new_type))
 		new_type = text2path(new_type)
 
-	if( !ispath(new_type) )
+	if(!ispath(new_type) )
 		to_chat(usr, "Invalid type path (new_type = [new_type]) in change_mob_type(). Contact a coder.")
 		return
 
@@ -50,9 +50,9 @@
 	if(has_dna() && desired_mob.has_dna())
 		var/mob/living/carbon/old_mob = src
 		var/mob/living/carbon/new_mob = desired_mob
-		old_mob.dna.transfer_identity(new_mob, transfer_species = FALSE)
+		old_mob.dna.copy_dna(new_mob.dna, NONE)
 		new_mob.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
-	else if(ishuman(desired_mob) && (!ismonkey(desired_mob)))
+	else if(ishuman(desired_mob) && !HAS_TRAIT(desired_mob, TRAIT_LESSER_HUMANOID))
 		var/mob/living/carbon/human/new_human = desired_mob
 		client?.prefs.safe_transfer_prefs_to(new_human)
 		new_human.dna.update_dna_identity()
@@ -67,7 +67,7 @@
 
 		mind.transfer_to(desired_mob, 1) // second argument to force key move to new mob
 	else
-		desired_mob.key = key
+		desired_mob.PossessByPlayer(key)
 
 	SEND_SIGNAL(src, COMSIG_MOB_CHANGED_TYPE, desired_mob)
 	if(delete_old_mob)

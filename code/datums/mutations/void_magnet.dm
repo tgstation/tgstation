@@ -1,14 +1,14 @@
-/datum/mutation/human/void
+/datum/mutation/void
 	name = "Void Magnet"
-	desc = "A rare genome that attracts odd forces not usually observed."
+	desc = "The subject attracts odd forces which are not usually observed."
 	quality = MINOR_NEGATIVE //upsides and downsides
 	text_gain_indication = span_notice("You feel a heavy, dull force just beyond the walls watching you.")
-	instability = 30
+	instability = POSITIVE_INSTABILITY_MODERATE // useful, but has large drawbacks
 	power_path = /datum/action/cooldown/spell/void/cursed
 	energy_coeff = 1
 	synchronizer_coeff = 1
 
-/datum/mutation/human/void/modify()
+/datum/mutation/void/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/void/cursed/to_modify = .
 	if(!istype(to_modify)) // null or invalid
@@ -57,10 +57,10 @@
 	return ..()
 
 /// Signal proc for [COMSIG_LIVING_LIFE]. Has a chance of casting itself randomly.
-/datum/action/cooldown/spell/void/cursed/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
+/datum/action/cooldown/spell/void/cursed/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	if(!isliving(source) || HAS_TRAIT(source, TRAIT_STASIS) || source.stat == DEAD || HAS_TRAIT(source, TRAIT_NO_TRANSFORM))
+	if(HAS_TRAIT(source, TRAIT_STASIS) || source.stat == DEAD)
 		return
 
 	if(!is_valid_target(source))

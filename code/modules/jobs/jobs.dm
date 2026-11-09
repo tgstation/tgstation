@@ -30,16 +30,6 @@ GLOBAL_LIST_INIT(exp_specialmap, list(
 ))
 GLOBAL_PROTECT(exp_specialmap)
 
-//this is necessary because antags happen before job datums are handed out, but NOT before they come into existence
-//so I can't simply use job datum.department_head straight from the mind datum, laaaaame.
-/proc/get_department_heads(job_title)
-	if(!job_title)
-		return list()
-
-	for(var/datum/job/job as anything in SSjob.joinable_occupations)
-		if(job.title == job_title)
-			return job.department_head //this is a list
-
 /proc/get_full_job_name(job)
 	var/static/regex/cap_expand = new("cap(?!tain)")
 	var/static/regex/cmo_expand = new("cmo")

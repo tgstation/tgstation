@@ -9,6 +9,10 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 /// Logic holder for supermatter delaminations, goes off the strategy design pattern.
 /// Selected by [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam
+	/// User friendly name for messages and logging
+	var/name
+	/// Has a priority announcement been sent since this delam strategy was initialized
+	var/announcement_triggered = FALSE
 
 /// Whether we are eligible for this delamination or not. TRUE if valid, FALSE if not.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
@@ -23,7 +27,7 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	if (sm.is_main_engine)
 		SSpersistence.delam_highscore = SSpersistence.rounds_since_engine_exploded
 		SSpersistence.rounds_since_engine_exploded = ROUNDCOUNT_ENGINE_JUST_EXPLODED
-		for (var/obj/machinery/incident_display/sign as anything in GLOB.map_delamination_counters)
+		for (var/obj/machinery/incident_display/sign as anything in GLOB.map_incident_displays)
 			sign.update_delam_count(ROUNDCOUNT_ENGINE_JUST_EXPLODED)
 	qdel(sm)
 
@@ -38,8 +42,8 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 		return FALSE
 
 	if (sm.damage >= sm.emergency_point && sm.damage_archived < sm.emergency_point)
-		sm.investigate_log("has entered the emergency point.", INVESTIGATE_ENGINE)
-		message_admins("[sm] has entered the emergency point [ADMIN_VERBOSEJMP(sm)].")
+		sm.investigate_log("has entered the emergency point: Pending [sm.delamination_strategy.name].", INVESTIGATE_ENGINE)
+		message_admins("[ADMIN_VERBOSEJMP(sm)] has entered the emergency point: Pending [sm.delamination_strategy.name].")
 
 	if((REALTIMEOFDAY - sm.lastwarning) < SUPERMATTER_WARNING_DELAY)
 		return FALSE
@@ -50,18 +54,18 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
 		else
 			sm.radio.talk_into(sm,"Crystalline hyperstructure returning to safe operating parameters. Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.warning_channel)
-		playsound(sm, 'sound/machines/terminal_alert.ogg', 75)
+		playsound(sm, 'sound/machines/terminal/terminal_alert.ogg', 75)
 		return FALSE
 
 	switch(sm.get_status())
 		if(SUPERMATTER_DELAMINATING)
-			playsound(sm, 'sound/misc/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
+			playsound(sm, 'sound/announcer/alarm/bloblarm.ogg', 100, FALSE, 40, 30, falloff_distance = 10)
 		if(SUPERMATTER_EMERGENCY)
-			playsound(sm, 'sound/machines/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			playsound(sm, 'sound/machines/engine_alert/engine_alert1.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(SUPERMATTER_DANGER)
-			playsound(sm, 'sound/machines/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
+			playsound(sm, 'sound/machines/engine_alert/engine_alert2.ogg', 100, FALSE, 30, 30, falloff_distance = 10)
 		if(SUPERMATTER_WARNING)
-			playsound(sm, 'sound/machines/terminal_alert.ogg', 75)
+			playsound(sm, 'sound/machines/terminal/terminal_alert.ogg', 75)
 
 	if(sm.damage >= sm.emergency_point) // In emergency
 		sm.radio.talk_into(sm, "CRYSTAL DELAMINATION IMMINENT! Integrity: [round(sm.get_integrity_percent(), 0.01)]%", sm.emergency_channel)
@@ -75,15 +79,24 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 	SEND_SIGNAL(sm, COMSIG_SUPERMATTER_DELAM_ALARM)
 	return TRUE
 
-/// Called when a supermatter switches it's strategy from another one to us.
+/// Generates an admin message and creates an investigate log.
+/datum/sm_delam/proc/log_delamination(obj/machinery/power/supermatter_crystal/sm)
+	message_admins("[ADMIN_VERBOSEJMP(sm)] triggered a [name].")
+	sm.investigate_log("triggered a [name].", INVESTIGATE_ENGINE)
+
+/// Called when a supermatter switches its strategy from another one to us.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam/proc/on_select(obj/machinery/power/supermatter_crystal/sm)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	sm.investigate_log("functional strategy is now [name].", INVESTIGATE_ENGINE)
+	if(SSticker.HasRoundStarted())
+		message_admins("[ADMIN_VERBOSEJMP(sm)] functional strategy is now [name].")
 
-/// Called when a supermatter switches it's strategy from us to something else.
+/// Called when a supermatter switches its strategy from us to something else.
 /// [/obj/machinery/power/supermatter_crystal/proc/set_delam]
 /datum/sm_delam/proc/on_deselect(obj/machinery/power/supermatter_crystal/sm)
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	sm.investigate_log("previous strategy was [name].", INVESTIGATE_ENGINE)
 
 /// Added to an examine return value.
 /// [/obj/machinery/power/supermatter_crystal/examine]
@@ -119,12 +132,13 @@ GLOBAL_LIST_INIT(sm_delam_list, list(
 // Change how bright the rock is.
 /// [/obj/machinery/power/supermatter_crystal/process_atmos]
 /datum/sm_delam/proc/lights(obj/machinery/power/supermatter_crystal/sm)
-	sm.set_light(
-		l_range = ROUND_UP(clamp(sm.internal_energy / 500, 4, 10)),
-		l_power = ROUND_UP(clamp(sm.internal_energy / 1000, 1, 5)),
-		l_color = sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR,
-		l_on = !!sm.internal_energy,
-	)
+	if(!!sm.internal_energy)
+		sm.set_light(
+			l_range = ROUND_UP(clamp(sm.internal_energy / 500, 4, 10)),
+			l_power = ROUND_UP(clamp(sm.internal_energy / 1000, 1, 5)),
+			l_color = sm.gas_heat_power_generation > 0.8 ? SUPERMATTER_RED : SUPERMATTER_COLOUR,
+			l_on = TRUE,
+		)
 
 /// Returns a set of messages to be spouted during delams
 /// First message is start of count down, second message is quitting of count down (if sm healed), third is 5 second intervals

@@ -66,7 +66,7 @@
 	if(flaming)
 		ash = new(owner, /particles/smoke/ash, PARTICLE_ATTACH_MOB)
 		var/clear_in = rand(15 SECONDS, 25 SECONDS)
-		if(duration != -1)
+		if(duration != STATUS_EFFECT_PERMANENT)
 			clear_in = min(duration, clear_in)
 		addtimer(CALLBACK(src, PROC_REF(clear_flame)), clear_in)
 	return TRUE
@@ -121,7 +121,7 @@
 		var/atom/target = get_edge_target_turf(source, source.dir)
 		choking_on.throw_at(target, distance, 1, source)
 
-/datum/status_effect/choke/get_examine_text()
+/datum/status_effect/choke/get_examine_text(mob/examiner)
 	return span_boldwarning("[owner.p_They()] [owner.p_are()] choking!")
 
 /datum/status_effect/choke/proc/remove_choke(datum/source)
@@ -163,7 +163,7 @@
 /datum/status_effect/choke/proc/attempt_eat(mob/source, atom/eating)
 	SIGNAL_HANDLER
 	source.balloon_alert(source, "can't get it down!")
-	return COMSIG_CARBON_BLOCK_EAT
+	return BLOCK_EAT_ATTEMPT
 
 /datum/status_effect/choke/proc/helped(mob/source, mob/helping)
 	SIGNAL_HANDLER
@@ -210,14 +210,16 @@
 	aggressor.stop_pulling()
 
 	var/atom/movable/choking_on = choking_on_ref?.resolve()
-	owner.visible_message(span_green("[victim] vomits up \the[choking_on]. [victim.p_theyre()] gonna make it!"), \
+	owner.visible_message(span_green("[victim] vomits up \the [choking_on]. [victim.p_Theyre()] gonna make it!"), \
 			span_green("You vomit up that accursed blockage. YOU CAN BREATHE! The broken chest is a hell of a price to pay."))
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
 		var/obj/item/bodypart/chest = carbon_victim.get_bodypart(BODY_ZONE_CHEST)
 		carbon_victim.cause_wound_of_type_and_severity(WOUND_BLUNT, chest, WOUND_SEVERITY_SEVERE, wound_source = "human force to the chest")
 
-	playsound(owner, 'sound/creatures/crack_vomit.ogg', 120, extrarange = 5, falloff_exponent = 4)
+	aggressor.client?.give_award(/datum/award/achievement/misc/samaritan, aggressor)
+
+	playsound(owner, 'sound/mobs/humanoids/human/gag_vomit/crack_vomit.ogg', 120, extrarange = 5, falloff_exponent = 4)
 	vomit_up()
 
 /datum/status_effect/choke/proc/mirror_dir(atom/source, old_dir, new_dir)
@@ -228,8 +230,8 @@
 	if(iscarbon(aggressor))
 		var/free_hands = 0
 		// Listen bud, you need at least 2 free hands for this
-		for(var/hand_i in 1 to length(aggressor.held_items))
-			if(!aggressor.has_hand_for_held_index(hand_i) || aggressor.held_items[hand_i])
+		for(var/hand_index in aggressor.get_empty_held_indexes())
+			if(!aggressor.has_hand_for_held_index(hand_index))
 				continue
 			free_hands += 1
 		if(free_hands < 2)
@@ -238,7 +240,7 @@
 
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
-		if(!carbon_victim.appears_alive())
+		if(IS_DEAD_OR_FAKING(carbon_victim))
 			victim.balloon_alert(aggressor, "too late...")
 			return FALSE
 
@@ -264,7 +266,7 @@
 	// If we ain't starting, deal a tad bit of brute, as a treat
 	// Note, we attempt to process 10 times a second, so over 7 seconds this'll deal 14 brute
 	if(!before_work)
-		victim.adjustBruteLoss(0.2)
+		victim.adjust_brute_loss(0.2)
 	return TRUE
 
 /datum/status_effect/choke/tick(seconds_between_ticks)
@@ -280,10 +282,8 @@
 /datum/status_effect/choke/proc/deal_damage(seconds_between_ticks)
 	owner.losebreath += 1 * seconds_between_ticks // 1 breath loss a second. This will deal additional breath damage, and prevent breathing
 	if(flaming)
-		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
-		if(head)
-			head.receive_damage(0, 2 * seconds_between_ticks, damage_source = "choking")
-		owner.adjustStaminaLoss(2 * seconds_between_ticks)
+		owner.apply_damage(2 * seconds_between_ticks, BURN, BODY_ZONE_HEAD, attacking_item = "choking")
+		owner.apply_damage(2 * seconds_between_ticks, STAMINA)
 
 /datum/status_effect/choke/proc/do_vfx(client/vfx_on)
 	var/old_x = delta_x

@@ -140,7 +140,7 @@
 	.["view_raw"] = view_raw
 	.["show_deleted"] = show_deleted
 	var/list/histories = list()
-	for(var/id as anything in book_history)
+	for(var/id in book_history)
 		var/list/insert = list()
 		for(var/datum/book_history_entry/entry in book_history[id])
 			insert += list(entry.serialize())

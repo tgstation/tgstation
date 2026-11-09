@@ -5,6 +5,8 @@
 #define RIGHT_CLICK "right"
 #define MIDDLE_CLICK "middle"
 #define LEFT_CLICK "left"
+#define BUTTON4 "xbutton1"
+#define BUTTON5 "xbutton2"
 
 ///Mouse button that was just clicked/released
 ///if(modifiers[BUTTON] == LEFT_CLICK)

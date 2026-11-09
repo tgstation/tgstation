@@ -12,6 +12,8 @@
 	var/datum/callback/after_assumed_control
 	/// If we're currently awaiting the results of a ghost poll
 	var/awaiting_ghosts = FALSE
+	/// Entry in the spawners menu, optional
+	var/joinable_mobs_title
 
 /datum/component/ghost_direct_control/Initialize(
 	ban_type = ROLE_SENTIENCE,
@@ -25,6 +27,7 @@
 	assumed_control_message = null,
 	datum/callback/extra_control_checks,
 	datum/callback/after_assumed_control,
+	joinable_mobs_title = null,
 )
 	. = ..()
 	if (!isliving(parent))
@@ -34,9 +37,10 @@
 	src.assumed_control_message = assumed_control_message || "You are [parent]!"
 	src.extra_control_checks = extra_control_checks
 	src.after_assumed_control = after_assumed_control
+	src.joinable_mobs_title = joinable_mobs_title
 
 	var/mob/mob_parent = parent
-	LAZYADD(GLOB.joinable_mobs[format_text("[initial(mob_parent.name)]")], mob_parent)
+	LAZYADDASSOCLIST(GLOB.joinable_mobs, joinable_mobs_title || format_text(initial(mob_parent.name)), mob_parent)
 
 	if (poll_candidates)
 		INVOKE_ASYNC(src, PROC_REF(request_ghost_control), poll_question, role_name || "[parent]", poll_length, poll_ignore_key, poll_announce_chosen, poll_chat_border_icon)
@@ -56,10 +60,7 @@
 	after_assumed_control = null
 
 	var/mob/mob_parent = parent
-	var/list/spawners = GLOB.joinable_mobs[format_text("[initial(mob_parent.name)]")]
-	LAZYREMOVE(spawners, mob_parent)
-	if(!LAZYLEN(spawners))
-		GLOB.joinable_mobs -= format_text("[initial(mob_parent.name)]")
+	LAZYREMOVEASSOC(GLOB.joinable_mobs, joinable_mobs_title || format_text(initial(mob_parent.name)), mob_parent)
 	return ..()
 
 /// Inform ghosts that they can possess this
@@ -80,7 +81,6 @@
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = poll_question,
 		check_jobban = ban_type,
-		role = ban_type,
 		poll_time = poll_length,
 		checked_target = parent,
 		ignore_category = poll_ignore_key,
@@ -142,13 +142,20 @@
 		return
 	if (extra_control_checks && !extra_control_checks.Invoke(harbinger))
 		return
+
 	harbinger.log_message("took control of [new_body].", LOG_GAME)
-	new_body.key = harbinger.key
-	to_chat(new_body, span_boldnotice(assumed_control_message))
-	after_assumed_control?.Invoke(harbinger)
+	// doesn't transfer mind because that transfers antag datum as well
+	new_body.PossessByPlayer(harbinger.ckey)
+
+	// Already qdels due to below proc but just in case
 	qdel(src)
 
-/// When someone else assumes control via some other means, get rid of our component
-/datum/component/ghost_direct_control/proc/on_login()
+/// When someone assumes control, get rid of our component
+/datum/component/ghost_direct_control/proc/on_login(mob/harbinger)
 	SIGNAL_HANDLER
+	// This proc is called the very moment .key is set, so we need to force mind to initialize here if we want the invoke to affect the mind of the mob
+	if(isnull(harbinger.mind))
+		harbinger.mind_initialize()
+	to_chat(harbinger, span_boldnotice(assumed_control_message))
+	after_assumed_control?.Invoke(harbinger)
 	qdel(src)

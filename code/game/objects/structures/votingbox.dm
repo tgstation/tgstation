@@ -9,7 +9,7 @@
 	icon_state = "votebox_maint"
 
 	anchored = TRUE
-
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15)
 	var/obj/item/card/id/owner //Slapping the box with this ID starts/ends the vote.
 
 	var/voting_active = FALSE //Voting or Maintenance Mode
@@ -19,18 +19,22 @@
 	var/list/voted //List of ID's that already voted.
 	COOLDOWN_DECLARE(vote_print_cooldown)
 
-/obj/structure/votebox/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I,/obj/item/card/id))
-		if(!owner)
-			register_owner(I,user)
-			return
-	if(istype(I,/obj/item/paper))
-		if(voting_active)
-			apply_vote(I,user)
-		else
+/obj/structure/votebox/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/card/id))
+		if(owner)
+			return ITEM_INTERACT_BLOCKING
+
+		register_owner(tool ,user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/paper))
+		if(!voting_active)
 			to_chat(user,span_warning("[src] is in maintenance mode. Voting is not possible at the moment."))
-		return
-	return ..()
+			return ITEM_INTERACT_BLOCKING
+		apply_vote(tool ,user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/votebox/interact(mob/user)
 	..()
@@ -44,13 +48,13 @@
 		dat += "<h1> Unregistered. Swipe ID card to register as voting box operator </h1>"
 	dat += "<h1>[vote_description]</h1>"
 	if(is_operator(user))
-		dat += "Voting: <a href='?src=[REF(src)];act=toggle_vote'>[voting_active ? "Active" : "Maintenance Mode"]</a><br>"
-		dat += "Set Description: <a href='?src=[REF(src)];act=set_desc'>Set Description</a><br>"
-		dat += "One vote per ID: <a href='?src=[REF(src)];act=toggle_auth'>[id_auth ? "Yes" : "No"]</a><br>"
-		dat += "Reset voted ID's: <a href='?src=[REF(src)];act=reset_voted'>Reset</a><br>"
-		dat += "Draw random vote: <a href='?src=[REF(src)];act=raffle'>Raffle</a><br>"
-		dat += "Shred votes: <a href='?src=[REF(src)];act=shred'>Shred</a><br>"
-		dat += "Tally votes: <a href='?src=[REF(src)];act=tally'>Tally</a><br>"
+		dat += "Voting: <a href='byond://?src=[REF(src)];act=toggle_vote'>[voting_active ? "Active" : "Maintenance Mode"]</a><br>"
+		dat += "Set Description: <a href='byond://?src=[REF(src)];act=set_desc'>Set Description</a><br>"
+		dat += "One vote per ID: <a href='byond://?src=[REF(src)];act=toggle_auth'>[id_auth ? "Yes" : "No"]</a><br>"
+		dat += "Reset voted ID's: <a href='byond://?src=[REF(src)];act=reset_voted'>Reset</a><br>"
+		dat += "Draw random vote: <a href='byond://?src=[REF(src)];act=raffle'>Raffle</a><br>"
+		dat += "Shred votes: <a href='byond://?src=[REF(src)];act=shred'>Shred</a><br>"
+		dat += "Tally votes: <a href='byond://?src=[REF(src)];act=tally'>Tally</a><br>"
 
 	var/datum/browser/popup = new(user, "votebox", "Voting Box", 300, 300)
 	popup.set_content(dat.Join())
@@ -94,7 +98,7 @@
 	ui_interact(user)
 
 /obj/structure/votebox/proc/set_description(mob/user)
-	var/new_description = tgui_input_text(user, "Enter a new description", "Vote Description", vote_description, multiline = TRUE)
+	var/new_description = tgui_input_text(user, "Enter a new description", "Vote Description", vote_description, multiline = TRUE, max_length = MAX_DESC_LEN)
 	if(new_description)
 		vote_description = new_description
 

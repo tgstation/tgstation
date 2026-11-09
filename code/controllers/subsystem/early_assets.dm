@@ -5,14 +5,22 @@
 /// opened it up early.
 SUBSYSTEM_DEF(early_assets)
 	name = "Early Assets"
-	init_order = INIT_ORDER_EARLY_ASSETS
-	flags = SS_NO_FIRE
+	dependencies = list(
+		/datum/controller/subsystem/processing/reagents,
+		/datum/controller/subsystem/greyscale_previews,
+	)
+	dependents = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms,
+	)
+	init_stage = INITSTAGE_EARLY
+	ss_flags = SS_NO_FIRE
 
 /datum/controller/subsystem/early_assets/Initialize()
-	for (var/datum/asset/asset_type as anything in subtypesof(/datum/asset))
-		if (initial(asset_type._abstract) == asset_type)
-			continue
+	var/init_source = "early assets"
+	SSatoms.set_tracked_initalized(INITIALIZATION_INNEW_REGULAR, init_source)
 
+	for (var/datum/asset/asset_type as anything in valid_subtypesof(/datum/asset))
 		if (!initial(asset_type.early))
 			continue
 
@@ -20,5 +28,7 @@ SUBSYSTEM_DEF(early_assets)
 			stack_trace("Could not initialize early asset [asset_type]!")
 
 		CHECK_TICK
+
+	SSatoms.clear_tracked_initalize(init_source)
 
 	return SS_INIT_SUCCESS

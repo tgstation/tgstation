@@ -1,15 +1,18 @@
 /obj/structure/plaque //This is a plaque you can craft with gold, then permanently engrave a title and description on, with a fountain pen.
 	icon = 'icons/obj/signs.dmi'
-	icon_state = "blankplaque"
+	icon_state = "goldenplaque"
+	base_icon_state = "goldenplaque"
 	name = "blank plaque"
-	desc = "A blank plaque, use a fancy pen to engrave it. It can be detatched from the wall with a wrench."
+	desc = "A blank plaque, use a pen to engrave it. It can be detached from the wall with a wrench."
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
-	custom_materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT)
 	max_integrity = 200 //Twice as durable as regular signs.
 	armor_type = /datum/armor/structure_plaque
+	///Boolean whether this has a custom sprite, if it does then we won't update to a "written" version.
+	var/custom_sprite = FALSE
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
 	var/engraved = FALSE
 
@@ -20,6 +23,8 @@
 
 /obj/structure/plaque/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		find_and_mount_on_atom()
 	register_context()
 
 /obj/structure/plaque/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -31,9 +36,14 @@
 		if (TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_LMB] = "Unfasten"
 			return CONTEXTUAL_SCREENTIP_SET
-	if(istype(held_item, /obj/item/pen/fountain) && !engraved)
+	if(istype(held_item, /obj/item/pen) && !engraved)
 		context[SCREENTIP_CONTEXT_LMB] = "Engrave"
 		return CONTEXTUAL_SCREENTIP_SET
+
+/obj/structure/plaque/update_icon_state()
+	. = ..()
+	if(engraved && !custom_sprite)
+		icon_state = "[base_icon_state]_written"
 
 /obj/structure/plaque/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -51,14 +61,16 @@
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message(span_notice("[user] unfastens [src]."), \
 		span_notice("You unfasten [src]."))
-	var/obj/item/plaque/unwrenched_plaque = new (get_turf(user))
+	var/obj/item/plaque/unwrenched_plaque = new(get_turf(user))
 	if(engraved) //If it's still just a basic unengraved plaque, we can (and should) skip some of the below variable transfers.
 		unwrenched_plaque.name = name //Copy over the plaque structure variables to the plaque item we're creating when we unwrench it.
 		unwrenched_plaque.desc = desc
 		unwrenched_plaque.engraved = engraved
 	unwrenched_plaque.icon_state = icon_state
+	unwrenched_plaque.base_icon_state = base_icon_state
 	unwrenched_plaque.update_integrity(get_integrity())
 	unwrenched_plaque.setDir(dir)
+	unwrenched_plaque.update_appearance(UPDATE_ICON)
 	qdel(src) //The plaque structure on the wall goes poof and only the plaque item from unwrenching remains.
 	return TRUE
 
@@ -80,52 +92,77 @@
 	atom_integrity = max_integrity
 	return TRUE
 
-/obj/structure/plaque/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/pen/fountain))
-		if(engraved)
-			to_chat(user, span_warning("This plaque has already been engraved."))
-			return
-		var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
-		if(!namechoice)
-			return
-		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization")
-		if(!descriptionchoice)
-			return
-		if(!Adjacent(user)) //Make sure user is adjacent still
-			to_chat(user, span_warning("You need to stand next to the plaque to engrave it!"))
-			return
-		user.visible_message(span_notice("[user] begins engraving [src]."), \
-			span_notice("You begin engraving [src]."))
-		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
-			return
-		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
-		desc = "The plaque reads: '[descriptionchoice]'"
-		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
-		user.visible_message(span_notice("[user] engraves [src]."), \
-			span_notice("You engrave [src]."))
-		return
-	if(istype(I, /obj/item/pen))
-		if(engraved)
-			to_chat(user, span_warning("This plaque has already been engraved, and your pen isn't fancy enough to engrave it anyway! Find a fountain pen."))
-			return
-		to_chat(user, span_warning("Your pen isn't fancy enough to engrave this! Find a fountain pen.")) //Go steal the Curator's.
-		return
-	return ..()
+/obj/structure/plaque/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/pen))
+		return NONE
+
+	if(engraved)
+		to_chat(user, span_warning("This plaque has already been engraved."))
+		return ITEM_INTERACT_BLOCKING
+
+	var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
+	if(!namechoice)
+		return ITEM_INTERACT_BLOCKING
+
+	var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization", max_length = MAX_PLAQUE_LEN)
+	if(!descriptionchoice)
+		return ITEM_INTERACT_BLOCKING
+
+	if(!Adjacent(user)) //Make sure user is adjacent still
+		to_chat(user, span_warning("You need to stand next to the plaque to engrave it!"))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user] begins engraving [src]."), \
+						span_notice("You begin engraving [src]."))
+	if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
+		return ITEM_INTERACT_BLOCKING
+
+	name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
+	desc = "The plaque reads: '[descriptionchoice]'"
+	engraved = TRUE //The plaque now has a name, description, and can't be altered again.
+	user.visible_message(span_notice("[user] engraves [src]."), \
+						span_notice("You engrave [src]."))
+	update_appearance(UPDATE_ICON)
+	return ITEM_INTERACT_SUCCESS
+
+// Plaque skins
+/datum/atom_skin/plaque
+	abstract_type = /datum/atom_skin/plaque
+	change_base_icon_state = TRUE
+
+/datum/atom_skin/plaque/default
+	preview_name = "Default"
+	new_icon_state = "goldenplaque"
+
+/datum/atom_skin/plaque/kiddie
+	preview_name = "Kiddie"
+	new_icon_state = "kiddieplaque"
+
+/datum/atom_skin/plaque/commissionplaque
+	preview_name = "Commissioned"
+	new_icon_state = "commissionplaque"
+
+/datum/atom_skin/plaque/goldcommissionplaque
+	preview_name = "Commissioned (Gold)"
+	new_icon_state = "goldcommissionplaque"
 
 /obj/item/plaque //The item version of the above.
 	icon = 'icons/obj/signs.dmi'
-	icon_state = "blankplaque"
+	icon_state = "goldenplaque"
+	base_icon_state = "goldenplaque"
 	inhand_icon_state = "blankplaque"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "blank plaque"
-	desc = "A blank plaque, use a fancy pen to engrave it. It can be placed on a wall."
+	desc = "A blank plaque, use a pen to engrave it. It can be placed on a wall."
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT)
 	max_integrity = 200
 	armor_type = /datum/armor/item_plaque
 	///This points the item to make the proper structure when placed on a wall.
 	var/plaque_path = /obj/structure/plaque
+	///Boolean whether this has a custom sprite, if it does then we won't update to a "written" version.
+	var/custom_sprite = FALSE
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
 	var/engraved = FALSE
 
@@ -133,6 +170,14 @@
 	melee = 50
 	fire = 50
 	acid = 50
+
+/obj/item/plaque/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/plaque)
+
+/obj/item/plaque/update_icon_state()
+	. = ..()
+	if(engraved && !custom_sprite)
+		icon_state = "[base_icon_state]_written"
 
 /obj/item/plaque/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -153,43 +198,52 @@
 	return TRUE
 
 
-/obj/item/plaque/attackby(obj/item/I, mob/user, params) //Same as part of the above, except for the item in hand instead of the structure.
-	if(istype(I, /obj/item/pen/fountain))
-		if(engraved)
-			to_chat(user, span_warning("This plaque has already been engraved."))
-			return
-		var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
-		if(!namechoice)
-			return
-		var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization")
-		if(!descriptionchoice)
-			return
-		if(!Adjacent(user)) //Make sure user is adjacent still
-			to_chat(user, span_warning("You need to stand next to the plaque to engrave it!"))
-			return
-		user.visible_message(span_notice("[user] begins engraving [src]."), \
-			span_notice("You begin engraving [src]."))
-		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
-			return
-		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
-		desc = "The plaque reads: '[descriptionchoice]'"
-		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
-		user.visible_message(span_notice("[user] engraves [src]."), \
-			span_notice("You engrave [src]."))
-		return
-	if(istype(I, /obj/item/pen))
-		if(engraved)
-			to_chat(user, span_warning("This plaque has already been engraved, and your pen isn't fancy enough to engrave it anyway! Find a fountain pen."))
-			return
-		to_chat(user, span_warning("Your pen isn't fancy enough to engrave this! Find a fountain pen.")) //Go steal the Curator's.
-		return
-	return ..()
+/obj/item/plaque/item_interaction(mob/living/user, obj/item/tool, list/modifiers) //Same as part of the above, except for the item in hand instead of the structure.
+	if(!istype(tool, /obj/item/pen))
+		return NONE
 
-/obj/item/plaque/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	if(!iswallturf(target) || !proximity)
-		return
-	var/turf/target_turf = target
+	if(engraved)
+		to_chat(user, span_warning("This plaque has already been engraved."))
+		return ITEM_INTERACT_BLOCKING
+
+	var/namechoice = tgui_input_text(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization", max_length = MAX_NAME_LEN)
+	if(!namechoice)
+		return ITEM_INTERACT_BLOCKING
+
+	var/descriptionchoice = tgui_input_text(user, "Engrave this plaque's text", "Plaque Customization", max_length = MAX_PLAQUE_LEN)
+	if(!descriptionchoice)
+		return ITEM_INTERACT_BLOCKING
+
+	if(!Adjacent(user)) //Make sure user is adjacent still
+		to_chat(user, span_warning("You need to stand next to the plaque to engrave it!"))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user] begins engraving [src]."), \
+						span_notice("You begin engraving [src]."))
+	if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
+		return ITEM_INTERACT_BLOCKING
+
+	update_text(namechoice, descriptionchoice)
+	user.visible_message(span_notice("[user] engraves [src]."), \
+						span_notice("You engrave [src]."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/plaque/proc/update_text(new_name, new_desc)
+	var/newly_engraved
+	if(new_name)
+		name = "\improper [new_name]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
+		newly_engraved = TRUE
+	if(new_desc)
+		desc = "The plaque reads: '[new_desc]'"
+		newly_engraved = TRUE
+	if(newly_engraved && !engraved)
+		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
+		update_appearance(UPDATE_ICON)
+
+/obj/item/plaque/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!iswallturf(interacting_with))
+		return NONE
+	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
 	var/obj/structure/plaque/placed_plaque = new plaque_path(user_turf) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
@@ -210,6 +264,9 @@
 		placed_plaque.desc = desc
 		placed_plaque.engraved = engraved
 	placed_plaque.icon_state = icon_state
+	placed_plaque.base_icon_state = base_icon_state
 	placed_plaque.update_integrity(get_integrity())
 	placed_plaque.setDir(dir)
+	placed_plaque.update_appearance(UPDATE_ICON)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS

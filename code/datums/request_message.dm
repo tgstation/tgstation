@@ -12,8 +12,8 @@
 	var/message_stamped_by = ""
 	/// The priority of the message
 	var/priority = ""
-	/// The radio frequency the message should be broadcasted on
-	var/radio_freq = null
+	/// The radio channel the message should be broadcasted on
+	var/radio_channel = null
 	/// The type of the request
 	var/request_type = ""
 	/// A list to be appended after the message, for example, list of ores
@@ -21,12 +21,12 @@
 
 /datum/request_message/New(data)
 	sender_department =  data["sender_department"]
-	received_time = station_time_timestamp()
+	received_time = round_timestamp()
 	content = data["message"]
 	message_verified_by = data["verified"]
 	message_stamped_by = data["stamped"]
 	priority = data["priority"]
-	radio_freq = data["notify_freq"]
+	radio_channel = data["notify_channel"]
 	request_type = data["ore_update"] ? ORE_UPDATE_REQUEST : data["request_type"]
 	var/list/data_appended_list = data["appended_list"]
 	if(data_appended_list && data_appended_list.len)

@@ -1,5 +1,6 @@
 /datum/map_template/shuttle/ruin
 	port_id = "ruin"
+	prefix = "_maps/shuttles/ruin/"
 	who_can_purchase = null
 
 /datum/map_template/shuttle/ruin/cyborg_mothership

@@ -3,6 +3,11 @@
 	ambience_index = AMBIENCE_ENGI
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+	tacmap_color = TACMAP_AREA_ENGINEERING
+
+/area/station/engineering/circuit_workshop
+	name = "\improper Circuit Workshop"
+	icon_state = "cir_wor"
 
 /area/station/engineering/engine_smes
 	name = "\improper Engineering SMES"
@@ -11,6 +16,10 @@
 /area/station/engineering/main
 	name = "Engineering"
 	icon_state = "engine"
+
+/area/station/engineering/main/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/block_area_power_fail)
 
 /area/station/engineering/hallway
 	name = "Engineering Hallway"
@@ -26,13 +35,11 @@
 /*outside atmos*/
 /area/station/engineering/atmos/space_catwalk
 	name = "\improper Atmospherics Space Catwalk"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 	sound_environment = SOUND_AREA_SPACE
 	ambience_index = AMBIENCE_SPACE
 	ambient_buzz = null //Space is deafeningly quiet
-	min_ambience_cooldown = 195 SECONDS //length of ambispace.ogg
-	max_ambience_cooldown = 200 SECONDS
 
 /area/station/engineering/atmos/project
 	name = "\improper Atmospherics Project Room"
@@ -65,17 +72,29 @@
 /area/station/engineering/atmospherics_engine
 	name = "\improper Atmospherics Engine"
 	icon_state = "atmos_engine"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
+
+/area/station/engineering/atmospherics_engine/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/block_area_power_fail)
 
 /area/station/engineering/lobby
 	name = "\improper Engineering Lobby"
 	icon_state = "engi_lobby"
 
 /area/station/engineering/supermatter
+	name = "\improper Place Somewhere Around the Supermatter" // don't use this type
+	icon_state = "engine_sm"
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
+
+/area/station/engineering/supermatter/engine
 	name = "\improper Supermatter Engine"
 	icon_state = "engine_sm"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/engineering/supermatter/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/block_area_power_fail)
 
 /area/station/engineering/supermatter/waste
 	name = "\improper Supermatter Waste Chamber"
@@ -84,6 +103,11 @@
 /area/station/engineering/supermatter/room
 	name = "\improper Supermatter Engine Room"
 	icon_state = "engine_sm_room"
+	sound_environment = SOUND_AREA_LARGE_ENCLOSED
+
+/area/station/engineering/supermatter/room/upper
+	name = "\improper Upper Supermatter Engine Room"
+	icon_state = "engine_sm_room_upper"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
 /area/station/engineering/break_room
@@ -116,7 +140,7 @@
 /area/station/engineering/storage/tcomms
 	name = "Telecomms Storage"
 	icon_state = "tcom_storage"
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA | CULT_PERMITTED
+	area_flags = BLOBS_ALLOWED | CULT_PERMITTED
 
 /*
 * Construction Areas
@@ -127,6 +151,7 @@
 	icon_state = "construction"
 	ambience_index = AMBIENCE_ENGI
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	tacmap_color = TACMAP_AREA_ENGINEERING
 
 /area/station/construction/mining/aux_base
 	name = "Auxiliary Base Construction"

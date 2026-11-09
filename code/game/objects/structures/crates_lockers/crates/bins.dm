@@ -3,8 +3,8 @@
 	name = "trash bin"
 	icon_state = "trashbin"
 	base_icon_state = "trashbin"
-	open_sound = 'sound/effects/bin_open.ogg'
-	close_sound = 'sound/effects/bin_close.ogg'
+	open_sound = 'sound/effects/bin/bin_open.ogg'
+	close_sound = 'sound/effects/bin/bin_close.ogg'
 	anchored = TRUE
 	horizontal = FALSE
 	delivery_icon = null
@@ -12,6 +12,7 @@
 	paint_jobs = null
 	elevation = 17
 	elevation_open = 17
+	can_weld_shut = FALSE
 
 /obj/structure/closet/crate/bin/LateInitialize()
 	. = ..()
@@ -32,17 +33,15 @@
 		return
 	. += base_icon_state + "_some"
 
-/obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/storage/bag/trash) && !opened)
-		var/obj/item/storage/bag/trash/T = W
-		to_chat(user, span_notice("You fill the bag."))
-		for(var/obj/item/O in src)
-			T.atom_storage?.attempt_insert(O, user, TRUE)
-		T.update_appearance()
-		do_animate()
-		return TRUE
-	else
+/obj/structure/closet/crate/bin/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/storage/bag/trash) || !opened)
 		return ..()
+	var/obj/item/storage/bag/trash/garbage_bag = tool
+	to_chat(user, span_notice("You fill the bag."))
+	for(var/obj/item/garbage in src)
+		garbage_bag.atom_storage?.attempt_insert(garbage, user, TRUE)
+	do_animate()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/closet/crate/bin/proc/do_animate()
 	playsound(loc, open_sound, 15, TRUE, -3)
@@ -66,4 +65,4 @@
 	items_to_sweep.Cut()
 
 	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
-	playsound(broom.loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
+	playsound(broom.loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)

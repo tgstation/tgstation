@@ -20,7 +20,7 @@ Charged extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
-	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/bubbles/bubbles.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/light_flicker.ogg', 50, TRUE)
 	do_effect(user)
 
@@ -81,7 +81,7 @@ Charged extracts:
 	effect_desc = "Creates a hypercharged slime cell battery, which has high capacity but takes longer to recharge."
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
-	new /obj/item/stock_parts/cell/high/slime_hypercharged(get_turf(user))
+	new /obj/item/stock_parts/power_store/cell/high/slime_hypercharged(get_turf(user))
 	user.visible_message(span_notice("[src] sparks violently, and swells with electric power!"))
 	..()
 
@@ -207,7 +207,7 @@ Charged extracts:
 /obj/item/slimecross/charged/gold/process()
 	visible_message(span_warning("[src] lets off a spark, and produces a living creature!"))
 	new /obj/effect/particle_effect/sparks(get_turf(src))
-	playsound(get_turf(src), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(get_turf(src), /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	create_random_mob(get_turf(src), HOSTILE_SPAWN)
 	spawned++
 	if(spawned >= max_spawn)
@@ -278,6 +278,5 @@ Charged extracts:
 /obj/item/slimecross/charged/rainbow/do_effect(mob/user)
 	user.visible_message(span_warning("[src] swells and splits into three new slimes!"))
 	for(var/i in 1 to 3)
-		var/mob/living/basic/slime/new_slime = new (get_turf(user))
-		new_slime.random_colour()
+		new /mob/living/basic/slime/random(get_turf(user))
 	return ..()

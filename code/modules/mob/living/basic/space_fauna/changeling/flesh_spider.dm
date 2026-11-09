@@ -16,10 +16,10 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BURN = 1.25, TOX = 4)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
-	speed = -0.1
+	speed = 0.2
 	maxHealth = 90
 	health = 90
 	melee_damage_lower = 15
@@ -28,12 +28,11 @@
 	melee_attack_cooldown = CLICK_CD_MELEE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	unsuitable_cold_damage = 4
 	unsuitable_heat_damage = 4
 	combat_mode = TRUE
-	faction = list() // No allies but yourself
 	pass_flags = PASSTABLE
 	unique_name = TRUE
 	lighting_cutoff_red = 22
@@ -41,6 +40,10 @@
 	lighting_cutoff_blue = 5
 	butcher_results = list(/obj/item/food/meat/slab/spider = 2, /obj/item/food/spiderleg = 8)
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider
+	max_stamina = 200
+	stamina_crit_threshold = BASIC_MOB_NO_STAMCRIT
+	stamina_recovery = 5
+	max_stamina_slowdown = 12
 
 /mob/living/basic/flesh_spider/Initialize(mapload)
 	. = ..()
@@ -58,7 +61,7 @@
 	)
 	AddComponent(\
 		/datum/component/regenerator,\
-		regeneration_delay = 4 SECONDS,\
+		regeneration_delay = 3 SECONDS,\
 		brute_per_second = maxHealth / 6,\
 		outline_colour = COLOR_PINK,\
 	)

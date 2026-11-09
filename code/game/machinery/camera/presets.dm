@@ -84,6 +84,13 @@
 	autonames_in_areas[camera_area] = number
 	c_tag = "[format_text(camera_area.name)] #[number]"
 
+/obj/machinery/camera/autoname/motion
+	start_active = TRUE
+	name = "motion-sensitive security camera"
+
+/obj/machinery/camera/autoname/motion/Initialize(mapload)
+	. = ..()
+	upgradeMotion()
 
 /**
  * Bomb preset
@@ -99,6 +106,15 @@
 	resistance_flags = parent_type::resistance_flags | INDESTRUCTIBLE
 	light_range = 10
 	start_active = TRUE
+
+/obj/machinery/camera/preset/siren_pirates
+	name = "Broadcasting Camera"
+	c_tag = "Siren Performing Stage"
+	network = list(CAMERA_NETWORK_PIRATE)
+	start_active = TRUE
+
+/obj/machinery/camera/preset/siren_pirates/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
+	return
 
 ///The internal camera object for exosuits, applied by the camera upgrade
 /obj/machinery/camera/exosuit
@@ -142,23 +158,26 @@
 /obj/machinery/camera/proc/upgradeEmpProof(malf_upgrade, ignore_malf_upgrades)
 	if(isEmpProof(ignore_malf_upgrades)) //pass a malf upgrade to ignore_malf_upgrades so we can replace the malf module with the normal one
 		return //that way if someone tries to upgrade an already malf-upgraded camera, it'll just upgrade it to a normal version.
-	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 	if(malf_upgrade)
 		malf_emp_firmware_active = TRUE //don't add parts to drop, update icon, ect. reconstructing it will also retain the upgrade.
 		malf_emp_firmware_present = TRUE //so the upgrade is retained after incompatible parts are removed.
+		AddElement(/datum/element/empprotection, EMP_PROTECT_ALL|EMP_NO_EXAMINE)
 
 	else if(!emp_module) //only happens via upgrading in camera/attackby()
 		emp_module = new(src)
-		if(malf_emp_firmware_active)
-			malf_emp_firmware_active = FALSE //make it appear like it's just normally upgraded so the icons and examine texts are restored.
+		malf_emp_firmware_active = FALSE //make it appear like it's just normally upgraded so the icons and examine texts are restored.
+		AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
 
 	camera_upgrade_bitflags |= CAMERA_UPGRADE_EMP_PROOF
+	calculate_active_power()
 
 /obj/machinery/camera/proc/removeEmpProof(ignore_malf_upgrades)
 	if(ignore_malf_upgrades) //don't downgrade it if malf software is forced onto it.
 		return
 	RemoveElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+	RemoveElement(/datum/element/empprotection, EMP_PROTECT_ALL|EMP_NO_EXAMINE)
 	camera_upgrade_bitflags &= ~CAMERA_UPGRADE_EMP_PROOF
+	calculate_active_power()
 
 /obj/machinery/camera/proc/isXRay(ignore_malf_upgrades)
 	return (camera_upgrade_bitflags & CAMERA_UPGRADE_XRAY) && (!(ignore_malf_upgrades && malf_xray_firmware_active))
@@ -177,11 +196,14 @@
 
 	camera_upgrade_bitflags |= CAMERA_UPGRADE_XRAY
 	update_appearance()
+	SScameras.update_visibility(src)
+	calculate_active_power()
 
 /obj/machinery/camera/proc/removeXRay(ignore_malf_upgrades)
 	if(!ignore_malf_upgrades) //don't downgrade it if malf software is forced onto it.
 		camera_upgrade_bitflags &= ~CAMERA_UPGRADE_XRAY
 	update_appearance()
+	calculate_active_power()
 
 /obj/machinery/camera/proc/isMotion()
 	return camera_upgrade_bitflags & CAMERA_UPGRADE_MOTION
@@ -196,6 +218,7 @@
 		proximity_monitor = new(src)
 	camera_upgrade_bitflags |= CAMERA_UPGRADE_MOTION
 	create_prox_monitor()
+	calculate_active_power()
 
 /obj/machinery/camera/proc/removeMotion()
 	if(name == "motion-sensitive security camera")
@@ -203,3 +226,4 @@
 	camera_upgrade_bitflags &= ~CAMERA_UPGRADE_MOTION
 	if(!area_motion)
 		QDEL_NULL(proximity_monitor)
+	calculate_active_power()

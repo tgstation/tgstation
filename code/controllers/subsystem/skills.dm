@@ -4,8 +4,7 @@ This subsystem mostly exists to populate and manage the skill singletons.
 
 SUBSYSTEM_DEF(skills)
 	name = "Skills"
-	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_SKILLS
+	ss_flags = SS_NO_FIRE
 	///Dictionary of skill.type || skill ref
 	var/list/all_skills = list()
 	///List of level names with index corresponding to skill level

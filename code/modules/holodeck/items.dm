@@ -14,7 +14,7 @@
 	throw_speed = 2
 	block_chance = 0
 	throwforce = 0
-	embedding = null
+	embed_type = null
 	sword_color_icon = null
 
 	active_throwforce = 0
@@ -93,7 +93,7 @@
 	to_chat(user, span_warning("You are too primitive to use this device!"))
 	return
 
-/obj/machinery/readybutton/attackby(obj/item/W, mob/user, params)
+/obj/machinery/readybutton/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	to_chat(user, span_warning("The device is a solid button, there's nothing you can do with it!"))
 
 /obj/machinery/readybutton/attack_hand(mob/user, list/modifiers)
@@ -129,9 +129,12 @@
 	if(numbuttons == numready)
 		begin_event()
 
-/obj/machinery/readybutton/update_icon_state()
-	icon_state = "auth_[ready ? "on" : "off"]"
-	return ..()
+/obj/machinery/readybutton/update_overlays()
+	. = ..()
+	if(ready && is_operational)
+		. += mutable_appearance(icon, "auth_on")
+		. += emissive_appearance(icon, "auth_on", src, alpha = src.alpha)
+
 
 /obj/machinery/readybutton/proc/begin_event()
 
@@ -148,9 +151,11 @@
 
 /obj/machinery/conveyor/holodeck
 
-/obj/machinery/conveyor/holodeck/attackby(obj/item/I, mob/user, params)
-	if(!user.transferItemToLoc(I, drop_location()))
+/obj/machinery/conveyor/holodeck/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!user.transferItemToLoc(tool, drop_location()))
 		return ..()
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/paper/fluff/holodeck/trek_diploma
 	name = "paper - Starfleet Academy Diploma"

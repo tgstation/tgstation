@@ -39,8 +39,7 @@
 	return TRUE //treaty signed at the Beeneeva convention
 
 /datum/ai_controller/basic_controller/butterfly
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/butterfly.bt.json"
 
 /mob/living/basic/butterfly/lavaland
 	unsuitable_atmos_damage = 0

@@ -8,7 +8,7 @@
 	if(!islist(victim_hiddenprints))
 		victim_hiddenprints = list()
 
-	var/list/hiddenprints = flatten_list(victim_hiddenprints)
+	var/list/hiddenprints = assoc_to_values(victim_hiddenprints)
 	list_clear_nulls(hiddenprints)
 
 	if(!length(hiddenprints))

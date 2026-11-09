@@ -45,7 +45,7 @@
 /area/template_noop)
 "u" = (
 /obj/effect/turf_decal/siding/dark,
-/obj/item/storage/box/ingredients/random{
+/obj/item/storage/box/ingredients/wildcard{
 	pixel_y = 14;
 	pixel_x = -7
 	},

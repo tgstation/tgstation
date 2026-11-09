@@ -1,4 +1,3 @@
-import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -7,7 +6,9 @@ import {
   LabeledList,
   Section,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 export const Limbgrower = (props) => {
@@ -84,7 +85,7 @@ export const Limbgrower = (props) => {
                     color="good"
                     onClick={() =>
                       act('make_limb', {
-                        design_id: design.id,
+                        design_path: design.path,
                         active_tab: design.parent_category,
                       })
                     }

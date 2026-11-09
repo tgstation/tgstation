@@ -1,0 +1,112 @@
+{
+	"dm_type": "/datum/bt_node/subtree/minebot_combat",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"key": "BB_CURRENT_TARGET",
+		"observer_abort": "BT_ABORT_BOTH"
+	},
+	"child": {
+		"type": "parallel",
+		"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+		"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+		"repeat_secondary": true,
+		"finish_on_primary": true,
+		"children": [
+			{
+				"type": "subplan",
+				"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+				"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+				"children": [
+					{
+						"type": "selector",
+						"children": [
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"vars": {
+									"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+									"key": "BB_MINEBOT_MISSILE_ABILITY"
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/targeted_mob_ability/and_clear_target",
+									"vars": {
+										"ability_key": "BB_MINEBOT_MISSILE_ABILITY",
+										"target_key": "BB_MINEBOT_MISSILE_TARGET"
+									}
+								}
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack/minebot",
+								"vars": {
+									"target_key": "BB_CURRENT_TARGET",
+									"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+								}
+							}
+						]
+					}
+				]
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/maintain_distance",
+				"vars": {
+					"target_key": "BB_CURRENT_TARGET",
+					"min_dist_key": "BB_MINIMUM_SHOOTING_DISTANCE",
+					"max_dist_key": "BB_MINIMUM_SHOOTING_DISTANCE"
+				}
+			},
+			{
+				"type": "subplan",
+				"success_policy": "BT_SUBPLAN_SUCCEED_ON_SUCCESS",
+				"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+				"loop_delay": "1 SECONDS",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"vars": {
+							"key": "BB_MINEBOT_MISSILE_TARGET",
+							"invert": true
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+							"vars": {
+								"target_key": "BB_MINEBOT_MISSILE_TARGET",
+								"target_source": "/datum/target_source/oview_single_type/minebot_target",
+								"targeting_strategy": "/datum/targeting_strategy/anything",
+								"vision_range": 7
+							}
+						}
+					}
+				]
+			},
+			{
+				"type": "subplan",
+				"success_policy": "BT_SUBPLAN_SUCCEED_ON_SUCCESS",
+				"failure_policy": "BT_SUBPLAN_FAIL_ON_FAILURE",
+				"loop_delay": "1 SECONDS",
+				"children": [
+					{
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"vars": {
+							"invert": false,
+							"key": "BB_MINEBOT_LANDMINE_ABILITY"
+						},
+						"child": {
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/use_mob_ability",
+							"vars": {
+								"ability_key": "BB_MINEBOT_LANDMINE_ABILITY"
+							}
+						}
+					}
+				]
+			}
+		]
+	}
+}

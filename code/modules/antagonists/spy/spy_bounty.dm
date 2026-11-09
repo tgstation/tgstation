@@ -31,6 +31,8 @@
 	VAR_FINAL/initalized = FALSE
 	/// Whether the bounty has been completed.
 	VAR_FINAL/claimed = FALSE
+	/// What pool we picked the loot from.
+	VAR_FINAL/loot_difficulty
 	/// What uplink item the bounty will reward on completion.
 	VAR_FINAL/datum/uplink_item/reward_item
 
@@ -70,15 +72,46 @@
 
 /// Selects what uplink item the bounty will reward on completion.
 /datum/spy_bounty/proc/select_reward(datum/spy_bounty_handler/handler)
-	var/list/loot_pool = handler.possible_uplink_items[difficulty]
+	loot_difficulty = difficulty
+
+	var/list/loot_pool
+	// work backwards from the highest difficulty loot pool to find one that has items
+	for(var/i in length(handler.possible_uplink_items) to 1 step -1)
+		var/pool_tier = handler.possible_uplink_items[i]
+		// we're not looking for this difficult, skip
+		if(pool_tier != loot_difficulty)
+			continue
+		// we found our difficulty's loot pool, if it has items we're done
+		loot_pool = handler.possible_uplink_items[pool_tier]
+		if(length(loot_pool) || i == 1)
+			break
+		// if our difficult does not have items, and we're not at the lowest difficulty, step down and try again
+		loot_difficulty = handler.possible_uplink_items[i - 1]
 
 	if(!length(loot_pool))
-		reward_item = /datum/uplink_item/bundles_tc/telecrystal
+		reward_item = SStraitor.uplink_items_by_type[/datum/uplink_item/bundles_tc/telecrystal]
 		return // future todo : add some junk items for when we run out of items
 
 	reward_item = pick(loot_pool)
+	// we remove here, rather than on claim, to reduce the chance of duplicate rewards in a single batch
+	// otherwise it would be not only possible, but *likely* to get the same reward simultaneously across bounties
+	// (though the reason this is a probability is so there is a rare chance this can happen anyways, for the fun of it)
 	if(prob(80))
 		loot_pool -= reward_item
+
+/**
+ * Called when the bounty gets cleared after the end of a bounty period
+ *
+ * * handler - The bounty handler that is handling this bounty.
+ */
+/datum/spy_bounty/proc/clear_bounty(datum/spy_bounty_handler/handler)
+	ASSERT(initalized, "Trying to clear an uninitialized bounty!")
+
+	// another chance to return unclaimed reward items to the bounty pool
+	if(!claimed && reward_item && prob(40))
+		handler.possible_uplink_items[loot_difficulty || difficulty] |= reward_item
+
+	qdel(src)
 
 /**
  * Checks if the passed movable is a valid target for this bounty.
@@ -132,6 +165,14 @@
 /datum/spy_bounty/proc/clean_up_stolen_item(atom/movable/stealing, mob/living/spy)
 	do_sparks(3, FALSE, stealing)
 
+	if(isitem(stealing) && stealing.loc == spy)
+		// get it out of our inventory before we mess with it to prevent any weirdness.
+		// bypasses nodrop - if you want, add a bespoke check for that higher up the chain
+		spy.temporarilyRemoveItemFromInventory(stealing, force = TRUE)
+		// also check for DROPDEL
+		if(QDELETED(stealing))
+			return
+
 	// Don't mess with it while it's going away
 	var/had_attack_hand_interaction = stealing.interaction_flags_atom & INTERACT_ATOM_ATTACK_HAND
 	stealing.interaction_flags_atom &= ~INTERACT_ATOM_ATTACK_HAND
@@ -168,7 +209,7 @@
 	if(had_attack_hand_interaction)
 		thing.interaction_flags_atom |= INTERACT_ATOM_ATTACK_HAND
 	thing.anchored = was_anchored
-	thing.transform = thing.transform.Scale(10)
+	thing.transform = thing.transform.Scale(100)
 	thing.moveToNullspace()
 
 	var/item_price
@@ -186,7 +227,7 @@
 
 	var/datum/market_item/stolen_good/new_item = new(thing, item_price)
 
-	return SSblackmarket.markets[/datum/market/blackmarket].add_item(new_item)
+	return SSmarket.markets[/datum/market/blackmarket].add_item(new_item)
 
 /// Steal an item
 /datum/spy_bounty/objective_item
@@ -218,6 +259,8 @@
 		if(isnull(thing_turf)) // nullspaced likely means it was stolen and is in the black market.
 			continue
 		if(!is_station_level(thing_turf.z) && !is_mining_level(thing_turf.z))
+			continue
+		if(HAS_TRAIT(existing_thing, TRAIT_ITEM_OBJECTIVE_BLOCKED))
 			continue
 		all_valid_existing_things += existing_thing
 
@@ -253,16 +296,14 @@
 		return FALSE
 
 	desired_item = pick(valid_possible_items)
-	// We need to do some snowflake for items that do exist vs generic items
-	var/list/obj/item/existing_items = GLOB.steal_item_handler.objectives_by_path[desired_item.targetitem]
-	var/obj/item/the_item = length(existing_items) ? pick(existing_items) : desired_item.targetitem
-	var/the_item_name = istype(the_item) ? the_item.name : initial(the_item.name)
-	name = "[the_item_name] [difficulty == SPY_DIFFICULTY_HARD ? "Grand ":""]Theft"
-	help = "Steal any [the_item_name][desired_item.steal_hint ? ": [desired_item.steal_hint]" : "."]"
+	name = "[desired_item.name] [difficulty == SPY_DIFFICULTY_HARD ? "Grand ":""]Theft"
+	help = "Steal [desired_item.name][desired_item.steal_hint ? ": [desired_item.steal_hint]" : "."]"
 	return TRUE
 
 /datum/spy_bounty/objective_item/is_stealable(atom/movable/stealing)
-	return istype(stealing, desired_item.targetitem) && desired_item.check_special_completion(stealing)
+	return istype(stealing, desired_item.targetitem) \
+		&& !HAS_TRAIT(stealing, TRAIT_ITEM_OBJECTIVE_BLOCKED) \
+		&& desired_item.check_special_completion(stealing)
 
 /datum/spy_bounty/objective_item/random_easy
 	difficulty = SPY_DIFFICULTY_EASY
@@ -421,7 +462,7 @@
 		/obj/machinery/computer/prisoner/management,
 		/obj/machinery/computer/rdconsole,
 		/obj/machinery/computer/records/security,
-		/obj/machinery/computer/scan_consolenew,
+		/obj/machinery/computer/dna_console,
 		/obj/machinery/computer/security, // Requires breaking into a sec checkpoint, but not too hard, many are never visited
 		/obj/machinery/dna_scannernew,
 		/obj/machinery/mecha_part_fabricator,
@@ -440,7 +481,6 @@
 	random_options = list(
 		/obj/machinery/computer/accounting,
 		/obj/machinery/computer/communications,
-		/obj/machinery/computer/upload,
 		/obj/machinery/modular_computer/preset/id,
 	)
 
@@ -452,7 +492,7 @@
 		/obj/machinery/teleport,
 		/obj/machinery/computer/teleporter,
 	)
-	location_type = /area/station/ai_monitored/aisat
+	location_type = /area/station/ai/satellite
 
 /// Subtype for a bounty that targets a specific crew member
 /datum/spy_bounty/targets_person
@@ -529,7 +569,7 @@
 		return TRUE
 	if(IS_WEAKREF_OF(stealing, target_ref))
 		var/mob/living/carbon/human/target = stealing
-		if(!target.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+		if(!INCAPACITATED_IGNORING(target, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 			return FALSE
 		if(find_desired_thing(target))
 			return TRUE
@@ -613,16 +653,16 @@
 		/obj/item/bodypart/arm/right,
 		/obj/item/bodypart/leg/left,
 		/obj/item/bodypart/leg/right,
-		/obj/item/organ/internal/stomach,
-		/obj/item/organ/internal/appendix,
-		/obj/item/organ/internal/liver,
-		/obj/item/organ/internal/eyes,
+		/obj/item/organ/stomach,
+		/obj/item/organ/appendix,
+		/obj/item/organ/liver,
+		/obj/item/organ/eyes,
 	)
 	return ..()
 
 /datum/spy_bounty/targets_person/some_item/limb_or_organ/find_desired_thing(mob/living/carbon/human/crewmember)
 	if(ispath(desired_type, /obj/item/bodypart))
-		return locate(desired_type) in crewmember.bodyparts
+		return locate(desired_type) in crewmember.get_bodyparts()
 	if(ispath(desired_type, /obj/item/organ))
 		return locate(desired_type) in crewmember.organs
 	return null
@@ -631,23 +671,23 @@
 	theft_time = 10 SECONDS
 	black_market_prob = 0
 	/// What typepath of bot we want to steal.
-	var/mob/living/simple_animal/bot/bot_type
+	var/mob/living/bot_type
 	/// Weakref to the bot we want to steal.
 	VAR_FINAL/datum/weakref/target_bot_ref
 
 /datum/spy_bounty/some_bot/get_dupe_protection_key(atom/movable/stealing)
 	return bot_type
 
-/datum/spy_bounty/some_bot/finish_cleanup(mob/living/simple_animal/bot/stealing)
+/datum/spy_bounty/some_bot/finish_cleanup(mob/living/basic/bot/stealing)
 	if(stealing.client)
 		to_chat(stealing, span_deadsay("You've been stolen! You are shipped off to the black market and taken apart for spare parts..."))
-		stealing.investigate_log("stole by a spy (and deleted)", INVESTIGATE_DEATHS)
+		stealing.investigate_log("was stolen by a spy (and deleted)", INVESTIGATE_DEATHS)
 		stealing.ghostize()
 	return ..()
 
 /datum/spy_bounty/some_bot/init_bounty(datum/spy_bounty_handler/handler)
 	for(var/datum/spy_bounty/some_bot/existing_bounty in handler.get_all_bounties())
-		var/mob/living/simple_animal/bot/existing_bot_type = existing_bounty.bot_type
+		var/mob/living/existing_bot_type = existing_bounty.bot_type
 		// ensures we don't get two similar bounties.
 		// may occasionally cast a wider net than we'd desire, but it's not that bad.
 		if(ispath(bot_type, initial(existing_bot_type.parent_type)))
@@ -675,29 +715,29 @@
 
 /datum/spy_bounty/some_bot/beepsky
 	difficulty = SPY_DIFFICULTY_MEDIUM // gotta get him to stand still
-	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/officer
+	bot_type = /mob/living/basic/bot/secbot/beepsky/officer
 	help = "Abduct Officer Beepsky - commonly found patrolling the station. \
 		Watch out, they may not take kindly to being scanned."
 
 /datum/spy_bounty/some_bot/ofitser
 	difficulty = SPY_DIFFICULTY_EASY
-	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/ofitser
+	bot_type = /mob/living/basic/bot/secbot/beepsky/ofitser
 	help = "Abduct Prison Ofitser - commonly found guarding the Gulag."
 
 /datum/spy_bounty/some_bot/armsky
 	difficulty = SPY_DIFFICULTY_HARD
-	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/armsky
+	bot_type = /mob/living/basic/bot/secbot/beepsky/armsky
 	help = "Abduct Sergeant-At-Armsky - commonly found guarding the station's Armory."
 
 /datum/spy_bounty/some_bot/pingsky
 	difficulty = SPY_DIFFICULTY_HARD
-	bot_type = /mob/living/simple_animal/bot/secbot/pingsky
+	bot_type = /mob/living/basic/bot/secbot/pingsky
 	help = "Abduct Officer Pingsky - commonly found protecting the station's AI."
 
-/datum/spy_bounty/some_bot/scrubbs
+/datum/spy_bounty/some_bot/scrubs
 	difficulty = SPY_DIFFICULTY_EASY
 	bot_type = /mob/living/basic/bot/cleanbot/medbay
-	help = "Abduct Scrubbs, MD - commonly found mopping up blood in Medbay."
+	help = "Abduct Scrubs, MD - commonly found mopping up blood in Medbay."
 
-/datum/spy_bounty/some_bot/scrubbs/can_claim(mob/user)
+/datum/spy_bounty/some_bot/scrubs/can_claim(mob/user)
 	return !(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL)

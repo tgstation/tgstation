@@ -30,3 +30,9 @@
 /proc/log_vote(text, list/data)
 	logger.Log(LOG_CATEGORY_GAME_VOTE, text, data)
 
+/proc/log_ghost_poll(text, list/data)
+	logger.Log(LOG_CATEGORY_GAME_GHOST_POLLS, text, data)
+
+/// Logging for drawing on minimap
+/proc/log_minimap_drawing(text, list/data)
+	logger.Log(LOG_CATEGORY_GAME_MINIMAP_DRAWING, text, data)

@@ -16,7 +16,7 @@
 	var/flash_range = 2 //this is roughly the size of a brig cell.
 
 	/// How strong Paralyze()'d targets are when flashed.
-	var/strength = 10 SECONDS
+	var/strength = 5 SECONDS
 
 	COOLDOWN_DECLARE(flash_cooldown)
 	/// Duration of time between flashes.
@@ -24,11 +24,11 @@
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 
-/obj/machinery/flasher/Initialize(mapload, ndir = 0, built = 0)
-	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
-	if(!built)
+/obj/machinery/flasher/Initialize(mapload)
+	. = ..()
+	if(mapload)
 		bulb = new(src)
-	find_and_hang_on_wall()
+		find_and_mount_on_atom()
 
 /obj/machinery/flasher/vv_edit_var(vname, vval)
 	. = ..()
@@ -62,35 +62,45 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	return ..()
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/flasher/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if (attacking_item.tool_behaviour == TOOL_WIRECUTTER)
-		if (bulb)
-			user.visible_message(span_notice("[user] begins to disconnect [src]'s flashbulb."), span_notice("You begin to disconnect [src]'s flashbulb..."))
-			if(attacking_item.use_tool(src, user, 30, volume=50) && bulb)
-				user.visible_message(span_notice("[user] disconnects [src]'s flashbulb!"), span_notice("You disconnect [src]'s flashbulb."))
-				bulb.forceMove(loc)
-				power_change()
 
-	else if (istype(attacking_item, /obj/item/assembly/flash/handheld))
-		if (!bulb)
-			if(!user.transferItemToLoc(attacking_item, src))
-				return
-			user.visible_message(span_notice("[user] installs [attacking_item] into [src]."), span_notice("You install [attacking_item] into [src]."))
-			power_change()
-		else
-			to_chat(user, span_warning("A flashbulb is already installed in [src]!"))
+	if (!istype(tool, /obj/item/assembly/flash/handheld))
+		return NONE
+	if (bulb)
+		to_chat(user, span_warning("A flashbulb is already installed in [src]!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] installs [tool] into [src]."), \
+						span_notice("You install [tool] into [src]."))
+	power_change()
+	return ITEM_INTERACT_SUCCESS
 
-	else if (attacking_item.tool_behaviour == TOOL_WRENCH)
-		if(!bulb)
-			to_chat(user, span_notice("You start unsecuring the flasher frame..."))
-			if(attacking_item.use_tool(src, user, 40, volume=50))
-				to_chat(user, span_notice("You unsecure the flasher frame."))
-				deconstruct(TRUE)
-		else
-			to_chat(user, span_warning("Remove a flashbulb from [src] first!"))
-	else
-		return ..()
+
+/obj/machinery/flasher/wirecutter_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	if(!bulb)
+		return NONE
+	user.visible_message(span_notice("[user] begins to disconnect [src]'s flashbulb."), span_notice("You begin to disconnect [src]'s flashbulb..."))
+	if(!tool.use_tool(src, user, 30, volume=50) || !bulb)
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] disconnects [src]'s flashbulb!"), span_notice("You disconnect [src]'s flashbulb."))
+	bulb.forceMove(loc)
+	power_change()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/flasher/wrench_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	if(bulb)
+		to_chat(user, span_warning("Remove a flashbulb from [src] first!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You start unsecuring the flasher frame..."))
+	if(!tool.use_tool(src, user, 40, volume=50))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You unsecure the flasher frame."))
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
@@ -108,7 +118,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		power_change()
 		return
 
-	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
+	playsound(src, 'sound/items/weapons/flash.ogg', 100, TRUE)
 	flick("[base_icon_state]_flash", src)
 	flash_lighting_fx()
 
@@ -120,8 +130,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 		if (get_dist(src, living_mob) > flash_range)
 			continue
 
-		if(living_mob.flash_act(affect_silicon = TRUE))
-			living_mob.log_message("was AOE flashed by an automated portable flasher", LOG_ATTACK)
+		if(bulb.flash_mob(living_mob, confusion_duration = strength * 1.5, extra_log =  "by [src]"))
 			living_mob.Paralyze(strength)
 			flashed = TRUE
 
@@ -161,7 +170,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	icon = 'icons/obj/machines/sec.dmi'
 	icon_state = "pflash1-p"
 	base_icon_state = "pflash"
-	strength = 8 SECONDS
+	strength = 4 SECONDS
 	anchored = FALSE
 	density = TRUE
 	///Proximity monitor associated with this atom, needed for proximity checks.
@@ -171,39 +180,41 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	. = ..()
 	proximity_monitor = new(src, 0)
 
+/obj/machinery/flasher/portable/find_and_mount_on_atom(mark_for_late_init, late_init)
+	return //its meant to be carried and mobile
+
 /obj/machinery/flasher/portable/HasProximity(atom/movable/proximity_check_mob)
 	if(!COOLDOWN_FINISHED(src, flash_cooldown))
 		return
 
-	if(iscarbon(proximity_check_mob))
-		var/mob/living/carbon/proximity_carbon = proximity_check_mob
-		if (proximity_carbon.move_intent != MOVE_INTENT_WALK && anchored)
-			flash()
+	if(!isliving(proximity_check_mob))
+		return
+
+	var/mob/living/proximity_living = proximity_check_mob
+	if (proximity_living.move_intent != MOVE_INTENT_WALK && anchored)
+		flash()
 
 /obj/machinery/flasher/portable/vv_edit_var(vname, vval)
 	. = ..()
 	if(vname == NAMEOF(src, flash_range))
 		proximity_monitor?.set_range(flash_range)
 
-/obj/machinery/flasher/portable/attackby(obj/item/attacking_item, mob/user, params)
-	if (attacking_item.tool_behaviour == TOOL_WRENCH)
-		attacking_item.play_tool_sound(src, 100)
+/obj/machinery/flasher/portable/wrench_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src, 100)
+	if (!anchored && !isinspace())
+		to_chat(user, span_notice("[src] is now secured."))
+		add_overlay("[base_icon_state]-s")
+		set_anchored(TRUE)
+		power_change()
+		proximity_monitor.set_range(flash_range)
+		return ITEM_INTERACT_SUCCESS
 
-		if (!anchored && !isinspace())
-			to_chat(user, span_notice("[src] is now secured."))
-			add_overlay("[base_icon_state]-s")
-			set_anchored(TRUE)
-			power_change()
-			proximity_monitor.set_range(flash_range)
-		else
-			to_chat(user, span_notice("[src] can now be moved."))
-			cut_overlays()
-			set_anchored(FALSE)
-			power_change()
-			proximity_monitor.set_range(0)
-
-	else
-		return ..()
+	to_chat(user, span_notice("[src] can now be moved."))
+	cut_overlays()
+	set_anchored(FALSE)
+	power_change()
+	proximity_monitor.set_range(0)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/wallframe/flasher
 	name = "mounted flash frame"

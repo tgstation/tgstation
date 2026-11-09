@@ -29,7 +29,7 @@
 	var/ignore_syncmesh_share = 0
 	/// If the blob blocks atmos and heat spread
 	var/atmosblock = FALSE
-	var/mob/camera/blob/overmind
+	var/mob/eye/blob/overmind
 
 
 /datum/armor/structure_blob
@@ -144,7 +144,7 @@
 	O.setDir(dir)
 	var/area/my_area = get_area(src)
 	if(controller)
-		var/mob/camera/blob/BO = controller
+		var/mob/eye/blob/BO = controller
 		O.color = BO.blobstrain.color
 		if(!(my_area.area_flags & BLOBS_ALLOWED))
 			O.color = BlendRGB(O.color, COLOR_WHITE, 0.5) //lighten it to indicate an off-station blob
@@ -157,7 +157,19 @@
 		O.do_attack_animation(A) //visually attack the whatever
 	return O //just in case you want to do something to the animation.
 
-/obj/structure/blob/proc/expand(turf/T = null, controller = null, expand_reaction = 1)
+/// Can this blob structure make further blobs? For special cases (e.g. blobs not going past crit mass count if not ending the round)
+/obj/structure/blob/proc/can_make_blob(mob/eye/blob/controller = null)
+	// If it's not being done with a controller, it's being done automatically. Because it's not player-controlled, it's not worth worrying about.
+	if(!controller)
+		return TRUE
+	// If it's not supposed to end the round and it's at the win count, don't make more. (400 tiles is still a lot to fight through...)
+	if(!controller.end_round_on_victory && (controller.blobs_legit.len >= controller.blobwincount))
+		balloon_alert(controller, "max tiles reached!")
+		return FALSE
+	// Otherwise, it's probably fine.
+	return TRUE
+
+/obj/structure/blob/proc/expand(turf/T = null, mob/eye/blob/controller = null, expand_reaction = 1)
 	if(!T)
 		var/list/dirs = list(1,2,4,8)
 		for(var/i = 1 to 4)
@@ -172,9 +184,13 @@
 		return
 	var/make_blob = TRUE //can we make a blob?
 
+	if(!can_make_blob(controller))
+		make_blob = FALSE
+
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
 		make_blob = FALSE
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
+		balloon_alert(controller, "failed to expand!")
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
 	if(!T.CanPass(src, get_dir(T, src))) //is the target turf impassable
@@ -241,19 +257,17 @@
 /obj/structure/blob/hulk_damage()
 	return 15
 
-/obj/structure/blob/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_ANALYZER)
-		user.changeNext_move(CLICK_CD_MELEE)
-		to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
-		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
-		if(overmind)
-			to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount].")]")
-			to_chat(user, chemeffectreport(user).Join("\n"))
-		else
-			to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
-		to_chat(user, typereport(user).Join("\n"))
+/obj/structure/blob/analyzer_act(mob/living/user, obj/item/analyzer/tool)
+	user.changeNext_move(CLICK_CD_MELEE)
+	to_chat(user, "<b>The analyzer beeps once, then reports:</b><br>")
+	SEND_SOUND(user, sound('sound/machines/ping.ogg'))
+	if(overmind)
+		to_chat(user, "<b>Progress to Critical Mass:</b> [span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount].")]")
+		to_chat(user, chemeffectreport(user).Join("\n"))
 	else
-		return ..()
+		to_chat(user, "<b>Blob core neutralized. Critical mass no longer attainable.</b>")
+	to_chat(user, typereport(user).Join("\n"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/blob/proc/chemeffectreport(mob/user)
 	RETURN_TYPE(/list)
@@ -273,7 +287,7 @@
 
 
 /obj/structure/blob/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(ROLE_BLOB in user.faction) //sorry, but you can't kill the blob as a blobbernaut
+	if(user.has_faction(ROLE_BLOB)) //sorry, but you can't kill the blob as a blobbernaut
 		return
 	..()
 
@@ -281,11 +295,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, TRUE)
+				playsound(src.loc, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/blob/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)
@@ -415,7 +429,7 @@
 			if(SPT_PROB(BLOB_REINFORCE_CHANCE, seconds_per_tick))
 				B.change_to(/obj/structure/blob/shield/reflective/core, overmind)
 
-/obj/structure/blob/special/proc/pulse_area(mob/camera/blob/pulsing_overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
+/obj/structure/blob/special/proc/pulse_area(mob/eye/blob/pulsing_overmind, claim_range = 10, pulse_range = 3, expand_range = 2)
 	if(QDELETED(pulsing_overmind))
 		pulsing_overmind = overmind
 	Be_Pulsed()

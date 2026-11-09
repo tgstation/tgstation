@@ -2,8 +2,12 @@
 	name = "Nar'Sian"
 	desc = "The ancient, blood-soaked, impossibly complex language of Nar'Sian cultists."
 	key = "n"
-	sentence_chance = 8
-	space_chance = 95 //very high due to the potential length of each syllable
+	space_chance = 75 //very high due to the potential length of each syllable
+	sentence_chance = 10
+	between_word_sentence_chance = 5
+	between_word_space_chance = 95
+	additional_syllable_low = -1
+	additional_syllable_high = 0
 	var/static/list/base_syllables = list(
 		"h", "v", "c", "e", "g", "d", "r", "n", "h", "o", "p",
 		"ra", "so", "at", "il", "ta", "gh", "sh", "ya", "te", "sh", "ol", "ma", "om", "ig", "ni", "in",

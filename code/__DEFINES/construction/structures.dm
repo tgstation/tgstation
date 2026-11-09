@@ -1,12 +1,12 @@
 //Defines for construction states
 
 //ai core defines
-#define EMPTY_CORE 0
-#define CIRCUIT_CORE 1
-#define SCREWED_CORE 2
-#define CABLED_CORE 3
-#define GLASS_CORE 4
-#define AI_READY_CORE 5
+#define CORE_STATE_EMPTY 0
+#define CORE_STATE_CIRCUIT 1
+#define CORE_STATE_SCREWED 2
+#define CORE_STATE_CABLED 3
+#define CORE_STATE_GLASSED 4
+#define CORE_STATE_FINISHED 5
 
 //girder construction states
 #define GIRDER_NORMAL 0
@@ -48,9 +48,11 @@
 #define AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS 1
 #define AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER 2
 
-//blast door (de)construction states
+///The blast door is missing wires, first step of construction.
 #define BLASTDOOR_NEEDS_WIRES 0
+///The blast door needs electronics, second step of construction.
 #define BLASTDOOR_NEEDS_ELECTRONICS 1
+///The blast door is fully constructed.
 #define BLASTDOOR_FINISHED 2
 
 //floodlights because apparently we use defines now

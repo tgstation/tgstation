@@ -27,28 +27,31 @@
 	if(case_type && LAZYLEN(contents))
 		var/mutable_appearance/gun_overlay = mutable_appearance(icon, case_type)
 		for(var/i in 1 to contents.len)
-			gun_overlay.pixel_x = 3 * (i - 1)
+			gun_overlay.pixel_w = 3 * (i - 1)
 			. += new /mutable_appearance(gun_overlay)
 	. += "[icon_state]_[open ? "open" : "door"]"
 
-/obj/structure/guncase/attackby(obj/item/I, mob/living/user, params)
+/obj/structure/guncase/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(iscyborg(user) || isalien(user))
-		return
-	if(istype(I, gun_category) && open)
-		if(LAZYLEN(contents) < capacity)
-			if(!user.transferItemToLoc(I, src))
-				return
-			to_chat(user, span_notice("You place [I] in [src]."))
-			update_appearance()
-		else
+		return NONE
+	if(istype(tool, gun_category) && open)
+		if(LAZYLEN(contents) == capacity)
 			to_chat(user, span_warning("[src] is full."))
-		return
+			return ITEM_INTERACT_BLOCKING
 
-	else if(!user.combat_mode)
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You place [tool] in [src]."))
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if(!user.combat_mode)
 		open = !open
 		update_appearance()
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/guncase/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -61,6 +64,13 @@
 	else
 		open = !open
 		update_appearance()
+
+/obj/structure/guncase/attack_hand_secondary(mob/user, list/modifiers)
+	if(iscyborg(user) || isalien(user))
+		return ..()
+	open = !open
+	update_appearance()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /**
  * show_menu: Shows a radial menu to a user consisting of an available weaponry for taking
@@ -104,7 +114,7 @@
 		return FALSE
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	return TRUE
 

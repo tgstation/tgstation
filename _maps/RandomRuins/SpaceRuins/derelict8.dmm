@@ -3,7 +3,7 @@
 /obj/item/stack/tile/iron/base,
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "ck" = (
 /obj/effect/spawner/random/structure/girder{
 	spawn_loot_chance = 80
@@ -22,7 +22,7 @@
 /obj/structure/lattice,
 /obj/item/stack/tile/iron/base,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "dS" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/broken/directional/south,
@@ -32,12 +32,12 @@
 "es" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "eu" = (
 /obj/structure/lattice,
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "hs" = (
 /obj/effect/spawner/random/trash/bin,
 /obj/effect/decal/cleanable/dirt,
@@ -119,7 +119,7 @@
 /obj/structure/lattice,
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "yf" = (
 /obj/structure/table,
 /obj/item/food/deadmouse{
@@ -136,11 +136,11 @@
 /obj/item/stack/tile/iron/base,
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "zh" = (
 /obj/item/stack/tile/iron/base,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "zt" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
@@ -155,7 +155,7 @@
 "zK" = (
 /obj/item/shard,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "BD" = (
 /obj/structure/table,
 /obj/item/gps/spaceruin{
@@ -176,7 +176,7 @@
 /obj/structure/lattice,
 /obj/structure/girder/displaced,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "DQ" = (
 /obj/effect/decal/cleanable/glass,
 /obj/structure/grille,
@@ -242,12 +242,12 @@
 "Of" = (
 /obj/item/stack/rods,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "OD" = (
 /obj/structure/lattice,
 /obj/item/stack/cable_coil/cut,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "OM" = (
 /obj/effect/spawner/random/bureaucracy/paper,
 /obj/structure/table,

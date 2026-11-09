@@ -40,12 +40,12 @@ Industrial extracts:
 		plasmaabsorbed += 1
 
 	if(plasmaabsorbed >= plasmarequired)
-		playsound(src, 'sound/effects/attackblob.ogg', 50, TRUE)
+		playsound(src, 'sound/effects/blob/attackblob.ogg', 50, TRUE)
 		plasmaabsorbed -= plasmarequired
 		for(var/i in 1 to itemamount)
 			do_after_spawn(new itempath(get_turf(src)))
 	else if(IsWorking)
-		playsound(src, 'sound/effects/bubbles.ogg', 5, TRUE)
+		playsound(src, 'sound/effects/bubbles/bubbles.ogg', 5, TRUE)
 	if(IsWorking)
 		icon_state = "industrial"
 	else
@@ -85,10 +85,10 @@ Industrial extracts:
 	colour = SLIME_TYPE_YELLOW
 	effect_desc = "Produces high capacity power cells, which are not fully charged on creation."
 	plasmarequired = 5
-	itempath = /obj/item/stock_parts/cell/high
+	itempath = /obj/item/stock_parts/power_store/cell/high
 
 /obj/item/slimecross/industrial/yellow/do_after_spawn(obj/item/spawned)
-	var/obj/item/stock_parts/cell/high/C = spawned
+	var/obj/item/stock_parts/power_store/cell/high/C = spawned
 	if(istype(C))
 		C.charge = rand(0,C.maxcharge/2)
 

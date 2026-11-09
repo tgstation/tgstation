@@ -1,10 +1,12 @@
 #define REAGENT_SPILL_DIVISOR 200
+#define COOLER_JUG_EJECT_TIME (8 SECONDS)
 
 /obj/structure/reagent_dispensers
 	name = "Dispenser"
 	desc = "..."
 	icon = 'icons/obj/medical/chemical_tanks.dmi'
 	icon_state = "water"
+	abstract_type = /obj/structure/reagent_dispensers
 	density = TRUE
 	anchored = FALSE
 	pressure_resistance = 2*ONE_ATMOSPHERE
@@ -33,6 +35,8 @@
 	var/last_rigger = ""
 	/// is it climbable? some of our wall-mounted dispensers should not have this
 	var/climbable = FALSE
+	/// Flags passed to the reagents datum upon creation
+	var/reagent_flags = DRAINABLE | AMOUNT_VISIBLE
 
 // This check is necessary for assemblies to automatically detect that we are compatible
 /obj/structure/reagent_dispensers/IsSpecialAssembly()
@@ -81,36 +85,34 @@
 		if(tank_volume && (damage_flag == BULLET || damage_flag == LASER))
 			boom()
 
-/obj/structure/reagent_dispensers/attackby(obj/item/W, mob/user, params)
-	if(W.is_refillable())
-		return FALSE //so we can refill them via their afterattack.
-	if(istype(W, /obj/item/assembly_holder) && accepts_rig)
+/obj/structure/reagent_dispensers/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/assembly_holder) && accepts_rig)
 		if(rig)
 			balloon_alert(user, "another device is in the way!")
-			return ..()
-		var/obj/item/assembly_holder/holder = W
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/assembly_holder/holder = tool
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
-			return ..()
+			return ITEM_INTERACT_BLOCKING
 
 		user.balloon_alert_to_viewers("attaching rig...")
 		add_fingerprint(user)
 		if(!do_after(user, 2 SECONDS, target = src) || !user.transferItemToLoc(holder, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		rig = holder
 		holder.master = src
 		holder.on_attach()
 		assembliesoverlay = holder
-		assembliesoverlay.pixel_x += 6
-		assembliesoverlay.pixel_y += 1
+		assembliesoverlay.pixel_w += 6
+		assembliesoverlay.pixel_z += 1
 		add_overlay(assembliesoverlay)
 		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(rig_boom))
 		log_bomber(user, "attached [holder.name] to ", src)
 		last_rigger = user
 		user.balloon_alert_to_viewers("attached rig")
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(W, /obj/item/stack/sheet/iron) && can_be_tanked)
-		var/obj/item/stack/sheet/iron/metal_stack = W
+	if(istype(tool, /obj/item/stack/sheet/iron) && can_be_tanked)
+		var/obj/item/stack/sheet/iron/metal_stack = tool
 		metal_stack.use(1)
 		var/obj/structure/reagent_dispensers/plumbed/storage/new_tank = new /obj/structure/reagent_dispensers/plumbed/storage(drop_location())
 		new_tank.reagents.maximum_volume = reagents.maximum_volume
@@ -119,9 +121,9 @@
 		new_tank.update_appearance(UPDATE_OVERLAYS)
 		new_tank.set_anchored(anchored)
 		qdel(src)
-		return FALSE
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/structure/reagent_dispensers/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -150,7 +152,7 @@
 	UnregisterSignal(src, COMSIG_IGNITER_ACTIVATE)
 
 /obj/structure/reagent_dispensers/Initialize(mapload)
-	create_reagents(tank_volume, DRAINABLE | AMOUNT_VISIBLE)
+	create_reagents(tank_volume, reagent_flags)
 	if(reagent_id)
 		reagents.add_reagent(reagent_id, tank_volume)
 	. = ..()
@@ -169,14 +171,21 @@
 	if(istype(volatiles) && volatiles.volume >= 25)
 		fuel_amt = volatiles.volume
 		reagents.del_reagent(/datum/reagent/fuel) // not actually used for the explosion
-	if(reagents.total_volume)
-		if(!fuel_amt)
-			visible_message(span_danger("\The [src] ruptures!"))
+	if(reagents.total_volume && !fuel_amt)
+		visible_message(span_danger("\The [src] ruptures!"))
+	// get deleted first so our spill can't hit or burn us again, moving out of the way instead knocks wall-mounted tanks off and booms them twice
+	var/atom/spill_location = loc
+	var/datum/reagents/spilled_reagents = reagents
+	reagents = null
+	spilled_reagents.my_atom = spill_location
+	qdel(src)
+	if(spilled_reagents.total_volume)
 		// Leave it up to future terrorists to figure out the best way to mix reagents with fuel for a useful boom here
-		chem_splash(loc, null, 2 + (reagents.total_volume + fuel_amt) / 1000, list(reagents), extra_heat=(fuel_amt / 50),adminlog=(fuel_amt<25))
+		chem_splash(spill_location, null, 2 + floor((spilled_reagents.total_volume + fuel_amt) / 1000), list(spilled_reagents), extra_heat=(fuel_amt / 50),adminlog=(fuel_amt<25))
+	qdel(spilled_reagents)
 
-	if(fuel_amt) // with that done, actually explode
-		visible_message(span_danger("\The [src] explodes!"))
+	if(fuel_amt && spill_location) // with that done, actually explode
+		spill_location.visible_message(span_danger("\The [src] explodes!"))
 		// old code for reference:
 		// standard fuel tank = 1000 units = heavy_impact_range = 1, light_impact_range = 5, flame_range = 5
 		// big fuel tank = 5000 units = devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12
@@ -185,16 +194,15 @@
 		// As it stands this is a minor nerf in exchange for an easy bombing technique working that has been broken for a while.
 		switch(fuel_amt)
 			if(25 to 150)
-				explosion(src, light_impact_range = 1, flame_range = 2)
+				explosion(spill_location, light_impact_range = 1, flame_range = 2, explosion_cause = src)
 			if(150 to 300)
-				explosion(src, light_impact_range = 2, flame_range = 3)
+				explosion(spill_location, light_impact_range = 2, flame_range = 3, explosion_cause = src)
 			if(300 to 750)
-				explosion(src, heavy_impact_range = 1, light_impact_range = 3, flame_range = 5)
+				explosion(spill_location, heavy_impact_range = 1, light_impact_range = 3, flame_range = 5, explosion_cause = src)
 			if(750 to 1500)
-				explosion(src, heavy_impact_range = 1, light_impact_range = 4, flame_range = 6)
+				explosion(spill_location, heavy_impact_range = 1, light_impact_range = 4, flame_range = 6, explosion_cause = src)
 			if(1500 to INFINITY)
-				explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 6, flame_range = 8)
-	qdel(src)
+				explosion(spill_location, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 6, flame_range = 8, explosion_cause = src)
 
 /obj/structure/reagent_dispensers/atom_deconstruct(disassembled = TRUE)
 	if(!disassembled)
@@ -204,15 +212,13 @@
 	if(leaking && reagents && reagents.total_volume >= amount_to_leak)
 		reagents.expose(get_turf(src), TOUCH, amount_to_leak / max(amount_to_leak, reagents.total_volume))
 		reagents.remove_reagent(reagent_id, amount_to_leak)
+		playsound(src, 'sound/effects/glug.ogg', 33, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return TRUE
 	return FALSE
 
 /obj/structure/reagent_dispensers/proc/knock_down()
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new ()
 	var/range = reagents.total_volume / REAGENT_SPILL_DIVISOR
-	smoke.attach(drop_location())
-	smoke.set_up(round(range), holder = drop_location(), location = drop_location(), carry = reagents, silent = FALSE)
-	smoke.start(log = TRUE)
+	do_chem_smoke(round(range), drop_location(), drop_location(), carry = reagents, silent = FALSE, log = TRUE)
 	reagents.clear_reagents()
 	qdel(src)
 
@@ -221,7 +227,7 @@
 	if(!openable)
 		return FALSE
 	leaking = !leaking
-	balloon_alert(user, "[leaking ? "opened" : "closed"] [src]'s tap")
+	balloon_alert(user, "[leaking ? "opened" : "closed"] tap")
 	user.log_message("[leaking ? "opened" : "closed"] [src].", LOG_GAME)
 	tank_leak()
 	return ITEM_INTERACT_SUCCESS
@@ -292,27 +298,37 @@
 	// if this sucks, feel free to change it, but make sure the damn thing will log. thanks.
 	return ..()
 
-/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WELDER)
-		if(!reagents.has_reagent(/datum/reagent/fuel))
-			to_chat(user, span_warning("[src] is out of fuel!"))
-			return
-		var/obj/item/weldingtool/W = I
-		if(istype(W) && !W.welding)
-			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
-				to_chat(user, span_warning("Your [W.name] is already full!"))
-				return
-			reagents.trans_to(W, W.max_fuel, transferred_by = user)
-			user.visible_message(span_notice("[user] refills [user.p_their()] [W.name]."), span_notice("You refill [W]."))
-			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
-			W.update_appearance()
-		else
-			user.visible_message(span_danger("[user] catastrophically fails at refilling [user.p_their()] [I.name]!"), span_userdanger("That was stupid of you."))
-			log_bomber(user, "detonated a", src, "via welding tool")
-			boom()
-		return
+/obj/structure/reagent_dispensers/fueltank/welder_act(mob/living/user, obj/item/tool)
+	var/obj/item/weldingtool/refilling_welder = tool
+	if(istype(refilling_welder) && !refilling_welder.welding)
+		if(refilling_welder.reagents.has_reagent(/datum/reagent/fuel, refilling_welder.max_fuel))
+			to_chat(user, span_warning("Your [refilling_welder.name] is already full!"))
+			return ITEM_INTERACT_BLOCKING
+		reagents.trans_to(refilling_welder, refilling_welder.max_fuel, transferred_by = user)
+		user.visible_message(span_notice("[user] refills [user.p_their()] [refilling_welder.name]."), span_notice("You refill [refilling_welder]."))
+		playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
+		refilling_welder.update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	var/obj/item/lighter/refilling_lighter = tool
+	if(istype(refilling_lighter) && !refilling_lighter.lit)
+		if(refilling_lighter.reagents.has_reagent(/datum/reagent/fuel, refilling_lighter.maximum_fuel))
+			to_chat(user, span_warning("Your [refilling_lighter.name] is already full!"))
+			return ITEM_INTERACT_BLOCKING
+		reagents.trans_to(refilling_lighter, refilling_lighter.maximum_fuel, transferred_by = user)
+		user.visible_message(span_notice("[user] refills [user.p_their()] [refilling_lighter.name]."), span_notice("You refill [refilling_lighter]."))
+		playsound(src, 'sound/effects/refill.ogg', 25, TRUE)
+		return ITEM_INTERACT_SUCCESS
+
+	if(!reagents.has_reagent(/datum/reagent/fuel))
+		to_chat(user, span_warning("[src] is out of fuel!"))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(
+		span_danger("[user] catastrophically fails at refilling [user.p_their()] [tool.name]!"),
+		span_userdanger("That was stupid of you."))
+	log_bomber(user, "detonated a", src, "via [tool.name]")
+	boom()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/reagent_dispensers/fueltank/large
 	name = "high capacity fuel tank"
@@ -338,16 +354,36 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	. = ..()
 	if(prob(1))
 		desc = "IT'S PEPPER TIME, BITCH!"
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/structure/reagent_dispensers/water_cooler
-	name = "liquid cooler"
-	desc = "A machine that dispenses liquid to drink."
-	icon = 'icons/obj/machines/vending.dmi'
+	name = "water cooler"
+	desc = "A machine that cools and dispenses liquids to drink. The 'hot' handle doesn't seem to do anything."
 	icon_state = "water_cooler"
 	anchored = TRUE
-	tank_volume = 500
-	var/paper_cups = 25 //Paper cups left from the cooler
+	reagent_flags = DRAINABLE | TRANSPARENT
+	tank_volume = 200
+	can_be_tanked = FALSE
+	max_integrity = 150
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 25)
+	///Paper cups left from the cooler.
+	var/paper_cups = 25
+	///Reference to our jug.
+	var/obj/item/reagent_containers/cooler_jug/our_jug
+	///Have we been tipped?
+	var/tipped = FALSE
+
+/obj/structure/reagent_dispensers/water_cooler/Initialize(mapload)
+	. = ..()
+	if(prob(2) && mapload)
+		reagents.convert_reagent(/datum/reagent/water, /datum/reagent/consumable/fruit_punch)
+	create_jug()
+	update_appearance()
+
+/obj/structure/reagent_dispensers/water_cooler/Destroy()
+	. = ..()
+	our_jug = null
 
 /obj/structure/reagent_dispensers/water_cooler/examine(mob/user)
 	. = ..()
@@ -362,25 +398,286 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	. = ..()
 	if(.)
 		return
+
+
+	if(tipped)
+		balloon_alert(user, "un-tipping...")
+		if(!do_after(user, 5 SECONDS, src))
+			return
+		tipped = FALSE
+		update_appearance()
+		return
+
+
+	if(user.combat_mode && our_jug)
+		balloon_alert(user, "removing jug...")
+		if(!do_after(user, COOLER_JUG_EJECT_TIME, src))
+			return
+		eject_jug(user)
+		return
+
 	if(!paper_cups)
 		to_chat(user, span_warning("There aren't any cups left!"))
 		return
 	user.visible_message(span_notice("[user] takes a cup from [src]."), span_notice("You take a paper cup from [src]."))
-	var/obj/item/reagent_containers/cup/glass/sillycup/S = new(get_turf(src))
-	user.put_in_hands(S)
+	var/obj/item/reagent_containers/cup/glass/sillycup/new_cup = new(get_turf(src))
+	user.put_in_hands(new_cup)
 	paper_cups--
 
-/obj/structure/reagent_dispensers/beerkeg
-	name = "beer keg"
-	desc = "Beer is liquid bread, it's good for you..."
-	icon_state = "beer"
-	reagent_id = /datum/reagent/consumable/ethanol/beer
-	openable = TRUE
+/obj/structure/reagent_dispensers/water_cooler/update_icon_state()
+	. = ..()
+	if(tipped)
+		icon_state = "water_cooler_disgraced"
+	else
+		if(!our_jug)
+			icon_state = "water_cooler_forlorn"
+		else
+			icon_state = "water_cooler"
 
-/obj/structure/reagent_dispensers/beerkeg/blob_act(obj/structure/blob/B)
+/obj/structure/reagent_dispensers/water_cooler/update_overlays()
+	. = ..()
+	if(!reagents)
+		return
+
+	if(!reagents.total_volume)
+		return
+
+	var/mixcolor
+	var/vol_counter = 0
+	var/vol_temp
+
+	for(var/datum/reagent/stored_reagent as anything in reagents.reagent_list)
+		vol_temp = stored_reagent.volume
+		vol_counter += vol_temp
+
+		var/chosen_color = stored_reagent.color
+		if(istype(stored_reagent, /datum/reagent/water))
+			if(!mixcolor)
+				mixcolor = "#2694D6" //Override the water to be a nice blue
+				continue
+			else
+				chosen_color = "#2694D6"
+		else
+			if(!mixcolor)
+				mixcolor = stored_reagent.color
+				continue
+			else
+				chosen_color = stored_reagent.color
+
+		if (length(mixcolor) >= length(chosen_color))
+			mixcolor = BlendRGB(mixcolor, chosen_color, vol_temp/vol_counter)
+		else
+			mixcolor = BlendRGB(chosen_color, mixcolor, vol_temp/vol_counter)
+
+	if(mixcolor)
+		var/overlay_tag
+		if(vol_counter > 100)
+			overlay_tag = "100"
+		else
+			overlay_tag = "50" //Can't be 0, because there'd be no mixcolor
+		var/mutable_appearance/tank_overlay = mutable_appearance('icons/obj/medical/chemical_tanks.dmi', "water_cooler_overlay[overlay_tag]")
+		tank_overlay.color = mixcolor
+		. += tank_overlay
+
+/obj/structure/reagent_dispensers/water_cooler/wrench_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode)
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
+	if(default_unfasten_wrench(user, tool, time = 6 SECONDS) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/structure/reagent_dispensers/water_cooler/attack_hand_secondary(mob/user, modifiers)
+	if(tipped)
+		balloon_alert(user, "it's already tipped!")
+		return
+
+	if(anchored)
+		balloon_alert(user, "it's anchored!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(!do_after(user, 1.5 SECONDS, src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	INVOKE_ASYNC(src, PROC_REF(boom), user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/reagent_dispensers/water_cooler/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/cooler_jug))
+		return
+
+	if(tipped)
+		balloon_alert(user, "it's tipped!")
+		return
+
+	var/obj/item/reagent_containers/cooler_jug/new_jug = tool
+	balloon_alert(user, "replacing jug...")
+	if(!do_after(user, COOLER_JUG_EJECT_TIME, src))
+		return
+
+	if(!user.transferItemToLoc(new_jug, src))
+		return ITEM_INTERACT_BLOCKING
+
+	eject_jug(user)
+	our_jug = new_jug
+	our_jug.reagents.trans_to(reagents, tank_volume)
+	balloon_alert(user, "attached")
+	user.log_message("attached a [new_jug] to [src] at [AREACOORD(src)] containing ([new_jug.reagents.get_reagent_log_string()])", LOG_ATTACK)
+	add_fingerprint(user)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/reagent_dispensers/water_cooler/atom_deconstruct(disassembled = TRUE)
+	if(disassembled)
+		return ..()
+	spill(destroyed = TRUE)
+
+/obj/structure/reagent_dispensers/water_cooler/boom()
+	if(QDELETED(src))
+		return
+	spill()
+	if(!QDELETED(src))
+		tip_over()
+
+/// Splashes our reagents and throws the jug out - destroyed moves us off the turf first so our own splash can't hit us
+/obj/structure/reagent_dispensers/water_cooler/proc/spill(destroyed = FALSE)
+	var/turf/spill_turf = get_turf(src)
+	var/atom/jug_drop = drop_location()
+	if(reagents.total_volume)
+		visible_message(span_danger("\The [src] flips on it's side and spills everywhere!"))
+	if(destroyed)
+		moveToNullspace()
+	if(reagents.total_volume)
+		chem_splash(spill_turf, null, 2 + floor((reagents.total_volume) / 1000), list(reagents))
+	if(QDELETED(src))
+		return
+	eject_jug(throw_away = TRUE, drop_at = jug_drop)
+	playsound(spill_turf, 'sound/effects/glass/glassbash.ogg', 100)
+
+///Creates an empty jug inside of the cooler. Doesn't need to be filled bc it absorbs the cooler's reagent on eject.
+/obj/structure/reagent_dispensers/water_cooler/proc/create_jug()
+	our_jug = new /obj/item/reagent_containers/cooler_jug(src)
+
+///Eject the jug in a variety of ways. If there is a user, the jug goes into their hands. throw_away is passed on tip, to empty and throw the jug away. We delete the reagents since we create a splash before this is called. drop_at is where it lands when we're already off the turf.
+/obj/structure/reagent_dispensers/water_cooler/proc/eject_jug(mob/living/user, throw_away = FALSE, atom/drop_at)
+	if(!our_jug)
+		return
+	drop_at ||= drop_location()
+
+	if(user)
+		user.put_in_hands(our_jug)
+	else
+		our_jug.forceMove(drop_at)
+
+	if(throw_away)
+		var/turf/turf_to_throw_at = get_ranged_target_turf(drop_at, pick(GLOB.alldirs), 2)
+		our_jug.throw_at(turf_to_throw_at, 2, 3)
+		reagents.remove_all(tank_volume) //Gets spilled on floor during boom()
+	else
+		reagents.trans_to(our_jug.reagents, tank_volume)
+
+	our_jug = null
+	update_appearance()
+
+///Handles the visual stuff related to the cooler itself tipping.
+/obj/structure/reagent_dispensers/water_cooler/proc/tip_over()
+	tipped = TRUE
+	update_appearance()
+
+///Pre-tipped version for mapping.
+/obj/structure/reagent_dispensers/water_cooler/fallen
+	tipped = TRUE
+	reagent_id = null
+	anchored = FALSE
+
+/obj/structure/reagent_dispensers/water_cooler/fallen/Initialize(mapload)
+	. = ..()
+	tip_over()
+
+/obj/structure/reagent_dispensers/water_cooler/fallen/create_jug()
+	return
+
+/obj/structure/reagent_dispensers/water_cooler/jugless
+	reagent_id = null
+	anchored = FALSE
+
+/obj/structure/reagent_dispensers/water_cooler/jugless/create_jug()
+	return
+
+///Punch cooler. Starts full of healing juice. In case anyone wants to map one somewhere as a healing station.
+/obj/structure/reagent_dispensers/water_cooler/punch_cooler
+	name = "punch cooler"
+	desc = "A machine that dispenses fruit punch to drink. This juice is unbearably sweet, and can only be safely consumed in the presence of a liquid cooler. Engage with caution."
+	reagent_id = /datum/reagent/consumable/fruit_punch
+
+/obj/structure/reagent_dispensers/keg
+	name = "keg"
+	desc = "A keg, usually filled with some low-grade, Nanotrasen brewed alcoholic drink."
+	icon_state = "keg"
+	openable = TRUE
+	var/keg_print
+
+/obj/structure/reagent_dispenders/keg/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/reagent_dispensers/keg/update_overlays()
+	. = ..()
+	if(keg_print)
+		. += keg_print
+
+/obj/structure/reagent_dispensers/keg/blob_act(obj/structure/blob/B)
 	explosion(src, heavy_impact_range = 3, light_impact_range = 5, flame_range = 10, flash_range = 7)
 	if(!QDELETED(src))
 		qdel(src)
+
+/obj/structure/reagent_dispensers/keg/beer
+	name = "beer keg"
+	desc = "Beer is liquid bread, it's good for you..."
+	keg_print = "keg_beer"
+	reagent_id = /datum/reagent/consumable/ethanol/beer
+
+/obj/structure/reagent_dispensers/keg/whiskey
+	name = "irish whiskey keg"
+	desc = "<i>Too much of anything is bad, but too much good whiskey is barely enough.\"</i> - Mark Twain"
+	keg_print = "keg_irish"
+	reagent_id = /datum/reagent/consumable/ethanol/whiskey
+
+/obj/structure/reagent_dispensers/keg/rum
+	name = "rum keg"
+	desc = "A keg of not just any rum, oh no. It's the famous Captain Pete's Spiced Rum. It's GRIFF in a bottle... or keg, dare I say."
+	keg_print = "keg_pirate"
+	reagent_id = /datum/reagent/consumable/ethanol/rum/aged
+
+/obj/structure/reagent_dispensers/keg/gold
+	name = "gold keg"
+	desc = "A gaudy, gold-coated keg. It's easy to assume that whatever is inside it must be quite valuable indeed."
+	icon_state = "keg_gold"
+
+/obj/structure/reagent_dispensers/keg/gold/rum
+	name = "vintage rum keg"
+	desc = "A keg of Captain Pete's Spiced Rum from over half a century ago. Old recipe, strong and authentic flavor, y'aaarrrr..."
+	keg_print = "keg_pirate"
+	reagent_id = /datum/reagent/consumable/ethanol/rum/aged
+
+/obj/structure/reagent_dispensers/keg/gold/irish
+	name = "special irish drink keg"
+	desc = "A keg full of a cocktail drink made from imported irish whiskey."
+	keg_print = "keg_irish"
+
+/obj/structure/reagent_dispensers/keg/gold/irish/Initialize(mapload)
+	reagent_id = pick(
+		/datum/reagent/consumable/ethanol/irishcoffee,
+		/datum/reagent/consumable/ethanol/irish_cream,
+		/datum/reagent/consumable/ethanol/irishcarbomb,
+		/datum/reagent/consumable/ethanol/b52,
+	)
+	return ..()
+
+/obj/structure/reagent_dispensers/keg/gold/trappist
+	name = "trappist beer keg"
+	desc = "A keg of <i>Mont de Requin Trappistes Bleu</i>. A beer normally brewed under guidelines so strict that there are only a handful of two of certified trappist beer breweries, none in the Spinward Sector."
+	keg_print = "keg_beer"
+	reagent_id = /datum/reagent/consumable/ethanol/trappist
 
 /obj/structure/reagent_dispensers/wall/virusfood
 	name = "virus food dispenser"
@@ -392,13 +689,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 
 /obj/structure/reagent_dispensers/wall/virusfood/Initialize(mapload)
 	. = ..()
-	find_and_hang_on_wall()
+	if(mapload)
+		find_and_mount_on_atom()
 
 /obj/structure/reagent_dispensers/cooking_oil
 	name = "vat of cooking oil"
 	desc = "A huge metal vat with a tap on the front. Filled with cooking oil for use in frying food."
 	icon_state = "vat"
-	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/nutriment/fat/oil
 	openable = TRUE
 
@@ -407,8 +704,16 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	desc = "A dish full of food slop for your bowl."
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "serving"
-	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/nutraslop
+	anchored = TRUE
+
+/obj/structure/reagent_dispensers/servingdish/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/reagent_dispensers/servingdish/unanchored
+	anchored = FALSE
 
 /obj/structure/reagent_dispensers/plumbed
 	name = "stationary water tank"
@@ -433,7 +738,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 
 /obj/structure/reagent_dispensers/plumbed/storage/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/simple_rotation)
+	AddElement(/datum/element/simple_rotation)
 
 
 /obj/structure/reagent_dispensers/plumbed/storage/update_overlays()
@@ -456,3 +761,4 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/virusfood, 30
 	accepts_rig = TRUE
 
 #undef REAGENT_SPILL_DIVISOR
+#undef COOLER_JUG_EJECT_TIME

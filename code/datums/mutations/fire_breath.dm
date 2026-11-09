@@ -1,17 +1,17 @@
-/datum/mutation/human/firebreath
+/datum/mutation/firebreath
 	name = "Fire Breath"
-	desc = "An ancient mutation that gives lizards breath of fire."
+	desc = "The subject can breathe fire at will."
 	quality = POSITIVE
 	difficulty = 12
 	locked = TRUE
-	text_gain_indication = "<span class='notice'>Your throat is burning!</span>"
-	text_lose_indication = "<span class='notice'>Your throat is cooling down.</span>"
+	text_gain_indication = span_notice("Your throat is burning!")
+	text_lose_indication = span_notice("Your throat is cooling down.")
 	power_path = /datum/action/cooldown/spell/cone/staggered/fire_breath
-	instability = 30
+	instability = POSITIVE_INSTABILITY_MODERATE
 	energy_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/firebreath/modify()
+/datum/mutation/firebreath/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/cone/staggered/fire_breath/to_modify = .
 	if(!istype(to_modify)) // null or invalid
@@ -29,7 +29,7 @@
 	name = "Fire Breath"
 	desc = "You breathe a cone of fire directly in front of you."
 	button_icon_state = "fireball0"
-	sound = 'sound/magic/demon_dies.ogg' //horrifying lizard noises
+	sound = 'sound/effects/magic/demon_dies.ogg' //horrifying lizard noises
 
 	school = SCHOOL_EVOCATION
 	cooldown_time = 40 SECONDS
@@ -91,6 +91,6 @@
 	target_mob.adjust_fire_stacks(max(2, 5 - level))
 	target_mob.ignite_mob()
 
-/datum/action/cooldown/spell/cone/staggered/firebreath/do_obj_cone_effect(obj/target_obj, atom/caster, level)
+/datum/action/cooldown/spell/cone/staggered/fire_breath/do_obj_cone_effect(obj/target_obj, atom/caster, level)
 	// Further out objects experience less exposed_temperature and exposed_volume
 	target_obj.fire_act(max(500, 900 - (100 * level)), max(50, 200 - (50 * level)))

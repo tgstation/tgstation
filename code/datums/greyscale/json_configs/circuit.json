@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "circuit_board",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",

@@ -1,2 +1,2 @@
 /mob/living/silicon/pai/binarycheck()
-	return radio?.translate_binary
+	return (radio?.special_channels & RADIO_SPECIAL_BINARY)

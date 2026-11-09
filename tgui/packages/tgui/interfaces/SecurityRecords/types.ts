@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import type { BooleanLike } from 'tgui-core/react';
 
 export type SecurityRecordsData = {
   assigned_view: string;
@@ -24,6 +24,7 @@ export type SecurityRecord = {
   rank: string;
   species: string;
   trim: string;
+  job_icon: string;
   wanted_status: string;
   voice: string;
 };
@@ -37,6 +38,7 @@ export type Crime = {
   paid: number;
   time: number;
   valid: BooleanLike;
+  voider: string;
 };
 
 export enum SECURETAB {

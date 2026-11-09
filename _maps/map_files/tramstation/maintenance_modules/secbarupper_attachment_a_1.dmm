@@ -85,7 +85,7 @@
 /area/station/maintenance/department/security)
 "Q" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "T" = (

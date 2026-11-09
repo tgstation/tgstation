@@ -1,6 +1,8 @@
 /atom/proc/investigate_log(message, subject)
-	if(!message || !subject)
+	if(!message)
 		return
+	if(!subject)
+		CRASH("No subject provided for investigate_log")
 	var/F = file("[GLOB.log_directory]/[subject].html")
 	var/source = "[src]"
 
@@ -8,7 +10,7 @@
 		var/mob/living/source_mob = src
 		source += " ([source_mob.ckey ? source_mob.ckey : "*no key*"])"
 
-	WRITE_FILE(F, "[time_stamp(format = "YYYY-MM-DD hh:mm:ss")] [REF(src)] ([x],[y],[z]) || [source] [message]<br>")
+	WRITE_FILE(F, "[server_timestamp(format = "YYYY-MM-DD hh:mm:ss")] [REF(src)] ([x],[y],[z]) || [source] [message]<br>")
 
 ADMIN_VERB(investigate_show, R_NONE, "Investigate", "Browse various detailed logs.", ADMIN_CATEGORY_GAME)
 	var/static/list/investigates = list(
@@ -59,4 +61,7 @@ ADMIN_VERB(investigate_show, R_NONE, "Investigate", "Browse various detailed log
 	if(!fexists(F))
 		to_chat(user, span_danger("No [selected] logfile was found."), confidential = TRUE)
 		return
-	user << browse(F,"window=investigate[selected];size=800x300")
+
+	var/datum/browser/browser = new(user, "investigate[selected]", "Investigation of [selected]", 800, 300)
+	browser.set_content(file2text(F))
+	browser.open()

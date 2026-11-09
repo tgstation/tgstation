@@ -13,7 +13,7 @@
 		/obj/item/food/chips = 6,
 		/obj/item/food/chips/shrimp = 6,
 		/obj/item/food/sosjerky = 6,
-		/obj/item/food/cornchips/random = 6,
+		/obj/item/food/chips/corn/random = 6,
 		/obj/item/food/sosjerky = 6,
 		/obj/item/food/no_raisin = 6,
 		/obj/item/food/peanuts = 6,
@@ -46,17 +46,30 @@
 	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
 
+/obj/machinery/vending/snack/Initialize(mapload)
+	. = ..()
+	if(!mapload || !is_station_level(z) || !HAS_TRAIT(SSstation, STATION_TRAIT_VENDING_SHORTAGE))
+		return
+
+	for(var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
+		product_record.amount = 0
+		credits_contained += rand(1, 5)
+
 /obj/item/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"
 
 /obj/machinery/vending/snack/blue
 	icon_state = "snackblue"
+	allow_custom = FALSE
 
 /obj/machinery/vending/snack/orange
 	icon_state = "snackorange"
+	allow_custom = FALSE
 
 /obj/machinery/vending/snack/green
 	icon_state = "snackgreen"
+	allow_custom = FALSE
 
 /obj/machinery/vending/snack/teal
 	icon_state = "snackteal"
+	allow_custom = FALSE

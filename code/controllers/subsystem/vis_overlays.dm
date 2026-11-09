@@ -1,15 +1,11 @@
 SUBSYSTEM_DEF(vis_overlays)
 	name = "Vis contents overlays"
 	wait = 1 MINUTES
+	ss_flags = SS_NO_INIT
 	priority = FIRE_PRIORITY_VIS
-	init_order = INIT_ORDER_VIS
 
-	var/list/vis_overlay_cache
+	var/list/vis_overlay_cache = list()
 	var/list/currentrun
-
-/datum/controller/subsystem/vis_overlays/Initialize()
-	vis_overlay_cache = list()
-	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/vis_overlays/fire(resumed = FALSE)
 	if(!resumed)
@@ -30,6 +26,9 @@ SUBSYSTEM_DEF(vis_overlays)
 
 //the "thing" var can be anything with vis_contents which includes images - in the future someone should totally allow vis overlays to be passed in as an arg instead of all this bullshit
 /datum/controller/subsystem/vis_overlays/proc/add_vis_overlay(atom/movable/thing, icon, iconstate, layer, plane, dir, alpha = 255, add_appearance_flags = NONE, unique = FALSE)
+	// A dying atom can rebuild its overlays during deletion, after /atom/Destroy dropped them (the nullspace move can change its z layer)
+	if(QDELETED(thing))
+		return
 	var/obj/effect/overlay/vis/overlay
 	if(!unique)
 		. = "[icon]|[iconstate]|[layer]|[plane]|[dir]|[alpha]|[add_appearance_flags]"

@@ -1,0 +1,92 @@
+{
+	"dm_type": "/datum/bt_node/subtree/forage_and_retaliate",
+	"bindings": {
+		"q8w3rtv1": {
+			"label": "Food Finder",
+			"default": "/datum/bt_node/subtree/find_food"
+		},
+		"z4n9bk7p": {
+			"label": "Retaliate Manager",
+			"default": "/datum/bt_node/subtree/capricious_pick_target"
+		}
+	},
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "BASIC_MOB_FIND_TARGET_RATE",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"key": "BB_BASIC_MOB_RETALIATE_LIST",
+						"observer_abort": "BT_ABORT_SELF"
+					},
+					"child": {
+						"type": "parallel",
+						"failure_policy": "BT_PARALLEL_FAILURE_ANY",
+						"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+						"repeat_secondary": true,
+						"finish_on_primary": true,
+						"children": [
+							{
+								"type": "subplan",
+								"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+								"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/basic_melee_attack",
+										"vars": {
+											"target_key": "BB_CURRENT_TARGET",
+											"targeting_strategy": "BB_TARGETING_STRATEGY",
+											"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION"
+										}
+									}
+								]
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+								"vars": {
+									"target_key": "BB_CURRENT_TARGET",
+									"required_dist": 1,
+									"finish_on_arrival": false
+								}
+							}
+						]
+					}
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/move_to_and_eat"
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"key": "BB_DISABLE_IDLE",
+						"invert": true
+					},
+					"child": {
+						"type": "subtree",
+						"subtype": "/datum/bt_node/subtree/random_walk"
+					}
+				}
+			]
+		},
+		{
+			"type": "subtree",
+			"subtype": "$z4n9bk7p"
+		},
+		{
+			"type": "subtree",
+			"subtype": "$q8w3rtv1"
+		}
+	]
+}

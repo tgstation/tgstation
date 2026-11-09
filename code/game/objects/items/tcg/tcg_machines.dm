@@ -24,27 +24,28 @@
 	var/summon_offset_x = 0
 	var/summon_offset_y = 1
 
-/obj/machinery/trading_card_holder/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/tcgcard) && current_summon == null)
-		current_card = I
-		card_template = current_card.extract_datum()
-		if(card_template.cardtype == "Creature")
-			if(!user.transferItemToLoc(current_card, src))
-				return
-			to_chat(user, span_notice("You put the [current_card] card in [src]."))
-			icon_state = "card_holder_active"
-			update_appearance()
-			current_summon = new(locate(x + summon_offset_x, y + summon_offset_y, z))
-			current_summon.template = card_template
-			current_summon.card_ref = current_card
-			current_summon.team_color = team_color
-			current_summon.load_model()
-		else
-			to_chat(user, span_notice("The [src] smartly rejects the non-creature card."))
-			current_card = null
-			return ..()
-	else
-		return ..()
+/obj/machinery/trading_card_holder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/tcgcard) || current_summon)
+		return NONE
+	current_card = tool
+	card_template = current_card.extract_datum()
+	if(card_template.cardtype != "Creature")
+		to_chat(user, span_notice("The [src] smartly rejects the non-creature card."))
+		current_card = null
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(current_card, src))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You put the [current_card] card in [src]."))
+	icon_state = "card_holder_active"
+	update_appearance()
+	current_summon = new(locate(x + summon_offset_x, y + summon_offset_y, z))
+	current_summon.template = card_template
+	current_summon.card_ref = current_card
+	current_summon.team_color = team_color
+	current_summon.load_model()
+	return ITEM_INTERACT_SUCCESS
 
 GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 
@@ -90,7 +91,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 
 /obj/machinery/trading_card_holder/attack_hand_secondary(mob/user)
 	if(isnull(current_summon))
-		var/card_name = tgui_input_text(user, "Insert card name", "Blank Card Naming", "blank card", MAX_NAME_LEN)
+		var/card_name = tgui_input_text(user, "Insert card name", "Blank Card Naming", "blank card", max_length = MAX_NAME_LEN)
 		if(isnull(card_name) || !user.can_perform_action(src))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		current_summon = new /obj/structure/trading_card_summon/blank(locate(x + summon_offset_x, y + summon_offset_y, z))
@@ -105,7 +106,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 /obj/machinery/trading_card_holder/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -176,7 +177,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	desc = template.desc
 	summon_power = template.power
 	summon_resolve = template.resolve
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/trading_card_summon/get_name_chaser(mob/user, list/name_chaser = list())
 	name_chaser += "Faction: [template.faction]"
@@ -240,7 +241,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 		resolve_color = DEFAULT_RESOLVE_COLOR
 	else
 		resolve_color = modified_color
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/trading_card_summon/Destroy()
 	if(hologram)
@@ -263,7 +264,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 	hologram.name = name
 	hologram.alpha = 170
 	hologram.add_atom_colour(team_color, FIXED_COLOUR_PRIORITY)
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/trading_card_summon/blank/get_name_chaser(mob/user, list/name_chaser)
 	name_chaser += "Power/Resolve: [summon_power]/[summon_resolve]"
@@ -272,7 +273,7 @@ GLOBAL_LIST_EMPTY(tcgcard_machine_radial_choices)
 /obj/structure/trading_card_summon/blank/modify_stats(mob/living/user)
 	summon_power = num2text(tgui_input_number(user, "Please input power value", "Stat Modification", text2num(summon_power), 25))
 	summon_resolve = num2text(tgui_input_number(user, "Please input resolve value", "Stat Modification", text2num(summon_resolve), 25))
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 #undef STAT_Y
 #undef POWER_X
@@ -356,7 +357,7 @@ GLOBAL_LIST_EMPTY(tcgcard_mana_bar_radial_choices)
 /obj/machinery/trading_card_button/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 

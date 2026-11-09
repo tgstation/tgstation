@@ -8,8 +8,12 @@
 	base_icon_state = "foamdart"
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1125)
 	harmful = FALSE
+	newtonian_force = 0.5
+	embed_type = /datum/embedding/foam_dart
 	var/modified = FALSE
 	var/static/list/insertable_items_hint = list(/obj/item/pen)
+	///For colored magazine overlays.
+	var/tip_color = "blue"
 
 /obj/item/ammo_casing/foam_dart/Initialize(mapload)
 	. = ..()
@@ -38,17 +42,17 @@
 		. += span_notice("[modified ? "You can" : "If you removed the safety cap with a screwdriver, you could"] insert a small item\
 			[length(type_initial_names) ? ", such as [english_list(type_initial_names, and_text = "or ", final_comma_text = ", ")]" : ""].")
 
-
-/obj/item/ammo_casing/foam_dart/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/ammo_casing/foam_dart/screwdriver_act(mob/living/user, obj/item/tool)
+	if(modified)
+		return NONE
 	var/obj/projectile/bullet/foam_dart/dart = loaded_projectile
-	if (attacking_item.tool_behaviour == TOOL_SCREWDRIVER && !modified)
-		modified = TRUE
-		dart.modified = TRUE
-		dart.damage_type = BRUTE
-		to_chat(user, span_notice("You pop the safety cap off [src]."))
-		update_appearance()
-	else
-		return ..()
+	modified = TRUE
+	dart.modified = TRUE
+	dart.damage_type = BRUTE
+	dart.set_embed(null) // Cap is what makes them sticky
+	to_chat(user, span_notice("You pop the safety cap off [src]."))
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/ammo_casing/foam_dart/riot
 	name = "riot foam dart"
@@ -56,4 +60,6 @@
 	projectile_type = /obj/projectile/bullet/foam_dart/riot
 	icon_state = "foamdart_riot"
 	base_icon_state = "foamdart_riot"
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT* 1.125)
+	tip_color = "red"
+	embed_type = /datum/embedding/foam_dart/riot
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)

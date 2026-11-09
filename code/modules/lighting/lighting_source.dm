@@ -1,3 +1,6 @@
+/// Cached global list of generated lighting sheets. See: datum/light_source/proc/get_sheet()
+GLOBAL_LIST_EMPTY(lighting_sheets)
+
 // This is where the fun begins.
 // These are the main datums that emit light.
 
@@ -67,7 +70,7 @@
 
 	update()
 	if(GLOB.light_debug_enabled)
-		source_atom.debug()
+		source_atom.debug_lights()
 
 /datum/light_source/Destroy(force)
 	remove_lum()
@@ -96,6 +99,7 @@
 	//yes, we register the signal to the top atom too, this is intentional and ensures contained lighting updates properly
 	if(ismovable(new_atom_host))
 		RegisterSignal(new_atom_host, COMSIG_MOVABLE_MOVED, PROC_REF(update_host_lights))
+	RegisterSignal(new_atom_host, COMSIG_TURF_NO_LONGER_BLOCK_LIGHT, PROC_REF(force_update))
 	return TRUE
 
 ///remove this light source from old_atom_host's light_sources list, unsetting movement registrations
@@ -106,6 +110,7 @@
 	LAZYREMOVE(old_atom_host.light_sources, src)
 	if(ismovable(old_atom_host))
 		UnregisterSignal(old_atom_host, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(old_atom_host, COMSIG_TURF_NO_LONGER_BLOCK_LIGHT)
 	return TRUE
 
 // Yes this doesn't align correctly on anything other than 4 width tabs.
@@ -221,16 +226,15 @@
 /// If the requested sheet is multiz, this will be 3 lists deep, first handling z level then x and y
 /// otherwise it's just two, x then y
 /datum/light_source/proc/get_sheet(multiz = FALSE)
-	var/list/static/key_to_sheet = list()
 	var/range = max(1, light_range);
 	var/key = "[range]-[visual_offset]-[offset_x]-[offset_y]-[light_dir]-[light_angle]-[light_height]-[multiz]"
-	var/list/hand_back = key_to_sheet[key]
+	var/list/hand_back = GLOB.lighting_sheets[key]
 	if(!hand_back)
 		if(multiz)
 			hand_back = generate_sheet_multiz(range, visual_offset, offset_x, offset_y, light_dir, light_angle, light_height)
 		else
 			hand_back = generate_sheet(range, visual_offset, offset_x, offset_y, light_dir, light_angle, light_height)
-		key_to_sheet[key] = hand_back
+		GLOB.lighting_sheets[key] = hand_back
 	return hand_back
 
 /// Returns a list of lists that encodes the light falloff of our source
@@ -240,7 +244,7 @@
 	var/list/encode = list()
 	// How far away the turfs we get are, and how many there are are often not the same calculation
 	// So we need to include the visual offset, so we can ensure our sheet is large enough to accept all the distance differences
-	var/bound_range = CEILING(range, 1) + visual_offset
+	var/bound_range = ceil(range) + visual_offset
 
 	// Corners are placed at 0.5 offsets
 	// We need our coords to reflect that (though x_offsets that change the basis for how things are calculated are fine too)
@@ -443,7 +447,7 @@
 	if(visual_offsets[1] != offset_x || visual_offsets[2] != offset_y || source_turf != old_source_turf)
 		offset_x = visual_offsets[1]
 		offset_y = visual_offsets[2]
-		visual_offset = max(CEILING(abs(offset_x), 1), CEILING(abs(offset_y), 1))
+		visual_offset = max(ceil(abs(offset_x)), ceil(abs(offset_y)))
 		update = TRUE
 
 	// If we need to update, well, update
@@ -464,7 +468,7 @@
 		return list()
 
 	var/oldlum = source_turf.luminosity
-	var/working_range = CEILING(light_range + visual_offset, 1)
+	var/working_range = ceil(light_range + visual_offset)
 	source_turf.luminosity = working_range
 
 	var/uses_multiz = !!GET_LOWEST_STACK_OFFSET(source_turf.z)

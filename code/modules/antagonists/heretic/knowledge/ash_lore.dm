@@ -1,62 +1,69 @@
-/**
- * # The path of Ash.
- *
- * Goes as follows:
- *
- * Nightwatcher's Secret
- * Grasp of Ash
- * Ashen Passage
- * > Sidepaths:
- *   Scorching Shark
- *   Ashen Eyes
- *
- * Mark of Ash
- * Ritual of Knowledge
- * Fire Blast
- * Mask of Madness
- * > Sidepaths:
- *   Space Phase
- *   Curse of Paralysis
- *
- * Fiery Blade
- * Nightwatcher's Rebirth
- * > Sidepaths:
- *   Ashen Ritual
- *   Eldritch Coin
- *
- * Ashlord's Rite
- */
+/datum/heretic_knowledge_tree_column/ash
+	route = PATH_ASH
+	ui_bgr = "node_ash"
+	complexity = "Easy"
+	complexity_color = COLOR_GREEN
+	icon = list(
+		"icon" = 'icons/obj/weapons/khopesh.dmi',
+		"state" = "ash_blade",
+		"frame" = 1,
+		"dir" = SOUTH,
+		"moving" = FALSE,
+	)
+	description = list(
+		"The Path of Ash revolves around fire, mobility and brutal crowd control against single opponents.",
+		"Play this path if you are new to Heretic, or really enjoy hit and run playstyles.",
+	)
+	pros = list(
+		"Very potent even from the beginning of the path.",
+		"Easy access to a mobility spells and expanded vision.",
+		"Very powerful mark effect.",
+	)
+	cons = list(
+		"Has less power than most heretics beyond their starting abilities.",
+		"Lacks durability in long conflicts.",
+		"Reliant on hitting fast and hard before their opponents can mount proper countermeasures.",
+	)
+	tips = list(
+		"Your Mansus Grasp applies a short blind and a mark that puts your opponent into stamina crit when triggered by your blade. The mark can spread to nearby opponents.",
+		"Selecting this path makes you immune to high temperature damage. Remember, however, that your clothes can still burn! If you want to protect yourself from your own fire, wear a Scorched Mantle.",
+		"Your Scorched Mantle will keep you on fire while protecting you from the ill effects of it. Use this to your advantage by running into groups of enemies, spreading fire far and wide.",
+		"Do not neglect the Mask of Madness. It will slowly sap the stamina of your enemies and make them hallucinate.",
+		"Make sure to set as many enemies on fire as you possibly can! Nightwatcher's Rebirth will heal you and have its cooldown reduced based on how many mobs you siphon.",
+		"Your ascension grants you complete immunity to environmental hazards, including bombs! But you are still vulnerable to more conventional weaponry. Do not become overconfident.",
+	)
+
+	start = /datum/heretic_knowledge/limited_amount/starting/base_ash
+	knowledge_tier1 = /datum/heretic_knowledge/spell/ash_passage
+	guaranteed_side_tier1 = /datum/heretic_knowledge/medallion
+	knowledge_tier2 = /datum/heretic_knowledge/spell/fire_blast
+	guaranteed_side_tier2 = /datum/heretic_knowledge/rifle
+	robes = /datum/heretic_knowledge/armor/ash
+	knowledge_tier3 = /datum/heretic_knowledge/nightwatchers_lantern
+	guaranteed_side_tier3 = /datum/heretic_knowledge/summon/ashy
+	blade = /datum/heretic_knowledge/blade_upgrade/ash
+	knowledge_tier4 = /datum/heretic_knowledge/spell/flame_birth
+	ascension = /datum/heretic_knowledge/ultimate/ash_final
+
 /datum/heretic_knowledge/limited_amount/starting/base_ash
 	name = "Nightwatcher's Secret"
-	desc = "Opens up the Path of Ash to you. \
-		Allows you to transmute a match and a knife into an Ashen Blade. \
+	desc = "Opens up the Path of Ash to you.<br>\
+		Allows you to create a Ashen Blades. \
 		You can only create two at a time."
+	transmute_text = "Transmute a match and a knife."
 	gain_text = "The City Guard know their watch. If you ask them at night, they may tell you about the ashy lantern."
-	next_knowledge = list(/datum/heretic_knowledge/ashen_grasp)
 	required_atoms = list(
 		/obj/item/knife = 1,
 		/obj/item/match = 1,
 	)
 	result_atoms = list(/obj/item/melee/sickly_blade/ash)
-	route = PATH_ASH
+	research_tree_icon_path = 'icons/obj/weapons/khopesh.dmi'
+	research_tree_icon_state = "ash_blade"
+	mark_type = /datum/status_effect/eldritch/ash
+	eldritch_passive = /datum/status_effect/heretic_passive/ash
 
-/datum/heretic_knowledge/ashen_grasp
-	name = "Grasp of Ash"
-	desc = "Your Mansus Grasp will burn the eyes of the victim, damaging them and blurring their vision."
-	gain_text = "The Nightwatcher was the first of them, his treason started it all. \
-		Their lantern, expired to ash - their watch, absent."
-	next_knowledge = list(/datum/heretic_knowledge/spell/ash_passage)
-	cost = 1
-	route = PATH_ASH
-
-/datum/heretic_knowledge/ashen_grasp/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
-
-/datum/heretic_knowledge/ashen_grasp/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	UnregisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK)
-
-/datum/heretic_knowledge/ashen_grasp/proc/on_mansus_grasp(mob/living/source, mob/living/target)
-	SIGNAL_HANDLER
+/datum/heretic_knowledge/limited_amount/starting/base_ash/on_mansus_grasp(mob/living/source, mob/living/target)
+	. = ..()
 
 	if(target.is_blind())
 		return
@@ -65,36 +72,10 @@
 		return
 
 	to_chat(target, span_danger("A bright green light burns your eyes horrifically!"))
-	target.adjustOrganLoss(ORGAN_SLOT_EYES, 15)
+	target.adjust_organ_loss(ORGAN_SLOT_EYES, 15)
 	target.set_eye_blur_if_lower(20 SECONDS)
 
-/datum/heretic_knowledge/spell/ash_passage
-	name = "Ashen Passage"
-	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality and traverse a short distance, passing though any walls."
-	gain_text = "He knew how to walk between the planes."
-	next_knowledge = list(
-		/datum/heretic_knowledge/mark/ash_mark,
-		/datum/heretic_knowledge/summon/fire_shark,
-		/datum/heretic_knowledge/medallion,
-	)
-	spell_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
-	cost = 1
-	route = PATH_ASH
-
-/datum/heretic_knowledge/mark/ash_mark
-	name = "Mark of Ash"
-	desc = "Your Mansus Grasp now applies the Mark of Ash. The mark is triggered from an attack with your Ashen Blade. \
-		When triggered, the victim takes additional stamina and burn damage, and the mark is transferred to a nearby heathen. \
-		Damage dealt is decreased with each transfer. \
-		Triggering the mark will also greatly reduce the cooldown of your Mansus Grasp."
-	gain_text = "He was a very particular man, always watching in the dead of night. \
-		But in spite of his duty, he regularly tranced through the Manse with his blazing lantern held high. \
-		He shone brightly in the darkness, until the blaze begin to die."
-	next_knowledge = list(/datum/heretic_knowledge/knowledge_ritual/ash)
-	route = PATH_ASH
-	mark_type = /datum/status_effect/eldritch/ash
-
-/datum/heretic_knowledge/mark/ash_mark/trigger_mark(mob/living/source, mob/living/target)
+/datum/heretic_knowledge/limited_amount/starting/base_ash/trigger_mark(mob/living/source, mob/living/target)
 	. = ..()
 	if(!.)
 		return
@@ -105,9 +86,17 @@
 		grasp.next_use_time -= round(grasp.cooldown_time*0.75)
 		grasp.build_all_button_icons()
 
-/datum/heretic_knowledge/knowledge_ritual/ash
-	next_knowledge = list(/datum/heretic_knowledge/spell/fire_blast)
-	route = PATH_ASH
+/datum/heretic_knowledge/spell/ash_passage
+	name = "Ashen Passage"
+	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality, \
+		allowing you to traverse a short distance, passing though any walls."
+	gain_text = "He knew how to walk between the planes."
+	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
+	cost = 2
+	drafting_tier = 5
+	max_charges = 6
+	focus_recharge_amount = 0.15
+	holywater_drain_amount = 0.15
 
 /datum/heretic_knowledge/spell/fire_blast
 	name = "Volcano Blast"
@@ -115,44 +104,71 @@
 		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
 		the beam will continue to another target."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
-	next_knowledge = list(/datum/heretic_knowledge/mad_mask)
-	spell_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
-	cost = 1
-	route = PATH_ASH
+	action_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
+	cost = 2
+	research_tree_icon_frame = 7
+	max_charges = 3
+	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
 
-
-/datum/heretic_knowledge/mad_mask
-	name = "Mask of Madness"
-	desc = "Allows you to transmute any mask, four candles, a stun baton, and a liver to create a Mask of Madness. \
-		The mask instills fear into heathens who witness it, causing stamina damage, hallucinations, and insanity. \
-		It can also be forced onto a heathen, to make them unable to take it off..."
-	gain_text = "The Nightwatcher was lost. That's what the Watch believed. Yet he walked the world, unnoticed by the masses."
-	next_knowledge = list(
-		/datum/heretic_knowledge/blade_upgrade/ash,
-		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/spell/space_phase,
-		/datum/heretic_knowledge/curse/paralysis,
-	)
+/datum/heretic_knowledge/armor/ash
+	desc = "Create a Scorched Mantle.<br>\
+		It provides completes protection from fire, and is able to produce more flames passively."
+	transmute_text = "Transmute a table (or a suit), a mask and a match."
+	gain_text = "The Watch remain as they fell, crumbling away from sight. \
+		Yet the winds blowing through the city call them back to service, dust kicked into the air, a drifting silhouette of the fallen."
+	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash)
+	research_tree_icon_state = "ash_armor"
 	required_atoms = list(
-		/obj/item/organ/internal/liver = 1,
-		/obj/item/melee/baton/security = 1,  // Technically means a cattleprod is valid
+		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
 		/obj/item/clothing/mask = 1,
+		/obj/item/match = 1,
+	)
+
+/datum/heretic_knowledge/nightwatchers_lantern
+	name = "Nightwatcher's Lantern"
+	desc = "Create a burning lantern.<br>\
+		A burning lantern drinks the flames off your body while you hold it in your hand, up to five stacks, and slowly gutters out if left alone. \
+		Each stack strengthens the light, which damages the eyes and eventually confuses those who witness it for too long. \
+		The effect is reduced for those with protective eyewear, and strengthened if the burning lantern is the only nearby source of light.<br>\
+		When fully charged, you can unleash it: everyone watching is blinded, protective eyewear only shortens it, \
+		and they see everything around them burning. Unleashing it also recharges your spells."
+	transmute_text = "Transmute a lamp, lantern, or seclight, a pair of eyes, a flash, and four lit candles."
+	gain_text = "The Nightwatcher did not venture out in the dark. That was foolish, even the Watch knew that. \
+		Their lantern burned with a light that could burn the sun."
+	cost = 2
+	result_atoms = list(/obj/item/flashlight/lantern/heretic)
+	required_atoms = list(
+		list(/obj/item/flashlight/lamp, /obj/item/flashlight/lantern, /obj/item/flashlight/seclite) = 1,
+		/obj/item/organ/eyes = 1,
+		/obj/item/assembly/flash = 1,
 		/obj/item/flashlight/flare/candle = 4,
 	)
-	result_atoms = list(/obj/item/clothing/mask/madness_mask)
-	cost = 1
-	route = PATH_ASH
+	research_tree_icon_path = 'icons/obj/antags/eldritch_lantern.dmi'
+	research_tree_icon_state = "lantern_charged"
+
+/datum/heretic_knowledge/nightwatchers_lantern/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/obj/item/flashlight/flare/candle/candle in atoms)
+		if(!candle.light_on)
+			atoms -= candle
+
+/datum/heretic_knowledge/nightwatchers_lantern/prepare_atom_for_ritual_test(atom/what)
+	. = ..()
+	if(istype(what, /obj/item/flashlight/flare/candle))
+		what.set_light_on(TRUE)
 
 /datum/heretic_knowledge/blade_upgrade/ash
 	name = "Fiery Blade"
 	desc = "Your blade now lights enemies ablaze on attack."
 	gain_text = "He returned, blade in hand, he swung and swung as the ash fell from the skies. \
 		His city, the people he swore to watch... and watch he did, as they all burnt to cinders."
-	next_knowledge = list(/datum/heretic_knowledge/spell/flame_birth)
-	route = PATH_ASH
+
+	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
+	research_tree_icon_state = "blade_upgrade_ash"
 
 /datum/heretic_knowledge/blade_upgrade/ash/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	if(source == target)
+	if(source == target || !isliving(target))
 		return
 
 	target.adjust_fire_stacks(1)
@@ -161,32 +177,33 @@
 /datum/heretic_knowledge/spell/flame_birth
 	name = "Nightwatcher's Rebirth"
 	desc = "Grants you Nightwatcher's Rebirth, a spell that extinguishes you and \
-		burns all nearby heathens who are currently on fire, healing you for every victim afflicted. \
+		burns all nearby heathens who are currently on fire, healing you for every victim afflicted.<br>\
 		If any victims afflicted are in critical condition, they will also instantly die."
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
-	next_knowledge = list(
-		/datum/heretic_knowledge/ultimate/ash_final,
-		/datum/heretic_knowledge/summon/ashy,
-		/datum/heretic_knowledge/eldritch_coin,
-	)
-	spell_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
-	cost = 1
-	route = PATH_ASH
+	action_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
+	cost = 2
+	research_tree_icon_frame = 5
+	is_final_knowledge = TRUE
+	max_charges = 3
+	focus_recharge_amount = 0.33
+	holywater_drain_amount = 0.16
 
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"
-	desc = "The ascension ritual of the Path of Ash. \
-		Bring 3 burning or husked corpses to a transmutation rune to complete the ritual. \
-		When completed, you become a harbinger of flames, gaining two abilites. \
+	desc = "The ascension ritual of the Path of Ash.<br>\
+		When completed, you become a harbinger of flames, gaining two abilites.<br>\
 		Cascade, which causes a massive, growing ring of fire around you, \
-		and Oath of Flame, causing you to passively create a ring of flames as you walk. \
-		Some ashen spells you already knew will be empowered as well. \
+		and Oath of Flame, causing you to passively create a ring of flames as you walk.<br>\
 		You will also become immune to flames, space, and similar environmental hazards."
+	transmute_text = "Transmute 3 burning or husked corpses."
 	gain_text = "The Watch is dead, the Nightwatcher burned with it. Yet his fire burns evermore, \
 		for the Nightwatcher brought forth the rite to mankind! His gaze continues, as now I am one with the flames, \
 		WITNESS MY ASCENSION, THE ASHY LANTERN BLAZES ONCE MORE!"
-	route = PATH_ASH
+
+	ascension_achievement = /datum/award/achievement/misc/ash_ascension
+	announcement_text = "%SPOOKY% Fear the blaze, for the Ashlord, %NAME% has ascended! The flames shall consume all! %SPOOKY%"
+	announcement_sound = 'sound/music/antag/heretic/ascend_ash.ogg'
 	/// A static list of all traits we apply on ascension.
 	var/static/list/traits_to_apply = list(
 		TRAIT_BOMBIMMUNE,
@@ -211,13 +228,6 @@
 
 /datum/heretic_knowledge/ultimate/ash_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce(
-		text = "[generate_heretic_text()] Fear the blaze, for the Ashlord, [user.real_name] has ascended! The flames shall consume all! [generate_heretic_text()]",
-		title = "[generate_heretic_text()]",
-		sound = ANNOUNCER_SPANOMALIES,
-		color_override = "pink",
-	)
-
 	var/datum/action/cooldown/spell/fire_sworn/circle_spell = new(user.mind)
 	circle_spell.Grant(user)
 
@@ -233,6 +243,4 @@
 	var/datum/action/cooldown/spell/aoe/fiery_rebirth/fiery_rebirth = locate() in user.actions
 	fiery_rebirth?.cooldown_time *= 0.16
 
-	user.client?.give_award(/datum/award/achievement/misc/ash_ascension, user)
-	if(length(traits_to_apply))
-		user.add_traits(traits_to_apply, MAGIC_TRAIT)
+	user.add_traits(traits_to_apply, type)

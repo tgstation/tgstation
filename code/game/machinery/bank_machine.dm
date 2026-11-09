@@ -2,6 +2,7 @@
 	name = "bank machine"
 	desc = "A machine used to deposit and withdraw station funds."
 	circuit = /obj/item/circuitboard/computer/bankmachine
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/bank_machine")
 	icon_screen = "vault"
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_VAULT)
@@ -43,21 +44,28 @@
 	synced_bank_account = null
 	return ..()
 
-/obj/machinery/computer/bank_machine/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/computer/bank_machine/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/value = 0
-	if(istype(weapon, /obj/item/stack/spacecash))
-		var/obj/item/stack/spacecash/inserted_cash = weapon
+	if(istype(tool, /obj/item/stack/spacecash))
+		var/obj/item/stack/spacecash/inserted_cash = tool
 		value = inserted_cash.value * inserted_cash.amount
-	else if(istype(weapon, /obj/item/holochip))
-		var/obj/item/holochip/inserted_holochip = weapon
+	else if(istype(tool, /obj/item/holochip))
+		var/obj/item/holochip/inserted_holochip = tool
 		value = inserted_holochip.credits
-	if(value)
-		if(synced_bank_account)
-			synced_bank_account.adjust_money(value)
-			say("Credits deposited! The [synced_bank_account.account_holder] is now [synced_bank_account.account_balance] cr.")
-		qdel(weapon)
-		return
-	return ..()
+	else if(istype(tool, /obj/item/coin))
+		var/obj/item/coin/inserted_coin = tool
+		value = inserted_coin.value
+	else if(istype(tool, /obj/item/poker_chip))
+		var/obj/item/poker_chip/inserted_chip = tool
+		value = inserted_chip.get_item_credit_value()
+	if(!value)
+		return NONE
+	if(synced_bank_account)
+		synced_bank_account.adjust_money(value)
+		say("[MONEY_NAME_CAPITALIZED] deposited! The [synced_bank_account.account_holder] is now [synced_bank_account.account_balance] [MONEY_SYMBOL].")
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/machinery/computer/bank_machine/process(seconds_per_tick)
 	. = ..()
@@ -73,7 +81,7 @@
 		end_siphon()
 		return
 
-	playsound(src, 'sound/items/poster_being_created.ogg', 100, TRUE)
+	playsound(src, 'sound/items/poster/poster_being_created.ogg', 100, TRUE)
 	syphoning_credits += siphon_am
 	synced_bank_account.adjust_money(-siphon_am)
 	if(next_warning < world.time && prob(15))
@@ -106,13 +114,13 @@
 	switch(action)
 		if("siphon")
 			if(is_station_level(src.z) || is_centcom_level(src.z))
-				say("Siphon of station credits has begun!")
+				say("Siphon of station [MONEY_NAME] has begun!")
 				start_siphon(ui.user)
 			else
 				say("Error: Console not in reach of station, withdrawal cannot begin.")
 			. = TRUE
 		if("halt")
-			say("Station credit withdrawal halted.")
+			say("Station [MONEY_NAME_SINGULAR] withdrawal halted.")
 			end_siphon()
 			. = TRUE
 
@@ -125,8 +133,9 @@
 /obj/machinery/computer/bank_machine/proc/end_siphon()
 	siphoning = FALSE
 	unauthorized = FALSE
-	if(syphoning_credits > 0)
-		new /obj/item/holochip(drop_location(), syphoning_credits) //get the loot
+	var/atom/droploc = drop_location()
+	for(var/cash_typepath in credits_to_spacecash(syphoning_credits))
+		new cash_typepath(droploc)
 	syphoning_credits = 0
 
 /obj/machinery/computer/bank_machine/proc/start_siphon(mob/living/carbon/user)

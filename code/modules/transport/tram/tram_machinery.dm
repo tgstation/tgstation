@@ -1,4 +1,5 @@
 /obj/item/assembly/control/transport
+	voice_filter = "highpass=f=300,lowpass=f=3500,aecho=0.8:0.9:70|140:0.3|0.15,alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 	/// The ID of the tram we're linked to
 	var/specific_transport_id = TRAMSTATION_LINE_1
 	/// Options to be passed with the requests to the transport subsystem
@@ -47,7 +48,8 @@
 	SIGNAL_HANDLER
 	if(!LAZYFIND(relevant, src))
 		return
-
+	if(SStts.tts_enabled)
+		voice = SStts.tram_voice
 	switch(response_code)
 		if(REQUEST_SUCCESS)
 			say("The tram has been called to the platform.")
@@ -91,11 +93,22 @@
 	/// The ID of the tram we're linked to
 	var/specific_transport_id = TRAMSTATION_LINE_1
 
+/// We allow borgs to use the button locally, but not the AI remotely
+/obj/machinery/button/transport/tram/attack_ai(mob/user)
+	if(isAI(user) || panel_open)
+		return
+	if(HAS_SILICON_ACCESS(user) && !issilicon(user)) //admins and remote controls can use it at a distance
+		return attack_hand(user)
+	if(in_range(user, src))
+		return attack_hand(user)
+	else
+		to_chat(user, span_warning("You are too far away to activate the button!"))
+
 /obj/machinery/button/transport/tram/setup_device()
+	. = ..()
 	var/obj/item/assembly/control/transport/call_button/tram_device = device
-	tram_device.id = id
-	tram_device.specific_transport_id = specific_transport_id
-	return ..()
+	if(istype(tram_device))
+		tram_device.specific_transport_id = specific_transport_id
 
 /obj/machinery/button/transport/tram/examine(mob/user)
 	. = ..()

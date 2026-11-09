@@ -1,7 +1,7 @@
-import { classes } from 'common/react';
 import { Component, createRef } from 'react';
+import { Box, Stack } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
-import { Box, Stack } from '../../components';
 import { noop } from './constants';
 import { DisplayName } from './DisplayName';
 
@@ -96,13 +96,13 @@ export class Port extends Component {
             onMouseDown={this.handlePortMouseDown}
             onContextMenu={this.handlePortRightClick}
             onMouseUp={this.handlePortMouseUp}
-            textAlign="center"
           >
             <svg
               style={{
                 width: '100%',
                 height: '100%',
                 position: 'absolute',
+                overflow: 'visible',
               }}
               viewBox="0, 0, 100, 100"
             >
@@ -118,7 +118,7 @@ export class Port extends Component {
                       -index * (100 * (Math.PI / composite_types.length))
                     }
                     className={`color-stroke-${compositeColor}`}
-                    strokeWidth="50px"
+                    strokeWidth="40px"
                     cx="50"
                     cy="50"
                     r="50"

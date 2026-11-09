@@ -132,8 +132,8 @@
 "aI" = (
 /obj/structure/closet/crate/engineering/electrical,
 /obj/item/storage/toolbox/electrical,
-/obj/item/stock_parts/cell/hyper,
-/obj/item/stock_parts/cell/high,
+/obj/item/stock_parts/power_store/cell/hyper,
+/obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aJ" = (
@@ -207,7 +207,7 @@
 "aW" = (
 /obj/structure/closet/crate/engineering/electrical,
 /obj/item/storage/toolbox/electrical,
-/obj/item/stock_parts/cell/hyper,
+/obj/item/stock_parts/power_store/cell/hyper,
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/has_grav/derelictoutpost/dockedship)
 "aX" = (
@@ -218,7 +218,7 @@
 "aY" = (
 /obj/structure/lattice,
 /turf/template_noop,
-/area/template_noop)
+/area/space/nearstation)
 "aZ" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/derelictoutpost)
@@ -233,7 +233,7 @@
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bc" = (
 /obj/structure/table,
-/obj/item/stock_parts/cell/hyper,
+/obj/item/stock_parts/power_store/cell/hyper,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
@@ -436,8 +436,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/turf/open/floor/plating{
-	icon_state = "wall_thermite";
+/turf/open/floor/plating/melted{
 	name = "melted wall"
 	},
 /area/ruin/space/has_grav/derelictoutpost)
@@ -540,7 +539,7 @@
 	name = "Power Storage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
@@ -573,13 +572,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "cC" = (
 /obj/structure/alien/weeds/creature,
-/mob/living/basic/creature{
-	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
-	health = 25;
-	maxHealth = 25;
-	name = "hatchling";
-	current_size = 0.85
-	},
+/mob/living/basic/creature/hatchling,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "cD" = (
@@ -590,7 +583,7 @@
 	name = "dried blood trail"
 	},
 /mob/living/basic/creature{
-	desc = "Awh its so sm-OH GOD WHAT THE FUCK.";
+	desc = "Awh, it's so sm-OH GOD, WHAT THE FUCK.";
 	health = 25;
 	maxHealth = 25;
 	name = "hatchling";
@@ -670,7 +663,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cV" = (
-/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/obj/effect/decal/cleanable/blood/splatter/xeno,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
 "cW" = (
@@ -765,9 +758,7 @@
 /area/ruin/space/has_grav/derelictoutpost)
 "dl" = (
 /obj/structure/alien/weeds/creature,
-/mob/living/basic/creature{
-	name = "Miss Tiggles"
-	},
+/mob/living/basic/creature/tiggles,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "dm" = (
@@ -777,7 +768,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost)
 "dq" = (
-/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/obj/effect/decal/cleanable/blood/splatter/xeno,
 /obj/structure/alien/weeds/creature,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/derelictoutpost/cargobay)
@@ -844,8 +835,7 @@
 	name = "dried blood trail"
 	},
 /obj/structure/alien/resin/membrane/creature,
-/turf/open/floor/plating{
-	icon_state = "wall_thermite";
+/turf/open/floor/plating/melted{
 	name = "melted wall"
 	},
 /area/ruin/space/has_grav/derelictoutpost)

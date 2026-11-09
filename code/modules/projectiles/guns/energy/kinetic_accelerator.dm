@@ -1,3 +1,6 @@
+#define PKA_COOLDOWN_INCREMENT 3.2
+#define STANDARD_RECHARGE_TIME 16
+
 /obj/item/gun/energy/recharge/kinetic_accelerator
 	name = "proto-kinetic accelerator"
 	desc = "A self recharging, ranged mining tool that does increased damage in low pressure."
@@ -7,11 +10,11 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/kinetic)
 	item_flags = NONE
 	obj_flags = UNIQUE_RENAME
+	resistance_flags = FIRE_PROOF
 	weapon_weight = WEAPON_LIGHT
-	can_bayonet = TRUE
-	knife_x_offset = 20
-	knife_y_offset = 12
 	gun_flags = NOT_A_REAL_GUN
+	recharge_time = STANDARD_RECHARGE_TIME
+	dual_wield_spread = 13 // Double PKA is a valid strat
 	///List of all mobs that projectiles fired from this gun will ignore.
 	var/list/ignored_mob_types
 	///List of all modkits currently in the kinetic accelerator.
@@ -19,17 +22,8 @@
 	///The max capacity of modkits the PKA can have installed at once.
 	var/max_mod_capacity = 100
 
-/obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
-	. = ..()
-	// Only actual KAs can be converted
-	if(type != /obj/item/gun/energy/recharge/kinetic_accelerator)
-		return
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ebow)
-
-	AddComponent(
-		/datum/component/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
+/obj/item/gun/energy/recharge/kinetic_accelerator/add_bayonet_point()
+	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -79,9 +73,13 @@
 		to_chat(user, span_notice("You pry all the modifications out."))
 		I.play_tool_sound(src, 100)
 		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
-			modkit_upgrade.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
+			if (modkit_upgrade.removable)
+				modkit_upgrade.forceMove(drop_location()) //uninstallation handled in Exited(), or /mob/living/silicon/robot/remove_from_upgrades() for borgs
 	else
 		to_chat(user, span_notice("There are no modifications currently installed."))
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/try_fire_gun(atom/target, mob/living/user, params)
+	return fire_gun(target, user, user.Adjacent(target) && !isturf(target), params)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -94,7 +92,9 @@
 	var/list/display_names = list()
 	var/list/items = list()
 	for(var/modkits_length in 1 to length(modkits))
-		var/obj/item/thing = modkits[modkits_length]
+		var/obj/item/borg/upgrade/modkit/thing = modkits[modkits_length]
+		if (!thing.removable)
+			continue
 		display_names["[thing.name] ([modkits_length])"] = REF(thing)
 		var/image/item_image = image(icon = thing.icon, icon_state = thing.icon_state)
 		if(length(thing.overlays))
@@ -119,7 +119,7 @@
 /obj/item/gun/energy/recharge/kinetic_accelerator/proc/check_menu(mob/living/carbon/human/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	return TRUE
 
@@ -129,12 +129,16 @@
 		MK.uninstall(src)
 	return ..()
 
-/obj/item/gun/energy/recharge/kinetic_accelerator/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/borg/upgrade/modkit))
-		var/obj/item/borg/upgrade/modkit/MK = I
-		MK.install(src, user)
-	else
-		..()
+/obj/item/gun/energy/recharge/kinetic_accelerator/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(istype(arrived, /obj/item/borg/upgrade/modkit))
+		modkits |= arrived
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/borg/upgrade/modkit))
+		return NONE
+	astype(tool, /obj/item/borg/upgrade/modkit).install(src, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/proc/get_remaining_mod_capacity()
 	var/current_capacity_used = 0
@@ -146,6 +150,16 @@
 	kinetic_projectile.kinetic_gun = src //do something special on-hit, easy!
 	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in modkits)
 		modkit_upgrade.modify_projectile(kinetic_projectile)
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/bdm
+	name = "infernal proto-kinetic accelerator"
+	icon_state = "kineticgun_evil"
+	inhand_icon_state = "kineticgun_evil"
+
+/obj/item/gun/energy/recharge/kinetic_accelerator/bdm/Initialize(mapload)
+	. = ..()
+	var/obj/item/borg/upgrade/modkit/cooldown/repeater/bdm/repeater_mod = new()
+	repeater_mod.install(src)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/cyborg
 	icon_state = "kineticgun_b"
@@ -164,7 +178,8 @@
 	projectile_type = /obj/projectile/kinetic
 	select_name = "kinetic"
 	e_cost = LASER_SHOTS(1, STANDARD_CELL_CHARGE * 0.5)
-	fire_sound = 'sound/weapons/kinetic_accel.ogg'
+	fire_sound = 'sound/items/weapons/kinetic_accel.ogg'
+	newtonian_force = 1
 
 /obj/item/ammo_casing/energy/kinetic/ready_proj(atom/target, mob/living/user, quiet, zone_override = "")
 	..()
@@ -186,6 +201,10 @@
 	var/pressure_decrease = 0.25
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/kinetic_gun
 
+/obj/projectile/kinetic/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/parriable_projectile, parry_callback = CALLBACK(src, PROC_REF(on_parry)))
+
 /obj/projectile/kinetic/Destroy()
 	kinetic_gun = null
 	return ..()
@@ -203,8 +222,20 @@
 		damage = damage * pressure_decrease
 		pressure_decrease_active = TRUE
 
+/obj/projectile/kinetic/proc/on_parry(mob/user)
+	SIGNAL_HANDLER
+
+	// Ensure that if the user doesn't have tracer mod we're still visible
+	icon_state = "ka_tracer"
+	update_appearance()
+
 /obj/projectile/kinetic/on_range()
-	strike_thing()
+	if(!pressure_decrease_active && !lavaland_equipment_pressure_check(get_turf(src)))
+		name = "weakened [name]"
+		damage = damage * pressure_decrease
+		pressure_decrease_active = TRUE
+
+	strike_thing(loc)
 	..()
 
 /obj/projectile/kinetic/on_hit(atom/target, blocked = 0, pierce_hit)
@@ -223,7 +254,7 @@
 			modkit_upgrade.projectile_strike(src, target_turf, target, kinetic_gun)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/M = target_turf
-		M.gets_drilled(firer, TRUE)
+		M.gets_drilled(firer, 1)
 		if(iscarbon(firer))
 			var/mob/living/carbon/carbon_firer = firer
 			var/skill_modifier = 1
@@ -237,6 +268,21 @@
 //mecha_kineticgun version of the projectile
 /obj/projectile/kinetic/mech
 	range = 5
+	damage = 50
+
+/obj/projectile/kinetic/mech/strike_thing(atom/target)
+	. = ..()
+	new /obj/effect/temp_visual/explosion/fast(get_turf(target))
+
+	for(var/turf/closed/mineral/mineral_turf in RANGE_TURFS(2, target) - target)
+		mineral_turf.drill_aoe(firer, 0.1)
+
+	for(var/mob/living/living_mob in range(2, target) - firer - target)
+		if(!ismining(living_mob))
+			continue
+		var/armor = living_mob.run_armor_check(def_zone, armor_flag, armour_penetration = armour_penetration)
+		living_mob.apply_damage(damage, damage_type, def_zone, armor)
+		to_chat(living_mob, span_userdanger("You're struck by a [name]!"))
 
 //Modkits
 /obj/item/borg/upgrade/modkit
@@ -248,22 +294,28 @@
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
 	model_flags = BORG_MODEL_MINER
+	//Most modkits are supposed to allow duplicates. The ones that don't should be blocked by PKA code anyways.
+	allow_duplicates = TRUE
+	// If defined with a type of mod, prevents paring this mod with another of the same mod in the same PKA
 	var/denied_type = null
-	var/maximum_of_type = 1
+	// If defined, limits the number of a mod to this value in a single PKA. If denied_type is not defined. but this value is above 1, it will default to types of itself.
+	var/maximum_of_type = 0
 	var/cost = 30
 	var/modifier = 1 //For use in any mod kit that has numerical modifiers
 	var/minebot_upgrade = TRUE
 	var/minebot_exclusive = FALSE
+	/// Can it be removed?
+	var/removable = TRUE
 
 /obj/item/borg/upgrade/modkit/examine(mob/user)
 	. = ..()
 	. += span_notice("Occupies <b>[cost]%</b> of mod capacity.")
 
-/obj/item/borg/upgrade/modkit/attackby(obj/item/A, mob/user)
-	if(istype(A, /obj/item/gun/energy/recharge/kinetic_accelerator) && !issilicon(user))
-		install(A, user)
-	else
-		..()
+/obj/item/borg/upgrade/modkit/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/gun/energy/recharge/kinetic_accelerator) || issilicon(user))
+		return NONE
+	install(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/borg/upgrade/modkit/action(mob/living/silicon/robot/R)
 	. = ..()
@@ -275,31 +327,43 @@
 	. = TRUE
 	if(minebot_upgrade)
 		if(minebot_exclusive && !istype(KA.loc, /mob/living/basic/mining_drone))
-			to_chat(user, span_notice("The modkit you're trying to install is only rated for minebot use."))
+			if (user)
+				to_chat(user, span_notice("The modkit you're trying to install is only rated for minebot use."))
 			return FALSE
 	else if(istype(KA.loc, /mob/living/basic/mining_drone))
-		to_chat(user, span_notice("The modkit you're trying to install is not rated for minebot use."))
+		if (user)
+			to_chat(user, span_notice("The modkit you're trying to install is not rated for minebot use."))
 		return FALSE
-	if(denied_type)
+
+	var/type_to_limit = denied_type
+
+	if(!type_to_limit && maximum_of_type)
+		type_to_limit = src
+
+	if(type_to_limit)
 		var/number_of_denied = 0
 		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
-			if(istype(modkit_upgrade, denied_type))
+			if(istype(modkit_upgrade, type_to_limit))
 				number_of_denied++
-			if(number_of_denied >= maximum_of_type)
-				. = FALSE
-				break
-	if(KA.get_remaining_mod_capacity() >= cost)
-		if(.)
-			if(transfer_to_loc && !user.transferItemToLoc(src, KA))
-				return
-			to_chat(user, span_notice("You install the modkit."))
-			playsound(loc, 'sound/items/screwdriver.ogg', 100, TRUE)
-			KA.modkits += src
-		else
-			to_chat(user, span_notice("The modkit you're trying to install would conflict with an already installed modkit. Remove existing modkits first."))
-	else
+			if(maximum_of_type && number_of_denied >= maximum_of_type || !maximum_of_type && number_of_denied) //if we denied a type, or we have a maximum to reach, break
+				if (user)
+					to_chat(user, span_notice("The modkit you're trying to install would conflict with an already installed modkit. Remove existing modkits first."))
+				return FALSE
+
+	if(KA.get_remaining_mod_capacity() < cost)
 		to_chat(user, span_notice("You don't have room(<b>[KA.get_remaining_mod_capacity()]%</b> remaining, [cost]% needed) to install this modkit. Use a crowbar or right click with an empty hand to remove existing modkits."))
-		. = FALSE
+		return FALSE
+
+	if(transfer_to_loc)
+		if (user && !user.transferItemToLoc(src, KA))
+			return FALSE
+		else if (!user)
+			forceMove(KA)
+
+	if (user)
+		to_chat(user, span_notice("You install the modkit."))
+		playsound(loc, 'sound/items/tools/screwdriver.ogg', 100, TRUE)
+	KA.modkits |= src
 
 /obj/item/borg/upgrade/modkit/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
@@ -325,6 +389,7 @@
 	desc = "Increases the range of a kinetic accelerator when installed."
 	modifier = 1
 	cost = 25
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/borg/upgrade/modkit/range/modify_projectile(obj/projectile/kinetic/K)
 	K.range += modifier
@@ -335,6 +400,7 @@
 	name = "damage increase"
 	desc = "Increases the damage of kinetic accelerator when installed."
 	modifier = 10
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/borg/upgrade/modkit/damage/modify_projectile(obj/projectile/kinetic/K)
 	K.damage += modifier
@@ -344,17 +410,27 @@
 /obj/item/borg/upgrade/modkit/cooldown
 	name = "cooldown decrease"
 	desc = "Decreases the cooldown of a kinetic accelerator. Not rated for minebot use."
-	modifier = 3.2
+	modifier = -PKA_COOLDOWN_INCREMENT
 	minebot_upgrade = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT)
+
+// Recalculate recharge time after adding or removing cooldown mods.
+/obj/item/borg/upgrade/modkit/cooldown/proc/get_recharge_time(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+	var/new_recharge_time = initial(KA.recharge_time)
+	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
+		if(istype(modkit_upgrade, src))
+			new_recharge_time += modkit_upgrade.modifier
+
+	return max(new_recharge_time, 0)
 
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()
 	if(.)
-		KA.recharge_time -= modifier
+		KA.recharge_time = get_recharge_time(KA)
 
 /obj/item/borg/upgrade/modkit/cooldown/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
-	KA.recharge_time += modifier
 	..()
+	KA.recharge_time = get_recharge_time(KA)
 
 /obj/item/borg/upgrade/modkit/cooldown/minebot
 	name = "minebot cooldown decrease"
@@ -367,35 +443,46 @@
 	minebot_upgrade = TRUE
 	minebot_exclusive = TRUE
 
-
-//AoE blasts
-/obj/item/borg/upgrade/modkit/aoe
+// AoE blasts
+// These are a subtype of cooldown so they can affect firing speed
+/obj/item/borg/upgrade/modkit/cooldown/aoe
 	modifier = 0
+	cost = 10
+	denied_type = /obj/item/borg/upgrade/modkit/cooldown/aoe
+	maximum_of_type = 1
+	/// Does the AOE mine turfs?
 	var/turf_aoe = FALSE
+	/// Have we taken another kit's AOE?
 	var/stats_stolen = FALSE
+	/// Multiplier for mob damage
+	var/damage_modifier = 0
 
-/obj/item/borg/upgrade/modkit/aoe/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
+/obj/item/borg/upgrade/modkit/cooldown/aoe/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()
-	if(.)
-		for(var/obj/item/borg/upgrade/modkit/aoe/AOE in KA.modkits) //make sure only one of the aoe modules has values if somebody has multiple
-			if(AOE.stats_stolen || AOE == src)
-				continue
-			modifier += AOE.modifier //take its modifiers
-			AOE.modifier = 0
-			turf_aoe += AOE.turf_aoe
-			AOE.turf_aoe = FALSE
-			AOE.stats_stolen = TRUE
+	if(!.)
+		return
+	for(var/obj/item/borg/upgrade/modkit/cooldown/aoe/AOE in KA.modkits) //make sure only one of the aoe modules has values if somebody has multiple
+		if(AOE.stats_stolen || AOE == src)
+			continue
+		modifier += AOE.modifier //take its modifiers
+		damage_modifier += AOE.damage_modifier
+		AOE.modifier = 0
+		AOE.damage_modifier = 0
+		turf_aoe += AOE.turf_aoe
+		AOE.turf_aoe = FALSE
+		AOE.stats_stolen = TRUE
 
-/obj/item/borg/upgrade/modkit/aoe/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+/obj/item/borg/upgrade/modkit/cooldown/aoe/uninstall(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
 	..()
 	modifier = initial(modifier) //get our modifiers back
+	damage_modifier = initial(damage_modifier)
 	turf_aoe = initial(turf_aoe)
 	stats_stolen = FALSE
 
-/obj/item/borg/upgrade/modkit/aoe/modify_projectile(obj/projectile/kinetic/K)
+/obj/item/borg/upgrade/modkit/cooldown/aoe/modify_projectile(obj/projectile/kinetic/K)
 	K.name = "kinetic explosion"
 
-/obj/item/borg/upgrade/modkit/aoe/projectile_strike(obj/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/recharge/kinetic_accelerator/KA)
+/obj/item/borg/upgrade/modkit/cooldown/aoe/projectile_strike(obj/projectile/kinetic/kinetic_blast, turf/target_turf, atom/target, obj/item/gun/energy/recharge/kinetic_accelerator/KA)
 	if(stats_stolen)
 		return
 	new /obj/effect/temp_visual/explosion/fast(target_turf)
@@ -403,31 +490,39 @@
 		for(var/T in RANGE_TURFS(1, target_turf) - target_turf)
 			if(ismineralturf(T))
 				var/turf/closed/mineral/M = T
-				M.gets_drilled(K.firer, TRUE)
-	if(modifier)
-		for(var/mob/living/L in range(1, target_turf) - K.firer - target)
-			var/armor = L.run_armor_check(K.def_zone, K.armor_flag, "", "", K.armour_penetration)
-			L.apply_damage(K.damage*modifier, K.damage_type, K.def_zone, armor)
-			to_chat(L, span_userdanger("You're struck by a [K.name]!"))
+				M.gets_drilled(kinetic_blast.firer, 0.1)
 
-/obj/item/borg/upgrade/modkit/aoe/turfs
+	if(!damage_modifier)
+		return
+
+	for(var/mob/living/living_mob in range(1, target) - kinetic_blast.firer - target)
+		if(!ismining(living_mob))
+			continue
+		var/armor = living_mob.run_armor_check(kinetic_blast.def_zone, kinetic_blast.armor_flag, armour_penetration = kinetic_blast.armour_penetration)
+		living_mob.apply_damage(kinetic_blast.damage * damage_modifier, kinetic_blast.damage_type, kinetic_blast.def_zone, armor)
+		to_chat(living_mob, span_userdanger("You're struck by a [kinetic_blast.name]!"))
+
+/obj/item/borg/upgrade/modkit/cooldown/aoe/turfs
 	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
-	denied_type = /obj/item/borg/upgrade/modkit/aoe/turfs
 	turf_aoe = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75)
+	// Negates one CD modifier
+	modifier = PKA_COOLDOWN_INCREMENT
 
-/obj/item/borg/upgrade/modkit/aoe/turfs/andmobs
-	name = "offensive mining explosion"
-	desc = "Causes the kinetic accelerator to destroy rock and damage mobs in an AoE."
-	maximum_of_type = 3
-	modifier = 0.25
-
-/obj/item/borg/upgrade/modkit/aoe/mobs
+/obj/item/borg/upgrade/modkit/cooldown/aoe/mobs
 	name = "offensive explosion"
 	desc = "Causes the kinetic accelerator to damage mobs in an AoE."
-	modifier = 0.2
+	damage_modifier = 1
 
-//Minebot passthrough
+/obj/item/borg/upgrade/modkit/cooldown/aoe/mobs/andturfs
+	name = "offensive mining explosion"
+	desc = "Causes the kinetic accelerator to destroy rock and damage mobs in an AoE."
+	turf_aoe = TRUE
+	modifier = -1 // Slightly better than normal turf AOE as its a rare find
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.5)
+
+// Minebot passthrough
 /obj/item/borg/upgrade/modkit/minebot_passthrough
 	name = "minebot passthrough"
 	desc = "Causes kinetic accelerator shots to pass through minebots."
@@ -463,6 +558,7 @@
 	denied_type = /obj/item/borg/upgrade/modkit/cooldown/repeater
 	modifier = -14 //Makes the cooldown 3 seconds(with no cooldown mods) if you miss. Don't miss.
 	cost = 50
+	custom_materials = list(/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/borg/upgrade/modkit/cooldown/repeater/projectile_strike_predamage(obj/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/recharge/kinetic_accelerator/KA)
 	var/valid_repeat = FALSE
@@ -475,6 +571,12 @@
 	if(valid_repeat)
 		KA.cell.use(KA.cell.charge)
 		KA.attempt_reload(KA.recharge_time * 0.25) //If you hit, the cooldown drops to 0.75 seconds.
+
+/obj/item/borg/upgrade/modkit/cooldown/repeater/bdm
+	name = "infernal repeater"
+	removable = FALSE
+	cost = 30
+	modifier = -10
 
 /obj/item/borg/upgrade/modkit/lifesteal
 	name = "lifesteal crystal"
@@ -498,6 +600,7 @@
 	denied_type = /obj/item/borg/upgrade/modkit/resonator_blasts
 	cost = 30
 	modifier = 0.25 //A bonus 15 damage if you burst the field on a target, 60 if you lure them into it.
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/borg/upgrade/modkit/resonator_blasts/projectile_strike(obj/projectile/kinetic/K, turf/target_turf, atom/target, obj/item/gun/energy/recharge/kinetic_accelerator/KA)
 	if(target_turf && !ismineralturf(target_turf)) //Don't make fields on mineral turfs.
@@ -514,6 +617,7 @@
 	denied_type = /obj/item/borg/upgrade/modkit/bounty
 	modifier = 1.25
 	cost = 30
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 2, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 2)
 	var/maximum_bounty = 25
 	var/list/bounties_reaped = list()
 
@@ -552,7 +656,6 @@
 	name = "decrease pressure penalty"
 	desc = "A syndicate modification kit that increases the damage a kinetic accelerator does in high pressure environments."
 	modifier = 2
-	denied_type = /obj/item/borg/upgrade/modkit/indoors
 	maximum_of_type = 2
 	cost = 35
 
@@ -566,6 +669,7 @@
 	desc = "Allows creatures normally incapable of firing guns to operate the weapon when installed."
 	cost = 20
 	denied_type = /obj/item/borg/upgrade/modkit/trigger_guard
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/borg/upgrade/modkit/trigger_guard/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()
@@ -634,5 +738,8 @@
 /obj/item/borg/upgrade/modkit/tracer/adjustable/proc/choose_bolt_color(mob/user)
 	set waitfor = FALSE
 
-	var/new_color = input(user,"","Choose Color",bolt_color) as color|null
+	var/new_color = tgui_color_picker(user, "", "Choose Color", bolt_color)
 	bolt_color = new_color || bolt_color
+
+#undef PKA_COOLDOWN_INCREMENT
+#undef STANDARD_RECHARGE_TIME

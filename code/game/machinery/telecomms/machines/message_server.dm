@@ -34,23 +34,26 @@
 		to_chat(user, span_warning("It seems that the blackbox is missing..."))
 		return
 
-/obj/machinery/blackbox_recorder/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(istype(attacking_item, /obj/item/blackbox))
-		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || !user.transferItemToLoc(attacking_item, src))
-			to_chat(user, span_warning("[attacking_item] is stuck to your hand!"))
-			return
-		user.visible_message(span_notice("[user] clicks [attacking_item] into [src]!"), \
-		span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
-		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-		stored = attacking_item
-		update_appearance()
-		return
-	return ..()
+/obj/machinery/blackbox_recorder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/blackbox))
+		return NONE
+	if(stored)
+		to_chat(user, span_warning("There's already a blackbox in \the [src].")) //something's gone wrong to get here, but you know, it could happen
+		return ITEM_INTERACT_BLOCKING
+	if(HAS_TRAIT(tool, TRAIT_NODROP) || !user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("[tool] is stuck to your hand!"))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] clicks [tool] into [src]!"), \
+	span_notice("You press the device into [src], and it clicks into place. The tapes begin spinning again."))
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	stored = tool
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/blackbox_recorder/Destroy()
 	if(stored)
 		stored.forceMove(loc)
-		new /obj/effect/decal/cleanable/oil(loc)
+		new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 
 /obj/machinery/blackbox_recorder/update_icon_state()
@@ -95,7 +98,8 @@
 	/// passed and the machine works.
 	/// Basically, if it's not 0, it's calibrating and therefore non-functional.
 	var/calibrating = 15 MINUTES
-
+	/// List of all the computers monitoring this server
+	var/list/obj/machinery/computer/message_monitor/listening_computers = list()
 
 #define MESSAGE_SERVER_FUNCTIONING_MESSAGE "This is an automated message. The messaging system is functioning correctly."
 
@@ -103,16 +107,16 @@
 	. = ..()
 	if (calibrating)
 		calibrating += world.time
-		say("Calibrating... Estimated wait time: [rand(3, 9)] minutes.")
-		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", "This is an automated message. System calibration started at [station_time_timestamp()].")
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom/movable, say), "Calibrating... Estimated wait time: [rand(3, 9)] minutes.")
+		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", "This is an automated message. System calibration started at [server_timestamp(ic_time = TRUE)] (PT: [round_timestamp()]).")
 	else
 		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
 
 /obj/machinery/telecomms/message_server/Destroy()
-	for(var/obj/machinery/computer/message_monitor/monitor in GLOB.telecomms_list)
-		if(monitor.linkedServer && monitor.linkedServer == src)
-			monitor.linkedServer = null
-	. = ..()
+	for(var/obj/machinery/computer/message_monitor/monitor in listening_computers)
+		monitor.set_linked_server(null)
+	listening_computers = null
+	return ..()
 
 /obj/machinery/telecomms/message_server/examine(mob/user)
 	. = ..()

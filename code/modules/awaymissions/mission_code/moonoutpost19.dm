@@ -7,6 +7,22 @@
 	icon_state = "minepost"
 	density = FALSE
 
+/turf/open/floor/plating/moon
+	initial_gas_mix = MOONBASE19_ATMOS
+
+/turf/open/misc/asteroid/basalt/moon_air
+	name = "asteroid impact"
+	initial_gas_mix = MOONBASE19_ATMOS
+
+/turf/open/floor/iron/moon
+	initial_gas_mix = MOONBASE19_ATMOS
+
+/turf/open/floor/iron/dark/moon
+	initial_gas_mix = MOONBASE19_ATMOS
+
+/turf/open/floor/wood/moon
+	initial_gas_mix = MOONBASE19_ATMOS
+
 //Areas
 /area/awaymission/moonoutpost19
 	name = "space"
@@ -34,7 +50,7 @@
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
-	ambientsounds = list('sound/ambience/ambimine.ogg')
+	ambientsounds = list('sound/ambience/ruin/ambimine.ogg')
 	icon_state = "awaycontent5"
 	outdoors = TRUE
 
@@ -56,7 +72,7 @@
 	power_environ = FALSE
 	power_equip = FALSE
 	power_light = FALSE
-	ambientsounds = list('sound/ambience/ambimine.ogg')
+	ambientsounds = list('sound/ambience/ruin/ambimine.ogg')
 	icon_state = "awaycontent8"
 
 //Fluff objects/structures.

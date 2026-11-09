@@ -1,11 +1,9 @@
 #define DEFAULT_WHO_CELLS_PER_ROW 4
 #define NO_ADMINS_ONLINE_MESSAGE "Adminhelps are also sent through TGS to services like IRC and Discord. If no admins are available in game, sending an adminhelp might still be noticed and responded to."
 
-/client/verb/who()
-	set name = "Who"
-	set category = "OOC"
+GAME_VERB(/client, who, "Who", "OOC")
 
-	var/msg = "<b>Current Players:</b>\n"
+	var/msg = ""
 
 	var/list/Lines = list()
 	var/columns_per_row = DEFAULT_WHO_CELLS_PER_ROW
@@ -25,7 +23,7 @@
 				else
 					entry += " - Playing as [client.mob.real_name]"
 					switch(client.mob.stat)
-						if(UNCONSCIOUS, HARD_CRIT)
+						if(HARD_CRIT)
 							entry += " - <font color='darkgray'><b>Unconscious</b></font>"
 						if(DEAD)
 							if(isobserver(client.mob))
@@ -36,7 +34,7 @@
 									entry += " - <font color='black'><b>DEAD</b></font>"
 							else
 								entry += " - <font color='black'><b>DEAD</b></font>"
-					if(is_special_character(client.mob))
+					if(client.mob.is_antag())
 						entry += " - <b><font color='red'>Antagonist</font></b>"
 				entry += " [ADMIN_QUE(client.mob)]"
 				entry += " ([round(client.avgping, 1)]ms)"
@@ -67,26 +65,18 @@
 	msg += "</tr></table>"
 
 	msg += "<b>Total Players: [length(Lines)]</b>"
-	to_chat(src, "<span class='infoplain'>[msg]</span>")
+	to_chat(src, fieldset_block(span_bold("Current Players"), span_infoplain(msg), "boxed_message"), type = MESSAGE_TYPE_INFO)
 
-/client/verb/adminwho()
-	set category = "Admin"
-	set name = "Adminwho"
+GAME_VERB(/client, adminwho, "Adminwho", "Admin")
 
 	var/list/lines = list()
 	var/payload_string = generate_adminwho_string()
-	var/header
-
-	if(payload_string == NO_ADMINS_ONLINE_MESSAGE)
-		header = "No Admins Currently Online"
-	else
-		header = "Current Admins:"
+	var/header = (payload_string == NO_ADMINS_ONLINE_MESSAGE) ? "No Admins Currently Online" : "Current Admins"
 
 	lines += span_bold(header)
 	lines += payload_string
 
-	var/finalized_string = examine_block(jointext(lines, "\n"))
-	to_chat(src, finalized_string)
+	to_chat(src, fieldset_block(span_bold(header), jointext(lines, "\n"), "boxed_message"), type = MESSAGE_TYPE_INFO)
 
 /// Proc that generates the applicable string to dispatch to the client for adminwho.
 /client/proc/generate_adminwho_string()

@@ -2,12 +2,12 @@
 //They'll attempt to leap at their target from afar using their hatchets.
 /mob/living/basic/mining/mook
 	name = "wanderer"
-	desc = "This unhealthy looking primitive seems to be talented at administiring health care."
+	desc = "This unhealthy looking primitive seems to be talented at administering health care."
 	icon = 'icons/mob/simple/jungle/mook.dmi'
 	icon_state = "mook"
 	icon_living = "mook"
 	icon_dead = "mook_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_MINING
 	gender = FEMALE
 	maxHealth = 150
 	faction = list(FACTION_MINING, FACTION_NEUTRAL)
@@ -15,15 +15,15 @@
 	move_resist = MOVE_FORCE_VERY_STRONG
 	melee_damage_lower = 8
 	melee_damage_upper = 8
-	attack_sound = 'sound/weapons/rapierhit.ogg'
+	attack_sound = 'sound/items/weapons/rapierhit.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	death_sound = 'sound/voice/mook_death.ogg'
+	death_sound = 'sound/mobs/non-humanoids/mook/mook_death.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/mook/support
 	speed = 5
 	pixel_x = -16
 	base_pixel_x = -16
-	pixel_y = -16
-	base_pixel_y = -16
+	pixel_z = -16
+	base_pixel_z = -16
 
 	///the state of combat we are in
 	var/attack_state = MOOK_ATTACK_NEUTRAL
@@ -41,9 +41,11 @@
 	var/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targeting/attack,
-		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/attack,
+		/datum/pet_command/fetch,
 	)
+	/// Things we want to find to heal
+	var/static/list/heal_targets = list(/mob/living/basic/mining/mook/worker)
 
 /mob/living/basic/mining/mook/Initialize(mapload)
 	. = ..()
@@ -58,13 +60,14 @@
 
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_ore))
 
 	if(is_healer)
 		grant_healer_abilities()
 
 	AddComponent(/datum/component/obeys_commands, pet_commands)
+	ai_controller?.set_blackboard_key(BB_MOOK_HEAL_TARGETS, typecacheof(heal_targets))
+
 
 /// Returns a list of actions and blackboard keys to pass into `grant_actions_by_list`.
 /mob/living/basic/mining/mook/proc/get_innate_abilities()
@@ -85,6 +88,7 @@
 /mob/living/basic/mining/mook/Entered(atom/movable/mover)
 	if(istype(mover, /obj/item/stack/ore))
 		held_ore = mover
+		ai_controller?.set_blackboard_key(BB_SIMPLE_CARRY_ITEM, mover)
 		update_appearance(UPDATE_OVERLAYS)
 
 	return ..()
@@ -96,27 +100,28 @@
 	held_ore = null
 	update_appearance(UPDATE_OVERLAYS)
 
-/mob/living/basic/mining/mook/proc/pre_attack(mob/living/attacker, atom/target)
-	SIGNAL_HANDLER
-
+/mob/living/basic/mining/mook/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if(.)
+		return
 	return attack_sequence(target)
 
 /mob/living/basic/mining/mook/proc/attack_sequence(atom/target)
 	if(istype(target, /obj/item/stack/ore) && isnull(held_ore))
 		var/obj/item/ore_target = target
 		ore_target.forceMove(src)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 	if(istype(target, /obj/structure/ore_container/material_stand))
 		if(held_ore)
 			held_ore.forceMove(target)
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 	if(istype(target, /obj/structure/bonfire))
 		var/obj/structure/bonfire/fire_target = target
 		if(!fire_target.burning)
 			fire_target.start_burning()
-		return COMPONENT_HOSTILE_NO_ATTACK
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/mining/mook/proc/change_combatant_state(state)
 	attack_state = state
@@ -150,7 +155,7 @@
 
 	. += ore_overlay
 
-/mob/living/basic/mining/mook/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+/mob/living/basic/mining/mook/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	change_combatant_state(state = MOOK_ATTACK_ACTIVE)
 	return ..()
 
@@ -187,7 +192,7 @@
 	if(istype(intruder, /mob/living/basic/mining/mook))
 		return
 	for(var/mob/living/basic/mining/mook/villager in oview(src, 9))
-		villager.ai_controller?.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, intruder)
+		villager.ai_controller?.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, intruder, world.time)
 
 
 /mob/living/basic/mining/mook/worker
@@ -243,8 +248,8 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	gender = MALE
-	attack_sound = 'sound/weapons/stringsmash.ogg'
-	death_sound = 'sound/voice/mook_death.ogg'
+	attack_sound = 'sound/items/weapons/stringsmash.ogg'
+	death_sound = 'sound/mobs/non-humanoids/mook/mook_death.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/mook/bard
 	///our guitar
 	var/obj/item/instrument/guitar/held_guitar
@@ -256,6 +261,10 @@
 	held_guitar = new(src)
 	ai_controller.set_blackboard_key(BB_SONG_INSTRUMENT, held_guitar)
 	update_appearance()
+
+/mob/living/basic/mining/mook/worker/bard/Destroy(force)
+	QDEL_NULL(held_guitar)
+	. = ..()
 
 /mob/living/basic/mining/mook/worker/tribal_chief
 	name = "tribal chief"
@@ -272,10 +281,12 @@
 	var/static/mutable_appearance/chief_active = mutable_appearance('icons/mob/simple/jungle/mook.dmi', "mook_chief_leap")
 	///overlay in our warmup state
 	var/static/mutable_appearance/chief_warmup = mutable_appearance('icons/mob/simple/jungle/mook.dmi', "mook_chief_warmup")
+	var/static/list/bonfire_targets = list(/obj/structure/bonfire)
 
 /mob/living/basic/mining/mook/worker/tribal_chief/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	ai_controller?.set_blackboard_key(BB_BONFIRE_TARGETS, typecacheof(bonfire_targets))
 
 /mob/living/basic/mining/mook/worker/tribal_chief/update_overlays()
 	. = ..()

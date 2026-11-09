@@ -7,15 +7,15 @@
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
 	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	icon_state = "electrolyzer-off"
-	name = "space electrolyzer"
-	desc = "Thanks to the fast and dynamic response of our electrolyzers, on-site hydrogen production is guaranteed. Warranty void if used by clowns"
+	name = "electrolyzer"
+	desc = "A portable electrolyzer, allowing for on-site production of Hydrogen. Warranty void if used by clowns."
 	max_integrity = 250
 	armor_type = /datum/armor/machinery_electrolyzer
 	circuit = /obj/item/circuitboard/machine/electrolyzer
 	/// We don't use area power, we always use the cell
 	use_power = NO_POWER_USE
 	///used to check if there is a cell in the machine
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/power_store/cell
 	///check if the machine is on or off
 	var/on = FALSE
 	///check what mode the machine should be (WORKING, STANDBY)
@@ -37,7 +37,7 @@
 	if(ispath(cell))
 		cell = new cell(src)
 	SSair.start_processing_machine(src)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	register_context()
 
 /obj/machinery/electrolyzer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -71,9 +71,9 @@
 		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
 		. += "There is no power cell installed."
-	if(in_range(user, src) || isobserver(user))
+	if(in_range(user, src) && !isobserver(user))
 		. += span_notice("<b>Alt-click</b> to toggle [on ? "off" : "on"].")
-		. += span_notice("<b>Anchor</b> to drain power from APC instead of cell")
+		. += span_notice("<b>Anchor</b> it to drain power from the area's APC instead its internal power cell.")
 	. += span_notice("It will drain power from the [anchored ? "area's APC" : "internal power cell"].")
 
 
@@ -95,21 +95,21 @@
 
 	if((!cell || cell.charge <= 0) && !anchored)
 		on = FALSE
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return PROCESS_KILL
 
 	var/turf/our_turf = loc
 	if(!istype(our_turf))
 		if(mode != ELECTROLYZER_MODE_STANDBY)
 			mode = ELECTROLYZER_MODE_STANDBY
-			update_appearance()
+			update_appearance(UPDATE_ICON)
 		return
 
 	var/new_mode = on ? ELECTROLYZER_MODE_WORKING : ELECTROLYZER_MODE_STANDBY //change the mode to working if the machine is on
 
 	if(mode != new_mode) //check if the mode is set correctly
 		mode = new_mode
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 	if(mode == ELECTROLYZER_MODE_STANDBY)
 		return
@@ -130,15 +130,7 @@
 		cell.use(power_to_use)
 
 /obj/machinery/electrolyzer/proc/call_reactions(datum/gas_mixture/env)
-	for(var/reaction in GLOB.electrolyzer_reactions)
-		var/datum/electrolyzer_reaction/current_reaction = GLOB.electrolyzer_reactions[reaction]
-
-		if(!current_reaction.reaction_check(env))
-			continue
-
-		current_reaction.react(loc, env, working_power)
-
-	env.garbage_collect()
+	env.electrolyze(working_power = working_power)
 
 /obj/machinery/electrolyzer/RefreshParts()
 	. = ..()
@@ -157,7 +149,7 @@
 	tool.play_tool_sound(src, 50)
 	toggle_panel_open()
 	balloon_alert(user, "[panel_open ? "opened" : "closed"] panel")
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/machinery/electrolyzer/wrench_act(mob/living/user, obj/item/tool)
@@ -166,26 +158,29 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/electrolyzer/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
-/obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, params)
+/obj/machinery/electrolyzer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/stock_parts/cell))
-		if(!panel_open)
-			balloon_alert(user, "open panel!")
-			return
-		if(cell)
-			balloon_alert(user, "cell inside!")
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		cell = I
-		I.add_fingerprint(usr)
-		balloon_alert(user, "inserted cell")
-		SStgui.update_uis(src)
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
+		return NONE
 
-		return
-	return ..()
+	if(!panel_open)
+		balloon_alert(user, "open panel!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(cell)
+		balloon_alert(user, "cell inside!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	cell = tool
+	tool.add_fingerprint(usr)
+	balloon_alert(user, "inserted cell")
+	SStgui.update_uis(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/electrolyzer/click_alt(mob/user)
 	if(panel_open)
@@ -200,7 +195,7 @@
 		return
 	on = !on
 	mode = ELECTROLYZER_MODE_STANDBY
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	if(on)
 		SSair.start_processing_machine(src)
