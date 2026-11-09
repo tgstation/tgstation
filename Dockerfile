@@ -1,5 +1,5 @@
 # base = ubuntu + full apt update
-FROM ubuntu:latest AS base
+FROM ubuntu:bionic AS base
 RUN dpkg --add-architecture i386 \
     && apt-get update \
     && apt-get upgrade -y \
