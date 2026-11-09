@@ -308,7 +308,7 @@
 	equip_delay_other = 6 SECONDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	/// Type of texture applied by this
-	var/texture_type = /datum/bodypart_texture/mesh/heretic
+	var/texture_type = /datum/bodypart_texture/mesh/space
 
 /obj/item/clothing/suit/armor/riot/Initialize(mapload)
 	. = ..()

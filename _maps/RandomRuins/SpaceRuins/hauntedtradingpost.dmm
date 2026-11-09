@@ -5373,7 +5373,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
 "Vj" = (
 /obj/structure/table/wood,
-/obj/item/food/cornchips{
+/obj/item/food/chips/corn{
 	pixel_x = -6;
 	pixel_y = 10
 	},

@@ -7,4 +7,5 @@
 	gain_text = span_notice("You feel lithe on your feet!")
 	lose_text = span_danger("You feel clumsy again.")
 	medical_record_text = "Patient scored highly on cardio tests."
+	mail_weight = 1
 	mail_goodies = list(/obj/item/melee/skateboard, /obj/item/clothing/shoes/wheelys/rollerskates)

@@ -19095,7 +19095,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/sign/plaques/kiddie{
+/obj/structure/plaque/kiddie/developer{
 	pixel_y = -32
 	},
 /turf/open/floor/engine,
@@ -40692,7 +40692,7 @@
 /area/station/security/courtroom)
 "mOa" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	pixel_x = 32;
 	pixel_y = -32
 	},
@@ -64487,6 +64487,7 @@
 /area/station/cargo/miningoffice)
 "uoW" = (
 /obj/structure/table,
+/obj/item/reagent_containers/spray/dinitrogen_plasmide,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,

@@ -144,6 +144,7 @@
 	if(is_hijacker)
 		ending_objective = new /datum/objective/hijack
 		ending_objective.owner = owner
+		objectives += ending_objective
 		return
 
 	var/martyr_compatibility = TRUE

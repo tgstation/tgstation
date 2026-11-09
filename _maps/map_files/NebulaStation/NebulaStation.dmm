@@ -21059,7 +21059,7 @@
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/trimline/dark/line,
 /obj/structure/table/glass,
-/obj/item/food/cornchips/random,
+/obj/item/food/chips/corn/random,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/port)
 "dgB" = (
@@ -37999,7 +37999,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	pixel_y = -32
 	},
 /turf/open/floor/wood/large,
@@ -43172,7 +43172,7 @@
 "grJ" = (
 /obj/structure/table/wood/fancy/green,
 /obj/effect/spawner/random/aimodule/harmless,
-/obj/structure/sign/plaques/kiddie{
+/obj/structure/plaque/kiddie/developer{
 	pixel_y = 32
 	},
 /obj/machinery/light/directional/north,
@@ -65937,7 +65937,7 @@
 	pixel_x = -7;
 	pixel_y = 7
 	},
-/obj/item/food/cornchips/blue{
+/obj/item/food/chips/corn/blue{
 	pixel_x = 7;
 	pixel_y = 4
 	},
@@ -117987,7 +117987,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	pixel_y = 32;
 	dir = 1
 	},
@@ -125339,7 +125339,7 @@
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/ce)
 "sBd" = (
-/obj/structure/sign/plaques/kiddie/badger{
+/obj/structure/plaque/kiddie/badger{
 	pixel_y = 32
 	},
 /obj/item/food/grown/flower/poppy{
@@ -151258,7 +151258,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	pixel_y = -32
 	},
 /turf/open/floor/wood/large,
@@ -155332,6 +155332,7 @@
 	},
 /obj/structure/rack,
 /obj/item/storage/box/bodybags,
+/obj/item/reagent_containers/spray/dinitrogen_plasmide,
 /obj/item/clothing/gloves/latex,
 /obj/item/tank/internals/anesthetic,
 /obj/item/healthanalyzer,
