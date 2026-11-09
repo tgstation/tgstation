@@ -45,3 +45,34 @@
 	var/obj/item/bodypart/head/guy_head = guy.get_bodypart(BODY_ZONE_HEAD)
 	guy_head.drop_limb(TRUE)
 	qdel(guy_head)
+
+/// Checks pressure protections flags
+/datum/unit_test/pressure_protection_flags
+
+/datum/unit_test/pressure_protection_flags/Run()
+	var/mob/living/carbon/human/consistent/guy = EASY_ALLOCATE()
+	ADD_TRAIT(guy, TRAIT_GODMODE, INNATE_TRAIT)
+
+	var/obj/item/clothing/suit/utility/fire/firefighter/suit = EASY_ALLOCATE()
+	guy.equip_to_appropriate_slot(suit)
+	TEST_ASSERT(guy.pressure_protected_bodyparts & PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT, "Equipping a firesuit didn't provide chest pressure protection")
+	TEST_ASSERT(guy.pressure_protected_bodyparts & PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT, "Equipping a firesuit didn't provide leg pressure protection")
+	TEST_ASSERT(guy.pressure_protected_bodyparts & PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT, "Equipping a firesuit didn't provide arm pressure protection")
+
+	var/obj/item/bodypart/leg/left/left_leg = guy.get_bodypart(BODY_ZONE_L_LEG)
+	TEST_ASSERT(!(guy.pressure_protected_bodyparts & PRESSURE_LEGS_PROTECTED_NATIVELY), "Removing one legs provided full pressure protection")
+	qdel(left_leg)
+	var/obj/item/bodypart/leg/right/right_leg = guy.get_bodypart(BODY_ZONE_R_LEG)
+	TEST_ASSERT(guy.pressure_protected_bodyparts & PRESSURE_LEGS_PROTECTED_NATIVELY, "Removing both legs didn't provide full pressure protection")
+	qdel(right_leg)
+
+	var/obj/item/bodypart/arm/left/left_arm = guy.get_bodypart(BODY_ZONE_L_ARM)
+	TEST_ASSERT(!(guy.pressure_protected_bodyparts & PRESSURE_ARMS_PROTECTED_NATIVELY), "Removing one arm provided full pressure protection")
+	qdel(left_arm)
+	var/obj/item/bodypart/arm/right/right_arm = guy.get_bodypart(BODY_ZONE_R_ARM)
+	TEST_ASSERT(guy.pressure_protected_bodyparts & PRESSURE_ARMS_PROTECTED_NATIVELY, "Removing both arms didn't provide full pressure protection")
+	qdel(right_arm)
+
+	var/obj/item/bodypart/head/head = guy.get_bodypart(BODY_ZONE_HEAD)
+	TEST_ASSERT(guy.pressure_protected_bodyparts & PRESSURE_HEAD_PROTECTED_NATIVELY, "Removing the head didn't provide full pressure protection")
+	qdel(head)
