@@ -16,8 +16,10 @@ RUN apt-get install -y --no-install-recommends \
         curl \
         unzip \
         make \
+        build-essential \
         python3 \
         python3-pip \
+        python3-venv \
         libstdc++6:i386
 
 COPY dependencies.sh .
