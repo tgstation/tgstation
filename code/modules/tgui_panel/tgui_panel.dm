@@ -94,6 +94,14 @@
 		client.admin_music_volume = payload["volume"]
 		return TRUE
 
+	if(type == "audio/playing")
+		client.web_music_playing = payload["playing"]
+		if(client.web_music_playing)
+			client.mob?.stop_sound_channel(CHANNEL_AMBIENCE)
+			if(client in SSambience.ambience_listening_clients)
+				SSambience.ambience_listening_clients[client] = world.time
+		return TRUE
+
 	if(type == "audio/protected")
 		if(!admins_warned)
 			message_admins(span_notice("Audio returned a protected playback error, likely due to being copyrighted."))
