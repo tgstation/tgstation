@@ -21,13 +21,13 @@ FEEDBACK_DATABASE feedback
 ##	FEEDBACK_TABLEPREFIX
 ##	FEEDBACK_TABLEPREFIX SS13_
 ## Remove "SS13_" if you are using the standard schema file.
-FEEDBACK_TABLEPREFIX SS13_
+FEEDBACK_TABLEPREFIX 
 
 ## Username/Login used to access the database.
-FEEDBACK_LOGIN tgdb
+FEEDBACK_LOGIN tg_user
 
 ## Password used to access the database.
-FEEDBACK_PASSWORD Flar3!
+FEEDBACK_PASSWORD 0K5lapnutZ
 
 ## Time in seconds for asynchronous queries to timeout
 ## Set to 0 for infinite
