@@ -10,8 +10,10 @@ services:
       MARIADB_USER: tg_user
       MARIADB_PASSWORD: 0K5lapnutZ
     volumes:
-      - /opt/gamesrv/db/mysql_data:/var/lib/mysql
-      - /opt/gamesrv/db/config:/etc/mysql/conf.d
+      - ./live/db/mysql_data:/var/lib/mysql
+      - ./live/db/config:/etc/mysql/conf.d
+      - ./SQL/tgstation_schema.sql:/docker-entrypoint-initdb.d/01-tgstation_schema.sql:ro
+      - ./SQL/library.sql:/docker-entrypoint-initdb.d/02-library.sql:ro
     networks:
       - tg_network
 
@@ -24,10 +26,9 @@ services:
       - "1337:1337" # Default SS13/TG port
     depends_on:
       - db
-    #volumes:
-      #- /opt/gamesrv/tgserver/config_data:/config_data
-      #- /opt/gamesrv/tgserver/instances:/tgs_instances
-      #- /opt/gamesrv/tgserver/logs:/var/log/tgstation-server
+    volumes:
+      - ./live/byond/config:/tgstation/config
+      - ./live/byond/data:/tgstation/data
     networks:
       - tg_network
 
