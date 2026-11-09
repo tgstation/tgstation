@@ -68,3 +68,11 @@
   sohpeach:
   - bugfix: ntos file manager can no longer be used to print carp plushies (and similar
       things)
+2026-11-09:
+  Melbert:
+  - code_imp: Cleaned up code for mobs being burned while tied to heat exhange pipes.
+      Report anything weird if it doesn't work the next time you get the opportunity
+      to try it in like 8 months
+  Y0SH1M4S73R:
+  - admin: datum instantiation from lua scripts can no longer be used to bypass admin
+      proc call protections
