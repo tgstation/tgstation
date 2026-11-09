@@ -1067,9 +1067,9 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 		puller.set_pull_offsets(src, puller.grab_state)
 
 	if(active_storage)
-		var/storage_is_important_recurisve = (active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE])
-		var/can_reach_active_storage = active_storage.parent.IsReachableBy(src)
-		if(!storage_is_important_recurisve && !can_reach_active_storage)
+		// first checks "is our active storage still in our recursive contents", i.e. anywhere on our person
+		// second check is "is our active storage still somewhere reachable", e.g. nearby on a table
+		if(!(active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE]) && !active_storage.parent.IsReachableBy(src))
 			active_storage.hide_contents(src)
 
 	if(!buckled && !moving_diagonally && loc != old_loc)
