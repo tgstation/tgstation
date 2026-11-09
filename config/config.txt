@@ -28,7 +28,7 @@ SERVERNAME Unsafe Deep Piss 13
 # STATIONNAME Space Station 13
 
 ## Put on byond hub: Uncomment this to put your server on the byond hub.
-HUB
+#HUB
 
 ## Lobby time: This is the amount of time between rounds that players have to setup their characters and be ready.
 LOBBY_COUNTDOWN 120
@@ -42,10 +42,10 @@ ROUND_END_COUNTDOWN 90
 ADMIN_LEGACY_SYSTEM
 
 ##Uncomment this to stop any admins loaded by the legacy system from having their rank edited by the permissions panel
-#PROTECT_LEGACY_ADMINS
+PROTECT_LEGACY_ADMINS
 
 ##Uncomment this to stop any ranks loaded by the legacy system from having their flags edited by the permissions panel
-#PROTECT_LEGACY_RANKS
+PROTECT_LEGACY_RANKS
 
 ##Uncomment this to have admin ranks only loaded from the legacy admin_ranks.txt
 ##If enabled, each time admins are loaded ranks the database will be updated with the current ranks and their flags
@@ -114,10 +114,10 @@ RETA_DURATION_DS 3000
 RETA_DEPT_COOLDOWN_DS 150
 
 ## allow players to initiate a restart vote
-#ALLOW_VOTE_RESTART
+ALLOW_VOTE_RESTART
 
 ## allow players to initiate a map-change vote
-#ALLOW_VOTE_MAP
+ALLOW_VOTE_MAP
 
 ## min delay (deciseconds) between voting sessions (default 10 minutes)
 VOTE_DELAY 6000
@@ -182,12 +182,12 @@ ALLOW_WEBCLIENT
 #USEWHITELIST
 
 ## The address shown for the game server in the TGS check command
-# PUBLIC_ADDRESS ss13.example.com:2506
+PUBLIC_ADDRESS ss13.flashdim.net:1337
 
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 ## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
 ## This is also used to show the server's address in the TGS check command if the public address isn't set
-# SERVER ss13.example.com:2506
+SERVER ss13.flashdim.net:1337
 
 ## forum address
 # FORUMURL http://tgstation13.org/phpBB/index.php
@@ -199,7 +199,7 @@ ALLOW_WEBCLIENT
 # RULESURL http://tgstation13.org/wiki/Rules
 
 ## Github address
-# GITHUBURL https://www.github.com/tgstation/tgstation
+GITHUBURL https://www.github.com/flashdim/tgstation
 
 ## Discord bot command prefix, if the discord bot is used
 # DISCORDBOTCOMMANDPREFIX ?
