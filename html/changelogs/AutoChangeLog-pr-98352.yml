@@ -1,0 +1,6 @@
+author: "headband0536"
+delete-after: True
+changes:
+  - rscadd: "Throwable sledgehammer"
+  - rscadd: "Telescreens and status displays are now breakable"
+  - image: "Sledgehammer sprites by Simpleton"
