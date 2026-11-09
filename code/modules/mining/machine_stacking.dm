@@ -170,8 +170,9 @@
 	var/key = input.merge_type
 	var/obj/item/stack/storage = stack_list[key]
 	if(!storage) //It's the first of this sheet added
-		stack_list[key] = storage = new input.type(src, 0)
-	storage.amount += input.amount //Stack the sheets
+		stack_list[key] = storage = new input.type(src, input.amount)
+	else
+		storage.amount += input.amount //Stack the sheets
 	qdel(input)
 
 	while(storage.amount >= stack_amt) //Get rid of excessive stackage
