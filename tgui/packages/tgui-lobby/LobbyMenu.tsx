@@ -157,12 +157,14 @@ function SpriteButton({
   onClick,
   children,
   pressedKey,
+  pressedSound = 'ui_select1.ogg'
 }: {
   iconState: string;
   enabled?: boolean;
   onClick?: React.MouseEventHandler;
   children?: React.ReactNode;
   pressedKey?: string;
+  pressedSound?: string;
 }) {
   const displayState = enabled ? iconState : `${iconState}_disabled`;
   const key = pressedKey ?? iconState;
@@ -182,7 +184,7 @@ function SpriteButton({
       className={`sprite-btn ${!enabled ? 'sprite-btn--disabled' : ''}`}
       onClick={(e) => {
         if (!enabled) return;
-        playSelectSound();
+        playSelectSound(pressedSound);
         triggerFlick();
         onClick?.(e);
       }}
@@ -592,6 +594,7 @@ export function LobbyMenu() {
           <LobbyElement top={146} left={-54} zIndex={3} collapsed={collapsed}>
             <SpriteButton
               iconState="start_now"
+              pressedSound="ui_splat.ogg"
               onClick={() => sendAction('start_now')}
             />
           </LobbyElement>

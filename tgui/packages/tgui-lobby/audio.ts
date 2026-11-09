@@ -12,8 +12,8 @@ function playOneShot(name: string) {
   audio.play().catch(() => {});
 }
 
-export function playSelectSound() {
-  playOneShot('ui_select1.ogg');
+export function playSelectSound(overrideSound: string | null) {
+  playOneShot(overrideSound ?? 'ui_select1.ogg');
 }
 
 export function playCollapseSound() {
