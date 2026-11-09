@@ -183,8 +183,8 @@
 				subject.apply_status_effect(/datum/status_effect/food_crave, src)
 			else
 				subject.apply_status_effect(/datum/status_effect/food_crave, src)
-			if(prob(10))
-				subject.nutrition -= 10 * crafting_complexity
+				if(prob(10))
+					subject.nutrition -= 10 * crafting_complexity
 			if(prob(30))
 				playsound(subject, 'sound/effects/stomach_growl.ogg', 50, TRUE)
 			if(prob(20))
