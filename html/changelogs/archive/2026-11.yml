@@ -73,6 +73,23 @@
   - code_imp: Cleaned up code for mobs being burned while tied to heat exhange pipes.
       Report anything weird if it doesn't work the next time you get the opportunity
       to try it in like 8 months
+  - balance: '"Throwing Arm" quirk cost reduced (7 -> 5)'
+  - balance: Reduced chance of obtaining several quirk's related mail items moderately,
+      with the exception of the Gamer quirk (which is now twice as likely, intead)
+  - rscadd: Added quirk "Eccentric Correspondent", which adds more randomness to your
+      mail item pool
+  - rscadd: Added quirk "Well Connected", which offers discounts on cargo or black
+      market orders.
+  - rscadd: Added quirk "Shock Reflex", which reduces the chance of being shocked
+      when failing hacks or the like.
+  - rscdel: Removed organ transport box from mail pool of Prosthetic Organ and Tin
+      Man quirks
+  PapaMichael:
+  - bugfix: EMP protection works more robustly
   Y0SH1M4S73R:
   - admin: datum instantiation from lua scripts can no longer be used to bypass admin
       proc call protections
+  headband0536:
+  - rscadd: Throwable sledgehammer
+  - rscadd: Telescreens and status displays are now breakable
+  - image: Sledgehammer sprites by Simpleton
