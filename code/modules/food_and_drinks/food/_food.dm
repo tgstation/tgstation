@@ -174,7 +174,7 @@
 	final_foodtypes &= ~food_recipe.removed_foodtypes
 	if(crafting_complexity >= FOOD_COMPLEXITY_4)
 		for(var/mob/living/carbon/human/subject in oviewers(5, crafter.loc))
-			if(subject.is_blind() || subject == crafter)
+			if(subject.is_blind() || subject == crafter || subject.has_status_effect(/datum/status_effect/craving_satisfied))
 				continue
 			if(subject.has_status_effect(/datum/status_effect/food_crave))
 				var/datum/status_effect/food_crave/our_crave = subject.status_effects[/datum/status_effect/food_crave]
@@ -185,7 +185,7 @@
 				subject.apply_status_effect(/datum/status_effect/food_crave, src)
 			if(prob(10))
 				subject.nutrition -= 10 * crafting_complexity
-			if(prob(15))
+			if(prob(30))
 				playsound(subject, 'sound/effects/stomach_growl.ogg', 50, TRUE)
 			if(prob(20))
 				subject.emote("drool")
