@@ -1,4 +1,4 @@
-pygit2==1.19.0
+pygit2==1.20.0
 bidict==0.23.1
 Pillow==11.1.0
 
