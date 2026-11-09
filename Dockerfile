@@ -16,6 +16,8 @@ RUN apt-get install -y --no-install-recommends \
         curl \
         unzip \
         make \
+        python3 \
+        python3-pip \
         libstdc++6:i386
 
 COPY dependencies.sh .
