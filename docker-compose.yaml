@@ -1,0 +1,54 @@
+services:
+  # MariaDB Backend
+  db:
+    image: mariadb:latest
+    container_name: tg_mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: Flar3!
+      MARIADB_DATABASE: tgstation
+      MARIADB_USER: tg_user
+      MARIADB_PASSWORD: 0K5lapnutZ
+    volumes:
+      - /opt/gamesrv/db/mysql_data:/var/lib/mysql
+      - /opt/gamesrv/db/config:/etc/mysql/conf.d  # Host config maps to MariaDB config dir
+    networks:
+      - tg_network
+
+  # TGStation Server
+  tgserver:
+    image: tgstation/server:latest
+    container_name: tg_server
+    restart: unless-stopped
+    ports:
+      - "1337:1337" # Default SS13/TG port
+      - "1338:1338" # Default SS13/TG port
+      - "1339:1339" # Default SS13/TG port
+      - "5000:5000" # Default API port
+    depends_on:
+      - db
+    environment:
+      # Option A: Connection String (Common for modern apps)
+      #DATABASE_URL: "mysql://tg_user:0K5lapnutZ@db:3306/tgstation"
+      
+      # Option B: Individual variables (Uncomment and use if the image expects these)
+       DB_HOST: db
+       DB_PORT: 3306
+       DB_USER: tg_user
+       DB_PASS: 0K5lapnutZ
+       DB_NAME: tgstation
+    volumes:
+      # IMPORTANT: The paths on the right must match where the
+      # tgstation/server software expects its files to be.
+      - /opt/gamesrv/tgserver/config_data:/config_data
+      - /opt/gamesrv/tgserver/instances:/tgs_instances
+      #- /opt/gamesrv/tgserver/logs:/var/log/tgstation-server
+    networks:
+      - tg_network
+
+networks:
+  tg_network:
+    driver: bridge
+
+volumes:
+  mysql_data:

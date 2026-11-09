@@ -17,5 +17,3 @@
 #define QUIRK_TRAUMALIKE (1<<4)
 /// Do not transfer this quirk via transfer_quirk_datums
 #define QUIRK_NO_TRANSFER (1<<5)
-/// Quirk isn't in the medical record
-#define QUIRK_NO_RECORD (1<<6)

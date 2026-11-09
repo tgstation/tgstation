@@ -84,6 +84,7 @@
 
 /datum/asset/simple/namespaced/lobby_menu_sounds
 	assets = list(
+		"ui_splat.ogg" = file("sound/effects/cartoon_sfx/cartoon_splat.ogg"),
 		"ui_select1.ogg" = file("sound/misc/menu/ui_select1.ogg"),
 		"menu_rollup1.ogg" = file("sound/misc/menu/menu_rollup1.ogg"),
 		"menu_rolldown1.ogg" = file("sound/misc/menu/menu_rolldown1.ogg"),

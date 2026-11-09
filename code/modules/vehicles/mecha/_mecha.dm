@@ -875,7 +875,7 @@
 	req_one_access = one_access ? accesses : list()
 
 /// Electrocute user from power celll
-/obj/vehicle/sealed/mecha/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
+/obj/vehicle/sealed/mecha/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff)
 	if(get_charge() < 1)
 		return FALSE
 	if(isnull(siemens_coeff))
