@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "the potential manifest in the pre-game lobby updates when someone unreadies."

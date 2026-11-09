@@ -6,7 +6,6 @@
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic organ. \
 		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	hardcore_value = 3
-	mail_goodies = list(/obj/item/storage/organbox)
 	/// The slot to replace, in string form
 	var/slot_string = "organ"
 	/// The original organ from before the prosthetic was applied

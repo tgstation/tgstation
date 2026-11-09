@@ -162,7 +162,7 @@
 			to_chat(src, span_warning("You have to be beside [offered.p_them()]!"))
 			return
 
-		if(!HAS_TRAIT(offered, TRAIT_CAN_HOLD_ITEMS))
+		if(!offered.can_hold_items(offered_item))
 			to_chat(src, span_warning("[offered.p_They()] can't hold anything you offer!"))
 			return
 	else if(!(locate(/mob/living) in orange(1, src)))
@@ -215,6 +215,6 @@
 	put_in_hands(offered_item)
 
 /mob/living/click_ctrl_shift(mob/user)
-	if(HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
+	if(can_hold_items())
 		var/mob/living/living_user = user
 		living_user.give(src)

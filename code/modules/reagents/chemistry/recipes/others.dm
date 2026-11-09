@@ -1,3 +1,11 @@
+/datum/chemical_reaction/robot_coolant
+	results = list(/datum/reagent/dinitrogen_plasmide = 3)
+	required_reagents = list(/datum/reagent/stable_plasma = 1, /datum/reagent/nitrogen = 2)
+	required_temp = 400
+	optimal_temp = 500
+	overheat_temp = 600
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
+
 
 /datum/chemical_reaction/sterilizine
 	results = list(/datum/reagent/space_cleaner/sterilizine = 3)

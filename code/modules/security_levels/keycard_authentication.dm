@@ -55,11 +55,11 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 /obj/machinery/keycard_auth/ui_status(mob/user, datum/ui_state/state)
 	if(isdrone(user))
 		return UI_CLOSE
-	if(!isanimal_or_basicmob(user))
-		return ..()
-	if(!HAS_TRAIT(user, TRAIT_CAN_HOLD_ITEMS))
-		balloon_alert(user, "no hands!")
-		return UI_CLOSE
+	if(isanimal_or_basicmob(user))
+		var/mob/living/living_user = user
+		if(!(living_user.mobility_flags & MOBILITY_USE))
+			balloon_alert(user, "no hands!")
+			return UI_CLOSE
 	return ..()
 
 /obj/machinery/keycard_auth/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

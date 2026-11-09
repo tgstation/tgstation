@@ -160,13 +160,13 @@
 	if(!ismob(AM))
 		return
 	var/mob/M = AM
-	shock(M, 70)
+	shock(M, 70, allow_modifiers = FALSE)
 
 /obj/structure/grille/attack_animal(mob/user, list/modifiers)
 	. = ..()
 	if(!.)
 		return
-	if(!shock(user, 70) && !QDELETED(src)) //Last hit still shocks but shouldn't deal damage to the grille
+	if(!shock(user, 70, allow_modifiers = FALSE) && !QDELETED(src)) //Last hit still shocks but shouldn't deal damage to the grille
 		take_damage(rand(5,10), BRUTE, MELEE, 1)
 
 /obj/structure/grille/attack_paw(mob/user, list/modifiers)
@@ -176,7 +176,7 @@
 	return 60
 
 /obj/structure/grille/attack_hulk(mob/living/carbon/human/user)
-	if(shock(user, 70))
+	if(shock(user, 70, allow_modifiers = FALSE))
 		return
 	. = ..()
 
@@ -188,14 +188,14 @@
 	user.do_attack_animation(src, ATTACK_EFFECT_KICK)
 	user.visible_message(span_warning("[user] hits [src]."), null, null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "hit")
-	if(!shock(user, 70))
+	if(!shock(user, 70, allow_modifiers = FALSE))
 		take_damage(rand(5,10), BRUTE, MELEE, 1)
 
 /obj/structure/grille/attack_alien(mob/living/user, list/modifiers)
 	user.do_attack_animation(src)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_warning("[user] mangles [src]."), null, null, COMBAT_MESSAGE_RANGE)
-	if(!shock(user, 70))
+	if(!shock(user, 70, allow_modifiers = FALSE))
 		take_damage(20, BRUTE, MELEE, 1)
 
 /obj/structure/grille/CanAllowThrough(atom/movable/mover, border_dir)
@@ -212,7 +212,7 @@
 
 /obj/structure/grille/wirecutter_act_secondary(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
-	if(shock(user, 100))
+	if(shock(user, allow_modifiers = FALSE))
 		return
 	tool.play_tool_sound(src, 100)
 	deconstruct(TRUE)
@@ -222,7 +222,7 @@
 	if(!isturf(loc))
 		return FALSE
 	add_fingerprint(user)
-	if(shock(user, 90))
+	if(shock(user, 90, allow_modifiers = FALSE))
 		return FALSE
 	if(!tool.use_tool(src, user, 0, volume=100))
 		return FALSE
@@ -235,7 +235,7 @@
 	if(istype(tool, /obj/item/stack/rods) && broken)
 		if(!do_after(user, 1 SECONDS, target = src))
 			return ITEM_INTERACT_BLOCKING
-		if(shock(user, 90))
+		if(shock(user, 90, allow_modifiers = FALSE))
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/stack/rods/grille_to_be = tool
 		user.visible_message(span_notice("[user] rebuilds the broken grille."), \
@@ -308,7 +308,7 @@
 		return ITEM_INTERACT_SUCCESS
 //window placing end
 
-	if((tool.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 70))
+	if((tool.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 70, allow_modifiers = FALSE))
 		return ITEM_INTERACT_BLOCKING
 
 	return NONE
@@ -351,7 +351,7 @@
 	update_appearance()
 	return TRUE
 
-/obj/structure/grille/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1)
+/obj/structure/grille/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
 	if(!anchored || broken) // anchored/broken grilles are never connected
 		return FALSE
 	var/turf/grill_loc = get_turf(src)
