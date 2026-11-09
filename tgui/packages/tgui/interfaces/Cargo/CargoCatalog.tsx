@@ -209,15 +209,7 @@ type CatalogListProps = {
 
 function CatalogList(props: CatalogListProps) {
   const { act, data } = useBackend<CargoData>();
-  const {
-    cart = [],
-    max_order,
-    self_paid,
-    app_cost,
-    displayed_currency_name,
-    goody_order_cost_modifier,
-    private_order_cost_modifier,
-  } = data;
+  const { cart = [], max_order, self_paid, app_cost, displayed_currency_name } = data;
   const { packs = [], openContents } = props;
 
   return (
@@ -234,9 +226,6 @@ function CatalogList(props: CatalogListProps) {
         }
 
         const privateBuy = (self_paid && !pack.goody) || app_cost;
-        const priceVariation =
-          (pack.goody && goody_order_cost_modifier !== 1.0) ||
-          (privateBuy && private_order_cost_modifier !== 1.0);
         const tooltipIcon = (content: string, icon: string, color: string) => (
           <Stack.Item>
             <Tooltip content={content}>
@@ -294,27 +283,14 @@ function CatalogList(props: CatalogListProps) {
               <Stack.Item align="center" width={5.5} mt={-0.75} mb={-0.75}>
                 <Stack vertical color="gold" lineHeight={0.75} fontSize={0.85}>
                   <Stack.Item
-                    opacity={priceVariation && 0.75}
-                    style={{
-                      textDecoration: priceVariation
-                        ? 'red line-through'
-                        : undefined,
-                    }}
+                    opacity={privateBuy && 0.75}
+                    style={{ textDecoration: privateBuy && 'red line-through' }}
                   >
-                    {formatMoney(pack.cost)}
-                    {displayed_currency_name}
+                    {formatMoney(pack.cost)}{displayed_currency_name}
                   </Stack.Item>
-                  {priceVariation && (
+                  {!!privateBuy && (
                     <Stack.Item>
-                      {formatMoney(
-                        Math.round(
-                          pack.cost *
-                            (pack.goody
-                              ? goody_order_cost_modifier
-                              : private_order_cost_modifier),
-                        ),
-                      )}
-                      {displayed_currency_name}
+                      {formatMoney(Math.round(pack.cost * 1.1))}{displayed_currency_name}
                     </Stack.Item>
                   )}
                 </Stack>

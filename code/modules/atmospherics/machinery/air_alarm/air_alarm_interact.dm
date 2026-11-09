@@ -178,7 +178,7 @@
 			if(!wires.is_cut(WIRE_AI))
 				aidisabled = FALSE
 
-/obj/machinery/airalarm/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
+/obj/machinery/airalarm/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
 	if(machine_stat & NOPOWER) // unpowered, no shock
 		return FALSE
 	return ..()

@@ -235,7 +235,7 @@
 	return ..()
 
 /obj/item/mod/control/wrench_act(mob/living/user, obj/item/wrench)
-	if(seconds_electrified && get_charge() && shock(user, 125))
+	if(seconds_electrified && get_charge() && shock(user, 100))
 		return ITEM_INTERACT_BLOCKING
 	if(open)
 		if(!core)
@@ -609,7 +609,7 @@
 		return
 	picked_module.on_select(user)
 
-/obj/item/mod/control/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
+/obj/item/mod/control/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
 	if(get_charge() < 1)
 		return FALSE
 	if(isnull(siemens_coeff))

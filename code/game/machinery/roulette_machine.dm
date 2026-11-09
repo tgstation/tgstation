@@ -443,7 +443,7 @@
 			set_machine_stat(machine_stat | MAINT)
 			icon_state = "open"
 
-/obj/machinery/roulette/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
+/obj/machinery/roulette/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
 	if(!on) // unpowered, no shock
 		return FALSE
 	return ..()
