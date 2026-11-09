@@ -150,7 +150,7 @@ HOSTEDBY flashdim
 ## IPINTEL:
 ## This allows you to detect likely proxies by checking ips against getipintel.net
 ## Rating to warn at: (0.8 is good, 1 is 100% likely to be a spammer/proxy, 0.8 is 80%, etc) anything equal to or higher then this number triggers an admin warning
-IPINTEL_RATING_BAD 0.8
+#IPINTEL_RATING_BAD 0.8
 ## Contact email, (required to use the service, leaving blank or default disables IPINTEL)
 #IPINTEL_EMAIL ch@nge.me
 ## Query base, if you pay for more queries this is what you want to change.
