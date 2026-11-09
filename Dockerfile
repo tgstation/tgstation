@@ -1,5 +1,5 @@
 # base = ubuntu + full apt update
-FROM ubuntu:bionic AS base
+FROM ubuntu:noble AS base
 RUN dpkg --add-architecture i386 \
     && apt-get update \
     && apt-get upgrade -y \
@@ -12,7 +12,7 @@ FROM base AS byond
 WORKDIR /byond
 
 RUN apt-get install -y --no-install-recommends \
-        libcurl4 \
+        libcurl4t64 \
         curl \
         unzip \
         make \
@@ -59,7 +59,7 @@ FROM rust AS rust_g
 WORKDIR /rust_g
 
 RUN apt-get install -y --no-install-recommends \
-        pkg-config:i386 \
+        pkg-config \
         libssl-dev:i386 \
         gcc-multilib \
         git \
@@ -78,7 +78,7 @@ FROM byond
 WORKDIR /tgstation
 
 RUN apt-get install -y --no-install-recommends \
-        libssl1.0.0:i386 \
+        libssl3t64:i386 \
         zlib1g:i386
 
 COPY --from=build /deploy ./
