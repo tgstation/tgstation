@@ -1,0 +1,9 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "\"Throwing Arm\" quirk cost reduced (7 -> 5)"
+  - balance: "Reduced chance of obtaining several quirk's related mail items moderately, with the exception of the Gamer quirk (which is now twice as likely, intead)"
+  - rscadd: "Added quirk \"Eccentric Correspondent\", which adds more randomness to your mail item pool"
+  - rscadd: "Added quirk \"Well Connected\", which offers discounts on cargo or black market orders."
+  - rscadd: "Added quirk \"Shock Reflex\", which reduces the chance of being shocked when failing hacks or the like."
+  - rscdel: "Removed organ transport box from mail pool of Prosthetic Organ and Tin Man quirks"
