@@ -26,7 +26,7 @@
 
 /datum/wires/vending/interact(mob/user)
 	var/obj/machinery/vending/vending_machine = holder
-	if (!HAS_SILICON_ACCESS(user) && vending_machine.seconds_electrified && vending_machine.shock(user, 100))
+	if (!HAS_SILICON_ACCESS(user) && vending_machine.seconds_electrified && vending_machine.shock(user, 125))
 		return
 
 	return ..()
@@ -66,7 +66,7 @@
 			vending_machine.extended_inventory = !vending_machine.extended_inventory
 		if(WIRE_SHOCK)
 			vending_machine.seconds_electrified = MACHINE_DEFAULT_ELECTRIFY_TIME
-			vending_machine.shock(usr, 100)
+			vending_machine.shock(usr, 125)
 		if(WIRE_IDSCAN)
 			vending_machine.scan_id = !vending_machine.scan_id
 		if(WIRE_SPEAKER)
@@ -88,13 +88,13 @@
 				vending_machine.seconds_electrified = MACHINE_NOT_ELECTRIFIED
 			else
 				vending_machine.seconds_electrified = MACHINE_ELECTRIFIED_PERMANENT
-				vending_machine.shock(usr, 100)
+				vending_machine.shock(usr, 125)
 		if(WIRE_IDSCAN)
 			vending_machine.scan_id = mend
 		if(WIRE_SPEAKER)
 			vending_machine.shut_up = mend
 
-/obj/machinery/vending/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+/obj/machinery/vending/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return FALSE
 	if(isnull(siemens_coeff))

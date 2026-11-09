@@ -16,7 +16,7 @@
 	department_for_prefs = /datum/job_department/security
 
 	exclusive_mail_goodies = TRUE
-	mail_goodies = list (
+	mail_goodies = list(
 		/obj/effect/spawner/random/contraband/prison = 1
 	)
 

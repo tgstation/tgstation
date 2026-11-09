@@ -513,7 +513,7 @@
 	if(isnull(cable))
 		return
 
-	vine.shock(victim, 100, cable)
+	vine.shock(victim, shock_source = cable, allow_modifiers = FALSE)
 
 /datum/spacevine_mutation/conductive/on_hit(obj/structure/spacevine/vine, obj/item/item,  mob/living/hitter, list/modifiers, list/attack_modifiers)
 	attempt_shock(vine, hitter, item)
