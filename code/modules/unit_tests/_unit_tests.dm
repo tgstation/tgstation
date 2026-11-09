@@ -179,6 +179,7 @@
 #include "dropper.dm"
 #include "dummy_spawn.dm"
 #include "dynamic_ruleset_sanity.dm"
+#include "effective_pressure.dm"
 #include "egg_glands.dm"
 #include "embedding.dm"
 #include "emoting.dm"
