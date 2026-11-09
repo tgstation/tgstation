@@ -62,7 +62,7 @@
 
 	/* CAMERA */
 	/// The network that the AI is currently viewing
-	var/list/network = list(CAMERANET_NETWORK_SS13)
+	var/network = CAMERANET_NETWORK_SS13
 	/// If the AI has their camera light enabled
 	var/camera_light_on = FALSE
 	/// List of cameras that have been illuminated by the AI's camera light

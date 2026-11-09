@@ -28,11 +28,17 @@
 	var/fuse_color = null
 	/// Timer for our explosion
 	var/fuse_timer = null
+	/// Icon file the crushed can we leave behind uses.
+	var/crushed_icon = /obj/item/trash/can::icon
+	/// Icon state the crushed can we leave behind uses. Set from our own icon_state when left null.
+	var/crushed_icon_state
 
 /obj/item/reagent_containers/cup/soda_cans/Initialize(mapload, vol)
 	. = ..()
 	AddElement(/datum/element/slapcrafting, string_list(list(/datum/crafting_recipe/improv_explosive)))
 	AddElement(/datum/element/atmos_sensitive, mapload) //Enables soda cans to explode in vaccuum.
+	if(isnull(crushed_icon_state))
+		crushed_icon_state = icon_state
 
 /obj/item/reagent_containers/cup/soda_cans/random/Initialize(mapload)
 	..()
@@ -92,7 +98,8 @@
 		)
 	playsound(src, 'sound/items/weapons/pierce.ogg', rand(10, 50), TRUE)
 	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(target.drop_location())
-	crushed_can.icon_state = icon_state
+	crushed_can.icon = crushed_icon
+	crushed_can.icon_state = crushed_icon_state
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -103,7 +110,8 @@
 	if(!proj.damage || proj.damage_type != BRUTE)
 		return
 	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(loc)
-	crushed_can.icon_state = icon_state
+	crushed_can.icon = crushed_icon
+	crushed_can.icon_state = crushed_icon_state
 	var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
 	crushed_can.throw_at(throw_target, rand(1,2), 7)
 	qdel(src)
@@ -276,7 +284,8 @@
 	burst_soda(hit_atom, hide_message = TRUE)
 	visible_message(span_danger("[src]'s impact with [hit_atom] causes it to rupture, spilling everywhere!"))
 	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(loc)
-	crushed_can.icon_state = icon_state
+	crushed_can.icon = crushed_icon
+	crushed_can.icon_state = crushed_icon_state
 	moveToNullspace()
 	QDEL_IN(src, 1 SECONDS) // give it a second so it can still be logged for the throw impact
 

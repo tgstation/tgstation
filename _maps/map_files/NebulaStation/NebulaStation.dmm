@@ -21059,7 +21059,7 @@
 /obj/effect/turf_decal/siding/dark,
 /obj/effect/turf_decal/trimline/dark/line,
 /obj/structure/table/glass,
-/obj/item/food/cornchips/random,
+/obj/item/food/chips/corn/random,
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/port)
 "dgB" = (
@@ -65937,7 +65937,7 @@
 	pixel_x = -7;
 	pixel_y = 7
 	},
-/obj/item/food/cornchips/blue{
+/obj/item/food/chips/corn/blue{
 	pixel_x = 7;
 	pixel_y = 4
 	},
@@ -155332,6 +155332,7 @@
 	},
 /obj/structure/rack,
 /obj/item/storage/box/bodybags,
+/obj/item/reagent_containers/spray/dinitrogen_plasmide,
 /obj/item/clothing/gloves/latex,
 /obj/item/tank/internals/anesthetic,
 /obj/item/healthanalyzer,

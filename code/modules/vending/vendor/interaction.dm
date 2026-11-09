@@ -82,10 +82,6 @@
 		if(inserted_item.type != product_datum.product_path)
 			continue
 
-		if(product_datum.amount == product_datum.max_amount)
-			to_chat(user, span_warning("[src] can't accept any more [inserted_item.name][inserted_item.p_s()]!"))
-			return FALSE
-
 		if(!user.transferItemToLoc(inserted_item, src))
 			to_chat(user, span_warning("[inserted_item] is stuck in your hand!"))
 			return FALSE

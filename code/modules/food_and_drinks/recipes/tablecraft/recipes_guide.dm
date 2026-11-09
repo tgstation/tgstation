@@ -1461,7 +1461,7 @@
 	result = /obj/item/food/peanuts
 
 /datum/crafting_recipe/food/vending/corn_chip
-	result = /obj/item/food/cornchips
+	result = /obj/item/food/chips/corn
 
 /datum/crafting_recipe/food/vending/sm_wind
 	machinery = list(/obj/machinery/vending/cola)
