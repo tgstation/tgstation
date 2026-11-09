@@ -996,6 +996,10 @@
 	duration = 5 MINUTES
 	status_type = STATUS_EFFECT_UNIQUE
 
+/datum.status_effect/craving_satisfied/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	new_owner.add_mood_event("fav_food",/datum/mood_event/favorite_food)
+
 /atom/movable/screen/alert/status_effect/food_happy
 	name = "Food Satisfied"
 	desc = "That really hit the spot!"
