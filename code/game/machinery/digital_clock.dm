@@ -108,7 +108,7 @@
 	do { \
 		var/_key = "[offset_amount][entry_state]"; \
 		if(!cache_list[_key]) { \
-			cache_list[_key] = mutable_appearance('icons/obj/digital_clock.dmi', "+[entry_state]"); \
+			cache_list[_key] = image(icon = 'icons/obj/digital_clock.dmi', icon_state = "+[entry_state]"); \
 			cache_list[_key].pixel_w = offset_amount; \
 		} \
 		return_list += cache_list[_key]; \
@@ -127,7 +127,7 @@
 	// tenth / the '2' in '12' / 12 -> 12 - (1 * 10) -> 12 - 10 -> 2
 	var/station_hours_one = station_hours - (station_hours_tenth * 10)
 
-	var/static/list/mutable_appearance/time_overlay_cache
+	var/static/list/image/time_overlay_cache
 	var/list/return_overlays = list()
 
 	time_overlay_cache ||= list()
