@@ -418,7 +418,6 @@ There are several things that need to be remembered:
 	apply_overlay(BACK_LAYER)
 
 /mob/living/carbon/human/get_held_overlays()
-	hud_used?.update_inventory_slot(ITEM_SLOT_HANDS)
 	var/list/hands = list()
 	for(var/held_index in get_active_held_indexes())
 		var/obj/item/worn_item = get_item_for_held_index(held_index)
