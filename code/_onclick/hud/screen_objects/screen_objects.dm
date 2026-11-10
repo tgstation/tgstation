@@ -1004,6 +1004,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 		return
 
 	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
+	var/datum/status_effect/grouped/screwy_hud/fake_healthy/fake_healthy = owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy)
 
 	for(var/part_zone, body_part_untyped in owner.get_bodyparts_by_zones())
 		// I hate that we "allow" support for more than 2 hands in the codebase
@@ -1020,7 +1021,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 			icon_key = "DEAD"
 		else if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, owner, overridable_key) & OVERRIDE_BODYPART_HEALTH_HUD)
 			icon_key = overridable_key[1] // thanks i hate it
-		else if(!owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
+		else if(!fake_healthy)
 			var/damage = body_part.get_damage() / body_part.max_damage
 			// calculate what icon state (1-5, or 0 if undamaged) to use based on damage
 			icon_key = clamp(ceil(damage * 5), 0, 5)
