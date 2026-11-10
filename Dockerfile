@@ -34,6 +34,7 @@ RUN . ./dependencies.sh \
     && apt-get purge -y --auto-remove curl make \
     && cd .. \
     && rm -rf byond byond.zip
+ENV PATH="/usr/local/byond/bin:${PATH}"
 
 # build = byond + tgstation compiled and deployed to /deploy
 FROM byond AS build
