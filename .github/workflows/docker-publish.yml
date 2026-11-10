@@ -31,11 +31,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set new version in code
-        run: >
-          sed -i "s/APP_VERSION/${{ github.event.release.name }}/g"
-          ${{ github.workspace }}/app.py
-
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
       - name: Install cosign
