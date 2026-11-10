@@ -56,8 +56,8 @@ RUN . ./dependencies.sh \
     && mkdir -p /root/.byond/bin \
     && curl -fL \
         "https://github.com/${DREAMLUAU_REPO}/releases/download/${DREAMLUAU_VERSION}/libdreamluau.so" \
-        -o /deploy/libdreamluau.so \
-    && chmod 755 /deploy/libdreamluau.so
+        -o /tgstation/libdreamluau.so \
+    && chmod 755 /tgstation/libdreamluau.so
 
 RUN export PATH="/usr/local/byond/bin:${PATH}" && env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build.sh \
     && tools/deploy.sh /deploy
