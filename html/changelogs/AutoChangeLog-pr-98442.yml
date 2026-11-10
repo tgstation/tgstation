@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - code_imp: "Cleaned up code pertaining to closing storage items you can't reach, report if you are able to reach things you probably shouldn't be able to"
