@@ -43,7 +43,7 @@ RUN command -v DreamMaker \
 
 RUN /usr/local/byond/bin/DreamMaker 2>&1 || true
 
-# build = byond + tgstation compiled and deployed to /deploy
+# build = byond + tgstation + dreamluau compiled and deployed to /deploy
 FROM byond AS build
 WORKDIR /tgstation
 
@@ -56,8 +56,8 @@ RUN . ./dependencies.sh \
     && mkdir -p /root/.byond/bin \
     && curl -fL \
         "https://github.com/${DREAMLUAU_REPO}/releases/download/${DREAMLUAU_VERSION}/libdreamluau.so" \
-        -o /root/.byond/bin/libdreamluau.so \
-    && chmod 755 /root/.byond/bin/libdreamluau.so
+        -o /deploy/libdreamluau.so \
+    && chmod 755 /deploy/libdreamluau.so
 
 RUN export PATH="/usr/local/byond/bin:${PATH}" && env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build.sh \
     && tools/deploy.sh /deploy
