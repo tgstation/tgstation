@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Electrodisruptive emitter beams heal the SM considerably more per hit, but begin to experience diminishing returns after a number of hits, resetting after not being hit with a healing emitter for some time."
