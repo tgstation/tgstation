@@ -27,8 +27,8 @@ services:
     depends_on:
       - db
     volumes:
-      - ./live/byond/config:/tgstation/config
-      - ./live/byond/data:/tgstation/data
+      - ./config:/tgstation/config
+      - ./gamedata:/tgstation/data
     networks:
       - tg_network
 
@@ -37,4 +37,5 @@ networks:
     driver: bridge
 
 volumes:
+  gamedata:
   mysql_data:
