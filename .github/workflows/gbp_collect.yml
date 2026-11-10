@@ -1,8 +1,6 @@
 name: GBP Collection
 # Every hour at the :20 minute mark. GitHub tells us to pick odd hours, instead of just using the start.
 on:
-  schedule:
-    - cron: "20 * * * *"
   workflow_dispatch:
 jobs:
   gbp_collection:
