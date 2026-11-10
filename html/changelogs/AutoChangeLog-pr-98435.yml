@@ -1,0 +1,4 @@
+author: "Maia-J"
+delete-after: True
+changes:
+  - bugfix: "Limb growers no longer prevent printing when they have been upgraded and have enough reagents if they wouldn't have had enough reagents were they not upgraded."
