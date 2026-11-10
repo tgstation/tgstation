@@ -35,7 +35,7 @@ RUN . ./dependencies.sh \
     && cd .. \
     && rm -rf byond byond.zip
 
-ENV PATH="/usr/local/byond/bin:${PATH}"
+RUN ls -l /usr/local/byond/bin
 
 # build = byond + tgstation compiled and deployed to /deploy
 FROM byond AS build
@@ -46,7 +46,7 @@ RUN apt-get install -y --no-install-recommends \
 
 COPY . .
 
-RUN env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build.sh \
+RUN export PATH="/usr/local/byond/bin:${PATH}" && env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build.sh \
     && tools/deploy.sh /deploy
 
 # rust = base + rustc and i686 target
