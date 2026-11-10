@@ -39345,7 +39345,7 @@
 /area/station/science/robotics/lab)
 "moG" = (
 /obj/machinery/light_switch/directional/south,
-/obj/structure/closet/secure_closet/security/engine,
+/obj/structure/closet/secure_closet/security/science,
 /obj/item/crowbar,
 /obj/item/book/manual/wiki/security_space_law,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
