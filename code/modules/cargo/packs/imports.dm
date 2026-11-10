@@ -84,7 +84,7 @@
 /datum/supply_pack/imports/dumpstercorpse
 	name = "A....Dumpster?"
 	desc = "Why does it smell so bad...."
-	cost = CARGO_CRATE_VALUE * 5
+	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/effect/mob_spawn/corpse/human/damaged)
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
