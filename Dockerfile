@@ -13,6 +13,7 @@ WORKDIR /byond
 
 RUN apt-get install -y --no-install-recommends \
         libcurl4t64 \
+        libcurl4t64:i386 \
         curl \
         unzip \
         make \
