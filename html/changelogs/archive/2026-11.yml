@@ -98,9 +98,20 @@
   - bugfix: Limb growers no longer prevent printing when they have been upgraded and
       have enough reagents if they wouldn't have had enough reagents were they not
       upgraded.
+  Melbert:
+  - code_imp: Cleaned up code for updating your hand UI slots, report anything weird
+      with that
+  - code_imp: Cleaned up code for updating your sprite with your held items, report
+      anything weird with that
+  - code_imp: Cleaned up code pertaining to closing storage items you can't reach,
+      report if you are able to reach things you probably shouldn't be able to
+  - balance: Electrodisruptive emitter beams heal the SM considerably more per hit,
+      but begin to experience diminishing returns after a number of hits, resetting
+      after not being hit with a healing emitter for some time.
   PapaMichael:
   - bugfix: Changeling transformations and experimental cloners now properly copy
       the TTS pitch of the target
+  - bugfix: MULEbots' autoreturn toggle now works
   The-Tyrant:
   - bugfix: Organic limbs can no longer get T1 robotic blunt wounds (loosened screws)
   san7890:
@@ -109,3 +120,4 @@
       one way or another).
   thegrb93:
   - bugfix: ooc chat button missing from ooc tab
+  - bugfix: Missing large painting frame craft recipe added
