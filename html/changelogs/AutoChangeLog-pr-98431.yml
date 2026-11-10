@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - bugfix: "Changeling transformations and experimental cloners now properly copy the TTS pitch of the target"
