@@ -13,6 +13,7 @@ WORKDIR /byond
 
 RUN apt-get install -y --no-install-recommends \
         libcurl4t64 \
+        libcurl4t64:i386 \
         curl \
         unzip \
         make \
@@ -35,7 +36,12 @@ RUN . ./dependencies.sh \
     && cd .. \
     && rm -rf byond byond.zip
 
-ENV PATH="/usr/local/byond/bin:${PATH}"
+RUN command -v DreamMaker \
+    && ls -l /usr/local/byond/bin \
+    && file /usr/local/byond/bin/DreamMaker \
+    && ldd /usr/local/byond/bin/DreamMaker || true
+
+RUN /usr/local/byond/bin/DreamMaker 2>&1 || true
 
 # build = byond + tgstation compiled and deployed to /deploy
 FROM byond AS build
@@ -46,7 +52,7 @@ RUN apt-get install -y --no-install-recommends \
 
 COPY . .
 
-RUN env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build.sh \
+RUN export PATH="/usr/local/byond/bin:${PATH}" && env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build.sh \
     && tools/deploy.sh /deploy
 
 # rust = base + rustc and i686 target
