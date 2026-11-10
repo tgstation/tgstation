@@ -93,3 +93,19 @@
   - rscadd: Throwable sledgehammer
   - rscadd: Telescreens and status displays are now breakable
   - image: Sledgehammer sprites by Simpleton
+2026-11-10:
+  Maia-J:
+  - bugfix: Limb growers no longer prevent printing when they have been upgraded and
+      have enough reagents if they wouldn't have had enough reagents were they not
+      upgraded.
+  PapaMichael:
+  - bugfix: Changeling transformations and experimental cloners now properly copy
+      the TTS pitch of the target
+  The-Tyrant:
+  - bugfix: Organic limbs can no longer get T1 robotic blunt wounds (loosened screws)
+  san7890:
+  - bugfix: Telekinetic users should be able to use UIs even when inside machinery,
+      as long as their client is expected to be able to have it in their sight (in
+      one way or another).
+  thegrb93:
+  - bugfix: ooc chat button missing from ooc tab
