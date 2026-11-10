@@ -97,6 +97,7 @@ RUN apt-get install -y --no-install-recommends \
         zlib1g:i386
 
 COPY --from=build /deploy ./
+COPY --from=build /tgstation/libdreamluau.so ./libdreamluau.so
 COPY --from=rust_g /rust_g/target/i686-unknown-linux-gnu/release/librust_g.so ./librust_g.so
 
 VOLUME [ "/tgstation/config", "/tgstation/data" ]
