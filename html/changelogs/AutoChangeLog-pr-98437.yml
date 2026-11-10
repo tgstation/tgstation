@@ -1,0 +1,4 @@
+author: "The-Tyrant"
+delete-after: True
+changes:
+  - bugfix: "Organic limbs can no longer get T1 robotic blunt wounds (loosened screws)"
