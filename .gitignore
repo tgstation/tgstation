@@ -258,3 +258,4 @@ tgstation.json
 rust_g64.dll
 /live
 /gamedata
+docker-compose.yaml
