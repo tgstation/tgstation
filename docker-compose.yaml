@@ -23,11 +23,13 @@ services:
     container_name: tgstation
     restart: unless-stopped
     ports:
-      - "1337:1337" # Default SS13/TG port
+      - "1337:8080" # Default SS13/TG port
     depends_on:
       - db
+      - tgcfd
     volumes:
       - ./config:/tgstation/config
+      - ./sound:/tgstation/sound
       - ./gamedata:/tgstation/data
     networks:
       - tg_network
