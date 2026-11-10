@@ -52,6 +52,13 @@ RUN apt-get install -y --no-install-recommends \
 
 COPY . .
 
+RUN . ./dependencies.sh \
+    && mkdir -p /root/.byond/bin \
+    && curl -fL \
+        "https://github.com/${DREAMLUAU_REPO}/releases/download/${DREAMLUAU_VERSION}/libdreamluau.so" \
+        -o /root/.byond/bin/libdreamluau.so \
+    && chmod 755 /root/.byond/bin/libdreamluau.so
+
 RUN export PATH="/usr/local/byond/bin:${PATH}" && env TG_BOOTSTRAP_NODE_LINUX=1 tools/build/build.sh \
     && tools/deploy.sh /deploy
 
@@ -93,5 +100,5 @@ COPY --from=build /deploy ./
 COPY --from=rust_g /rust_g/target/i686-unknown-linux-gnu/release/librust_g.so ./librust_g.so
 
 VOLUME [ "/tgstation/config", "/tgstation/data" ]
-ENTRYPOINT [ "DreamDaemon", "tgstation.dmb", "-port", "1337", "-trusted", "-close", "-verbose" ]
+ENTRYPOINT [ "DreamDaemon", "tgstation.dmb", "-port", "1337", "-webclient", "-trusted", "-close", "-verbose" ]
 EXPOSE 1337
