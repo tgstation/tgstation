@@ -1004,7 +1004,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 		return
 
 	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
-	var/fake_healthy = owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy)
+	var/datum/status_effect/grouped/screwy_hud/fake_healthy/fake_healthy = owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy)
 
 	for(var/part_zone, body_part_untyped in owner.get_bodyparts_by_zones())
 		// I hate that we "allow" support for more than 2 hands in the codebase
