@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - bugfix: "Telekinetic users should be able to use UIs even when inside machinery, as long as their client is expected to be able to have it in their sight (in one way or another)."
