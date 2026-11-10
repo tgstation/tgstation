@@ -1,5 +1,5 @@
 # base = ubuntu + full apt update
-FROM ubuntu:xenial AS base
+FROM ubuntu:noble AS base
 RUN dpkg --add-architecture i386 \
     && apt-get update \
     && apt-get upgrade -y \
@@ -12,10 +12,14 @@ FROM base AS byond
 WORKDIR /byond
 
 RUN apt-get install -y --no-install-recommends \
-        libcurl4 \
+        libcurl4t64 \
         curl \
         unzip \
         make \
+        build-essential \
+        python3 \
+        python3-pip \
+        python3-venv \
         libstdc++6:i386
 
 COPY dependencies.sh .
@@ -27,9 +31,11 @@ RUN . ./dependencies.sh \
     && sed -i 's|install:|&\n\tmkdir -p $(MAN_DIR)/man6|' Makefile \
     && make install \
     && chmod 644 /usr/local/byond/man/man6/* \
-    && apt-get purge -y --auto-remove curl unzip make \
+    && apt-get purge -y --auto-remove curl make \
     && cd .. \
     && rm -rf byond byond.zip
+
+ENV PATH="/usr/local/byond/bin:${PATH}"
 
 # build = byond + tgstation compiled and deployed to /deploy
 FROM byond AS build
@@ -55,7 +61,7 @@ FROM rust AS rust_g
 WORKDIR /rust_g
 
 RUN apt-get install -y --no-install-recommends \
-        pkg-config:i386 \
+        pkg-config \
         libssl-dev:i386 \
         gcc-multilib \
         git \
@@ -74,7 +80,7 @@ FROM byond
 WORKDIR /tgstation
 
 RUN apt-get install -y --no-install-recommends \
-        libssl1.0.0:i386 \
+        libssl3t64:i386 \
         zlib1g:i386
 
 COPY --from=build /deploy ./
