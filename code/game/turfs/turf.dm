@@ -900,8 +900,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Invalidates this turf and its neighbours, then queues them for baking.
 /turf/proc/nav_dirty()
-	// Before the subsystem inits nothing is baked
-	if(!SSnavmap.initialized)
+	// Track startup changes by coordinates, since the turf may be replaced.
+	if(!SSnavmap.initialized || SSnavmap.startup_finalization_pending)
+		SSnavmap.record_startup_dirty_turf(src)
 		return
 	SSnavmap.publish_nav_cost_flags(src, get_nav_cost_flags())
 	// Only auto-update important z-levels
@@ -937,7 +938,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Publishes a terrain-cost flag change without rebaking passability edges.
 /turf/proc/nav_cost_dirty()
-	if(!SSnavmap.initialized)
+	if(!SSnavmap.initialized || SSnavmap.startup_finalization_pending)
+		SSnavmap.record_startup_cost_dirty(src)
 		return
 	var/effective_flags = get_nav_cost_flags()
 	SSnavmap.publish_nav_cost_flags(src, effective_flags)
@@ -974,10 +976,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	nav_pass = packed
 	nav_blockers = blockers
-	SSnavmap.publish_nav_cost_flags(src, get_nav_cost_flags())
+	var/effective_cost_flags = get_nav_cost_flags()
+	SSnavmap.publish_nav_cost_flags(src, effective_cost_flags)
 	// Mass prebakes publish the completed z-level in one FFI call when the DLL is present.
 	if(!skip_navmap_push)
-		navmap_pathfinder_update(x, y, z, packed, get_nav_cost_flags())
+		navmap_pathfinder_update(x, y, z, packed, effective_cost_flags)
+	return effective_cost_flags
 
 /// Builds packed passability bits and live blockers for one outgoing edge.
 /turf/proc/nav_evaluate_edge(dir, turf/dest, list/edge_blockers)

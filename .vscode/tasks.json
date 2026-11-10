@@ -21,6 +21,34 @@
 			"label": "Build All"
 		},
 		{
+			"label": "Build all navmaps",
+			"detail": "Generate every station navmap and save the files in build/navmaps.",
+			"type": "process",
+			"command": "tools/build/build.sh",
+			"windows": {
+				"command": ".\\tools\\build\\build.bat"
+			},
+			"args": ["navmap-bake"],
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": ["$dreammaker"],
+			"group": "build",
+			"runOptions": {
+				"instanceLimit": 1
+			},
+			"presentation": {
+				"reveal": "always",
+				"focus": false,
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			}
+		},
+		{
 			"type": "process",
 			"command": "tools/build/build.sh",
 			"args": [

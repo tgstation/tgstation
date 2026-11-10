@@ -185,6 +185,12 @@
 /turf/open/openspace/nav_dirty_vertical_dependents()
 	// Ground edges on our horizontal neighbours depend on whether our downward
 	// fall path is blocked, so a change below us invalidates those edges too.
+	if(!SSnavmap.initialized || SSnavmap.startup_finalization_pending)
+		for(var/horizontal_dir in GLOB.cardinals)
+			var/turf/edge_neighbor = get_step(src, horizontal_dir)
+			if(edge_neighbor)
+				SSnavmap.record_startup_dirty_coordinate(edge_neighbor)
+		return
 	for(var/horizontal_dir in GLOB.cardinals)
 		var/turf/edge_neighbor = get_step(src, horizontal_dir)
 		if(!edge_neighbor)

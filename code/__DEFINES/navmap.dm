@@ -1,6 +1,12 @@
 // nav_pass is a packed int on /turf. null means its never been baked before.
 // Direction values are used directly as bit groups so no lookup is needed.
 
+/// Increment when baking changes make saved navmaps outdated.
+#define NAVMAP_BAKE_RULES_VERSION 1
+
+#define NAVMAP_BAKE_MAP_CONFIG_PARAMETER "navmap-bake-map-config"
+#define NAVMAP_BAKE_SOURCE_CONFIG_PARAMETER "navmap-bake-source-config"
+
 /// GROUND edge bits: horizontal cardinal directions are bits 0-3 and UP/DOWN are bits 4-5.
 #define NAV_GROUND(dir)  (dir)
 
