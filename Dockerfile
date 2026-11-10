@@ -101,5 +101,5 @@ COPY --from=build /tgstation/libdreamluau.so ./libdreamluau.so
 COPY --from=rust_g /rust_g/target/i686-unknown-linux-gnu/release/librust_g.so ./librust_g.so
 
 VOLUME [ "/tgstation/config", "/tgstation/data" ]
-ENTRYPOINT [ "DreamDaemon", "tgstation.dmb", "-port", "1337", "-webclient", "-trusted", "-close", "-verbose" ]
-EXPOSE 1337
+ENTRYPOINT [ "DreamDaemon", "tgstation.dmb", "-port", "8080", "-webclient", "-trusted", "-close", "-verbose" ]
+EXPOSE 8080

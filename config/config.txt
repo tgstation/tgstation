@@ -182,12 +182,12 @@ ALLOW_WEBCLIENT
 #USEWHITELIST
 
 ## The address shown for the game server in the TGS check command
-PUBLIC_ADDRESS ss13.flashdim.net:1337
+# PUBLIC_ADDRESS ss13.flashdim.net:8080
 
 ## set a server location for world reboot. Don't include the byond://, just give the address and port.
 ## Don't set this to the same server, BYOND will automatically restart players to the server when it has restarted.
 ## This is also used to show the server's address in the TGS check command if the public address isn't set
-# SERVER ss13.flashdim.net:1337
+# SERVER ss13.flashdim.net:8080
 
 ## forum address
 # FORUMURL http://tgstation13.org/phpBB/index.php
