@@ -19,7 +19,7 @@ services:
 
   # TGStation Server
   tgstation:
-    image: flashdim/tgstation:latest
+    image: ghcr.io/flashdim/tgstation:latest
     container_name: tgstation
     restart: unless-stopped
     ports:
