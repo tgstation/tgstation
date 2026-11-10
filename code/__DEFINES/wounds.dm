@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 ))
 
 // ~wound categories: wounding_types
-/// any brute weapon/attack that doesn't have sharpness. rolls for blunt bone wounds
+/// any brute weapon/attack that doesn't have sharpness. rolls for blunt wounds
 #define WOUND_BLUNT "wound_blunt"
 /// any brute weapon/attack with sharpness = SHARP_EDGED. rolls for slash wounds
 #define WOUND_SLASH "wound_slash"
@@ -110,9 +110,14 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 /// Cranial fissure wound.
 #define WOUND_SERIES_CRANIAL_FISSURE "wound_series_cranial_fissure"
 /// Robotic wounds.
+
+/// T1-T3 Basic metal blunt wounds. T1 requires jointed and metal, T2-3 require only metal. From: robotic_blunt.dm
 #define WOUND_SERIES_METAL_BLUNT_BASIC "wound_series_metal_blunt_basic"
+/// T1-T3 Basic metal burn wounds. Requires metal. From: robotic_burn.dm
 #define WOUND_SERIES_METAL_BURN_OVERHEAT "wound_series_metal_burn_basic"
+/// Currently unused.
 #define WOUND_SERIES_METAL_SLASH_LEAK "wound_series_metal_slash_leak_basic"
+/// Currently unused.
 #define WOUND_SERIES_METAL_PIERCE_LEAK "wound_series_metal_pierce_leak_basic"
 /// Bruise wound.
 #define WOUND_SERIES_BRUISING "wound_series_bruising"
