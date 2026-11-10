@@ -1,0 +1,4 @@
+author: "thegrb93"
+delete-after: True
+changes:
+  - bugfix: "ooc chat button missing from ooc tab"
