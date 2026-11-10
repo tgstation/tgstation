@@ -257,3 +257,4 @@ define_sanity_output.txt
 tgstation.json
 rust_g64.dll
 /live
+/gamedata
