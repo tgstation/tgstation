@@ -35,7 +35,12 @@ RUN . ./dependencies.sh \
     && cd .. \
     && rm -rf byond byond.zip
 
-RUN ls -l /usr/local/byond/bin
+RUN command -v DreamMaker \
+    && ls -l /usr/local/byond/bin \
+    && file /usr/local/byond/bin/DreamMaker \
+    && ldd /usr/local/byond/bin/DreamMaker || true
+
+RUN /usr/local/byond/bin/DreamMaker 2>&1 || true
 
 # build = byond + tgstation compiled and deployed to /deploy
 FROM byond AS build
