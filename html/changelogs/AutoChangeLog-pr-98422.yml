@@ -1,0 +1,5 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - bugfix: "fixed mutated regeneration threshold text"
+  - spellcheck: "mutated regeneration fluff text changes to \"quickly\" instead of \"slowly\" if you stack it high enough"
