@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - code_imp: "Cleaned up code for updating your hand UI slots, report anything weird with that"
+  - code_imp: "Cleaned up code for updating your sprite with your held items, report anything weird with that"
