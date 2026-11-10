@@ -213,7 +213,7 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	var/mob/living/living_user = astype(user, /mob/living)
+	var/mob/living/living_user = astype(user.mob, /mob/living)
 	if(!living_user)
 		return FALSE
 	var/obj/item/object = living_user.get_active_held_item()

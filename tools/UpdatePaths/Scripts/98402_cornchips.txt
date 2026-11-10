@@ -1,0 +1,1 @@
+/obj/item/food/cornchips/@SUBTYPES : /obj/item/food/chips/corn/@SUBTYPES(@OLD)
