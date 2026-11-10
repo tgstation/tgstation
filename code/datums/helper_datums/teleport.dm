@@ -270,7 +270,6 @@
 	SHOULD_BE_PURE(TRUE)
 
 	var/area/origin_area = get_area(teleported_atom)
-	var/area/destination_area = get_area(destination)
 	var/turf/destination_turf = get_turf(destination)
 	if(!is_valid_teleport_turf(destination_turf, origin_area))
 		return FALSE
