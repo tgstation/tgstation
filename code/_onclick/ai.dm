@@ -332,8 +332,8 @@
 	var/alt_index = alt_modes.Find(selected_mode.type)
 	if((alt_index)&&(alt_modes.len > alt_index))
 		select_mode(user, alt_modes[alt_index + 1])
-		balloon_alert(user, "[selected_mode.name]")
-		investigate_log("was cycled to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
+		balloon_alert(user, "[selected_mode::name]")
+		investigate_log("was cycled to [selected_mode::name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
 		return CLICK_ACTION_SUCCESS
 	select_mode(user, /datum/air_alarm_mode/cycle)
 	balloon_alert(user, "cycle")
