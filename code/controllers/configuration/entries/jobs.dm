@@ -8,9 +8,10 @@
 
 	return returnable_list
 
-/// Private proc that gets a list of all jobs with the JOB_NEW_PLAYER_JOINABLE flag, for config use only. This is just so that loading/regenerating the config still works even if some jobs don't exist in joinable occupations.
+/// Gets a list of all jobs with the JOB_NEW_PLAYER_JOINABLE flag, for config use only. This is just so that loading/regenerating the config still works even if some jobs don't exist in joinable occupations.
 /// Ultimately, this here to ensure that server operators will not have their config randomly drop jobs if they make a file at the wrong time (i.e. a map disabling a job)
 /datum/controller/subsystem/job/proc/get_configurable_jobs()
+	PRIVATE_PROC(TRUE)
 	RETURN_TYPE(/list/datum/job)
 	var/static/list/configurable_jobs = null
 	if(isnull(configurable_jobs))
@@ -106,9 +107,10 @@
 
 		// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
 		// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator knows that they are overriding the codebase defaults when they remove the comment.
-		var/list/working_list = list()
-		working_list[JOB_CONFIG_TOTAL_POSITIONS] = job_config_line(default_positions, commented = TRUE)
-		working_list[JOB_CONFIG_SPAWN_POSITIONS] = job_config_line(starting_positions, commented = TRUE)
+		var/list/working_list = list(
+				JOB_CONFIG_TOTAL_POSITIONS = job_config_line(default_positions, commented = TRUE),
+				JOB_CONFIG_SPAWN_POSITIONS = job_config_line(starting_positions, commented = TRUE),
+		)
 
 		working_list += generate_job_config_excluding_legacy(occupation)
 		file_data[occupation.config_tag] = working_list
