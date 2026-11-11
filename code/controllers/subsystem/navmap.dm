@@ -701,7 +701,7 @@ SUBSYSTEM_DEF(navmap)
 	startup_baked_generation[key] = generation
 	startup_baked_turfs[key] = tile
 
-/// Bakes turfs changed during startup.
+/// Bakes turfs changed during startup..
 /datum/controller/subsystem/navmap/proc/flush_startup_dirty_turfs()
 	while(length(startup_dirty_turfs) || length(startup_dirty_currentrun) || length(startup_dirty_costs))
 		for(var/cost_key in startup_dirty_costs)
