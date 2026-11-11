@@ -1,4 +1,0 @@
-author: "btcbuster"
-delete-after: True
-changes:
-  - rscadd: "Putrid dumpsters that spawn corpses now spawn morgue corpses instead of an intact human corpse, leading to other species and damage on the corpses. Cost decreased."

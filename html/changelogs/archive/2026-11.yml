@@ -126,3 +126,7 @@
   - bugfix: fixed mutated regeneration threshold text
   - spellcheck: mutated regeneration fluff text changes to "quickly" instead of "slowly"
       if you stack it high enough
+  btcbuster:
+  - rscadd: Putrid dumpsters that spawn corpses now spawn morgue corpses instead of
+      an intact human corpse, leading to other species and damage on the corpses.
+      Cost decreased.
