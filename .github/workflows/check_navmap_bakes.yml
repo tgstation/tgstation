@@ -38,6 +38,10 @@ jobs:
           if: steps.maps.outputs.maps != '[]'
           uses: ./.github/actions/restore_or_install_byond
 
+      - name: Install rust-g
+        if: steps.maps.outputs.maps != '[]'
+        run: bash tools/ci/install_rust_g.sh
+
       - name: Check generated navmaps
         env:
           MAPS: ${{ steps.maps.outputs.maps }}
