@@ -130,3 +130,7 @@
   - rscadd: Putrid dumpsters that spawn corpses now spawn morgue corpses instead of
       an intact human corpse, leading to other species and damage on the corpses.
       Cost decreased.
+  necromanceranne:
+  - balance: Cyborgs require two flashes to stun them once again.
+  - balance: You can now punch borgs to death. But you do need to have a decent punch
+      to even hurt them.
