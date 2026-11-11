@@ -121,3 +121,8 @@
   thegrb93:
   - bugfix: ooc chat button missing from ooc tab
   - bugfix: Missing large painting frame craft recipe added
+2026-11-11:
+  Fghj240:
+  - bugfix: fixed mutated regeneration threshold text
+  - spellcheck: mutated regeneration fluff text changes to "quickly" instead of "slowly"
+      if you stack it high enough
