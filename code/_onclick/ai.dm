@@ -322,10 +322,11 @@
 	if(aidisabled)
 		return NONE
 	//all of the modes that require more deliberation
-	var/list/alt_modes/ = list(
+	var/list/alt_modes = list(
 		/datum/air_alarm_mode/cycle,
 		/datum/air_alarm_mode/siphon,
-		/datum/air_alarm_mode/panic_siphon)
+		/datum/air_alarm_mode/panic_siphon,
+	)
 
 	//checks if we are mid alt cycle or need to start at beginning
 	var/alt_index = alt_modes.Find(selected_mode.type)
