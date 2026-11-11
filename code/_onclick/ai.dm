@@ -299,8 +299,8 @@
 	var/shift_index = shift_modes.Find(selected_mode.type)
 	if((shift_index)&&(shift_modes.len > shift_index))
 		select_mode(user, shift_modes[shift_index + 1])
-		balloon_alert(user, "[selected_mode.name]")
-		investigate_log("was cycled to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
+		balloon_alert(user, "[selected_mode::name]")
+		investigate_log("was cycled to [selected_mode::name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
 		return
 	select_mode(user, /datum/air_alarm_mode/filtering)
 	balloon_alert(user, "filtering")
