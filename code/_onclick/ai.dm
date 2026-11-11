@@ -289,11 +289,12 @@
 		return
 
 	//relatively safe modes that progressively get more iffy
-	var/list/shift_modes/ = list(
+	var/list/shift_modes = list(
 		/datum/air_alarm_mode/filtering,
 		/datum/air_alarm_mode/contaminated,
 		/datum/air_alarm_mode/refill,
-		/datum/air_alarm_mode/draught)
+		/datum/air_alarm_mode/draught,
+	)
 
 	//checks if we are mid shift cycle or need to start at beginning
 	var/shift_index = shift_modes.Find(selected_mode.type)
