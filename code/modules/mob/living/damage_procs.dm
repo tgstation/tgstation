@@ -477,10 +477,10 @@
 		//how positive values represent damage and negative represent healing in adjust_x_loss() calls once again (less confusing this way).
 		on_damage_loss_changed(-difference, updating_health, forced, damage_type)
 
-	// BUUUT WE'RE INTENTIONALLY CHECKING FOR >= 0 HERE BECAUSE TAKING 0 STAMINA DAMAGE STILL RESETS THE TIMER!!
-	if(damage_type == STAMINA && difference >= 0)
+	// BUUUT WE'RE INTENTIONALLY CHECKING FOR <= 0 HERE BECAUSE TAKING 0 STAMINA DAMAGE STILL RESETS THE TIMER!!
+	if(damage_type == STAMINA && difference <= 0)
 		timed_stamina_reset()
-		SEND_SIGNAL(src, COMSIG_LIVING_STAMINA_RESET)
+		SEND_SIGNAL(src, COMSIG_LIVING_STAMINA_REGEN_RESET)
 
 	return difference
 

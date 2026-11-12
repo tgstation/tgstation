@@ -31,7 +31,7 @@
 /datum/unit_test/stam_reset/Run()
 	var/mob/living/carbon/human/consistent/tider = allocate(__IMPLIED_TYPE__)
 	tider.set_stamina_loss(10)
-	RegisterSignal(tider, COMSIG_LIVING_STAMINA_RESET, PROC_REF(reset_count))
+	RegisterSignal(tider, COMSIG_LIVING_STAMINA_REGEN_RESET, PROC_REF(reset_count))
 
 	tider.adjust_stamina_loss(10)
 	TEST_ASSERT_EQUAL(reset_count, 1, "Stamina timer reset should have been triggered (normal amount of damage)")

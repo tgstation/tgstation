@@ -410,4 +410,4 @@
 #define COMSIG_LIVING_HALLUCINATING "living_hallucinating"
 
 /// From /mob/living/proc/timed_stamina_reset() : ()
-#define COMSIG_LIVING_STAMINA_RESET "living_stamina_reset"
+#define COMSIG_LIVING_STAMINA_REGEN_RESET "living_stamina_reset"
