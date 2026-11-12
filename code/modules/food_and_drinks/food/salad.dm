@@ -6,6 +6,8 @@
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	bite_consumption = 3
 	w_class = WEIGHT_CLASS_NORMAL
+	pickup_sound = /datum/sound_effect/bowl_pickup
+	drop_sound = /datum/sound_effect/bowl_drop
 	food_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("leaves" = 1)
 	foodtypes = VEGETABLES
@@ -189,6 +191,8 @@
 	fill_icon_thresholds = list(0)
 	fill_icon_state = "fullbowl"
 	fill_icon = 'icons/obj/food/soupsalad.dmi'
+	pickup_sound = /datum/sound_effect/bowl_pickup
+	drop_sound = /datum/sound_effect/bowl_drop
 
 	volume = SOUP_SERVING_SIZE + 5
 	gulp_size = 3
