@@ -77,6 +77,8 @@
 #define FACTION_SLIME "slime"
 /// Spiders and their webs
 #define FACTION_SPIDER "spiders"
+/// Specifically blood spiders, they hate everyone
+#define FACTION_BLOOD_SPIDER "blood_spider"
 /// Currently used only by floating eyeballs
 #define FACTION_SPOOKY "spooky"
 /// Statues that move around when nobody is watching them
@@ -102,9 +104,6 @@
 #define FACTION_HERETIC "heretics"
 /// Mainly used by pirate simplemobs. However I placed them here instead, as its also used by players
 #define FACTION_PIRATE "pirate"
-
-/// Generates a mob faction for the passed owner, used by stabilized pink extracts
-#define FACTION_PINK_EXTRACT(owner) "pink_[owner]"
 
 /**
  * SET_FACTION_AND_ALLIES_FROM(destination, source)
@@ -139,15 +138,17 @@
 	} while(FALSE)
 
 /**
- * Compare two lists of factions, returning true if any match.
- * If exact match is passed through we only return true if both faction lists match equally.
+ * Compare two lists of factions, resolving to TRUE if both lists share at least one faction.
+ * If exact match is set, we only resolve to TRUE if ALL factions in faction_A are also present in faction_B.
  *
- * Macro-ified version to avoid extra proc overhead.
+ * If allies lists are provided, the macro will also resolve to TRUE if there is any overlap between allies_A and allies_B,
+ * regardless of the exact_match flag.
  */
-#define FAST_FACTION_CHECK(faction_A, faction_B, allies_A, allies_B, exact_match) \
+#define FACTION_CHECK(faction_A, faction_B, allies_A, allies_B, exact_match) \
 ( \
-	!(exact_match) ? \
-		(LAZYLEN((faction_A) & (faction_B)) || LAZYLEN((allies_A) & (allies_B))) \
+	LAZYLEN((allies_A) & (allies_B)) || \
+	(exact_match) ? \
+		( LAZYLEN((faction_A) & (faction_B)) == LAZYLEN(faction_A) ) \
 	: \
-		((LAZYLEN((faction_A) & (faction_B)) == LAZYLEN(faction_A)) && LAZYLEN((allies_A) & (allies_B))) \
+		( LAZYLEN((faction_A) & (faction_B)) ) \
 )

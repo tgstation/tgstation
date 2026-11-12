@@ -115,3 +115,50 @@
 				or add its type to the ignored list if appropriate. \
 				mob: [mob_instance]([mob_instance.type]) current factions: ([jointext(mob_faction, ", ")]) expected factions: ([jointext(expected_faction, ", ")])")
 		qdel(mob_instance)
+
+#define FACTION_A "faction_a"
+#define FACTION_B "faction_b"
+#define FACTION_C "faction_c"
+
+/datum/unit_test/faction_checks
+
+/datum/unit_test/faction_checks/Run()
+	var/mob/living/carbon/human/consistent/guy_a = EASY_ALLOCATE()
+	var/mob/living/carbon/human/consistent/guy_b = EASY_ALLOCATE()
+
+	TEST_ASSERT(!guy_a.faction_check_atom(guy_b), "guy_a and guy_b should not have a faction match.")
+	TEST_ASSERT(!guy_b.faction_check_atom(guy_a, TRUE), "guy_b and guy_a should not have an exact faction match.")
+
+	guy_a.add_faction(FACTION_A)
+	guy_b.add_faction(FACTION_A)
+
+	TEST_ASSERT(guy_a.faction_check_atom(guy_b), "guy_a and guy_b should have a faction match.")
+	TEST_ASSERT(guy_b.faction_check_atom(guy_a), "guy_b and guy_a should have a faction match.")
+	TEST_ASSERT(guy_a.faction_check_atom(guy_b, TRUE), "guy_a and guy_b should have an exact faction match.")
+	TEST_ASSERT(guy_b.faction_check_atom(guy_a, TRUE), "guy_b and guy_a should have an exact faction match.")
+
+	guy_a.add_faction(FACTION_B)
+	guy_b.add_faction(FACTION_B)
+	guy_b.add_faction(FACTION_C)
+
+	TEST_ASSERT(guy_a.faction_check_atom(guy_b), "guy_a and guy_b should still have a faction match.")
+	TEST_ASSERT(guy_a.faction_check_atom(guy_b, TRUE), "guy_a and guy_b should still have an exact faction match, as guy_b has both FACTION_A and FACTION_B.")
+	TEST_ASSERT(guy_b.faction_check_atom(guy_a), "guy_b and guy_a should still have a faction match.")
+	TEST_ASSERT(!guy_b.faction_check_atom(guy_a, TRUE), "guy_b and guy_a should no longer have an exact faction match, as guy_a does not have FACTION_C.")
+
+/datum/unit_test/ally_checks
+
+/datum/unit_test/ally_checks/Run()
+	var/mob/living/carbon/human/consistent/guy_a = EASY_ALLOCATE()
+	var/mob/living/carbon/human/consistent/guy_b = EASY_ALLOCATE()
+
+	guy_a.add_ally(guy_b)
+
+	TEST_ASSERT(guy_a.faction_check_atom(guy_b), "guy_a and guy_b should have a faction match due to being allies.")
+	TEST_ASSERT(guy_b.faction_check_atom(guy_a), "guy_b and guy_a should have a faction match due to being allies.")
+	TEST_ASSERT(guy_a.faction_check_atom(guy_b, TRUE), "guy_a and guy_b should have an faction match due to being allies, ignoring exact faction requirements.")
+	TEST_ASSERT(guy_b.faction_check_atom(guy_a, TRUE), "guy_b and guy_a should have an faction match due to being allies, ignoring exact faction requirements.")
+
+#undef FACTION_A
+#undef FACTION_B
+#undef FACTION_C

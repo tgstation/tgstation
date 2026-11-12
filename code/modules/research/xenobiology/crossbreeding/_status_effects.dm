@@ -910,16 +910,16 @@
 			continue
 		mobs += weak_mob
 		beast.apply_status_effect(/datum/status_effect/pinkdamagetracker)
-		beast.add_faction(faction_name)
+		beast.add_ally(faction_name)
 
 /datum/status_effect/stabilized/pink/on_remove()
 	for(var/datum/weakref/weak_mob as anything in mobs)
 		var/mob/living/beast = weak_mob.resolve()
 		if(isnull(beast))
 			continue
-		beast.remove_faction(faction_name)
+		beast.remove_ally(faction_name)
 		beast.remove_status_effect(/datum/status_effect/pinkdamagetracker)
-	owner.remove_faction(faction_name)
+	owner.remove_ally(faction_name)
 
 /datum/status_effect/stabilized/oil
 	id = "stabilizedoil"
