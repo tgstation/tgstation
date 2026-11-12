@@ -143,6 +143,7 @@
 /**
  * Compare two lists of factions, resolving to TRUE if both lists share at least one faction.
  * If exact match is set, we only resolve to TRUE if ALL factions in faction_A are also present in faction_B.
+ * NB: that this means the order you check factions matters - checking A and B is not the same as checking B and A
  *
  * If allies lists are provided, the macro will also resolve to TRUE if there is any overlap between allies_A and allies_B,
  * regardless of the exact_match flag.
@@ -151,7 +152,7 @@
 ( \
 	ALLY_CHECK(allies_A, allies_B, FALSE/* we're ignoring exact_match here intentionally! */) || \
 	(exact_match) ? \
-		( LAZYLEN((faction_A) & (faction_B)) == LAZYLEN(faction_A) ) \
+		( LAZYLEN(faction_A) && ( LAZYLEN((faction_A) & (faction_B)) == LAZYLEN(faction_A) ) ) \
 	: \
 		( LAZYLEN((faction_A) & (faction_B)) ) \
 )
@@ -166,7 +167,7 @@
 #define ALLY_CHECK(allies_A, allies_B, exact_match) \
 ( \
 	(exact_match) ? \
-		( LAZYLEN((allies_A) & (allies_B)) == LAZYLEN(allies_A) ) \
+		( LAZYLEN(allies_A) && ( LAZYLEN((allies_A) & (allies_B)) == LAZYLEN(allies_A) ) ) \
 	: \
 		( LAZYLEN((allies_A) & (allies_B)) ) \
 )
