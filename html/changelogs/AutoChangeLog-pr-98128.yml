@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Dynamic has a significantly higher chance of spawning antags if there are no antags alive"
+  - bugfix: "Dynamic no longer counts dead people as alive for the purpose of antag spawn chance"
+  - qol: "Dynamic math changed slightly. Fewer antags are spawned if a significant amount of the crew is dead, and observers who were never part of the crew no longer reduce the chance of spawning antags."
+  - qol: "Dynamic rulesets that a require ghosts cannot be picked if there are no ghosts. This means midround rulesets like Traitors / Mass Traitors will be significantly more common when there are no observers."
