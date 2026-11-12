@@ -13,7 +13,7 @@
 	/// Does it need cleaning?
 	var/dirty = FALSE
 	/// Time from starting until meat appears
-	var/gibtime = 40
+	var/gibtime = 4 SECONDS
 	/// Average efficiency multiplier for how much meat we meet when we meat the meat per meat of each of meat's meat limbs
 	var/efficiency = 0.25
 	/// If the gibber should give the 'Subject may not have abiotic items on' message
@@ -35,12 +35,12 @@
 
 /obj/machinery/gibber/RefreshParts()
 	. = ..()
-	gibtime = 40
+	gibtime = initial(gibtime)
 	efficiency = initial(efficiency)
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		efficiency += matter_bin.tier * 0.25
 	for(var/datum/stock_part/servo/servo in component_parts)
-		gibtime -= 5 * servo.tier
+		gibtime -= 0.5 SECONDS * servo.tier
 		if(servo.tier >= 2)
 			ignore_clothing = TRUE
 
