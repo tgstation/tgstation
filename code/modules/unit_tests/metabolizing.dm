@@ -126,7 +126,6 @@
 /datum/unit_test/metabolizing_without_liver
 
 /datum/unit_test/metabolizing_without_liver/Run()
-	. = ..()
 	var/mob/living/carbon/human/consistent/dummy = EASY_ALLOCATE()
 	dummy.adjust_organ_loss(ORGAN_SLOT_LIVER, INFINITY)
 	dummy.reagents.add_reagent(/datum/reagent/medicine/c2/libital, 10)
