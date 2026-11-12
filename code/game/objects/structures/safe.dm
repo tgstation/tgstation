@@ -65,6 +65,11 @@ FLOOR SAFES
 		AddElement(/datum/element/climbable)
 		AddElement(/datum/element/elevation, pixel_shift = 22)
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 	if(open && !locked)
 		return
 
@@ -86,6 +91,13 @@ FLOOR SAFES
 	//uses the same icon as the captain's spare safe (therefore lockable storage) so keep it in line with that
 	icon_state = "[initial(icon_state)][open ? null : "_locked"]"
 	return ..()
+
+/obj/structure/safe/proc/on_magic_unlock(obj/source, datum/spell, mob/caster)
+	SIGNAL_HANDLER
+
+	locked = FALSE
+	open = TRUE
+	update_appearance()
 
 /obj/structure/safe/wrench_act(mob/living/user, obj/item/tool)
 	if(!open)
