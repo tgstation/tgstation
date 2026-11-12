@@ -457,7 +457,7 @@
 	var/old_amount = staminaloss
 	staminaloss = amount
 	var/delta = old_amount - staminaloss
-	return on_damage_loss(-delta, updating_stamina, forced, STAMINA, delta)
+	. = on_damage_loss(-delta, updating_stamina, forced, STAMINA, delta)
 
 /**
  * Called at the end of each set/adjust_x_loss proc, regardless of whether damage was actually inflicted/healed or not.
@@ -471,17 +471,22 @@
  */
 /mob/living/proc/on_damage_loss(amount, updating_health, forced, damage_type, difference)
 	SHOULD_CALL_PARENT(TRUE)
-	if(difference) // only call on_damage_loss_changed if there's an actual change
+	// on_damage_loss_changed is only called if there is an actual change
+	if(difference != 0)
 		//We pass down 'difference' and not 'amount' as that's the actual change, with its sign swapped to match
 		//how positive values represent damage and negative represent healing in adjust_x_loss() calls once again (less confusing this way).
 		on_damage_loss_changed(-difference, updating_health, forced, damage_type)
-	return difference //I'm pretty sure only mob_damage unit tests need this return value, but who knows...
+
+	// BUUUT WE'RE INTENTIONALLY CHECKING FOR >= 0 HERE BECAUSE TAKING 0 STAMINA DAMAGE STILL RESETS THE TIMER!!
+	if(damage_type == STAMINA && difference >= 0)
+		timed_stamina_reset()
+		SEND_SIGNAL(src, COMSIG_LIVING_STAMINA_RESET)
+
+	return difference
 
 ///Called by [on_damage_loss()], if the damage was actually inflicted or healed (difference different than 0)
 /mob/living/proc/on_damage_loss_changed(amount, updating_health, forced, damage_type)
 	SHOULD_CALL_PARENT(TRUE)
-	if(damage_type == STAMINA && amount > 0)
-		timed_stamina_reset()
 	if(updating_health)
 		updatehealth()
 
