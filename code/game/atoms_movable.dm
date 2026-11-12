@@ -1922,22 +1922,20 @@
 /*
  * Returns TRUE if the ally or allies in list are in our allies list
  * If match_all is set, we have to match everything in the provided list arg.
+ *
+ * NB: match_all will VERY OFTEN fail for allies as mobs are allied to themselves.
+ * Only use it if you know what you're doing, you will almost certainly want to do a faction check instead.
  */
 /atom/movable/proc/has_ally(ally_or_allies, match_all)
 	if (!LAZYLEN(allies))
 		return FALSE
 
 	if (islist(ally_or_allies))
-		if(match_all)
-			var/match_count = FACTION_CHECK(null, null, allies, ally_or_allies, TRUE)
-			return (match_count == LAZYLEN(ally_or_allies))
-		else
-			return FACTION_CHECK(null, null, allies, ally_or_allies, FALSE)
-
-	else if(isatom(ally_or_allies))
+		return ALLY_CHECK(allies, ally_or_allies, match_all)
+	if(isatom(ally_or_allies))
 		return "[REF(ally_or_allies)]" in allies
-	else
-		return ally_or_allies in allies
+	return ally_or_allies in allies
+
 /**
  * Returns the faction list of this atom/movable
  */
@@ -2016,24 +2014,6 @@
 
 	else
 		return faction_or_factions in faction
-
-/**
- * Returns TRUE if any of the factions or allies are in our faction list.
- * If match_all is set, we have to match everything in the provided list arg.
- */
-/atom/movable/proc/has_faction_or_allies(faction_or_factions, allies_list, match_all)
-	if (!LAZYLEN(faction_or_factions))
-		return FALSE
-
-	if (islist(faction_or_factions))
-		if (match_all)
-			var/match_count = FACTION_CHECK(faction, faction_or_factions, allies, allies_list, TRUE)
-			return (match_count == LAZYLEN(faction_or_factions) + LAZYLEN(allies_list))
-		else
-			return FACTION_CHECK(faction, faction_or_factions, allies, allies_list, FALSE)
-
-	else
-		return (faction_or_factions in faction) && FACTION_CHECK(null, null, allies, allies_list, match_all)
 
 /**
  * Opens the modify faction ui.

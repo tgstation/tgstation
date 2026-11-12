@@ -126,6 +126,9 @@
 	var/mob/living/carbon/human/consistent/guy_a = EASY_ALLOCATE()
 	var/mob/living/carbon/human/consistent/guy_b = EASY_ALLOCATE()
 
+	guy_a.set_faction(null)
+	guy_b.set_faction(null)
+
 	TEST_ASSERT(!guy_a.faction_check_atom(guy_b), "guy_a and guy_b should not have a faction match.")
 	TEST_ASSERT(!guy_b.faction_check_atom(guy_a, TRUE), "guy_b and guy_a should not have an exact faction match.")
 

@@ -149,9 +149,24 @@
  */
 #define FACTION_CHECK(faction_A, faction_B, allies_A, allies_B, exact_match) \
 ( \
-	LAZYLEN((allies_A) & (allies_B)) || \
+	ALLY_CHECK(allies_A, allies_B, FALSE/* we're ignoring exact_match here intentionally! */) || \
 	(exact_match) ? \
 		( LAZYLEN((faction_A) & (faction_B)) == LAZYLEN(faction_A) ) \
 	: \
 		( LAZYLEN((faction_A) & (faction_B)) ) \
+)
+
+/**
+ * Compares two lists of allies, resolving to TRUE if there is any overlap.
+ * If exact_match is set, we only resolve to TRUE if ALL allies in allies_A are also present in allies_B.
+ *
+ * NB: exact_match will VERY OFTEN fail for allies as mobs are allied to themselves.
+ * Only use it if you know what you're doing (you will almost certainly want to do a faction check instead).
+ */
+#define ALLY_CHECK(allies_A, allies_B, exact_match) \
+( \
+	(exact_match) ? \
+		( LAZYLEN((allies_A) & (allies_B)) == LAZYLEN(allies_A) ) \
+	: \
+		( LAZYLEN((allies_A) & (allies_B)) ) \
 )
