@@ -52,6 +52,7 @@
 	src.rank = rank
 	src.species = species
 	src.trim = trim
+	src.voice = voice
 
 /// Parses gender field into byond gender defines
 /datum/record/proc/get_byond_gender()
