@@ -300,6 +300,6 @@
 	playsound(src, 'sound/effects/magic/summon_magic.ogg', 50, TRUE, TRUE)
 
 	var/mob/living/stickman = new /mob/living/basic/stickman/lesser(get_turf(summoner))
-	stickman.add_ally(summoner)
+	SET_FACTION_AND_ALLIES_FROM(stickman, summoner)
 
 	COOLDOWN_START(src, summoning_cooldown, 3 SECONDS)
