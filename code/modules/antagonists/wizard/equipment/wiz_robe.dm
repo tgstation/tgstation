@@ -301,5 +301,6 @@
 
 	var/mob/living/stickman = new /mob/living/basic/stickman/lesser(get_turf(summoner))
 	SET_FACTION_AND_ALLIES_FROM(stickman, summoner)
+	stickman.remove_faction(FACTION_NEUTRAL)
 
 	COOLDOWN_START(src, summoning_cooldown, 3 SECONDS)
