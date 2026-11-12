@@ -114,6 +114,7 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
+	voice = "?????",
 	/// Crew specific
 	lock_ref,
 	major_disabilities = "None",
@@ -164,6 +165,7 @@
 	rank = "Unassigned",
 	species = "Human",
 	trim = "Unassigned",
+	voice = "?????",
 	/// Locked specific
 	datum/dna/locked_dna,
 	datum/mind/mind_ref,
