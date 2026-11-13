@@ -23,6 +23,8 @@
 	icon_state = "cucumber"
 	foodtypes = VEGETABLES
 	tastes = list("cucumber" = 1)
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 
 /obj/item/food/grown/cucumber/juice_typepath()
 	return /datum/reagent/consumable/cucumberjuice

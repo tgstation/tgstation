@@ -112,7 +112,7 @@
 	abstract = FALSE
 	wound_path_to_generate = /datum/wound/blunt/robotic/moderate
 	// logically you could have loose screws in a torso, but this is for parity and balance reasons
-	required_limb_biostate = BIO_JOINTED
+	required_limb_biostate = BIO_METAL | BIO_JOINTED
 	threshold_minimum = 35
 
 /datum/wound/blunt/robotic/moderate/treat(obj/item/potential_treater, mob/user)

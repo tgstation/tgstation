@@ -46,7 +46,7 @@
 				return trim(input(user, message, title, default) as text|null, max_length)
 	var/datum/tgui_input_text/text_input = new(user, message, title, default, max_length, multiline, encode, timeout, ui_state)
 	text_input.ui_interact(user)
-	text_input.wait()
+	text_input.wait(user)
 	if (text_input)
 		. = text_input.entry
 		qdel(text_input)
@@ -103,8 +103,8 @@
  * Waits for a user's response to the tgui_input_text's prompt before returning. Returns early if
  * the window was closed by the user.
  */
-/datum/tgui_input_text/proc/wait()
-	while (!entry && !closed && !QDELETED(src))
+/datum/tgui_input_text/proc/wait(mob/user)
+	while (!entry && !closed && !QDELETED(src) && !QDELETED(user))
 		stoplag(1)
 
 /datum/tgui_input_text/ui_interact(mob/user, datum/tgui/ui)

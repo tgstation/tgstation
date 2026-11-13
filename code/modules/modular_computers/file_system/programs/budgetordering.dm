@@ -99,8 +99,8 @@
 			can_approve_requests = FALSE
 	else
 		requestonly = TRUE
-	if(buyer)
-		data["points"] = buyer.account_balance
+
+	data["points"] = buyer?.account_balance || 0
 	// To recap above because it's kind of a mess, here's all the options:
 		//Head of staff ID card: Can approve, buy, and make purchases using their own departmental budgets.
 		//ID card, not a head of staff: can request items from cargo using departmental budget.
@@ -111,6 +111,8 @@
 	//Data regarding the User's capability to buy things.
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
+	data["goody_order_cost_modifier"] = id_card?.registered_account?.goody_order_cost_modifier || 1.0
+	data["private_order_cost_modifier"] = id_card?.registered_account?.private_order_cost_modifier || 1.0
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched

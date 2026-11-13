@@ -39,6 +39,8 @@
 	foodtypes = FRUIT
 	tastes = list("apple" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/hcider
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 	/// Do we know about the worm?
 	var/found_worm = FALSE
 	/// The worm in question

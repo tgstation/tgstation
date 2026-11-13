@@ -53,6 +53,11 @@
 	else
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_interact))
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
+	)
+	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
+
 /datum/component/lockable_storage/UnregisterFromParent()
 	if(can_hack_open)
 		UnregisterSignal(parent, list(
@@ -70,6 +75,7 @@
 		UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	else
 		UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND)
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 	return ..()
 
 /**
@@ -202,6 +208,13 @@
 /datum/component/lockable_storage/proc/on_interact(atom/source, mob/user)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
+
+/datum/component/lockable_storage/proc/on_magic_unlock(obj/source, datum/spell, mob/caster)
+	SIGNAL_HANDLER
+
+	if(isturf(source.loc) || get(source, /mob) == caster)
+		numeric_input = lock_code
+		source.atom_storage.set_locked(STORAGE_NOT_LOCKED)
 
 /datum/component/lockable_storage/ui_interact(mob/user, datum/tgui/ui)
 	var/obj/source = parent

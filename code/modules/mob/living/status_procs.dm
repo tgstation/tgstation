@@ -507,6 +507,8 @@
 	for(var/datum/quirk/candidate as anything in quirks)
 		if(from_scan && (candidate.quirk_flags & QUIRK_HIDE_FROM_SCAN))
 			continue
+		if(medical && (candidate.quirk_flags & QUIRK_NO_RECORD))
+			continue
 		switch(category)
 			if(CAT_QUIRK_MAJOR_DISABILITY)
 				if(candidate.value >= -4)
