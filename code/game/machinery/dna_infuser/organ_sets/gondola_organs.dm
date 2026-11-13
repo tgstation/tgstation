@@ -100,13 +100,13 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	else
 		to_chat(liver_owner, span_warning("You feel like something would be happening to your arms right now... if you still had them."))
 	to_chat(liver_owner, span_notice("Hugging a target will pacify them, but you won't be able to carry much of anything anymore."))
-	RegisterSignal(liver_owner, COMSIG_HUMAN_EQUIPPING_ITEM, PROC_REF(on_owner_equipping_item))
+	RegisterSignal(liver_owner, COMSIG_MOB_CAN_EQUIP, PROC_REF(on_owner_equipping_item))
 	RegisterSignal(liver_owner, COMSIG_LIVING_TRY_PULL, PROC_REF(on_owner_try_pull))
 	RegisterSignal(liver_owner, COMSIG_CARBON_HELPED, PROC_REF(on_hug))
 
 /obj/item/organ/liver/gondola/on_mob_remove(mob/living/carbon/liver_owner, special, movement_flags)
 	. = ..()
-	UnregisterSignal(liver_owner, list(COMSIG_HUMAN_EQUIPPING_ITEM, COMSIG_LIVING_TRY_PULL, COMSIG_CARBON_HELPED))
+	UnregisterSignal(liver_owner, list(COMSIG_MOB_CAN_EQUIP, COMSIG_LIVING_TRY_PULL, COMSIG_CARBON_HELPED))
 
 /// signal sent when prompting if an item can be equipped
 /obj/item/organ/liver/gondola/proc/on_owner_equipping_item(mob/living/carbon/human/owner, obj/item/equip_target, slot)

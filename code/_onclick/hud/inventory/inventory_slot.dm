@@ -6,7 +6,7 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 		slot_types[slot_type] = new slot_type()
 	return slot_types
 
-/// Inventory slot datum (singleton) which holds data about an inventory screen element
+/// Inventory slot datum (singleton) which holds data about an inventory slot and its screen element
 /datum/inventory_slot
 	abstract_type = /datum/inventory_slot
 	/// Name assigned to the screen element
@@ -25,6 +25,9 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 	var/screen_group = HUD_GROUP_STATIC
 	/// Typepath of the screen element
 	var/screen_type = /atom/movable/screen/inventory
+
+	/// Is this slot affected by equip_delay?
+	var/has_equip_delay = FALSE
 
 /datum/inventory_slot/proc/create_element(datum/hud/hud)
 	var/atom/movable/screen/inventory/inv_box = hud.add_screen_object(screen_type, HUD_KEY_ITEM_SLOT(slot_id), screen_group, inherit_style ? hud.ui_style : null, screen_loc)
@@ -66,12 +69,17 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 	slot_item.pixel_y = slot_item.base_pixel_y
 	slot.vis_contents += slot_item
 
+/// Returns if an item can be equipped into this slot by a mob
+/// Needs to be overriden by a per-slot basis by individual mob inventory slots
+/datum/inventory_slot/proc/can_equip(obj/item/target, slot, disable_warning, mob/living/owner, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
+	CRASH("[owner] attempted to equip [target] into a slot [slot] ([type]) that does not override can_equip!")
+
 // Not a real inventory slot, but this is used as a generic abstraction for hand slot UI behaviors
 /datum/inventory_slot/hands
 	slot_id = ITEM_SLOT_HANDS
 
 /datum/inventory_slot/hands/create_element(datum/hud/hud)
-	CRASH("[hud] attempted to call create_element on a behavior-only hands inventory slot datum!")
+	return
 
 /datum/inventory_slot/hands/get_slot_item(mob/owner, hand_index = 1)
 	return owner.get_item_for_held_index(hand_index)
@@ -92,3 +100,36 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 
 	var/obj/item/slot_item = get_slot_item(owner, hand_index)
 	update_slot_icon_contents(slot, slot_item)
+
+/datum/inventory_slot/hands/can_equip(obj/item/target, slot, disable_warning, mob/living/owner, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
+	if (!(owner.mobility_flags & MOBILITY_PICKUP))
+		return FALSE
+	if (length(owner.get_empty_held_indexes()))
+		return TRUE
+	return FALSE
+
+/// System slot for handcuffs, not on the UI
+/datum/inventory_slot/handcuffs
+	slot_id = ITEM_SLOT_HANDCUFFED
+
+/datum/inventory_slot/handcuffs/create_element(datum/hud/hud)
+	return
+
+/datum/inventory_slot/handcuffs/update_inventory_slot(datum/hud/hud, mob/owner)
+	return
+
+/datum/inventory_slot/handcuffs/can_equip(obj/item/target, slot, disable_warning, mob/living/owner, bypass_equip_delay_self, ignore_equipped, indirect_action)
+	return owner.num_hands >= 2
+
+/// System slot for legcuffs, not on the UI
+/datum/inventory_slot/legcuffs
+	slot_id = ITEM_SLOT_LEGCUFFED
+
+/datum/inventory_slot/legcuffs/create_element(datum/hud/hud)
+	return
+
+/datum/inventory_slot/legcuffs/update_inventory_slot(datum/hud/hud, mob/owner)
+	return
+
+/datum/inventory_slot/legcuffs/can_equip(obj/item/target, slot, disable_warning, mob/living/owner, bypass_equip_delay_self, ignore_equipped, indirect_action)
+	return owner.num_legs >= 2
