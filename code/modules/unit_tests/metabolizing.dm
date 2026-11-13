@@ -12,7 +12,7 @@
 
 /datum/unit_test/metabolization/proc/test_reagent(mob/living/carbon/C, reagent_type)
 	C.reagents.add_reagent(reagent_type, 10)
-	C.reagents.metabolize(C, SSMOBS_DT, 0, can_overdose = TRUE)
+	C.reagents.metabolize(C, SSMOBS_DT, can_overdose = TRUE)
 	C.reagents.clear_reagents()
 
 /datum/unit_test/metabolization/Destroy()
@@ -122,3 +122,20 @@
 /datum/unit_test/addictions/Destroy()
 	SSmobs.ignite()
 	return ..()
+
+/datum/unit_test/metabolizing_without_liver
+
+/datum/unit_test/metabolizing_without_liver/Run()
+	var/mob/living/carbon/human/consistent/dummy = EASY_ALLOCATE()
+	dummy.adjust_organ_loss(ORGAN_SLOT_LIVER, INFINITY)
+	dummy.reagents.add_reagent(/datum/reagent/medicine/c2/libital, 10)
+	var/obj/item/organ/liver/liver = dummy.get_organ_slot(ORGAN_SLOT_LIVER)
+	liver.on_life(SSMOBS_DT)
+	var/datum/reagent/medicine/c2/libital/the_reagent = locate() in dummy.reagents.reagent_list
+	TEST_ASSERT_NOTNULL(the_reagent, "Reagent was not found in the dummy's reagents after metabolization")
+	TEST_ASSERT_EQUAL(10, the_reagent.volume, "Reagent volume was altered despite liver failure")
+	TEST_ASSERT(!the_reagent.metabolizing, "Reagent was metabolized despite liver failure")
+	the_reagent.self_consuming = TRUE
+	liver.on_life(SSMOBS_DT)
+	TEST_ASSERT_NOTEQUAL(10, the_reagent.volume, "Reagent volume was not altered despite being self-consuming")
+	TEST_ASSERT(the_reagent.metabolizing, "Reagent was not metabolizing despite being self-consuming")
