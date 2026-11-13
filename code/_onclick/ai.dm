@@ -290,18 +290,19 @@
 		return
 
 	//relatively safe modes that progressively get more iffy
-	var/list/shift_modes/ = list(
+	var/list/shift_modes = list(
 		/datum/air_alarm_mode/filtering,
 		/datum/air_alarm_mode/contaminated,
 		/datum/air_alarm_mode/refill,
-		/datum/air_alarm_mode/draught)
+		/datum/air_alarm_mode/draught,
+	)
 
 	//checks if we are mid shift cycle or need to start at beginning
 	var/shift_index = shift_modes.Find(selected_mode.type)
 	if((shift_index)&&(shift_modes.len > shift_index))
 		select_mode(user, shift_modes[shift_index + 1])
-		balloon_alert(user, "[selected_mode.name]")
-		investigate_log("was cycled to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
+		balloon_alert(user, "[selected_mode::name]")
+		investigate_log("was cycled to [selected_mode::name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
 		return
 	select_mode(user, /datum/air_alarm_mode/filtering)
 	balloon_alert(user, "filtering")
@@ -322,17 +323,18 @@
 	if(aidisabled)
 		return NONE
 	//all of the modes that require more deliberation
-	var/list/alt_modes/ = list(
+	var/list/alt_modes = list(
 		/datum/air_alarm_mode/cycle,
 		/datum/air_alarm_mode/siphon,
-		/datum/air_alarm_mode/panic_siphon)
+		/datum/air_alarm_mode/panic_siphon,
+	)
 
 	//checks if we are mid alt cycle or need to start at beginning
 	var/alt_index = alt_modes.Find(selected_mode.type)
 	if((alt_index)&&(alt_modes.len > alt_index))
 		select_mode(user, alt_modes[alt_index + 1])
-		balloon_alert(user, "[selected_mode.name]")
-		investigate_log("was cycled to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
+		balloon_alert(user, "[selected_mode::name]")
+		investigate_log("was cycled to [selected_mode::name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
 		return CLICK_ACTION_SUCCESS
 	select_mode(user, /datum/air_alarm_mode/cycle)
 	balloon_alert(user, "cycle")
