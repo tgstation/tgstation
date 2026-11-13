@@ -21,6 +21,7 @@
 	RegisterSignal(parent, COMSIG_CLICK_CTRL, PROC_REF(try_removing_item))
 	RegisterSignal(parent, COMSIG_FOOD_EATEN, PROC_REF(consume_food_storage))
 	RegisterSignals(parent, list(COMSIG_FOOD_CONSUMED, COMSIG_OBJ_DECONSTRUCT), PROC_REF(storage_consumed))
+	ADD_TRAIT(parent, TRAIT_PASS_ID_ACCESS_IN_CONTENTS, REF(src))
 
 	var/atom/food = parent
 	initial_volume = food.reagents.total_volume
@@ -32,6 +33,7 @@
 	food.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 /datum/component/food_storage/UnregisterFromParent()
+	REMOVE_TRAIT(parent, TRAIT_PASS_ID_ACCESS_IN_CONTENTS, REF(src))
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ITEM_INTERACTION_SECONDARY,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
