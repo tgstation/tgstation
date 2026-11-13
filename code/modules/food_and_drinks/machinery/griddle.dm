@@ -31,10 +31,14 @@
 		update_appearance()
 	RegisterSignal(src, COMSIG_ATOM_EXPOSE_REAGENT, PROC_REF(on_expose_reagent))
 	RegisterSignal(src, COMSIG_STORAGE_DUMP_CONTENT, PROC_REF(on_storage_dump))
+	AddComponent(/datum/component/touch_the_stove, is_active = CALLBACK(src, PROC_REF(is_active)), temperature = 1000)
 
 /obj/machinery/griddle/Destroy()
 	QDEL_NULL(grill_loop)
 	return ..()
+
+/obj/machinery/griddle/proc/is_active()
+	return on
 
 /obj/machinery/griddle/crowbar_act(mob/living/user, obj/item/I)
 	. = default_deconstruction_crowbar(user, I)
@@ -123,11 +127,7 @@
 		item.atom_storage.attempt_insert(tray_item, user, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/griddle/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	toggle_mode()
-
-/obj/machinery/griddle/attack_robot(mob/user)
+/obj/machinery/griddle/interact(mob/user)
 	. = ..()
 	toggle_mode()
 
