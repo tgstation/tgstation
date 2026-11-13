@@ -441,7 +441,9 @@
 	if(amount > 0 && !forced)
 		amount *= GET_PHYSIOLOGY(src, STAMINA)
 
-	if(!amount || !can_adjust_stamina_loss(amount, forced, required_biotype))
+	// No !amount check here, and that's intentional.
+	// Taking 0 stamina damage should still reset the regen timer.
+	if(!can_adjust_stamina_loss(amount, forced, required_biotype))
 		return 0
 
 	var/old_amount = staminaloss
@@ -457,7 +459,7 @@
 	var/old_amount = staminaloss
 	staminaloss = amount
 	var/delta = old_amount - staminaloss
-	. = on_damage_loss(-delta, updating_stamina, forced, STAMINA, delta)
+	return on_damage_loss(-delta, updating_stamina, forced, STAMINA, delta)
 
 /**
  * Called at the end of each set/adjust_x_loss proc, regardless of whether damage was actually inflicted/healed or not.
