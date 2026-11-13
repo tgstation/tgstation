@@ -453,6 +453,14 @@
 	. = ..()
 	AddElement(/datum/element/blood_limb_overlay)
 
+/obj/item/bodypart/leg/left/skeleton/nonfunctional/digitigrade
+	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
+	footstep_type = FOOTSTEP_MOB_CLAW
+
+/obj/item/bodypart/leg/left/skeleton/nonfunctional/digitigrade/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/digitigrade_limb, "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]", limb_id, TRUE)
+
 /obj/item/bodypart/leg/right/skeleton/nonfunctional
 	limb_id = BODYPART_ID_BONE
 	disabling_threshold_percentage = 0
@@ -461,6 +469,15 @@
 /obj/item/bodypart/leg/right/skeleton/nonfunctional/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/blood_limb_overlay)
+
+/obj/item/bodypart/leg/right/skeleton/nonfunctional/digitigrade
+	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
+	footstep_type = FOOTSTEP_MOB_CLAW
+
+/obj/item/bodypart/leg/right/skeleton/nonfunctional/digitigrade/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/digitigrade_limb, "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]", limb_id, TRUE)
+
 
 ///MUSHROOM
 /obj/item/bodypart/head/mushroom
