@@ -149,6 +149,8 @@
 2026-11-13:
   Melbert:
   - balance: The Knock spell will open safes and briefcases
+  - map: Removed excess waste filters from the Supermatter Engine across all maps
+  - map: Standardizes waste output of the Supermatter Engine across all maps
   PapaMichael:
   - bugfix: The Kilostation Sci Security outpost now has a security science locker
   grungussuss:

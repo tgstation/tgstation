@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - map: "Removed excess waste filters from the Supermatter Engine across all maps"
-  - map: "Standardizes waste output of the Supermatter Engine across all maps"
