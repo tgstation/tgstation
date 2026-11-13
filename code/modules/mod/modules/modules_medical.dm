@@ -341,7 +341,7 @@
 		var/shared_flags = target_zones & clothing.body_parts_covered
 		if(shared_flags)
 			ripped_clothing[clothing] = shared_flags
-			clothing.body_parts_covered &= ~shared_flags
+			clothing.remove_bodypart_coverage(shared_flags)
 
 /obj/item/mod/module/thread_ripper/on_process(seconds_per_tick)
 	. = ..()
@@ -358,7 +358,7 @@
 		if(istype(clothing_wearer) && mod.wearer.Adjacent(clothing_wearer) && !clothing_wearer.is_holding(clothing))
 			continue
 		zipped = TRUE
-		clothing.body_parts_covered |= ripped_clothing[clothing]
+		clothing.add_bodypart_coverage(ripped_clothing[clothing])
 		ripped_clothing -= clothing
 	if(zipped)
 		playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE)
@@ -371,7 +371,7 @@
 		if(QDELETED(clothing))
 			ripped_clothing -= clothing
 			continue
-		clothing.body_parts_covered |= ripped_clothing[clothing]
+		clothing.add_bodypart_coverage(ripped_clothing[clothing])
 	ripped_clothing = list()
 	if(!deleting)
 		playsound(src, 'sound/items/zip/zip.ogg', 25, TRUE)
