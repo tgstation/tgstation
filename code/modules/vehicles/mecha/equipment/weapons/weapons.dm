@@ -153,7 +153,7 @@
 	desc = "A weapon for combat exosuits. Shoots powerful destructive blasts capable of demolishing obstacles."
 	icon_state = "mecha_pulse"
 	energy_drain = 1.2 KILO JOULES
-	projectile = /obj/projectile/beam/pulse/heavy
+	projectile = /obj/projectile/beam/laser/pulse/heavy
 	fire_sound = 'sound/items/weapons/marauder.ogg'
 	harmful = TRUE
 

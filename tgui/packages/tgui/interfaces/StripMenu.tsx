@@ -1,6 +1,6 @@
 import { range } from 'es-toolkit';
 import type { CSSProperties } from 'react';
-import { Box, Button, Icon, Image, Stack } from 'tgui-core/components';
+import { Box, Button, DmIcon, Icon, Image, Stack } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
 import { resolveAsset } from '../assets';
@@ -273,9 +273,14 @@ type Interactable = {
   interacting: BooleanLike;
 };
 
+type AlternateActionIcon = {
+  icon: string;
+  icon_state: string;
+};
+
 type AlternateActions = {
   alternate?: string[];
-  alternate_icons?: Record<string, string> | null;
+  alternate_icons?: Record<string, AlternateActionIcon> | null;
 };
 
 /**
@@ -294,6 +299,7 @@ type StripMenuItem =
   | ((
       | ({
           icon: string;
+          icon_state: string;
           name: string;
           obscured: ObscuringLevel;
         } & AlternateActions)
@@ -352,8 +358,9 @@ export const StripMenu = (props) => {
                     tooltip = slot.displayName;
                   } else if ('name' in item) {
                     content = (
-                      <Image
-                        src={`data:image/jpeg;base64,${item.icon}`}
+                      <DmIcon
+                        icon={item.icon}
+                        icon_state={item.icon_state}
                         width="64px"
                         height="64px"
                         style={{
@@ -393,8 +400,7 @@ export const StripMenu = (props) => {
                   if (item && 'alternate' in item && item.alternate?.length) {
                     alternateActions = item.alternate.map(
                       (alternateKey, idx) => {
-                        const alternateAction =
-                          ALTERNATE_ACTIONS[alternateKey];
+                        const alternateAction = ALTERNATE_ACTIONS[alternateKey];
                         const alternateIcon =
                           item.alternate_icons?.[alternateKey];
 
@@ -434,8 +440,9 @@ export const StripMenu = (props) => {
                             }
                           >
                             {alternateIcon ? (
-                              <Image
-                                src={`data:image/jpeg;base64,${alternateIcon}`}
+                              <DmIcon
+                                icon={alternateIcon.icon}
+                                icon_state={alternateIcon.icon_state}
                                 width="20px"
                                 height="20px"
                               />

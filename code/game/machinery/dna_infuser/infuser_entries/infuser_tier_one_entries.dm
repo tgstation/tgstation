@@ -53,10 +53,10 @@
 	tier = DNA_MUTANT_TIER_ONE
 	status_effect_type = /datum/status_effect/organ_set_bonus/carp
 
-/datum/infuser_entry/rat
-	name = "Rat"
+/datum/infuser_entry/mouse
+	name = "Mouse"
 	infuse_mob_name = "rodent"
-	desc = "Frail, small, positively cheesed to face the world. Easy to stuff yourself full of rat DNA, but perhaps not the best choice?"
+	desc = "Frail, small, positively cheesed to face the world. Easy to stuff yourself full of mouse DNA, but perhaps not the best choice?"
 	threshold_desc = "you become lithe enough to crawl through ventilation."
 	qualities = list(
 		"cheesy lines",
@@ -68,14 +68,16 @@
 		/obj/item/food/deadmouse,
 	)
 	output_organs = list(
-		/obj/item/organ/eyes/night_vision/rat,
-		/obj/item/organ/heart/rat,
-		/obj/item/organ/stomach/rat,
-		/obj/item/organ/tongue/rat,
+		/obj/item/organ/eyes/night_vision/mouse,
+		/obj/item/organ/heart/mouse,
+		/obj/item/organ/stomach/mouse,
+		/obj/item/organ/tongue/mouse,
+		/obj/item/organ/tail/mouse,
+		/obj/item/organ/ears/mouse,
 	)
 	infusion_desc = "skittish"
 	tier = DNA_MUTANT_TIER_ONE
-	status_effect_type = /datum/status_effect/organ_set_bonus/rat
+	status_effect_type = /datum/status_effect/organ_set_bonus/mouse
 
 /datum/infuser_entry/roach
 	name = "Roach"

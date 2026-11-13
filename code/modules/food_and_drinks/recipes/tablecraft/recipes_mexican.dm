@@ -130,7 +130,7 @@
 /datum/crafting_recipe/food/chipsandsalsa
 	name = "Chips and salsa"
 	reqs = list(
-		/obj/item/food/cornchips = 1,
+		/obj/item/food/chips/corn = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/tomato = 1,

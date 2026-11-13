@@ -102,9 +102,42 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
+	VAR_PRIVATE/opened = FALSE
+
+/obj/item/food/chips/make_edible()
+	. = ..()
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, after_eat = CALLBACK(src, PROC_REF(open_bag)))
+
+/obj/item/food/chips/proc/open_bag(...)
+	opened = TRUE
+
 /obj/item/food/chips/make_leave_trash()
-	if(trash_type)
-		AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
+	. = ..()
+	if(!trash_type)
+		return
+	var/static/list/loc_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(pop_bag))
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/item/food/chips/proc/pop_bag(datum/source, atom/entered, ...)
+	SIGNAL_HANDLER
+
+	if(opened || !isliving(entered) || !isturf(loc)) // can't pop opened chips
+		return
+
+	var/mob/living/popper = entered
+	if(popper.mob_size < MOB_SIZE_HUMAN)
+		return
+
+	playsound(src, 'sound/effects/chipbagpop.ogg', 100)
+
+	popper.visible_message(
+		span_danger("[popper] steps on \the [source], popping the bag!"),
+		span_danger("You step on \the [source], popping the bag!"),
+		span_danger("You hear a sharp crack!"),
+		COMBAT_MESSAGE_RANGE,
+	)
+	new trash_type(loc)
+	qdel(src)
 
 /obj/item/food/chips/shrimp
 	name = "shrimp chips"
@@ -457,7 +490,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	trash_type = /obj/item/trash/semki/healthy
 	crafting_complexity = FOOD_COMPLEXITY_1
 
-/obj/item/food/cornchips
+/obj/item/food/chips/corn
 	name = "\improper Boritos corn chips"
 	desc = "Triangular corn chips. They do seem a bit bland but would probably go well with some kind of dipping sauce."
 	icon_state = "boritos"
@@ -475,10 +508,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/cornchips/make_leave_trash()
-	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
-
-/obj/item/food/cornchips/blue
+/obj/item/food/chips/corn/blue
 	name = "\improper Coolest Ranch Boritos corn chips"
 	desc = "Which came first, ranch or cool ranch?"
 	icon_state = "boritos"
@@ -492,7 +522,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	)
 	tastes = list("fried corn" = 1, "coolest ranch" = 3)
 
-/obj/item/food/cornchips/green
+/obj/item/food/chips/corn/green
 	name = "\improper Spess Salsa Boritos corn chips"
 	desc = "It has the salsa baked in, so you don't need dip."
 	icon_state = "boritosgreen"
@@ -506,7 +536,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	)
 	tastes = list("fried corn" = 1, "spess salsa" = 3)
 
-/obj/item/food/cornchips/red
+/obj/item/food/chips/corn/red
 	name = "\improper Nacho Cheese Boritos corn chips"
 	desc = "Notorious for helping cover everything you touch in orange cheese dust."
 	icon_state = "boritosred"
@@ -520,7 +550,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	)
 	tastes = list("fried corn" = 1, "nacho cheese" = 3)
 
-/obj/item/food/cornchips/purple
+/obj/item/food/chips/corn/purple
 	name = "\improper Spicy Sweet Chili Boritos corn chips"
 	desc = "The only flavour that actually tastes spicy like proper nachos."
 	icon_state = "boritospurple"
@@ -534,12 +564,12 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	)
 	tastes = list("fried corn" = 1, "spicy & sweet chili" = 3)
 
-/obj/item/food/cornchips/random
+/obj/item/food/chips/corn/random
 	name = "\improper Boritos cornchips"
 	desc = "Filled with one of four delicious flavours!"
 
-/obj/item/food/cornchips/random/Initialize(mapload)
-	var/random_flavour = pick(subtypesof(/obj/item/food/cornchips) - /obj/item/food/cornchips/random)
+/obj/item/food/chips/corn/random/Initialize(mapload)
+	var/random_flavour = pick(subtypesof(/obj/item/food/chips/corn) - /obj/item/food/chips/corn/random)
 
 	var/obj/item/food/sample = new random_flavour(loc)
 

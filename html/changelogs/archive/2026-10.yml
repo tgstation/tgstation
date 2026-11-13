@@ -626,3 +626,73 @@
       heads of staff.
   JohnFulpWillard:
   - rscadd: Plaques are now more customizable, and in the loadout menu.
+2026-10-29:
+  FeudeyTF:
+  - bugfix: 'fixed ''Input: Enable TGUI'' option for text inputs'
+  MacaroniCritter:
+  - qol: The loadout menu now relies on skins to select different colors of the fedora,
+      cowboy boots, and soft cap
+  Melbert:
+  - bugfix: Fix chat message when removing embedded objects from yourself
+  - bugfix: Fixes head revolutionary not getting codewords
+  - bugfix: Fix Crimson Cleaver Curse being droppable in late stages
+  - bugfix: Ceruleans picking up special shoes (like noslips) no longer permanently
+      breaks the shoes
+  - code_imp: Cleaned up clothing rendering very slightly, particularly relating to
+      inhand sprites, report anything weird with it
+  - code_imp: Cleaned up Cerulean shoe code, report anything weird with it
+  - bugfix: Fix some forms of zombification being uncurable
+  - bugfix: Fixes airborne disease spread. Sneezing, coughing, and breathing will
+      now spread diseases if you are UNMASKED, rather than if you are masked.
+  vinylspiders:
+  - admin: overflayer once again shows the base plane and offset for unregistered
+      planes it can decode.
+  - bugfix: the potential manifest in the pre-game lobby updates when someone unreadies.
+2026-10-30:
+  ArcaneMusic:
+  - admin: Admins may now use the "create black market item" verb to sell a marked
+      object on the black market.
+  CabinetOnFire:
+  - bugfix: Fixes edge-case where AI could get stuck in behaviors (due to decorators
+      not aborting correctly)
+  Melbert:
+  - bugfix: Fix changeling void adaptation and darkness adaptation speeding up chemical
+      regen, rather than slowing it down
+  - bugfix: Fix latejoin revolution never gaining new headrevs
+  - bugfix: Stealthy actions (like spy stealing's cog icon) are hidden again
+  - bugfix: (Should) fix issues where progress bars flash red or flash complete at
+      inappropriate times
+  - bugfix: Fixes ninja draining power directly from a cell only working if they fail
+      to drain power
+  - code_imp: Cleaned up cancel interactions hotkey to be less jank, report anything
+      weird
+  - bugfix: Traitors can actually get hijack objectives
+  - bugfix: Pirate, syndicate, and whiteship shuttles - among some other places -
+      now properly spawn with their AI interaction wires cut on their APCs and Airlocks,
+      preventing the AI and Cyborgs for messing with them unless mended.
+  PapaMichael:
+  - bugfix: Basic night vision (like from the genetics mutation) works again
+  - bugfix: You can once again give items with the keybind
+  necromanceranne:
+  - balance: Pulse projectiles now have high armor penetration. They also move extremely
+      quickly.
+  - balance: Pulse slugs do 40 damage and have an AP of 30.
+  - balance: X-ray lasers now do 20 damage instead of 15.
+  - balance: Smoothbore disablers no longer are inaccurate, and do 45 damage and move
+      twice as fast. They still struggle to harm anything with armor.
+  vinylspiders:
+  - qol: examining an unsecured welder now tells you its fuel tank is open and can
+      be screwed shut, and trying to light one tells you to screw the tank shut first.
+  - bugfix: camera coverage no longer breaks when looking down through glass at the
+      bottom of a multilevel area
+2026-10-31:
+  Melbert:
+  - bugfix: Fix riot armor using brown mesh (now black, matching the armor)
+  - bugfix: Smoke from things like smoke grenades or the chaplain's smoke spell once
+      again have a negative effect when exposed to it (coughing, minor oxygen damage,
+      dropping items)
+  - bugfix: Fix modsuit deploy canceling from movement
+  san7890:
+  - bugfix: Halloweeners rejoice, some ancient Dullahan bugs have been patched. This
+      includes their speech, how they interact as a changeling, and how they percieve
+      the world.

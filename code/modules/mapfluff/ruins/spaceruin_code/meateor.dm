@@ -78,7 +78,7 @@
 		/obj/item/organ/heart/gland/slime = 4,
 		/obj/item/organ/heart/gland/trauma = 4,
 		/obj/item/organ/heart/carp = 3,
-		/obj/item/organ/heart/rat = 3,
+		/obj/item/organ/heart/mouse = 3,
 		/obj/item/organ/heart/gland/electric = 3,
 		/obj/item/organ/monster_core/brimdust_sac = 3,
 		/obj/item/organ/monster_core/regenerative_core = 3,
@@ -88,7 +88,7 @@
 		/obj/item/organ/alien/acid = 2,
 		/obj/item/organ/alien/resinspinner = 2,
 		/obj/item/organ/eyes/night_vision/goliath = 2,
-		/obj/item/organ/eyes/night_vision/rat = 2,
+		/obj/item/organ/eyes/night_vision/mouse = 2,
 		/obj/item/organ/heart/gland/ventcrawling = 1,
 	)
 

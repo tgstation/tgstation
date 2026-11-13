@@ -721,28 +721,28 @@
 "Fs" = (
 /obj/structure/closet/cardboard,
 /obj/item/restraints/handcuffs/cable/zipties/used,
-/obj/item/food/cornchips/blue,
-/obj/item/food/cornchips/blue,
-/obj/item/food/cornchips/green,
-/obj/item/food/cornchips/green,
-/obj/item/food/cornchips/purple,
-/obj/item/food/cornchips/purple,
-/obj/item/food/cornchips/red,
-/obj/item/food/cornchips/red,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/blue{
+/obj/item/food/chips/corn/blue,
+/obj/item/food/chips/corn/blue,
+/obj/item/food/chips/corn/green,
+/obj/item/food/chips/corn/green,
+/obj/item/food/chips/corn/purple,
+/obj/item/food/chips/corn/purple,
+/obj/item/food/chips/corn/red,
+/obj/item/food/chips/corn/red,
+/obj/item/food/chips/corn/random,
+/obj/item/food/chips/corn/random,
+/obj/item/food/chips/corn/blue{
 	desc = "Limited edition flavour. Only for sale within the space commonwealth.";
 	name = "\improper Space Salt and Vinegar Boritos corn chips";
 	tastes = list("salt" = 1, "vinegar" = 3)
 	},
-/obj/item/food/cornchips/blue{
+/obj/item/food/chips/corn/blue{
 	desc = "Limited edition flavour. Only for sale within the space commonwealth.";
 	name = "\improper Space Salt and Vinegar Boritos corn chips";
 	tastes = list("salt" = 1, "vinegar" = 3)
 	},
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
+/obj/item/food/chips/corn/random,
+/obj/item/food/chips/corn/random,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Fz" = (
@@ -871,10 +871,10 @@
 /obj/item/petri_dish,
 /obj/item/petri_dish,
 /obj/item/petri_dish,
-/obj/item/organ/tongue/rat,
+/obj/item/organ/tongue/mouse,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass,
-/obj/item/organ/stomach/rat,
+/obj/item/organ/stomach/mouse,
 /obj/item/fish/ratfish,
 /obj/structure/closet/crate/freezer,
 /obj/effect/spawner/random/medical/surgery_tool,
@@ -1092,7 +1092,7 @@
 /obj/structure/closet/crate/trashcart/filled,
 /obj/effect/decal/cleanable/insectguts,
 /obj/item/pinata,
-/obj/item/food/cornchips/green,
+/obj/item/food/chips/corn/green,
 /obj/effect/spawner/random/food_or_drink/condiment,
 /mob/living/basic/mouse,
 /turf/open/floor/plating/dumpsterair,
@@ -1223,7 +1223,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/food/deadmouse,
 /mob/living/basic/mouse/rat,
-/obj/item/organ/heart/rat,
+/obj/item/organ/heart/mouse,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 

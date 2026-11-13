@@ -1,0 +1,4 @@
+/obj/item/organ/eyes/night_vision/rat/@SUBTYPES : /obj/item/organ/eyes/night_vision/mouse/@SUBTYPES{@OLD}
+/obj/item/organ/heart/rat/@SUBTYPES : /obj/item/organ/heart/mouse/@SUBTYPES{@OLD}
+/obj/item/organ/stomach/rat/@SUBTYPES : /obj/item/organ/stomach/mouse/@SUBTYPES{@OLD}
+/obj/item/organ/tongue/rat/@SUBTYPES : /obj/item/organ/tongue/mouse/@SUBTYPES{@OLD}

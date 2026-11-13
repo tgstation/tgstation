@@ -134,7 +134,7 @@
 
 /datum/food_processor_process/tortilla
 	input = /obj/item/food/tortilla
-	output = /obj/item/food/cornchips
+	output = /obj/item/food/chips/corn
 	added_foodtypes = JUNKFOOD|FRIED
 
 /datum/food_processor_process/parsnip

@@ -91,6 +91,11 @@
 		return UI_DISABLED
 	return ..()
 
+
+/// quick viewcheck for UI interactions
+/mob/living/proc/view_can_ui_interact(atom/target, range = 5)
+	return target in view(range, src)
+
 /**
  * public
  *
@@ -109,7 +114,7 @@
 
 	var/dist = get_dist(src_object, src)
 	// If the object is obscured or too far away, close it.
-	if (dist > 5 || (viewcheck && !(src_object in view(5, src))))
+	if (dist > 5 || (viewcheck && !view_can_ui_interact(src_object)))
 		return UI_CLOSE
 	// Disable if further than 2 tiles
 	if (dist > 2)
@@ -121,6 +126,6 @@
 	return UI_INTERACTIVE
 
 /mob/living/carbon/human/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE, allow_tk = TRUE)
-	if(allow_tk && dna.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(src, src_object))
+	if(allow_tk && dna.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(src, src_object) && (viewcheck && view_can_ui_interact(src_object)))
 		return UI_INTERACTIVE
 	return ..()

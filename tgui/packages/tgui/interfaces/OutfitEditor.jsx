@@ -1,4 +1,12 @@
-import { Box, Button, Icon, Image, Section, Stack } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  DmIcon,
+  Icon,
+  Image,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -135,10 +143,11 @@ const OutfitSlot = (props) => {
         {name}
       </Button>
       <Box height="32px">
-        {currItem?.sprite && (
+        {currItem?.icon && (
           <>
-            <Image
-              src={`data:image/jpeg;base64,${currItem?.sprite}`}
+            <DmIcon
+              icon={currItem?.icon}
+              icon_state={currItem?.icon_state}
               title={currItem?.desc}
             />
             <Icon

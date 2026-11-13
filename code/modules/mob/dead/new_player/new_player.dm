@@ -128,7 +128,11 @@
 /// Updates the ready report for this player
 /mob/dead/new_player/proc/update_ready_report()
 	if(ready != PLAYER_READY_TO_PLAY)
-		SSticker.ready_jobs -= ckey
+		if(SSticker.ready_jobs[ckey])
+			SSticker.ready_jobs -= ckey
+			// Everyone unreadies on Logout() as they spawn in, so we stop redoing it once the round is setting up
+			if(SSticker.current_state <= GAME_STATE_PREGAME)
+				SSticker.update_aggregate_ready_report()
 		return
 	if(SSticker.HasRoundStarted())
 		return

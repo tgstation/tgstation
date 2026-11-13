@@ -242,8 +242,7 @@
 	if(!istype(user))
 		return
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-	for(var/trait in clothing_traits)
-		REMOVE_CLOTHING_TRAIT(user, trait)
+	remove_clothing_traits(user)
 	if(iscarbon(user) && tint)
 		var/mob/living/carbon/carbon_user = user
 		carbon_user.update_tint()
@@ -261,8 +260,7 @@
 	if(slot_flags & slot) //Was equipped to a valid slot for this item?
 		if(iscarbon(user) && LAZYLEN(zones_disabled))
 			RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(bristle), override = TRUE)
-		for(var/trait in clothing_traits)
-			ADD_CLOTHING_TRAIT(user, trait)
+		give_clothing_traits(user, slot)
 		if(iscarbon(user) && tint)
 			var/mob/living/carbon/carbon_user = user
 			carbon_user.update_tint()
@@ -271,6 +269,16 @@
 				if(variable in user.vars)
 					LAZYSET(user_vars_remembered, variable, user.vars[variable])
 					user.vv_edit_var(variable, user_vars_to_edit[variable])
+
+/// Gives the wearer all the clothing traits associated with this item
+/obj/item/clothing/proc/give_clothing_traits(mob/living/wearer, slot)
+	for(var/trait in clothing_traits)
+		ADD_CLOTHING_TRAIT(wearer, trait)
+
+/// Removes all the clothing traits associated with this item from the wearer
+/obj/item/clothing/proc/remove_clothing_traits(mob/living/wearer)
+	for(var/trait in clothing_traits)
+		REMOVE_CLOTHING_TRAIT(wearer, trait)
 
 // If the item is a piece of clothing and is being worn, make sure it updates on the player
 /obj/item/clothing/update_greyscale()
