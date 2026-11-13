@@ -82,7 +82,7 @@
 	if(isnull(refined_type))
 		return
 	new refined_type(drop_location(), amount)
-	qdel(src
+	qdel(src)
 
 /obj/item/stack/ore/uranium
 	name = "uranium ore"
