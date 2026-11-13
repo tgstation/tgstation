@@ -49,10 +49,6 @@
 
 //Current stations
 
-// Catwalk: added Apr 10, 2025 (#90532)
-/obj/structure/plaque/static_plaque/golden/commission/catwalk
-	desc = "Spinward Sector Station SS-13\n'Catwalk' Class Outpost\nCommissioned 10/04/2565\n'The New Level'"
-
 // Deltastation: added Dec 17, 2016 (#22066)
 /obj/structure/plaque/static_plaque/golden/commission/delta
 	desc = "Spinward Sector Station SS-13\n'Delta' Class Outpost\nCommissioned 17/12/2556\n'Efficiency Through Redundancy'"
@@ -138,6 +134,10 @@
 // Wawastation: added Jun 4, 2024 (#82298), removed Jul 7, 2026 (#96447) - 2 years, 1 month, 3 days
 /obj/structure/plaque/static_plaque/golden/commission/wawa
 	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 04/06/2564\nDecomissioned 9/07/2565\n'Forever Vertical'"
+
+// Catwalk: added Apr 10, 2025 (#90532), removed X (#?????) - TBD
+/obj/structure/plaque/static_plaque/golden/commission/catwalk
+	desc = "Spinward Sector Station SS-13\n'Catwalk' Class Outpost\nCommissioned 10/04/2565\n'The New Level'"
 
 // Other Stations
 
