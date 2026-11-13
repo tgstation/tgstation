@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Digital clocks should report more accurate times in the hours position (before, it mirrored one of the minute's times)"
-  - code_imp: "Cleaned up digital clock code a bit, report if they seem to be reporting weird numbers"

@@ -147,11 +147,21 @@
       This means midround rulesets like Traitors / Mass Traitors will be significantly
       more common when there are no observers.
 2026-11-13:
+  FalloutFalcon:
+  - bugfix: Stacking machines not linked to a silo works
   Melbert:
   - balance: The Knock spell will open safes and briefcases
   - map: Removed excess waste filters from the Supermatter Engine across all maps
   - map: Standardizes waste output of the Supermatter Engine across all maps
+  - bugfix: Digital clocks should report more accurate times in the hours position
+      (before, it mirrored one of the minute's times)
+  - code_imp: Cleaned up digital clock code a bit, report if they seem to be reporting
+      weird numbers
+  - bugfix: Fix crawl/drag sounds being played while fireman carrying
   PapaMichael:
   - bugfix: The Kilostation Sci Security outpost now has a security science locker
+  Pumpkinoe:
+  - balance: Nutimov is slightly more dangerous to use now, if you don't treat the
+      AI right
   grungussuss:
   - sound: added new handling sfx to bowls, fruits, vegetables, rags, griddles.
