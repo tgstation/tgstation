@@ -7,12 +7,14 @@ export const player = new AudioPlayer();
 player.onPlay(() => {
   store.set(playingAtom, true);
   store.set(visibleAtom, true);
+  Byond.sendMessage('audio/playing', { playing: true });
 });
 
 player.onStop(() => {
   store.set(playingAtom, false);
   store.set(visibleAtom, false);
   store.set(metaAtom, null);
+  Byond.sendMessage('audio/playing', { playing: false });
 });
 
 type PlayPayload = {

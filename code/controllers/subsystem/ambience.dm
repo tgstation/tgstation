@@ -34,6 +34,9 @@ SUBSYSTEM_DEF(ambience)
 		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) //WHAT? I CAN'T HEAR YOU
 			continue
 
+		if(client_iterator.web_music_playing)
+			continue
+
 		//Check to see if the client-mob is in a valid area
 		var/area/current_area = get_area(client_mob)
 		if(!current_area) //Something's gone horribly wrong

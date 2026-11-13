@@ -248,6 +248,9 @@
 	///Which ambient sound this client is currently being provided.
 	var/current_ambient_sound
 
+	/// Is this client currently playing admin internet music?
+	var/web_music_playing = FALSE
+
 	/// The DPI scale of the client. 1 is equivalent to 100% window scaling, 2 will be 200% window scaling
 	var/window_scaling
 
