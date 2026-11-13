@@ -81,12 +81,7 @@
 	. = ..()
 	if(isnull(refined_type))
 		return
-
-	var/probability = rand(0, 100) / 100
-	var/burn_value = probability * amount
-	var/amount_refined = floor(burn_value * values_sum(mats_per_unit) / SHEET_MATERIAL_AMOUNT)
-	if(amount_refined > 1)
-		new refined_type(drop_location(), amount_refined)
+	new refined_type(drop_location(), amount)
 	qdel(src)
 
 /obj/item/stack/ore/uranium
