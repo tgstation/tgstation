@@ -1043,6 +1043,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS) && !HAS_TRAIT(humi, TRAIT_COLD_BLOODED))
 		body_temperature_core(humi, seconds_per_tick)
 
+	// Dead bodies cool down to the room no matter what they wear, like other carbons do.
+	// Without this the core of an insulated corpse never loses heat, the skin just gets it back from the core every tick.
+	else if(humi.stat == DEAD && !humi.on_fire)
+		var/area_temp = humi.get_temperature(humi.loc?.return_air())
+		if(area_temp < humi.bodytemperature)
+			humi.adjust_bodytemperature(area_temp - humi.bodytemperature, use_insulation = FALSE, use_steps = TRUE)
+		if(area_temp < humi.coretemperature)
+			humi.adjust_coretemperature(max((area_temp - humi.coretemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX), area_temp)
+
 	// These do run in statis
 	body_temperature_skin(humi, seconds_per_tick)
 	body_temperature_alerts(humi, seconds_per_tick)
