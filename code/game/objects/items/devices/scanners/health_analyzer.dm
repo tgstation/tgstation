@@ -170,7 +170,7 @@
 
 	render_list += "[span_info("Analyzing results for <b>[target]</b> ([round_timestamp()]):")]<br><span class='info ml-1'>Overall status: [mob_status]</span><br>"
 
-	if(!scanpower == SCANPOWER_BASIC && target.has_reagent(/datum/reagent/inverse/technetium))
+	if(scanpower < SCANPOWER_ADVANCED && target.has_reagent(/datum/reagent/inverse/technetium))
 		scanpower = SCANPOWER_ADVANCED
 
 	SEND_SIGNAL(target, COMSIG_LIVING_HEALTHSCAN, render_list, scanpower, user, mode, tochat)
@@ -289,7 +289,6 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/humantarget = target
-
 		// Organ damage, missing organs
 		var/render = FALSE
 		var/toReport = "<span class='info ml-1'>Organ status:</span>\

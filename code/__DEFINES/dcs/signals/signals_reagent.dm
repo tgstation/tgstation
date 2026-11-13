@@ -23,6 +23,8 @@
 ///send from seeds to any reagents within any produced plants when initially grown
 ///to allow reagents to modify themselves based on the plant they were grown in. (obj/item/seeds)
 #define COMSIG_REAGENT_GROWN_IN_PLANT "reagent_grown_in_plant"
+///sent on life tick, if metabolizing the chem (owner, seconds_per_tick, metabolization_ratio)
+#define COMSIG_REAGENT_ON_LIFE "reagent_on_life"
 
 ///from base of [/datum/reagents/proc/add_reagent] - Sent before the reagent is added: (reagenttype, amount, reagtemp, data, no_react)
 #define COMSIG_REAGENTS_PRE_ADD_REAGENT "reagents_pre_add_reagent"
