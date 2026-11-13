@@ -146,3 +146,10 @@
   - qol: Dynamic rulesets that a require ghosts cannot be picked if there are no ghosts.
       This means midround rulesets like Traitors / Mass Traitors will be significantly
       more common when there are no observers.
+2026-11-13:
+  Melbert:
+  - balance: The Knock spell will open safes and briefcases
+  PapaMichael:
+  - bugfix: The Kilostation Sci Security outpost now has a security science locker
+  grungussuss:
+  - sound: added new handling sfx to bowls, fruits, vegetables, rags, griddles.
