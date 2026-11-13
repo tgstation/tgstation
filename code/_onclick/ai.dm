@@ -13,7 +13,8 @@
 	if(ismob(A))
 		ai_tracking_tool.track_mob(src, A)
 		return
-	A.move_camera_by_click()
+	else
+		A.move_camera_by_click()
 
 /obj/machinery/move_camera_by_click()
 	return
