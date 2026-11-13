@@ -26,6 +26,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	var/static/list/ignored_atoms = typecacheof(list(
 		null, // I don't know why null is the first element of this typepache but it was there when I found it
 		/mob/dead,
+		/atom/movable/lighting_object,
 		/obj/effect/landmark,
 		/obj/docking_port,
 		/obj/effect/particle_effect/sparks,
