@@ -41,6 +41,8 @@
 	TEST_ASSERT_EQUAL(reset_count, 3, "Stamina timer reset should have been triggered (regardless of being at the stamina damage cap)")
 	tider.adjust_stamina_loss(0)
 	TEST_ASSERT_EQUAL(reset_count, 4, "Stamina timer reset should have been triggered (even for 0 damage)")
+	tider.adjust_stamina_loss(-10)
+	TEST_ASSERT_EQUAL(reset_count, 4, "Stamina timer reset should not have been triggered after healing stamina damage")
 
 	var/datum/status_effect/incapacitating/stamcrit/stamcrit_effect = tider.has_status_effect(/datum/status_effect/incapacitating/stamcrit)
 	stamcrit_effect.diminishing_return_counter += INFINITY
