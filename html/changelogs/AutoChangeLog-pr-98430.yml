@@ -1,6 +1,0 @@
-author: "CabinetOnFire"
-delete-after: True
-changes:
-  - balance: "Monkeys are less tough to fight"
-  - bugfix: "Monkeys stop throwing things through (solid) windows"
-  - bugfix: "fixes inversion that made tamed monkeys steal shit instead of untamed ones"

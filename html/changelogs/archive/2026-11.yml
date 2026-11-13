@@ -147,6 +147,11 @@
       This means midround rulesets like Traitors / Mass Traitors will be significantly
       more common when there are no observers.
 2026-11-13:
+  CabinetOnFire:
+  - balance: Monkeys are less tough to fight
+  - bugfix: Monkeys stop throwing things through (solid) windows
+  - bugfix: fixes inversion that made tamed monkeys steal shit instead of untamed
+      ones
   FalloutFalcon:
   - bugfix: Stacking machines not linked to a silo works
   Melbert:
