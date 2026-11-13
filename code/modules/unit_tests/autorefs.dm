@@ -25,6 +25,8 @@
 	var/datum/autoref/turf_ref = AUTOREF(test_turf)
 	TEST_ASSERT_EQUAL(turf_ref.resolve(), test_turf, "turf autoref should resolve")
 
+	var/original_turf_type = test_turf.type
 	var/turf/changed_turf = test_turf.ChangeTurf(/turf/open/floor/plating)
 	TEST_ASSERT_EQUAL(AUTOREF(changed_turf), turf_ref, "changed turf should keep the same autoref")
 	TEST_ASSERT_EQUAL(turf_ref.resolve(), changed_turf, "changed turf's autoref should still resolve")
+	changed_turf.ChangeTurf(original_turf_type)
