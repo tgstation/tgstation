@@ -198,7 +198,7 @@
 	SEND_SIGNAL(current, COMSIG_MOB_ENSLAVED_TO, creator)
 
 	current.add_faction(creator.get_faction())
-	current.add_ally(current)
+	current.add_ally(creator)
 
 	current.log_message("has been enslaved to [key_name(creator)].", LOG_GAME)
 	log_admin("[key_name(current)] has been enslaved to [key_name(creator)].")

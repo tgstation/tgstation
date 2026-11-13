@@ -162,6 +162,6 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 /proc/isvineimmune(atom/target)
 	if(isliving(target))
 		var/mob/living/victim = target
-		if(victim.has_faction(FACTION_VINES, FACTION_PLANTS))
+		if(victim.has_faction(list(FACTION_VINES, FACTION_PLANTS)))
 			return TRUE
 	return FALSE

@@ -45,7 +45,8 @@
 
 	if (!QDELETED(bananas))
 		ADD_TRAIT(bananas, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
-		SET_FACTION_AND_ALLIES_FROM(bananas, src)
+		if(LAZYLEN(faction))
+			SET_FACTION_AND_ALLIES_FROM(bananas, src)
 
 		visible_message(span_notice("[src] expands!"))
 		bananas.log_message("spawned via [src], Last attached mob: [key_name(spammer)].", LOG_ATTACK)
