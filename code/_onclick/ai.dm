@@ -12,7 +12,6 @@
 
 	if(ismob(A))
 		ai_tracking_tool.track_mob(src, A)
-		return
 	else
 		A.move_camera_by_click()
 
