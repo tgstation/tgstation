@@ -161,6 +161,7 @@
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
 	cached_map = keep_cached_map ? parsed : null
+	var/no_changeturf = (SSatoms.initialized == INITIALIZATION_INSSATOMS)
 
 	var/list/turf_blacklist = list()
 	update_blacklist(T, turf_blacklist)
@@ -172,7 +173,7 @@
 		T.y,
 		T.z,
 		crop_map = TRUE,
-		no_changeturf = (SSatoms.initialized == INITIALIZATION_INSSATOMS),
+		no_changeturf = no_changeturf,
 		place_on_top = should_place_on_top,
 	))
 		return
@@ -180,6 +181,15 @@
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return
+	if(no_changeturf)
+		// This load skips ChangeTurf, so dirty its region directly.
+		for(var/z_level in bounds[MAP_MINZ] to bounds[MAP_MAXZ])
+			for(var/y in bounds[MAP_MINY] to bounds[MAP_MAXY])
+				for(var/x in bounds[MAP_MINX] to bounds[MAP_MAXX])
+					var/turf/changed_turf = locate(x, y, z_level)
+					if(changed_turf)
+						changed_turf.nav_dirty()
+				CHECK_TICK
 
 	require_area_resort()
 

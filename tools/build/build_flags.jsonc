@@ -76,6 +76,13 @@
 			"description": "Makes no space levels load in.",
 		},
 		{
+			"id": "NAVMAP_BAKE_GENERATION",
+			"define": "NAVMAP_BAKE_GENERATION",
+			"label": "Navmap bake generation",
+			"category": "Map",
+			"description": "Bakes the selected map's navmap, then shuts down.",
+		},
+		{
 			"id": "TIMER_DEBUG",
 			"define": "TIMER_DEBUG",
 			"label": "Timer debug",

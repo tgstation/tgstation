@@ -33,6 +33,7 @@
 // Ruins of "onehalf" ship
 
 /area/ruin/space/has_grav/onehalf/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Half-Station Hallway"
 
 /area/ruin/space/has_grav/onehalf/drone_bay
@@ -205,6 +206,7 @@
 	name = "\improper ASRC Laboratory"
 
 /area/ruin/space/has_grav/dangerous_research/maint
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "\improper ASRC Maintenance"
 
 //Interdyne Ruin
@@ -252,6 +254,7 @@
 	icon_state = "os_beta_engine"
 
 /area/ruin/space/ancientstation/beta/hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Beta Station Main Corridor"
 	icon_state = "os_beta_hall"
 
@@ -277,6 +280,7 @@
 	icon_state = "charliestation"
 
 /area/ruin/space/ancientstation/charlie/hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Charlie Station Main Corridor"
 	icon_state = "os_charlie_hall"
 
@@ -321,6 +325,7 @@
 	icon_state = "deltastation"
 
 /area/ruin/space/ancientstation/delta/hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Delta Station Main Corridor"
 	icon_state = "os_delta_hall"
 
@@ -353,6 +358,7 @@
 
 // Area define for organization
 /area/ruin/space/ks13/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 
 /area/ruin/space/ks13/hallway/central
 	name = "\improper Derelict Central Hallway"
@@ -459,6 +465,7 @@
 	icon_state = "ks13_ord"
 
 /area/ruin/space/ks13/science/ordnance_hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Derelict Ordnance Hallway"
 	icon_state = "ks13_ord_hall"
 
@@ -478,6 +485,7 @@
 	icon_state = "ks13_court"
 
 /area/ruin/space/ks13/security/court_hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Derelict Courtroom Hallway"
 	icon_state = "ks13_court_hall"
 
@@ -489,6 +497,7 @@
 	icon_state = "ks13_bridge"
 
 /area/ruin/space/ks13/command/bridge_hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Derelict Bridge Hallway"
 	icon_state = "ks13_bridge_hall"
 
@@ -504,6 +513,7 @@
 	icon_state = "ks13_ai_vault"
 
 /area/ruin/space/ks13/ai/corridor
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Derelict AI Corridor"
 	icon_state = "ks13_ai_corridor"
 
@@ -714,6 +724,7 @@
 	name = "\improper Donk Co. Trading Outpost Public Meeting Area And Cafeteria"
 
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Donk Co. Trading Outpost Public Docks And Corridors"
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 
@@ -727,6 +738,7 @@
 	name = "\improper Donk Co. Trading Outpost Engineering Station"
 
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Donk Co. Trading Outpost Secure Corridor"
 	icon_state = "donk_command"
 
@@ -734,6 +746,7 @@
 	name = "\improper Donk Co. Trading Outpost Break Room"
 
 /area/ruin/space/has_grav/hauntedtradingpost/maint
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "\improper Donk Co. Trading Outpost Auxiliary Storage Room"
 	icon_state = "donk_maints"
 	airlock_wires = /datum/wires/airlock/maint

@@ -1,0 +1,68 @@
+name: Check generated navmaps
+
+on:
+  workflow_call:
+
+jobs:
+  check_navmap_bakes:
+    name: Verify generated station navmaps
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha || github.event.before }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Select affected station maps
+        id: maps
+        run: |
+          if [[ -n "$BASE_SHA" && "$BASE_SHA" != "0000000000000000000000000000000000000000" ]]; then
+            git cat-file -e "$BASE_SHA^{commit}" 2>/dev/null || git fetch --no-tags --depth=1 origin "$BASE_SHA"
+            maps=$(python3 tools/build_navmaps.py --list-maps --changed-since "$BASE_SHA")
+          else
+            maps=$(python3 tools/build_navmaps.py --list-maps)
+          fi
+          echo "maps=$maps" >> "$GITHUB_OUTPUT"
+          echo "Station maps to check: $maps"
+
+      - name: Configure BYOND version
+        if: steps.maps.outputs.maps != '[]'
+        uses: ./.github/actions/configure_byond_version
+
+      - parallel:
+        - name: Set up Bun
+          if: steps.maps.outputs.maps != '[]'
+          uses: ./.github/actions/setup_bun
+
+        - name: Restore or install BYOND
+          if: steps.maps.outputs.maps != '[]'
+          uses: ./.github/actions/restore_or_install_byond
+
+      - name: Install rust-g
+        if: steps.maps.outputs.maps != '[]'
+        run: bash tools/ci/install_rust_g.sh
+
+      - name: Check generated navmaps
+        env:
+          MAPS: ${{ steps.maps.outputs.maps }}
+        run: |
+          if [[ "$MAPS" != "[]" ]]; then
+            source "$HOME/BYOND/byond/bin/byondsetup"
+          fi
+          if [[ -n "$BASE_SHA" && "$BASE_SHA" != "0000000000000000000000000000000000000000" ]]; then
+            python3 tools/build_navmaps.py --check --changed-since "$BASE_SHA"
+          else
+            python3 tools/build_navmaps.py --check
+          fi
+
+      - name: Upload bake diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: navmap-bake-check-${{ github.run_id }}
+          path: |
+            tmp/navmap-bake-check/
+            data/logs/tmp/navmap-bake-logs/
+            build/navmaps/*.raw.json
+          if-no-files-found: ignore
+          retention-days: 7
