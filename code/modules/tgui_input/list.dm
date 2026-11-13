@@ -33,7 +33,7 @@
 		qdel(input)
 		return
 	input.ui_interact(user)
-	input.wait()
+	input.wait(user)
 	if (input)
 		. = input.choice
 		qdel(input)
@@ -105,8 +105,8 @@
  * Waits for a user's response to the tgui_list_input's prompt before returning. Returns early if
  * the window was closed by the user.
  */
-/datum/tgui_list_input/proc/wait()
-	while (!choice && !closed)
+/datum/tgui_list_input/proc/wait(mob/user)
+	while (!choice && !closed && !QDELETED(src) && !QDELETED(user))
 		stoplag(1)
 
 /datum/tgui_list_input/ui_interact(mob/user, datum/tgui/ui)
