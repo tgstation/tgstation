@@ -950,3 +950,57 @@
 /datum/status_effect/heads_up/proc/on_death(mob/living/source)
 	SIGNAL_HANDLER
 	qdel(src)
+
+/datum/status_effect/food_crave
+	id = "food_crave"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	alert_type = /atom/movable/screen/alert/status_effect/food_crave
+	on_remove_on_mob_delete = TRUE
+	duration = 1 MINUTES
+	status_type = STATUS_EFFECT_REFRESH
+	var/list/food_list
+
+/datum/status_effect/food_crave/on_creation(mob/living/new_owner, obj/item/food/trigger_food, ...)
+	. = ..()
+	food_list = list()
+	food_list += trigger_food
+	RegisterSignal(new_owner, COMSIG_LIVING_FINISH_EAT, PROC_REF(satisfy_craving))
+
+/// Second argument contains the food trigger
+/datum/status_effect/food_crave/refresh(effect,obj/item/food/trigger_food, ...)
+	. = ..()
+	food_list += trigger_food
+
+/datum/status_effect/food_crave/on_remove()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_LIVING_FINISH_EAT)
+
+/datum/status_effect/food_crave/proc/satisfy_craving(mob/living/food_eater, datum/eaten_food)
+	SIGNAL_HANDLER
+
+	if(eaten_food in food_list)
+		food_eater.apply_status_effect(/datum/status_effect/craving_satisfied)
+		qdel(src)
+
+
+/atom/movable/screen/alert/status_effect/food_crave
+	name = "Food Craving"
+	desc = "Something smells really good!"
+	icon_state = "mood_food_crave"
+
+/datum/status_effect/craving_satisfied
+	id = "craving_satisfied"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	alert_type = /atom/movable/screen/alert/status_effect/food_crave
+	on_remove_on_mob_delete = TRUE
+	duration = 5 MINUTES
+	status_type = STATUS_EFFECT_UNIQUE
+
+/datum/status_effect/craving_satisfied/on_creation(mob/living/new_owner, ...)
+	. = ..()
+	new_owner.add_mood_event("fav_food",/datum/mood_event/favorite_food)
+
+/atom/movable/screen/alert/status_effect/food_happy
+	name = "Food Satisfied"
+	desc = "That really hit the spot!"
+	icon_state = "food_satisfied"
