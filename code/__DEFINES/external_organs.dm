@@ -11,6 +11,7 @@
 
 /// Tail spine defines
 #define SPINE_KEY_LIZARD "lizard"
+#define SPINE_KEY_CAT "cat"
 
 //wing flight defines
 ///can't generate lift, will only fly in 0G, while atmos is present

@@ -32,12 +32,11 @@
 	icon_state = "cyber"
 	locked = TRUE
 
-/datum/sprite_accessory/ears/fox
+/datum/sprite_accessory/ears/cat/fox
 	icon = 'icons/mob/human/fox_features.dmi'
 	name = "Fox"
 	icon_state = "fox"
 	color_src = HAIR_COLOR
-	locked = TRUE
 
 /datum/sprite_accessory/ears/mouse
 	icon = 'icons/mob/human/mouse_features.dmi'
