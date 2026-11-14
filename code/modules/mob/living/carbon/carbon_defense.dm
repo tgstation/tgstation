@@ -542,6 +542,10 @@
 	if(user != src)
 		return ..()
 
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon, grab_at_wounds), src)
+
+/// Attempts to grasp at the user's own wounds to slow bleeding.
+/mob/living/carbon/proc/grab_at_wounds(mob/living/user)
 	var/obj/item/bodypart/grasped_part = get_bodypart(zone_selected)
 	if(!grasped_part?.can_be_grasped())
 		return
