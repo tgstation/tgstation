@@ -41,7 +41,8 @@
 		/mob/living/basic/pet/fox,
 	)
 	output_organs = list(
-		/obj/item/organ/ears/fox,
+		/obj/item/organ/ears/cat/fox,
+		/obj/item/organ/tail/cat/fox,
 	)
 	infusion_desc = "inexcusable"
 	tier = DNA_MUTANT_TIER_ZERO
