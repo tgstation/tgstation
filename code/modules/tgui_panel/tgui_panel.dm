@@ -96,7 +96,7 @@
 
 	if(type == "audio/playing")
 		client.web_music_playing = payload["playing"]
-		if(client.web_music_playing)
+		if(client.web_music_playing && client.prefs.read_preference(/datum/preference/toggle/sound_ambience_mute_during_music))
 			client.mob?.stop_sound_channel(CHANNEL_AMBIENCE)
 			if(client in SSambience.ambience_listening_clients)
 				SSambience.ambience_listening_clients[client] = world.time
