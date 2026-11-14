@@ -10,10 +10,9 @@ import {
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
-import type { NTOSData } from '../layouts/NtosWindow';
 import { AccessList } from './common/AccessList';
+import { useNtos } from './NtosCore';
 
 type CardData = {
   has_trim: BooleanLike;
@@ -38,7 +37,7 @@ type Data = {
   show_basic: BooleanLike;
   templates: Record<string, string>;
   wildcard_flags: Record<string, number>;
-} & NTOSData;
+};
 
 type Region = {
   name: string;
@@ -66,7 +65,7 @@ export const NtosCard = (props) => {
 };
 
 export const NtosCardContent = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const {
     authed_user,
     modified_card,
@@ -151,7 +150,7 @@ export const NtosCardContent = (props) => {
 };
 
 const LoginPage = () => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { authed_user, auth_card, is_holding_id } = data;
 
   return (
@@ -200,7 +199,7 @@ const LoginPage = () => {
 };
 
 const IdCardPage = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { authed_user, auth_card, modified_card, is_holding_id } = data;
 
   return (
@@ -287,7 +286,7 @@ const IdCardPage = (props) => {
 };
 
 const TemplateDropdown = (props) => {
-  const { act } = useBackend<Data>();
+  const { act } = useNtos<Data>();
   const { templates } = props;
 
   const templateKeys = Object.keys(templates);

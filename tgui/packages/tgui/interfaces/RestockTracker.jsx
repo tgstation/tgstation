@@ -6,20 +6,23 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const Restock = (props) => {
+  const { data } = useBackend();
+
   return (
     <Window width={575} height={560}>
       <Window.Content scrollable>
-        <RestockTracker />
+        <RestockTracker data={data} />
       </Window.Content>
     </Window>
   );
 };
 
 export const RestockTracker = (props) => {
-  const { data } = useBackend();
+  const { data } = props;
   const vending_list = sortBy(data.vending_list ?? [], [
     (vend) => vend.percentage,
   ]);
+
   return (
     <Section fill title="Vendor Stocking Status">
       <Stack vertical>
@@ -87,7 +90,6 @@ export const RestockTracker = (props) => {
 };
 
 export const RestockTrackerFull = (props) => {
-  const { data } = useBackend();
   return (
     <Section bold textAlign="center">
       All vending machines stocked!

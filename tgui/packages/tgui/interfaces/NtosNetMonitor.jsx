@@ -9,11 +9,12 @@ import {
   Tabs,
 } from 'tgui-core/components';
 
-import { useBackend, useSharedState } from '../backend';
+import { useSharedState } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 export const NtosNetMonitor = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   const [tab_main, setTab_main] = useSharedState('tab_main', 1);
   const {
     ntnetrelays,
@@ -68,7 +69,7 @@ export const NtosNetMonitor = (props) => {
 
 const MainPage = (props) => {
   const { ntnetrelays, idsalarm, idsstatus, ntnetlogs = [] } = props;
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
 
   return (
     <Section>
@@ -149,7 +150,7 @@ const MainPage = (props) => {
 
 const TabletPage = (props) => {
   const { tablets } = props;
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   if (!tablets.length) {
     return <NoticeBox>No tablets detected.</NoticeBox>;
   }

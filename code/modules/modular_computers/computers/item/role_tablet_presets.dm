@@ -27,7 +27,7 @@
 	. = ..()
 	for(var/programs in head_programs)
 		var/datum/computer_file/program/program_type = new programs
-		store_file(program_type)
+		os.filesystem.store_file(program_type)
 
 	if (ispath(fax_type, /obj/machinery/fax))
 		var/datum/computer_file/program/faxbond/fax_notifier = locate() in stored_files
@@ -537,7 +537,7 @@
 	greyscale_colors = "#891417#80FF80"
 	saved_identification = "John Doe"
 	saved_job = "Citizen"
-	device_theme = PDA_THEME_SYNDICATE
+	os_type = /datum/operating_system/default/ntos/syndie/uplink
 
 /obj/item/modular_computer/pda/syndicate/Initialize(mapload)
 	. = ..()

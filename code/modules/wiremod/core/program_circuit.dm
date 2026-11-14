@@ -40,7 +40,7 @@
 	///The integrated circuit was loaded/duplicated
 	if(isnull(found_program))
 		associated_program = new associated_program()
-		computer.store_file(associated_program)
+		computer.os.filesystem.store_file(associated_program)
 	else
 		associated_program = found_program
 
@@ -71,19 +71,19 @@
 	if(associated_program.program_flags & PROGRAM_CIRCUITS_RUN_WHEN_CLOSED || COMPONENT_TRIGGERED_BY(start, port))
 		return TRUE
 	var/obj/item/modular_computer/computer = associated_program.computer
-	if(computer.active_program == associated_program || (associated_program in computer.idle_threads))
+	if((associated_program in computer.os.active_threads) || (associated_program in computer.os.idle_threads))
 		return TRUE
 	return FALSE
 
 /obj/item/circuit_component/mod_program/proc/start_prog(datum/port/input/port)
-	associated_program.computer.open_program(program = associated_program)
+	associated_program.os.run_program(program = associated_program)
 
 /obj/item/circuit_component/mod_program/proc/on_start(mob/living/user)
 	SIGNAL_HANDLER
 	running.set_output(TRUE)
 
 /obj/item/circuit_component/mod_program/proc/kill_prog(datum/port/input/port)
-	associated_program.kill_program()
+	associated_program.os.kill_program(associated_program)
 
 /obj/item/circuit_component/mod_program/proc/on_kill(mob/living/user)
 	SIGNAL_HANDLER

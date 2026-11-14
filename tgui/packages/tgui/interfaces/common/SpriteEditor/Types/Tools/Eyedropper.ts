@@ -15,14 +15,15 @@ export class Eyedropper extends Tool {
     isRightClick?: boolean,
   ) {
     if (isRightClick) return undefined;
-    const { selectedDir, selectedLayer, setCurrentColor } = context;
+    const { act, selectedDir, selectedLayer, setCurrentColor } = context;
     const { width, height } = data;
     const [px, py, inBounds] = constrainToIconGrid(x, y, width, height);
     if (!inBounds) return undefined;
-    setCurrentColor(
+    setCurrentColor([
+      act,
       parseHexColorString(
         getDataPixel(data, selectedLayer, selectedDir, px, py),
       ),
-    );
+    ]);
   }
 }

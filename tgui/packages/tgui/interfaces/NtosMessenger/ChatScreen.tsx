@@ -12,8 +12,8 @@ import {
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
-import { useBackend } from '../../backend';
 import type { NtMessage, NtMessenger, NtPicture } from './types';
+import { useNtos } from '../NtosCore';
 
 type ChatScreenProps = {
   canReply: BooleanLike;
@@ -82,7 +82,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       return;
     }
 
-    const { act } = useBackend();
+    const { act } = useNtos();
 
     this.tryClearReadTimeout();
 
@@ -116,7 +116,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   }
 
   clearUnreads() {
-    const { act } = useBackend();
+    const { act } = useNtos();
 
     act('PDA_clearUnreads', { ref: this.props.chatRef });
   }
@@ -130,7 +130,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
   handleSelectPicture() {
     const { isSilicon } = this.props;
-    const { act } = useBackend();
+    const { act } = useNtos();
     if (isSilicon) {
       act('PDA_siliconSelectPhoto');
     } else {
@@ -143,7 +143,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
       return;
     }
 
-    const { act } = useBackend();
+    const { act } = useNtos();
     const { chatRef, recipient } = this.props;
 
     const ref = chatRef ? chatRef : recipient.ref;
@@ -162,7 +162,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   }
 
   render() {
-    const { act } = useBackend();
+    const { act } = useNtos();
     const {
       canReply,
       messages,
