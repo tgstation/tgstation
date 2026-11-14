@@ -8,7 +8,7 @@
 	name = "mounted teleporter"
 	desc = "An exosuit module that allows exosuits to teleport to any position in view."
 	icon_state = "mecha_teleport"
-	equip_cooldown = 150
+	equip_cooldown = 15 SECONDS
 	energy_drain = STANDARD_CELL_CHARGE
 	range = MECHA_RANGED
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 5)
@@ -30,7 +30,7 @@
 	name = "mounted wormhole generator"
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes, allowing for long-range inaccurate teleportation."
 	icon_state = "mecha_wholegen"
-	equip_cooldown = 50
+	equip_cooldown = 5 SECONDS
 	energy_drain = STANDARD_CELL_CHARGE * 0.3
 	range = MECHA_RANGED
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
@@ -72,7 +72,7 @@
 	name = "mounted gravitational catapult"
 	desc = "An exosuit mounted Gravitational Catapult."
 	icon_state = "mecha_teleport"
-	equip_cooldown = 10
+	equip_cooldown = 1 SECONDS
 	energy_drain = STANDARD_CELL_CHARGE * 0.1
 	range = MECHA_MELEE|MECHA_RANGED
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
