@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Stamina damage is properly refreshed by taking more stamina damage - in other words. if you baton someone who is in stamcrit. it properly extends stamcrit."
