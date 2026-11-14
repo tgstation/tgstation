@@ -28,7 +28,7 @@
 	/// Is the shield currently switching modes?
 	VAR_FINAL/switching = FALSE
 	/// How much damage is converted to cell drain by active shielding?
-	var/damage_to_charge_ratio = 0.0066 * STANDARD_CELL_CHARGE
+	var/damage_to_charge_ratio = 0.0067 * STANDARD_CELL_CHARGE
 	/// Energy used to maintain active shielding passively
 	var/passive_shield_drain = 0.01 * STANDARD_CELL_CHARGE
 
