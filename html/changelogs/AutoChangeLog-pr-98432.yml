@@ -1,4 +1,0 @@
-author: "AitorLogedo"
-delete-after: True
-changes:
-  - bugfix: "Dead bodies wearing insulating clothes cool down after burning instead of staying hot and husking."

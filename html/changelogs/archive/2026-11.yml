@@ -171,6 +171,17 @@
   grungussuss:
   - sound: added new handling sfx to bowls, fruits, vegetables, rags, griddles.
 2026-11-14:
+  AitorLogedo:
+  - bugfix: Dead bodies wearing insulating clothes cool down after burning instead
+      of staying hot and husking.
   Fghj240:
   - spellcheck: corrected gibber meat production examine text
   - code_imp: improved gibber code formatting
+  Melbert:
+  - bugfix: Stamina damage is properly refreshed by taking more stamina damage - in
+      other words. if you baton someone who is in stamcrit. it properly extends stamcrit.
+  - bugfix: Fixes a bug where you could magically gain an ID card's accesses if the
+      ID card was placed within literally anything (briefcases, backpacks, whatever)
+      being held. A few items have kept this properly (obviously, wallets and PDAs...
+      but a few other special items might have kept it too...)
+  - bugfix: You can turn while buckled again
