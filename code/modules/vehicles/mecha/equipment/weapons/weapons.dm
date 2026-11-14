@@ -542,7 +542,7 @@
 	name = "\improper Oingo Boingo Punch-face"
 	desc = "Equipment for clown exosuits. Delivers fun right to your face!"
 	icon_state = "mecha_punching_glove"
-	energy_drain = 250 KILO JOULES
+	energy_drain = STANDARD_CELL_CHARGE * 0.25
 	equip_cooldown = 20
 	range = MECHA_MELEE|MECHA_RANGED
 	missile_range = 5
@@ -634,7 +634,7 @@
 	desc = "A modified hydraulic clamp, for use exclusively with the Paddy exosuit. Non-lethally apprehends suspects."
 	icon_state = "paddy_claw"
 	equip_cooldown = 15
-	energy_drain = 10 KILO JOULES
+	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	tool_behaviour = TOOL_RETRACTOR
 	range = MECHA_MELEE
 	toolspeed = 0.8
