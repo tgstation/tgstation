@@ -27,7 +27,7 @@
 	name = "mounted sleeper"
 	desc = "A mounted sleeper that stabilizes patients."
 	icon_state = "mecha_sleeper_miner"
-	energy_drain = 20
+	energy_drain = STANDARD_CELL_CHARGE * 0.02
 	range = MECHA_MELEE
 	equip_cooldown = 20
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
@@ -211,7 +211,7 @@
 	icon_state = "mecha_syringegun"
 	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 10
-	energy_drain = 10
+	energy_drain = STANDARD_CELL_CHARGE * 0.01
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	///Lazylist of syringes that we've picked up
 	var/list/syringes
@@ -372,7 +372,7 @@
 	name = "exosuit medical beamgun"
 	desc = "Equipment for medical exosuits. Generates a focused beam of medical nanites."
 	icon_state = "mecha_medigun"
-	energy_drain = 10
+	energy_drain = STANDARD_CELL_CHARGE * 0.01
 	range = MECHA_MELEE|MECHA_RANGED
 	equip_cooldown = 0
 	///The medical gun doing the actual healing. yes its wierd but its better than copypasting the entire thing

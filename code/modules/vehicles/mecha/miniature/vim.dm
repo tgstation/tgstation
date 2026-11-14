@@ -20,7 +20,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10.55, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 	stepsound = 'sound/effects/servostep.ogg'
 	pivot_step = TRUE
-	step_energy_drain = 4
+	step_energy_drain = parent_type::step_energy_drain * 0.5
 	mecha_flags = CAN_STRAFE | HAS_LIGHTS | IS_ENCLOSED
 	mech_type = EXOSUIT_MODULE_VIM
 	interaction_flags_mouse_drop = NONE

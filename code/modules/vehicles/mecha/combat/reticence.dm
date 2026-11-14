@@ -21,7 +21,7 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
-	step_energy_drain = 4
+	step_energy_drain = parent_type::step_energy_drain * 0.5
 	color = "#87878715"
 
 /datum/armor/mecha_reticence

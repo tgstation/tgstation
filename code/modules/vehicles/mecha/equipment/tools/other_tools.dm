@@ -31,7 +31,7 @@
 	desc = "An exosuit module that allows generating of small quasi-stable wormholes, allowing for long-range inaccurate teleportation."
 	icon_state = "mecha_wholegen"
 	equip_cooldown = 50
-	energy_drain = 300
+	energy_drain = STANDARD_CELL_CHARGE * 0.3
 	range = MECHA_RANGED
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
@@ -73,7 +73,7 @@
 	desc = "An exosuit mounted Gravitational Catapult."
 	icon_state = "mecha_teleport"
 	equip_cooldown = 10
-	energy_drain = 100
+	energy_drain = STANDARD_CELL_CHARGE * 0.1
 	range = MECHA_MELEE|MECHA_RANGED
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	///Which atom we are movable_target onto for
@@ -222,7 +222,7 @@
 	name = "exosuit repair droid"
 	desc = "An automated repair droid for exosuits. Scans for damage and repairs it. Can fix almost all types of external or internal damage."
 	icon_state = "repair_droid"
-	energy_drain = 50
+	energy_drain = STANDARD_CELL_CHARGE * 0.5
 	range = 0
 	unstackable = TRUE
 	can_be_toggled = TRUE
