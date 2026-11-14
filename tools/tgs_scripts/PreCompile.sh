@@ -48,18 +48,19 @@ if [ ! -d "rust-g" ]; then
 	echo "Cloning rust-g..."
 	git clone https://github.com/tgstation/rust-g
 	cd rust-g
-	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
 else
 	echo "Fetching rust-g..."
 	cd rust-g
 	git fetch
-	~/.cargo/bin/rustup target add i686-unknown-linux-gnu
 fi
 
 echo "Deploying rust-g..."
 git checkout "$RUST_G_VERSION"
+~/.cargo/bin/rustup target add i686-unknown-linux-gnu x86_64-unknown-linux-gnu
 env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --ignore-rust-version --release --target=i686-unknown-linux-gnu
 cp -f target/i686-unknown-linux-gnu/release/librust_g.so "$1/librust_g.so"
+env PKG_CONFIG_ALLOW_CROSS=1 ~/.cargo/bin/cargo build --ignore-rust-version --release --target=x86_64-unknown-linux-gnu --features allow_non_32bit
+cp -f target/x86_64-unknown-linux-gnu/release/librust_g.so "$1/librust_g64.so"
 cd ..
 
 #
