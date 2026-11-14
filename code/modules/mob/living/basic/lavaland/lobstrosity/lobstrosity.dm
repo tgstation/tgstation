@@ -267,16 +267,21 @@
 	radial_icon = 'icons/mob/actions/actions_items.dmi'
 	radial_icon_state = "sniper_zoom"
 	speech_commands = list("charge", "slam", "tackle")
-	command_feedback = "growl"
-	pointed_reaction = "and growls"
 	pet_ability_key = BB_TARGETED_ACTION
+
+/datum/pet_command/use_ability/lob_charge/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	switch(feedback_type)
+		if(PET_COMMAND_FEEDBACK_ACTIVATED)
+			return "[parent] growls"
+		if(PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+			return "[parent] growls at [target]"
+	return ..()
 
 /datum/pet_command/use_ability/lob_charge/set_command_target(mob/living/parent, atom/target)
 	if (!target)
 		return FALSE
 	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(parent.ai_controller.blackboard[targeting_strategy_key])
 	if(!targeter?.is_valid_target(parent, target))
-		parent.balloon_alert_to_viewers("shakes head!")
 		return FALSE
 	return ..()
 

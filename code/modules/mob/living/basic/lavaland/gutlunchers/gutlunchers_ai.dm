@@ -33,13 +33,15 @@
 	command_desc = "Command your pet to mine down walls."
 	speech_commands = list("mine", "smash")
 
-/datum/pet_command/mine_walls/try_activate_command(mob/living/commander, radial_command)
+/datum/pet_command/mine_walls/try_activate_command(mob/living/commander, radial_command, datum/weakref/command_point, has_command_point = FALSE, explicit_command = TRUE, atom/initial_target)
 	var/mob/living/parent = weak_parent.resolve()
 	if(isnull(parent))
 		return
 	//no walls for us to mine
 	var/target_in_vicinity = locate(/turf/closed/mineral) in oview(9, parent)
 	if(isnull(target_in_vicinity))
+		if(explicit_command)
+			emit_command_feedback(parent, PET_COMMAND_FEEDBACK_NO_WALLS)
 		return
 	return ..()
 
@@ -54,8 +56,18 @@
 
 /datum/pet_command/breed/gutlunch/set_command_target(mob/living/parent, atom/target)
 	if(GLOB.gutlunch_count >= MAXIMUM_GUTLUNCH_POP)
-		parent.balloon_alert_to_viewers("can't reproduce anymore!")
 		return FALSE
+	return ..()
+
+/datum/pet_command/breed/gutlunch/refuse_target(mob/living/parent, atom/target)
+	if(GLOB.gutlunch_count >= MAXIMUM_GUTLUNCH_POP)
+		emit_command_feedback(parent, PET_COMMAND_FEEDBACK_CANNOT_REPRODUCE, target = target)
+		return
+	return ..()
+
+/datum/pet_command/breed/gutlunch/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	if(feedback_type == PET_COMMAND_FEEDBACK_CANNOT_REPRODUCE)
+		return "[parent] shakes [parent.p_their()] head!"
 	return ..()
 
 /// Interacts with the food trough to eat ore, then clears the hungry flag.

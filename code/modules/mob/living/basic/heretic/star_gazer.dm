@@ -406,9 +406,16 @@
 
 /datum/pet_command/attack/star_gazer
 	speech_commands = list("attack", "sic", "kill", "slash them")
-	command_feedback = "stares!"
-	pointed_reaction = "stares intensely!"
-	refuse_reaction = "..."
+
+/datum/pet_command/attack/star_gazer/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	switch(feedback_type)
+		if(PET_COMMAND_FEEDBACK_ACTIVATED)
+			return "[parent] stares"
+		if(PET_COMMAND_FEEDBACK_REFUSED_TARGET)
+			return target ? "[parent] stares at [target]" : "[parent] stares"
+		if(PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+			return "[parent] stares at [target]"
+	return ..()
 
 //special interaction for giving Farstar Amrita, the cocktail that makes you hallucinate a fake gazer, to a real gazer.
 /mob/living/basic/heretic_summon/star_gazer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
