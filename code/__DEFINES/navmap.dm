@@ -2,7 +2,7 @@
 // Direction values are used directly as bit groups so no lookup is needed.
 
 /// Increment when baking changes make saved navmaps outdated.
-#define NAVMAP_BAKE_RULES_VERSION 1
+#define NAVMAP_BAKE_RULES_VERSION 2
 
 #define NAVMAP_BAKE_MAP_CONFIG_PARAMETER "navmap-bake-map-config"
 #define NAVMAP_BAKE_SOURCE_CONFIG_PARAMETER "navmap-bake-source-config"
