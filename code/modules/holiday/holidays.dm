@@ -284,7 +284,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 
 /datum/holiday/april_fools/celebrate()
 	. = ..()
-	SSjob.set_overflow_role(/datum/job/clown)
+	SSjob.set_overflow_role(/datum/job/clown, "[type] ([nameof(__PROC__)])")
 	SSticker.set_lobby_music('sound/music/lobby_music/clown.ogg', override = TRUE)
 
 /datum/holiday/april_fools/get_holiday_colors(atom/thing_to_color)

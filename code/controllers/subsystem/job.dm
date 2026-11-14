@@ -69,11 +69,16 @@ SUBSYSTEM_DEF(job)
 	/// Dictionary that maps job priorities to low/medium/high. Keys have to be number-strings as assoc lists cannot be indexed by integers. Set in setup_job_lists.
 	var/list/job_priorities_to_strings
 
+	/// A string related to whatever last set the overflow role through `set_overflow_role`.
+	var/overflow_invoker = null
+	/// The defaults for the current overflow role
+	var/list/overflow_baselines = list()
+
 	/// Are we using the old job config system (txt) or the new job config system (TOML)? IF we are going to use the txt file, then we are in "legacy mode", and this will flip to TRUE.
 	var/legacy_mode = FALSE
 
-	/// List of job config datum singletons.
-	var/list/job_config_datum_singletons = list()
+	/// List of job config type datum singletons, as in you can access it via the static key "name" of the job_config_type and then be able to dynamically alter any type of value on runtime load
+	var/list/datum/job_config_type/job_config_datum_singletons = list()
 
 	/// This is just the message we prepen and put into all of the config files to ensure documentation. We use this in more than one place, so let's put it in the SS to make life a bit easier.
 	var/config_documentation = "## This is the configuration file for the job system.\n## This will only be enabled when the config flag LOAD_JOBS_FROM_TXT is enabled.\n\
@@ -85,18 +90,18 @@ SUBSYSTEM_DEF(job)
 	## As time goes on, more config options may be added to this file.\n\
 	## You can use the admin verb 'Generate Job Configuration' in-game to auto-regenerate this config as a downloadable file without having to manually edit this file if we add more jobs or more things you can edit here.\n\
 	## It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.\n## It's strongly advised you create your own version of this file rather than use the one provisioned on the codebase.\n\n\
-	## The game will not read any line that is commented out with a '#', as to allow you to defer to codebase defaults.\n## If you want to override the codebase values, add the value and then uncomment that line by removing the # from the job key's name.\n\
-	## Ensure that the key is flush, do not introduce any whitespaces when you uncomment a key. For example:\n## \"# Total Positions\" should always be changed to \"Total Positions\", no additional spacing.\n\
+	## The game will not read any line that starts with a '#', as to allow you to defer to codebase defaults.\n## Every value is listed commented out, showing the current codebase default.\n\
+	## To override a codebase value, edit the number and then delete the leading '#' from that line. For example:\n## #\"Total Positions\" = 2 becomes \"Total Positions\" = 5\n\
 	## Best of luck editing!\n"
 
 /datum/controller/subsystem/job/Initialize()
 	setup_job_lists()
-	job_config_datum_singletons = generate_config_singletons() // we set this up here regardless in case someone wants to use the verb to generate the config file.
+	job_config_datum_singletons = generate_config_singletons()
 	if(!length(all_occupations))
 		setup_occupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		load_jobs_from_config()
-	set_overflow_role(CONFIG_GET(string/overflow_job)) // this must always go after load_jobs_from_config() due to how the legacy systems operate, this always takes precedent.
+	set_overflow_role(CONFIG_GET(string/overflow_job), "[type] ([nameof(__PROC__)])") // this must always go after load_jobs_from_config() due to how the legacy systems operate.
 
 	// Initialize RETA system - must be after setup_occupations() so all jobs are loaded - code/modules/reta/reta_system.dm
 	log_game("RETA: Jobs subsystem Initialize() calling RETA initialization")
@@ -119,32 +124,73 @@ SUBSYSTEM_DEF(job)
 		overflow_jobs += check_job
 	return overflow_jobs
 
-/datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
+/// Changes the overflow role to a new job type. We want to log/otherwise track who set it and when using a string that invoked this public proc.
+/datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role, invoker = null)
+	if(isnull(invoker))
+		if(IsAdminAdvancedProcCall())
+			invoker = "[usr] (admin)"
+		else
+			invoker = "!Unknown!"
+
 	var/datum/job/new_overflow = ispath(new_overflow_role) ? get_job_type(new_overflow_role) : get_job(new_overflow_role)
+	job_debug("SET_OVRFLW: Attempting to set new overflow role: [new_overflow_role] by [invoker]")
 	if(!new_overflow)
-		job_debug("SET_OVRFLW: Failed to set new overflow role: [new_overflow_role]")
+		job_debug("SET_OVRFLW: Failed to set new overflow role: [new_overflow_role] by [invoker]")
 		CRASH("set_overflow_role failed | new_overflow_role: [isnull(new_overflow_role) ? "null" : new_overflow_role]")
+
+	var/new_overflow_type = new_overflow.type
+
+	if(!isnull(overflow_role) && (new_overflow_type != overflow_role))
+		revert_overflow_overrides(get_job_type(overflow_role))
+		overflow_role = new_overflow_type
+
+	apply_overflow_overrides(new_overflow)
+	overflow_invoker = invoker
+	job_debug("SET_OVRFLW: Overflow role set to: [new_overflow_type] by [invoker]")
+
+/// Puts the overflow restrictions on a given job. We will store the old configuration for a restoration as needed.
+/datum/controller/subsystem/job/proc/apply_overflow_overrides(datum/job/overflow_job)
+	var/overflow_job_type = overflow_job.type
+	if(!overflow_baselines[overflow_job_type]) // cache the current values as the baseline for this job type
+		var/list/new_baseline = list()
+		for(var/config_datum_key in job_config_datum_singletons)
+			var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
+			var/copiable_var_name = config_datum.datum_var_name
+			new_baseline[copiable_var_name] = overflow_job.vars[copiable_var_name]
+
+		overflow_baselines[overflow_job_type] = new_baseline
+
 	var/cap = CONFIG_GET(number/overflow_cap)
+	overflow_job.allow_bureaucratic_error = FALSE
+	overflow_job.job_flags |= JOB_CANNOT_OPEN_SLOTS
+	overflow_job.spawn_positions = cap
+	overflow_job.total_positions = cap
 
-	new_overflow.allow_bureaucratic_error = FALSE
-	new_overflow.spawn_positions = cap
-	new_overflow.total_positions = cap
-	new_overflow.job_flags |= JOB_CANNOT_OPEN_SLOTS
-
-	if(new_overflow.type == overflow_role)
+/// Undoes `apply_overflow_overrides`, restoring back whatever the job held before it became the overflow role.
+/datum/controller/subsystem/job/proc/revert_overflow_overrides(datum/job/former_overflow_job)
+	var/list/baseline = overflow_baselines[former_overflow_job.type]
+	if(!baseline)
 		return
-	var/datum/job/old_overflow = get_job_type(overflow_role)
-	old_overflow.allow_bureaucratic_error = initial(old_overflow.allow_bureaucratic_error)
-	old_overflow.spawn_positions = initial(old_overflow.spawn_positions)
-	old_overflow.total_positions = initial(old_overflow.total_positions)
-	if(!(initial(old_overflow.job_flags) & JOB_CANNOT_OPEN_SLOTS))
-		old_overflow.job_flags &= ~JOB_CANNOT_OPEN_SLOTS
-	overflow_role = new_overflow.type
-	job_debug("SET_OVRFLW: Overflow role set to: [new_overflow.type]")
+	for(var/var_name in baseline)
+		former_overflow_job.vars[var_name] = baseline[var_name]
+
+/// Does nothing but read the stored variables of a given occupation as it should exist in either the config or the codebase.
+/datum/controller/subsystem/job/proc/get_config_baseline_value(datum/job_config_type/config_datum, datum/job/occupation)
+	var/occupation_type = occupation.type
+	if(occupation_type != overflow_role)
+		return config_datum.get_current_value(occupation)
+
+	var/list/baseline = overflow_baselines[occupation_type]
+	if(!baseline)
+		stack_trace("Somehow didn't get a baseline for overflow role! Failing over to give the value as it exists on the config datum.")
+		return config_datum.get_current_value(occupation)
+
+	return config_datum.normalize_value(baseline[config_datum.datum_var_name])
 
 /datum/controller/subsystem/job/proc/setup_occupations()
 	name_occupations = list()
 	type_occupations = list()
+	overflow_baselines = list()
 
 	var/list/all_jobs = subtypesof(/datum/job)
 	if(!length(all_jobs))
@@ -331,7 +377,7 @@ SUBSYSTEM_DEF(job)
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		// Any errors with the configs has already been said, we don't need to repeat them here.
 		load_jobs_from_config(silent = TRUE)
-	set_overflow_role(overflow_role)
+	set_overflow_role(overflow_role, "[type] ([nameof(__PROC__)])")
 	return
 
 
