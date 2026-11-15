@@ -178,4 +178,4 @@
 					source = spawner,
 				)
 
-	priority_announce("Unidentified armed ship detected near the station.")
+	priority_announce("Unidentified armed ship detected near the station.", sound = ANNOUNCER_LINE_THREAT_ARMED_SHIP)

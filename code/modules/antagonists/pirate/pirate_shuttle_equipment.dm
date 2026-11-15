@@ -72,7 +72,7 @@
 
 /// Alerts the crew about the siphon
 /obj/machinery/shuttle_scrambler/proc/send_notification()
-	priority_announce("Data theft signal detected; source registered on local GPS units.")
+	priority_announce("Data theft signal detected; source registered on local GPS units.", sound = ANNOUNCER_LINE_THREAT_DATA_THEFT)
 
 /// Switches off the siphon
 /obj/machinery/shuttle_scrambler/proc/toggle_off(mob/user)

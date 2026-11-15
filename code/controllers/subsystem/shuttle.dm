@@ -290,7 +290,7 @@ SUBSYSTEM_DEF(shuttle)
 		priority_announce(
 			text = "Emergency shuttle uplink interference detected, shuttle call disabled while the system reinitializes. Estimated restore in [DisplayTimeText(lockout_timer, round_seconds_to = 60)].",
 			title = "Uplink Interference",
-			sound = 'sound/announcer/announcement/announce_dig.ogg',
+			sound = ANNOUNCER_LINE_SHUTTLE_UPLINK_INTERFERENCE,
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "grey",
 		)
@@ -304,7 +304,7 @@ SUBSYSTEM_DEF(shuttle)
 		priority_announce(
 			text= "Emergency shuttle uplink services are now back online.",
 			title = "Uplink Restored",
-			sound = 'sound/announcer/announcement/announce_dig.ogg',
+			sound = ANNOUNCER_LINE_SHUTTLE_UPLINK_RESTORED,
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "green",
 		)
@@ -601,7 +601,7 @@ SUBSYSTEM_DEF(shuttle)
 		priority_announce(
 			text = "Departure has been postponed indefinitely pending conflict resolution.",
 			title = "Hostile Environment Detected",
-			sound = 'sound/announcer/notice/notice1.ogg',
+			sound = ANNOUNCER_LINE_SHUTTLE_DEPARTURE_POSTPONED,
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "grey",
 		)
@@ -611,7 +611,7 @@ SUBSYSTEM_DEF(shuttle)
 		priority_announce(
 			text = "You have [DisplayTimeText(emergency_dock_time)] to board the emergency shuttle.",
 			title = "Hostile Environment Resolved",
-			sound = 'sound/announcer/announcement/announce_dig.ogg',
+			sound = ANNOUNCER_LINE_SHUTTLE_BOARDING_TIME,
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "green",
 		)

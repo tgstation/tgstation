@@ -37,7 +37,11 @@
 	start_when = rand(40, 60)
 
 /datum/round_event/carp_migration/announce(fake)
-	priority_announce("[fluff_signal] have been detected near [station_name()], please stand-by.", "Lifesign Alert")
+	var/message = "[fluff_signal] have been detected near [station_name()], please stand-by."
+	if(fluff_signal == "Unknown magical entities")
+		priority_announce(message, "Lifesign Alert", ANNOUNCER_LINE_EVENT_CARP_MAGICAL)
+	else
+		priority_announce(message, "Lifesign Alert", ANNOUNCER_LINE_EVENT_CARP_BIOLOGICAL)
 
 /datum/round_event/carp_migration/start()
 	// Stores the most recent fish we spawn

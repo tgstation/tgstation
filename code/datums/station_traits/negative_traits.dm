@@ -698,7 +698,7 @@
 		Every shielding unit will provide an additional [shielder_time] of protection, fully protecting the station with [max_shielders] shielding units.
 	"}
 
-	priority_announce(announcement, sound = 'sound/announcer/notice/notice1.ogg')
+	priority_announce(announcement, sound = ANNOUNCER_LINE_TRAIT_NEBULA_BRIEFING)
 
 	//Set the display screens to the radiation alert
 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)

@@ -85,10 +85,10 @@
 /obj/effect/grand_rune/proc/announce_rune()
 	var/area/created_area = get_area(src)
 	if (potency >= GRAND_RITUAL_IMMINENT_FINALE_POTENCY)
-		priority_announce("Major anomalous fluctuations to local spacetime detected in: [created_area.name].", "Anomaly Alert")
+		priority_announce("Major anomalous fluctuations to local spacetime detected in: [created_area.name].", "Anomaly Alert", ANNOUNCER_LINE_THREAT_RUNE_SPACETIME)
 		return
 	if (potency >= GRAND_RITUAL_RUNES_WARNING_POTENCY)
-		priority_announce("Unusual anomalous energy fluctuations detected in: [created_area.name].", "Anomaly Alert")
+		priority_announce("Unusual anomalous energy fluctuations detected in: [created_area.name].", "Anomaly Alert", ANNOUNCER_LINE_THREAT_RUNE_ENERGY)
 		return
 
 /obj/effect/grand_rune/examine(mob/user)
@@ -292,16 +292,13 @@
 	if (dire_warnings_given != times_invoked)
 		return ..()
 	var/area/created_area = get_area(src)
-	var/announce = null
 	switch (dire_warnings_given)
 		if (0)
-			announce = "Large anomalous energy spike detected in: [created_area.name]."
+			priority_announce("Large anomalous energy spike detected in: [created_area.name].", "Anomaly Alert", ANNOUNCER_LINE_THREAT_RUNE_SPIKE)
 		if (1)
-			announce = "Automatic causality stabilisation failed, recommend urgent intervention in: [created_area.name]."
+			priority_announce("Automatic causality stabilisation failed, recommend urgent intervention in: [created_area.name].", "Anomaly Alert", ANNOUNCER_LINE_THREAT_RUNE_CAUSALITY)
 		if (2)
-			announce = "Imminent local reality failure in: [created_area.name]. All crew please prepare to evacuate."
-	if (announce)
-		priority_announce(announce, "Anomaly Alert")
+			priority_announce("Imminent local reality failure in: [created_area.name]. All crew please prepare to evacuate.", "Anomaly Alert", ANNOUNCER_LINE_THREAT_RUNE_REALITY)
 	dire_warnings_given++
 	return ..()
 

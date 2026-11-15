@@ -476,7 +476,16 @@ def convert(source, destination, adjustments, gain_db):
     output *= attenuation
     destination.parent.mkdir(parents=True, exist_ok=True)
     subtype = "VORBIS" if destination.suffix.lower() == ".ogg" else "PCM_16"
-    sf.write(destination, output, SAMPLE_RATE, subtype=subtype)
+    # Write smaller blocks so Windows does not crash while saving long lines.
+    with sf.SoundFile(
+        destination,
+        mode="w",
+        samplerate=SAMPLE_RATE,
+        channels=output.shape[1],
+        subtype=subtype,
+    ) as output_file:
+        for start in range(0, len(output), 65536):
+            output_file.write(output[start : start + 65536])
     print(
         f"{source.name} -> {destination} ({len(output) / SAMPLE_RATE:.2f} s, stereo, {SAMPLE_RATE} Hz)"
     )

@@ -105,7 +105,7 @@
 	sm_gas.powerloss_inhibition = initial(sm_gas.powerloss_inhibition)
 	sm_gas.heat_power_generation = initial(sm_gas.heat_power_generation)
 	sm_gas.heat_modifier = initial(sm_gas.heat_modifier)
-	priority_announce("The supermatter surge has dissipated, crystal output readings have normalized.", "Anomaly Cleared")
+	priority_announce("The supermatter surge has dissipated, crystal output readings have normalized.", "Anomaly Cleared", ANNOUNCER_LINE_EVENT_SUPERMATTER_CLEARED)
 	engine = null
 	sm_gas = null
 

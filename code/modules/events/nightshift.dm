@@ -47,15 +47,35 @@
 
 	if(announce)
 		if(active)
-			send_announcement("Good evening, crew. To reduce power consumption and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.")
+			priority_announce(
+				"Good evening, crew. To reduce power consumption and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.",
+				sound = ANNOUNCER_LINE_EVENT_NIGHTSHIFT_EVENING,
+				sender_override = "Automated Lighting System Announcement",
+				color_override = "grey",
+			)
 		else
-			send_announcement("Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.")
+			priority_announce(
+				"Good morning, crew. As it is now day time, all of the lights aboard the station have been restored to their former brightness.",
+				sound = ANNOUNCER_LINE_EVENT_NIGHTSHIFT_MORNING,
+				sender_override = "Automated Lighting System Announcement",
+				color_override = "grey",
+			)
 
 	if(resume)
 		if(active)
-			send_announcement("Restoring night lighting configuration to normal operation.")
+			priority_announce(
+				"Restoring night lighting configuration to normal operation.",
+				sound = ANNOUNCER_LINE_EVENT_NIGHTSHIFT_RESTORE,
+				sender_override = "Automated Lighting System Announcement",
+				color_override = "grey",
+			)
 		else
-			send_announcement("Disabling night lighting: Station is in a state of emergency.")
+			priority_announce(
+				"Disabling night lighting: Station is in a state of emergency.",
+				sound = ANNOUNCER_LINE_EVENT_NIGHTSHIFT_EMERGENCY,
+				sender_override = "Automated Lighting System Announcement",
+				color_override = "grey",
+			)
 
 	update_machines()
 
@@ -67,12 +87,3 @@
 			APC.set_nightshift(!nightshift_disabled)
 		if(TICK_CHECK)
 			return
-
-///Custom messages sent throughout the event that we'll do here, instead of using the `announce` proc that's only at the start.
-/datum/round_event/nightshift/proc/send_announcement(message)
-	priority_announce(
-		text = message,
-		sound = 'sound/announcer/notice/notice2.ogg',
-		sender_override = "Automated Lighting System Announcement",
-		color_override = "grey",
-	)

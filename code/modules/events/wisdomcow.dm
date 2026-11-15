@@ -23,7 +23,7 @@
 	var/datum/reagent/forced_reagent_type
 
 /datum/round_event/wisdomcow/announce(fake)
-	priority_announce("A wise cow has been spotted in the area. Be sure to ask for her advice.", "Nanotrasen Cow Ranching Agency")
+	priority_announce("A wise cow has been detected in the station, be sure to ask for her advice", "Unusual Lifesign Alert", ANNOUNCER_LINE_EVENT_WISDOM_COW)
 
 /datum/round_event/wisdomcow/start()
 	var/turf/targetloc

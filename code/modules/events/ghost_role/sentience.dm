@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 	sentience_report += "Based on [data], we believe that [one] of the station's [pets] has developed [strength] level intelligence, and the ability to communicate."
 
-	priority_announce(sentience_report,"[command_name()] Medium-Priority Update")
+	priority_announce(sentience_report, "[command_name()] Medium-Priority Update", ANNOUNCER_LINE_EVENT_SENTIENCE)
 
 /datum/round_event/ghost_role/sentience/spawn_role()
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, alert_pic = /obj/item/slimepotion/sentience, role_name_text = role_name)

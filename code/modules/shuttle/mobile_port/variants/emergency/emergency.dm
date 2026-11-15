@@ -238,6 +238,7 @@
 				priority_announce(
 					text = "The emergency shuttle has left the station. Estimate [timeLeft(60 SECONDS)] minutes until the shuttle docks at [command_name()].",
 					title = "Emergency Shuttle Departure",
+					sound = ANNOUNCER_LINE_SHUTTLE_DEPARTURE,
 					sender_override = "Emergency Shuttle Uplink Alert",
 					color_override = "orange",
 				)
@@ -304,6 +305,7 @@
 	priority_announce(
 		text = "The emergency shuttle is preparing for direct jump. Estimate [timeLeft(60 SECONDS)] minutes until the shuttle docks at [command_name()].",
 		title = "Emergency Shuttle Transit Failure",
+		sound = ANNOUNCER_LINE_SHUTTLE_DIRECT_JUMP,
 		sender_override = "Emergency Shuttle Uplink Alert",
 		color_override = "orange",
 	)

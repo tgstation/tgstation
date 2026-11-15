@@ -3,7 +3,7 @@
 		'sound/announcer/medbot/newAI.ogg')
 	alert_sounds = list('sound/announcer/medbot/attention.ogg')
 	command_report_sounds = list('sound/announcer/medbot/commandreport.ogg')
-	event_sounds = list(ANNOUNCER_AIMALF = 'sound/announcer/default/aimalf.ogg',
+	event_sounds = list(ANNOUNCER_AIMALF = 'sound/announcer/default/threats/aimalf.ogg',
 		ANNOUNCER_ALIENS = 'sound/announcer/medbot/aliens.ogg',
 		ANNOUNCER_ANIMES = 'sound/announcer/medbot/animes.ogg',
 		ANNOUNCER_GRANOMALIES = 'sound/announcer/medbot/granomalies.ogg',

@@ -65,7 +65,7 @@
 	deadchat_broadcast(" has just been[random ? " randomly" : ""] triggered[cause ? " by [cause]" : ""]!", "<b>Scrubber Overflow: [initial(forced_reagent_type.name)]</b>", message_type=DEADCHAT_ANNOUNCEMENT)
 
 /datum/round_event/scrubber_overflow/announce(fake)
-	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "[command_name()] Engineering Division")
+	priority_announce("The scrubbers network is experiencing a backpressure surge. Some ejection of contents may occur.", "[command_name()] Engineering Division", ANNOUNCER_LINE_EVENT_SCRUBBER_OVERFLOW)
 
 /datum/round_event/scrubber_overflow/setup()
 	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/temp_vent as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/atmospherics/components/unary/vent_scrubber))

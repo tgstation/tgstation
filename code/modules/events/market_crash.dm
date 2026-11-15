@@ -33,7 +33,7 @@
 		"uhh, bad luck, we guess"
 	)
 	var/reason = pick(poss_reasons)
-	priority_announce("Due to [reason], prices for on-station vendors will be increased for a short period.", "Nanotrasen Accounting Division")
+	priority_announce("Due to [reason], prices for on-station vendors will be increased for a short period.", "Nanotrasen Accounting Division", ANNOUNCER_LINE_EVENT_MARKET_PRICES_UP)
 
 /datum/round_event/market_crash/start()
 	. = ..()
@@ -46,7 +46,7 @@
 	REMOVE_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING, MARKET_CRASH_EVENT_TRAIT)
 	SSeconomy.price_update()
 	SSeconomy.update_vending_prices()
-	priority_announce("Prices for on-station vendors have now stabilized.", "Nanotrasen Accounting Division")
+	priority_announce("Prices for on-station vendors have now stabilized.", "Nanotrasen Accounting Division", ANNOUNCER_LINE_EVENT_MARKET_PRICES_STABLE)
 
 /datum/round_event/market_crash/tick()
 	. = ..()

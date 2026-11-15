@@ -83,7 +83,7 @@
 	. = ..()
 	if(!.)
 		return
-	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert")
+	priority_announce("The radiation threat has passed. Please return to your workplaces.", "Anomaly Alert", ANNOUNCER_LINE_EVENT_RADIATION_CLEARED)
 	status_alarm(FALSE)
 
 /datum/weather/rad_storm/proc/do_mutate(mob/living/carbon/human/mutant)

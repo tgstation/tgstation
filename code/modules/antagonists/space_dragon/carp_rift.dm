@@ -256,7 +256,7 @@
 	if(time_charged >= max_charge)
 		charge_state = CHARGE_COMPLETED
 		var/area/location = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [initial(location.name)], please stand-by.", "[command_name()] Wildlife Observations", has_important_message = TRUE)
+		priority_announce("Spatial object has reached peak energy charge in [initial(location.name)], please stand-by.", "[command_name()] Wildlife Observations", ANNOUNCER_LINE_THREAT_RIFT_PEAK_CHARGE, has_important_message = TRUE)
 		atom_integrity = INFINITY
 		icon_state = "carp_rift_charged"
 		set_light_color(LIGHT_COLOR_DIM_YELLOW)
@@ -281,7 +281,7 @@
 	if(charge_state < CHARGE_FINALWARNING && time_charged >= (max_charge * 0.5))
 		charge_state = CHARGE_FINALWARNING
 		var/area/A = get_area(src)
-		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)]. Stop it at all costs!", "[command_name()] Wildlife Observations", ANNOUNCER_SPANOMALIES)
+		priority_announce("A rift is causing an unnaturally large energy flux in [initial(A.name)]. Stop it at all costs!", "[command_name()] Wildlife Observations", ANNOUNCER_LINE_THREAT_RIFT_ENERGY_FLUX)
 
 /**
  * Used to create carp controlled by ghosts when the option is available.
