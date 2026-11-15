@@ -147,6 +147,16 @@
 	if(pre_coverage != obscured_slots)
 		item_coverage_changed(obscured_slots & ~pre_coverage, pre_coverage & ~obscured_slots)
 
+	if(astype(item, /obj/item/clothing)?.clothing_flags & STOPSPRESSUREDAMAGE)
+		if(item.body_parts_covered & CHEST)
+			pressure_protected_bodyparts |= PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT
+		if(item.body_parts_covered & HEAD)
+			pressure_protected_bodyparts |= PRESSURE_HEAD_PROTECTED_BY_EQUIPMENT
+		if(item.body_parts_covered & (HANDS|ARMS)) // yes, you *just* need arms OR hands protected, not both. very odd isn't it
+			pressure_protected_bodyparts |= PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT
+		if(item.body_parts_covered & (FEET|LEGS)) // yes, you *just* need feet OR legs protected, not both. very odd isn't it
+			pressure_protected_bodyparts |= PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT
+
 /// Removes the passed item's coverage from the mob's coverage related flags
 /mob/living/carbon/proc/remove_item_coverage(obj/item/item)
 	refresh_obscured() // No way to remove a single item's coverage without recalculating everything
@@ -156,9 +166,20 @@
 
 	obscured_slots = NONE
 	covered_slots = NONE
+	pressure_protected_bodyparts &= ~PRESSURE_EQUIPMENT_FLAGS
 	for(var/obj/item/other_equipped_item as anything in get_equipped_items())
 		obscured_slots |= other_equipped_item.flags_inv
 		covered_slots |= other_equipped_item.flags_inv | other_equipped_item.transparent_protection
+
+		if(astype(other_equipped_item, /obj/item/clothing)?.clothing_flags & STOPSPRESSUREDAMAGE)
+			if(other_equipped_item.body_parts_covered & CHEST)
+				pressure_protected_bodyparts |= PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT
+			if(other_equipped_item.body_parts_covered & HEAD)
+				pressure_protected_bodyparts |= PRESSURE_HEAD_PROTECTED_BY_EQUIPMENT
+			if(other_equipped_item.body_parts_covered & (HANDS|ARMS))
+				pressure_protected_bodyparts |= PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT
+			if(other_equipped_item.body_parts_covered & (FEET|LEGS))
+				pressure_protected_bodyparts |= PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT
 
 	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
 		obscured_slots |= HIDEHAIR|HIDEFACIALHAIR
