@@ -770,15 +770,6 @@ GAME_VERB_HIDDEN(/mob/dead/observer, add_view_range, "Add View Range")
 				ManualFollow(target)
 				return
 
-		if(href_list["follow_ckey"])
-			var/target_ckey = ckey(href_list["follow_ckey"])
-			// Only poll winners can be followed this way, otherwise this would let ghosts find anyone's mob by ckey
-			if(SSpolling.announced_ckeys[target_ckey])
-				var/mob/target = get_mob_by_ckey(target_ckey)
-				if(istype(target) && (target != src))
-					ManualFollow(target)
-			return
-
 		if(href_list["x"] && href_list["y"] && href_list["z"])
 			var/tx = text2num(href_list["x"])
 			var/ty = text2num(href_list["y"])
