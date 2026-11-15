@@ -1,0 +1,11 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Drone chat works again."
+  - bugfix: "Monkeys spawned from cubes no longer attack other monkeys."
+  - bugfix: "NPC flesh spiders attack randomly."
+  - bugfix: "The meteor heart uses its abilities correctly."
+  - bugfix: "Stabilized pink extracts correctly pacify nearby mobs."
+  - bugfix: "Stickmen summoned from the paper mache robes don't attack the caster."
+  - bugfix: "Rats spawned from toilet bongs are friendly as expected."
+  - bugfix: "Killer tomatos and seedlings are immune to kudzu."
