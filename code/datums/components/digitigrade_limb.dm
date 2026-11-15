@@ -15,7 +15,8 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(!free_id)
-		CRASH("/datum/component/digitigrade_limb added with null free_id")
+		stack_trace("[type] added with null free_id")
+		return COMPONENT_INCOMPATIBLE
 
 	var/obj/item/bodypart/limb = parent
 

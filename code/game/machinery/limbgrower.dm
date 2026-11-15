@@ -264,7 +264,9 @@
 
 	var/built_typepath = being_built.build_path
 	if(ispath(built_typepath, /obj/item/bodypart))
-		build_limb(astype(being_built, /datum/design/bodypart)?.build_limb_from_cat ? create_buildpath() : built_typepath)
+		if(astype(being_built, /datum/design/bodypart)?.build_limb_from_cat)
+			built_typepath = create_buildpath()
+		build_limb(built_typepath)
 	else
 		//Just build whatever it is
 		new built_typepath(loc)

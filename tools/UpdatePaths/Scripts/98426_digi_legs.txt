@@ -1,0 +1,1 @@
+/obj/item/bodypart/leg/right/digitigrade : /obj/item/bodypart/leg/right/lizard/digitigrade
