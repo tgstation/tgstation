@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - bugfix: "Supply Pod \"Launch Turf Ordered\" and \"Launch Random Turf\" modes now work again"
