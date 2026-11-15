@@ -7,6 +7,8 @@ SUBSYSTEM_DEF(polling)
 	var/list/datum/candidate_poll/currently_polling
 	/// Number of polls performed since the start
 	var/total_polls = 0
+	/// Assoc list of ckeys that were announced as chosen by a poll, the only ckeys FOLLOW_CKEY_LINK is allowed to resolve
+	var/list/announced_ckeys = list()
 
 /datum/controller/subsystem/polling/fire()
 	if(!currently_polling) // if polls_active is TRUE then this shouldn't happen, but still..

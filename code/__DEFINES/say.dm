@@ -119,6 +119,8 @@
 
 // A link given to ghost alice to follow bob
 #define FOLLOW_LINK(alice, bob) "<a href=byond://?src=[REF(alice)];follow=[REF(bob)]>(F)</a>"
+/// A link given to ghost alice to follow whatever mob the ckey is in at the time of clicking, only works for ckeys announced by a candidate poll
+#define FOLLOW_CKEY_LINK(alice, bob_ckey) "<a href=byond://?src=[REF(alice)];follow_ckey=[bob_ckey]>(F)</a>"
 #define TURF_LINK(alice, turfy) "<a href=byond://?src=[REF(alice)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(T)</a>"
 #define FOLLOW_OR_TURF_LINK(alice, bob, turfy) "<a href=byond://?src=[REF(alice)];follow=[REF(bob)];x=[turfy.x];y=[turfy.y];z=[turfy.z]>(F)</a>"
 

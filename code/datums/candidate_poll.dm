@@ -154,5 +154,9 @@
 		return
 	for(var/mob/chosen in chosen_candidates)
 		var/client/chosen_client = chosen.client
+		if(isnull(chosen_client))
+			continue
+		// The chosen one is still a ghost that's about to be deleted, so the link has to find their mob by ckey when clicked
+		SSpolling.announced_ckeys[chosen_client.ckey] = TRUE
 		for(var/mob/poll_recipient as anything in poll_recipients)
-			to_chat(poll_recipient, span_ooc("[isobserver(poll_recipient) ? FOLLOW_LINK(poll_recipient, chosen_client.mob) : null][span_warning(" [full_capitalize(role)] Poll: ")][key_name(chosen_client, include_name = FALSE)] was selected."))
+			to_chat(poll_recipient, span_ooc("[isobserver(poll_recipient) ? FOLLOW_CKEY_LINK(poll_recipient, chosen_client.ckey) : null][span_warning(" [full_capitalize(role)] Poll: ")][key_name(chosen_client, include_name = FALSE)] was selected."))
