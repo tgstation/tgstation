@@ -206,6 +206,7 @@
   - bugfix: Stickmen summoned from the paper mache robes don't attack the caster.
   - bugfix: Rats spawned from toilet bongs are friendly as expected.
   - bugfix: Killer tomatos and seedlings are immune to kudzu.
+  - bugfix: You can no longer start to metabolize chems without a liver
   PapaMichael:
   - bugfix: Supply Pod "Launch Turf Ordered" and "Launch Random Turf" modes now work
       again
