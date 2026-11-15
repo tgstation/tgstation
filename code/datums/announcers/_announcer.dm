@@ -6,7 +6,7 @@
 	var/alert_sounds = list()
 	///Sounds made when command report is received
 	var/command_report_sounds = list()
-	///Event audio, can be used for specific event announcements and is assoc key - sound. If no sound is found the default is used.area
+	///Event-specific audio, keyed by ANNOUNCER_* defines. Unmapped event keys are silent for this announcer.
 	var/event_sounds = list()
 	///Override this to have a custom message to show instead of the normal priority announcement
 	var/custom_alert_message

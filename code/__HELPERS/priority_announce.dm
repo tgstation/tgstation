@@ -49,11 +49,16 @@
 			return
 
 	var/list/announcement_strings = list()
+	var/should_play_sound = TRUE
 
 	if(!sound)
 		sound = SSstation.announcer.get_rand_alert_sound()
-	else if(SSstation.announcer.event_sounds[sound])
-		sound = SSstation.announcer.event_sounds[sound]
+	else if(sound in GLOB.announcer_keys)
+		var/event_sound = SSstation.announcer.event_sounds[sound]
+		if(event_sound)
+			sound = event_sound
+		else
+			should_play_sound = FALSE
 
 	var/header
 	switch(type)
@@ -83,7 +88,7 @@
 	else
 		finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(jointext(announcement_strings, ""))
 
-	dispatch_announcement_to_players(finalized_announcement, players, sound)
+	dispatch_announcement_to_players(finalized_announcement, players, sound, should_play_sound)
 
 	if(isnull(sender_override) && players == GLOB.player_list)
 		if(length(title) > 0)
