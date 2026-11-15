@@ -146,7 +146,8 @@
 		return
 
 	if(source.body_position == LYING_DOWN)
-		play_craw_step(source)
+		if(!source.buckled)
+			play_craw_step(source)
 		return
 
 	if(HAS_TRAIT(source, TRAIT_SILENT_FOOTSTEPS) || SHOULD_MOB_DISABLE_FOOTSTEPS(source))

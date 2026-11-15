@@ -10,13 +10,16 @@
  * Checks if a blackboard cooldown key is off cooldown before ticking the child,
  * then sets it when the child finishes  replacing the key_off_cooldown
  *
- * cooldown_duration is in deciseconds (e.g. 30 SECONDS).
+ * cooldown_duration is the duration of the cooldown (or lower bound if max is also set)
+ * cooldown_duration_max is the upper bounds
  * lock_on_succeed = TRUE (default): lock after child SUCCESS only.
  * lock_on_succeed = FALSE: lock after any completion (SUCCESS or FAILURE).
  */
 /datum/bt_node/decorator/cooldown
 	var/cooldown_key
 	var/cooldown_duration
+	/// Optional upper bound for a randomly chosen cooldown duration.
+	var/cooldown_duration_max
 	var/lock_on_succeed = TRUE
 
 /datum/bt_node/decorator/cooldown/check_condition(datum/ai_controller/controller)
@@ -25,4 +28,7 @@
 
 /datum/bt_node/decorator/cooldown/on_child_complete(datum/ai_controller/controller, result)
 	if(!lock_on_succeed || result == BT_SUCCESS)
-		controller.set_blackboard_key(cooldown_key, world.time + cooldown_duration)
+		var/actual_cooldown_duration = cooldown_duration
+		if(!isnull(cooldown_duration_max))
+			actual_cooldown_duration = rand(cooldown_duration, cooldown_duration_max)
+		controller.set_blackboard_key(cooldown_key, world.time + actual_cooldown_duration)

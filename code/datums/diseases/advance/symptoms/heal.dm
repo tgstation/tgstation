@@ -639,8 +639,8 @@
 	transmittable = -4
 	level = 9
 	threshold_descs = list(
-		"Resistance 9" = "Doubles healing speed from stable genetics.",
-		"Stage Speed 6" = "Slightly increases healing speed for all hosts without negative genetic stability.",
+		"Resistance 9" = "Slightly increases healing speed for all hosts without negative genetic stability.",
+		"Stage Speed 6" = "Doubles healing speed from stable genetics.",
 	)
 	power = 0
 	var/stability_divisor = 25
@@ -663,5 +663,5 @@
 
 /datum/symptom/heal/genetic/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	if(carbon_host.heal_overall_damage(actual_power, actual_power, required_bodytype = healable_bodytypes) && prob(5))
-		to_chat(carbon_host, span_notice("You feel your injuries slowly fading away."))
+		to_chat(carbon_host, span_notice("You feel your injuries [actual_power >= 3 ? "quickly" : "slowly"] fading away."))
 	return TRUE

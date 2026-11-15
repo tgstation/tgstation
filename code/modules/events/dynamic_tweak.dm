@@ -33,3 +33,10 @@
 	SSdynamic.rulesets_to_spawn[LATEJOIN] += new_latejoins
 
 	message_admins("Event: Dynamic Tweak added [new_latejoins] latejoin\s, [new_lights] light midround\s and [new_heavies] heavy midround\s.")
+	log_dynamic("Event: Dynamic Tweak added additional ruleset(s):")
+	if(new_lights)
+		log_dynamic("- +[new_lights] light midround\s")
+	if(new_heavies)
+		log_dynamic("- +[new_heavies] heavy midround\s")
+	if(new_latejoins)
+		log_dynamic("- +[new_latejoins] latejoin\s")

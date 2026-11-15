@@ -21,42 +21,41 @@
 	pixel_shift = 28
 
 /obj/machinery/digital_clock/wrench_act_secondary(mob/living/user, obj/item/tool)
-	. = ..()
 	balloon_alert(user, "[anchored ? "un" : ""]securing...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
 		balloon_alert(user, "[anchored ? "un" : ""]secured")
-		deconstruct()
-		return TRUE
+		deconstruct(TRUE)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/digital_clock/welder_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return
-	if(atom_integrity >= max_integrity)
+	if(get_integrity() >= max_integrity)
 		balloon_alert(user, "it doesn't need repairs!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "repairing display...")
-	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
-		return TRUE
+	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume = 50))
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "repaired")
-	atom_integrity = max_integrity
+	repair_damage(INFINITY)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/digital_clock/atom_fix()
+	. = ..()
 	set_machine_stat(machine_stat & ~BROKEN)
-	update_appearance()
-	return TRUE
 
 /obj/machinery/digital_clock/multitool_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return
 	if(!(obj_flags & EMAGGED))
-		return
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "resetting...")
 	tool.play_tool_sound(src)
 	if(tool.use_tool(src, user, 6 SECONDS))
 		playsound(loc, 'sound/items/deconstruct.ogg', 50, vary = TRUE)
 		balloon_alert(user, "reset")
 		obj_flags &= ~EMAGGED
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/digital_clock/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -71,85 +70,75 @@
 	emag_act()
 
 /obj/machinery/digital_clock/on_deconstruction(disassembled)
+	var/atom/droploc = drop_location()
 	if(disassembled)
-		new /obj/item/wallframe/digital_clock(drop_location())
+		new /obj/item/wallframe/digital_clock(droploc)
 	else
-		new /obj/item/stack/sheet/iron(drop_location(), 2)
-		new /obj/item/shard(drop_location())
-		new /obj/item/shard(drop_location())
+		new /obj/item/stack/sheet/iron(droploc, 2)
+		new /obj/item/shard(droploc)
+		new /obj/item/shard(droploc)
 
 /obj/machinery/digital_clock/Initialize(mapload)
 	. = ..()
 	if(mapload)
 		find_and_mount_on_atom()
 	AddElement(/datum/element/beauty, 200)
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/digital_clock/process(seconds_per_tick)
-	if(machine_stat & NOPOWER)
+	if(!is_operational)
 		return
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 
-
-/obj/machinery/digital_clock/update_appearance(updates=ALL)
+/obj/machinery/digital_clock/on_set_is_operational(old_value)
 	. = ..()
-	if(machine_stat & (NOPOWER|BROKEN))
+	update_appearance(UPDATE_OVERLAYS)
+	if(is_operational)
+		set_light(l_range = 1.5, l_power = 0.7, l_color = LIGHT_COLOR_BLUE) // blue light
+	else
 		set_light(0)
-		return
-	set_light(l_range = 1.5, l_power = 0.7, l_color = LIGHT_COLOR_BLUE) // blue light
 
 /obj/machinery/digital_clock/update_overlays()
 	. = ..()
-
-	if(machine_stat & (NOPOWER|BROKEN))
+	if(!is_operational)
 		return
-	. += update_time()
-	return .
+	. += get_time_overlays()
 
-/obj/machinery/digital_clock/proc/update_time()
-	var/station_minutes
-	if(obj_flags & EMAGGED)
-		station_minutes = rand(0, 99)
-	else
-		station_minutes = text2num(round_timestamp(format = "mm"))
+#define RETRIEVE_TIME_CACHE_ENTRY(offset_amount, entry_state, cache_list, return_list) \
+	do { \
+		var/_key = "[offset_amount][entry_state]"; \
+		if(!cache_list[_key]) { \
+			cache_list[_key] = image(icon = 'icons/obj/digital_clock.dmi', icon_state = "+[entry_state]"); \
+			cache_list[_key].pixel_w = offset_amount; \
+		} \
+		return_list += cache_list[_key]; \
+	} while(FALSE)
 
+/obj/machinery/digital_clock/proc/get_time_overlays()
+	var/station_minutes = (obj_flags & EMAGGED) ? rand(0, 99) : text2num(round_timestamp(format = "mm"))
 	// tenth / the '3' in '31' / 31 -> 3.1 -> 3
 	var/station_minute_tenth = station_minutes >= 10 ? round(station_minutes * 0.1) : 0
 	// one / the '1' in '31' / 31 -> 31 - (3 * 10) -> 31 - 30 -> 1
 	var/station_minute_one = station_minutes - (station_minute_tenth * 10)
 
-	var/station_hours
-
-	if(obj_flags & EMAGGED)
-		station_hours = rand(0, 99)
-	else
-		station_hours = text2num(round_timestamp(format = "hh"))
-
+	var/station_hours = (obj_flags & EMAGGED) ? rand(0, 99) : text2num(round_timestamp(format = "hh"))
 	// one / the '1' in '12' / 12 -> 1.2 -> 1
-	var/station_hours_tenth = station_minutes >= 10 ? round(station_hours * 0.1) : 0
+	var/station_hours_tenth = station_hours >= 10 ? round(station_hours * 0.1) : 0
 	// tenth / the '2' in '12' / 12 -> 12 - (1 * 10) -> 12 - 10 -> 2
 	var/station_hours_one = station_hours - (station_hours_tenth * 10)
 
-	var/return_overlays = list()
+	var/static/list/image/time_overlay_cache
+	var/list/return_overlays = list()
 
-	var/mutable_appearance/minute_one_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_minute_one]")
-	minute_one_overlay.pixel_w = 0
-	return_overlays += minute_one_overlay
-
-	var/mutable_appearance/minute_tenth_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_minute_tenth]")
-	minute_tenth_overlay.pixel_w = -4
-	return_overlays += minute_tenth_overlay
-
-	var/mutable_appearance/separator = mutable_appearance('icons/obj/digital_clock.dmi', "+separator")
-	return_overlays += separator
-
-	var/mutable_appearance/hour_one_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_hours_one]")
-	hour_one_overlay.pixel_w = -10
-	return_overlays += hour_one_overlay
-
-	var/mutable_appearance/hour_tenth_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_hours_tenth]")
-	hour_tenth_overlay.pixel_w = -14
-	return_overlays += hour_tenth_overlay
+	time_overlay_cache ||= list()
+	RETRIEVE_TIME_CACHE_ENTRY(0, "separator", time_overlay_cache, return_overlays)
+	RETRIEVE_TIME_CACHE_ENTRY(0, station_minute_one, time_overlay_cache, return_overlays)
+	RETRIEVE_TIME_CACHE_ENTRY(-4, station_minute_tenth, time_overlay_cache, return_overlays)
+	RETRIEVE_TIME_CACHE_ENTRY(-10, station_hours_one, time_overlay_cache, return_overlays)
+	RETRIEVE_TIME_CACHE_ENTRY(-14, station_hours_tenth, time_overlay_cache, return_overlays)
 
 	return return_overlays
+
+#undef RETRIEVE_TIME_CACHE_ENTRY
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/digital_clock, 28)

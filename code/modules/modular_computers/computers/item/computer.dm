@@ -155,6 +155,7 @@
 
 	register_context()
 	update_appearance()
+	ADD_TRAIT(src, TRAIT_PASS_ID_ACCESS_IN_CONTENTS, INNATE_TRAIT)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/modular_computer/LateInitialize()

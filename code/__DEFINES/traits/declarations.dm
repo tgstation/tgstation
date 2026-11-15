@@ -1312,6 +1312,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// ID cards with this trait have special appraisal text.
 #define TRAIT_TASTEFULLY_THICK_ID_CARD "impressive_very_nice"
 
+/// When applied to objects, ID cards placed in the object's contents will act as if they are worn or held, granting the mob the card's access.
+/// This is not applied recursively, i.e. an ID card in an item with this trait in another item with this trait does not work.
+#define TRAIT_PASS_ID_ACCESS_IN_CONTENTS "pass_id_access_in_contents"
+
 ///The entity has Silicon 'access', so is either a silicon, has an access wand, or is an admin ghost AI.
 ///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.
 #define TRAIT_SILICON_ACCESS "silicon_access_trait"

@@ -17,6 +17,12 @@
 	subject.dropItemToGround(card)
 	TEST_ASSERT(check_access(subject, null), "Subject still had access after unequipping ID card.")
 
+	var/obj/item/storage/briefcase/briefcase = EASY_ALLOCATE()
+	card.forceMove(briefcase)
+	subject.put_in_hands(briefcase)
+	TEST_ASSERT(!check_access(subject, ACCESS_HYDROPONICS), "Subject had access while holding briefcase with ID card inside - expected no access.")
+	subject.dropItemToGround(briefcase)
+
 	var/obj/item/storage/wallet/wallet = EASY_ALLOCATE()
 	card.forceMove(wallet)
 	subject.equip_to_appropriate_slot(wallet)

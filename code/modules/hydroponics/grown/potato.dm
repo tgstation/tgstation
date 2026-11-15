@@ -26,6 +26,8 @@
 	icon_state = "potato"
 	foodtypes = VEGETABLES
 	distill_reagent = /datum/reagent/consumable/ethanol/vodka
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 
 /obj/item/food/grown/potato/juice_typepath()
 	return /datum/reagent/consumable/potato_juice

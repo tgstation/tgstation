@@ -147,15 +147,24 @@
 										"children": [
 											{
 												"type": "decorator",
-												"decorator": "/datum/bt_node/decorator/target_can_be_shove_stunned",
+												"decorator": "/datum/bt_node/decorator/cooldown",
 												"vars": {
-													"target_key": "BB_CURRENT_TARGET"
+													"cooldown_key": "BB_MONKEY_SHOVE_COOLDOWN",
+													"cooldown_duration": "3 SECONDS",
+													"cooldown_duration_max": "5 SECONDS"
 												},
 												"child": {
-													"type": "leaf",
-													"behavior": "/datum/bt_node/ai_behavior/shove_target",
+													"type": "decorator",
+													"decorator": "/datum/bt_node/decorator/target_can_be_shove_stunned",
 													"vars": {
 														"target_key": "BB_CURRENT_TARGET"
+													},
+													"child": {
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/shove_target",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET"
+														}
 													}
 												}
 											},
