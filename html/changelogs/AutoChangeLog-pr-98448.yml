@@ -1,4 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - qol: "Ambient game tracks will no longer play over admin web music"

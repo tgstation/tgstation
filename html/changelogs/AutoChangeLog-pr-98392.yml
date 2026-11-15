@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Projectiles should freeze less (more processing time has been allocated to them - so if something else starts to freeze feel free to file a report)"

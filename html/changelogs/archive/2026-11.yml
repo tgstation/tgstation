@@ -185,3 +185,28 @@
       being held. A few items have kept this properly (obviously, wallets and PDAs...
       but a few other special items might have kept it too...)
   - bugfix: You can turn while buckled again
+2026-11-15:
+  CabinetOnFire:
+  - refactor: Pathfinding now makes use of a more optimized rust-g A* algorithm
+  - bugfix: Bots now should reliably be summonable
+  Melbert:
+  - code_imp: Changed the code that determines if you're protected from pressure damage
+      or not, report anything weird with your ghetto spacesuit setups (like if they
+      suddenly stop working)
+  - rscadd: If you have someone aggressively grabbed, you can click on a lit stove
+      or hot griddle to place their hand onto it.
+  - qol: Projectiles should freeze less (more processing time has been allocated to
+      them - so if something else starts to freeze feel free to file a report)
+  - bugfix: Voice is properly passed to crew records
+  - bugfix: Drone chat works again.
+  - bugfix: Monkeys spawned from cubes no longer attack other monkeys.
+  - bugfix: NPC flesh spiders attack randomly.
+  - bugfix: The meteor heart uses its abilities correctly.
+  - bugfix: Stabilized pink extracts correctly pacify nearby mobs.
+  - bugfix: Stickmen summoned from the paper mache robes don't attack the caster.
+  - bugfix: Rats spawned from toilet bongs are friendly as expected.
+  - bugfix: Killer tomatos and seedlings are immune to kudzu.
+  PapaMichael:
+  - bugfix: Supply Pod "Launch Turf Ordered" and "Launch Random Turf" modes now work
+      again
+  - qol: Ambient game tracks will no longer play over admin web music

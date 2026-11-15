@@ -1,5 +1,0 @@
-author: "CabinetOnFire"
-delete-after: True
-changes:
-  - refactor: "Pathfinding now makes use of a more optimized rust-g A* algorithm"
-  - bugfix: "Bots now should reliably be summonable"

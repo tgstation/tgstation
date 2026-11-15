@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Changed the code that determines if you're protected from pressure damage or not, report anything weird with your ghetto spacesuit setups (like if they suddenly stop working)"
