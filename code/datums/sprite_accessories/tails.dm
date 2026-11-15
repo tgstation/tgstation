@@ -84,9 +84,9 @@
 	icon_state = "default"
 	color_src = HAIR_COLOR
 
-/datum/sprite_accessory/tails/felinid/fox
-	name = "Fox"
-	icon_state = "fox"
+/datum/sprite_accessory/tails/felinid/somali
+	name = "Somali"
+	icon_state = "somali"
 
 /datum/sprite_accessory/tails/monkey
 

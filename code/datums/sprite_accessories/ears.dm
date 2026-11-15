@@ -32,7 +32,13 @@
 	icon_state = "cyber"
 	locked = TRUE
 
-/datum/sprite_accessory/ears/cat/fox
+/datum/sprite_accessory/ears/cat/somali //they look like foxes...
+	icon = 'icons/mob/human/fox_features.dmi'
+	name = "Somali"
+	icon_state = "fox"
+	color_src = HAIR_COLOR
+
+/datum/sprite_accessory/ears/fox
 	icon = 'icons/mob/human/fox_features.dmi'
 	name = "Fox"
 	icon_state = "fox"
