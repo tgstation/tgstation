@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "If you have someone aggressively grabbed, you can click on a lit stove or hot griddle to place their hand onto it."
