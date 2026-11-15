@@ -77,6 +77,8 @@
 #define FACTION_SLIME "slime"
 /// Spiders and their webs
 #define FACTION_SPIDER "spiders"
+/// Specifically blood spiders, they hate everyone
+#define FACTION_BLOOD_SPIDER "blood_spider"
 /// Currently used only by floating eyeballs
 #define FACTION_SPOOKY "spooky"
 /// Statues that move around when nobody is watching them
@@ -139,15 +141,33 @@
 	} while(FALSE)
 
 /**
- * Compare two lists of factions, returning true if any match.
- * If exact match is passed through we only return true if both faction lists match equally.
+ * Compare two lists of factions, resolving to TRUE if both lists share at least one faction.
+ * If exact match is set, we only resolve to TRUE if ALL factions in faction_A are also present in faction_B.
+ * NB: that this means the order you check factions matters - checking A and B is not the same as checking B and A
  *
- * Macro-ified version to avoid extra proc overhead.
+ * If allies lists are provided, the macro will also resolve to TRUE if there is any overlap between allies_A and allies_B,
+ * regardless of the exact_match flag.
  */
-#define FAST_FACTION_CHECK(faction_A, faction_B, allies_A, allies_B, exact_match) \
+#define FACTION_CHECK(faction_A, faction_B, allies_A, allies_B, exact_match) \
 ( \
-	!(exact_match) ? \
-		(LAZYLEN((faction_A) & (faction_B)) || LAZYLEN((allies_A) & (allies_B))) \
+	ALLY_CHECK(allies_A, allies_B, FALSE/* we're ignoring exact_match here intentionally! */) || \
+	(exact_match) ? \
+		( LAZYLEN(faction_A) && ( LAZYLEN((faction_A) & (faction_B)) == LAZYLEN(faction_A) ) ) \
 	: \
-		((LAZYLEN((faction_A) & (faction_B)) == LAZYLEN(faction_A)) && LAZYLEN((allies_A) & (allies_B))) \
+		( LAZYLEN((faction_A) & (faction_B)) ) \
+)
+
+/**
+ * Compares two lists of allies, resolving to TRUE if there is any overlap.
+ * If exact_match is set, we only resolve to TRUE if ALL allies in allies_A are also present in allies_B.
+ *
+ * NB: exact_match will VERY OFTEN fail for allies as mobs are allied to themselves.
+ * Only use it if you know what you're doing (you will almost certainly want to do a faction check instead).
+ */
+#define ALLY_CHECK(allies_A, allies_B, exact_match) \
+( \
+	(exact_match) ? \
+		( LAZYLEN(allies_A) && ( LAZYLEN((allies_A) & (allies_B)) == LAZYLEN(allies_A) ) ) \
+	: \
+		( LAZYLEN((allies_A) & (allies_B)) ) \
 )
