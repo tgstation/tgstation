@@ -1,0 +1,5 @@
+author: "Maia-J"
+delete-after: True
+changes:
+  - bugfix: "The Grey Tide spear illusions attack their target again."
+  - bugfix: "Mirage grenades spawn mirages again."
