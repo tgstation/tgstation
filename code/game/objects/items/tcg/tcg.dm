@@ -491,7 +491,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon_state = "crew"
 	precon_id = "crew"
 
-/obj/item/tcg_precondeck/Initialize()
+/obj/item/tcg_precondeck/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/item_scaling, 0.5, 1)
 

@@ -214,10 +214,10 @@ SUBSYSTEM_DEF(trading_card_game)
 	qdel(pack)
 
 ///Returns a /datum/card from the card path, which should be in the form "series_id/card_id".
-/datum/controller/subsystem/trading_card_game/proc/get_card_datum_from_path(var/path)
+/datum/controller/subsystem/trading_card_game/proc/get_card_datum_from_path(path)
 	var/list/split = splittext(path, "/")
 	. = get_card_datum(split[1], split[2])
 
 ///Returns a /datum/card from a series and id.
-/datum/controller/subsystem/trading_card_game/proc/get_card_datum(var/series, var/id)
+/datum/controller/subsystem/trading_card_game/proc/get_card_datum(series, id)
 	. = cached_cards[series]["ALL"][id]
