@@ -6,7 +6,7 @@
 	name = "hydraulic clamp"
 	desc = "Equipment for engineering exosuits. Lifts objects and loads them into cargo."
 	icon_state = "mecha_clamp"
-	equip_cooldown = 15
+	equip_cooldown = 1.5 SECONDS
 	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	tool_behaviour = TOOL_RETRACTOR
 	range = MECHA_MELEE
@@ -155,7 +155,7 @@
 	name = "exosuit extinguisher"
 	desc = "Equipment for engineering exosuits. A rapid-firing high capacity fire extinguisher."
 	icon_state = "mecha_exting"
-	equip_cooldown = 5
+	equip_cooldown = 0.5 SECONDS
 	energy_drain = 0
 	equipment_slot = MECHA_UTILITY
 	range = MECHA_MELEE|MECHA_RANGED

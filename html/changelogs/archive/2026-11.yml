@@ -212,9 +212,16 @@
       again
   - qol: Ambient game tracks will no longer play over admin web music
 2026-11-16:
+  Maia-J:
+  - bugfix: The Grey Tide spear illusions attack their target again.
+  - bugfix: Mirage grenades spawn mirages again.
   Melbert:
   - bugfix: Fixes several mobs taking damage from damage types they are intended to
       be immune to
+  Xander3359:
+  - bugfix: Fixed misplaced wallet runtiming on maps with no closets
+  btcbuster:
+  - balance: You no longer lose ore when smelting it.
   scolastico:
   - bugfix: Pressing "Force Reconnect" in the chat panel's websocket settings no longer
       breaks the websock

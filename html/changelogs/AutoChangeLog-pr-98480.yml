@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "The Reticence, Gygax, Clarke, Phazon, and Odysseus all mistakenly drained 10x less power to move than intended; this has been fixed"
+  - bugfix: "Some mecha equipment (Mounted sleeper, syringe gun, beam gun, wormhole generator, teleporter, repair droid, punch-face, and paddy clamp) mistakenly drained 10x less power on usage than intended; this has been fixed"
