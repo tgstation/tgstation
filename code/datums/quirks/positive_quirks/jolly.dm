@@ -6,6 +6,7 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES|QUIRK_TRAUMALIKE
 	medical_record_text = "Patient demonstrates constant euthymia irregular for environment. It's a bit much, to be honest."
 	medical_symptom_text = "Exhibits persistent feelings of happiness and elevated mood, which may lead to unrealistic optimism and risk-taking behaviors."
+	mail_weight = 1
 	mail_goodies = list(/obj/item/clothing/mask/joy)
 
 /datum/quirk/jolly/process(seconds_per_tick)

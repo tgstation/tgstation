@@ -190,6 +190,9 @@
 
 /// ID card is being equipped to an item (like a pda or wallet)
 /obj/item/card/id/proc/equip_to_item_loc(atom/new_loc)
+	if(!HAS_TRAIT(new_loc, TRAIT_PASS_ID_ACCESS_IN_CONTENTS))
+		return
+
 	RegisterSignal(new_loc, COMSIG_ITEM_EQUIPPED, PROC_REF(on_loc_equipped), override = TRUE)
 	RegisterSignal(new_loc, COMSIG_ITEM_DROPPED, PROC_REF(on_loc_dropped), override = TRUE)
 	if (ismob(new_loc.loc))

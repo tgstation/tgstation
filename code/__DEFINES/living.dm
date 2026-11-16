@@ -37,7 +37,7 @@
 #define DEFAULT_PHYSIOLOGY_VAL 1
 
 ///get the physiology coefficient for a specific key
-#define GET_PHYSIOLOGY(living, key) (LAZYACCESS(living.physiology, key) || DEFAULT_PHYSIOLOGY_VAL)
+#define GET_PHYSIOLOGY(living, key) (isnull(LAZYACCESS(living.physiology, key)) ? DEFAULT_PHYSIOLOGY_VAL : LAZYACCESS(living.physiology, key))
 
 #define _INIT_PHYSIOLOGY_VAL(living, key) \
 	LAZYINITLIST(living.physiology); \

@@ -3,6 +3,8 @@
 	desc = "What is this? It's not a carrot, that's for sure. You should tell someone about this."
 	icon_state = "carrot"
 	abstract_type = /obj/item/food/grown/carrotlike
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 	/// What do we get from inadequately sharpening this?
 	var/shiv_type = null
 	/// What do we get from adequately sharpening this?

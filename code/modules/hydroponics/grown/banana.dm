@@ -26,6 +26,8 @@
 	bite_consumption_mod = 3
 	foodtypes = FRUIT
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 
 /obj/item/food/grown/banana/juice_typepath()
 	return /datum/reagent/consumable/banana

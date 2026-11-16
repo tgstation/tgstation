@@ -7,6 +7,7 @@
 	lose_text = span_notice("Your jaw feels fitting again.")
 	medical_record_text = "Patient is absurdly easy to knock out. Do not allow them near a boxing ring."
 	hardcore_value = 4
+	mail_weight = 2
 	mail_goodies = list(
 		/obj/item/clothing/gloves/boxing,
 		/obj/item/clothing/mask/luchador/rudos,

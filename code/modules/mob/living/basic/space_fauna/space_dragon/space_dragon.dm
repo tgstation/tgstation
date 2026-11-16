@@ -19,7 +19,7 @@
 	faction = list(FACTION_CARP)
 	mob_biotypes = MOB_SPECIAL
 	status_flags = CANPUSH
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	gender = NEUTER
 	maxHealth = 400
 	health = 400

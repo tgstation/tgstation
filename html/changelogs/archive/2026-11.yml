@@ -48,3 +48,180 @@
   cacogen:
   - qol: Pride pins are now named after their skin instead of just generic "pride
       pin"
+2026-11-07:
+  Fghj240:
+  - rscadd: Added burn and blunt wounds for robotic bodyparts
+  - rscadd: Added a new reagent, a coolant for robotic burns.
+  - map: Added chilled coolant spray (for robotic burn wounds) to robotics
+  - code_imp: removed magic strings from bone repair surgery required states text
+  Melbert:
+  - code_imp: Vents should perform better, note any issues with vents (especially
+      when overclocked)
+  SmArtKar:
+  - bugfix: Fixed a harddel in goliath tentacle code
+  san7890:
+  - balance: Telekinetic users can no longer open up a UI on a given object, allow
+      it to exit their site, and be able to edit it unceasingly.
+  thegrb93:
+  - balance: Tirizene prevents stamina regen
+2026-11-08:
+  sohpeach:
+  - bugfix: ntos file manager can no longer be used to print carp plushies (and similar
+      things)
+2026-11-09:
+  Melbert:
+  - code_imp: Cleaned up code for mobs being burned while tied to heat exhange pipes.
+      Report anything weird if it doesn't work the next time you get the opportunity
+      to try it in like 8 months
+  - balance: '"Throwing Arm" quirk cost reduced (7 -> 5)'
+  - balance: Reduced chance of obtaining several quirk's related mail items moderately,
+      with the exception of the Gamer quirk (which is now twice as likely, intead)
+  - rscadd: Added quirk "Eccentric Correspondent", which adds more randomness to your
+      mail item pool
+  - rscadd: Added quirk "Well Connected", which offers discounts on cargo or black
+      market orders.
+  - rscadd: Added quirk "Shock Reflex", which reduces the chance of being shocked
+      when failing hacks or the like.
+  - rscdel: Removed organ transport box from mail pool of Prosthetic Organ and Tin
+      Man quirks
+  PapaMichael:
+  - bugfix: EMP protection works more robustly
+  Y0SH1M4S73R:
+  - admin: datum instantiation from lua scripts can no longer be used to bypass admin
+      proc call protections
+  headband0536:
+  - rscadd: Throwable sledgehammer
+  - rscadd: Telescreens and status displays are now breakable
+  - image: Sledgehammer sprites by Simpleton
+2026-11-10:
+  Maia-J:
+  - bugfix: Limb growers no longer prevent printing when they have been upgraded and
+      have enough reagents if they wouldn't have had enough reagents were they not
+      upgraded.
+  Melbert:
+  - code_imp: Cleaned up code for updating your hand UI slots, report anything weird
+      with that
+  - code_imp: Cleaned up code for updating your sprite with your held items, report
+      anything weird with that
+  - code_imp: Cleaned up code pertaining to closing storage items you can't reach,
+      report if you are able to reach things you probably shouldn't be able to
+  - balance: Electrodisruptive emitter beams heal the SM considerably more per hit,
+      but begin to experience diminishing returns after a number of hits, resetting
+      after not being hit with a healing emitter for some time.
+  PapaMichael:
+  - bugfix: Changeling transformations and experimental cloners now properly copy
+      the TTS pitch of the target
+  - bugfix: MULEbots' autoreturn toggle now works
+  The-Tyrant:
+  - bugfix: Organic limbs can no longer get T1 robotic blunt wounds (loosened screws)
+  san7890:
+  - bugfix: Telekinetic users should be able to use UIs even when inside machinery,
+      as long as their client is expected to be able to have it in their sight (in
+      one way or another).
+  thegrb93:
+  - bugfix: ooc chat button missing from ooc tab
+  - bugfix: Missing large painting frame craft recipe added
+2026-11-11:
+  Fghj240:
+  - bugfix: fixed mutated regeneration threshold text
+  - spellcheck: mutated regeneration fluff text changes to "quickly" instead of "slowly"
+      if you stack it high enough
+  btcbuster:
+  - rscadd: Putrid dumpsters that spawn corpses now spawn morgue corpses instead of
+      an intact human corpse, leading to other species and damage on the corpses.
+      Cost decreased.
+  necromanceranne:
+  - balance: Cyborgs require two flashes to stun them once again.
+  - balance: You can now punch borgs to death. But you do need to have a decent punch
+      to even hurt them.
+2026-11-12:
+  Melbert:
+  - bugfix: Dynamic has a significantly higher chance of spawning antags if there
+      are no antags alive
+  - bugfix: Dynamic no longer counts dead people as alive for the purpose of antag
+      spawn chance
+  - qol: Dynamic math changed slightly. Fewer antags are spawned if a significant
+      amount of the crew is dead, and observers who were never part of the crew no
+      longer reduce the chance of spawning antags.
+  - qol: Dynamic rulesets that a require ghosts cannot be picked if there are no ghosts.
+      This means midround rulesets like Traitors / Mass Traitors will be significantly
+      more common when there are no observers.
+2026-11-13:
+  CabinetOnFire:
+  - balance: Monkeys are less tough to fight
+  - bugfix: Monkeys stop throwing things through (solid) windows
+  - bugfix: fixes inversion that made tamed monkeys steal shit instead of untamed
+      ones
+  FalloutFalcon:
+  - bugfix: Stacking machines not linked to a silo works
+  Melbert:
+  - balance: The Knock spell will open safes and briefcases
+  - map: Removed excess waste filters from the Supermatter Engine across all maps
+  - map: Standardizes waste output of the Supermatter Engine across all maps
+  - bugfix: Digital clocks should report more accurate times in the hours position
+      (before, it mirrored one of the minute's times)
+  - code_imp: Cleaned up digital clock code a bit, report if they seem to be reporting
+      weird numbers
+  - bugfix: Fix crawl/drag sounds being played while fireman carrying
+  PapaMichael:
+  - bugfix: The Kilostation Sci Security outpost now has a security science locker
+  Pumpkinoe:
+  - balance: Nutimov is slightly more dangerous to use now, if you don't treat the
+      AI right
+  grungussuss:
+  - sound: added new handling sfx to bowls, fruits, vegetables, rags, griddles.
+2026-11-14:
+  AitorLogedo:
+  - bugfix: Dead bodies wearing insulating clothes cool down after burning instead
+      of staying hot and husking.
+  Fghj240:
+  - spellcheck: corrected gibber meat production examine text
+  - code_imp: improved gibber code formatting
+  Melbert:
+  - bugfix: Stamina damage is properly refreshed by taking more stamina damage - in
+      other words. if you baton someone who is in stamcrit. it properly extends stamcrit.
+  - bugfix: Fixes a bug where you could magically gain an ID card's accesses if the
+      ID card was placed within literally anything (briefcases, backpacks, whatever)
+      being held. A few items have kept this properly (obviously, wallets and PDAs...
+      but a few other special items might have kept it too...)
+  - bugfix: You can turn while buckled again
+2026-11-15:
+  CabinetOnFire:
+  - refactor: Pathfinding now makes use of a more optimized rust-g A* algorithm
+  - bugfix: Bots now should reliably be summonable
+  Melbert:
+  - code_imp: Changed the code that determines if you're protected from pressure damage
+      or not, report anything weird with your ghetto spacesuit setups (like if they
+      suddenly stop working)
+  - rscadd: If you have someone aggressively grabbed, you can click on a lit stove
+      or hot griddle to place their hand onto it.
+  - qol: Projectiles should freeze less (more processing time has been allocated to
+      them - so if something else starts to freeze feel free to file a report)
+  - bugfix: Voice is properly passed to crew records
+  - bugfix: Drone chat works again.
+  - bugfix: Monkeys spawned from cubes no longer attack other monkeys.
+  - bugfix: NPC flesh spiders attack randomly.
+  - bugfix: The meteor heart uses its abilities correctly.
+  - bugfix: Stabilized pink extracts correctly pacify nearby mobs.
+  - bugfix: Stickmen summoned from the paper mache robes don't attack the caster.
+  - bugfix: Rats spawned from toilet bongs are friendly as expected.
+  - bugfix: Killer tomatos and seedlings are immune to kudzu.
+  - bugfix: You can no longer start to metabolize chems without a liver
+  PapaMichael:
+  - bugfix: Supply Pod "Launch Turf Ordered" and "Launch Random Turf" modes now work
+      again
+  - qol: Ambient game tracks will no longer play over admin web music
+2026-11-16:
+  Maia-J:
+  - bugfix: The Grey Tide spear illusions attack their target again.
+  - bugfix: Mirage grenades spawn mirages again.
+  Melbert:
+  - bugfix: Fixes several mobs taking damage from damage types they are intended to
+      be immune to
+  Xander3359:
+  - bugfix: Fixed misplaced wallet runtiming on maps with no closets
+  btcbuster:
+  - balance: You no longer lose ore when smelting it.
+  scolastico:
+  - bugfix: Pressing "Force Reconnect" in the chat panel's websocket settings no longer
+      breaks the websock
