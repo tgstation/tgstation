@@ -180,8 +180,9 @@
 	feature_key = FEATURE_TAIL_CAT
 	color_source = ORGAN_COLOR_HAIR
 
-/obj/item/organ/tail/cat/somali
-	sprite_accessory_override = /datum/sprite_accessory/tails/felinid/somali
+/obj/item/organ/tail/cat/fox
+	name = "fox tail"
+	sprite_accessory_override = /datum/sprite_accessory/tails/felinid/fox
 
 /obj/item/organ/tail/monkey
 	name = "monkey tail"
