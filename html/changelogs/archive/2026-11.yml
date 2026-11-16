@@ -211,3 +211,10 @@
   - bugfix: Supply Pod "Launch Turf Ordered" and "Launch Random Turf" modes now work
       again
   - qol: Ambient game tracks will no longer play over admin web music
+2026-11-16:
+  Melbert:
+  - bugfix: Fixes several mobs taking damage from damage types they are intended to
+      be immune to
+  scolastico:
+  - bugfix: Pressing "Force Reconnect" in the chat panel's websocket settings no longer
+      breaks the websock
