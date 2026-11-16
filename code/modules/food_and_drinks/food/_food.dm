@@ -178,7 +178,7 @@
 				continue
 			if(subject.has_status_effect(/datum/status_effect/food_crave))
 				var/datum/status_effect/food_crave/our_crave = subject.status_effects[/datum/status_effect/food_crave]
-				if(src in our_crave.food_list)
+				if(our_crave.food_list[src])
 					continue
 				subject.apply_status_effect(/datum/status_effect/food_crave, src)
 			else

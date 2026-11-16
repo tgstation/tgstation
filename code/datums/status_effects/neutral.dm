@@ -963,13 +963,13 @@
 /datum/status_effect/food_crave/on_creation(mob/living/new_owner, obj/item/food/trigger_food, ...)
 	. = ..()
 	food_list = list()
-	food_list += trigger_food
+	food_list[trigger_food] = TRUE
 	RegisterSignal(new_owner, COMSIG_LIVING_FINISH_EAT, PROC_REF(satisfy_craving))
 
 /// Second argument contains the food trigger
 /datum/status_effect/food_crave/refresh(effect,obj/item/food/trigger_food, ...)
 	. = ..()
-	food_list += trigger_food
+	food_list[trigger_food] = TRUE
 
 /datum/status_effect/food_crave/on_remove()
 	. = ..()
@@ -978,7 +978,7 @@
 /datum/status_effect/food_crave/proc/satisfy_craving(mob/living/food_eater, datum/eaten_food)
 	SIGNAL_HANDLER
 
-	if(eaten_food in food_list)
+	if(food_list[trigger_food])
 		food_eater.apply_status_effect(/datum/status_effect/craving_satisfied)
 		qdel(src)
 
