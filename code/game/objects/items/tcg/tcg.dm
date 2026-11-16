@@ -471,7 +471,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcg_precondeck
 	name = "\improper TGC Preconstructed Deck"
-	desc = "Face off with this awesome Tactical Game Cards pre-constructed deck, ready for play!"
+	desc = "Face off with this awesome TGC pre-constructed deck, ready for play!"
 	icon = 'icons/obj/toys/tcgprecons.dmi'
 	icon_state = "template"
 	w_class = WEIGHT_CLASS_SMALL
@@ -481,11 +481,13 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcg_precondeck/command
 	name = "\improper 'Command' TGC Preconstructed Deck"
+	desc = "Control the battlefield and lead the station to victory with this awesome TGC pre-constructed deck, ready for play!"
 	icon_state = "command"
 	precon_id = "command"
 
 /obj/item/tcg_precondeck/crew
 	name = "\improper 'Crew' TGC Preconstructed Deck"
+	desc = "Rally with the common man and master the greytide with this awesome TGC pre-constructed deck, ready for play!"
 	icon_state = "crew"
 	precon_id = "crew"
 
