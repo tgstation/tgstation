@@ -17,6 +17,12 @@
 	SIGNAL_HANDLER
 	pen_resolved_during_qdel = !isnull(pen_ref.resolve())
 
+#define EXPECTED_FLOOR_TYPE /turf/open/floor
+// Do this instead of just ChangeTurf to guarantee that baseturfs is completely default on-init behavior
+#define RESET_TO_EXPECTED(turf) \
+	turf.ChangeTurf(EXPECTED_FLOOR_TYPE);\
+	turf.assemble_baseturfs(initial(turf.baseturfs))
+
 /datum/unit_test/autoref_change_turf
 
 /datum/unit_test/autoref_change_turf/Run()
@@ -25,8 +31,13 @@
 	var/datum/autoref/turf_ref = AUTOREF(test_turf)
 	TEST_ASSERT_EQUAL(turf_ref.resolve(), test_turf, "turf autoref should resolve")
 
-	var/original_turf_type = test_turf.type
 	var/turf/changed_turf = test_turf.ChangeTurf(/turf/open/floor/plating)
 	TEST_ASSERT_EQUAL(AUTOREF(changed_turf), turf_ref, "changed turf should keep the same autoref")
 	TEST_ASSERT_EQUAL(turf_ref.resolve(), changed_turf, "changed turf's autoref should still resolve")
-	changed_turf.ChangeTurf(original_turf_type)
+
+/datum/unit_test/autoref_change_turf/Destroy()
+	RESET_TO_EXPECTED(run_loc_floor_bottom_left)
+	return ..()
+
+#undef RESET_TO_EXPECTED
+#undef EXPECTED_FLOOR_TYPE
