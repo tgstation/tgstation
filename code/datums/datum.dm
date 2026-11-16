@@ -129,9 +129,7 @@
 	tag = null
 	datum_flags &= ~DF_USE_TAG //In case something tries to REF us
 
-	if(auto_reference)
-		UNLINT(auto_reference.reference = null)
-		auto_reference = null
+	auto_reference?.cleanup(src)
 
 	if(_active_timers)
 		var/list/timers = _active_timers

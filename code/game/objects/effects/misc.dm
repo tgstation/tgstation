@@ -35,9 +35,7 @@
 
 /obj/effect/spawner/Destroy(force)
 	SHOULD_CALL_PARENT(FALSE)
-	if(auto_reference)
-		UNLINT(auto_reference.reference = null)
-		auto_reference = null
+	auto_reference?.cleanup(src)
 	moveToNullspace()
 	return QDEL_HINT_QUEUE
 

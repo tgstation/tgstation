@@ -3,11 +3,13 @@
 /proc/AUTOREF(datum/input)
 	if(!istype(input) || QDELING(input))
 		return
-
 	if(isautoref(input))
 		return input
+
 	if(input.datum_flags & DF_WEAK_AUTOREF)
 		return input.auto_reference ||= new /datum/autoref/weak(input)
+	if(isturf(input) || isarea(input))
+		return input.auto_reference ||= new /datum/autoref/immortal(input)
 	return input.auto_reference ||= new /datum/autoref(input)
 
 /datum/proc/create_autoref() //Forced creation for admin proccalls
@@ -73,6 +75,27 @@
 /datum/autoref/proc/resolve()
 	return reference?.gc_destroyed ? null : reference
 
+/**
+ * SERIOUSLY READ THE AUTODOC COMMENT FOR THIS PROC BEFORE EVEN THINKING ABOUT USING IT
+ *
+ * Like resolve, but doesn't care if the datum is being qdeleted but hasn't been deleted yet.
+ *
+ * The return value of this proc leaves hanging references if the datum is being qdeleted but hasn't been deleted yet.
+ *
+ * Do not do anything that would create a lasting reference to the return value, such as giving it a tag, putting it on the map,
+ * adding it to an atom's contents or vis_contents, giving it a key (if it's a mob), attaching it to an atom (if it's an image),
+ * or assigning it to a datum or list referenced somewhere other than a temporary value.
+ *
+ * Unless you're resolving a weakref to a datum in a COMSIG_QDELETING signal handler registered on that very same datum,
+ * just use resolve instead.
+ */
+/datum/autoref/proc/hard_resolve()
+	return reference
+
+/datum/autoref/proc/cleanup(datum/ref)
+	ref.auto_reference = null
+	reference = null
+
 /datum/autoref/vv_get_dropdown()
 	. = ..()
 	VV_DROPDOWN_OPTION("", "--- /autoref ---")
@@ -88,9 +111,27 @@
 		if(R)
 			usr.client.debug_variables(R)
 
+/// Turfs and areas are special little snowflakes that never truly delete.
+/datum/autoref/immortal
+
+/datum/autoref/immortal/New(datum/thing)
+	reference = thing
+
+/datum/autoref/immortal/cleanup(datum/ref)
+	return
+
+/datum/autoref/weak
+
 /datum/autoref/weak/New(datum/thing)
 	reference = REF(thing)
 
 /datum/autoref/weak/resolve()
 	var/datum/resolved = locate(reference)
 	return (QDELETED(resolved) || resolved.auto_reference != src) ? null : resolved
+
+/datum/autoref/weak/hard_resolve()
+	var/datum/resolved = locate(reference)
+	return (resolved?.auto_reference == src) ? resolved : null
+
+/datum/autoref/weak/cleanup(datum/ref)
+	ref.auto_reference = null
