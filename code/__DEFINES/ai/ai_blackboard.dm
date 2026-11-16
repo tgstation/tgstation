@@ -155,11 +155,11 @@
 /// When shooting enemies, what method do I use to determine if I can shoot them right now?
 #define BB_RANGED_CAN_SHOOT_METHOD "BB_ranged_can_shoot_method"
 /// Always try to shoot
-#define CAN_SHOOT_METHOD_ALWAYSSHOOT "can_shoot_method_alwaysshoot"
+#define CAN_SHOOT_METHOD_ALWAYSSHOOT 1
 /// Use can_see to determine if enemy is currently shootable
-#define CAN_SHOOT_METHOD_CANSEE "can_shoot_method_cansee"
+#define CAN_SHOOT_METHOD_CANSEE 2
 /// Use los_check to determine if enemy is currently shootable
-#define CAN_SHOOT_METHOD_LOSCHECK "can_shoot_method_loscheck"
+#define CAN_SHOOT_METHOD_LOSCHECK 3
 /// Moveflags to use when determining when to shoot via can_shoot_method = CAN_SHOOT_METHOD_LOSCHECK
 #define BB_RANGED_PROJECTILE_MOVE_FLAGS "BB_ranged_projectile_move_flags"
 
