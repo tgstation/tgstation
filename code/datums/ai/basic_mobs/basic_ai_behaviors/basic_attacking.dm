@@ -74,16 +74,12 @@
 	var/can_shoot_method = CAN_SHOOT_METHOD_CANSEE
 	/// Max range at which we can fire. Make sure your movement actually gets you this close please
 	var/max_range = 9
-	/// Moveflags used to determine if obstacles can be shot through
-	var/can_shoot_loscheck_passflags
 
 /datum/bt_node/ai_behavior/basic_ranged_attack/setup(datum/ai_controller/controller)
 	. = ..()
 	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED))
 		return FALSE
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
-
-	can_shoot_loscheck_passflags = controller.blackboard[BB_RANGED_PROJECTILE_MOVE_FLAGS]
 
 	if(QDELETED(target))
 		return FALSE
@@ -113,13 +109,15 @@
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/bt_node/ai_behavior/basic_ranged_attack/proc/is_target_blocked(basic_mob, final_target)
-	switch(can_shoot_method)
+	var/selected_shoot_method = controller.blackboard[BB_RANGED_CAN_SHOOT_METHOD] || can_shoot_method
+	switch(selected_shoot_method)
 		if(CAN_SHOOT_METHOD_ALWAYSSHOOT)
 			return TRUE
 		if(CAN_SHOOT_METHOD_CANSEE)
 			if(can_see(basic_mob, final_target, max_range))
 				return TRUE
 		if(CAN_SHOOT_METHOD_LOSCHECK)
+			var/can_shoot_loscheck_passflags = controller.blackboard[BB_RANGED_PROJECTILE_MOVE_FLAGS]
 			if(los_check(basic_mob, final_target, can_shoot_loscheck_passflags))
 				return TRUE
 		else
