@@ -50,6 +50,7 @@
 	process_early() // not risking processing falling behind and letting gas out
 
 /obj/machinery/atmos_shield_gen/Destroy(force)
+	SSmachines.processing_early -= src
 	QDEL_LIST(fields)
 	master?.turn_off()
 	master = null
@@ -110,13 +111,13 @@
 	if(!panel_open && locked)
 		balloon_alert(user, "locked!")
 		return ITEM_INTERACT_FAILURE
-	return default_deconstruction_screwdriver(user, icon_state, icon_state, tool)
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/atmos_shield_gen/crowbar_act(mob/user, obj/item/tool)
 	if(on)
 		balloon_alert(user, "turn off first!")
 		return ITEM_INTERACT_FAILURE
-	return default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/atmos_shield_gen/wrench_act(mob/living/user, obj/item/tool)
 	if(on)

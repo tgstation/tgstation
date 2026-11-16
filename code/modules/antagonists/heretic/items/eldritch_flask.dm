@@ -6,6 +6,7 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "eldritch_flask"
 	list_reagents = list(/datum/reagent/eldritch = 50)
+	can_lid = FALSE
 
 // Unique bottle that lets you instantly draw blood from a victim
 /obj/item/reagent_containers/cup/phylactery

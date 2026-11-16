@@ -43,7 +43,7 @@
 		if(!creature.mind?.has_antag_datum(/datum/antagonist/bitrunning_glitch, check_subtypes = TRUE))
 			return
 
-		INVOKE_ASYNC(src, PROC_REF(station_spawn), arrived, chosen_forge)
+		INVOKE_ASYNC(src, PROC_REF(station_spawn), arrived, chosen_forge, source)
 		return
 
 	if(istype(arrived, /obj/structure/closet/crate/secure/bitrunning/encrypted))
@@ -73,6 +73,11 @@
 
 			if(istype(creature, /mob/living/simple_animal/hostile/megafauna))
 				var/mob/living/simple_animal/hostile/megafauna/boss = creature
+				boss.make_virtual_megafauna()
+				continue
+
+			if(istype(creature, /mob/living/basic/boss))
+				var/mob/living/basic/boss/boss = creature
 				boss.make_virtual_megafauna()
 				continue
 

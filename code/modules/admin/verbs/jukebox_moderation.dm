@@ -25,6 +25,7 @@ ADMIN_VERB(upload_jukebox_music, R_SERVER, "Jukebox Upload Music", "Upload a val
 
 	message_admins("[key_name_admin(user)] uploaded [clean_name] to the jukebox!")
 	to_chat(user, span_notice("Successfully uploaded [clean_name]!"))
+	refresh_jukebox_songs()
 
 ADMIN_VERB(browse_jukebox_music, R_SERVER, "Jukebox Browse Music", "Browse music files for moderation.", ADMIN_CATEGORY_SERVER)
 	var/list/files = flist(CONFIG_JUKEBOX_SOUNDS)
@@ -51,7 +52,18 @@ ADMIN_VERB(browse_jukebox_music, R_SERVER, "Jukebox Browse Music", "Browse music
 			message_admins(msg)
 			log_admin(msg)
 			SSblackbox.record_feedback("associative", "jukebox_deletion", 1, list("round_id" = "[GLOB.round_id]", "deletor" = "[key_name_admin(user)]", "deleted" = "[choice]"))
+			refresh_jukebox_songs()
 		if ("Download")
 			user << ftp(file(path))
 		else
 			return
+
+/// Recache the songs from config then force replace all the songs.
+/proc/refresh_jukebox_songs()
+	var/refreshed = FALSE
+	for(var/obj/machinery/jukebox/jukebox as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/jukebox))
+		if(!refreshed)
+			jukebox.music_player.load_songs_from_config(TRUE)
+			refreshed = TRUE
+
+		jukebox.music_player.songs = jukebox.music_player.init_songs()

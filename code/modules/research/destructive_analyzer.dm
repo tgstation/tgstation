@@ -14,6 +14,10 @@
 	base_icon_state = "d_analyzer"
 	circuit = /obj/item/circuitboard/machine/destructive_analyzer
 
+/obj/machinery/rnd/destructive_analyzer/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY) //This allows people to put syndicate screwdrivers in the machine. Secondary act still passes.
+
 /obj/machinery/rnd/destructive_analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
@@ -61,8 +65,11 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/rnd/destructive_analyzer/update_icon_state()
-	icon_state = "[base_icon_state][loaded_item ? "_l" : null]"
-	return ..()
+	. = ..()
+	if(panel_open && !loaded_item)
+		return // use parent call state
+
+	icon_state = "[base_icon_state][loaded_item ? "_l" : ""]"
 
 /obj/machinery/rnd/destructive_analyzer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -79,24 +86,19 @@
 		data["indestructible"] = !(loaded_item.resistance_flags & INDESTRUCTIBLE)
 		data["loaded_item"] = loaded_item
 		data["already_deconstructed"] = !!stored_research.deconstructed_items[loaded_item.type]
-		var/list/points = techweb_item_point_check(loaded_item)
+		var/list/points = SSresearch.techweb_point_items[loaded_item.type]
 		data["recoverable_points"] = techweb_point_display_generic(points)
 
-		var/list/boostable_nodes = techweb_item_unlock_check(loaded_item)
-		for(var/id in boostable_nodes)
-			var/datum/techweb_node/unlockable_node = SSresearch.techweb_node_by_id(id)
-			var/list/node_data = list()
-			node_data["node_name"] = unlockable_node.display_name
-			node_data["node_id"] = unlockable_node.id
-			node_data["node_hidden"] = !!stored_research.hidden_nodes[unlockable_node.id]
-			data["node_data"] += list(node_data)
+		var/list/boostable_nodes = SSresearch.techweb_unlock_items[loaded_item.type]
+		for(var/node_path in boostable_nodes)
+			var/datum/techweb_node/unlockable_node = SSresearch.techweb_nodes[node_path]
+			data["node_data"] += list(list(
+				"node_name" = unlockable_node.display_name,
+				"node_path" = node_path,
+				"node_hidden" = !!stored_research.hidden_nodes[node_path],
+			))
 	else
 		data["loaded_item"] = null
-	return data
-
-/obj/machinery/rnd/destructive_analyzer/ui_static_data(mob/user)
-	var/list/data = list()
-	data["research_point_id"] = DESTRUCTIVE_ANALYZER_DESTROY_POINTS
 	return data
 
 /obj/machinery/rnd/destructive_analyzer/ui_act(action, params, datum/tgui/ui)
@@ -114,7 +116,8 @@
 				unload_item()
 				return TRUE
 		if("deconstruct")
-			if(!user_try_decon_id(params["deconstruct_id"]))
+			var/node_path = text2path(params["deconstruct_path"])
+			if(!try_deconstruct_loaded_item(node_path))
 				say("Destructive analysis failed!")
 			return TRUE
 
@@ -124,13 +127,9 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	return NONE
 
-//This allows people to put syndicate screwdrivers in the machine. Secondary act still passes.
-/obj/machinery/rnd/destructive_analyzer/screwdriver_act(mob/living/user, obj/item/tool)
-	return FALSE
-
 //We need to call default_deconstruction_screwdriver here since its parent will call screwdriver_act on this level which will stop us from ever deconstructing.
 /obj/machinery/rnd/destructive_analyzer/screwdriver_act_secondary(mob/living/user, obj/item/tool)
-	return default_deconstruction_screwdriver(user, "[initial(icon_state)]_t", initial(icon_state), tool)
+	return default_deconstruction_screwdriver(user, tool)
 
 //We need to let wire cutter in (not block) so we can analyze alien wirecutters.
 /obj/machinery/rnd/destructive_analyzer/wirecutter_act(mob/living/user, obj/item/tool)
@@ -186,35 +185,32 @@
 		if(mob_thing.stat != DEAD)
 			mob_thing.investigate_log("has been killed by a destructive analyzer.", INVESTIGATE_DEATHS)
 		mob_thing.death()
-	var/list/point_value = techweb_item_point_check(thing)
-	if(point_value && !stored_research.deconstructed_items[thing.type])
+	var/list/points = SSresearch.techweb_point_items[thing.type]
+	if(length(points) && !stored_research.deconstructed_items[thing.type])
 		stored_research.deconstructed_items[thing.type] = TRUE
-		stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = point_value))
+		stored_research.adjust_multiple_points(points)
 	qdel(thing)
 
 /**
- * Attempts to destroy the loaded item using a provided research id.
+ * Attempts to destroy the loaded item using a provided techweb node path.
+ * If no node path is provided, we will deconstruct for points instead
  * Args:
  * id - The techweb ID node that we're meant to unlock if applicable.
  */
-/obj/machinery/rnd/destructive_analyzer/proc/user_try_decon_id(id)
+/obj/machinery/rnd/destructive_analyzer/proc/try_deconstruct_loaded_item(node_path)
 	if(!istype(loaded_item))
 		return FALSE
-	if(isnull(id))
-		return FALSE
 
-	var/item_type = loaded_item.type
-	if(id == DESTRUCTIVE_ANALYZER_DESTROY_POINTS)
-		if(!destroy_item(gain_research_points = TRUE))
-			return FALSE
-		return TRUE
+	if(isnull(node_path))
+		return destroy_item(gain_research_points = TRUE)
 
-	var/datum/techweb_node/node_to_discover = SSresearch.techweb_node_by_id(id)
+	var/datum/techweb_node/node_to_discover = SSresearch.techweb_nodes[node_path]
 	if(!istype(node_to_discover))
 		return FALSE
+	var/item_type = loaded_item.type
 	if(!destroy_item())
 		return FALSE
-	SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[node_to_discover.id]", "[item_type]"))
+	SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[node_path]", "[item_type]"))
 	stored_research.unhide_node(node_to_discover)
 	return TRUE
 

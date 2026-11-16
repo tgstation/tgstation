@@ -21,7 +21,7 @@
 	obj_damage = 50
 	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/paper_wizard
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 	unsuitable_atmos_damage = 0
 	///spell to summon minions
 	var/datum/action/cooldown/spell/conjure/wizard_summon_minions/summon
@@ -35,6 +35,9 @@
 	grant_loot()
 	AddElement(/datum/element/effect_trail, /obj/effect/temp_visual/paper_scatter)
 
+/mob/living/basic/paper_wizard/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
+
 /mob/living/basic/paper_wizard/proc/grant_abilities()
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/spell/conjure/wizard_summon_minions = BB_WIZARD_SUMMON_MINIONS,
@@ -47,6 +50,7 @@
 	AddElement(/datum/element/death_drops, /obj/effect/temp_visual/paperwiz_dying)
 
 /datum/ai_controller/basic_controller/paper_wizard
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/paper_wizard/paper_wizard.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_WRITING_LIST = list(
@@ -57,46 +61,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/wizard_mimic,
-		/datum/ai_planning_subtree/use_mob_ability/wizard_summon_minions,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/paper_wizard,
-		/datum/ai_planning_subtree/find_paper_and_write,
-	)
-
-/datum/ai_planning_subtree/attack_obstacle_in_path/paper_wizard
-	target_key = BB_FOUND_PAPER
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/paper_wizard
-
-/datum/ai_behavior/attack_obstructions/paper_wizard
-	action_cooldown = 0.4 SECONDS
-	can_attack_turfs = TRUE
-	can_attack_dense_objects = TRUE
-
-/datum/ai_planning_subtree/targeted_mob_ability/wizard_mimic
-	ability_key = BB_WIZARD_MIMICS
-	finish_planning = FALSE
-
-/datum/ai_planning_subtree/use_mob_ability/wizard_summon_minions
-	ability_key = BB_WIZARD_SUMMON_MINIONS
-	finish_planning = FALSE
-
-/datum/ai_behavior/find_and_set/empty_paper
-	action_cooldown = 10 SECONDS
-
-/datum/ai_behavior/find_and_set/empty_paper/search_tactic(datum/ai_controller/controller, locate_path, search_range = SEARCH_TACTIC_DEFAULT_RANGE)
-	var/list/empty_papers = list()
-
-	for(var/obj/item/paper/target_paper in oview(search_range, controller.pawn))
-		if(target_paper.is_empty())
-			empty_papers += target_paper
-
-	if(empty_papers.len)
-		return pick(empty_papers)
 
 /mob/living/basic/paper_wizard/copy
 	desc = "'Tis a ruse!"

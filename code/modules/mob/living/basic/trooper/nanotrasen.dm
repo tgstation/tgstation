@@ -87,7 +87,7 @@
 
 /mob/living/basic/trooper/nanotrasen/ranged/smg/peaceful
 	desc = "An officer of Nanotrasen's private security force."
-	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst/peaceful
+	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst/peaceful_burst
 
 /mob/living/basic/trooper/nanotrasen/ranged/smg/peaceful/Initialize(mapload)
 	. = ..()
@@ -98,4 +98,4 @@
 	if (!istype(attacker))
 		return
 	for (var/mob/living/basic/trooper/nanotrasen/potential_trooper in oview(src, 7))
-		potential_trooper.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
+		potential_trooper.ai_controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)

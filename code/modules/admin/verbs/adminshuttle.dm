@@ -54,7 +54,7 @@ ADMIN_VERB(cancel_shuttle, R_ADMIN, "Cancel Shuttle", "Recall the shuttle, regar
 	if(tgui_alert(user, "You sure?", "Confirm Shuttle Cancellation", list("Yes", "No")) != "Yes")
 		return
 
-	if(!SSshuttle.cancel_evac(user.mob)) // handles the case where the shuttle is set to unrecallable by another admin or the code
+	if(!SSshuttle.cancel_evac(user.mob, hide_origin = TRUE)) // handles the case where the shuttle is set to unrecallable by another admin or the code
 		return
 
 	BLACKBOX_LOG_ADMIN_VERB("Cancel Shuttle")

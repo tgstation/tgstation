@@ -1,0 +1,114 @@
+{
+	"dm_type": "/datum/bt_node/subtree/carp_migration",
+	"type": "selector",
+	"children": [
+		{
+			"type": "sequence",
+			"children": [
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/find_carp_rift_shortcut/nearby",
+					"vars": {
+						"destination_key": "BB_CARP_RIFT_DESTINATION"
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+					"vars": {
+						"target_key": "BB_CARP_RIFT_DESTINATION",
+						"required_dist": 0,
+						"finish_on_arrival": true
+					}
+				},
+				{
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/clear_key",
+					"vars": {
+						"key": "BB_CARP_RIFT_DESTINATION"
+					}
+				}
+			]
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"key": "BB_CARP_MIGRATION_TARGET"
+			},
+			"child": {
+				"type": "sequence",
+				"children": [
+					{
+						"type": "selector",
+						"children": [
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/carp_path_blocked",
+								"vars": {
+									"target_key": "BB_CARP_MIGRATION_TARGET"
+								},
+								"child": {
+									"type": "selector",
+									"children": [
+										{
+											"type": "decorator",
+											"decorator": "/datum/bt_node/decorator/ability_available",
+											"vars": {
+												"ability_key": "BB_CARP_RIFT"
+											},
+											"child": {
+												"type": "leaf",
+												"behavior": "/datum/bt_node/ai_behavior/make_carp_rift/towards/unvalidated",
+												"vars": {
+													"ability_key": "BB_CARP_RIFT",
+													"target_key": "BB_CARP_MIGRATION_TARGET"
+												}
+											}
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
+											"vars": {
+												"target_key": "BB_CARP_MIGRATION_TARGET",
+												"time_between_perform": "1.5 SECONDS"
+											}
+										}
+									]
+								}
+							},
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/succeed"
+							}
+						]
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_CARP_MIGRATION_TARGET",
+							"required_dist": 3,
+							"finish_on_arrival": true
+						}
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/clear_arrived_migration_target",
+						"vars": {
+							"target_key": "BB_CARP_MIGRATION_TARGET"
+						}
+					}
+				]
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/find_next_carp_migration_step",
+			"vars": {
+				"path_key": "BB_CARP_MIGRATION_PATH",
+				"target_key": "BB_CARP_MIGRATION_TARGET"
+			}
+		}
+	]
+}

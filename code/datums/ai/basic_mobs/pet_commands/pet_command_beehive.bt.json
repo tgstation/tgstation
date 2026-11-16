@@ -1,0 +1,23 @@
+{
+	"dm_type": "/datum/bt_node/subtree/pet_command/beehive",
+	"type": "sequence",
+	"children": [
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+			"vars": {
+				"target_key": "BB_CURRENT_HOME",
+				"required_dist": 1,
+				"finish_on_arrival": false
+			}
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/enter_exit_hive"
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/clear_pet_command"
+		}
+	]
+}

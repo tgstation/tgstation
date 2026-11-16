@@ -24,6 +24,8 @@ export type Shuttle = {
   price: number;
   ref: string;
   refund: number;
+  department_locked: boolean;
+  department_name: string;
 };
 
 type Message = {

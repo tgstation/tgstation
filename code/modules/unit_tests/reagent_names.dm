@@ -4,7 +4,7 @@
 /datum/unit_test/reagent_names/Run()
 	var/used_names = list()
 
-	for (var/datum/reagent/reagent as anything in subtypesof(/datum/reagent))
+	for (var/datum/reagent/reagent as anything in valid_subtypesof(/datum/reagent))
 		// Make sure names are different
 		var/name = initial(reagent.name)
 		if (!name)

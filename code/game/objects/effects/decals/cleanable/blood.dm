@@ -8,6 +8,10 @@
 	clean_type = CLEAN_TYPE_BLOOD
 	color = BLOOD_COLOR_RED
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
+	)
+
 	/// Amount of blood, in units, in this decal
 	/// Spent when drying or making footprints
 	var/bloodiness = BLOOD_AMOUNT_PER_DECAL
@@ -50,6 +54,8 @@
 				can_hold_viruses = TRUE
 				break
 	. = ..(diseases = can_hold_viruses ? diseases : null)
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	if(islist(blood_or_dna))
 		add_blood_DNA(blood_or_dna)
 	else if(istype(blood_or_dna, /datum/blood_type))
@@ -62,15 +68,12 @@
 		total_dry_time = drying_time
 		START_PROCESSING(SSblood_drying, src)
 
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
-	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
 	if (bloodiness || GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		update_appearance()
 
-/obj/effect/decal/cleanable/blood/Destroy()
+/obj/effect/decal/cleanable/blood/Destroy(force)
 	STOP_PROCESSING(SSblood_drying, src)
 	return ..()
 
@@ -134,7 +137,9 @@
 	create_reagents(round(bloodiness * BLOOD_TO_UNITS_MULTIPLIER, CHEMICAL_VOLUME_ROUNDING))
 	var/num_reagents = length(reagents_to_add)
 	for(var/reagent_type in reagents_to_add)
-		reagents.add_reagent(reagent_type, round(bloodiness * BLOOD_TO_UNITS_MULTIPLIER / num_reagents, CHEMICAL_VOLUME_ROUNDING))
+		reagents.add_reagent(reagent_type = reagent_type,
+							amount = round(bloodiness * BLOOD_TO_UNITS_MULTIPLIER / num_reagents, CHEMICAL_VOLUME_ROUNDING),
+							data = ispath(reagent_type, /datum/reagent/blood) ? list(BLOOD_DATA_DNA = pick(blood_DNA)) : null)
 	return reagents
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/merger)
@@ -291,12 +296,15 @@
 	beauty = -50
 	base_name = "trail of"
 	bloodiness = BLOOD_AMOUNT_PER_DECAL * 0.1
+	gender = NEUTER
 
 	/// All the components of the trail
 	var/list/obj/effect/decal/cleanable/blood/trail/trail_components
 
 /obj/effect/decal/cleanable/blood/trail_holder/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna = get_default_blood_type())
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	icon_state = "nothing"
 	update_appearance() // Cut possible overlays
 	if(mapload)
@@ -530,6 +538,8 @@
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna = get_default_blood_type())
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	leave_blood = has_blood_flag(GET_ATOM_BLOOD_DNA(src), BLOOD_COVER_TURFS)
 	if(squishy)
 		AddElement(/datum/element/squish_sound)
@@ -540,13 +550,7 @@
 /obj/effect/decal/cleanable/blood/gibs/lazy_init_reagents()
 	if (reagents)
 		return reagents
-
-	if (!decal_reagent)
-		return
-
-	create_reagents(reagent_amount)
-	reagents.add_reagent(decal_reagent, reagent_amount)
-	return reagents
+	return init_reagents(decal_reagent, reagent_amount)
 
 /obj/effect/decal/cleanable/blood/gibs/update_overlays()
 	. = ..()
@@ -690,6 +694,8 @@
 
 /obj/effect/decal/cleanable/blood/footprints/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna = get_default_blood_type())
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	icon_state = "" // All of the footprint visuals come from overlays
 	if(mapload)
 		entered_dirs |= dir // Keep the same appearance as in the map editor
@@ -797,6 +803,8 @@
 	base_suffix = "splatter"
 	can_dry = FALSE // No point
 
+	mergeable_decal = FALSE
+
 	/// The turf we just came from, so we can back up when we hit a wall
 	var/turf/prev_loc
 	/// Skip making the final blood splatter when we're done, like if we're not in a turf
@@ -814,6 +822,8 @@
 
 /obj/effect/decal/cleanable/blood/hitsplatter/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna = get_default_blood_type(), splatter_strength)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	leave_blood = has_blood_flag(GET_ATOM_BLOOD_DNA(src), BLOOD_COVER_TURFS)
 	prev_loc = loc //Just so we are sure prev_loc exists
 	if(splatter_strength)
@@ -920,8 +930,8 @@
 	if(!the_window.fulltile)
 		return FALSE
 
-	var/obj/effect/decal/cleanable/final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(prev_loc, null, GET_ATOM_BLOOD_DNA(src))
-	final_splatter.forceMove(the_window)
+	// Spawn in the window so we don't merge with a floor splatter and delete ourselves before attaching.
+	var/obj/effect/decal/cleanable/final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(the_window, null, GET_ATOM_BLOOD_DNA(src))
 	the_window.vis_contents += final_splatter
 	expire()
 	return TRUE

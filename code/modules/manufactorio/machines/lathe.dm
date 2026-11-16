@@ -5,8 +5,8 @@
 	circuit = /obj/item/circuitboard/machine/manulathe
 	/// power cost for lathing
 	var/power_cost = 5 KILO WATTS
-	/// design id we print
-	var/design_id
+	/// The typepath of the design we print
+	var/chosen_design_path
 	///The container to hold materials
 	var/datum/material_container/materials
 	//looping sound for printing items
@@ -22,14 +22,13 @@
 	print_sound = new(src,  FALSE)
 	materials = new ( \
 		src, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL], \
+		SSmaterials.flat_materials, \
 		0, \
 		MATCONTAINER_EXAMINE|MATCONTAINER_NO_INSERT, \
 	)
 	register_context()
 	. = ..()
-	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe])
-		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe] = new /datum/techweb/autounlocking/autolathe
+	GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe] ||= new /datum/techweb/autounlocking/autolathe()
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe]
 
 /obj/machinery/power/manufacturing/lathe/Destroy()
@@ -51,21 +50,17 @@
 	var/datum/stock_part/matter_bin/bin = locate() in component_parts
 	materials.max_amount = bin.tier * (SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE)
 
-
 /obj/machinery/power/manufacturing/lathe/examine(mob/user)
 	. = ..()
-	var/datum/design/design
-	if(!isnull(design_id))
-		design = SSresearch.techweb_design_by_id(design_id)
+	var/datum/design/design = SSresearch.techweb_designs[chosen_design_path]
 	. += span_notice("It is set to print [!isnull(design) ? design.name : "nothing, set with a multitool"].")
 	if(isnull(design))
 		return
 	. += span_notice("It needs:")
-	for(var/valid_type in design.materials)
+	for(var/valid_type, amount in design.materials)
 		var/atom/ingredient = valid_type
-		var/amount = design.materials[ingredient] / SHEET_MATERIAL_AMOUNT
 
-		. += "[amount] sheets of [initial(ingredient.name)]"
+		. += "[amount / SHEET_MATERIAL_AMOUNT] sheets of [initial(ingredient.name)]"
 
 /obj/machinery/power/manufacturing/lathe/update_overlays()
 	. = ..()
@@ -92,20 +87,20 @@
 /obj/machinery/power/manufacturing/lathe/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
 	var/list/name_to_id = list()
-	for(var/id in stored_research.researched_designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(id)
-		name_to_id[design.name] = id
+	for(var/design_path in stored_research.researched_designs)
+		var/datum/design/design = SSresearch.techweb_designs[design_path]
+		name_to_id[design.name] = design_path
 	var/result = tgui_input_list(user, "Select Design", "Select Design", sort_list(name_to_id))
 	if(isnull(result))
 		return ITEM_INTERACT_FAILURE
-	design_id = name_to_id[result]
+	chosen_design_path = name_to_id[result]
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/manufacturing/lathe/process()
 	if(!isnull(withheld) && !send_resource(withheld, dir))
 		return
 
-	var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+	var/datum/design/design = SSresearch.techweb_designs[chosen_design_path]
 	if(isnull(design) || !(design.build_type & AUTOLATHE))
 		return
 	if(surplus() < power_cost)
@@ -113,17 +108,27 @@
 		return
 	//check for materials required. For custom material items decode their required materials
 	var/list/materials_needed = list()
-	for(var/material in design.materials)
-		var/amount_needed = design.materials[material]
-		if(istext(material)) // category
-			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
-				if(materials.get_material_amount(valid_candidate) < amount_needed)
-					continue
-				material = valid_candidate
-				break
+	var/list/slots_chosen = null
+	for(var/material, amount_needed in design.materials)
+		var/datum/material_requirement/requirement = null
+		var/datum/material_slot/slot = null
+		if(ispath(material, /datum/material_requirement))
+			requirement = material
+		else if (ispath(material, /datum/material_slot))
+			slot = SSmaterials.material_slots[material]
+			requirement = slot.requirement_type
+
+		if(requirement) // Material requirement
+			for(var/datum/material/valid_candidate as anything in SSmaterials.get_materials_by_req(material))
+				if(materials.get_material_amount(valid_candidate) >= amount_needed)
+					material = valid_candidate
+					break
 		if(isnull(material))
 			return
 		materials_needed[material] = amount_needed
+		if (slot)
+			var/datum/material/proper_mat = material
+			LAZYSET(slots_chosen, slot.type, proper_mat.id)
 
 	if(!materials.has_materials(materials_needed))
 		return
@@ -132,9 +137,9 @@
 	flick_overlay_view(mutable_appearance(icon, "lathe_printing"), craft_time)
 	print_sound.start()
 	add_load(power_cost)
-	busy = addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_needed), craft_time, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_DELETE_ME)
+	busy = addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_needed, slots_chosen), craft_time, TIMER_UNIQUE | TIMER_STOPPABLE | TIMER_DELETE_ME)
 
-/obj/machinery/power/manufacturing/lathe/proc/do_make_item(datum/design/design, list/materials_needed)
+/obj/machinery/power/manufacturing/lathe/proc/do_make_item(datum/design/design, list/materials_needed, list/slots_chosen)
 	finalize_build()
 	if(surplus() < power_cost)
 		return
@@ -150,14 +155,17 @@
 		var/max_stack_amount = initial(stack_item.max_amount)
 		var/amount = initial(stack_item.amount)
 		while(amount > max_stack_amount)
-			var/obj/item/stack/new_stack = new stack_item(null, max_stack_amount)
+			var/obj/item/stack/new_stack = new stack_item(drop_location(), max_stack_amount)
 			if(!send_resource(new_stack, dir))
 				withheld = new_stack
 			amount -= max_stack_amount
-		created = new stack_item(null, amount)
+		created = new stack_item(drop_location(), amount)
 	else
-		created = new design.build_path(null)
-		split_materials_uniformly(materials_needed, target_object = created)
+		created = design.create_result(drop_location(), materials_needed)
+		if (length(slots_chosen))
+			created.set_material_slots(slots_chosen)
+		design.transfer_materials(materials_needed, target_object = created)
+
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)
 		created.pixel_y = created.base_pixel_y + rand(-6, 6)

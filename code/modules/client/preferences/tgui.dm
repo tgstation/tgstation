@@ -63,6 +63,13 @@
 		// Force it to reload either way
 		tgui.update_static_data(client.mob)
 
+// But no games.
+/datum/preference/toggle/tgui_unlimited_windows
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "tgui_unlimited_windows"
+	savefile_identifier = PREFERENCE_PLAYER
+	default_value = FALSE
+
 /// Light mode for tgui say
 /datum/preference/toggle/tgui_say_light_mode
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES

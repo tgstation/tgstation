@@ -553,8 +553,8 @@ world
 				)
 
 				flatX1 = addX1
-				flatX2 = addY1
-				flatY1 = addX2
+				flatX2 = addX2
+				flatY1 = addY1
 				flatY2 = addY2
 
 			// Blend the overlay into the flattened icon
@@ -628,6 +628,21 @@ world
 	mask_icon.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 255,255,255,-255, 1,1,1,1)
 	return mask_icon
 
+/**
+ * A simple helper proc to apply a mask to an icon
+ * Arguments:
+ * * base_icon - the icon which the proc will apply the mask on
+ * * mask_to_use - the mask to use from code\__DEFINES\icon_masks.dm
+ * * replacement - an icon to overlay after the masking
+ */
+/proc/apply_icon_mask(icon/base_icon, mask_to_use, icon/replacement)
+	if(isnull(mask_to_use))
+		return
+	var/icon/mask = icon('icons/mob/clothing/under/masking_helpers.dmi', mask_to_use)
+	base_icon.Blend(mask, ICON_SUBTRACT)
+	if(!isnull(replacement))
+		base_icon.Blend(replacement, ICON_OVERLAY)
+	return base_icon
 
 /mob/proc/AddCamoOverlay(atom/A)//A is the atom which we are using as the overlay.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)//Don't really care for overlays/underlays.
@@ -1235,7 +1250,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		return TRUE
 
 	var/static/list/screams = list()
-	if(!isnull(screams[file]))
+	if(isnull(screams[file]))
 		screams[file] = TRUE
 		stack_trace("State [state] in file [file] does not exist.")
 
@@ -1335,9 +1350,11 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 /// Strips all underlays on a different plane from an appearance.
 /// Returns the stripped appearance.
-/proc/strip_appearance_underlays(mutable_appearance/appearance)
+/proc/strip_appearance_underlays(mutable_appearance/appearance) as /mutable_appearance
 	var/base_plane = PLANE_TO_TRUE(appearance.plane)
 	for(var/mutable_appearance/underlay as anything in appearance.underlays)
+		if(isnull(underlay))
+			continue
 		if(PLANE_TO_TRUE(underlay.plane) != base_plane)
 			appearance.underlays -= underlay
 	return appearance
@@ -1348,13 +1365,15 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
  * Filters out certain overlays from the copy, depending on their planes
  * Prevents stuff like lighting from being copied to the new appearance
  */
-/proc/copy_appearance_filter_overlays(appearance_to_copy)
+/proc/copy_appearance_filter_overlays(appearance_to_copy) as /mutable_appearance
 	var/mutable_appearance/copy = new(appearance_to_copy)
 	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
 
 	/// Ideally we'd have knowledge what we're removing but i'd have to be done on target appearance retrieval
 	var/list/overlays_to_keep = list()
 	for(var/mutable_appearance/special_overlay as anything in copy.overlays)
+		if(isnull(special_overlay))
+			continue
 		var/mutable_appearance/real = new()
 		real.appearance = special_overlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
@@ -1363,6 +1382,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 	var/list/underlays_to_keep = list()
 	for(var/mutable_appearance/special_underlay as anything in copy.underlays)
+		if(isnull(special_underlay))
+			continue
 		var/mutable_appearance/real = new()
 		real.appearance = special_underlay
 		if(PLANE_TO_TRUE(real.plane) in plane_whitelist)
@@ -1372,7 +1393,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	return copy
 
 /// Returns the (isolated) security HUD icon for the given job.
-/proc/get_job_hud_icon(datum/job/job) as /icon
+/proc/get_job_hud_icon(datum/job/job, scale = 1) as /icon
 	var/static/alist/icon_cache = alist()
 	if(isnull(job))
 		return
@@ -1386,10 +1407,61 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 			return null
 
 	//add it to the cache if it isn't already
-	var/job_type = job.type
+	var/job_type = "[job.type][scale]"
 	if(!icon_cache[job_type])
 		var/icon/sechud_icon = job.get_lobby_icon()
 		sechud_icon.Crop(1, 17, 8, 24)
+		if(scale != 1)
+			sechud_icon.Scale(sechud_icon.Width() * scale, sechud_icon.Height() * scale)
 		icon_cache[job_type] = sechud_icon
 
 	return icon(icon_cache[job_type])
+
+/**
+ * Copies the pixel colors from the passed in icon `I` to the 2d list `grid`
+ */
+/proc/fill_grid_from_icon(list/grid, icon/I)
+	var/width = I.Width()
+	var/height = I.Height()
+	for(var/x in 1 to width)
+		for(var/y in 1 to height)
+			var/pixel = I.GetPixel(x,height+1-y)
+			if(length(pixel) == 7)
+				pixel += "ff"
+			grid[y][x] = pixel
+
+// Given a number of frames for an icon state, and the dimensions of the icon, returns the ideal dimensions for a DMI file
+/proc/calculate_optimal_icon_grid_dimensions(width, height, count)
+	var/grid_width = 1
+	var/grid_height = 1
+	while(grid_width * grid_height < count)
+		if(height*grid_height < width*grid_width)
+			grid_height++
+		else
+			grid_width++
+	return list(grid_height, grid_width)
+
+// Reorder the 2d pixel data of the passed in frames into a data string that can be passed to rustg_dmi_create_png
+/proc/reorder_pixels(icon_width, icon_height, grid_width, grid_height, list/frames)
+	var/file_width = icon_width * grid_width
+
+	// This little trick right here reduces the total iteration of repeat_string from the product of the arguments to their sum.
+	// Can't be applied to the general case without a complex partitioning algorithm,
+	// since the count could either be a large prime or have large primes as factors
+	var/linear_pixels = COLOR_DMI_MASK
+	for(var/count in list(icon_width, icon_height, grid_width, grid_height))
+		if(count == 1)
+			continue
+		linear_pixels = repeat_string(count, linear_pixels)
+
+	for(var/i in 1 to length(frames))
+		var/list/frame = frames[i]
+		var/row_index = floor((i-1)/grid_width)
+		var/column = (i-1)%grid_width
+		for(var/y in 1 to length(frame))
+			var/list/row = jointext(frame[y], "")
+			var/splice_start = (row_index*icon_height+y-1)*file_width + column*icon_width + 1
+			linear_pixels = splicetext(linear_pixels, (splice_start-1)*9+1, (splice_start+icon_width-1)*9+1, row)
+	var/zero_alpha_regex = regex(@@#(?:(?!a0a0a0)([0-9]|[a-f]){6}00)@, "gi")
+	linear_pixels = replacetext(linear_pixels, zero_alpha_regex, COLOR_DMI_MASK)
+	return linear_pixels

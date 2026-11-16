@@ -39,8 +39,8 @@
 /datum/storage/cigarette_box
 	max_slots = 6
 	display_contents = FALSE
-	rustle_sound = SFX_CIG_PACK_INSERT
-	remove_rustle_sound = SFX_CIG_PACK_RUSTLE
+	rustle_sound = /datum/sound_effect/cig_pack_insert
+	remove_rustle_sound = /datum/sound_effect/cig_pack_rustle
 
 /datum/storage/cigarette_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
@@ -80,13 +80,35 @@
 
 /// Nugget Boxes
 /datum/storage/nugget_box
-	max_slots = 6
+	max_slots = 7
 
 /datum/storage/nugget_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/food/nugget,
 		/obj/item/fish/fryish,
+	))
+
+/// Wing Boxes
+/datum/storage/wing_box
+	max_slots = 5
+
+/datum/storage/wing_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
+	. = ..()
+	set_holdable(list(
+		/obj/item/food/fried_chicken,
+	))
+
+/// Fry Boxes
+/datum/storage/fry_box
+	max_slots = 2
+
+/datum/storage/fry_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
+	. = ..()
+	set_holdable(list(
+		/obj/item/food/fries,
+		/obj/item/food/cheesyfries,
+		/obj/item/food/carrotfries,
 	))
 
 /// Jars of Pickles

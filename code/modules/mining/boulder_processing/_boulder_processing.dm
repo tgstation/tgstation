@@ -3,6 +3,7 @@
 	desc = "You shouldn't be seeing this! And bouldertech isn't even a real company!"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "ore_redemption"
+	base_icon_state = "ore_redemption"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	anchored = TRUE
 	density = TRUE
@@ -21,6 +22,8 @@
 	var/points_held = 0
 	///The action verb to display to players
 	var/action = "processing"
+	/// What reagent should be produced when a boost chemical is replaced by the booster_reagent?
+	var/datum/reagent/waste_chemical = /datum/reagent/water
 
 	/// Cooldown associated with the sound played for collecting mining points.
 	COOLDOWN_DECLARE(sound_cooldown)
@@ -68,20 +71,24 @@
 	else if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 	else if(held_item.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Un" : ""]Anchor"
+		context[SCREENTIP_CONTEXT_LMB] = "[anchored ? "Unan" : "An"]chor"
 	else if(panel_open && held_item.tool_behaviour == TOOL_CROWBAR)
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 
 /obj/machinery/bouldertech/examine(mob/user)
 	. = ..()
-	. += span_notice("The machine reads that it has [span_bold("[points_held] mining points")] stored. Swipe an ID to claim them.")
-	. += span_notice("Click to remove a stored boulder.")
+
+	. += span_suppradio("The machine reads that it has [EXAMINE_HINT("[points_held] mining points")] stored. Swipe an ID to claim them.")
 
 	var/boulder_count = 0
 	for(var/obj/item/boulder/potential_boulder in contents)
 		boulder_count += 1
-	. += span_notice("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
-	. += span_notice("Can process up to <b>[boulders_processing_count] boulders</b> at a time.")
+
+	if(boulder_count >= 1)
+		. += span_notice("[EXAMINE_HINT("Right Click")] to manually remove a stored boulder.<br />")
+
+	. += span_info("Storage capacity = <b>[boulder_count]/[boulders_held_max] boulders</b>.")
+	. += span_info("This machine can process up to [EXAMINE_HINT("[boulders_processing_count] boulders")] at a time.")
 
 	if(anchored)
 		. += span_notice("It's [EXAMINE_HINT("anchored")] in place.")
@@ -93,22 +100,32 @@
 	if(panel_open)
 		. += span_notice("The whole machine can be [EXAMINE_HINT("pried")] apart.")
 
+/obj/machinery/bouldertech/examine_more(mob/user)
+	. = ..()
+
+	var/list/datum/reagents/booster_list = get_booster_reagents()
+	if(length(booster_list))
+		. += span_notice("This machine's output is boosted by <b>chemical intake:</b><br>")
+		for(var/datum/reagent/increment as anything in booster_list)
+			. += span_info("&bull; [increment::name]: Provides [booster_list[increment] * 10]% Boost")
+		. += span_notice("<br>Upon being boosted successfully, \the [src] will produce [EXAMINE_HINT("[waste_chemical.name]")].")
+
 /obj/machinery/bouldertech/update_icon_state()
 	. = ..()
 	var/suffix = ""
 	if(!anchored || panel_open || !is_operational || (machine_stat & (BROKEN | NOPOWER)))
 		suffix = "-off"
-	icon_state ="[initial(icon_state)][suffix]"
+	icon_state ="[base_icon_state][suffix]"
 
 /obj/machinery/bouldertech/CanAllowThrough(atom/movable/mover, border_dir)
-	if(!anchored)
+	if(!anchored || !(dir == border_dir || dir == REVERSE_DIR(border_dir)))
 		return FALSE
 	if(istype(mover, /obj/item/stack/sheet))
 		return TRUE
 	if(istype(mover, /obj/item/boulder))
 		return can_process_boulder(mover)
-	if(isgolem(mover))
-		return can_process_golem(mover)
+	if(isliving(mover))
+		return can_process_living_mob(mover)
 	return ..()
 
 /**
@@ -166,7 +183,7 @@
  *
  * * [rockman][mob/living/carbon/human] - the golem we are trying to main
  */
-/obj/machinery/bouldertech/proc/can_process_golem(mob/living/carbon/human/rockman)
+/obj/machinery/bouldertech/proc/can_process_living_mob(mob/living/rockman)
 	PRIVATE_PROC(TRUE)
 	SHOULD_BE_PURE(TRUE)
 
@@ -178,11 +195,26 @@
 	if(!COOLDOWN_FINISHED(src, accept_cooldown))
 		return FALSE
 
-	//not processable
-	if(!istype(rockman) || QDELETED(rockman) || rockman.body_position != LYING_DOWN)
+	//not a mineral mob
+	if(!istype(rockman) || QDELETED(rockman))
 		return FALSE
 
-	return TRUE
+	var/list/bodyparts = rockman.get_bodyparts()
+	if(length(bodyparts)) //Has bodypart, check if any has the BIO_STONE state (we don't check MOB_MINERAL for carbon mobs cuz we don't want to gib plasmamen, just grind golem parts)
+		for(var/obj/item/bodypart/part as anything in bodyparts)
+			if(!(part.biological_state & BIO_STONE))
+				return FALSE
+	else if(!(rockman.mob_biotypes & MOB_MINERAL))
+		return FALSE
+
+	//Only return true if they are lying down or are incapacitated.
+	if(rockman.mobility_flags & MOBILITY_LIEDOWN)
+		if(rockman.body_position == LYING_DOWN)
+			return TRUE
+	else if(rockman.incapacitated)
+		return TRUE
+
+	return FALSE
 
 /**
  * Accepts a golem to be processed, mainly for memes
@@ -190,28 +222,52 @@
  *
  * * [rockman][mob/living/carbon/human] - the golem we are trying to main
  */
-/obj/machinery/bouldertech/proc/accept_golem(mob/living/carbon/human/rockman)
+/obj/machinery/bouldertech/proc/accept_mob(mob/living/rockman)
 	PRIVATE_PROC(TRUE)
 
-	if(!can_process_golem(rockman))
+	if(!can_process_living_mob(rockman))
 		return
 
 	if(!use_energy(active_power_usage * 1.5, force = FALSE))
 		say("Not enough energy!")
 		return
 
-	maim_golem(rockman)
+	maim_mob(rockman)
 	playsound(src, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 	COOLDOWN_START(src, accept_cooldown, 3 SECONDS)
 
 /// What effects actually happens to a golem when it is "processed"
-/obj/machinery/bouldertech/proc/maim_golem(mob/living/carbon/human/rockman)
+/obj/machinery/bouldertech/proc/maim_mob(mob/living/rockman)
 	PROTECTED_PROC(TRUE)
 
 	Shake(duration = 1 SECONDS)
+	var/list/bodyparts = rockman.get_bodyparts()
+	var/gibbing = TRUE
+	if(length(bodyparts)) //Has bodypart, check if any has the BIO_STONE state and don't just gib them if you can.
+		var/list/deleted_part_names
+		gibbing = FALSE
+		for(var/obj/item/bodypart/part as anything in bodyparts)
+			if(!(part.biological_state & BIO_STONE))
+				continue
+			if(part.body_zone == BODY_ZONE_CHEST) //Ok, so, without a chest, we're pretty much going to be gibbed anyway.
+				gibbing = TRUE
+				break
+			else
+				deleted_part_names += part.name
+				qdel(part) //This calls force_removal() with dismembered set to TRUE
+		if(!gibbing && length(deleted_part_names))
+			var/parts_text = english_list(deleted_part_names)
+			rockman.investigate_log("had [rockman.p_their()] [parts_text] which all had BIO_STONE biological state) destroyed by a [src]", INVESTIGATE_CARGO)
+			rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("Your [parts_text] are shred into bits by [src]!"))
+
+	if(gibbing)
+		gib_mob(rockman)
+
+///Called at the end of main_mob() if they were a bodyparts-less mob or their chest was made of stone...
+/obj/machinery/bouldertech/proc/gib_mob(mob/living/rockman)
 	rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("You get processed into bits by [src]!"))
-	rockman.investigate_log("was gibbed by [src] for being a golem", INVESTIGATE_DEATHS)
+	rockman.investigate_log("was gibbed by [src] for having the MOB_MINERAL mob biotype", INVESTIGATE_DEATHS)
 	rockman.gib(DROP_ALL_REMAINS)
 
 /obj/machinery/bouldertech/proc/on_entered(datum/source, atom/movable/atom_movable)
@@ -221,8 +277,8 @@
 		INVOKE_ASYNC(src, PROC_REF(accept_boulder), atom_movable)
 		return
 
-	if(isgolem(atom_movable))
-		INVOKE_ASYNC(src, PROC_REF(accept_golem), atom_movable)
+	if(isliving(atom_movable))
+		INVOKE_ASYNC(src, PROC_REF(accept_mob), atom_movable)
 		return
 
 /**
@@ -233,6 +289,12 @@
 	PROTECTED_PROC(TRUE)
 
 	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100%.
+
+///Returns a map of reagent -> boost amount to increase this machines efficiency
+/obj/machinery/bouldertech/proc/get_booster_reagents()
+	RETURN_TYPE(/list/datum/reagents)
+
+	return list()
 
 /**
  * Checks if this machine can process this material
@@ -290,15 +352,10 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bouldertech/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
-		update_appearance(UPDATE_ICON_STATE)
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/bouldertech/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -342,7 +399,8 @@
 
 	//if boulders are kept inside because there is no space to eject them, then they could be reprocessed, lets avoid that
 	if(!chosen_boulder.processed_by)
-		check_for_boosts()
+		if(length(reagents.reagent_list))
+			check_for_boosts() //Handles the mineral boosting, as well as creating waste. Must have reagents in the machine.
 
 		//here we loop through the boulder's ores
 		var/list/rejected_mats = list()
@@ -351,7 +409,7 @@
 			if(!can_process_material(possible_mat))
 				rejected_mats[possible_mat] = quantity
 				continue
-			points_held = round(points_held + (quantity * possible_mat.points_per_unit * MINING_POINT_MACHINE_MULTIPLIER)) // put point total here into machine
+			points_held += round(quantity * possible_mat.points_per_boulder_unit) // put point total here into machine
 			if(isnull(silo_materials.silo) || !silo_materials.mat_container.insert_amount_mat(quantity, possible_mat))
 				new possible_mat.sheet_type(drop_location(), floor(quantity / SHEET_MATERIAL_AMOUNT))
 
@@ -362,9 +420,9 @@
 		if(!length(chosen_boulder.custom_materials))
 			playsound(loc, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			if(istype(chosen_boulder, /obj/item/boulder/artifact))
-				points_held = round((points_held + MINER_POINT_MULTIPLIER) * MINING_POINT_MACHINE_MULTIPLIER) /// Artifacts give bonus points!
+				points_held = round((points_held + MINER_POINT_MULTIPLIER)) /// Artifacts give bonus points!
 			chosen_boulder.break_apart()
-			return//We've processed all the materials in the boulder, so we can just destroy it in break_apart.
+			return //We've processed all the materials in the boulder, so we can just destroy it in break_apart.
 
 		chosen_boulder.processed_by = src
 
@@ -391,7 +449,7 @@
 		breakdown_boulder(potential_boulder)
 		boulders_found = FALSE
 
-	//when the boulder is removed it plays sound and  displays a balloon alert. don't overlap when that happens
+	//when the boulder is removed it plays sound and displays a balloon alert. Don't overlap when that happens
 	if(boulders_found)
 		playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 		balloon_alert_to_viewers(action)

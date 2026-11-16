@@ -7,7 +7,7 @@
 	icon_state = "firebot1"
 	light_color = "#8cffc9"
 	light_power = 0.8
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.9, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_CONSTRUCTION)
 	radio_key = /obj/item/encryptionkey/headset_eng
@@ -93,7 +93,7 @@
 	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targeting safeties.")) // heheehe. funny
 
 	audible_message(span_danger("[src] buzzes oddly!"))
-	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 	internal_ext.chem = /datum/reagent/clf3 //Refill the internal extinguisher with liquid fire
 	internal_ext.power = 3
@@ -134,9 +134,7 @@
 /mob/living/basic/bot/firebot/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	if(!COOLDOWN_FINISHED(src, foam_cooldown))
 		return
-	var/datum/effect_system/fluid_spread/foam/firefighting/foam = new
-	foam.set_up(3, holder = src, location = loc)
-	foam.start()
+	do_foam(3, src, loc, foam_type = /datum/effect_system/fluid_spread/foam/firefighting)
 	COOLDOWN_START(src, foam_cooldown, FOAM_INTERVAL)
 
 /mob/living/basic/bot/firebot/proc/spray_water(atom/attacked_atom, list/modifiers)

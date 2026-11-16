@@ -131,7 +131,7 @@
 			var/list/spawn_params = list(
 				"selected_atom" = selected_atom,
 				"offset" = params["offset"],
-				"atom_dir" = text2num(params["dir"]) || 1,
+				"atom_dir" = text2num(params["atom_dir"]) || 1,
 				"atom_amount" = text2num(params["atom_amount"]) || 1,
 				"atom_name" = params["atom_name"],
 				"where_target_type" = params["where_target_type"] || WHERE_FLOOR_BELOW_MOB,
@@ -196,9 +196,9 @@
 		admin_client.mouse_pointer_icon = admin_client.mouse_override_icon
 		admin_client.click_intercept = src
 
-		winset(admin_client, "mapwindow.map", "right-click=true")
+		winset(admin_client, SKIN_MAPWINDOW_MAP, "right-click=true")
 	else
-		winset(admin_client, "mapwindow.map", "right-click=false")
+		winset(admin_client, SKIN_MAPWINDOW_MAP, "right-click=false")
 
 	var/mob/holder_mob = admin_client.mob
 	holder_mob?.update_mouse_pointer()

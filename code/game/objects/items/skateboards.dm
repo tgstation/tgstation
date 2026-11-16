@@ -15,9 +15,9 @@
 	var/board_item_type = /obj/vehicle/ridden/scooter/skateboard
 
 /obj/item/melee/skateboard/attack_self(mob/user)
-	var/obj/vehicle/ridden/scooter/skateboard/S = new board_item_type(get_turf(user))//this probably has fucky interactions with telekinesis but for the record it wasn't my fault
-	S.buckle_mob(user)
-	qdel(src)
+	var/obj/vehicle/ridden/scooter/skateboard/board = new board_item_type(get_turf(user), src)//this probably has fucky interactions with telekinesis but for the record it wasn't my fault
+	board.buckle_mob(user)
+	forceMove(board)
 
 /obj/item/melee/skateboard/improvised
 	name = "improvised skateboard"
@@ -55,6 +55,7 @@
 	force = 18
 	throwforce = 6
 	w_class = WEIGHT_CLASS_NORMAL
+	obj_flags = parent_type::obj_flags | UNIQUE_RENAME
 	attack_verb_continuous = list("bashes", "crashes", "grinds", "skates")
 	attack_verb_simple = list("bash", "crash", "grind", "skate")
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/holyboarded

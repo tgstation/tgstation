@@ -23,11 +23,11 @@
 	#define COMSIG_MOB_CANCEL_CLICKON (1<<0)
 ///from base of mob/alt_click_on_secodary(): (atom/A)
 #define COMSIG_MOB_ALTCLICKON_SECONDARY "mob_altclickon_secondary"
-/// From base of /mob/living/simple_animal/bot/proc/bot_step()
+/// From base of /mob/living/basic/bot/proc/bot_step()
 #define COMSIG_MOB_BOT_PRE_STEP "mob_bot_pre_step"
 	/// Should always match COMPONENT_MOVABLE_BLOCK_PRE_MOVE as these are interchangeable and used to block movement.
 	#define COMPONENT_MOB_BOT_BLOCK_PRE_STEP COMPONENT_MOVABLE_BLOCK_PRE_MOVE
-/// From base of /mob/living/simple_animal/bot/proc/bot_step()
+/// From base of /mob/living/basic/bot/proc/bot_step()
 #define COMSIG_MOB_BOT_STEP "mob_bot_step"
 
 /// From base of /mob/proc/update_held_items
@@ -51,9 +51,7 @@
 	#define MOVE_ARG_NEW_LOC 1
 	/// The argument of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
-/// From base of /client/Move(): (new_loc, direction)
-#define COMSIG_MOB_CLIENT_MOVE_NOGRAV "mob_client_move_nograv"
-/// From base of /client/Move(): (direction, old_dir)
+/// From base of /client/Move(): (direction, old_dir, atom/old_loc)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 /// From base of /client/proc/change_view() (mob/source, new_size)
 #define COMSIG_MOB_CLIENT_CHANGE_VIEW "mob_client_change_view"
@@ -63,6 +61,9 @@
 #define COMSIG_CLIENT_SET_EYE "client_set_eye"
 /// from base of /datum/view_data/proc/afterViewChange() : (view)
 #define COMSIG_VIEWDATA_UPDATE "viewdata_update"
+/// From mob/living/carbon/human/reset_perspective() : potential_perspective_list (should be only 1), atom/new_eye, force_reset (bool)
+#define COMSIG_HUMAN_FORCED_PERSPECTIVE_MANAGEMENT "human_forced_perspective_management"
+	#define COMSIG_UPDATE_NEW_PERSPECTIVE (1<<0)
 
 /// Sent from /proc/do_after if someone starts a do_after action bar.
 #define COMSIG_DO_AFTER_BEGAN "mob_do_after_began"
@@ -107,6 +108,7 @@
 #define COMSIG_MOB_SIGHT_CHANGE "mob_sight_changed"
 ///from base of mob/set_invis_see(): (new_invis, old_invis)
 #define COMSIG_MOB_SEE_INVIS_CHANGE "mob_see_invis_change"
+	#define COMPONENT_BLOCK_INVIS_CHANGE (1<<0)
 
 /// from /mob/living/proc/apply_damage(): (list/damage_mods, damage, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 /// allows you to add multiplicative damage modifiers to the damage mods argument to adjust incoming damage
@@ -122,7 +124,7 @@
 #define COMSIG_MOB_ATTACK_ALIEN "mob_attack_alien"
 ///from base of /mob/throw_item(): (atom/target)
 #define COMSIG_MOB_THROW "mob_throw"
-///from base of /mob/verb/examinate(): (atom/target, list/examine_strings)
+///from base of /mob/verb/examinate(): (atom/target, list/examine_strings, list/examine_overrides)
 #define COMSIG_MOB_EXAMINING "mob_examining"
 ///from base of /mob/verb/examinate(): (atom/target)
 #define COMSIG_MOB_EXAMINATE "mob_examinate"
@@ -132,6 +134,8 @@
 	#define COMSIG_BLOCK_EYECONTACT (1<<0)
 ///from base of /mob/update_sight(): ()
 #define COMSIG_MOB_UPDATE_SIGHT "mob_update_sight"
+///from base of /mob/living/restore_initial_sight(): ()
+#define COMSIG_LIVING_RESTORE_INITIAL_SIGHT "mob_restore_init_sight"
 ////from /mob/living/say(): ()
 #define COMSIG_MOB_SAY "mob_say"
 	#define COMPONENT_UPPERCASE_SPEECH (1<<0)
@@ -162,6 +166,20 @@
 	#define COMPONENT_EMOTE_COOLDOWN_BYPASS (1<<0)
 ///from /mob/living/emote(): ()
 #define COMSIG_MOB_EMOTE "mob_emote"
+///from base of datum/emote/get_sound(): (key, list/sounds)
+#define COMSIG_MOB_EMOTE_SOUND(key) "mob_emote_sound_[key]"
+	#define EMOTE_SOUND_TONGUE 1
+	#define EMOTE_SOUND_MASK 2
+	#define EMOTE_SOUND_STATUS_EFFECT 3
+/// from base of mob/cycle_hand(): (cycle_dir, climb, silent)<br>
+/// Ran before hand cycling behaviour is started<br>
+#define COMSIG_MOB_CYCLE_HAND "mob_cycle_hand"
+	#define COMPONENT_BLOCK_CYCLE (1<<0) //! Do not continue cycling hands
+/// from base of mob/cycle_hand(): (cycle_dir, climb, silent)<br>
+/// Ran while hands are being cycled, firing once a hand_index has been selected<br>
+/// hand_index: the hand index we want to react to
+#define COMSIG_MOB_CYCLE_HAND_INDEX(hand_index) "mob_cycle_hand_index_[hand_index]"
+	#define COMPONENT_CONTINUE_CYCLE (1<<1) //! This index was invalid, but don't give up yet
 ///from base of mob/swap_hand(): (obj/item/currently_held_item)
 #define COMSIG_MOB_SWAPPING_HANDS "mob_swapping_hands"
 	#define COMPONENT_BLOCK_SWAP (1<<0)
@@ -185,10 +203,13 @@
 //from base of client/MouseUp(): (/client, object, location, control, params)
 #define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"
 ///Called on the mob being stripped, accepts COMPONENT_CANT_STRIP (mob/user, obj/item/unequipping)
-#define COMSIG_BEING_STRIPPED "try_strip"
+#define COMSIG_BEING_STRIPPED "being_stripped"
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
+///Called when a mob's strip menu is attempting to be opened,from base /datum/element/strippable/proc/mouse_drop_onto (datum/source, atom/over, mob/user)
+#define COMSIG_MOB_STRIP_MENU_OPEN "mob_strip_menu_open"
+	#define COMPONENT_BLOCK_STRIP_MENU_OPEN (1<<0)
 ///From /datum/component/face_decal/splat/Initialize()
 #define COMSIG_MOB_HIT_BY_SPLAT "hit_by_splat"
 ///From /obj/item/gun/proc/check_botched()
@@ -286,3 +307,18 @@
 
 /// from /mob/eye/camera/remote/assign_user(): (mob/living/new_user, mob/living/old_user)
 #define COMSIG_REMOTE_CAMERA_ASSIGN_USER "remote_camera_assign_user"
+
+///sent to TTS sounds when the volume preference is changed and applied
+#define COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED "tts_volume_preference_applied"
+
+///sent to radio TTS sounds when the volume preference is changed and applied
+#define COMSIG_MOB_TTS_RADIO_VOLUME_PREFERENCE_APPLIED "tts_radio_volume_preference_applied"
+
+/// Sent when a mob's name is fullyrenamed (oldname(can be null), newname)
+#define COMSIG_MOB_FULLY_RENAMED "mob_fully_renamed"
+
+///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
+#define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"
+
+///from /client/proc/update_special_keybinds()
+#define COMSIG_MOB_HOTKEYS_UPDATED "mob_hotkeys_updated"

@@ -20,6 +20,7 @@
 	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
 /obj/item/seeds/starthistle/harvest(mob/user)
+	. = list()
 	var/obj/machinery/hydroponics/parent = loc
 	var/seed_count = yield
 	if(prob(getYield() * 20))
@@ -28,6 +29,7 @@
 		for(var/i in 1 to seed_count)
 			var/obj/item/seeds/starthistle/harvestseeds = Copy()
 			harvestseeds.forceMove(output_loc)
+			. += harvestseeds
 
 	parent.update_tray(user, seed_count)
 

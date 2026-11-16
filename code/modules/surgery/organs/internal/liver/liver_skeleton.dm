@@ -8,12 +8,13 @@
 	desc = "You have no idea what this strange ball of bones does."
 	icon_state = "liver-bone"
 	organ_traits = list(TRAIT_STABLELIVER)
+	organ_flags = ORGAN_MINERAL
 	///Var for brute healing via milk
 	var/milk_brute_healing = 2.5
 	///Var for burn healing via milk
 	var/milk_burn_healing = 2.5
 
-/obj/item/organ/liver/bone/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick)
+/obj/item/organ/liver/bone/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, metabolization_rate)
 	. = ..()
 	// parent returned COMSIG_MOB_STOP_REAGENT_TICK or we are failing
 	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))
@@ -34,7 +35,7 @@
 				var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly...
 				var/obj/item/bodypart/bodypart = organ_owner.get_bodypart(selected_part) //We're so sorry skeletons, you're so misunderstood
 				if(bodypart)
-					playsound(organ_owner, SFX_DESECRATION, 50, vary = TRUE) //You just want to socialize
+					playsound(organ_owner, /datum/sound_effect/desecration, 50, vary = TRUE) //You just want to socialize
 					organ_owner.visible_message(span_warning("[organ_owner] rattles loudly and flails around!!"), span_danger("Your bones hurt so much that your missing muscles spasm!!"))
 					INVOKE_ASYNC(organ_owner, TYPE_PROC_REF(/atom/movable, say), "OOF!!", forced = chem.type)
 					organ_owner.apply_damage(200, BRUTE, bodypart)

@@ -64,6 +64,6 @@
 	user.say("SHIA KAZING!!", forced = "smite suicide")
 	do_sparks(4, FALSE, get_turf(user))
 	explosion(user, heavy_impact_range = 2, explosion_cause = src) //Cheap explosion imitation because putting detonate() here causes runtimes
-	user.gib(DROP_BODYPARTS)
+	user.gib(DROP_ALL_REMAINS)
 	qdel(src)
 	return MANUAL_SUICIDE

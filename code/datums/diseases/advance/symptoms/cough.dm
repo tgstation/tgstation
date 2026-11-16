@@ -17,8 +17,7 @@
 	level = 1
 	severity = 1
 	base_message_chance = 15
-	symptom_delay_min = 2
-	symptom_delay_max = 15
+	symptom_delay = 8.5
 	required_organ = ORGAN_SLOT_LUNGS
 	threshold_descs = list(
 		"Resistance 11" = "The host will drop small items when coughing.",
@@ -32,6 +31,7 @@
 	///if FALSE, there is a percentage chance that the mob will emote coughing while cough_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown cough occurs.
 	var/off_cooldown_coughed = FALSE
 	var/spread_range = 1
+	var/suppress_warning = FALSE
 
 /datum/symptom/cough/Start(datum/disease/advance/active_disease)
 	. = ..()
@@ -46,7 +46,7 @@
 	if(active_disease.totalResistance() >= 15) //strong enough to stun (occasionally)
 		power = 2
 	if(active_disease.totalStageSpeed() >= 6) //cough more often
-		symptom_delay_max = 10
+		symptom_delay = 6
 
 /datum/symptom/cough/Activate(datum/disease/advance/active_disease)
 	. = ..()

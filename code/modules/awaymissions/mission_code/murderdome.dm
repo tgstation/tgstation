@@ -12,11 +12,10 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-/obj/structure/grille/indestructible/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/structure/grille/indestructible/wirecutter_act(mob/living/user, obj/item/tool)
-	return NONE
+/obj/structure/grille/indestructible/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_WIRECUTTER, TOOL_ACT_PRIMARY)
 
 /obj/effect/spawner/structure/window/reinforced/indestructible
 	spawn_list = list(/obj/structure/grille/indestructible, /obj/structure/window/reinforced/fulltile/indestructible)

@@ -197,7 +197,8 @@
 
 	SEND_SIGNAL(src, COMSIG_ORGAN_REMOVED, organ_owner)
 	SEND_SIGNAL(organ_owner, COMSIG_CARBON_LOSE_ORGAN, src, special)
-	ADD_TRAIT(src, TRAIT_USED_ORGAN, ORGAN_TRAIT)
+	if(organ_owner.mind)
+		ADD_TRAIT(src, TRAIT_ORGAN_USED_BY_PLAYER, ORGAN_TRAIT)
 
 	if(!special)
 		organ_owner.hud_used?.update_locked_slots()
@@ -263,6 +264,8 @@
 	limb.owner?.synchronize_bodytypes()
 	limb.owner?.synchronize_bodyshapes()
 
+	SEND_SIGNAL(src, COMSIG_ORGAN_BODYPART_REMOVED, limb)
+
 	if(!bodypart_overlay)
 		return
 
@@ -270,8 +273,6 @@
 
 	if(use_mob_sprite_as_obj_sprite)
 		update_appearance(UPDATE_OVERLAYS)
-
-	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
 
 	if(greyscale_config)
 		get_greyscale_color_from_draw_color()

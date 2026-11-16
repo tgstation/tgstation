@@ -2,6 +2,7 @@
 	name = "drinking glass"
 	desc = "Your standard drinking glass."
 	icon_state = "glass_empty"
+	worn_icon_state = "bottle"
 	base_icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	fill_icon_thresholds = list(0)

@@ -1,11 +1,9 @@
 /**
  * AI controller for carp
  * Expected flow is:
- * * If health is low, mark that we want to run away.
- * * If we want to run away, find nearest target and run out of view of it.
- * * Look for anything we want to eat in the area and target it.
- * * If we don't have a target already, find something to attack.
- * * Go and attack our target (which might be food, or might be a mob).
+ * * If we want to run away (injured, or a scary fisherman is near), flee or panic-teleport from our target.
+ * * Otherwise hunt for something to attack, prioritising scary fishermen, and go bite it.
+ * * When idle, migrate between destinations or wander.
  */
 /datum/ai_controller/basic_controller/carp
 	blackboard = list(
@@ -17,21 +15,7 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
-		/datum/ai_planning_subtree/find_target_prioritize_traits,
-		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
-		/datum/ai_planning_subtree/flee_target/from_fisherman,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
-		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
-		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/no_fisherman,
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/carp_migration,
-	)
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp.bt.json"
 
 ///Megacarps. The only difference is that they don't flee from scary fishermen and prioritize them.
 /datum/ai_controller/basic_controller/carp/mega
@@ -42,20 +26,7 @@
 		BB_TARGET_PRIORITY_TRAIT = TRAIT_SCARY_FISHERMAN,
 		BB_CARPS_FEAR_FISHERMAN = FALSE,
 	)
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
-		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
-		/datum/ai_planning_subtree/flee_target,
-		/datum/ai_planning_subtree/find_target_prioritize_traits,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
-		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
-		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/carp_migration,
-	)
+
 /**
  * Carp which bites back, but doesn't look for targets.
  * 'Not hunting targets' includes food (and can rings), because they have been well trained.
@@ -69,39 +40,14 @@
 		BB_CARPS_FEAR_FISHERMAN = TRUE,
 	)
 	ai_traits = PASSIVE_AI_FLAGS
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
-		/datum/ai_planning_subtree/flee_target/from_fisherman,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
-		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
-		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/no_fisherman,
-	)
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_pet.bt.json"
 
 /**
  * AI for carp with a spell.
  * Flow is basically the same as regular carp, except it will try and cast a spell at its target whenever possible and not fleeing.
  */
 /datum/ai_controller/basic_controller/carp/ranged
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
-		/datum/ai_planning_subtree/find_target_prioritize_traits,
-		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
-		/datum/ai_planning_subtree/flee_target/from_fisherman,
-		/datum/ai_planning_subtree/find_nearest_magicarp_spell_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/magicarp,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/carp,
-		/datum/ai_planning_subtree/shortcut_to_target_through_carp_rift,
-		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/magicarp,
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/carp_migration,
-	)
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_ranged.bt.json"
 
 /**
  * Carp which bites back, but doesn't look for targets and doesnt do as much damage
@@ -116,14 +62,33 @@
 		BB_TARGET_ONLY_WITH_TRAITS = list(TRAIT_SCARY_FISHERMAN),
 	)
 	ai_traits = PASSIVE_AI_FLAGS
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/simple_find_target/to_flee, // This should only find master fishermen because of the targeting strategy
-		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/from_flee_key,
-		/datum/ai_planning_subtree/make_carp_rift/panic_teleport/flee_key,
-		/datum/ai_planning_subtree/flee_target/from_flee_key,
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/make_carp_rift/aggressive_teleport,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/carp_migration,
-	)
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_passive.bt.json"
+
+
+/// Shared carp skeleton: escape -> pet command -> (flee / combat / migrate-or-idle) with a target-finding secondary.
+/datum/bt_node/subtree/basic_carp_tree
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/basic_carp_tree.bt.json"
+
+/// Flee or panic-teleport away from a keyed target.
+/datum/bt_node/subtree/carp_flee
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_flee.bt.json"
+
+/// Attack our current target: cast a spell, teleport in, smash obstacles or bite.
+/datum/bt_node/subtree/carp_combat
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_combat.bt.json"
+
+/// Travel a migration path, riding or punching through rifts and walls along the way.
+/datum/bt_node/subtree/carp_migration
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_migration.bt.json"
+
+/// Hunting target finder: flee the nearest threat when injured, otherwise hunt prioritising scary fishermen.
+/datum/bt_node/subtree/carp_target_selection
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_target_selection.bt.json"
+
+/// Bite-back target finder: target whoever has attacked us.
+/datum/bt_node/subtree/carp_retaliate_selection
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_retaliate_selection.bt.json"
+
+/// Passive flee finder: flag scary fishermen and attackers as things to run away from.
+/datum/bt_node/subtree/carp_passive_selection
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/carp/carp_passive_selection.bt.json"

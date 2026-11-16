@@ -16,7 +16,10 @@
 	else
 		if(LAZYLEN(personalities) >= CONFIG_GET(number/max_personalities))
 			return TRUE
-		if(SSpersonalities.is_incompatible(personalities, personality_type))
+		var/list/selected_types
+		for(var/selected_key in personalities)
+			LAZYADD(selected_types, SSpersonalities.personalities_by_key[selected_key].type)
+		if(SSpersonalities.is_incompatible(selected_types, personality_type))
 			return TRUE
 		LAZYADD(personalities, personality_key)
 	preferences.update_preference(GLOB.preference_entries[/datum/preference/personality], personalities)
@@ -51,7 +54,6 @@
 
 	var/max = CONFIG_GET(number/max_personalities)
 	data["max_personalities"] = max >= length(SSpersonalities.personalities_by_type) ? -1 : max
-	data["mood_enabled"] = !CONFIG_GET(flag/disable_human_mood)
 
 	return data
 

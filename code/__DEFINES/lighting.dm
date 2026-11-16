@@ -11,6 +11,11 @@
 /// Nonesensical value for light color, used for null checks.
 #define NONSENSICAL_VALUE -99999
 
+// Light systems that use the overlay light component
+#define IS_OVERLAY_LIGHT_SYSTEM(system) (system == OVERLAY_LIGHT || system == OVERLAY_LIGHT_DIRECTIONAL || system == OVERLAY_LIGHT_BEAM)
+// Light systems that use the cone image of the overlay light component
+#define IS_OVERLAY_CONE_LIGHT_SYSTEM(system) (system == OVERLAY_LIGHT_DIRECTIONAL || system == OVERLAY_LIGHT_BEAM)
+
 /// Is our overlay light source attached to another movable (its loc), meaning that the lighting component should go one level deeper.
 #define LIGHT_ATTACHED (1<<0)
 /// Freezes a light in its current state, blocking any attempts at modification
@@ -38,6 +43,8 @@
 
 ///How many tiles standard fires glow.
 #define LIGHT_RANGE_FIRE 3
+#define LIGHT_POWER_FIRE 2
+
 #define LIGHT_FIRE_BLOSSOM 2.1
 #define LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED 2.7
 #define LIGHT_POWER_FIRE_BLOSSOM_HARVESTED 1.5
@@ -92,11 +99,11 @@ GLOBAL_LIST_INIT(specular_color, SPECULAR_COLOR)
 
 // Types of emissives
 /// Emissive that will not have bloom applied to it, encoded into the green channel
-#define EMISSIVE_NO_BLOOM 0
+#define EMISSIVE_NO_BLOOM 1
 /// Emissive that will get bloom applied to it, encoded into the red channel
-#define EMISSIVE_BLOOM 1
+#define EMISSIVE_BLOOM 2
 /// Mimics a highly reflective surface, will not have any glow by itself but will amplify any lighting applied to it, encoded into the blue channel
-#define EMISSIVE_SPECULAR 2
+#define EMISSIVE_SPECULAR 3
 
 /// Light cutoff of specular emissives, controls how sharp a light must be before it starts reflecting
 #define SPECULAR_EMISSIVE_CUTOFF 0.3
@@ -137,3 +144,9 @@ do { \
 		source.lum_b = 1; \
 	}; \
 } while (FALSE)
+
+/// light_overlay flags
+/// For switchable lights, is it on and currently emitting light?
+#define LIGHTING_ON (1<<0)
+/// Is the parent attached to something else, its loc? Then we need to keep an eye of this.
+#define LIGHTING_ATTACHED (1<<1)

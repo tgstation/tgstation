@@ -78,16 +78,17 @@
 		/obj/item/organ/heart/gland/slime = 4,
 		/obj/item/organ/heart/gland/trauma = 4,
 		/obj/item/organ/heart/carp = 3,
-		/obj/item/organ/heart/rat = 3,
+		/obj/item/organ/heart/mouse = 3,
 		/obj/item/organ/heart/gland/electric = 3,
 		/obj/item/organ/monster_core/brimdust_sac = 3,
 		/obj/item/organ/monster_core/regenerative_core = 3,
 		/obj/item/organ/monster_core/rush_gland = 3,
 		/obj/item/organ/tongue/carp = 3,
+		/obj/item/organ/fangs/carp = 3,
 		/obj/item/organ/alien/acid = 2,
 		/obj/item/organ/alien/resinspinner = 2,
 		/obj/item/organ/eyes/night_vision/goliath = 2,
-		/obj/item/organ/eyes/night_vision/rat = 2,
+		/obj/item/organ/eyes/night_vision/mouse = 2,
 		/obj/item/organ/heart/gland/ventcrawling = 1,
 	)
 
@@ -95,11 +96,12 @@
 	. = ..()
 	stored_organ = pick_weight(allowed_organs)
 
-/obj/structure/meateor_fluff/flesh_pod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if (attacking_item.get_sharpness() & SHARP_EDGED)
-		cut_open(user)
-		return
-	return ..()
+/obj/structure/meateor_fluff/flesh_pod/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!(tool.get_sharpness() & SHARP_EDGED))
+		return NONE
+
+	cut_open(user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Cut the pod open and destroy it
 /obj/structure/meateor_fluff/flesh_pod/proc/cut_open(mob/user)

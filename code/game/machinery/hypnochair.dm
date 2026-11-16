@@ -27,15 +27,11 @@
 	open_machine()
 	update_appearance()
 
-/obj/machinery/hypnochair/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, item))
-		update_appearance()
-		return
-	if(default_pry_open(item))
-		return
-	if(default_deconstruction_crowbar(item))
-		return
-	return ..()
+/obj/machinery/hypnochair/screwdriver_act(mob/living/user, obj/item/tool)
+	return isnull(occupant) ? default_deconstruction_screwdriver(user, tool) : NONE
+
+/obj/machinery/hypnochair/crowbar_act(mob/living/user, obj/item/tool)
+	return default_pry_open(user, tool, deconstruct_on_fail = TRUE)
 
 /obj/machinery/hypnochair/ui_state(mob/user)
 	return GLOB.notcontained_state
@@ -183,13 +179,12 @@
 	return ..()
 
 /obj/machinery/hypnochair/container_resist_act(mob/living/user)
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
 		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(600)].)"), \
 		span_hear("You hear a metallic creaking from [src]."))
 	if(do_after(user,(600), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src || state_open)
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
 			span_notice("You successfully break out of [src]!"))

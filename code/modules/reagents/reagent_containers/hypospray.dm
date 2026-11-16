@@ -28,6 +28,31 @@
 		return NONE
 	return inject(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
+/obj/item/reagent_containers/hypospray/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+	if (!target.reagents)
+		return NONE
+
+	if(isliving(target))
+		to_chat(user, span_warning("[src] can't be used to draw blood!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(reagents.holder_full())
+		to_chat(user, span_notice("[src] is full."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!target.reagents.total_volume)
+		to_chat(user, span_warning("[target] is empty!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!target.is_drawable(user))
+		to_chat(user, span_warning("You cannot directly remove reagents from [target]!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
+	if(trans)
+		to_chat(user, span_notice("You fill [src] with [trans] units of the solution. It now contains [reagents.total_volume] units."))
+	return ITEM_INTERACT_SUCCESS
+
 ///Handles all injection checks, injection and logging.
 /obj/item/reagent_containers/hypospray/proc/inject(mob/living/affected_mob, mob/user)
 	if(used_up)
@@ -133,7 +158,7 @@
 	var/label_examine = TRUE
 	var/label_text
 
-/obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
+/obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 
@@ -178,6 +203,7 @@
 /obj/item/reagent_containers/hypospray/medipen/stimpack/traitor
 	desc = "A modified stimulants autoinjector for use in combat situations. Has a mild healing effect."
 	list_reagents = list(/datum/reagent/medicine/stimulants = 10, /datum/reagent/medicine/omnizine = 10)
+	volume = 20
 
 /obj/item/reagent_containers/hypospray/medipen/stimulants
 	name = "stimulant medipen"
@@ -203,6 +229,7 @@
 	inhand_icon_state = "morphen"
 	base_icon_state = "morphen"
 	list_reagents = list(/datum/reagent/medicine/morphine = 10)
+	volume = 10
 
 /obj/item/reagent_containers/hypospray/medipen/oxandrolone
 	name = "oxandrolone medipen"
@@ -211,6 +238,7 @@
 	inhand_icon_state = "oxapen"
 	base_icon_state = "oxapen"
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 10)
+	volume = 10
 
 /obj/item/reagent_containers/hypospray/medipen/penacid
 	name = "pentetic acid medipen"
@@ -219,6 +247,7 @@
 	inhand_icon_state = "penacid"
 	base_icon_state = "penacid"
 	list_reagents = list(/datum/reagent/medicine/pen_acid = 10)
+	volume = 10
 
 /obj/item/reagent_containers/hypospray/medipen/salacid
 	name = "salicylic acid medipen"
@@ -227,6 +256,7 @@
 	inhand_icon_state = "salacid"
 	base_icon_state = "salacid"
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 10)
+	volume = 10
 
 /obj/item/reagent_containers/hypospray/medipen/salbutamol
 	name = "salbutamol medipen"
@@ -235,6 +265,7 @@
 	inhand_icon_state = "salpen"
 	base_icon_state = "salpen"
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10)
+	volume = 10
 
 /obj/item/reagent_containers/hypospray/medipen/tuberculosiscure
 	name = "BVAK autoinjector"
@@ -290,6 +321,19 @@
 	amount_per_transfer_from_this = 60
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10)
 
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury/purple
+	name = "luxury purple medipen"
+	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard environments. This one is purple. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
+	icon_state = "slimepen"
+	base_icon_state = "slimepen"
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/regen_jelly/diluted = 5 ,/datum/reagent/toxin = 5 ,/datum/reagent/medicine/leporazine = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury/purple/Initialize(mapload)
+	. = ..()
+	if(prob(0.1)) // idea by melbert
+		name = "luxury ourple medipen"
+		desc = replacetext(desc, "purple", "ourple") // i do not feel like copy-pasting the entire desc for a one-word change
+
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"
 	desc = "A rapid way to save a person from a critical injury state! Additionally contains a powerful coagulant to prevent blood loss."
@@ -297,6 +341,7 @@
 	inhand_icon_state = "atropen"
 	base_icon_state = "atropen"
 	list_reagents = list(/datum/reagent/medicine/atropine = 10, /datum/reagent/medicine/coagulant = 2)
+	volume = 12
 
 /obj/item/reagent_containers/hypospray/medipen/snail
 	name = "snail shot"
@@ -306,6 +351,7 @@
 	base_icon_state = "snail"
 	list_reagents = list(/datum/reagent/snail = 10)
 	label_examine = FALSE
+	volume = 10
 
 /obj/item/reagent_containers/hypospray/medipen/magillitis
 	name = "experimental autoinjector"
@@ -362,3 +408,4 @@
 	inhand_icon_state = "atropen"
 	base_icon_state = "atropen"
 	list_reagents = list(/datum/reagent/medicine/c2/penthrite = 10)
+	volume = 10

@@ -16,6 +16,10 @@
 	layer = CORGI_ASS_PIN_LAYER
 	embed_type = /datum/embedding/corgi_pin
 
+/obj/item/tail_pin/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/stickerable, 9)
+
 /datum/embedding/corgi_pin
 	pain_chance = 0
 	jostle_pain_mult = 0
@@ -34,17 +38,3 @@
 	poster_item_desc = "Place it on a wall to start playing pin the tail on the corgi."
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/party_game, 32)
-
-/obj/structure/sign/poster/party_game/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(!istype(attacking_item, /obj/item/tail_pin))//We're using the same trick that tables use for placing objects x and y onto the click location.
-		return
-
-	var/x_offset = 0
-	var/y_offset = 0
-	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
-		x_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
-		y_offset = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
-	if(!user.transfer_item_to_turf(attacking_item, drop_location(), x_offset, y_offset, silent = FALSE))
-		return
-	return TRUE

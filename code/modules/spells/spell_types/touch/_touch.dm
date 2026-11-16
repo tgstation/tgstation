@@ -52,14 +52,6 @@
 /datum/action/cooldown/spell/touch/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	return !!attached_hand
 
-/datum/action/cooldown/spell/touch/set_statpanel_format()
-	. = ..()
-	if(!islist(.))
-		return
-
-	if(attached_hand)
-		.[PANEL_DISPLAY_STATUS] = "ACTIVE"
-
 /datum/action/cooldown/spell/touch/can_cast_spell(feedback = TRUE)
 	. = ..()
 	if(!.)
@@ -157,7 +149,7 @@
 		StartCooldown()
 		return
 
-	if(!QDELETED(attached_hand) && (attached_hand in cast_on.held_items))
+	if(!QDELETED(attached_hand) && cast_on.is_holding(attached_hand))
 		remove_hand(cast_on, reset_cooldown_after = TRUE)
 		return
 
@@ -224,6 +216,7 @@
 	else if(!cast_on_hand_hit(hand, victim, caster))
 		return NONE
 
+	SEND_SIGNAL(caster, COMSIG_SPELL_TOUCH_SPELL_ACTUALLY_CAST, src, victim)
 	log_combat(caster, victim, "cast the touch spell [name] on", hand)
 	INVOKE_ASYNC(src, PROC_REF(spell_feedback), caster)
 	caster.do_attack_animation(victim)
@@ -315,6 +308,7 @@
 	if(!can_hit_with_hand(taker, offerer))
 		return
 
+	offerer.client?.give_award(/datum/award/achievement/misc/spicy_handshake, offerer)
 	INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, taker, offerer)
 	return COMPONENT_OFFER_INTERRUPT
 

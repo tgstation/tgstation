@@ -349,12 +349,14 @@
 	name = "M-90gl Carbine Case (Hard)"
 	desc = "A fully-loaded, specialized three-round burst carbine that fires .223 ammunition from a 30 round magazine.\
 		Comes with a 40mm underbarrel grenade launcher. Use secondary-fire to fire the grenade launcher. Also comes with two spare magazines \
-		and a box of 40mm rubber slugs."
+		and a box of 40mm rubber pucks."
 	item = /obj/item/storage/toolbox/guncase/m90gl
 	relevant_child_items = list(
 		/datum/uplink_item/ammo_nuclear/basic/carbine,
 		/datum/uplink_item/ammo_nuclear/special/carbine,
-		/datum/uplink_item/ammo_nuclear/basic/carbine/a40mm,
+		/datum/uplink_item/ammo_nuclear/basic/a40mm,
+		/datum/uplink_item/ammo_nuclear/basic/a40mm/rubber,
+		/datum/uplink_item/ammo_nuclear/ap/a40mm,
 	)
 
 /datum/uplink_item/ammo_nuclear/basic/carbine
@@ -369,13 +371,6 @@
 		These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material. \
 		The name is a misnomer. It doesn't contain any lead whatsoever!"
 	item = /obj/item/ammo_box/magazine/m223/phasic
-
-/datum/uplink_item/ammo_nuclear/basic/carbine/a40mm
-	name = "40mm Grenade Box (M-90gl)"
-	desc = "A box of 40mm HE grenades for use with the M-90gl's under-barrel grenade launcher. \
-		Your teammates will ask you to not shoot these down small hallways. \
-		You'll do it anyway."
-	item = /obj/item/ammo_box/a40mm
 
 // ~~ Anti-Materiel Sniper Rifle ~~
 
@@ -525,10 +520,44 @@
 // ~~ Grenadier's Belt Kit ~~
 
 /datum/uplink_item/weapon_kits/high_cost/grenadier
-	name = "Grenadier's Belt and Grenade Launcher Kit (Hard)"
-	desc = "A belt containing 26 lethally dangerous and destructive grenades, along with a grenade launcher to fire them. Comes with an extra multitool and screwdriver."
+	name = "Grenadier's Belt and Pneumatic Grenade Launcher Kit (Hard)"
+	desc = "A belt containing 26 lethally dangerous and destructive grenades, along with a pneumatic grenade launcher to fire them. Comes with an extra multitool and screwdriver."
 	item = /obj/item/storage/box/syndie_kit/demoman
 	purchasable_from = UPLINK_SERIOUS_OPS
+
+// ~~ Pump-Action Grenade Launcher Kit ~~
+
+/datum/uplink_item/weapon_kits/medium_cost/china_lake
+	name = "Pump-Action Grenade Launcher Kit (Moderate)"
+	desc = "A weapon case containing a 40mm pump-action grenade launcher and a bandolier of 40mm grenades. Less versatile than the pneumatic grenade launcher kit, but no less dangerous. \
+		Though try to be careful about danger close. If you even care. A favourite of the Tiger Cooperative."
+	item = /obj/item/storage/toolbox/guncase/china_lake
+	purchasable_from = UPLINK_SERIOUS_OPS
+
+/datum/uplink_item/ammo_nuclear/basic/a40mm
+	name = "40mm HE Shell Box (Grenade Launchers)"
+	desc = "A box of 40mm HE grenades for use with ballistic grenade launchers. \
+		Your teammates will ask you to not shoot these down small hallways. \
+		You'll do it anyway."
+	item = /obj/item/ammo_box/a40mm
+
+/datum/uplink_item/ammo_nuclear/basic/a40mm/rubber
+	name = "40mm Rubber Shell Box (Grenade Launchers)"
+	desc = "A box of 40mm rubber grenades for use with ballistic grenade launchers. Launching a giant rubber puck at someone at high velocity is maybe the most \
+		humane thing you are about to do today. For when you're trying to earn some karma points or something."
+	item = /obj/item/ammo_box/a40mm/rubber
+
+/datum/uplink_item/ammo_nuclear/ap/a40mm
+	name = "40mm Titanium Flak Shell Box (Grenade Launchers)"
+	desc = "A box of 40mm titanium flak shells for use with ballistic grenade launchers. Launches an obscene number of titanium ball bearings into your enemies. \
+		For when you want to get up close and personal."
+	item = /obj/item/ammo_box/a40mm
+
+/datum/uplink_item/ammo_nuclear/incendiary/a40mm
+	name = "40mm Incendiary Shell Box (Grenade Launchers)"
+	desc = "A box of 40mm incendiary grenade shells for use with ballistic grenade launchers. Launches a incendiary payload at targets, bursting on contact and \
+		engulfing everything around it in roaring fire. For when you really don't want to leave anything and anyone unscathed. Including possibly your allies."
+	item = /obj/item/ammo_box/a40mm
 
 // ~~ Detonator: In case you lose the old one ~~
 
@@ -625,7 +654,7 @@
 		operative team's body-cams. They can also pilot the shuttle remotely and view the station's camera net. \
 		If you're a meathead who's just here to kill people and don't care about strategising or intel, you'll still have someone to bear witness to your murder-spree!"
 	item = /obj/item/antag_spawner/nuke_ops/overwatch
-	cost = 12
+	cost = 10
 	purchasable_from = UPLINK_FIREBASE_OPS
 
 // ~~ Disposable Sentry Gun ~~
@@ -638,6 +667,16 @@
 	cost = 16
 	restricted = FALSE
 	refundable = FALSE
+
+
+/datum/uplink_item/reinforcements/ed209
+	name = "Modified ED209"
+	desc = "Stolen Nanotrasen tech, slightly tweaked and modified to fit a greater purpose."
+	item = /obj/item/antag_spawner/nuke_ops/ed209_nukie
+	cost = 20
+	restricted = FALSE
+	refundable = FALSE
+
 
 // Bundles
 
@@ -674,6 +713,14 @@
 	item = /obj/item/storage/box/syndie_kit/induction_kit
 	cost = 10
 	purchasable_from = UPLINK_NUKE_OPS
+
+/datum/uplink_item/bundles_tc/induction_kit/clown
+	name = "Syndicate Circus Induction Kit"
+	desc = "Found a particularly entertaining and skilled performer on the station? \
+		This kit allows you to induct them into the Syndicate circus! Contains equipment them with all the necessary gear for their new role. \
+		*NOT* for usage with Reinforcements, and does not brainwash the target!"
+	item = /obj/item/storage/box/syndie_kit/induction_kit/clown
+	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/bundles_tc/cowboy
 	name = "Syndicate Outlaw Kit"
@@ -756,7 +803,6 @@
 	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
 	population_minimum = TRAITOR_POPULATION_LOWPOP
-	progression_minimum = 30 MINUTES
 	purchasable_from = UPLINK_ALL_SYNDIE_OPS | UPLINK_TRAITORS // Don't give this to spies
 	cant_discount = TRUE
 
@@ -767,7 +813,7 @@
 	desc = "An upgraded, elite version of the Syndicate MODsuit. It features fireproofing, and also \
 		provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
 	item = /obj/item/mod/control/pre_equipped/elite
-	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
+	purchasable_from = (UPLINK_SERIOUS_OPS | UPLINK_SPY)
 
 /datum/uplink_item/suits/energy_shield
 	name = "MODsuit Energy Shield Module"
@@ -834,7 +880,6 @@
 	item = /obj/item/assault_pod
 	cost = 30
 	surplus = 0
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	restricted = TRUE
 	purchasable_from = UPLINK_FIREBASE_OPS
 
@@ -844,7 +889,7 @@
 		In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/syndicate
 	cost = 4
-	purchasable_from = UPLINK_SERIOUS_OPS | UPLINK_SPY
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
@@ -853,7 +898,7 @@
 		for faster healing on the field. Also comes with basic medical tools and sterlizer."
 	item = /obj/item/storage/medkit/tactical
 	cost = 4
-	purchasable_from = UPLINK_SERIOUS_OPS
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/device_tools/medkit/premium
 	name = "Syndicate Combat Medical Suite"
@@ -871,7 +916,7 @@
 	desc = "A potion recovered at great risk by undercover Syndicate operatives and then subsequently modified with Syndicate technology. \
 		Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
 	cost = 4
-	purchasable_from = UPLINK_SERIOUS_OPS | UPLINK_SPY
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY
 	restricted = TRUE
 
 // Implants
@@ -888,6 +933,7 @@
 		in any creature, biological or mechanical."
 	item = /obj/item/storage/box/syndie_kit/imp_deathrattle
 	cost = 4
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/implants/nuclear/microbomb
 	name = "Microbomb Implant"
@@ -896,7 +942,7 @@
 		This will permanently destroy your body, however."
 	item = /obj/item/storage/box/syndie_kit/imp_microbomb
 	cost = 2
-	purchasable_from = UPLINK_SERIOUS_OPS | UPLINK_SPY
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/nuclear/macrobomb
 	name = "Macrobomb Implant"
@@ -905,6 +951,15 @@
 	item = /obj/item/storage/box/syndie_kit/imp_macrobomb
 	cost = 20
 	restricted = TRUE
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
+
+/datum/uplink_item/implants/nuclear/macrobomb/fake
+	name = "Fake Macrobomb Implant"
+	desc = "A bomb implant with the same delay as a true macrobomb, but is ultimately no greater than a standard microbomb. \
+		However, its detonation also comes with a surprise that the standard microbomb doesn't..."
+	item = /obj/item/storage/box/syndie_kit/imp_macrobomb_fake
+	cost = /datum/uplink_item/implants/nuclear/microbomb::cost
+	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/implants/nuclear/deniability
 	name = "Tactical Deniability Implant"
@@ -973,7 +1028,7 @@
 		micro-organism symbiosis to slime-core weaponization, this special Authorization Key can let you push past the boundaries \
 		of bio-terrorism at breakneck speeds. As a bonus, these labs even come equipped with natural life support! *Plants not included."
 	item = /obj/item/keycard/syndicate_bio
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_FIREBASE_OPS
 
 /datum/uplink_item/base_keys/chem_key
 	name = "Syndicate Chemical Plant Access Card"
@@ -982,7 +1037,7 @@
 		can be instantly delivered to your location. Create groundbreaking chemical agents, cook up, sell the best of drugs, \
 		and listen to the best classic music today!"
 	item = /obj/item/keycard/syndicate_chem
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_FIREBASE_OPS
 
 /datum/uplink_item/base_keys/fridge_key
 	name = "Lopez's Access Card"
@@ -991,14 +1046,14 @@
 		pocket during this morning's briefing. He's been looking for it since. Take it, get into the fridge, and cook up whatever \
 		you need before he gets back. And remember: DON'T TELL ANYONE! -M.T"
 	item = /obj/item/keycard/syndicate_fridge
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_FIREBASE_OPS
 
 /datum/uplink_item/base_keys/custodial_key
 	name = "Syndicate Custodial Access Card"
 	desc = "Your workplace dirty? No problem! with this card you gain access to the custodial. Containing a janitorial cart \
 	with some janitorial supplies and an canister of water vapour."
 	item = /obj/item/keycard/syndicate_custodial
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_FIREBASE_OPS
 
 // Hats
 // It is fundamental for the game's health for there to be a hat crate for nuclear operatives.

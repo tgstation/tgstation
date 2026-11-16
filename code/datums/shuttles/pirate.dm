@@ -1,5 +1,6 @@
 /datum/map_template/shuttle/pirate
 	port_id = "pirate"
+	prefix = "_maps/shuttles/pirate/"
 	who_can_purchase = null
 
 /datum/map_template/shuttle/pirate/default
@@ -33,3 +34,7 @@
 /datum/map_template/shuttle/pirate/medieval
 	suffix = "medieval"
 	name = "pirate ship (Siege Pod)"
+
+/datum/map_template/shuttle/pirate/siren
+	suffix = "siren"
+	name = "pirate ship (Siren Shimai)"

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="100%" height="100%">
+    <pattern id="pattern-checkers" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse" >
+      <rect fill="#999" x="0" width="12" height="12" y="0"/>
+      <rect fill="#bbb" x="12" width="12" height="12" y="0"/>
+      <rect fill="#bbb" x="0" width="12" height="12" y="12"/>
+      <rect fill="#999" x="12" width="12" height="12" y="12"/>
+    </pattern>
+    <rect x="0" y="0" width="100%" height="100%" fill="url(#pattern-checkers)" />
+</svg>

@@ -12,12 +12,13 @@
 	illness = "Aurora Snorealis"
 	stealth = -1
 	resistance = -2
-	stage_speed = -3
+	stage_speed = -2
 	transmittable = 0
-	level = 6
-	symptom_delay_min = 30
-	symptom_delay_max = 85
+	level = 4
+	symptom_delay = 57.5
 	severity = 4
+	symptom_cure = /datum/reagent/medicine/ondansetron
+	cure_color = "yellow"
 	var/yawning = FALSE
 	threshold_descs = list(
 		"Transmission 4" = "Causes the host to periodically emit a yawn that tries to infect bystanders within 6 meters of the host.",
@@ -31,8 +32,7 @@
 	if(A.totalTransmittable() >= 4) //yawning (mostly just some copy+pasted code from sneezing, with a few tweaks)
 		yawning = TRUE
 	if(A.totalStageSpeed() >= 10) //act more often
-		symptom_delay_min = 20
-		symptom_delay_max = 45
+		symptom_delay = 32.5
 
 /datum/symptom/narcolepsy/Activate(datum/disease/advance/A)
 	. = ..()

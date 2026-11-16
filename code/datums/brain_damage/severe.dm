@@ -294,7 +294,7 @@
 	owner.remove_status_effect(/datum/status_effect/trance)
 
 /datum/brain_trauma/severe/hypnotic_trigger/handle_hearing(datum/source, list/hearing_args)
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER])
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER])
 		return
 
 	var/regex/reg = new("(\\b[REGEX_QUOTE(trigger_phrase)]\\b)","ig")
@@ -356,7 +356,7 @@
 		return
 	if(!COOLDOWN_FINISHED(src, steal_cd))
 		return
-	if(!owner.has_active_hand() || !owner.get_empty_held_indexes())
+	if(!owner.has_active_hand() || !length(owner.get_empty_held_indexes()))
 		return
 
 	// If our main hand is full, that means our offhand is empty, so try stealing with that

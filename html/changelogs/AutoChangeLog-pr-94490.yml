@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - refactor: "faction list structures have been refactored, please report any unusual faction related behavior"

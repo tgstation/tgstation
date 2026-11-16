@@ -305,8 +305,8 @@
 "zH" = (
 /obj/structure/closet/cardboard,
 /obj/item/stack/medical/suture,
-/obj/item/stack/medical/gauze,
-/obj/item/stack/sticky_tape/surgical,
+/obj/item/stack/medical/wrap/gauze,
+/obj/item/stack/medical/wrap/sticky_tape/surgical,
 /obj/structure/broken_flooring/corner,
 /obj/item/organ/cyberimp/arm/toolkit/surgery,
 /obj/item/organ/cyberimp/eyes/hud/medical,
@@ -409,7 +409,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "EJ" = (
-/obj/item/stack/sticky_tape/surgical,
+/obj/item/stack/medical/wrap/sticky_tape/surgical,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Go" = (
@@ -666,7 +666,7 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "XD" = (
-/obj/structure/sinkframe,
+/obj/item/wallframe/sinkframe,
 /obj/structure/broken_flooring/pile,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/item/rag{

@@ -21,11 +21,11 @@
 
 /datum/brain_trauma/magic/lumiphobia/on_life(seconds_per_tick)
 	..()
-	var/turf/T = owner.loc
-	if(!istype(T))
+	var/turf/owner_turf = owner.loc
+	if(!istype(owner_turf))
 		return
 
-	if(T.get_lumcount() <= SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
+	if(!owner_turf.check_lumcount_above(SHADOW_SPECIES_LIGHT_THRESHOLD)) //if there's enough light, start dying
 		return
 
 	if(COOLDOWN_FINISHED(src, damage_warning_cooldown))
@@ -109,7 +109,7 @@
 
 /datum/brain_trauma/magic/stalker/on_life(seconds_per_tick)
 	// Dead and unconscious people are not interesting to the psychic stalker.
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		return
 
 	// Not even nullspace will keep it at bay.

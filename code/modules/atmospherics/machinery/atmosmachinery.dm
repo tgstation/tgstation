@@ -46,7 +46,7 @@
 	var/list/obj/machinery/atmospherics/nodes
 
 	///The path of the pipe/device that will spawn after unwrenching it (such as pipe fittings)
-	var/construction_type
+	var/obj/item/pipe/construction_type
 	///icon_state as a pipe item
 	var/pipe_state
 	///Check if the device should be on or off (mostly used in processing for machines)
@@ -192,15 +192,17 @@
 /// This should only be called by SSair as part of the rebuild queue.
 /// Handles rebuilding pipelines after init or they've been changed.
 /obj/machinery/atmospherics/proc/rebuild_pipes()
-	var/list/targets = get_rebuild_targets()
 	rebuilding = FALSE
-	for(var/datum/pipeline/build_off as anything in targets)
-		build_off.build_pipeline(src) //This'll add to the expansion queue
+	var/datum/pipeline/build_target = get_rebuild_target()
+	if(!build_target)
+		return
+	build_target.build_pipeline(src) //This'll add to the expansion queue
+	SSair.add_to_rebuild_queue(src) // expansion can connect several ports. revisit this machine after the expansion queue has been processed
 
 /**
- * Returns a list of new pipelines that need to be built up
+ * Assigns and returns the next pipeline that needs to be built up. Make sure to expand it before requesting another
  */
-/obj/machinery/atmospherics/proc/get_rebuild_targets()
+/obj/machinery/atmospherics/proc/get_rebuild_target()
 	return
 
 /**
@@ -409,14 +411,16 @@
 	nodes[nodes.Find(reference)] = null
 	update_appearance()
 
-/obj/machinery/atmospherics/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/pipe)) //lets you autodrop
-		var/obj/item/pipe/pipe = W
-		if(user.dropItemToGround(pipe))
-			pipe.set_piping_layer(piping_layer) //align it with us
-			return TRUE
-	else
-		return ..()
+/obj/machinery/atmospherics/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/pipe)) //lets you autodrop
+		return NONE
+
+	var/obj/item/pipe/pipe = tool
+	if(!user.dropItemToGround(pipe))
+		return ITEM_INTERACT_BLOCKING
+
+	pipe.set_piping_layer(piping_layer) //align it with us
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/wrench_act(mob/living/user, obj/item/I)
 	if(!can_unwrench(user))
@@ -636,9 +640,6 @@
 /obj/machinery/atmospherics/proc/return_pipenets()
 	return list()
 
-/obj/machinery/atmospherics/update_remote_sight(mob/user)
-	user.add_sight(SEE_TURFS|BLIND)
-
 /**
  * Used for certain children of obj/machinery/atmospherics to not show pipe vision when mob is inside it.
  */
@@ -686,7 +687,7 @@
 
 	SET_PLANE_EXPLICIT(cap_overlay, initial(plane), our_turf)
 
-	cap_overlay.color = pipe_color
+	cap_overlay.color = (pipe_color == ATMOS_COLOR_OMNI && nodes[1]?.pipe_color) || pipe_color
 	cap_overlay.layer = initial(layer)
 	cap_overlay.icon_state = "[bitfield]_[piping_layer]"
 

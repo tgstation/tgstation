@@ -110,3 +110,56 @@
 	)
 	infusion_desc = "domestic"
 	tier = DNA_MUTANT_TIER_ZERO
+
+/datum/infuser_entry/penguin
+	name = "Penguin"
+	infuse_mob_name = "penguin"
+	desc = "Honestly, there wasn't much to gleam from a penguin's DNA, other than they walk funny."
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
+	qualities = list(
+		"you waddle when you walk",
+	)
+	input_obj_or_mob = list(
+		/mob/living/basic/pet/penguin,
+	)
+	output_organs = list(
+		/obj/item/organ/ears/penguin,
+	)
+	infusion_desc = "waddly"
+	tier = DNA_MUTANT_TIER_ZERO
+
+/datum/infuser_entry/plants
+	name = "Plant"
+	infuse_mob_name = "plant hybrid"
+	desc = "Hydroponics research has long been interested in splicing human DNA into plant DNA, creating podpeople. \
+		Many scientists didn't want to let those hippies get the leg up on them, so they attempted the opposite - to pretty uninteresting results."
+	threshold_desc = DNA_INFUSION_NO_THRESHOLD
+	qualities = list(
+		"gives you neat hair",
+		"not much else, honestly",
+	)
+	input_obj_or_mob = list(
+		/obj/item/food/grown,
+		/obj/item/grown,
+	)
+	output_organs = list(
+		/obj/item/organ/appendix/pod,
+		/obj/item/organ/brain/pod,
+		/obj/item/organ/ears/pod,
+		/obj/item/organ/eyes/pod,
+		/obj/item/organ/heart/pod,
+		/obj/item/organ/liver/pod,
+		/obj/item/organ/lungs/pod,
+		/obj/item/organ/pod_hair,
+		/obj/item/organ/stomach/pod,
+		/obj/item/organ/tongue/pod,
+	)
+	infusion_desc = "botanical"
+	tier = DNA_MUTANT_TIER_ZERO
+
+/datum/infuser_entry/plants/get_output_organs(mob/living/carbon/human/target, atom/movable/infused_from)
+	// Prioritize pod hair since it's the only thing that matters here
+	if(!target.get_organ_by_type(/obj/item/organ/pod_hair))
+		return list(/obj/item/organ/pod_hair)
+
+	return ..()

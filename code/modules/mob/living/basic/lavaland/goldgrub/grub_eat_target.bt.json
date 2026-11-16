@@ -1,0 +1,44 @@
+{
+	"dm_type": "/datum/bt_node/subtree/grub_eat_target",
+	"bindings": {
+		"b6t594ql": {
+			"label": "target_key",
+			"default": "null"
+		},
+		"bj13tsp3": {
+			"label": "target_key",
+			"default": ""
+		},
+		"bjwb8dxm": {
+			"label": "target_key",
+			"default": ""
+		}
+	},
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
+		"key": "$b6t594ql"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"vars": {
+					"target_key": "$bj13tsp3",
+					"required_dist": 1,
+					"finish_on_arrival": true
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/grub_eat",
+				"vars": {
+					"target_key": "$bjwb8dxm"
+				}
+			}
+		]
+	}
+}

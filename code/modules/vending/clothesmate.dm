@@ -50,6 +50,7 @@
 			"products" = list(
 				/obj/item/clothing/accessory/pride = 15,
 				/obj/item/clothing/accessory/waistcoat = 4,
+				/obj/item/clothing/accessory/sweatervest = 4,
 				/obj/item/clothing/suit/toggle/suspenders = 4,
 				/obj/item/clothing/neck/tie/horrible = 3,
 				/obj/item/clothing/neck/robe_cape = 3,
@@ -102,6 +103,8 @@
 				/obj/item/clothing/suit/jacket/oversized = 4,
 				/obj/item/clothing/suit/jacket/fancy = 4,
 				/obj/item/clothing/suit/toggle/lawyer/greyscale = 4,
+				/obj/item/clothing/suit/hooded/wintercoat/pullover = 3,
+				/obj/item/clothing/suit/hooded/wintercoat/zipup = 3,
 				/obj/item/clothing/suit/hooded/wintercoat/custom = 3,
 				/obj/item/clothing/suit/hooded/wintercoat = 3,
 				/obj/item/clothing/under/suit/navy = 3,

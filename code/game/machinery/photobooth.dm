@@ -102,15 +102,10 @@
 		. += "[base_icon_state]_panel"
 
 /obj/machinery/photobooth/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!has_buckled_mobs() && default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		update_appearance(UPDATE_ICON)
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	return has_buckled_mobs() ? NONE : default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/photobooth/crowbar_act(mob/living/user, obj/item/tool)
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/photobooth/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -130,7 +125,7 @@
 	if(obj_flags & EMAGGED)
 		var/mob/living/carbon/carbon_occupant = occupant
 		for(var/i in 1 to 5) //play a ton of sounds to mimic it blinding you
-			playsound(src, SFX_POLAROID, 75, TRUE)
+			playsound(src, /datum/sound_effect/polaroid, 75, TRUE)
 			if(carbon_occupant)
 				carbon_occupant.flash_act(5)
 			sleep(0.2 SECONDS)

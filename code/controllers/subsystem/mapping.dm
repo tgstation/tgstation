@@ -17,6 +17,12 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ruins_templates = list()
 
+	///Assoc list of all ruins spawned, key center of ruin spawn -> value ruin instance
+	var/list/active_ruins = alist()
+
+	///Ordered list of ruins that have been reserved. Each entry is list(ruin template, central turf, clear_below). Populated by seedRuins(), consumed by load_reserved_ruins().
+	var/list/reserved_ruins = list()
+
 	///List of ruins, separated by their theme
 	var/list/themed_ruins = list()
 
@@ -37,22 +43,21 @@ SUBSYSTEM_DEF(mapping)
 	var/list/z_level_to_lowest_plane_offset = list()
 	// This pair allows for easy conversion between an offset plane, and its true representation
 	// Both are in the form "input plane" -> output plane(s)
-	/// Assoc list of string plane values to their true, non offset representation
-	var/list/plane_offset_to_true
-	/// Assoc list of true string plane values to a list of all potential offset planess
-	var/list/true_to_offset_planes
-	/// Assoc list of string plane to the plane's offset value
-	var/list/plane_to_offset
-	/// List of planes that do not allow for offsetting
-	var/list/plane_offset_blacklist
-	/// List of render targets that do not allow for offsetting
-	var/list/render_offset_blacklist
-	/// List of plane masters that are of critical priority
-	var/list/critical_planes
+	/// Alist of plane values to their true, non offset representation
+	var/alist/plane_offset_to_true
+	/// Alist of true plane values to a list of all potential offset planess
+	var/alist/true_to_offset_planes
+	/// Alist of planes to their offset value
+	var/alist/plane_to_offset
+	/// Alist of planes that do not allow for offsetting
+	var/alist/plane_offset_blacklist
+	/// Alist of render targets that do not allow for offsetting
+	var/alist/render_offset_blacklist
+	/// Alist of plane masters that are of critical priority
+	var/alist/critical_planes
 	/// The largest plane offset we've generated so far
 	var/max_plane_offset = 0
 
-	var/loading_ruins = FALSE
 	var/list/turf/unused_turfs = list() //Not actually unused turfs they're unused but reserved for use for whatever requests them. "[zlevel_of_turf]" = list(turfs)
 	var/list/datum/turf_reservations //list of turf reservations
 	var/list/used_turfs = list() //list of turf = datum/turf_reservation
@@ -62,8 +67,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/reservation_ready = list()
 	var/clearing_reserved_turfs = FALSE
 
-	///All possible biomes in assoc list as type || instance
-	var/list/biomes = list()
+	/// An associative list of biome types to their instance
+	var/list/biomes
 
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
@@ -91,6 +96,14 @@ SUBSYSTEM_DEF(mapping)
 
 /datum/controller/subsystem/mapping/PreInit()
 	..()
+	var/bake_map_config_path = world.params[NAVMAP_BAKE_MAP_CONFIG_PARAMETER]
+	if(bake_map_config_path)
+		var/datum/map_config/bake_config = new
+		if(!bake_config.LoadConfig(bake_map_config_path, TRUE))
+			CRASH("Could not load navmap bake configuration [bake_map_config_path]")
+		QDEL_NULL(current_map)
+		current_map = bake_config
+		return
 #ifdef FORCE_MAP
 	current_map = load_map_config(FORCE_MAP, FORCE_MAP_DIRECTORY)
 #else
@@ -106,28 +119,36 @@ SUBSYSTEM_DEF(mapping)
 		if(!current_map || current_map.defaulted)
 			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to [old_config.map_name]."))
 			current_map = old_config
-	plane_offset_to_true = list()
-	true_to_offset_planes = list()
-	plane_to_offset = list()
+
+	// stupid planecube bs
+	plane_offset_to_true = alist()
+	true_to_offset_planes = alist()
+	plane_to_offset = alist()
+	plane_offset_blacklist = alist()
+	render_offset_blacklist = alist()
+	critical_planes = alist()
 	// VERY special cases for FLOAT_PLANE, so it will be treated as expected by plane management logic
 	// Sorry :(
-	plane_offset_to_true["[FLOAT_PLANE]"] = FLOAT_PLANE
-	true_to_offset_planes["[FLOAT_PLANE]"] = list(FLOAT_PLANE)
-	plane_to_offset["[FLOAT_PLANE]"] = 0
-	plane_offset_blacklist = list()
+	plane_offset_to_true[FLOAT_PLANE] = FLOAT_PLANE
+	true_to_offset_planes[FLOAT_PLANE] = list(FLOAT_PLANE)
+	plane_to_offset[FLOAT_PLANE] = 0
 	// You aren't allowed to offset a floatplane that'll just fuck it all up
-	plane_offset_blacklist["[FLOAT_PLANE]"] = TRUE
-	render_offset_blacklist = list()
-	critical_planes = list()
+	plane_offset_blacklist[FLOAT_PLANE] = TRUE
 	create_plane_offsets(0, 0)
-	initialize_biomes()
+
+	biomes = init_subtypes_w_path_keys(/datum/biome)
 	loadWorld()
 	determine_fake_sale()
 	require_area_resort()
 	process_teleport_locs() //Sets up the wizard teleport locations
 	preloadTemplates()
+	#ifdef NAVMAP_BAKE_GENERATION
+	var/generating_navmap_bakes = TRUE
+	#else
+	var/generating_navmap_bakes = FALSE
+	#endif
 
-#ifndef LOWMEMORYMODE
+#ifndef SKIP_SPACE_LEVELS
 	// Create space ruin levels
 	while (space_levels_so_far < current_map.space_ruin_levels)
 		add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_SPACE)
@@ -138,32 +159,34 @@ SUBSYSTEM_DEF(mapping)
 		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 		++space_levels_so_far
 
-	if(current_map.wilderness_levels)
+	if(current_map.wilderness_levels && !generating_navmap_bakes)
 		var/list/FailedZs = list()
 
-		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.maps_to_spawn, default_traits = ZTRAITS_WILDS, height_autosetup = FALSE)
+		LoadGroup(FailedZs, "Wilderness Area", current_map.wilderness_directory, current_map.wilderness_maps_to_spawn, default_traits = current_map.wilderness_z_traits, height_autosetup = FALSE)
 
 		if(LAZYLEN(FailedZs))
 			CRASH("Ice wilds failed to load!")
 
 	// Pick a random away mission.
-	if(CONFIG_GET(flag/roundstart_away))
+	if(!generating_navmap_bakes && CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
 
-	else if (SSmapping.current_map.load_all_away_missions) // we're likely in a local testing environment, so punch it.
+	else if (!generating_navmap_bakes && SSmapping.current_map.load_all_away_missions) // we're likely in a local testing environment, so punch it.
 		load_all_away_missions()
 
-	loading_ruins = TRUE
-	setup_ruins()
-	loading_ruins = FALSE
-
+	if(!generating_navmap_bakes)
+		setup_ruins()
 #endif
-	// Run map generation after ruin generation to prevent issues
-	run_map_terrain_generation()
-	// Generate our rivers, we do this here so the map doesn't load on top of them
-	setup_rivers()
-	// now that the terrain is generated, including rivers, we can safely populate it with objects and mobs
-	run_map_terrain_population()
+
+	if(!generating_navmap_bakes)
+		// Run map generation after ruin space is reserved, since this space is used for the cave gen.
+		run_map_terrain_generation()
+		// Generate our rivers, we do this here so the map doesn't load on top of them
+		setup_rivers()
+		// Now that terrain generation is done, actually load the ruin maps in.
+		load_reserved_ruins()
+		// now that the terrain is generated, including rivers, we can safely populate it with objects and mobs
+		run_map_terrain_population()
 	// Add the first transit level
 	var/datum/space_level/base_transit = add_reservation_zlevel()
 	require_area_resort()
@@ -273,13 +296,33 @@ SUBSYSTEM_DEF(mapping)
 		var/proportional_budget = round(CONFIG_GET(number/space_budget) * (space_ruins.len / DEFAULT_SPACE_RUIN_LEVELS))
 		seedRuins(space_ruins, proportional_budget, list(/area/space), themed_ruins[ZTRAIT_SPACE_RUINS], mineral_budget = 0, ruins_type = ZTRAIT_SPACE_RUINS)
 
+///loads all of the ruins we previously reserved space for
+/datum/controller/subsystem/mapping/proc/load_reserved_ruins()
+	for(var/list/reservation in reserved_ruins)
+		var/datum/map_template/ruin/reserved_ruin = reservation[1]
+		var/turf/central_turf = reservation[2]
+		var/clear_below = reservation[3]
+		load_ruin_now(reserved_ruin, central_turf, clear_below)
+	reserved_ruins.Cut()
+
+/**
+ * Immediately loads a single reserved ruin's map, and runs terrain generation for any
+ * of the areas, since they get spawned AFTER normal terrain gen runs its pass
+ */
+/datum/controller/subsystem/mapping/proc/load_ruin_now(datum/map_template/ruin/reserved_ruin, turf/central_turf, clear_below)
+	var/starting_area_count = GLOB.areas.len
+	reserved_ruin.load_reserved(central_turf, clear_below)
+	for(var/i in starting_area_count + 1 to GLOB.areas.len)
+		var/area/ruin_area = GLOB.areas[i]
+		ruin_area.RunTerrainGeneration()
+
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
 /datum/controller/subsystem/mapping/proc/setup_rivers()
 	// Generate mining ruins
 	var/list/lava_ruins = levels_by_trait(ZTRAIT_LAVA_RUINS)
 	for (var/lava_z in lava_ruins)
-		spawn_rivers(lava_z, 4, /turf/open/lava/smooth/lava_land_surface, /area/lavaland/surface/outdoors/unexplored)
+		spawn_rivers(lava_z, 3, /turf/open/lava/smooth/lava_land_surface, /area/lavaland/surface/outdoors/unexplored) // +1 from the mapped in waypoint
 
 	var/list/ice_ruins = levels_by_trait(ZTRAIT_ICE_RUINS)
 	for (var/ice_z in ice_ruins)
@@ -296,11 +339,8 @@ SUBSYSTEM_DEF(mapping)
 	SSshuttle.transit_requesters.Cut()
 	message_admins("Clearing dynamic reservation space.")
 	var/list/obj/docking_port/mobile/in_transit = list()
-	for(var/i in SSshuttle.transit_docking_ports)
-		var/obj/docking_port/stationary/transit/T = i
-		if(!istype(T))
-			continue
-		in_transit[T] = T.get_docked()
+	for(var/obj/docking_port/stationary/transit/transit_port in SSshuttle.transit_docking_ports)
+		in_transit[transit_port] = transit_port.get_docked()
 	var/go_ahead = world.time + wipe_safety_delay
 	if(in_transit.len)
 		message_admins("Shuttles in transit detected. Attempting to fast travel. Timeout is [wipe_safety_delay/10] seconds.")
@@ -336,7 +376,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 /datum/controller/subsystem/mapping/proc/check_nuke_threats()
 	for(var/datum/d in nuke_threats)
-		if(!istype(d) || QDELETED(d))
+		if(QDELETED(d))
 			nuke_threats -= d
 
 	for(var/N in nuke_tiles)
@@ -351,7 +391,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 
 /datum/controller/subsystem/mapping/Recover()
-	flags |= SS_NO_INIT
+	ss_flags |= SS_NO_INIT
 	initialized = SSmapping.initialized
 	map_templates = SSmapping.map_templates
 	ruins_templates = SSmapping.ruins_templates
@@ -445,6 +485,9 @@ Used by the AI doomsday and the self-destruct nuke.
 	station_start = world.maxz + 1
 	INIT_ANNOUNCE("Loading [current_map.map_name]...")
 	LoadGroup(FailedZs, "Station", current_map.map_path, current_map.map_file, current_map.traits, ZTRAITS_STATION, height_autosetup = current_map.height_autosetup)
+	#ifdef NAVMAP_BAKE_GENERATION
+	return
+	#endif
 
 	if(SSdbcore.Connect())
 		var/datum/db_query/query_round_map_name = SSdbcore.NewQuery({"
@@ -453,7 +496,7 @@ Used by the AI doomsday and the self-destruct nuke.
 		query_round_map_name.Execute()
 		qdel(query_round_map_name)
 
-#ifndef LOWMEMORYMODE
+#ifndef SKIP_LAVALAND
 
 	if(current_map.minetype == MINETYPE_LAVALAND)
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
@@ -685,29 +728,21 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 /datum/controller/subsystem/mapping/proc/do_wipe_turf_reservations()
 	PRIVATE_PROC(TRUE)
 	UNTIL(initialized) //This proc is for AFTER init, before init turf reservations won't even exist and using this will likely break things.
-	for(var/i in turf_reservations)
-		var/datum/turf_reservation/TR = i
-		if(!QDELETED(TR))
-			qdel(TR, TRUE)
+	for(var/datum/turf_reservation/reservation as anything in turf_reservations)
+		if(!QDELETED(reservation))
+			qdel(reservation, TRUE)
 	UNSETEMPTY(turf_reservations)
 	var/list/clearing = list()
-	for(var/l in unused_turfs) //unused_turfs is an assoc list by z = list(turfs)
-		if(islist(unused_turfs[l]))
-			clearing |= unused_turfs[l]
+	for(var/z_level, turf_list in unused_turfs) //unused_turfs is an assoc list by z = list(turfs)
+		if(islist(turf_list))
+			clearing |= turf_list
 	clearing |= used_turfs //used turfs is an associative list, BUT, reserve_turfs() can still handle it. If the code above works properly, this won't even be needed as the turfs would be freed already.
 	unused_turfs.Cut()
 	used_turfs.Cut()
 	reserve_turfs(clearing, await = TRUE)
 
-///Initialize all biomes, assoc as type || instance
-/datum/controller/subsystem/mapping/proc/initialize_biomes()
-	for(var/biome_path in subtypesof(/datum/biome))
-		var/datum/biome/biome_instance = new biome_path()
-		biomes[biome_path] += biome_instance
-
 /datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
-	for(var/B in areas)
-		var/area/A = B
+	for(var/area/A as anything in areas)
 		A.reg_in_areas_in_z()
 
 /datum/controller/subsystem/mapping/proc/get_isolated_ruin_z()
@@ -744,10 +779,8 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	if(contain_turfs)
 		build_area_turfs(z_value, filled_with_space)
 
-	// And finally, misc global generation
-
-	// We'll have to update this if offsets change, because we load lowest z to highest z
-	generate_lighting_appearance_by_z(z_value)
+	if(SSweather.initialized)
+		SSweather.generate_holders(z_value, z_value)
 
 /datum/controller/subsystem/mapping/proc/build_area_turfs(z_level, space_guaranteed)
 	// If we know this is filled with default tiles, we can use the default area
@@ -785,11 +818,6 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 		z_level_to_lowest_plane_offset[level_to_update.z_value] = plane_offset
 		z_level_to_stack[level_to_update.z_value] = z_stack
 
-	// This can be affected by offsets, so we need to update it
-	// PAIN
-	for(var/i in 1 to length(z_list))
-		generate_lighting_appearance_by_z(i)
-
 	var/old_max = max_plane_offset
 	max_plane_offset = max(max_plane_offset, plane_offset)
 	if(max_plane_offset == old_max)
@@ -809,39 +837,29 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 		GLOB.starlight_objects += starlight_object(offset)
 		GLOB.starlight_overlays += starlight_overlay(offset)
 
-	for(var/datum/gas/gas_type as anything in GLOB.meta_gas_info)
-		var/list/gas_info = GLOB.meta_gas_info[gas_type]
-		if(initial(gas_type.moles_visible) != null)
-			gas_info[META_GAS_OVERLAY] += generate_gas_overlays(gen_from, new_offset, gas_type)
+	for(var/datum/gas/gas_type as anything in GLOB.meta_gas_info[META_GAS_ID])
+		if(!isnull(initial(gas_type.moles_visible)))
+			GLOB.meta_gas_info[META_GAS_OVERLAY][gas_type] += generate_gas_overlays(gen_from, new_offset, gas_type)
 
 /datum/controller/subsystem/mapping/proc/create_plane_offsets(gen_from, new_offset)
 	for(var/plane_offset in gen_from to new_offset)
 		for(var/atom/movable/screen/plane_master/master_type as anything in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate)
-			var/plane_to_use = initial(master_type.plane)
-			var/string_real = "[plane_to_use]"
-
+			var/plane_to_use = master_type::plane
 			var/offset_plane = GET_NEW_PLANE(plane_to_use, plane_offset)
-			var/string_plane = "[offset_plane]"
 
-			if(initial(master_type.offsetting_flags) & BLOCKS_PLANE_OFFSETTING)
-				plane_offset_blacklist[string_plane] = TRUE
-				var/render_target = initial(master_type.render_target)
-				if(!render_target)
-					render_target = get_plane_master_render_base(initial(master_type.name))
+			if(master_type::offsetting_flags & BLOCKS_PLANE_OFFSETTING)
+				plane_offset_blacklist[offset_plane] = TRUE
+				var/render_target = master_type::render_target || get_plane_master_render_base(master_type::name)
 				render_offset_blacklist[render_target] = TRUE
 				if(plane_offset != 0)
 					continue
 
-			if(initial(master_type.critical) & PLANE_CRITICAL_DISPLAY)
-				critical_planes[string_plane] = TRUE
+			if(master_type::critical & PLANE_CRITICAL_DISPLAY)
+				critical_planes[offset_plane] = TRUE
 
-			plane_offset_to_true[string_plane] = plane_to_use
-			plane_to_offset[string_plane] = plane_offset
-
-			if(!true_to_offset_planes[string_real])
-				true_to_offset_planes[string_real] = list()
-
-			true_to_offset_planes[string_real] |= offset_plane
+			plane_offset_to_true[offset_plane] = plane_to_use
+			plane_to_offset[offset_plane] = plane_offset
+			LAZYADDASSOCLIST(true_to_offset_planes, plane_to_use, offset_plane)
 
 /// Takes a turf or a z level, and returns a list of all the z levels that are connected to it
 /datum/controller/subsystem/mapping/proc/get_connected_levels(turf/connected)
@@ -874,11 +892,6 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	if(!target)
 		CRASH("Attempted to lazy load a template key that does not exist: '[template_key]'")
 	return target.lazy_load()
-
-/proc/generate_lighting_appearance_by_z(z_level)
-	if(length(GLOB.default_lighting_underlays_by_z) < z_level)
-		GLOB.default_lighting_underlays_by_z.len = z_level
-	GLOB.default_lighting_underlays_by_z[z_level] = mutable_appearance(LIGHTING_ICON, "transparent", z_level * 0.01, null, LIGHTING_PLANE, 255, RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM, offset_const = GET_Z_PLANE_OFFSET(z_level))
 
 /// Returns true if the map we're playing on is on a planet
 /datum/controller/subsystem/mapping/proc/is_planetary()

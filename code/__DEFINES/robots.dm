@@ -4,7 +4,6 @@
 #define LAW_ZEROTH "zeroth"
 #define LAW_INHERENT "inherent"
 #define LAW_SUPPLIED "supplied"
-#define LAW_ION "ion"
 #define LAW_HACKED "hacked"
 
 //AI notification defines
@@ -81,7 +80,6 @@
 /// Default view range for finding targets.
 #define DEFAULT_SCAN_RANGE 7
 //Amount of time that must pass after a Commissioned bot gets saluted to get another.
-#define BOT_COMMISSIONED_SALUTE_DELAY (60 SECONDS)
 
 //Bot mode defines displaying how Bots act
 ///The Bot is currently active, and will do whatever it is programmed to do.
@@ -218,6 +216,30 @@ DEFINE_BITFIELD(security_mode_flags, list(
 	"SECBOT_HANDCUFF_TARGET" = SECBOT_HANDCUFF_TARGET,
 	"SECBOT_SABOTEUR_AFFECTED" = SECBOT_SABOTEUR_AFFECTED,
 ))
+
+///can honkbots slip people?
+#define HONKBOT_MODE_SLIP (1<<6)
+
+//repairbots
+///can we fix breaches
+#define REPAIRBOT_FIX_BREACHES (1<<0)
+///can we fix grilles
+#define REPAIRBOT_REPLACE_WINDOWS (1<<1)
+///can we replace tiles
+#define REPAIRBOT_REPLACE_TILES (1<<2)
+///can we fix girders
+#define REPAIRBOT_FIX_GIRDERS (1<<3)
+///can we build girders
+#define REPAIRBOT_BUILD_GIRDERS (1<<4)
+
+DEFINE_BITFIELD(repairbot_flags, list(
+	"FIX_BREACHES" = REPAIRBOT_FIX_BREACHES,
+	"REPLACE_WINDOWS" = REPAIRBOT_REPLACE_WINDOWS,
+	"REPLACE_TILES" = REPAIRBOT_REPLACE_TILES,
+	"FIX_GIRDERS" = REPAIRBOT_FIX_GIRDERS,
+	"BUILD_GIRDERS" = REPAIRBOT_BUILD_GIRDERS,
+))
+
 
 //MedBOT defines
 ///Whether to declare if someone (we are healing) is in critical condition
@@ -375,3 +397,10 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 
 /// Default offsets for riding a cyborg
 #define DEFAULT_ROBOT_RIDING_OFFSETS list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(-6, 3), TEXT_WEST = list(6, 3))
+
+
+//mulebots
+#define MULEBOT_MOOD_ANNOYED "ANNOYED"
+#define MULEBOT_MOOD_CHIME "CHIME"
+#define MULEBOT_MOOD_DELIGHT "DELIGHT"
+#define MULEBOT_MOOD_SIGH "SIGH"

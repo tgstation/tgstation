@@ -13,15 +13,14 @@
 	///The purity of the created reagent in % (purity uses 0-1 values)
 	var/purity = 100
 
-/obj/machinery/chem_dispenser/chem_synthesizer/Destroy()
+/obj/machinery/chem_dispenser/chem_synthesizer/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR, TOOL_ACT_PRIMARY)
+
+/obj/machinery/chem_dispenser/chem_synthesizer/Destroy(force)
 	QDEL_NULL(beaker)
 	return ..()
-
-/obj/machinery/chem_dispenser/chem_synthesizer/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/machinery/chem_dispenser/chem_synthesizer/crowbar_act(mob/living/user, obj/item/tool)
-	return NONE
 
 /obj/machinery/chem_dispenser/chem_synthesizer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

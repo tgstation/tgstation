@@ -234,8 +234,6 @@
 	var/log_override = FALSE
 	/// If true, the projectile won't cause any logging whatsoever. Used for hallucinations and shit.
 	var/do_not_log = FALSE
-	/// We ignore mobs with these factions.
-	var/list/ignored_factions
 	/// Turf that we have registered connect_loc signal - this is done for performance, as we're moving ~a dozen turfs per tick
 	/// and registering and unregistering signal for every single one of them is stupid. Unregistering the signal from the correct turf in case we get moved by smth else is important
 	var/turf/last_tick_turf
@@ -286,6 +284,7 @@
 		generate_hitscan_tracers()
 	STOP_PROCESSING(SSprojectiles, src)
 	firer = null
+	fired_from = null
 	original = null
 	QDEL_NULL(embed_data)
 	if (movement_vector)
@@ -425,11 +424,12 @@
 /obj/projectile/proc/firer_deleted(datum/source)
 	SIGNAL_HANDLER
 	// Shooting yourself point-blank
-	if (firer == original)
+	if (source == original)
 		original = null
-	if (firer == fired_from)
+	if (source == fired_from)
 		fired_from = null
-	firer = null
+	if (source == firer)
+		firer = null
 
 /obj/projectile/proc/original_deleted(datum/source)
 	SIGNAL_HANDLER
@@ -438,6 +438,16 @@
 /obj/projectile/proc/fired_from_deleted(datum/source)
 	SIGNAL_HANDLER
 	fired_from = null
+
+/// Changes who fired us after we've been fired, moving the qdel listener over to the new firer
+/obj/projectile/proc/set_firer(atom/movable/new_firer)
+	if (firer == new_firer)
+		return
+	if (firer && firer != fired_from && firer != original)
+		UnregisterSignal(firer, COMSIG_QDELETING)
+	firer = new_firer
+	if (firer)
+		RegisterSignal(firer, COMSIG_QDELETING, PROC_REF(firer_deleted), override = TRUE)
 
 /obj/projectile/proc/on_ricochet(atom/target)
 	ricochets++
@@ -644,9 +654,9 @@
 			var/mob/firer_mob = firer
 			if (firer_mob.buckled == target)
 				return FALSE
-	if(ignored_factions?.len && ismob(target) && !direct_target)
+	if(LAZYLEN(faction) && ismob(target) && !direct_target)
 		var/mob/target_mob = target
-		if(target_mob.has_faction(ignored_factions))
+		if(FACTION_CHECK(faction, target_mob.get_faction(), allies, target_mob.allies, FALSE))
 			return FALSE
 	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
@@ -819,7 +829,7 @@
 		START_PROCESSING(SSprojectiles, src)
 	// move it now to avoid potentially hitting yourself with firer-hitting projectiles
 	if (!deletion_queued && !hitscan)
-		process_movement(max(FLOOR(speed, 1), 1), tile_limit = TRUE)
+		process_movement(max(floor(speed)), tile_limit = TRUE)
 
 /// Makes projectile home onto the passed target with minor inaccuracy
 /obj/projectile/proc/set_homing_target(atom/target)
@@ -909,7 +919,7 @@
 		pixels_to_move = SSprojectiles.max_pixels_per_tick
 
 	overrun += MODULUS(pixels_to_move, 1)
-	pixels_to_move = FLOOR(pixels_to_move, 1)
+	pixels_to_move = floor(pixels_to_move)
 	SEND_SIGNAL(src, COMSIG_PROJECTILE_BEFORE_MOVE)
 
 	// Registering turf entries is done here instead of a connect_loc because else it could be called multiple times per tick and waste performance
@@ -980,8 +990,8 @@
 			distance_to_move = SSprojectiles.pixels_per_decisecond
 
 		// Figure out if we move to the next turf and if so, what its positioning relatively to us is
-		var/x_shift = distance_to_move >= x_to_border ? SIGN(movement_vector.pixel_x) : 0
-		var/y_shift = distance_to_move >= y_to_border ? SIGN(movement_vector.pixel_y) : 0
+		var/x_shift = distance_to_move >= x_to_border ? sign(movement_vector.pixel_x) : 0
+		var/y_shift = distance_to_move >= y_to_border ? sign(movement_vector.pixel_y) : 0
 		var/moving_turfs = x_shift || y_shift
 		// Calculate where in the turf we will be when we cross the edge.
 		// This is a projectile variable because its also used in hit VFX
@@ -1253,8 +1263,8 @@
 	free_hitscan_forceMove = TRUE
 	forceMove(source_loc)
 	starting = source_loc
-	pixel_x = source.pixel_x
-	pixel_y = source.pixel_y
+	pixel_x = source.pixel_x - source.base_pixel_x
+	pixel_y = source.pixel_y - source.base_pixel_y
 	original = target
 
 	// Trim off excess pixel_x/y by converting them into turf offset
@@ -1341,7 +1351,7 @@
 
 	var/ox = round(screenview[1] * 0.5) - user.client.pixel_x //"origin" x
 	var/oy = round(screenview[2] * 0.5) - user.client.pixel_y //"origin" y
-	angle = ATAN2(tx - oy, ty - ox)
+	angle = ATAN2(ty - oy, tx - ox)
 	return list(angle, p_x, p_y)
 
 /obj/projectile/experience_pressure_difference()
@@ -1379,7 +1389,7 @@
 	// redirect the projectile
 	original = locate(new_x, new_y, z)
 	starting = current_tile
-	firer = hit_atom
+	set_firer(hit_atom)
 	yo = new_y - current_tile.y
 	xo = new_x - current_tile.x
 	var/new_angle_s = angle + rand(120, 240)

@@ -2,7 +2,7 @@
 
 ///Reagent Scanner - Lets the user scan reagents.
 /obj/item/mod/module/reagent_scanner
-	name = "MOD reagent scanner module"
+	name = "\improper MOD reagent scanner module"
 	desc = "A module based off research-oriented Nanotrasen HUDs, this is capable of scanning the contents of \
 		containers and projecting the information in an easy-to-read format on the wearer's display. \
 		It cannot detect flavors, so that's up to you."
@@ -12,6 +12,7 @@
 	active_power_cost = DEFAULT_CHARGE_DRAIN * 0.2
 	incompatible_modules = list(/obj/item/mod/module/reagent_scanner)
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_EYES|ITEM_SLOT_MASK)
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 
 /obj/item/mod/module/reagent_scanner/on_activation(mob/activator)
 	ADD_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, REF(src))
@@ -20,7 +21,7 @@
 	REMOVE_TRAIT(mod.wearer, TRAIT_REAGENT_SCANNER, REF(src))
 
 /obj/item/mod/module/reagent_scanner/advanced
-	name = "MOD advanced reagent scanner module"
+	name = "\improper MOD advanced reagent scanner module"
 	desc = "An advanced module with all the features of research-oriented Nanotrasen HUDs, this is capable of scanning \
 		the contents of containers and projecting the information in an easy-to-read format on the wearer's display. \
 		It also contains a research scanner and an explosion sensor that gives details on nearby explosions. \
@@ -51,7 +52,7 @@
 
 ///Anti-Gravity - Makes the user weightless.
 /obj/item/mod/module/anomaly_locked/antigrav
-	name = "MOD anti-gravity module"
+	name = "\improper MOD anti-gravity module"
 	desc = "A module that uses a gravitational core to make the user completely weightless."
 	icon_state = "antigrav"
 	module_type = MODULE_TOGGLE
@@ -60,6 +61,7 @@
 	incompatible_modules = list(/obj/item/mod/module/atrocinator, /obj/item/mod/module/anomaly_locked/antigrav)
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/uranium = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mod/module/anomaly_locked/antigrav/on_activation(mob/activator)
 	if(mod.wearer.has_gravity())
@@ -83,7 +85,7 @@
 
 ///Teleporter - Lets the user teleport to a nearby location.
 /obj/item/mod/module/anomaly_locked/teleporter
-	name = "MOD teleporter module"
+	name = "\improper MOD teleporter module"
 	desc = "A module that uses a bluespace core to let the user transport their particles elsewhere."
 	icon_state = "teleporter"
 	module_type = MODULE_ACTIVE
@@ -93,6 +95,7 @@
 	incompatible_modules = list(/obj/item/mod/module/anomaly_locked/teleporter)
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/bluespace)
 	required_slots = list(ITEM_SLOT_BACK|ITEM_SLOT_BELT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
 	/// Time it takes to teleport
 	var/teleport_time = 1 SECONDS
 	/// Maximum turf range

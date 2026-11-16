@@ -1,8 +1,8 @@
 /**Spontaneous Combustion
- * Slightly hidden.
- * Lowers resistance tremendously.
- * Decreases stage speed tremendously.
- * Decreases transmittability tremendously.
+ * No effect to stealth.
+ * No effect to resistance.
+ * Decreases stage speed slightly.
+ * Decreases transmittability greatly.
  * Fatal level
  * Bonus: Ignites infected mob.
  */
@@ -11,15 +11,15 @@
 	name = "Spontaneous Combustion"
 	desc = "The virus turns fat into an extremely flammable compound, and raises the body's temperature, making the host burst into flames spontaneously."
 	illness = "Spontaneous Combustion"
-	stealth = -1
-	resistance = -4
-	stage_speed = -3
-	transmittable = -4
+	stealth = 0
+	resistance = 0
+	stage_speed = -1
+	transmittable = -2
 	level = 6
 	severity = 5
 	base_message_chance = 20
-	symptom_delay_min = 20
-	symptom_delay_max = 75
+	symptom_delay = 47.5
+	symptom_cure = /datum/reagent/medicine/leporazine // See, this one's tricky. You gotta convince them you don't have fever or chills in the same virus.
 	var/infective = FALSE
 	threshold_descs = list(
 		"Stage Speed 4" = "Increases the intensity of the flames.",
@@ -27,6 +27,7 @@
 		"Transmission 8" = "Host will spread the virus through skin flakes when bursting into flame.",
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
+	var/suppress_warning = FALSE
 
 /datum/symptom/fire/Start(datum/disease/advance/A)
 	. = ..()
@@ -97,11 +98,12 @@ Bonus
 	resistance = -2
 	stage_speed = -2
 	transmittable = -2
-	level = 7
+	level = 9
 	severity = 6
 	base_message_chance = 100
-	symptom_delay_min = 30
-	symptom_delay_max = 90
+	symptom_delay = 60
+	symptom_cure = /datum/reagent/consumable/frostoil
+	cure_color = "red"
 	var/chems = FALSE
 	var/explosion_power = 1
 	threshold_descs = list(
@@ -116,8 +118,7 @@ Bonus
 		return
 	if(A.totalResistance() >= 9) //intense but sporadic effect
 		power = 2
-		symptom_delay_min = 50
-		symptom_delay_max = 140
+		symptom_delay = 95
 	if(A.totalStageSpeed() >= 8) //serious boom when wet
 		explosion_power = 2
 	if(A.totalTransmittable() >= 8) //extra chemicals

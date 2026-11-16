@@ -165,8 +165,7 @@
 
 /// Does some steam effects from the jaunt at passed loc.
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/proc/do_steam_effects(turf/loc)
-	var/datum/effect_system/steam_spread/steam = new()
-	steam.set_up(10, FALSE, loc)
+	var/datum/effect_system/basic/steam_spread/steam = new(loc, 10, FALSE)
 	steam.start()
 
 
@@ -221,7 +220,8 @@
 	. = ..()
 	if(!.)
 		return
-	if (locate(/obj/effect/blessing) in .)
+	var/atom/new_loc = .
+	if (HAS_TRAIT(new_loc, TRAIT_TURF_BLESSED))
 		to_chat(user, span_warning("Holy energies block your path!"))
 		return null
 

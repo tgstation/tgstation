@@ -60,6 +60,8 @@
 #define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
 #define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
 #define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
+/// A new weather particle holder has been created
+#define COMSIG_WEATHER_NEW_PARTICLE_HOLDER "!weather_new_particle_holder"
 /// An alarm of some form was sent (datum/alarm_handler/source, alarm_type, area/source_area)
 #define COMSIG_GLOB_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
 /// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)
@@ -82,11 +84,24 @@
 /// (new_name, old_name)
 #define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"
 
+/// Sent when a station trait with a lobby button is created
+#define COMSIG_GLOB_LOBBY_TRAIT_ADDED "!lobby_trait_added"
+/// Sent when a station trait with a lobby button is destroyed
+#define COMSIG_GLOB_LOBBY_TRAIT_REMOVED "!lobby_trait_removed"
+
 /// Global signal sent before we decide what job everyone has
 #define COMSIG_GLOB_PRE_JOBS_ASSIGNED "!pre_roles_assigned"
 
 /// global signal when a global nullrod type is picked
 #define COMSIG_GLOB_NULLROD_PICKED "!nullrod_picked"
+
+/// global signal when someone prays via prayer verb.
+#define COMSIG_GLOB_SEND_PRAYER "!send_prayer"
+	#define ARG_PRAYING_MOB 1
+	#define ARG_PRAYER_MSG 2
+	#define ARG_PRAYER_TYPE 3
+	#define ARG_PRAYER_SYMBOL 4
+	#define ARG_PRAYED_DEITIES 5
 
 /// Global signal when light debugging is canceled
 #define COMSIG_LIGHT_DEBUG_DISABLED "!light_debug_disabled"
@@ -108,3 +123,8 @@
 /// Global signal whenever a camera network broadcast is started/stopped/updated: (camera_net, is_show_active, announcement)
 #define COMSIG_GLOB_NETWORK_BROADCAST_UPDATED "!network_broadcast_updated"
 
+///Global signal sent when the player list grows. Called by [mob/add_to_player_list] (mob/player)
+#define COMSIG_GLOB_PLAYER_LOGIN "!player_login"
+
+///Global signal sent when the player list shrinks. Called by [mob/remove_from_player_list] (mob/player)
+#define COMSIG_GLOB_PLAYER_LOGOUT "!player_logout"

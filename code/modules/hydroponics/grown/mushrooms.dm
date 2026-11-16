@@ -1,9 +1,6 @@
 /obj/item/food/grown/mushroom
 	name = "mushroom"
 	abstract_type = /obj/item/food/grown/mushroom
-	// This is a prototype that should never be spawned
-	// but we'll default it to SOME seed if it does end up spawning just so we don't runtime horribly
-	seed = /obj/item/seeds/chanter
 	bite_consumption_mod = 3
 	foodtypes = VEGETABLES
 	wine_power = 40
@@ -198,19 +195,21 @@
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty!"
 	icon_state = "chanterelle"
 
-/obj/item/food/grown/mushroom/chanterelle/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(I, /obj/item/kitchen/spoon))
-		return ..()
-	if(seed.potency < 95)
-		return ..()
+/obj/item/food/grown/mushroom/chanterelle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/kitchen/spoon))
+		return NONE
 
-	to_chat(user, span_notice("You hollow up the chanterelle with [I]."))
+	if(seed.potency < 95)
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You hollow out the chanterelle with [tool]."))
 	remove_item_from_storage(user)
 	if(seed.resistance_flags & FIRE_PROOF)
-		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle/fr())
+		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle/fireproof())
 	else
 		user.put_in_hands(new /obj/item/clothing/head/wizard/chanterelle())
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 //Jupiter Cup
 /obj/item/seeds/chanter/jupitercup
@@ -225,7 +224,12 @@
 	endurance = 8
 	yield = 4
 	growthstages = 2
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/preset/liquidelectricity, /datum/plant_gene/trait/carnivory/jupitercup)
+	genes = list(
+		/datum/plant_gene/reagent/preset/liquidelectricity,
+		/datum/plant_gene/trait/carnivory/jupitercup,
+		/datum/plant_gene/trait/cell_charge,
+		/datum/plant_gene/trait/plant_type/fungal_metabolism,
+	)
 	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 	mutatelist = null
@@ -301,7 +305,11 @@
 	icon_harvest = "glowcap-harvest"
 	plantname = "Glowcaps"
 	product = /obj/item/food/grown/mushroom/glowshroom/glowcap
-	genes = list(/datum/plant_gene/trait/glow/red, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
+	genes = list(
+		/datum/plant_gene/trait/glow/red,
+		/datum/plant_gene/trait/cell_charge,
+		/datum/plant_gene/trait/plant_type/fungal_metabolism,
+	)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/teslium = 0.1, /datum/reagent/consumable/nutriment = 0.04)
 	rarity = 30

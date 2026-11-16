@@ -33,7 +33,7 @@
 	blue = add_input_port("Blue", PORT_TYPE_NUMBER)
 	brightness = add_input_port("Brightness", PORT_TYPE_NUMBER)
 
-	on = add_input_port("On", PORT_TYPE_NUMBER)
+	on = add_input_port("On", PORT_TYPE_BOOLEAN)
 
 /obj/item/circuit_component/light/register_shell(atom/movable/shell)
 	. = ..()

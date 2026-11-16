@@ -15,20 +15,33 @@
 
 /datum/component/proficient_miner/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump))
+	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
 
 /datum/component/proficient_miner/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_MOVABLE_BUMP)
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_BUMP, COMSIG_LIVING_UNARMED_ATTACK))
+
+/datum/component/proficient_miner/proc/on_unarmed_attack(mob/living/source, atom/target, proximity, modifiers)
+	SIGNAL_HANDLER
+
+	if(!proximity)
+		return
+	try_mine(source, target)
 
 /datum/component/proficient_miner/proc/on_bump(atom/movable/source, atom/target)
 	SIGNAL_HANDLER
 
-	if(!ismineralturf(target) || last_bumpmine_tick == world.time)
+	if(last_bumpmine_tick == world.time)
+		return
+	try_mine(source, target)
+
+/datum/component/proficient_miner/proc/try_mine(atom/movable/source, atom/target)
+	if(!ismineralturf(target))
 		return
 
 	var/mob/living/user = null
 	if(isliving(parent))
 		user = parent
-		if(user.stat != CONSCIOUS)
+		if(IS_UNCONSCIOUS_OR_CRIT(user))
 			return
 
 	var/turf/closed/mineral/mineral_wall = target
@@ -41,7 +54,12 @@
 		INVOKE_ASYNC(src, PROC_REF(slow_mine), user, target)
 		return
 
+	var/mob/living/driver = null
+	if (pass_driver && length(user.buckled_mobs))
+		driver = user.buckled_mobs[1]
+
 	last_bumpmine_tick = world.time
+	SEND_SIGNAL(parent, COMSIG_PROFICIENT_MINER_MINED, mineral_wall, driver || user)
 	mineral_wall.gets_drilled(source)
 
 /datum/component/proficient_miner/proc/slow_mine(mob/living/user, turf/closed/mineral/mineral_wall)
@@ -65,4 +83,5 @@
 		playsound(user, pick(mine_sounds), 50)
 
 	if(istype(mineral_wall))
+		SEND_SIGNAL(parent, COMSIG_PROFICIENT_MINER_MINED, mineral_wall, driver || user)
 		mineral_wall.gets_drilled(driver || user)

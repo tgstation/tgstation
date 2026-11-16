@@ -1056,7 +1056,7 @@
 "Ue" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/stack/sticky_tape/pointy/super,
+/obj/item/stack/medical/wrap/sticky_tape/pointy/super,
 /obj/structure/cable,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)

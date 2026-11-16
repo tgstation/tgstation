@@ -39,7 +39,11 @@
 /// *Only* run the test provided within the parentheses
 /// This is useful for debugging when you want to reduce noise, but should never be pushed
 /// Intended to be used in the manner of `TEST_FOCUS(/datum/unit_test/math)`
-#define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }
+#define TEST_FOCUS(test_path) ##test_path { test_flags = UNIT_TEST_FOCUS; }
+
+/// Run the test provided within the parentheses run_count times
+/// Useful for debugging flaky tests that only fail sometimes
+#define TEST_REPEAT(test_path, run_count) ##test_path { times_to_run = ##run_count; }
 
 /// Logs a noticable message on GitHub, but will not mark as an error.
 /// Use this when something shouldn't happen and is of note, but shouldn't block CI.
@@ -62,6 +66,16 @@
  * Keep in mind tho that create and destroy will absolutely break the test platform, anything that relies on its shape cannot come after it.
  */
 #define TEST_AFTER_CREATE_AND_DESTROY INFINITY
+
+// Unit test bitflags
+
+/// If any unit test has this bitflag, only unit tests with UNIT_TEST_FOCUS will run.
+#define UNIT_TEST_FOCUS (1<<0)
+/// This unit test only runs on specially designated unit test maps (Should only ever be one).
+#define UNIT_TEST_DEBUG_MAP_ONLY (1<<1)
+
+#define UNIT_TEST_BASIC (UNIT_TEST_DEBUG_MAP_ONLY)
+#define UNIT_TEST_MAP_TEST (NONE)
 
 /// Change color to red on ANSI terminal output, if enabled with -DANSICOLORS.
 #ifdef ANSICOLORS
@@ -99,6 +113,7 @@
 #include "area_contents.dm"
 #include "armor_verification.dm"
 #include "asset_smart_cache.dm"
+#include "atmos_pressure_tanks.dm"
 #include "atmospherics_sanity.dm"
 #include "autowiki.dm"
 #include "bake_a_cake.dm"
@@ -112,6 +127,9 @@
 #include "blindness.dm"
 #include "blood_volume_procs.dm"
 #include "bloody_footprints.dm"
+#include "borg_tools.dm"
+#include "bot_access.dm"
+#include "boulder_processing.dm"
 #include "breath.dm"
 #include "buckle.dm"
 #include "burning.dm"
@@ -120,6 +138,7 @@
 #include "card_mismatch.dm"
 #include "cardboard_cutouts.dm"
 #include "cargo_crate_sanity.dm"
+#include "cargo_crates_and_exclusions.dm"
 #include "cargo_dep_order_locations.dm"
 #include "cargo_selling.dm"
 #include "chain_pull_through_space.dm"
@@ -146,6 +165,7 @@
 #include "crafting.dm"
 #include "crayons.dm"
 #include "create_and_destroy.dm"
+#include "cuffed_item.dm"
 #include "damp_rag.dm"
 #include "dcs_check_list_arguments.dm"
 #include "dcs_get_id_from_elements.dm"
@@ -154,16 +174,17 @@
 #include "dismemberment.dm"
 #include "dna_infusion.dm"
 #include "door_access.dm"
+#include "door_control_assembly.dm"
 #include "dragon_expiration.dm"
 #include "drink_icons.dm"
 #include "dropper.dm"
 #include "dummy_spawn.dm"
 #include "dynamic_ruleset_sanity.dm"
+#include "effective_pressure.dm"
 #include "egg_glands.dm"
 #include "embedding.dm"
 #include "emoting.dm"
 #include "emp_flashlight.dm"
-#include "ensure_subtree_operational_datum.dm"
 #include "ethereal_revival.dm"
 #include "explosion_action.dm"
 #include "firedoor_regions.dm"
@@ -172,6 +193,7 @@
 #include "focus_only_tests.dm"
 #include "font_awesome_icons.dm"
 #include "food_edibility_check.dm"
+#include "food_processor.dm"
 #include "full_heal.dm"
 #include "gas_transfer.dm"
 #include "get_turf_pixel.dm"
@@ -194,17 +216,26 @@
 #include "hydroponics_harvest.dm"
 #include "hydroponics_self_mutations.dm"
 #include "hydroponics_validate_genes.dm"
-#include "inhands.dm"
+#include "icon_state.dm"
+#include "icon_state_inhand.dm"
+#include "icon_state_worn.dm"
+#include "icons_missing.dm"
+#include "id_access.dm"
+#include "id_card.dm"
 #include "interaction_door.dm"
 #include "interaction_silicon.dm"
 #include "interaction_structures.dm"
+#include "job_display_order.dm"
+#include "job_icons.dm"
 #include "json_savefile_importing.dm"
 #include "keybinding_init.dm"
 #include "kinetic_crusher.dm"
 #include "knockoff_component.dm"
+#include "language_key_conflicts.dm"
 #include "language_transfer.dm"
 #include "leash.dm"
 #include "lesserform.dm"
+#include "light_replacer.dm"
 #include "limbsanity.dm"
 #include "ling_decap.dm"
 #include "liver.dm"
@@ -213,6 +244,7 @@
 #include "lungs.dm"
 #include "machine_disassembly.dm"
 #include "mafia.dm"
+#include "make_vegan_wellington.dm"
 #include "map_landmarks.dm"
 #include "mapload_space_verification.dm"
 #include "mapping.dm"
@@ -220,11 +252,11 @@
 #include "market.dm"
 #include "mecha_build.dm"
 #include "mecha_damage.dm"
+#include "mecha_equipment.dm"
 #include "medical_wounds.dm"
 #include "merge_type.dm"
 #include "metabolizing.dm"
 #include "mindbound_actions.dm"
-#include "missing_icons.dm"
 #include "mob_chains.dm"
 #include "mob_damage.dm"
 #include "mob_faction.dm"
@@ -235,6 +267,7 @@
 #include "monkey_business.dm"
 #include "mouse_bite_cable.dm"
 #include "move_pulled.dm"
+#include "movement_loop_buckets.dm"
 #include "movement_order_sanity.dm"
 #include "mutant_hands_consistency.dm"
 #include "mutant_organs.dm"
@@ -251,6 +284,7 @@
 #include "oxyloss_suffocation.dm"
 #include "paintings.dm"
 #include "pills.dm"
+#include "placing_on_space.dm"
 #include "plane_double_transform.dm"
 #include "plane_dupe_detector.dm"
 #include "plane_sanity.dm"
@@ -258,12 +292,12 @@
 #include "preference_species.dm"
 #include "preferences.dm"
 #include "projectiles.dm"
+#include "punpun.dm"
 #include "quirks.dm"
 #include "range_return.dm"
 #include "rcd.dm"
 #include "reachable_soup.dm"
 #include "reagent_container_defaults.dm"
-#include "reagent_id_typos.dm"
 #include "reagent_mob_expose.dm"
 #include "reagent_mod_procs.dm"
 #include "reagent_names.dm"
@@ -278,8 +312,10 @@
 #include "screenshot_airlocks.dm"
 #include "screenshot_antag_icons.dm"
 #include "screenshot_basic.dm"
+#include "screenshot_debrain.dm"
 #include "screenshot_digi.dm"
 #include "screenshot_dynamic_human_icons.dm"
+#include "screenshot_hair_gradient.dm"
 #include "screenshot_high_luminosity_eyes.dm"
 #include "screenshot_humanoids.dm"
 #include "screenshot_husk.dm"
@@ -289,6 +325,7 @@
 #include "serving_tray.dm"
 #include "simple_animal_freeze.dm"
 #include "siunit.dm"
+#include "slapcrafting.dm"
 #include "slime_mood.dm"
 #include "slips.dm"
 #include "spawn_humans.dm"
@@ -308,6 +345,7 @@
 #include "spraycan.dm"
 #include "spritesheets.dm"
 #include "stack_singular_name.dm"
+#include "stacked_metab.dm"
 #include "station_trait_tests.dm"
 #include "status_effect_validity.dm"
 #include "stomach.dm"
@@ -316,6 +354,7 @@
 #include "strippable.dm"
 #include "stuns.dm"
 #include "style_hotswapping.dm"
+#include "subsystem_flags.dm"
 #include "subsystem_init.dm"
 #include "suit_sensor.dm"
 #include "suit_storage_icons.dm"
@@ -325,6 +364,7 @@
 #include "teleporters.dm"
 #include "text.dm"
 #include "tgui_create_message.dm"
+#include "tile_replacement.dm"
 #include "timer_sanity.dm"
 #include "trait_addition_and_removal.dm"
 #include "traitor.dm"
@@ -341,7 +381,6 @@
 #include "washing.dm"
 #include "weird_food.dm"
 #include "wizard_loadout.dm"
-#include "worn_icons.dm"
 // END_INCLUDE
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"

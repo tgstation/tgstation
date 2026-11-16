@@ -1,4 +1,6 @@
 #define DUMPTIME 3000
+///Amount of money you need to lose to get the negative moodlet.
+#define NO_MY_MONEY 10000
 
 /datum/bank_account
 	///Name listed on the account, reflected on the ID card.
@@ -21,8 +23,10 @@
 	var/add_to_accounts = TRUE
 	///The Unique ID number code associated with the owner's bank account, assigned at round start.
 	var/account_id
-	///Is there a CRAB 17 on the station draining funds? Prevents manual fund transfer. pink levels are rising
-	var/being_dumped = FALSE
+	///Amount of money that's been crabbed, if you lose enough from one series of CRAB-17's, you get a negative moodlet.
+	var/money_crabbed
+	///Lazylist of CRAB 17s on the station draining funds. Prevents manual fund transfer. pink levels are rising
+	var/list/being_dumped
 	///Reference to the current civilian bounty that the account is working on.
 	var/datum/bounty/civilian_bounty
 	///If player is currently picking a civilian bounty to do, these options are held here to prevent soft-resetting through the UI.
@@ -40,6 +44,15 @@
 	/// How many paychecks to skip when payday is called.
 	var/paydays_to_skip = 0
 
+	/// Modifier to private cargo orders made with this account. Does not apply to goodies.
+	var/private_order_cost_modifier = 1.0
+	/// Modifier to cargo orders for goodies made with this account. Does not stack with private order cost modifier.
+	var/goody_order_cost_modifier = 1.0
+	/// Modifier to black market orders made with this account.
+	var/black_market_cost_modifier = 1.0
+	/// Modifier to the amount of money lost per CRAB-17 drain.
+	var/crab_17_drain_rate_modifier = 1.0
+
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
 	account_job = job
@@ -48,6 +61,9 @@
 	setup_unique_account_id()
 	update_account_job_lists(job)
 	pay_token = uppertext("[copytext(newname, 1, 2)][copytext(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]")
+
+	if(player_account)
+		private_order_cost_modifier *= 1.1
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
@@ -113,8 +129,23 @@
 /**
  * Sets the bank_account to behave as though a CRAB-17 event is happening.
  */
-/datum/bank_account/proc/dumpeet()
-	being_dumped = TRUE
+/datum/bank_account/proc/dumpeet(obj/structure/checkoutmachine/dump_machine)
+	LAZYADD(being_dumped, dump_machine)
+	money_crabbed = 0
+
+/**
+ * Stops the dumping of the bank account.
+ */
+/datum/bank_account/proc/stop_dump(obj/structure/checkoutmachine/dump_machine)
+	LAZYREMOVE(being_dumped, dump_machine)
+	if(money_crabbed < NO_MY_MONEY)
+		return
+	for(var/obj/card as anything in bank_cards)
+		var/mob/living/card_holder = recursive_loc_check(card, /mob/living)
+		if(!isliving(card_holder)) //If on a mob
+			continue
+		//overwrite the slots event.
+		card_holder.add_mood_event(SLOTS_MOOD_CATEGORY, /datum/mood_event/slots/all_gone)
 
 /**
  * Returns TRUE if a bank account has more than or equal to the amount, amt.
@@ -135,7 +166,7 @@
 	if((amount < 0 && has_money(-amount)) || amount > 0)
 		var/debt_collected = 0
 		if(account_debt > 0 && amount > 0)
-			debt_collected = min(CEILING(amount*DEBT_COLLECTION_COEFF, 1), account_debt)
+			debt_collected = min(ceil(amount*DEBT_COLLECTION_COEFF), account_debt)
 		account_balance += amount - debt_collected
 		if(reason)
 			add_log_to_history(amount, reason)
@@ -244,7 +275,7 @@
 			if(!card_holder.client || (!(get_chat_toggles(card_holder.client) & CHAT_BANKCARD) && !force))
 				return
 
-			if(card_holder.can_hear())
+			if(!HAS_TRAIT(card_holder, TRAIT_DEAF))
 				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 				to_chat(card_holder, "[icon2html(icon_source, card_holder)] [span_notice("[message]")]")
 		else if(isturf(card.loc)) //If on the ground
@@ -252,7 +283,7 @@
 			for(var/mob/potential_hearer in hearers(1,card_location))
 				if(!potential_hearer.client || (!(get_chat_toggles(potential_hearer.client) & CHAT_BANKCARD) && !force))
 					continue
-				if(potential_hearer.can_hear())
+				if(!HAS_TRAIT(potential_hearer, TRAIT_DEAF))
 					potential_hearer.playsound_local(card_location, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 		else
@@ -262,7 +293,7 @@
 					continue
 				if(!sound_atom)
 					sound_atom = card.drop_location() //in case we're inside a bodybag in a crate or something. doing this here to only process it if there's a valid mob who can hear the sound.
-				if(potential_hearer.can_hear())
+				if(!HAS_TRAIT(potential_hearer, TRAIT_DEAF))
 					potential_hearer.playsound_local(get_turf(sound_atom), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 					to_chat(potential_hearer, "[icon2html(icon_source, potential_hearer)] [span_notice("[message]")]")
 
@@ -352,3 +383,4 @@
 	)))
 
 #undef DUMPTIME
+#undef NO_MY_MONEY

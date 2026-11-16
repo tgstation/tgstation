@@ -19,37 +19,25 @@
 	blacklist += subtypesof(/datum/station_trait/job) - type // All but ourselves
 	RegisterSignal(SSdcs, COMSIG_GLOB_PRE_JOBS_ASSIGNED, PROC_REF(pre_jobs_assigned))
 
-/datum/station_trait/job/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
-	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
-	lobby_button.desc = button_desc
-	return ..()
+/datum/station_trait/job/get_lobby_description()
+	return button_desc
 
-/datum/station_trait/job/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
-	if (LAZYFIND(lobby_candidates, user))
-		LAZYREMOVE(lobby_candidates, user)
+/datum/station_trait/job/on_lobby_button_click(mob/dead/new_player/player)
+	if(LAZYFIND(lobby_candidates, player))
+		LAZYREMOVE(lobby_candidates, player)
 	else
-		LAZYADD(lobby_candidates, user)
+		LAZYADD(lobby_candidates, player)
 
-/datum/station_trait/job/on_lobby_button_destroyed(atom/movable/screen/lobby/button/sign_up/lobby_button)
-	. = ..()
-	LAZYREMOVE(lobby_candidates, lobby_button.get_mob())
+/datum/station_trait/job/get_lobby_icon_state(mob/dead/new_player/player)
+	return LAZYFIND(lobby_candidates, player) ? "signup_on" : "signup"
 
-/datum/station_trait/job/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
-	if (LAZYFIND(lobby_candidates, lobby_button.get_mob()))
-		lobby_button.base_icon_state = "signup_on"
-	else
-		lobby_button.base_icon_state = "signup"
-
-/// Add an overlay based on whether you are actively signed up for this role
-/datum/station_trait/job/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
-	SIGNAL_HANDLER
-	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "tick" : "cross"
+/datum/station_trait/job/get_lobby_overlay_states(mob/dead/new_player/player)
+	return list(LAZYFIND(lobby_candidates, player) ? "tick" : "cross")
 
 /// Called before we start assigning roles, assign ours first
 /datum/station_trait/job/proc/pre_jobs_assigned()
 	SIGNAL_HANDLER
 	sign_up_button = FALSE
-	destroy_lobby_buttons()
 	for (var/mob/dead/new_player/signee as anything in lobby_candidates)
 		if (isnull(signee) || !signee.client || !signee.mind || signee.ready != PLAYER_READY_TO_PLAY)
 			LAZYREMOVE(lobby_candidates, signee)
@@ -81,9 +69,8 @@
 	. = ..()
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(replace_cargo))
 
-/datum/station_trait/job/cargorilla/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
-	. = ..()
-	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "gorilla_on" : "gorilla_off"
+/datum/station_trait/job/cargorilla/get_lobby_overlay_states(mob/dead/new_player/player)
+	return list(LAZYFIND(lobby_candidates, player) ? "gorilla_on" : "gorilla_off")
 
 /// Remove the cargo equipment and personnel that are being replaced by a gorilla.
 /datum/station_trait/job/cargorilla/proc/replace_cargo(datum/source)
@@ -91,7 +78,6 @@
 	var/mob/living/basic/sloth/cargo_sloth = GLOB.cargo_sloth
 	if(isnull(cargo_sloth))
 		lobby_candidates = list()
-		destroy_lobby_buttons() // Sorry folks
 		sign_up_button = FALSE
 		return
 
@@ -109,13 +95,12 @@
 	show_in_report = TRUE
 	job_to_add = /datum/job/bridge_assistant
 
+/datum/station_trait/job/bridge_assistant/get_lobby_overlay_states(mob/dead/new_player/player)
+	return list("bridge_assistant")
+
 /datum/station_trait/job/bridge_assistant/New()
 	. = ..()
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(add_coffeemaker))
-
-/datum/station_trait/job/bridge_assistant/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
-	. = ..()
-	overlays += "bridge_assistant"
 
 /// Creates a coffeemaker in the bridge, if we don't have one yet.
 /datum/station_trait/job/bridge_assistant/proc/add_coffeemaker(datum/source)
@@ -162,9 +147,8 @@
 	show_in_report = TRUE
 	job_to_add = /datum/job/veteran_advisor
 
-/datum/station_trait/job/veteran_advisor/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
-	. = ..()
-	overlays += "veteran_advisor"
+/datum/station_trait/job/veteran_advisor/get_lobby_overlay_states(mob/dead/new_player/player)
+	return list("veteran_advisor")
 
 /datum/station_trait/job/human_ai
 	name = "Human AI"
@@ -181,14 +165,13 @@
 	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP, PROC_REF(remove_ai_job))
 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(give_fax_machine))
 
+/datum/station_trait/job/human_ai/get_lobby_overlay_states(mob/dead/new_player/player)
+	return list(LAZYFIND(lobby_candidates, player) ? "human_ai_on" : "human_ai_off")
+
 /datum/station_trait/job/human_ai/revert()
 	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_SETUP)
 	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	return ..()
-
-/datum/station_trait/job/human_ai/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
-	. = ..()
-	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "human_ai_on" : "human_ai_off"
 
 /datum/station_trait/job/human_ai/proc/remove_ai_job(datum/source)
 	SIGNAL_HANDLER
@@ -240,6 +223,9 @@
 	show_in_report = TRUE
 	job_to_add = /datum/job/pun_pun
 
+/datum/station_trait/job/pun_pun/get_lobby_overlay_states(mob/dead/new_player/player)
+	return list(LAZYFIND(lobby_candidates, player) ? "pun_pun_on" : "pun_pun_off")
+
 /datum/station_trait/job/pun_pun/New()
 	. = ..()
 	//Make sure we don't have two Pun Puns if loaded before the start of the round.
@@ -247,7 +233,3 @@
 		return
 	new /obj/effect/landmark/start/pun_pun(GLOB.the_one_and_only_punpun.loc)
 	qdel(GLOB.the_one_and_only_punpun)
-
-/datum/station_trait/job/pun_pun/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
-	. = ..()
-	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "pun_pun_on" : "pun_pun_off"

@@ -154,7 +154,8 @@
 
 ///Generate the fish table if we don't have one already.
 /datum/fish_source/portal/random/on_fishing_spot_init(datum/component/fishing_spot/spot)
-	if(fish_table)
+	if(all_portal_fish_sources_at_once)
+		fish_table = all_portal_fish_sources_at_once
 		return
 
 	///rewards not found in other fishing portals
@@ -166,13 +167,12 @@
 		if(portal_type == type || !ispath(portal_type, /datum/fish_source/portal))
 			continue
 		var/datum/fish_source/portal/preset_portal = GLOB.preset_fish_sources[portal_type]
-		fish_table |= preset_portal.fish_table
+		for(var/reward_path in preset_portal.fish_table)
+			if(reward_path == FISHING_DUD) // We don't serve duds.
+				continue
+			fish_table[reward_path] = rand(1, 4)
 
-	///We don't serve duds.
-	fish_table -= FISHING_DUD
-
-	for(var/reward_path in fish_table)
-		fish_table[reward_path] = rand(1, 4)
+	all_portal_fish_sources_at_once = fish_table
 
 ///Difficulty has to be calculated before the rest, because of how it influences jump chances
 /datum/fish_source/portal/random/calculate_difficulty(datum/fishing_challenge/challenge, result, obj/item/fishing_rod/rod, mob/fisherman)

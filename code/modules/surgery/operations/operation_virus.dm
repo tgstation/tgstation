@@ -42,7 +42,7 @@
 	return FALSE
 
 /datum/surgery_operation/basic/viral_bonding/tool_check(obj/item/tool)
-	return tool.get_temperature() > 0
+	return tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 
 /datum/surgery_operation/basic/viral_bonding/on_preop(mob/living/patient, mob/living/surgeon, obj/item/tool, list/operation_args)
 	display_results(

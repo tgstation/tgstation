@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
 	"assist": {
 		"actions": {
 			"source": {
@@ -69,5 +69,14 @@
 		"clientKind": "git",
 		"enabled": false,
 		"useIgnoreFile": false
-	}
+	},
+	"overrides": [
+		{
+			"includes": ["**/build_flags.jsonc"],
+			"json": {
+				"parser": { "allowTrailingCommas": true },
+				"formatter": { "trailingCommas": "all" }
+			}
+		}
+	]
 }

@@ -143,7 +143,7 @@
 				active_camera.on_stop_watching(src)
 
 			if(!spying)
-				playsound(computer, SFX_TERMINAL_TYPE, 25, FALSE)
+				playsound(computer, /datum/sound_effect/terminal_type, 25, FALSE)
 
 			var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
 			if(selected_camera)
@@ -172,9 +172,9 @@
 	var/datum/camerachunk/target_camerachunk = SScameras.get_turf_camera_chunk(target_turf)
 	if(!target_camerachunk)
 		CRASH("[src] was able to track [target] through /datum/trackable, but was not on a visible turf to cameras.")
-	for(var/obj/machinery/camera/cameras as anything in target_camerachunk.cameras[target.z])
+	for(var/obj/machinery/camera/cameras as anything in target_camerachunk.cameras["[target.z]"])
 		// We need to find a particular camera that can see this turf
-		if(length(cameras.can_see() & list(target_turf)))
+		if(!(length(cameras.can_see() & list(target_turf))))
 			continue
 		var/new_camera = WEAKREF(cameras)
 		if(camera_ref == new_camera)
@@ -237,5 +237,6 @@
 	var/size_y = bbox[4] - bbox[2] + 1
 
 	cam_screen.show_camera(visible_turfs, size_x, size_y)
+	cam_screen.set_display(active_camera)
 
 #undef DEFAULT_MAP_SIZE

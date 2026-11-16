@@ -24,39 +24,42 @@ Reproductive extracts:
 	. = ..()
 	create_storage(storage_type = /datum/storage/extract_inventory)
 
-/obj/item/slimecross/reproductive/attackby(obj/item/O, mob/user)
+/obj/item/slimecross/reproductive/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/datum/storage/extract_inventory/slime_storage = atom_storage
-	if(!istype(slime_storage))
-		return
+	if(!istype(slime_storage)) // what
+		return NONE
 
 	if((last_produce + cooldown) > world.time)
 		to_chat(user, span_warning("[src] is still digesting!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(length(contents) >= feedAmount) //if for some reason the contents are full, but it didnt digest, attempt to digest again
 		to_chat(user, span_warning("[src] appears to be full but is not digesting! Maybe poking it stimulated it to digest."))
 		slime_storage?.processCubes(user)
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(O, /obj/item/storage/bag/xeno))
+	if(istype(tool, /obj/item/storage/bag/xeno))
 		var/list/inserted = list()
-		O.atom_storage.remove_type(/obj/item/food/monkeycube, src, feedAmount - length(contents), TRUE, FALSE, user, inserted)
-		if(inserted.len)
-			to_chat(user, span_notice("You feed [length(inserted)] Monkey Cube[p_s()] to [src], and it pulses gently."))
-			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-			slime_storage?.processCubes(user)
-		else
+		tool.atom_storage.remove_type(/obj/item/food/monkeycube, src, feedAmount - length(contents), TRUE, FALSE, user, inserted)
+		if(!inserted.len)
 			to_chat(user, span_warning("There are no monkey cubes in the bio bag!"))
-		return
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_notice("You feed [length(inserted)] monkey cube[length(inserted) > 1 ? "s" : ""] to [src], and it pulses gently."))
+		playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+		slime_storage?.processCubes(user)
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(O, /obj/item/food/monkeycube))
-		if(atom_storage?.attempt_insert(O, user, override = TRUE, force = STORAGE_FULLY_LOCKED))
-			to_chat(user, span_notice("You feed 1 Monkey Cube to [src], and it pulses gently."))
-			slime_storage?.processCubes(user)
-			playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
-			return
-		else
-			to_chat(user, span_notice("The [src] rejects the Monkey Cube!")) //in case it fails to insert for whatever reason you get feedback
+	if(!istype(tool, /obj/item/food/monkeycube))
+		return NONE
+
+	if(!atom_storage?.attempt_insert(tool, user, override = TRUE, force = STORAGE_FULLY_LOCKED))
+		to_chat(user, span_notice("The [src] rejects [tool]!")) //in case it fails to insert for whatever reason you get feedback
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You feed [tool] to [src], and it pulses gently."))
+	slime_storage?.processCubes(user)
+	playsound(src, 'sound/items/eatfood.ogg', 20, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slimecross/reproductive/grey
 	extract_type = /obj/item/slime_extract/grey

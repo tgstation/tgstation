@@ -150,23 +150,6 @@
 
 //Pod objects
 
-//Window
-/obj/structure/window/reinforced/shuttle/survival_pod
-	name = "pod window"
-	icon = 'icons/obj/smooth_structures/pod_window.dmi'
-	icon_state = "pod_window-0"
-	base_icon_state = "pod_window"
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
-	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
-
-/obj/structure/window/reinforced/survival_pod
-	name = "pod window"
-	icon = 'icons/obj/mining_zones/survival_pod.dmi'
-	icon_state = "pwindow"
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawner, 0)
-
 //Door
 /obj/machinery/door/airlock/survival_pod
 	name = "Airlock"
@@ -267,20 +250,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
 	max_n_of_items = 10
 	pixel_y = -4
 
-/obj/machinery/smartfridge/survival_pod/welder_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/machinery/smartfridge/survival_pod/wrench_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/machinery/smartfridge/survival_pod/screwdriver_act(mob/living/user, obj/item/tool)
-	return NONE
-
-/obj/machinery/smartfridge/survival_pod/crowbar_act(mob/living/user, obj/item/tool)
-	return NONE
-
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
+	AddElement(/datum/element/tool_blocker, TOOL_WELDER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR, TOOL_ACT_PRIMARY)
 	return ..()
 
 /obj/machinery/smartfridge/survival_pod/preloaded/Initialize(mapload)

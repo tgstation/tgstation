@@ -27,8 +27,11 @@
 	var/barometer_accuracy
 	/// Cached gasmix data from ui_interact
 	var/list/last_gasmix_data
+
+	var/datum/weakref/last_scanned
 	/// Max scan distance
 	var/ranged_scan_distance = 1
+	COOLDOWN_DECLARE(next_air_alarm_scan)
 
 /obj/item/analyzer/Initialize(mapload)
 	. = ..()
@@ -42,6 +45,64 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+	register_context()
+
+/obj/item/analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(held_item != src)
+		return NONE
+
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Point to nearest air alarm in area"
+	context[SCREENTIP_CONTEXT_RMB] = "Open the gas reference"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Activate the barometer function"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/analyzer/click_alt_secondary(mob/user)
+	. = ..()
+
+	if(.)
+		return
+
+	if(user.get_active_held_item() == src)
+		scan_air_alarm(user)
+
+/obj/item/analyzer/proc/scan_air_alarm(mob/user)
+	if(!COOLDOWN_FINISHED(src, next_air_alarm_scan))
+		return
+
+	COOLDOWN_START(src, next_air_alarm_scan, 2 SECONDS)
+
+	var/obj/machinery/airalarm/target
+	var/area/local_area = get_area(src)
+
+	for(var/obj/machinery/airalarm/air_alarm in GLOB.air_alarms)
+		if(air_alarm.my_area != local_area)
+			continue
+
+		if(!target)
+			target = air_alarm
+			continue
+
+		if(get_dist_euclidean(air_alarm, user) > get_dist_euclidean(target, user))
+			continue
+
+		target = air_alarm
+
+	if(!target)
+		user.balloon_alert(user, "no air alarm in this area!")
+		return
+
+	var/datum/component/pinpointer/pinpointer = GetComponent(/datum/component/pinpointer)
+
+	if(!pinpointer)
+		pinpointer = AddComponent(/datum/component/pinpointer)
+
+	var/distance = pinpointer.point_to(user, target)
+
+	if(!distance)
+		user.balloon_alert(user, "found air alarm!")
 
 /obj/item/analyzer/grind_results()
 	return list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
@@ -59,11 +120,14 @@
 	. += span_notice("Right-click [src] to open the gas reference.")
 	. += span_notice("Alt-click [src] to activate the barometer function.")
 
-/obj/item/analyzer/suicide_act(mob/living/carbon/user)
+/obj/item/analyzer/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to analyze [user.p_them()]self with [src]! The display shows that [user.p_theyre()] dead!"))
 	return BRUTELOSS
 
 /obj/item/analyzer/click_alt(mob/user) //Barometer output for measuring when the next storm happens
+	if(user.get_active_held_item() != src)
+		return
+
 	if(cooldown)
 		to_chat(user, span_warning("[src]'s barometer function is preparing itself."))
 		return CLICK_ACTION_BLOCKING
@@ -134,39 +198,59 @@
 	return return_atmos_handbooks()
 
 /obj/item/analyzer/ui_data(mob/user)
-	LAZYINITLIST(last_gasmix_data)
-	return list("gasmixes" = last_gasmix_data)
+	var/obj/item/last_scanned_real = last_scanned?.resolve()
+	if(!QDELETED(last_scanned_real) && can_see(user, last_scanned_real, ranged_scan_distance))
+		collect_scan_info(last_scanned_real) // updates last_gasmix_data as long as we're in range
+
+	return list(
+		"gasmixes" = last_gasmix_data,
+	)
+
+/// Checks if we can use the analyzer at all
+/obj/item/analyzer/proc/can_use(mob/user)
+	if(!user.can_read(src))
+		return FALSE
+	// Logical, but it contains "tutorial information", so we should allow it.
+	// if(user.is_blind())
+	// 	return FALSE
+	return TRUE
+
+/obj/item/analyzer/ui_status(mob/user)
+	return can_use(user) ? ..() : UI_CLOSE
 
 /obj/item/analyzer/attack_self(mob/user, modifiers)
-	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
-		return
-	atmos_scan(user=user, target=get_turf(src), silent=FALSE)
-	on_analyze(source=src, target=get_turf(src))
+	scan_atom(get_turf(src), user)
+	return TRUE
 
 /obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
-	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
-		return
-
 	ui_interact(user)
+	return TRUE
 
 /obj/item/analyzer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(interacting_with, /obj/effect/anomaly) && can_see(user, interacting_with, ranged_scan_distance))
 		var/obj/effect/anomaly/ranged_anomaly = interacting_with
 		ranged_anomaly.analyzer_act(user, src)
 		return ITEM_INTERACT_SUCCESS
+
 	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && can_see(user, interacting_with, ranged_scan_distance))
-		atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : get_turf(interacting_with)))
+		scan_atom(interacting_with.return_analyzable_air() ? interacting_with : get_turf(interacting_with), user)
 	return NONE // Non-blocking
 
-/// Called when our analyzer is used on something
-/obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
-	SIGNAL_HANDLER
+/obj/item/analyzer/proc/scan_atom(atom/target, mob/living/user)
+	if(!can_use(user))
+		return
+
+	atmos_scan(user, target, silent = FALSE)
+	collect_scan_info(target)
+
+/obj/item/analyzer/proc/collect_scan_info(atom/target)
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
-		return FALSE
+		return
+
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
 	var/list/new_gasmix_data = list()
 	for(var/datum/gas_mixture/air as anything in airs)
@@ -175,6 +259,12 @@
 			mix_name += " - Node [airs.Find(air)]"
 		new_gasmix_data += list(gas_mixture_parser(air, mix_name))
 	last_gasmix_data = new_gasmix_data
+	last_scanned = WEAKREF(target)
+
+/// Called when our analyzer is used on something
+/obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
+	SIGNAL_HANDLER
+	collect_scan_info(target)
 
 /**
  * Outputs a message to the user describing the target's gasmixes.
@@ -190,7 +280,7 @@
 	var/icon = target
 	var/message = list()
 	if(!silent && isliving(user))
-		playsound(user, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		playsound(user, /datum/sound_effect/industrial_scan, 20, TRUE, -2, TRUE, FALSE)
 		user.visible_message(span_notice("[user] uses the analyzer on [icon2html(icon, viewers(user))] [target]."), span_notice("You use the analyzer on [icon2html(icon, user)] [target]."))
 	message += span_boldnotice("Results of analysis of [icon2html(icon, user)] [target].")
 
@@ -212,10 +302,10 @@
 		if(total_moles > 0)
 			message += span_notice("Moles: [round(total_moles, 0.01)] mol")
 
-			var/list/cached_gases = air.gases
-			for(var/id in cached_gases)
-				var/gas_concentration = cached_gases[id][MOLES]/total_moles
-				message += span_notice("[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(cached_gases[id][MOLES], 0.01)] mol ([round(gas_concentration*100, 0.01)] %)")
+			var/list/cached_gas_name = GAS_META[META_GAS_NAME]
+			for(var/id, amount in air.moles)
+				var/gas_concentration = amount / total_moles
+				message += span_notice("[cached_gas_name[id]]: [round(amount, 0.01)] mol ([round(gas_concentration*100, 0.01)] %)")
 			message += span_notice("Temperature: [round(temperature - T0C,0.01)] &deg;C ([round(temperature, 0.01)] K)")
 			message += span_notice("Volume: [volume] L")
 			message += span_notice("Pressure: [round(pressure, 0.01)] kPa")

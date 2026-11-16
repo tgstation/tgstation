@@ -46,6 +46,8 @@
 	/// The sound this obj makes when something is unbuckled from it
 	var/unbuckle_sound = null
 
+	var/generate_map_preview = FALSE
+
 	uses_integrity = TRUE
 
 /obj/vv_edit_var(vname, vval)
@@ -60,7 +62,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/Initialize(mapload)
 	. = ..()
 
-	check_on_table()
+	if(anchored_tabletop_offset)
+		check_on_table()
 
 	if (id_tag)
 		GLOB.objects_by_id_tag[id_tag] = src
@@ -168,7 +171,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/vv_get_dropdown()
 	. = ..()
-	VV_DROPDOWN_OPTION("", "---")
+	VV_DROPDOWN_OPTION("", "--- /obj ---")
 	VV_DROPDOWN_OPTION(VV_HK_MASS_DEL_TYPE, "Delete all of type")
 	VV_DROPDOWN_OPTION(VV_HK_OSAY, "Object Say")
 
@@ -275,8 +278,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// If we can unwrench this object; returns SUCCESSFUL_UNFASTEN and FAILED_UNFASTEN, which are both TRUE, or CANT_UNFASTEN, which isn't.
 /obj/proc/can_be_unfasten_wrench(mob/user, silent)
-	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
-		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
+	if(!is_anchorable_floor(loc) && !anchored)
+		if(!silent)
+			to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
 		return FAILED_UNFASTEN
 	return SUCCESSFUL_UNFASTEN
 
@@ -304,7 +308,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return CANT_UNFASTEN
 	to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 	set_anchored(!anchored)
-	check_on_table()
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	return SUCCESSFUL_UNFASTEN
 
@@ -318,35 +321,51 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// Adjusts the vertical pixel_z offset when the object is anchored on a tile with table
 /obj/proc/check_on_table()
-	if(anchored_tabletop_offset == 0)
-		return
-	if(istype(src, /obj/structure/table))
-		return
-
 	if(anchored && locate(/obj/structure/table) in loc)
 		pixel_z = anchored_tabletop_offset
 	else
 		pixel_z = initial(pixel_z)
 
+/obj/structure/table/check_on_table()
+	return
+
+/obj/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.) || !anchored_tabletop_offset)
+		return
+	check_on_table()
+
 /obj/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
-		return
-	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
-	force *= strength_mod
-	throwforce *= strength_mod
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		change_material_strength(material, mat_amount, multiplier)
 
-///This proc is called when the material is removed from an object specifically.
 /obj/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
-	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
-		return
-	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
-	force /= strength_mod
-	throwforce /= strength_mod
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		change_material_strength(material, mat_amount, multiplier, remove = TRUE)
+
+/// Changes force and throwforce of an item based on its properties. Split into a separate proc as to allow items to change theirs based on sharpness and behavior
+/obj/proc/change_material_strength(datum/material/material, mat_amount, multiplier, remove = FALSE)
+	var/density = material.get_property(MATERIAL_DENSITY)
+	var/hardness = material.get_property(MATERIAL_HARDNESS)
+	var/flexibility = material.get_property(MATERIAL_FLEXIBILITY)
+	// Dense and hard objects make for good melee weapons, bendy ones not so much
+	var/force_mod = (1 + (density - 4) * 0.05 + (hardness - 4) * 0.05) * (1 - flexibility * 0.1)
+	// Hardness doesn't matter much when we're just whacking someone in the back of the head
+	var/throwforce_mod = 1 + (density - 4) * 0.1 - flexibility * 0.1
+
+	if (!remove)
+		force *= GET_MATERIAL_MODIFIER(force_mod, multiplier)
+		throwforce *= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
+	else
+		force /= GET_MATERIAL_MODIFIER(force_mod, multiplier)
+		throwforce /= GET_MATERIAL_MODIFIER(throwforce_mod, multiplier)
 
 /// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
 /obj/proc/get_demolition_modifier(obj/target)
+	if(HAS_TRAIT(target, TRAIT_IGNORE_DEMOLITION))
+		return 1
 	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
 		return (1 / demolition_mod)
 	return demolition_mod
@@ -366,3 +385,35 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /// Called when UNIQUE_RENAME is reset
 /obj/proc/rename_reset()
 	return
+
+/**
+ * Used to deliver a shock to a mob from this object
+ * The target must be adjacent to this object, or else the shock will fail
+ *
+ * * shocking - who are we zapping
+ * * chance - probability the shock succeeds
+ * can be modified by traits/quirks, so passing > 100 is allowed
+ * defaults to 1000 (guaranteed to shock, likely even with modifiers)
+ * * shock_source - used for determining where to get the power to zap them.
+ * can be an apc, a cable, an area, a cell, or even a powernet datum
+ * subtypes may override this proc to pass this up to the parent
+ * defaults to our cell or our current area/apc
+ * * siemens_coeff - multiplier to how much shock is delivered
+ * default to a 1x modifier
+ * * allow_modifiers - whether to apply modifiers to shock chance
+ * default to TRUE
+ *
+ * Returns TRUE if the shock was successfully delivered
+ * Returns FALSE if the shock failed for any reason
+ */
+/obj/proc/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1, allow_modifiers = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+	if(!isliving(shocking))
+		return FALSE
+	if(allow_modifiers && shocking.has_quirk(/datum/quirk/shock_reflex))
+		chance *= 0.66
+	if(!prob(chance))
+		return FALSE // you lucked out, no shock for you
+
+	do_sparks(5, TRUE, src)
+	return electrocute_mob(shocking, shock_source || get_cell() || get_area(src), src, siemens_coeff, TRUE)

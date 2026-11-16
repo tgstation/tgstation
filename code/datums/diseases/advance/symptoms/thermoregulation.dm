@@ -12,8 +12,8 @@
 	stealth = 0
 	resistance = 1
 	stage_speed = -2
-	transmittable = -1
-	level = 5
+	transmittable = 0
+	level = 4
 	severity = 0
 	threshold_descs = list(
 		"Resistance 8" = "Increases thermal regulation speed."

@@ -78,7 +78,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	///The internal attack ID for the elite's OpenFire() proc to use
 	var/chosen_attack_num = 0
 
-/datum/action/innate/elite_attack/create_button()
+/datum/action/innate/elite_attack/create_button(mob/viewer)
 	var/atom/movable/screen/movable/action_button/button = ..()
 	button.maptext = ""
 	button.maptext_x = 6
@@ -274,7 +274,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 
 	for(var/mob/living/simple_animal/hostile/asteroid/elite/elitehere in loc)
 		if(elitehere == mychild && activity == TUMOR_PASSIVE)
-			mychild.adjustHealth(-mychild.maxHealth * 0.025*seconds_per_tick)
+			mychild.adjust_brute_loss(-mychild.maxHealth * 0.025*seconds_per_tick)
 			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(mychild))
 			H.color = COLOR_RED
 
@@ -303,7 +303,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(QDELETED(mychild) || mychild.stat == DEAD)
 		onEliteLoss()
 		return
-	if(QDELETED(activator) || activator.stat == DEAD || (activator.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(activator, TRAIT_NODEATH)))
+	if(QDELETED(activator) || activator.stat == DEAD || (activator.health <= activator.dead_threshold && HAS_TRAIT(activator, TRAIT_NODEATH)))
 		if(!QDELETED(activator) && HAS_TRAIT(activator, TRAIT_NODEATH)) // dust the unkillable activator
 			activator.dust(drop_items = TRUE)
 		onEliteWon()

@@ -4,7 +4,8 @@
 	desc = "You can't contain the colorful beauty of the cosmos inside."
 	form = "Condition"
 	agent = "Stars"
-	cure_text = "Space Cleaner"
+	cure_text = /datum/reagent/space_cleaner::name
+	spread_text = "None"
 	cures = list(/datum/reagent/space_cleaner)
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
@@ -19,16 +20,16 @@
 
 	switch(stage)
 		if(2)
-			if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
+			if(SPT_PROB(1, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 				to_chat(affected_mob, span_warning("The colorful beauty of the cosmos seems to have taken a toll on your equilibrium."))
 		if(3)
-			if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
+			if(SPT_PROB(1, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 				to_chat(affected_mob, span_warning("Your stomach swirls with colors unseen by human eyes."))
 		if(4)
-			if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
+			if(SPT_PROB(1, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 				to_chat(affected_mob, span_warning("It feels like you're floating through a maelstrom of celestial colors."))
 		if(5)
-			if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
+			if(SPT_PROB(1, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 				to_chat(affected_mob, span_warning("Your stomach has become a turbulent nebula, swirling with kaleidoscopic patterns."))
 			else
 				affected_mob.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM), vomit_type = /obj/effect/decal/cleanable/vomit/nebula, lost_nutrition = 10, distance = 2)

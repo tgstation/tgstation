@@ -25,7 +25,7 @@
 	result = /obj/item/weaponcrafting/receiver
 	reqs = list(
 		/obj/item/stack/sheet/iron = 5,
-		/obj/item/stack/sticky_tape = 1,
+		/obj/item/stack/medical/wrap/sticky_tape = 1,
 		/obj/item/screwdriver = 1,
 		/obj/item/assembly/mousetrap = 1,
 	)
@@ -38,7 +38,7 @@
 	result = /obj/item/weaponcrafting/stock
 	reqs = list(
 		/obj/item/stack/sheet/mineral/wood = 8,
-		/obj/item/stack/sticky_tape = 1,
+		/obj/item/stack/medical/wrap/sticky_tape = 1,
 	)
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED
@@ -49,40 +49,12 @@
 	result = /obj/item/gun_maintenance_supplies/makeshift
 	reqs = list(
 		/obj/item/stack/sheet/iron = 5,
-		/obj/item/stack/sticky_tape = 1,
+		/obj/item/stack/medical/wrap/sticky_tape = 1,
 		/obj/item/pipe = 1,
 		/obj/item/stack/sheet/cloth = 2,
 	)
 	time = 5 SECONDS
 	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/advancedegun
-	name = "Advanced Energy Gun"
-	result = /obj/item/gun/energy/e_gun/nuclear
-	reqs = list(
-		/obj/item/gun/energy/e_gun = 1,
-		/obj/item/weaponcrafting/gunkit/nuclear = 1,
-	)
-	time = 10 SECONDS
-	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/advancedegun/New()
-	LAZYADD(blacklist, typecacheof(/obj/item/gun/energy/e_gun, ignore_root_path = TRUE))
-	return ..()
-
-/datum/crafting_recipe/tempgun
-	name = "Temperature Gun"
-	result = /obj/item/gun/energy/temperature
-	reqs = list(
-		/obj/item/gun/energy/disabler = 1,
-		/obj/item/weaponcrafting/gunkit/temperature = 1,
-	)
-	time = 10 SECONDS
-	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/tempgun/New()
-	LAZYADD(blacklist, typecacheof(/obj/item/gun/energy/e_gun, ignore_root_path = TRUE))
-	return ..()
 
 /datum/crafting_recipe/beam_rifle
 	name = "Event Horizon Anti-Existential Beam Rifle"
@@ -97,17 +69,6 @@
 	time = 30 SECONDS //Maybe the delay will make you reconsider your choices
 	category = CAT_WEAPON_RANGED
 
-/datum/crafting_recipe/ebow
-	name = "Energy Crossbow"
-	result = /obj/item/gun/energy/recharge/ebow/large
-	reqs = list(
-		/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
-		/obj/item/weaponcrafting/gunkit/ebow = 1,
-		/datum/reagent/uranium/radium = 15,
-	)
-	time = 10 SECONDS
-	category = CAT_WEAPON_RANGED
-
 /datum/crafting_recipe/laser
 	abstract_type = /datum/crafting_recipe/laser
 	/// We will use the same blacklist for every type here to avoid repeating lists
@@ -118,46 +79,6 @@
 		laser_blacklist = typecacheof(/obj/item/gun/energy/laser, ignore_root_path = TRUE)
 	blacklist = laser_blacklist
 	return ..()
-
-/datum/crafting_recipe/laser/xraylaser
-	name = "X-ray Laser Gun"
-	result = /obj/item/gun/energy/laser/xray
-	reqs = list(
-		/obj/item/gun/energy/laser = 1,
-		/obj/item/weaponcrafting/gunkit/xray = 1,
-	)
-	time = 10 SECONDS
-	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/laser/hellgun
-	name = "Hellfire Laser Gun"
-	result = /obj/item/gun/energy/laser/hellgun
-	reqs = list(
-		/obj/item/gun/energy/laser = 1,
-		/obj/item/weaponcrafting/gunkit/hellgun = 1,
-	)
-	time = 10 SECONDS
-	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/laser/ioncarbine
-	name = "Ion Carbine"
-	result = /obj/item/gun/energy/ionrifle/carbine
-	reqs = list(
-		/obj/item/gun/energy/laser = 1,
-		/obj/item/weaponcrafting/gunkit/ion = 1,
-	)
-	time = 10 SECONDS
-	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/teslacannon
-	name = "Tesla Cannon"
-	result = /obj/item/gun/energy/tesla_cannon
-	reqs = list(
-		/obj/item/assembly/signaler/anomaly/flux = 1,
-		/obj/item/weaponcrafting/gunkit/tesla = 1,
-	)
-	time = 10 SECONDS
-	category = CAT_WEAPON_RANGED
 
 /datum/crafting_recipe/improvised_pneumatic_cannon //Pretty easy to obtain but
 	name = "Pneumatic Cannon"
@@ -189,13 +110,13 @@
 
 /datum/crafting_recipe/pipegun
 	name = "Pipegun"
-	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun
+	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/empty
 	reqs = list(
 		/obj/item/weaponcrafting/receiver = 1,
 		/obj/item/pipe = 2,
 		/obj/item/weaponcrafting/stock = 1,
 		/obj/item/storage/toolbox = 1, // for the screws
-		/obj/item/stack/sticky_tape = 1,
+		/obj/item/stack/medical/wrap/sticky_tape = 1,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	time = 5 SECONDS
@@ -203,14 +124,14 @@
 
 /datum/crafting_recipe/pipepistol
 	name = "Pipe Pistol"
-	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol
+	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/pistol/empty
 	reqs = list(
 		/obj/item/weaponcrafting/receiver = 1,
 		/obj/item/pipe = 1,
 		/obj/item/stock_parts/servo = 2,
 		/obj/item/stack/sheet/mineral/wood = 4,
 		/obj/item/storage/toolbox = 1, // for the screws
-		/obj/item/stack/sticky_tape = 1,
+		/obj/item/stack/medical/wrap/sticky_tape = 1,
 	)
 	tool_paths = list(/obj/item/hatchet)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
@@ -249,7 +170,7 @@
 
 /datum/crafting_recipe/pipegun_prime
 	name = "Regal Pipegun"
-	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime
+	result = /obj/item/gun/ballistic/rifle/boltaction/pipegun/prime/empty
 	reqs = list(
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun = 1,
 		/obj/item/food/deadmouse = 1,
@@ -266,16 +187,14 @@
 
 /datum/crafting_recipe/deagle_prime //When you factor in the makarov (7 tc), the toolbox (1 tc), and the emag (3 tc), this comes to a total of 18 TC or thereabouts. Igorning the 20k pricetag, obviously.
 	name = "Regal Condor"
-	result = /obj/item/gun/ballistic/automatic/pistol/deagle/regal
+	result = /obj/item/gun/ballistic/automatic/pistol/deagle/regal/no_mag
 	reqs = list(
 		/obj/item/gun/ballistic/automatic/pistol = 1,
-		/obj/item/stack/sheet/mineral/gold = 25,
-		/obj/item/stack/sheet/mineral/silver = 25,
-		/obj/item/food/donkpocket = 1,
+		/obj/item/stack/sheet/mineral/gold = 15,
+		/obj/item/stack/sheet/mineral/silver = 15,
 		/obj/item/stack/telecrystal = 4,
 		/obj/item/clothing/head/costume/crown/fancy = 1, //the captain's crown
 		/obj/item/storage/toolbox/syndicate = 1,
-		/obj/item/stack/sheet/iron = 10,
 	)
 	tool_behaviors = list(TOOL_SCREWDRIVER)
 	tool_paths = list(
@@ -283,7 +202,7 @@
 		/obj/item/clothing/mask/gas/syndicate,
 		/obj/item/card/emag
 	)
-	time = 30 SECONDS
+	time = 25 SECONDS
 	category = CAT_WEAPON_RANGED
 	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
@@ -292,8 +211,8 @@
 	return ..()
 
 /datum/crafting_recipe/deagle_prime_mag
-	name = "Regal Condor Magazine (10mm Reaper)"
-	result = /obj/item/ammo_box/magazine/r10mm
+	name = "Regal Condor Magazine (.45 Reaper)"
+	result = /obj/item/ammo_box/magazine/r45
 	reqs = list(
 		/obj/item/stack/sheet/iron = 10,
 		/obj/item/stack/sheet/mineral/gold = 10,
@@ -353,7 +272,7 @@
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
-	crafting_flags = CRAFT_CHECK_DENSITY
+	crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_MUST_BE_LEARNED
 
 
 /datum/crafting_recipe/large_ballista
@@ -467,16 +386,6 @@
 		/obj/item/stack/sheet/leather = 1,
 	)
 	time = 30 SECONDS
-	category = CAT_WEAPON_RANGED
-
-/datum/crafting_recipe/photoncannon
-	name = "Photon Cannon"
-	result = /obj/item/gun/energy/photon
-	reqs = list(
-		/obj/item/assembly/signaler/anomaly/flux = 1,
-		/obj/item/weaponcrafting/gunkit/photon = 1,
-	)
-	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
 
 /datum/crafting_recipe/sks

@@ -1,5 +1,8 @@
 /// Fully randomizes everything in the character.
 /datum/preferences/proc/randomise_appearance_prefs(randomize_flags = ALL)
+	var/tree_key = "character[default_slot]"
+	if(!(tree_key in savefile.get_entry()))
+		savefile.set_entry(tree_key, list())
 	for (var/datum/preference/preference as anything in get_preferences_in_priority_order())
 		if (!preference.included_in_randomization_flags(randomize_flags))
 			continue
@@ -72,10 +75,6 @@
 			available_hardcore_quirks -= picked_quirk
 			continue
 
-		if((initial(picked_quirk.quirk_flags) & QUIRK_MOODLET_BASED) && CONFIG_GET(flag/disable_human_mood)) //check for moodlet quirks
-			available_hardcore_quirks -= picked_quirk
-			continue
-
 		all_quirks += initial(picked_quirk.name)
 		quirk_budget -= available_hardcore_quirks[picked_quirk]
 		. += available_hardcore_quirks[picked_quirk]
@@ -86,10 +85,10 @@
 	var/datum/job/preview_job
 	var/highest_pref = 0
 
-	for(var/job in job_preferences)
-		if(job_preferences[job] > highest_pref)
+	for(var/job, priority in job_preferences)
+		if(priority > highest_pref)
 			preview_job = SSjob.get_job(job)
-			highest_pref = job_preferences[job]
+			highest_pref = priority
 
 	return preview_job
 
@@ -126,4 +125,6 @@
 				continue
 			mannequin.add_quirk(quirk_type, parent, announce = FALSE)
 
+	// Height is applied universally once to save on filters
+	mannequin.apply_height(mannequin, ENTIRE_BODY)
 	return mannequin.appearance

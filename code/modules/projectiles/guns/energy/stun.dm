@@ -53,7 +53,7 @@
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, 0.15 SECONDS, allow_akimbo = FALSE)
 
-/obj/item/gun/energy/disabler/add_seclight_point()
+/obj/item/gun/energy/disabler/smg/add_seclight_point()
 	AddComponent(\
 		/datum/component/seclite_attachable, \
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \

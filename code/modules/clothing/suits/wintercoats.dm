@@ -7,6 +7,7 @@
 	worn_icon = 'icons/mob/clothing/suits/wintercoat.dmi'
 	inhand_icon_state = "coatwinter"
 	body_parts_covered = CHEST|GROIN|ARMS
+	bodyshapes_with_variations = NONE
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list()
@@ -14,6 +15,9 @@
 	hood_down_overlay_suffix = "_hood"
 	/// How snug are we?
 	var/zipped = FALSE
+	/// Whether alt-clicking this coat zips/unzips it
+	var/can_altclick_zip = TRUE
+	auto_deploy_hood_on_outfit_equip = FALSE
 
 /datum/armor/hooded_wintercoat
 	bio = 10
@@ -43,14 +47,16 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/examine(mob/user)
 	. = ..()
-
-	. += span_notice("<b>Alt-click</b> to [zipped ? "un" : ""]zip.")
+	if(can_altclick_zip)
+		. += span_notice("<b>Alt-click</b> to [zipped ? "un" : ""]zip.")
 
 
 /obj/item/clothing/suit/hooded/wintercoat/click_alt(mob/user)
+	if(!can_altclick_zip)
+		return CLICK_ACTION_BLOCKING
 	zipped = !zipped
 	playsound(src, 'sound/items/zip/zip_up.ogg', 30, TRUE, -3)
-	worn_icon_state = "[initial(post_init_icon_state) || initial(icon_state)][zipped ? "_t" : ""]"
+	worn_icon_state = "[INITIAL_ICON_STATE(src)][zipped ? "_t" : ""]"
 	balloon_alert(user, "[zipped ? "" : "un"]zipped")
 
 	if(ishuman(loc))
@@ -539,7 +545,7 @@
 /datum/armor/wintercoat_engineering
 	fire = 20
 
-/obj/item/clothing/suit/hooded/wintercoat/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/hooded/wintercoat/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
@@ -552,7 +558,7 @@
 /datum/armor/winterhood_engineering
 	fire = 20
 
-/obj/item/clothing/head/hooded/winterhood/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/hooded/winterhood/engineering/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
@@ -694,3 +700,96 @@
 	desc = "A heavy jacket hood made from 'synthetic' animal furs, with custom colors."
 	greyscale_config = /datum/greyscale_config/winter_hoods
 	greyscale_config_worn = /datum/greyscale_config/winter_hoods/worn
+	flags_1 = NO_NEW_GAGS_PREVIEW_1
+
+/obj/item/clothing/suit/hooded/wintercoat/pullover
+	name = "pullover"
+	desc = "A colorable pullover hoodie."
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/hooded/wintercoat/pullover"
+	post_init_icon_state = "pullover"
+	greyscale_config = /datum/greyscale_config/hoodie_pullover
+	greyscale_config_worn = /datum/greyscale_config/hoodie_pullover/worn
+	greyscale_colors = "#5f5f5f"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/pullover
+	flags_1 = IS_PLAYER_COLORABLE_1
+	hood_down_overlay_suffix = ""
+	hood_up_affix = "_t"
+	can_altclick_zip = FALSE
+
+/obj/item/clothing/suit/hooded/wintercoat/pullover/on_hood_up(obj/item/clothing/head/hooded/hood)
+	return
+
+/obj/item/clothing/suit/hooded/wintercoat/pullover/on_hood_down(obj/item/clothing/head/hooded/hood)
+	return
+
+/obj/item/clothing/head/hooded/winterhood/pullover
+	name = "pullover hood"
+	desc = "A colorable pullover hoodie."
+	icon_state = "hood_pullover"
+	worn_icon_state = "hood_pullover"
+	hair_mask = /datum/hair_mask/hoodie
+	greyscale_config = /datum/greyscale_config/hoodie_pullover_hood
+	greyscale_config_worn = /datum/greyscale_config/hoodie_pullover_hood/worn
+	greyscale_colors = "#5f5f5f"
+	flags_1 = NO_NEW_GAGS_PREVIEW_1
+
+/obj/item/clothing/suit/hooded/wintercoat/pullover/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+	. = ..()
+	if(!hood)
+		return
+	var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	hood.set_greyscale(coat_colors)
+	hood.update_slot_icon()
+
+/obj/item/clothing/suit/hooded/wintercoat/pullover/on_hood_created(obj/item/clothing/head/hooded/hood)
+	. = ..()
+	var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	hood.set_greyscale(coat_colors)
+
+/obj/item/clothing/suit/hooded/wintercoat/zipup
+	name = "zipup"
+	desc = "A colorable zipup hoodie."
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
+	icon_state = "/obj/item/clothing/suit/hooded/wintercoat/zipup"
+	post_init_icon_state = "zipup"
+	greyscale_config = /datum/greyscale_config/hoodie_zipup
+	greyscale_config_worn = /datum/greyscale_config/hoodie_zipup/worn
+	greyscale_colors = "#5f5f5f"
+	hoodtype = /obj/item/clothing/head/hooded/winterhood/zipup
+	flags_1 = IS_PLAYER_COLORABLE_1
+	hood_down_overlay_suffix = ""
+	hood_up_affix = "_t"
+
+/obj/item/clothing/suit/hooded/wintercoat/zipup/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
+	. = ..()
+	if(isinhands || (hood && hood.loc != src))
+		return
+
+	var/suffix = (zipped ? "hood_t" : "hood")
+	var/state = "[INITIAL_ICON_STATE(src)]_[suffix]"
+	. += mutable_appearance(icon_file, state, -SUIT_LAYER)
+
+/obj/item/clothing/head/hooded/winterhood/zipup
+	name = "zipup hood"
+	desc = "A colorable zipup hoodie."
+	icon_state = "hood_zipup"
+	worn_icon_state = "hood_zipup"
+	hair_mask = /datum/hair_mask/hoodie
+	greyscale_config = /datum/greyscale_config/hoodie_zipup_hood
+	greyscale_config_worn = /datum/greyscale_config/hoodie_zipup_hood/worn
+	greyscale_colors = "#5f5f5f"
+	flags_1 = NO_NEW_GAGS_PREVIEW_1
+
+/obj/item/clothing/suit/hooded/wintercoat/zipup/set_greyscale(list/colors, new_config, new_worn_config, new_inhand_left, new_inhand_right)
+	. = ..()
+	if(!hood)
+		return
+	var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	hood.set_greyscale(coat_colors)
+	hood.update_slot_icon()
+
+/obj/item/clothing/suit/hooded/wintercoat/zipup/on_hood_created(obj/item/clothing/head/hooded/hood)
+	. = ..()
+	var/list/coat_colors = SSgreyscale.ParseColorString(greyscale_colors)
+	hood.set_greyscale(coat_colors)

@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "You can now clamp cables by RMBing them with wirecutters in order to prevent them from connecting to other cables in a certain direction."
-  - refactor: "Refactored cable interaction and some of connection code"

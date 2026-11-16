@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(achievements)
 	name = "Achievements"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 	var/achievements_enabled = FALSE
 
 	///List of achievements

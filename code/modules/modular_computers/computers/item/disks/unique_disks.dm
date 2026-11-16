@@ -1,6 +1,6 @@
 /obj/item/disk/computer/syndicate
-	name = "golden data disk"
-	desc = "A data disk with some high-tech programs, probably expensive as hell."
+	name = "syndicate data disk"
+	desc = "A data disk with some high-tech programs. Rumor has it that the disk is made of gold, which probably makes it expensive as hell."
 	icon_state = "datadisk9"
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT)
 

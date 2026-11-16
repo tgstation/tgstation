@@ -209,8 +209,7 @@
 		stop_autofiring()
 	return COMPONENT_CLIENT_MOUSEUP_INTERCEPT
 
-
-/datum/component/automatic_fire/proc/stop_autofiring(datum/source, atom/object, turf/location, control, params)
+/datum/component/automatic_fire/proc/stop_autofiring(mob/living/source, obj/item/swapped_to, obj/item/swapped_from)
 	SIGNAL_HANDLER
 	if(autofire_stat != AUTOFIRE_STAT_FIRING)
 		return
@@ -288,6 +287,8 @@
 /obj/item/gun/proc/on_autofire_start(mob/living/shooter)
 	if(fire_cd || shooter.incapacitated || !can_trigger_gun(shooter))
 		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_GUN_TRY_AUTO_FIRE, shooter) & COMPONENT_CANCEL_GUN_FIRE)
+		return NONE
 	if(!can_shoot())
 		shoot_with_empty_chamber(shooter)
 		return FALSE

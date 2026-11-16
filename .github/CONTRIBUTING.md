@@ -12,7 +12,8 @@
 7. [Good Boy Points](#good-boy-points)
 8. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
 9. [Banned content](#banned-content)
-10. [A word on Git](#a-word-on-git)
+10. [Generative AI Use](#generative-ai-use)
+11. [A word on Git](#a-word-on-git)
 
 ## Reporting Issues
 
@@ -195,6 +196,10 @@ Do not add any of the following in a Pull Request or risk getting the PR closed:
 - Code which violates GitHub's [terms of service](https://github.com/site/terms).
 
 Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
+
+### Generative AI Use
+
+We do not accept ai generated pull requests, bug reports, code, comments or review.
 
 ## A word on Git
 

@@ -146,7 +146,7 @@
 /atom/movable/screen/alert/status_effect/overwatch
 	name = "Overwatched"
 	desc = "Freeze! You are being watched!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "aimed"
 
 /// Blocks further applications of the ability for a little while

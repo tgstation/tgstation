@@ -214,7 +214,7 @@
 		var/mob/living/carbon/human/human_suspect = suspect
 		if(human_suspect.gloves)
 			has_gloves = "(gloves)"
-	var/current_time = time_stamp()
+	var/current_time = round_timestamp()
 	if(!LAZYACCESS(hiddenprints, suspect.key))
 		LAZYSET(hiddenprints, suspect.key, "First: \[[current_time]\] \"[suspect.real_name]\"[has_gloves]. Ckey: [suspect.ckey]")
 	else

@@ -24,7 +24,7 @@
 	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	melee_attack_cooldown = 0.6 SECONDS
 	speak_emote = list("growls")
-	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0)
+	physiology = list(BURN = 0.5, TOX = 0, OXY = 0, STAMINA = 0)
 	death_sound = 'sound/effects/magic/cosmic_expansion.ogg'
 
 	slowed_by_drag = FALSE
@@ -34,7 +34,7 @@
 	can_buckle_to = FALSE
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	lighting_cutoff_red = 12
 	lighting_cutoff_green = 15
 	lighting_cutoff_blue = 34
@@ -131,7 +131,7 @@
 	target.apply_damage(damage = 5, damagetype = BURN)
 	var/datum/targeting_strategy/target_confirmer = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY])
 	for(var/mob/living/nearby_mob in range(1, src))
-		if(target == nearby_mob || !target_confirmer?.can_attack(src, nearby_mob))
+		if(target == nearby_mob || !target_confirmer?.is_valid_target(src, nearby_mob))
 			continue
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark)
 		nearby_mob.apply_damage(10)
@@ -364,7 +364,7 @@
 				if(victim == our_master?.resolve())
 					continue
 				var/mob/living/living_victim = victim
-				if(living_victim.stat > CONSCIOUS)
+				if(living_victim.stat != STABLE)
 					playsound(living_victim, 'sound/effects/supermatter.ogg', 80, TRUE)
 					living_victim.visible_message(
 						span_danger("You see [living_victim] engulfed in the scorching wrath of the cosmos. \
@@ -402,30 +402,22 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/pet_target/star_gazer,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
-
-/datum/ai_planning_subtree/attack_obstacle_in_path/star_gazer
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/star_gazer
-
-/datum/ai_planning_subtree/attack_obstacle_in_path/pet_target/star_gazer
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/star_gazer
-
-/datum/ai_behavior/attack_obstructions/star_gazer
-	action_cooldown = 0.4 SECONDS
-	can_attack_turfs = TRUE
-	can_attack_dense_objects = TRUE
+	behavior_tree_json = "code/modules/mob/living/basic/heretic/star_gazer.bt.json"
 
 /datum/pet_command/attack/star_gazer
 	speech_commands = list("attack", "sic", "kill", "slash them")
 	command_feedback = "stares!"
 	pointed_reaction = "stares intensely!"
 	refuse_reaction = "..."
-	attack_behaviour = /datum/ai_behavior/basic_melee_attack
+
+//special interaction for giving Farstar Amrita, the cocktail that makes you hallucinate a fake gazer, to a real gazer.
+/mob/living/basic/heretic_summon/star_gazer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/cup/glass/drinkingglass) || tool.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/farstar_amrita) < 5)
+		return ..()
+
+	user.client?.give_award(/datum/award/achievement/misc/gazer_sippy, user)
+	src.befriend(user) //the gazer will no longer attack you, but you still gotta worry about the heretic that's leading the gazer around
+	playsound(src,'sound/items/drink.ogg', 50)
+	src.emote("flip") //it's silly that it can do this with no cooldown, allowing you to spin the gazer really fast, but this is a silly interaction.
+	tool.reagents.remove_reagent(/datum/reagent/consumable/ethanol/farstar_amrita, 5)
+	return ITEM_INTERACT_SUCCESS

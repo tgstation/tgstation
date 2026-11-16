@@ -2,6 +2,13 @@
 #define IS_ORGANIC_ORGAN(organ) (organ.organ_flags & ORGAN_ORGANIC)
 /// Helper to figure out if an organ is robotic
 #define IS_ROBOTIC_ORGAN(organ) (organ.organ_flags & ORGAN_ROBOTIC)
+/// Helper to figure out if an organ is mineral
+#define IS_MINERAL_ORGAN(organ) (organ.organ_flags & ORGAN_MINERAL)
+
+/// List of organ flags that can not be bioscrambled
+#define ORGAN_BIOSCRAMBLE_INCOMPATIBLE (ORGAN_ROBOTIC | ORGAN_MINERAL)
+/// Check to see if an organ can be bioscrambled
+#define ORGAN_CAN_BE_BIOSCRAMBLED(organ) (!(organ.organ_flags & ORGAN_BIOSCRAMBLE_INCOMPATIBLE) && !(organ.flags_1 & HOLOGRAM_1))
 
 // Flags for the organ_flags var on /obj/item/organ
 /// Organic organs, the default. Don't get affected by EMPs.
@@ -38,6 +45,8 @@
 #define ORGAN_MUTANT (1<<15)
 /// The organ has been chomped or otherwise rendered unusable.
 #define ORGAN_UNUSABLE (1<<16)
+/// Used for organs that aren't really real organs, but holders for stuff and whatnot
+#define ORGAN_FAKE (1<<17)
 
 /// Organ flags that correspond to bodytypes
 #define ORGAN_TYPE_FLAGS (ORGAN_ORGANIC | ORGAN_ROBOTIC | ORGAN_MINERAL | ORGAN_GHOST)
@@ -54,6 +63,9 @@
 /// Helper to figure out if a limb is a peg limb
 #define IS_PEG_LIMB(limb) (limb.bodytype & BODYTYPE_PEG)
 
+/// Is the bodypart a stump
+#define IS_STUMP(limb) (limb.bodypart_flags & BODYPART_STUMP)
+
 // Flags for the bodypart_flags var on /obj/item/bodypart
 /// Bodypart cannot be dismembered or amputated
 #define BODYPART_UNREMOVABLE (1<<0)
@@ -65,10 +77,20 @@
 #define BODYPART_UNHUSKABLE (1<<3)
 /// Bodypart has never been added to a mob
 #define BODYPART_VIRGIN (1<<4)
+/// Not a full bodypart, but in fact is part of a missing limb
+#define BODYPART_STUMP (1<<5)
+/// Bodypart is considered abstract and doesn't need to do certain things (like be visible)
+#define BODYPART_ABSTRACT (1<<6)
 
 // Bodypart change blocking flags
 ///Bodypart does not get replaced during set_species()
 #define BP_BLOCK_CHANGE_SPECIES (1<<0)
+
+// is_husked values
+/// Husked from burns
+#define HUSKED_BURN 1
+/// Husked from zombification
+#define HUSKED_ZOMBIE 2
 
 // Flags for the head_flags var on /obj/item/bodypart/head
 /// Head can have hair

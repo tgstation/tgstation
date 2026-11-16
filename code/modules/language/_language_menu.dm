@@ -29,12 +29,12 @@
 	for(var/datum/language/language as anything in GLOB.all_languages)
 		var/list/lang_data = list()
 
-		lang_data["name"] = initial(language.name)
-		lang_data["desc"] = initial(language.desc)
-		lang_data["key"] = initial(language.key)
+		lang_data["name"] = language::name
+		lang_data["desc"] = language::desc
+		lang_data["key"] = language::key
 		lang_data["is_default"] = (language == language_holder.selected_language)
-		lang_data["icon"] = initial(language.icon)
-		lang_data["icon_state"] = initial(language.icon_state)
+		lang_data["icon"] = language::icon
+		lang_data["icon_state"] = language::icon_state
 		if(speaker)
 			lang_data["can_speak"] = !!speaker.has_language(language, SPOKEN_LANGUAGE)
 			lang_data["could_speak"] = !!(language_holder.omnitongue || speaker.could_speak_language(language))

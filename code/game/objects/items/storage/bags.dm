@@ -34,6 +34,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	storage_type = /datum/storage/bag/trash
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
@@ -88,6 +89,7 @@
 	inhand_icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
 	storage_type = /datum/storage/bag/trash/bluespace
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/storage/bag/trash/bluespace/cyborg
 	insertable = FALSE
@@ -105,6 +107,8 @@
 	var/spam_protection = FALSE
 	/// Mob we're currently tracking
 	var/mob/listening_to = null
+	/// Turf whose ore entry and initialization signals we are currently listening to
+	var/turf/listening_turf = null
 	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
 	var/dropping_ores = FALSE
 	/// Cooldown on balloon alerts when picking ore
@@ -112,6 +116,7 @@
 
 /obj/item/storage/bag/ore/Destroy(force)
 	listening_to = null
+	listening_turf = null
 	return ..()
 
 /obj/item/storage/bag/ore/equipped(mob/user)
@@ -122,6 +127,7 @@
 	if (isturf(user.loc))
 		RegisterSignal(user.loc, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
 		RegisterSignal(user.loc, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
+		listening_turf = user.loc
 	listening_to = user
 
 /obj/item/storage/bag/ore/dropped()
@@ -129,9 +135,10 @@
 	if(!listening_to)
 		return
 	UnregisterSignal(listening_to, COMSIG_MOVABLE_MOVED)
-	if (listening_to.loc)
-		UnregisterSignal(listening_to.loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
+	if (listening_turf)
+		UnregisterSignal(listening_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 	listening_to = null
+	listening_turf = null
 
 // Ensure we don't suck up ores that we've just dropped off
 /obj/item/storage/bag/ore/attack_self(mob/user, modifiers)
@@ -149,8 +156,9 @@
 /obj/item/storage/bag/ore/proc/on_user_moved(mob/living/user, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 
-	if(old_loc)
-		UnregisterSignal(old_loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
+	if(listening_turf)
+		UnregisterSignal(listening_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
+	listening_turf = null
 
 	var/turf/tile = get_turf(user)
 	if(!isturf(tile))
@@ -158,10 +166,11 @@
 
 	RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
 	RegisterSignal(tile, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
+	listening_turf = tile
 	INVOKE_ASYNC(src, PROC_REF(handle_move), user)
 
 /obj/item/storage/bag/ore/proc/handle_move(mob/living/user)
-	if(user.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(user))
 		return
 	var/turf/tile = get_turf(user)
 	var/obj/structure/ore_box/box = null
@@ -179,7 +188,7 @@
 		spam_protection = FALSE
 		return
 
-	playsound(user, SFX_RUSTLE, 50, TRUE)
+	playsound(user, /datum/sound_effect/rustle, 50, TRUE)
 	if(!COOLDOWN_FINISHED(src, ore_bag_balloon_cooldown))
 		return
 
@@ -243,6 +252,7 @@
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	icon_state = "satchel_bspace"
 	storage_type = /datum/storage/bag/ore/holding
+	custom_materials = list(/datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/storage/bag/plants
 	name = "plant bag"
@@ -256,6 +266,7 @@
 	name = "portable seed extractor"
 	desc = "For the enterprising botanist on the go. Less efficient than the stationary model, it creates one seed per plant."
 	icon_state = "portaseeder"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 
 /obj/item/storage/bag/plants/portaseeder/Initialize(mapload)
 	. = ..()
@@ -361,8 +372,8 @@
 	custom_price = PAYCHECK_CREW * 0.6
 	storage_type = /datum/storage/bag/tray
 	sound_vary = TRUE
-	pickup_sound = SFX_TRAY_PICKUP
-	drop_sound = SFX_TRAY_DROP
+	pickup_sound = /datum/sound_effect/tray_pickup
+	drop_sound = /datum/sound_effect/tray_drop
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -516,23 +527,47 @@
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE|ITEM_SLOT_NECK
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/bag/rebar_quiver
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 6.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.15, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.5)
+	actions_types = list(/datum/action/item_action/reload_rebar)
+
+
+/obj/item/storage/bag/rebar_quiver/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/storage/bag/rebar_quiver/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/reload_rebar))
+		reload_held_rebar(user)
+
+/obj/item/storage/bag/rebar_quiver/proc/reload_held_rebar(mob/user)
+	if(!contents.len)
+		user.balloon_alert(user, "no bolts left!")
+		return
+	var/obj/held_item = user.get_active_held_item()
+	if(!held_item || !istype(held_item, /obj/item/gun/ballistic/rifle/rebarxbow))
+		user.balloon_alert(user, "no held crossbow!")
+		return
+	var/obj/item/gun/ballistic/rifle/rebarxbow/held_crossbow = held_item
+	if(held_crossbow.magazine.contents.len >= held_crossbow.magazine.max_ammo)
+		user.balloon_alert(user, "no more room!")
+		return
+	if(!do_after(user, held_crossbow.reload_time, user,timed_action_flags = held_crossbow.doafter_flags))
+		return
+
+	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
+	held_crossbow.item_interaction(user, ammo_to_load)
 
 /obj/item/storage/bag/rebar_quiver/syndicate
 	icon_state = "syndie_quiver_0"
 	worn_icon_state = "syndie_quiver_0"
 	inhand_icon_state = "holyquiver"
-	desc = "A specialized quiver meant to hold any kind of bolts intended for use with the rebar crossbow. \
+	desc = "A specialized quiver meant to hold any kind of bolts intended for use with the rebar crossbow. Allows moving while reloading.\
 		Clearly a better design than a cut up oxygen tank..."
 	slot_flags = ITEM_SLOT_NECK
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	actions_types = list(/datum/action/item_action/reload_rebar)
 	storage_type = /datum/storage/bag/rebar_quiver/syndicate
-
-/obj/item/storage/bag/rebar_quiver/syndicate/Initialize(mapload)
-	. = ..()
-	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/storage/bag/rebar_quiver/syndicate/PopulateContents()
 	for(var/to_fill in 1 to 20)
@@ -549,28 +584,6 @@
 			icon_state = "syndie_quiver_2"
 		if(14 to 20)
 			icon_state = "syndie_quiver_3"
-
-/obj/item/storage/bag/rebar_quiver/syndicate/ui_action_click(mob/user, actiontype)
-	if(istype(actiontype, /datum/action/item_action/reload_rebar))
-		reload_held_rebar(user)
-
-/obj/item/storage/bag/rebar_quiver/syndicate/proc/reload_held_rebar(mob/user)
-	if(!contents.len)
-		user.balloon_alert(user, "no bolts left!")
-		return
-	var/obj/held_item = user.get_active_held_item()
-	if(!held_item || !istype(held_item, /obj/item/gun/ballistic/rifle/rebarxbow))
-		user.balloon_alert(user, "no held crossbow!")
-		return
-	var/obj/item/gun/ballistic/rifle/rebarxbow/held_crossbow = held_item
-	if(held_crossbow.magazine.contents.len >= held_crossbow.magazine.max_ammo)
-		user.balloon_alert(user, "no more room!")
-		return
-	if(!do_after(user, 1.2 SECONDS, user))
-		return
-
-	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
-	held_crossbow.item_interaction(user, ammo_to_load)
 
 /obj/item/storage/bag/quiver
 	name = "quiver"

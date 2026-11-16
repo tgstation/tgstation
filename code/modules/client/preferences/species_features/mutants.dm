@@ -15,8 +15,11 @@
 /datum/preference/color/mutant_color/create_default_value()
 	return sanitize_hexcolor("[pick("7F", "FF")][pick("7F", "FF")][pick("7F", "FF")]")
 
-/datum/preference/color/mutant_color/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features[FEATURE_MUTANT_COLOR] = value
+/datum/preference/color/mutant_color/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
+	var/species_type = preferences.read_preference(/datum/preference/choiced/species)
+	var/datum/species/species = GLOB.species_prototypes[species_type]
+	if (!(TRAIT_FIXED_MUTANT_COLORS in species.inherent_traits))
+		target.dna.features[FEATURE_MUTANT_COLOR] = value
 
 /datum/preference/color/mutant_color/is_valid(value)
 	if (!..(value))

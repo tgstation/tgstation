@@ -31,6 +31,7 @@
 	available_items[item.category] -= item.identifier
 	if(!length(available_items[item.category]))
 		available_items -= item.category
+		categories -= item.category
 
 /**
  * Handles buying the item for a market.
@@ -52,7 +53,7 @@
 	var/shipment_fee = item.shipping_override?[method]
 	if(isnull(shipment_fee))
 		shipment_fee = shipping[method]
-	var/price = item.price + shipment_fee
+	var/price = (item.price * (uplink.current_user.black_market_cost_modifier || 1.0)) + shipment_fee
 
 	if(!uplink.current_user)///There is no ID card on the user, or the ID card has no account
 		to_chat(user, span_warning("The uplink sparks, as it can't identify an ID card with a bank account on you."))
@@ -91,7 +92,7 @@
 	name = "Black Market"
 	shipping = list(
 		SHIPPING_METHOD_LTSRBT = 40,
-		SHIPPING_METHOD_LAUNCH = 10,
-		SHIPPING_METHOD_TELEPORT= 75,
+		SHIPPING_METHOD_LAUNCH = 0,
+		SHIPPING_METHOD_TELEPORT = 75,
 	)
 	legal_status = FALSE

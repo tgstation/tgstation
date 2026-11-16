@@ -83,16 +83,16 @@
 	else
 		toggle_open()
 
-/obj/machinery/skill_station/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(I,/obj/item/skillchip))
-		if(inserted_skillchip)
-			to_chat(user,span_notice("There's already a skillchip inside."))
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		inserted_skillchip = I
-		return
-	return ..()
+/obj/machinery/skill_station/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool,/obj/item/skillchip))
+		return NONE
+	if(inserted_skillchip)
+		to_chat(user,span_notice("There's already a skillchip inside."))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	inserted_skillchip = tool
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/skill_station/dump_contents()
 	. = ..()

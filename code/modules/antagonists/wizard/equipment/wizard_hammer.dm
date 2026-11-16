@@ -4,6 +4,7 @@
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "singularity_hammer0"
+	inhand_icon_state = "singularity_hammer0"
 	base_icon_state = "singularity_hammer"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
@@ -34,12 +35,8 @@
 	AddElement(/datum/element/kneejerk)
 	AddComponent(/datum/component/two_handed, \
 		force_multiplier = 4, \
-		icon_wielded = "[base_icon_state]1", \
+		update_icon_state = TRUE, \
 	)
-
-/obj/item/singularityhammer/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
 
 /obj/item/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
@@ -78,6 +75,7 @@
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "mjollnir0"
+	inhand_icon_state = "mjollnir0"
 	base_icon_state = "mjollnir"
 	worn_icon_state = "mjollnir"
 	icon_angle = -45
@@ -94,36 +92,30 @@
 	. = ..()
 	AddComponent(/datum/component/two_handed, \
 		force_multiplier = 5, \
-		icon_wielded = "[base_icon_state]1", \
-		attacksound = SFX_SPARKS, \
+		update_icon_state = TRUE, \
+		attacksound = /datum/sound_effect/sparks, \
 	)
 
-/obj/item/mjollnir/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
-
-/obj/item/mjollnir/proc/shock(mob/living/target)
+/obj/item/mjollnir/proc/yeet_shock(mob/living/target)
 	target.Stun(1.5 SECONDS)
 	target.Knockdown(10 SECONDS)
-	var/datum/effect_system/lightning_spread/s = new /datum/effect_system/lightning_spread
-	s.set_up(5, 1, target.loc)
-	s.start()
+	var/datum/effect_system/basic/lightning_spread/lightning = new(target.loc, 5, TRUE)
+	lightning.start()
 	target.visible_message(span_danger("[target.name] is shocked by [src]!"), \
 		span_userdanger("You feel a powerful shock course through your body sending you flying!"), \
 		span_hear("You hear a heavy electrical crack!"))
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
 	target.throw_at(throw_target, 200, 4)
 
-/obj/item/mjollnir/attack(mob/living/target_mob, mob/user)
-	..()
-	if(QDELETED(target_mob))
+/obj/item/mjollnir/afterattack(atom/target, mob/user)
+	if(QDELETED(target))
 		return
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		return
-	if(HAS_TRAIT(src, TRAIT_WIELDED))
-		shock(target_mob)
+	if(HAS_TRAIT(src, TRAIT_WIELDED) && isliving(target))
+		yeet_shock(target)
 
 /obj/item/mjollnir/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
+	if(.)
+		return
 	if(!QDELETED(hit_atom) && isliving(hit_atom))
-		shock(hit_atom)
+		yeet_shock(hit_atom)

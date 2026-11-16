@@ -26,17 +26,17 @@
 	if (!target.data)
 		target.data = list()
 
-	target.data["blood_type"] = blood_type
+	target.data[BLOOD_DATA_TYPE] = blood_type
 	if (blood_type.desc)
 		target.description = blood_type.desc
 	target.color = blood_type.get_color()
 
 
 	if (!blood_source)
-		target.material = GET_MATERIAL_REF(/datum/material/meat/blood_meat, target)
+		target.material = SSmaterials.get_material(/datum/material/meat/blood_meat, target)
 		return
 
-	target.material = GET_MATERIAL_REF(/datum/material/meat/mob_meat, blood_source)
+	target.material = SSmaterials.get_material(/datum/material/meat/mob_meat, blood_source)
 
 	var/list/blood_data = blood_source.get_blood_data()
 	if(blood_data["viruses"])
@@ -81,7 +81,7 @@
 	SIGNAL_HANDLER
 
 	if ((methods & (TOUCH | VAPOR)) && reac_volume >= 3 && (blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_MOBS)))
-		exposed_mob.add_blood_DNA(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type))
+		exposed_mob.add_blood_DNA(list("[source.data?[BLOOD_DATA_DNA] || blood_type.dna_string]" = blood_type))
 
 	// Somehow got a no-data reagent, probably artificially created blood
 	if (!source.data)
@@ -91,7 +91,7 @@
 		return
 
 	for(var/datum/disease/strain as anything in source.data["viruses"])
-		if ((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
+		if ((strain.spread_flags & (DISEASE_SPREAD_SPECIAL|DISEASE_SPREAD_NON_CONTAGIOUS)))
 			continue
 
 		if (methods & INGEST)
@@ -125,7 +125,7 @@
 	if (reac_volume < 3 || !(blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_TURFS)))
 		return
 
-	var/dna_list = list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type)
+	var/dna_list = list("[source.data?[BLOOD_DATA_DNA] || blood_type.dna_string]" = blood_type)
 	var/obj/effect/decal/cleanable/blood/splatter = locate() in exposed_turf
 	if (!splatter)
 		if (!(blood_type.blood_flags & BLOOD_COVER_TURFS))
@@ -156,7 +156,7 @@
 		return
 
 	if (blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_ITEMS))
-		exposed_obj.add_blood_DNA(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type))
+		exposed_obj.add_blood_DNA(list("[source.data?[BLOOD_DATA_DNA] || blood_type.dna_string]" = blood_type))
 
 	if (!(blood_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
 		return
@@ -188,7 +188,7 @@
 		return
 
 	// Mixed blood cannot be used for cloning
-	if (source.data["blood_DNA"] != mix_data["blood_DNA"])
+	if (source.data[BLOOD_DATA_DNA] != mix_data[BLOOD_DATA_DNA])
 		source.data["cloneable"] = FALSE
 
 	var/list/source_viruses = source.data["viruses"]

@@ -32,6 +32,10 @@
 ///Slightly slower, higher in memory. Just not optimal
 //#define REFERENCE_TRACKING_DEBUG
 
+///Skips over a bunch of types that are "unlikely" to have any hanging refs,
+///MASSIVELY speeding up finding references. Relatively speaking. The reftracker is still not very fast.
+//#define FAST_REFERENCE_TRACKING
+
 ///Run a lookup on things hard deleting by default.
 //#define GC_FAILURE_HARD_LOOKUP
 #ifdef GC_FAILURE_HARD_LOOKUP
@@ -69,6 +73,8 @@
 #define GC_FAILURE_HARD_LOOKUP
 // Log references in their own file
 #define REFERENCE_TRACKING_LOG_APART
+// use fast reftracking
+#define FAST_REFERENCE_TRACKING
 #endif // REFERENCE_DOING_IT_LIVE
 
 /// Sets up the reftracker to be used locally, to hunt for hard deletions
@@ -103,6 +109,9 @@
 
 // If defined, we will NOT defer asset generation till later in the game, and will instead do it all at once, during initiialize
 //#define DO_NOT_DEFER_ASSETS
+
+// Forces init assets to generate regardless of config setting
+//#define FORCE_GENERATE_INIT_ASSETS
 
 /// If this is uncommented, Autowiki will generate edits and shut down the server.
 /// Prefer the autowiki build target instead.
@@ -143,14 +152,7 @@
 #endif // 1 to use the default behaviour;
 								// 2 for preloading absolutely everything;
 
-#ifdef LOWMEMORYMODE
-#ifndef ABSOLUTE_MINIMUM
-#define FORCE_MAP "runtimestation"
-#else
-#define FORCE_MAP "runtimestation_minimal"
-#endif
-#define FORCE_MAP_DIRECTORY "_maps"
-#endif
+#define FORCE_MAP_DIRECTORY MAP_DIRECTORY_MAPS
 
 //Additional code for the above flags.
 #ifdef TESTING
@@ -173,8 +175,14 @@
 #define GC_FAILURE_HARD_LOOKUP
 //Ensures all early assets can actually load early
 #define DO_NOT_DEFER_ASSETS
+//Always gen assets, unit tests will check if the contributor needs to update them
+#define FORCE_GENERATE_INIT_ASSETS
 //Test at full capacity, the extra cost doesn't matter
 #define TIMER_DEBUG
+	// Checks if unit tests are being run locally or well, not
+	#if !defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
+	#define RUNNING_LOCAL_TESTS
+	#endif
 #endif
 
 #ifdef TGS
@@ -203,3 +211,8 @@
 #ifdef MAP_TEST
 #warn Compiling in MAP_TEST mode. Certain game mechanics will be disabled.
 #endif
+
+/// Disable to use builtin DM-based generation.
+/// IconForge is 250x times faster but requires storing the icons in tmp/ and may result in higher asset transport.
+/// Note that the builtin GAGS editor still uses the 'legacy' generation to allow for debugging.
+#define USE_RUSTG_ICONFORGE_GAGS

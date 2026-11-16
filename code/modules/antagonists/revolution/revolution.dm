@@ -7,8 +7,9 @@
 	antag_hud_name = "rev"
 	suicide_cry = "VIVA LA REVOLUTION!!"
 	stinger_sound = 'sound/music/antag/revolutionary_tide.ogg'
-	var/datum/team/revolution/rev_team
+	ui_name = "AntagInfoRevolution"
 
+	var/datum/team/revolution/rev_team
 	/// When this antagonist is being de-antagged, this is the source. Can be a mob (for mindshield/blunt force trauma) or a #define string.
 	var/deconversion_source
 
@@ -20,18 +21,6 @@
 	return ..()
 
 /datum/antagonist/rev/admin_add(datum/mind/new_owner, mob/admin)
-	// No revolution exists which means admin adding this will create a new revolution team
-	// This causes problems because revolution teams (currently) require a dynamic datum to process its victory / defeat conditions
-	if(!(locate(/datum/team/revolution) in GLOB.antagonist_teams))
-		var/confirm = tgui_alert(admin, "Notice: Revolutions do not function 100% when created via traitor panel instead of dynamic. \
-			The leaders will be able to convert as normal, but the shuttle will not be blocked and there will be no announcements when either side wins. \
-			Are you sure?", "Be Wary", list("Yes", "No"))
-		if(QDELETED(src) || QDELETED(new_owner.current) || confirm != "Yes")
-			return
-
-	go_through_with_admin_add(new_owner, admin)
-
-/datum/antagonist/rev/proc/go_through_with_admin_add(datum/mind/new_owner, mob/admin)
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has rev'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has rev'ed [key_name(new_owner)].")
@@ -56,12 +45,7 @@
 /datum/antagonist/rev/on_gain()
 	. = ..()
 	equip_rev()
-	owner.current.log_message("has been converted to the revolution!", LOG_ATTACK, color="red")
-
-/datum/antagonist/rev/greet()
-	. = ..()
-	to_chat(owner, span_userdanger("Help your cause. Do not harm your fellow freedom fighters. You can identify your comrades by the red \"R\" icons, and your leaders by the blue \"R\" icons. Help them kill the heads to win the revolution!"))
-	owner.announce_objectives()
+	owner.current.log_message("has been converted to the revolution!", LOG_ATTACK, color = COLOR_CULT_RED)
 
 /datum/antagonist/rev/create_team(datum/team/revolution/new_team)
 	if(!new_team)
@@ -98,7 +82,41 @@
 	message_admins("[key_name_admin(admin)] has head-rev'ed [O].")
 	log_admin("[key_name(admin)] has head-rev'ed [O].")
 
-/datum/antagonist/rev/head/go_through_with_admin_add(datum/mind/new_owner, mob/admin)
+/datum/antagonist/rev/ui_static_data(mob/user)
+	. = ..()
+	.["leader"] = (pref_flag == ROLE_REV_HEAD)
+	.["heads"] = list()
+	for(var/datum/mind/head_of_staff as anything in SSjob.get_all_heads())
+		.["heads"] += list(list("name" = head_of_staff.name, "role" = head_of_staff.assigned_role.title))
+
+/datum/antagonist/rev/head/ui_static_data(mob/user)
+	. = ..()
+	.["code_phrases"] = rev_team.head_chose_phrase_raw
+	.["code_responses"] = rev_team.head_code_responses_raw
+	.["lone_wolf"] = !roundstart || length(rev_team.get_head_revolutionaries()) == 1
+	.["conversion_objective_max_length"] = MAX_CHARTER_LEN // it's poetic, not lazy reuse, I swear
+	.["conversion_objective"] = html_decode(conversion_objective)
+
+/datum/antagonist/rev/head/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	switch(action)
+		if("set_conversion_objective")
+			if(!params["conversion_objective"])
+				conversion_objective = ""
+				return
+
+			var/new_objective = trim(sanitize(params["conversion_objective"]), MAX_CHARTER_LEN)
+			if(!new_objective)
+				tgui_alert(usr, "Your objective is invalid. Please try again.")
+				return
+			if(is_ic_filtered(new_objective))
+				tgui_alert(usr, "Your objective contains IC filtered words. Please remove them and try again.")
+				return
+
+			conversion_objective = new_objective
+			owner.current.log_message("set their conversion guideline to: [conversion_objective]", color = COLOR_CULT_RED)
+
+/datum/antagonist/rev/head/admin_add(datum/mind/new_owner, mob/admin)
 	give_flash = TRUE
 	give_hud = TRUE
 	remove_clumsy = TRUE
@@ -158,9 +176,13 @@
 	preview_outfit = /datum/outfit/revolutionary
 	hardcore_random_bonus = TRUE
 
+	/// Headrev-set objective sent to any player they convert
+	var/conversion_objective = ""
+
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = TRUE
+	var/roundstart = FALSE
 
 /datum/antagonist/rev/head/pre_mindshield(mob/implanter, mob/living/mob_override)
 	return COMPONENT_MINDSHIELD_RESISTED
@@ -182,11 +204,17 @@
 	real_mob.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
 	RegisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB, PROC_REF(on_flash_success))
 
+	real_mob.AddComponent(/datum/component/codeword_hearing, rev_team.head_code_phrases, "blue", src)
+	real_mob.AddComponent(/datum/component/codeword_hearing, rev_team.head_code_responses, "red", src)
+
 /datum/antagonist/rev/head/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
 	real_mob.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
 	UnregisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_MOB)
+
+	for(var/datum/component/codeword_hearing/component as anything in real_mob.GetComponents(/datum/component/codeword_hearing))
+		component.delete_if_from_source(src)
 
 /// Signal proc for [COMSIG_MOB_SUCCESSFUL_FLASHED_MOB].
 /// Bread and butter of revolution conversion, successfully flashing a carbon will make them a revolutionary
@@ -195,7 +223,7 @@
 
 	if(flashed.stat == DEAD || issilicon(flashed) || isdrone(flashed))
 		return
-	if(flashed.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(flashed))
 		to_chat(source, span_warning("[flashed.p_They()] must be conscious before you can convert [flashed.p_them()]!"))
 		return
 
@@ -222,21 +250,21 @@
 	return ..() + "(Leader)"
 
 /datum/antagonist/rev/head/get_preview_icon()
-	var/icon/final_icon = render_preview_outfit(preview_outfit)
+	var/datum/universal_icon/final_icon = render_preview_outfit(preview_outfit)
 
-	final_icon.Blend(make_assistant_icon("Business Hair"), ICON_UNDERLAY, -8, 0)
-	final_icon.Blend(make_assistant_icon("CIA"), ICON_UNDERLAY, 8, 0)
+	final_icon.blend_icon(make_assistant_icon("Business Hair"), ICON_UNDERLAY, -8, 0)
+	final_icon.blend_icon(make_assistant_icon("CIA"), ICON_UNDERLAY, 8, 0)
 
 	// Apply the rev head HUD, but scale up the preview icon a bit beforehand.
 	// Otherwise, the R gets cut off.
-	final_icon.Scale(64, 64)
+	final_icon.scale(64, 64)
 
-	var/icon/rev_head_icon = icon('icons/mob/huds/antag_hud.dmi', "rev_head")
-	rev_head_icon.Scale(48, 48)
-	rev_head_icon.Crop(1, 1, 64, 64)
-	rev_head_icon.Shift(EAST, 10)
-	rev_head_icon.Shift(NORTH, 16)
-	final_icon.Blend(rev_head_icon, ICON_OVERLAY)
+	var/datum/universal_icon/rev_head_icon = uni_icon('icons/mob/huds/antag_hud.dmi', "rev_head")
+	rev_head_icon.scale(48, 48)
+	rev_head_icon.crop(1, 1, 64, 64)
+	rev_head_icon.shift(EAST, 10)
+	rev_head_icon.shift(NORTH, 16)
+	final_icon.blend_icon(rev_head_icon, ICON_OVERLAY)
 
 	return finish_preview_icon(final_icon)
 
@@ -244,8 +272,8 @@
 	var/mob/living/carbon/human/dummy/consistent/assistant = new
 	assistant.set_hairstyle(hairstyle, update = TRUE)
 
-	var/icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
-	assistant_icon.ChangeOpacity(0.5)
+	var/datum/universal_icon/assistant_icon = render_preview_outfit(/datum/outfit/job/assistant/consistent, assistant)
+	assistant_icon.change_opacity(0.5)
 
 	qdel(assistant)
 
@@ -279,8 +307,34 @@
 		rev_mind.current.Stun(10 SECONDS)
 
 	rev_mind.add_memory(/datum/memory/recruited_by_headrev, protagonist = rev_mind.current, antagonist = owner.current)
-	rev_mind.add_antag_datum(/datum/antagonist/rev,rev_team)
+	rev_mind.add_antag_datum(/datum/antagonist/rev, rev_team)
 	return TRUE
+
+/datum/antagonist/rev/head/add_revolutionary(datum/mind/rev_mind, stun = TRUE, mute = TRUE)
+	. = ..()
+	if(!. || !conversion_objective)
+		return
+
+	addtimer(CALLBACK(src, PROC_REF(report_conversion_objective), rev_mind, conversion_objective), 2 SECONDS, TIMER_DELETE_ME)
+
+/datum/antagonist/rev/head/proc/report_conversion_objective(datum/mind/rev_mind, set_conversion_objective)
+	if(QDELETED(rev_mind))
+		return
+
+	if(isnull(rev_mind?.current?.client))
+		if(isnull(rev_mind?.current))
+			return
+		// Try again until they get a client - presumably they're actively being polled for (due to a jobban or something).
+		addtimer(CALLBACK(src, PROC_REF(report_conversion_objective), rev_mind, set_conversion_objective), 3 SECONDS, TIMER_DELETE_ME)
+		return
+
+	var/conversion_formatted = span_slightly_larger(span_hypnophrase(set_conversion_objective))
+	var/hint_formatted = span_warning("This is a guideline instilled upon you from your (new) leader - \
+		while you are expected to follow it where possible, it is not a strict order. \
+		Further orders from your (new) leader(s) may supersede this.")
+
+	to_chat(rev_mind.current, fieldset_block(span_warning("A directive echoes through your mind..."), "[conversion_formatted]<br>[hint_formatted]", "boxed_message red_box"))
+	rev_mind.current.log_message("has been given a conversion guideline from [key_name(owner.current)]: [set_conversion_objective]", color = COLOR_CULT_RED)
 
 /datum/antagonist/rev/head/proc/demote()
 	var/datum/mind/old_owner = owner
@@ -320,7 +374,7 @@
 
 /// Handles rev removal via IC methods such as borging, mindshielding, blunt force trauma to the head or revs losing.
 /datum/antagonist/rev/proc/remove_revolutionary(deconverter)
-	owner.current.log_message("has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!", LOG_ATTACK, color=COLOR_CULT_RED)
+	owner.current.log_message("has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!", LOG_ATTACK, color = COLOR_CULT_RED)
 	if(deconverter == DECONVERTER_BORGED)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	if(iscarbon(owner.current) && deconverter)
@@ -371,6 +425,23 @@
 	/// List of all ex-revs. Useful because dynamic removes antag status when it ends, so this can be kept for the roundend report.
 	var/list/datum/mind/ex_revs = list()
 
+	/// List of code phrases
+	VAR_FINAL/list/head_chose_phrase_raw
+	/// Regex for code phrases that only headrevs hear
+	VAR_FINAL/regex/head_code_phrases
+	/// List of code responses
+	VAR_FINAL/list/head_code_responses_raw
+	/// Regex for code responses that only headrevs hear
+	VAR_FINAL/regex/head_code_responses
+
+/datum/team/revolution/New(starting_members)
+	. = ..()
+	head_chose_phrase_raw = generate_code_phrase(return_list = TRUE)
+	head_code_phrases = new("([jointext(head_chose_phrase_raw, "|")])", "ig")
+
+	head_code_responses_raw = generate_code_phrase(return_list = TRUE)
+	head_code_responses = new("([jointext(head_code_responses_raw, "|")])", "ig")
+
 /// Saves all current headrevs and revs
 /datum/team/revolution/proc/save_members()
 	ex_headrevs = get_head_revolutionaries()
@@ -405,10 +476,7 @@
 	for(var/datum/mind/khrushchev as anything in members - head_revolutionaries)
 		if(!can_be_headrev(khrushchev))
 			continue
-		var/client/khruschevs_client = GET_CLIENT(khrushchev.current)
-		if(!(ROLE_REV_HEAD in khruschevs_client.prefs.be_special) && !(ROLE_PROVOCATEUR in khruschevs_client.prefs.be_special))
-			continue
-		if(ismonkey(khrushchev.current))
+		if(HAS_TRAIT(khrushchev.current, TRAIT_LESSER_HUMANOID))
 			monkey_promotable += khrushchev
 		else
 			promotable += khrushchev

@@ -184,7 +184,7 @@
 
 	if(status == FISH_DEAD)
 		force -= 8 + w_class
-		hitsound = SFX_SWING_HIT
+		hitsound = /datum/sound_effect/swing_hit
 		block_chance -= 25
 		demolition_mod -= 0.3
 		armour_penetration -= 15
@@ -201,7 +201,7 @@
 	toolspeed -= bonus_malus * 0.1
 
 // you suicide like a real chainsaw
-/obj/item/fish/chainsawfish/suicide_act(mob/living/carbon/user)
+/obj/item/fish/chainsawfish/suicide_act(mob/living/user)
 	if(status == FISH_DEAD)
 		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)

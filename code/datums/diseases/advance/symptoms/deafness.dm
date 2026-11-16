@@ -10,21 +10,22 @@
 	name = "Deafness"
 	desc = "The virus causes inflammation of the eardrums, causing intermittent deafness."
 	illness = "Aural Perforation"
-	stealth = -1
-	resistance = -2
-	stage_speed = -1
-	transmittable = -3
+	stealth = 0
+	resistance = 1
+	stage_speed = 1
+	transmittable = -2
 	level = 4
 	severity = 4
 	base_message_chance = 100
-	symptom_delay_min = 25
-	symptom_delay_max = 80
+	symptom_delay = 52.5
 	required_organ = ORGAN_SLOT_EARS
+	symptom_cure = /datum/reagent/medicine/psicodine
 	threshold_descs = list(
 		"Resistance 9" = "Causes permanent deafness, instead of intermittent.",
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
 	var/causes_permanent_deafness = FALSE
+	var/suppress_warning = FALSE
 
 /datum/symptom/deafness/Start(datum/disease/advance/A)
 	. = ..()

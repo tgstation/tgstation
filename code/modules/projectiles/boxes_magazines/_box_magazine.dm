@@ -20,6 +20,8 @@
 	var/list/stored_ammo = list()
 	///type that the magazine will be searching for, rejects if not a subtype of
 	var/ammo_type = /obj/item/ammo_casing
+	///type that the magazine will never accept. Allows for blacklisting some ammo types that share calibers, for instance.
+	var/refused_type
 	/// wording used for individual units of ammo, e.g. cartridges (regular ammo), shells (shotgun shells)
 	var/casing_phrasing = "round"
 	///maximum amount of ammo in the magazine
@@ -116,7 +118,7 @@
 		load_type = ammo_type
 
 	var/obj/item/ammo_casing/round_check = load_type
-	if(!starting && !(caliber ? (caliber == initial(round_check.caliber)) : (ammo_type == load_type)))
+	if(!starting && (!(caliber ? (caliber == initial(round_check.caliber)) : (ammo_type == load_type)) || refused_type && refused_type == ammo_type))
 		stack_trace("Tried loading unsupported ammocasing type [load_type] into ammo box [type].")
 		return
 
@@ -160,7 +162,7 @@
 ///puts a round into the magazine
 /obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/new_round, replace_spent = 0)
 	// Boxes don't have a caliber type, magazines do. Not sure if it's intended or not, but if we fail to find a caliber, then we fall back to ammo_type.
-	if(!new_round || !(caliber ? (caliber == new_round.caliber) : (ammo_type == new_round.type)))
+	if(!is_compatible_round(new_round))
 		return FALSE
 
 	if (stored_ammo.len < max_ammo)
@@ -188,6 +190,11 @@
 		new_round.forceMove(src)
 		return TRUE
 	return FALSE
+
+/obj/item/ammo_box/proc/is_compatible_round(obj/item/ammo_casing/new_round)
+	if(!new_round || !(caliber ? (caliber == new_round.caliber) : (ammo_type == new_round.type)) || refused_type && refused_type == new_round.type)
+		return FALSE
+	return TRUE
 
 ///Whether or not the box can be loaded, used in overrides
 /obj/item/ammo_box/proc/can_load(mob/user)

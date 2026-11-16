@@ -1,15 +1,12 @@
 ADMIN_VERB(painting_manager, R_ADMIN, "Paintings Manager", "View and redact paintings.", ADMIN_CATEGORY_MAIN)
-	var/static/datum/paintings_manager/ui = new
-	ui.ui_interact(user.mob)
+	var/datum/paintings_manager/tgui = new()
+	tgui.ui_interact(user.mob)
 
 /// Painting Admin Management Panel
 /datum/paintings_manager
 
 /datum/paintings_manager/ui_state(mob/user)
 	return ADMIN_STATE(R_ADMIN)
-
-/datum/paintings_manager/ui_close(mob/user)
-	qdel(src)
 
 /datum/paintings_manager/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

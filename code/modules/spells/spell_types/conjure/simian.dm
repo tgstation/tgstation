@@ -53,7 +53,7 @@
 /datum/action/cooldown/spell/conjure/simian/post_summon(atom/summoned_object, atom/cast_on)
 	var/mob/living/alive_dude = summoned_object
 	alive_dude.add_faction(list(FACTION_MONKEY))
-	if(ismonkey(alive_dude))
+	if(HAS_TRAIT(alive_dude, TRAIT_LESSER_HUMANOID))
 		equip_monky(alive_dude)
 		return
 
@@ -90,8 +90,8 @@
 
 	// Load the ammo
 	if(istype(weapon, /obj/item/gun/syringe/blowgun))
-		var/obj/item/reagent_containers/syringe/crude/tribal/syring = new(summoned_monkey)
-		weapon.attackby(syring, summoned_monkey)
+		var/obj/item/reagent_containers/syringe/crude/tribal/dart = new(summoned_monkey)
+		astype(weapon, /obj/item/gun/syringe/blowgun).attempt_insert_syringe(summoned_monkey, dart)
 
 	// Wield the weapon!
 	if(is_type_in_list(weapon, list(/obj/item/spear, /obj/item/fireaxe)))

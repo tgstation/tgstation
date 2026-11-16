@@ -6,8 +6,6 @@
 	cooldown_time = 1.5 SECONDS
 	/// The range of the dash
 	var/dash_range = 4
-	/// The distance you will be from the target after you dash
-	var/pick_range = 5
 
 /datum/action/cooldown/mob_cooldown/dash/Activate(atom/target_atom)
 	disable_cooldown_actions()

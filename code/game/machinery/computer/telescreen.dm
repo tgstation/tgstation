@@ -9,13 +9,17 @@
 	network = list(CAMERANET_NETWORK_THUNDERDOME)
 	density = FALSE
 	circuit = null
+	breakable_without_circuit = TRUE
+	armor_type = /obj/machinery/status_display::armor_type
 	light_power = 0
 	/// The kind of wallframe that this telescreen drops
 	var/frame_type = /obj/item/wallframe/telescreen
 	projectiles_pass_chance = 100
+	generate_map_preview = FALSE
 
 /obj/machinery/computer/security/telescreen/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/weld_repairable)
 	if(mapload)
 		find_and_mount_on_atom()
 
@@ -26,15 +30,10 @@
 	icon_state = "telescreen"
 	result_path = /obj/machinery/computer/security/telescreen
 	pixel_shift = 32
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/machinery/computer/security/telescreen/on_deconstruction(disassembled)
 	new frame_type(loc)
-
-/obj/machinery/computer/security/telescreen/update_icon_state()
-	icon_state = initial(icon_state)
-	if(machine_stat & BROKEN)
-		icon_state += "b"
-	return ..()
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
@@ -99,7 +98,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 		return UI_CLOSE
 	if(!isliving(user))
 		return isAdminGhostAI(user) ? UI_INTERACTIVE : UI_UPDATE
-	if(user.stat >= SOFT_CRIT)
+	if(user.incapacitated)
 		return UI_UPDATE
 
 	var/can_range = FALSE
@@ -139,9 +138,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	else
 		if(!can_see(watcher, src, 7))
 			return FALSE
-	if(watcher.is_blind())
-		return FALSE
-	if(!isobserver(watcher) && watcher.stat >= UNCONSCIOUS)
+	if(watcher.is_blind() || IS_UNCONSCIOUS(watcher))
 		return FALSE
 	return TRUE
 
@@ -152,7 +149,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	else
 		icon_screen = icon_state_off
 	update_appearance(UPDATE_OVERLAYS)
-	if(announcement)
+	if(announcement && is_operational)
 		say(announcement)
 
 /// Adds a camera network ID to the entertainment monitor, and turns off the monitor if network list is empty
@@ -569,4 +566,3 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/monaster
 /obj/item/wallframe/telescreen/monastery
 	name = "monastery telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/monastery
-

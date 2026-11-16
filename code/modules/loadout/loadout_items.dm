@@ -278,18 +278,15 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		var/skin_chosen = item_details[INFO_RESKIN]
 		var/list/atom_skins = get_atom_skins()
 		for(var/datum/atom_skin/skin_path as anything in valid_subtypesof(reskin_datum))
-			if(skin_path::preview_name != skin_chosen)
-				continue
-			if(skin_path::preview_name != skin_chosen)
+			if(format_text(skin_path::preview_name) != skin_chosen && format_text(skin_path::new_name) != skin_chosen)
 				continue
 			var/datum/atom_skin/skin_instance = atom_skins[skin_path]
 			skin_instance.apply(equipped_item)
 			if(istype(equipped_item, /obj/item/clothing/accessory))
 				// Snowflake handing for accessories, because we need to update the thing it's attached to instead
 				if(isclothing(equipped_item.loc))
-					var/obj/item/clothing/under/attached_to = equipped_item.loc
-					attached_to.update_accessory_overlay()
-					update_flag |= (ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING)
+					var/obj/item/clothing/attached_to = equipped_item.loc
+					update_flag |= attached_to.slot_flags
 			else
 				update_flag |= equipped_item.slot_flags
 			break

@@ -46,6 +46,7 @@
 	ammo_x_offset = 1
 	selfcharge = 1
 	gun_flags = NOT_A_REAL_GUN
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/uranium = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/gun/energy/meteorgun
 	name = "meteor gun"
@@ -100,6 +101,7 @@
 	usesound = list('sound/items/tools/welder.ogg', 'sound/items/tools/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 4)
 
 /obj/item/gun/energy/plasmacutter/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)
@@ -117,29 +119,40 @@
 	if(cell)
 		. += span_notice("[src] is [round(cell.percent())]% charged.")
 
-/obj/item/gun/energy/plasmacutter/attackby(obj/item/I, mob/user)
-	var/charge_multiplier = 0 //2 = Refined stack, 1 = Ore
-	if(istype(I, /obj/item/stack/sheet/mineral/plasma))
+/obj/item/gun/energy/plasmacutter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/charge_multiplier = 0
+	if(istype(tool, /obj/item/stack/sheet/mineral/plasma))
 		charge_multiplier = 2
-	if(istype(I, /obj/item/stack/ore/plasma))
+	else if(istype(tool, /obj/item/stack/ore/plasma))
 		charge_multiplier = 1
-	if(charge_multiplier)
-		if(cell.charge == cell.maxcharge)
-			balloon_alert(user, "already fully charged!")
-			return
-		I.use(1)
-		cell.give(0.5 * STANDARD_CELL_CHARGE * charge_multiplier)
-		balloon_alert(user, "cell recharged")
-	else
-		..()
+
+	if(!charge_multiplier)
+		return NONE
+
+	if(cell.charge == cell.maxcharge)
+		balloon_alert(user, "already fully charged!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/sheet = tool
+	if (!sheet.use(1))
+		return ITEM_INTERACT_BLOCKING
+
+	cell.give(0.2 * STANDARD_CELL_CHARGE * charge_multiplier)
+	balloon_alert(user, "cell recharged")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/energy/plasmacutter/emp_act(severity)
 	. = ..()
-	if(isliving(loc))
-		var/mob/living/user = loc
-		user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
-		user.adjust_fire_stacks(4)
-		user.ignite_mob()
+	if(. & EMP_PROTECT_CONTENTS)
+		return
+
+	if(!isliving(loc))
+		return
+
+	var/mob/living/user = loc
+	user.visible_message(span_danger("Concentrated plasma discharges from [src] onto [user], burning them!"), span_userdanger("[src] malfunctions, spewing concentrated plasma onto you! It burns!"))
+	user.adjust_fire_stacks(4)
+	user.ignite_mob()
 
 // Can we weld? Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
@@ -163,16 +176,16 @@
 	return (!QDELETED(cell) && cell.use(used ? used * PLASMA_CUTTER_CHARGE_WELD : PLASMA_CUTTER_CHARGE_WELD))
 
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
+	if(!amount)
+		amount = 1
+		return ..()
 
-	if(amount)
-		var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
-		target.add_overlay(sparks)
-		LAZYADD(update_overlays_on_z, sparks)
-		. = ..()
-		LAZYREMOVE(update_overlays_on_z, sparks)
-		target.cut_overlay(sparks)
-	else
-		. = ..(amount=1)
+	var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
+	target.add_overlay(sparks)
+	LAZYADD(update_overlays_on_z, sparks)
+	. = ..()
+	LAZYREMOVE(update_overlays_on_z, sparks)
+	target.cut_overlay(sparks)
 
 /obj/item/gun/energy/plasmacutter/try_fire_gun(atom/target, mob/living/user, params)
 	return fire_gun(target, user, user.Adjacent(target) && !isturf(target), params)
@@ -185,6 +198,7 @@
 	inhand_icon_state = "adv_plasmacutter"
 	force = 15
 	ammo_type = list(/obj/item/ammo_casing/energy/plasma/adv)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 
 #define AMMO_SELECT_BLUE 1
 #define AMMO_SELECT_ORANGE 2
@@ -199,31 +213,19 @@
 	icon_state = "wormhole_projector"
 	base_icon_state = "wormhole_projector"
 	automatic_charge_overlays = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT)
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
-	var/firing_core = FALSE
+	var/spawn_with_core = FALSE
 	gun_flags = NOT_A_REAL_GUN
+
+/obj/item/gun/energy/wormhole_projector/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anomaly_locked_gun, list(/obj/item/assembly/signaler/anomaly/bluespace), init_core = spawn_with_core)
 
 /obj/item/gun/energy/wormhole_projector/examine(mob/user)
 	. = ..()
 	. += span_notice("<b>Left-click</b> to fire blue wormholes and <b><font color=orange>right-click</font></b> to fire orange wormholes.")
-
-/obj/item/gun/energy/wormhole_projector/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/assembly/signaler/anomaly/bluespace))
-		to_chat(user, span_notice("You insert [C] into the wormhole projector and the weapon gently hums to life."))
-		firing_core = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		qdel(C)
-		return
-
-/obj/item/gun/energy/wormhole_projector/can_shoot()
-	if(!firing_core)
-		return FALSE
-	return ..()
-
-/obj/item/gun/energy/wormhole_projector/shoot_with_empty_chamber(mob/living/user)
-	. = ..()
-	to_chat(user, span_danger("The display says, 'NO CORE INSTALLED'."))
 
 /obj/item/gun/energy/wormhole_projector/update_icon_state()
 	. = ..()
@@ -290,10 +292,10 @@
 		qdel(p_blue)
 		p_blue = new_portal
 	crosslink()
-	playsound(new_portal, SFX_PORTAL_CREATED, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(new_portal, /datum/sound_effect/portal_created, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/gun/energy/wormhole_projector/core_inserted
-	firing_core = TRUE
+	spawn_with_core = TRUE
 
 #undef AMMO_SELECT_BLUE
 #undef AMMO_SELECT_ORANGE
@@ -345,23 +347,20 @@
 	inhand_icon_state = "gravity_gun"
 	icon_state = "gravity_gun"
 	automatic_charge_overlays = FALSE
-	var/power = 4
-	var/firing_core = FALSE
+	custom_materials = list(
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/uranium = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 1.5,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 1.5,
+	)
 	gun_flags = NOT_A_REAL_GUN
+	var/power = 4
 
-/obj/item/gun/energy/gravity_gun/attackby(obj/item/C, mob/user)
-	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))
-		to_chat(user, span_notice("You insert [C] into the gravitational manipulator and the weapon gently hums to life."))
-		firing_core = TRUE
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		qdel(C)
-		return
-	return ..()
-
-/obj/item/gun/energy/gravity_gun/can_shoot()
-	if(!firing_core)
-		return FALSE
-	return ..()
+/obj/item/gun/energy/gravity_gun/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anomaly_locked_gun, list(/obj/item/assembly/signaler/anomaly/grav))
 
 /**
 -----------------Tesla Cannon--------------------------------
@@ -390,13 +389,14 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 	display_empty =  FALSE
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
-	///if our stpck is extended and we are ready to fire.
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 5)
+	///if our stock is extended and we are ready to fire.
 	var/ready_to_fire = FALSE
 
 /obj/item/gun/energy/tesla_cannon/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/automatic_fire, autofire_shot_delay =  100 MILLISECONDS, firing_sound_loop = /datum/looping_sound/tesla_cannon)
+	AddComponent(/datum/component/anomaly_locked_gun, list(/obj/item/assembly/signaler/anomaly/flux))
 
 /obj/item/gun/energy/tesla_cannon/can_trigger_gun(mob/living/user, akimbo_usage)
 	if(ready_to_fire)
@@ -511,3 +511,4 @@ it is often confused with the mech weapon of the same name, since it is a bit mo
 /obj/item/gun/energy/photon/Initialize(mapload)
 	. = ..()
 	set_light_on(TRUE) // The gun quite literally shoots mini-suns.
+	AddComponent(/datum/component/anomaly_locked_gun, list(/obj/item/assembly/signaler/anomaly/flux))

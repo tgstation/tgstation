@@ -26,7 +26,7 @@
 /atom/movable/screen/alert/status_effect/terrified
 	name = "Terrified!"
 	desc = "You feel a supernatural darkness settle in around you, overwhelming you with panic! Get into the light!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "terrified"
 
 #undef TERROR_INITIAL_AMOUNT

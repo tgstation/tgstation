@@ -53,19 +53,22 @@
 		FISHING_DUD = 5,
 		/obj/item/stack/ore/slag = 15,
 		/obj/item/fish/lavaloop = 15,
+		/obj/item/stack/sheet/animalhide/goliath_hide = 15,
+		/obj/item/stack/sheet/bone = 15,
+		/obj/item/stack/sheet/sinew = 15,
 		/obj/structure/closet/crate/necropolis/tendril = 1,
-		/obj/item/skeleton_key = 1,
 		/obj/item/stack/sheet/mineral/runite = 1,
 		/obj/effect/mob_spawn/corpse/human/charredskeleton = 1,
+		/mob/living/basic/mining/legion= 1,
+		/mob/living/basic/mining/brimdemon= 1,
+
 	)
 	fish_counts = list(
 		/obj/structure/closet/crate/necropolis/tendril = 1,
-		/obj/item/skeleton_key = 1,
 		/obj/item/stack/sheet/mineral/runite = 2,
 	)
 	fish_count_regen = list(
 		/obj/structure/closet/crate/necropolis/tendril = 27 MINUTES,
-		/obj/item/skeleton_key = 13 MINUTES,
 		/obj/item/stack/sheet/mineral/runite = 15 MINUTES,
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 20
@@ -91,7 +94,6 @@
 		/obj/effect/decal/remains/plasma = 2,
 		/obj/item/stack/sheet/mineral/runite = 2,
 		/obj/item/stack/sheet/mineral/adamantine = 2,
-		/obj/item/skeleton_key = 1,
 		/obj/structure/closet/crate/necropolis/tendril = 1,
 		/mob/living/basic/mining/lobstrosity = 1,
 		/mob/living/basic/mining/lobstrosity/juvenile = 1,
@@ -99,13 +101,11 @@
 	fish_counts = list(
 		/obj/item/stack/sheet/mineral/adamantine = 3,
 		/obj/item/stack/sheet/mineral/runite = 2,
-		/obj/item/skeleton_key = 1,
 		/obj/structure/closet/crate/necropolis/tendril = 1,
 	)
 	fish_count_regen = list(
 		/obj/item/stack/sheet/mineral/adamantine = 8 MINUTES,
 		/obj/item/stack/sheet/mineral/runite = 10 MINUTES,
-		/obj/item/skeleton_key = 15 MINUTES,
 		/obj/structure/closet/crate/necropolis/tendril = 30 MINUTES,
 	)
 	overlay_state = "portal_plasma"

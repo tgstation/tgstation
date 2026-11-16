@@ -161,7 +161,7 @@
 
 /obj/item/clothing/gloves/atmos
 	name = "atmospheric extrication gloves"
-	desc = "Heavy duty gloves for firefighters. These are thick, non-flammable and let you carry people faster."
+	desc = "Heavy duty gloves for firefighters. These are thick, non-flammable, and let you carry people faster."
 	icon_state = "atmos"
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
@@ -181,6 +181,7 @@
 	name = "athletic fishing gloves"
 	desc = "A pair of gloves to fish without a fishing rod but your raw <b>athletics</b> strength. It doubles as a good workout device. <i><b>WARNING</b>: May cause injuries when catching bigger fish.</i>"
 	icon_state = "fishing_gloves"
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	///The current fishing minigame datum the wearer is engaged in.
 	var/datum/fishing_challenge/challenge
 

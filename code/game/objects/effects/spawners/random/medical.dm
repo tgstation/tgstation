@@ -8,7 +8,7 @@
 	loot = list(
 		/obj/item/stack/medical/suture,
 		/obj/item/stack/medical/mesh,
-		/obj/item/stack/medical/gauze,
+		/obj/item/stack/medical/wrap/gauze,
 	)
 
 /obj/effect/spawner/random/medical/injector
@@ -63,6 +63,7 @@
 		/obj/item/organ/lungs/plasmaman,
 		/obj/item/organ/tail/cat,
 		/obj/item/organ/tail/lizard,
+		/obj/item/organ/tail/fish/cerulean,
 	)
 
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner
@@ -75,7 +76,7 @@
 
 /obj/effect/spawner/random/medical/surgery_tool
 	name = "Surgery tool spawner"
-	icon_state = "scapel"
+	icon_state = "scalpel"
 	loot = list(
 		/obj/item/scalpel,
 		/obj/item/hemostat,
@@ -88,7 +89,7 @@
 
 /obj/effect/spawner/random/medical/surgery_tool_advanced
 	name = "Advanced surgery tool spawner"
-	icon_state = "scapel"
+	icon_state = "scalpel"
 	loot = list( // Mail loot spawner. Drop pool of advanced medical tools typically from research. Not endgame content.
 		/obj/item/scalpel/advanced,
 		/obj/item/retractor/advanced,
@@ -97,7 +98,7 @@
 
 /obj/effect/spawner/random/medical/surgery_tool_alien
 	name = "Rare surgery tool spawner"
-	icon_state = "scapel"
+	icon_state = "scalpel"
 	loot = list( // Mail loot spawner. Some sort of random and rare surgical tool. Alien tech found here.
 		/obj/item/scalpel/alien,
 		/obj/item/hemostat/alien,

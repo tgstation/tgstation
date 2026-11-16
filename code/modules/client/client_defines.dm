@@ -75,10 +75,6 @@
 	///The visual delay to use for the current client.Move(), mostly used for making a client based move look like it came from some other slower source
 	var/visual_delay = 0
 
-		///////////////
-		//SOUND STUFF//
-		///////////////
-
 		////////////
 		//SECURITY//
 		////////////
@@ -175,9 +171,6 @@
 	/// Messages currently seen by this client
 	var/list/seen_messages
 
-	//Hide status bar (bottom left)
-	var/show_status_bar = TRUE
-
 	/// datum wrapper for client view
 	var/datum/view_data/view_size
 
@@ -186,28 +179,13 @@
 
 	/// list of all tabs
 	var/list/panel_tabs = list()
-	/// list of tabs containing spells and abilities
-	var/list/spell_tabs = list()
 	///A lazy list of atoms we've examined in the last RECENT_EXAMINE_MAX_WINDOW (default 2) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
 	var/list/recent_examines
 
-	var/list/parallax_layers
-	var/list/parallax_layers_cached
-	var/atom/movable/screen/parallax_home/parallax_rock
-	///this is the last recorded client eye by SSparallax/fire()
-	var/atom/movable/movingmob
-	var/turf/previous_turf
-	///world.time of when we can state animate()ing parallax again
-	var/dont_animate_parallax
-	/// Direction our current area wants to move parallax
-	var/parallax_movedir = 0
-	/// How many parallax layers to show our client
-	var/parallax_layers_max = 4
-	/// Timers for the area directional animation, one for each layer
-	var/list/parallax_animate_timers
-	/// Do we want to do parallax animations at all?
-	/// Exists to prevent laptop fires
-	var/do_parallax_animations = TRUE
+	/// List of all the parallax instances we are currently displaying
+	var/list/atom/movable/screen/parallax_home/parallax_instances = list()
+	/// The parallax instance tied to our eye
+	var/atom/movable/screen/parallax_home/eye_parallax
 
 	///Are we locking our movement input?
 	var/movement_locked = FALSE
@@ -253,6 +231,9 @@
 	/// Whether or not this client has the combo HUD enabled
 	var/combo_hud_enabled = FALSE
 
+	/// Whether New() has started. BYOND can call Del() before client initialization begins.
+	var/new_started = FALSE
+
 	/// If this client has been fully initialized or not
 	var/fully_created = FALSE
 
@@ -262,8 +243,18 @@
 	/// Loot panel for the client
 	var/datum/lootpanel/loot_panel
 
+	var/datum/admin_verb_panel/admin_verb_panel
+
 	///Which ambient sound this client is currently being provided.
 	var/current_ambient_sound
 
+	/// Is this client currently playing admin internet music?
+	var/web_music_playing = FALSE
+
 	/// The DPI scale of the client. 1 is equivalent to 100% window scaling, 2 will be 200% window scaling
 	var/window_scaling
+
+	var/datum/tgui_window/stat_panel
+
+	/// OOC colour of the clients messages.
+	var/ooc_colour = null

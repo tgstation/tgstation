@@ -29,17 +29,45 @@
 	return our_armor
 
 /mob/living/proc/getarmor(def_zone, type)
+	SHOULD_CALL_PARENT(TRUE)
+	var/worn_armor = get_worn_armor_value(def_zone, type)
+	var/inner_armor_percent = min(inner_armor?.get_rating(type) * 0.01, 1)
+	var/not_blocked = (100 - worn_armor) * (1 - inner_armor_percent)
+	return 100 - not_blocked
+
+/mob/living/proc/get_worn_armor_value(obj/item/bodypart/def_zone, damage_type)
 	return 0
 
-//this returns the mob's protection against eye damage (number between -1 and 2) from bright lights
+///This proc adds the ratings of an armor type to our inner armor, which is initialized if previously null.
+/mob/living/proc/add_inner_armor(datum/armor/armor_to_add)
+	if(isnull(inner_armor))
+		inner_armor = new
+	inner_armor = inner_armor.add_other_armor(armor_to_add)
+
+///This proc removes the ratings of an armor type from our inner armor, then deletes it if all ratings are 0.
+/mob/living/proc/remove_inner_armor(datum/armor/armor_to_remove)
+	if(isnull(inner_armor))
+		return
+	inner_armor = inner_armor.subtract_other_armor(armor_to_remove)
+	var/list/ratings_list = inner_armor.get_rating_list()
+	for(var/rating in ratings_list)
+		if(ratings_list[rating] != 0)
+			return
+	QDEL_NULL(inner_armor) //all ratings are 0, meaning we no longer have an intrinsic armor of some kind.
+
+/// This returns the mob's protection against eye damage (number between -1 and 2) from bright lights
 /mob/living/proc/get_eye_protection()
 	return 0
 
-///A easy to use proc to apply both organ damage and temporary deafness at once, so you don't have to get the ears everytime.
+/// This returns a number is subtracted from the severity of incoming emps against this mob.
+/mob/living/proc/get_emp_protection()
+	return emp_protection
+
+/// An easy to use proc to apply both organ damage and temporary deafness at once, so you don't have to get the ears everytime.
 /mob/living/proc/sound_damage(damage, deafen)
 	return
 
-//this returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
+/// This returns the mob's protection against ear damage (0:no protection; 1: some ear protection; 2: has no ears)
 /mob/living/proc/get_ear_protection(ignore_deafness = FALSE)
 	if(!ignore_deafness && HAS_TRAIT(src, TRAIT_DEAF))
 		return INFINITY //For all my homies that can not hear in the world
@@ -47,7 +75,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_GET_EAR_PROTECTION, sig_protection)
 	var/protection = sig_protection[EAR_PROTECTION_ARG]
 	var/turf/current_turf = get_turf(src)
-	var/datum/gas_mixture/environment = current_turf.return_air()
+	var/datum/gas_mixture/environment = current_turf?.return_air()
 	var/pressure = environment?.return_pressure()
 	if(pressure < SOUND_MINIMUM_PRESSURE) //space is empty
 		protection += EAR_PROTECTION_VACUUM
@@ -101,6 +129,14 @@
 	return null
 
 /**
+ * Checks if our mob has their eyes visible.
+ * More verbose then directly checking HIDEEYES and lets you search for tint, flash protection, or covering clothing.
+ * Retuns TRUE or FALSE
+ */
+/mob/living/proc/is_eyes_visible(max_tint, max_flash_protection, requires_eyes = FALSE, covered_check_flags = NONE)
+	return TRUE
+
+/**
  * Check if the passed body zone is covered by some clothes
  *
  * * location: body zone to check
@@ -142,7 +178,7 @@
 		apply_projectile_effects(proj, def_zone, blocked)
 
 /mob/living/proc/apply_projectile_effects(obj/projectile/proj, def_zone, armor_check)
-	apply_damage(
+	var/damage_dealt = apply_damage(
 		damage = proj.damage,
 		damagetype = proj.damage_type,
 		def_zone = def_zone,
@@ -153,6 +189,10 @@
 		attack_direction = get_dir(proj.starting, src),
 		attacking_item = proj,
 	)
+
+	if(proj.damage_type == BRUTE && damage_dealt >= 10 && proj.speed >= 1 && prob(0.1))
+		var/obj/item/organ/brain/a_brain = locate() in get_bodypart(def_zone)
+		a_brain?.cure_trauma_type(resilience = TRAUMA_RESILIENCE_LOBOTOMY)
 
 	apply_effects(
 		stun = proj.stun,
@@ -174,6 +214,10 @@
 
 	if (proj.damage && armor_check < 100)
 		create_projectile_hit_effects(proj, def_zone, armor_check)
+
+	if(proj.fired_from)
+		SEND_SIGNAL(proj.fired_from, COMSIG_PROJECTILE_POST_HIT_LIVING, src, def_zone, armor_check)
+	SEND_SIGNAL(proj, COMSIG_PROJECTILE_SELF_POST_HIT_LIVING, src, def_zone, armor_check)
 
 /mob/living/proc/create_projectile_hit_effects(obj/projectile/proj, def_zone, blocked)
 	if (proj.damage_type != BRUTE)
@@ -207,9 +251,9 @@
 		return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
 	return 0 // plays no sound
 
-/mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
+/mob/living/proc/set_combat_mode(new_mode, silent = TRUE, force = FALSE)
 
-	if(HAS_TRAIT(src, TRAIT_COMBAT_MODE_LOCK))
+	if(HAS_TRAIT(src, TRAIT_COMBAT_MODE_LOCK) && !force)
 		return
 
 	if(combat_mode == new_mode)
@@ -217,8 +261,7 @@
 	. = combat_mode
 	combat_mode = new_mode
 	SEND_SIGNAL(src, COMSIG_COMBAT_MODE_TOGGLED)
-	if(hud_used?.action_intent)
-		hud_used.action_intent.update_appearance()
+	hud_used?.screen_objects[HUD_MOB_INTENTS]?.update_appearance()
 	if(silent || !client?.prefs.read_preference(/datum/preference/toggle/sound_combatmode))
 		return
 	if(combat_mode)
@@ -309,8 +352,13 @@
 /mob/living/proc/can_catch_item(skip_throw_mode_check = FALSE, try_offhand = FALSE)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return FALSE
-	if(get_active_held_item() && (!try_offhand || get_inactive_held_item() || !swap_hand()))
-		return FALSE
+
+	if(get_active_held_item())
+		if(!try_offhand)
+			return FALSE
+		var/empty_held_indexes = get_empty_held_indexes()
+		if(!length(empty_held_indexes) || !swap_hand(pick(empty_held_indexes)))
+			return FALSE
 	return TRUE
 
 /mob/living/fire_act()
@@ -323,13 +371,13 @@
  */
 /mob/living/proc/grab(mob/living/target)
 	if(!istype(target))
-		return FALSE
+		return GRAB_SKIP
 	if(SEND_SIGNAL(src, COMSIG_LIVING_GRAB, target) & (COMPONENT_CANCEL_ATTACK_CHAIN|COMPONENT_SKIP_ATTACK))
-		return FALSE
+		return GRAB_FAILURE
 	if(target.check_block(src, 0, "[src]'s grab", UNARMED_ATTACK))
-		return FALSE
+		return GRAB_FAILURE
 	target.grabbedby(src)
-	return TRUE
+	return GRAB_SUCCESS
 
 /**
  * Called when this mob is grabbed by another mob.
@@ -473,7 +521,7 @@
 	if(.)
 		return TRUE
 
-	if(!combat_mode && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
+	if(!user.combat_mode && HAS_TRAIT(src, TRAIT_READY_TO_OPERATE) && user.perform_surgery(src))
 		return TRUE
 
 	return FALSE
@@ -582,10 +630,11 @@
 /mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, flags) & COMPONENT_LIVING_BLOCK_SHOCK)
 		return FALSE
+	siemens_coeff *= GET_PHYSIOLOGY(src, PHYS_COEFF_ELEC_CONDUCTIVITY)
 	shock_damage *= siemens_coeff
 	if((flags & SHOCK_TESLA) && HAS_TRAIT(src, TRAIT_TESLA_SHOCKIMMUNE))
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
+	if(!(flags & SHOCK_IGNORE_IMMUNITY) && HAS_TRAIT(src, TRAIT_SHOCKIMMUNE))
 		return FALSE
 	if(shock_damage < 1)
 		return FALSE
@@ -608,6 +657,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_CONTENTS)
 		return
+	severity += get_emp_protection()
 	for(var/obj/inside in contents)
 		inside.emp_act(severity)
 
@@ -668,7 +718,7 @@
 	return TRUE
 
 //called when the mob receives a loud bang
-/mob/living/proc/soundbang_act(intensity = SOUNDBANG_NORMAL, stun_pwr = 20, damage_pwr = 5, deafen_pwr = 15, ignore_deafness = FALSE, send_sound = TRUE)
+/mob/living/proc/soundbang_act(intensity = SOUNDBANG_NORMAL, stun_pwr = 2 SECONDS, damage_pwr = 5, deafen_pwr = 1.5 SECONDS, ignore_deafness = FALSE, send_sound = TRUE)
 	var/protection = get_ear_protection(ignore_deafness)
 	if(protection >= intensity)
 		return FALSE
@@ -816,6 +866,9 @@
 				span_userdanger("You[knocked_down ? "'re knocked down" : " resist falling down"] from a shove by [name]!"), span_hear("You hear aggressive shuffling [knocked_down ? "followed by a loud thud!" : ""]"), COMBAT_MESSAGE_RANGE, src)
 			to_chat(src, span_danger("You shove [target.name][knocked_down ? ", knocking [target.p_them()] down" : ""]!"))
 			log_combat(src, target, "shoved", "[knocked_down ? "knocking them down[weapon ? " with [weapon]" : ""]" : ""]")
+			if(ishuman(target))
+				var/mob/living/carbon/human/human_target = target
+				human_target.force_say()
 			return
 
 	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
@@ -877,9 +930,10 @@
 		return FALSE
 	if(has_status_effect(/datum/status_effect/hallucination) || has_status_effect(/datum/status_effect/drugginess))
 		return TRUE
-	if(IsSleeping() || IsUnconscious())
+	if(IS_UNCONSCIOUS(src))
 		return TRUE
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		return TRUE
-	if(mob_mood && mob_mood.sanity < SANITY_UNSTABLE)
+	if(mob_mood?.sanity < SANITY_UNSTABLE)
 		return TRUE
+	return FALSE

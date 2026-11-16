@@ -26,7 +26,7 @@
 
 /datum/wires/vending/interact(mob/user)
 	var/obj/machinery/vending/vending_machine = holder
-	if (!HAS_SILICON_ACCESS(user) && vending_machine.seconds_electrified && vending_machine.shock(user, 100))
+	if (!HAS_SILICON_ACCESS(user) && vending_machine.seconds_electrified && vending_machine.shock(user, 125))
 		return
 
 	return ..()
@@ -66,7 +66,7 @@
 			vending_machine.extended_inventory = !vending_machine.extended_inventory
 		if(WIRE_SHOCK)
 			vending_machine.seconds_electrified = MACHINE_DEFAULT_ELECTRIFY_TIME
-			vending_machine.shock(usr, 100)
+			vending_machine.shock(usr, 125)
 		if(WIRE_IDSCAN)
 			vending_machine.scan_id = !vending_machine.scan_id
 		if(WIRE_SPEAKER)
@@ -88,29 +88,15 @@
 				vending_machine.seconds_electrified = MACHINE_NOT_ELECTRIFIED
 			else
 				vending_machine.seconds_electrified = MACHINE_ELECTRIFIED_PERMANENT
-				vending_machine.shock(usr, 100)
+				vending_machine.shock(usr, 125)
 		if(WIRE_IDSCAN)
 			vending_machine.scan_id = mend
 		if(WIRE_SPEAKER)
 			vending_machine.shut_up = mend
 
-
-/**
- * Shock the passed in user
- *
- * This checks we have power and that the passed in prob is passed, then generates some sparks
- * and calls electrocute_mob on the user
- *
- * Arguments:
- * * user - the user to shock
- * * shock_chance - probability the shock happens
- */
-/obj/machinery/vending/proc/shock(mob/living/user, shock_chance)
-	if(!istype(user) || machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
+/obj/machinery/vending/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
+	if(machine_stat & (BROKEN|NOPOWER))
 		return FALSE
-	if(!prob(shock_chance))
-		return FALSE
-	do_sparks(5, TRUE, src)
-	if(electrocute_mob(user, get_area(src), src, 0.7, dist_check = TRUE))
-		return TRUE
-	return FALSE
+	if(isnull(siemens_coeff))
+		siemens_coeff = 0.7
+	return ..()

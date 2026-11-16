@@ -47,7 +47,7 @@
 			subject.add_mood_event("paranoia_personality", /datum/mood_event/paranoid/large_group)
 
 /datum/personality/paranoid/proc/is_dangerous_mob(mob/living/subject, mob/living/carbon/human/target)
-	if(target.stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(target))
 		return FALSE
 	if(target.invisibility > subject.see_invisible || target.alpha < 20)
 		return FALSE

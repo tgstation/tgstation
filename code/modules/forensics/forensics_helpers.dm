@@ -36,7 +36,7 @@
 	if (QDELETED(src))
 		return
 	var/old = 0
-	if(suspect.gloves && istype(suspect.gloves, /obj/item/clothing))
+	if(suspect.gloves && isclothing(suspect.gloves))
 		var/obj/item/clothing/gloves/suspect_gloves = suspect.gloves
 		old = GET_ATOM_BLOOD_DNA_LENGTH(suspect_gloves)
 		if(suspect_gloves.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
@@ -211,7 +211,7 @@
 			dirty_feet = FALSE
 
 	if(slots_to_bloody & ITEM_SLOT_HANDS)
-		for(var/obj/item/thing in held_items)
+		for(var/obj/item/thing as anything in get_held_items())
 			thing.add_blood_DNA(blood_DNA_to_add)
 
 	cached_blood_color = null

@@ -8,22 +8,25 @@
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
 
-///Special throw_impact for hats to frisbee hats at people to place them on their heads/attempt to de-hat them.
+/// Can we land on people's heads?
+/obj/item/clothing/head/proc/can_throw_equip(atom/hit_atom)
+	return TRUE
+
+// Special throw_impact for hats to frisbee hats at people to place them on their heads/attempt to de-hat them.
 /obj/item/clothing/head/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
 	. = ..()
-	///if the thrown object's target zone isn't the head
+	if(!can_throw_equip(hit_atom))
+		return
+	// if the thrown object's target zone isn't the head
 	if(thrownthing.target_zone != BODY_ZONE_HEAD)
 		return
-	///ignore any hats with the tinfoil counter-measure enabled
-	if(clothing_flags & ANTI_TINFOIL_MANEUVER)
-		return
-	///if the hat happens to be capable of holding contents and has something in it. mostly to prevent super cheesy stuff like stuffing a mini-bomb in a hat and throwing it
+	// if the hat happens to be capable of holding contents and has something in it. mostly to prevent super cheesy stuff like stuffing a mini-bomb in a hat and throwing it
 	if(LAZYLEN(contents))
 		return
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/H = hit_atom
-		if(istype(H.head, /obj/item))
-			var/obj/item/WH = H.head
+		var/obj/item/WH = H.get_item_by_slot(ITEM_SLOT_HEAD)
+		if(istype(WH))
 			///check if the item has NODROP
 			if(HAS_TRAIT(WH, TRAIT_NODROP))
 				H.visible_message(span_warning("[src] bounces off [H]'s [WH.name]!"), span_warning("[src] bounces off your [WH.name], falling to the floor."))
@@ -55,18 +58,18 @@
 			R.visible_message(span_notice("[src] lands neatly on top of [R]!"), span_notice("[src] lands perfectly on top of you."))
 			R.place_on_head(src) //hats aren't designed to snugly fit borg heads or w/e so they'll always manage to knock eachother off
 
-/obj/item/clothing/head/worn_overlays(mutable_appearance/standing, isinhands = FALSE)
+/obj/item/clothing/head/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedhelmet")
 
-/obj/item/clothing/head/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+/obj/item/clothing/head/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if (isinhands)
 		return
-	var/blood_overlay = get_blood_overlay("helmet")
+	var/blood_overlay = get_blood_overlay("helmet", bodyshape)
 	if (blood_overlay)
 		. += blood_overlay
 

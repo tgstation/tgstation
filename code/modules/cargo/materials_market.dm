@@ -36,19 +36,14 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/materials_market/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]", tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/materials_market/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/materials_market/item_interaction(mob/living/user, obj/item/stack/exportable, list/modifiers)
-	. = NONE
 	if(!isstack(exportable))
-		return
+		return NONE
 
 	if(!is_operational)
 		balloon_alert(user, "no power!")
@@ -135,6 +130,7 @@
 	var/sheet_to_buy
 	var/requested_amount
 	var/minimum_value_threshold = 0
+	var/maximum_value_threshold = 0
 	var/elastic_mult = 1
 	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
 		//convert trend into text
@@ -173,6 +169,8 @@
 		else
 			minimum_value_threshold = round(initial(traded_mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
 
+		maximum_value_threshold = round(initial(traded_mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
+
 		//Pulling elastic modifier into data.
 		for(var/datum/export/material/market/export_est in GLOB.exports_list)
 			if(export_est.material_id == traded_mat)
@@ -182,7 +180,8 @@
 			"name" = initial(traded_mat.name),
 			"price" = SSstock_market.materials_prices[traded_mat],
 			"rarity" = initial(traded_mat.value_per_unit),
-			"threshold" = minimum_value_threshold,
+			"min_threshold" = minimum_value_threshold,
+			"max_threshold" = maximum_value_threshold,
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
 			"color" = color_string,
@@ -356,31 +355,40 @@
 /obj/item/stock_block/Initialize(mapload)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(value_warning)), 1.5 MINUTES, TIMER_DELETE_ME)
-	addtimer(CALLBACK(src, PROC_REF(update_value)), 3 MINUTES, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(become_liquid)), 3 MINUTES, TIMER_DELETE_ME)
 
 /obj/item/stock_block/examine(mob/user)
 	. = ..()
 
 	var/datum/material/export_mat = custom_materials[1]
 	var/quantity = custom_materials[export_mat] / SHEET_MATERIAL_AMOUNT
-	. += span_notice("\The [src] is worth [quantity * export_value] [MONEY_SYMBOL], from selling [quantity] sheets of [export_mat.name].")
 
 	if(fluid)
 		. += span_warning("\The [src] is currently liquid! Its value is based on the market price.")
+		update_value()
 	else
 		. += span_notice("\The [src]'s value is still [span_boldnotice("locked in")]. [span_boldnotice("Sell it")] before its value becomes liquid!")
 
+	. += span_notice("\The [src] is worth [quantity * export_value] [MONEY_SYMBOL], from selling [quantity] sheets of [export_mat.name].")
+
+/// Creates a visible effect warning nearby players that a stock block is beginning to become liquid in price.
 /obj/item/stock_block/proc/value_warning()
 	visible_message(span_warning("\The [src] is starting to become liquid!"))
 	icon_state = "stock_block_fluid"
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/item/stock_block/proc/update_value()
-	export_value = SSstock_market.materials_prices[custom_materials[1]]
+/// Creates a visible effect warning nearby players that a stock block has become liquid in price, and updates the value, icon_state, and fluidity vars.
+/obj/item/stock_block/proc/become_liquid()
+	update_value()
 	icon_state = "stock_block_liquid"
 	update_appearance(UPDATE_ICON_STATE)
 	visible_message(span_warning("\The [src] becomes liquid!"))
 	fluid = TRUE
+
+/// Updates the value of the stock block, for examine, and for sale value. Export value becomes equal to the stock market value of that material.
+/obj/item/stock_block/proc/update_value()
+	export_value = SSstock_market.materials_prices[src.custom_materials[1].type]
+	return export_value
 
 #undef MAX_STACK_LIMIT
 #undef GALATIC_MATERIAL_ORDER

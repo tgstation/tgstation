@@ -1,5 +1,3 @@
-#define SHEET_POINT_VALUE 33
-
 /**********************Prisoners' Console**************************/
 
 /obj/machinery/mineral/labor_claim_console
@@ -29,7 +27,8 @@
 /obj/machinery/mineral/labor_claim_console/proc/register_shuttle_signal()
 	SIGNAL_HANDLER
 	var/obj/docking_port/mobile/laborshuttle = SSshuttle.getShuttle("laborcamp")
-	RegisterSignal(laborshuttle, COMSIG_SHUTTLE_SHOULD_MOVE, PROC_REF(on_laborshuttle_can_move))
+	if(laborshuttle)
+		RegisterSignal(laborshuttle, COMSIG_SHUTTLE_SHOULD_MOVE, PROC_REF(on_laborshuttle_can_move))
 	UnregisterSignal(SSshuttle, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /obj/machinery/mineral/labor_claim_console/Destroy()
@@ -77,6 +76,11 @@
 	data["can_go_home"] = can_go_home
 	return data
 
+/obj/machinery/mineral/labor_claim_console/ui_static_data(mob/user)
+	var/list/data = list()
+	data["shuttle_exists"] = !isnull(SSshuttle.getShuttle("laborcamp"))
+	return data
+
 /obj/machinery/mineral/labor_claim_console/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -103,6 +107,12 @@
 					COOLDOWN_START(src, say_cooldown, 2 SECONDS)
 
 		if("move_shuttle")
+			if(isnull(SSshuttle.getShuttle("laborcamp")))
+				if(COOLDOWN_FINISHED(src, say_cooldown))
+					say("Shuttle not found.")
+					COOLDOWN_START(src, say_cooldown, 2 SECONDS)
+				return
+
 			var/list/labor_shuttle_mobs = find_labor_shuttle_mobs()
 			if(length(labor_shuttle_mobs) > 1 || labor_shuttle_mobs[1] != user_mob)
 				if(COOLDOWN_FINISHED(src, say_cooldown))
@@ -171,6 +181,7 @@
 /**********************Prisoner Collection Unit**************************/
 
 /obj/machinery/mineral/stacking_machine/laborstacker
+	name = "labor camp collection unit"
 	force_connect = TRUE
 	damage_deflection = 21 //otherwise prisoners will destroy it
 	///Idle points sitting in the machine left to be claimed.
@@ -188,8 +199,8 @@
 	if (!istype(input, /obj/item/stack/sheet))
 		return ..()
 	var/obj/item/stack/sheet/sheet = input
-	if (sheet.manufactured && sheet.gulag_valid)
-		points += SHEET_POINT_VALUE * sheet.amount
+	if (sheet.manufactured && sheet.gulag_value)
+		points += sheet.gulag_value * sheet.amount
 	return ..()
 
 /obj/machinery/mineral/stacking_machine/laborstacker/base_item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
@@ -213,16 +224,19 @@
 		return
 	user.examinate(src)
 
-/obj/machinery/mineral/labor_points_checker/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(weapon, /obj/item/card/id/advanced/prisoner))
-		return ..()
-	var/obj/item/card/id/advanced/prisoner/prisoner_id = weapon
+/obj/machinery/mineral/labor_points_checker/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/card/id/advanced/prisoner))
+		return NONE
+
+	var/obj/item/card/id/advanced/prisoner/prisoner_id = tool
 	if(!prisoner_id.goal) //no goal to reach
 		say("No goal required for this ID.")
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	say("ID: [prisoner_id.registered_name].")
 	say("Points Collected: [prisoner_id.points] / [prisoner_id.goal].")
 	say("Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.")
+	return ITEM_INTERACT_SUCCESS
 
 /datum/aas_config_entry/security_labor_stacker
 	name = "Security Alert: Labor Camp Release"
@@ -232,5 +246,3 @@
 	vars_and_tooltips_map = list(
 		"PERSON" = "will be replaced with the name of the prisoner."
 	)
-
-#undef SHEET_POINT_VALUE

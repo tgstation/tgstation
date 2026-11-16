@@ -28,7 +28,7 @@
 	return ..()
 
 /datum/terror_handler/phobia_source/proc/can_trigger()
-	return !HAS_TRAIT(owner, TRAIT_FEARLESS) && !HAS_TRAIT(owner, TRAIT_MIND_TEMPORARILY_GONE) && owner.stat < UNCONSCIOUS
+	return !HAS_TRAIT(owner, TRAIT_FEARLESS) && !HAS_TRAIT(owner, TRAIT_MIND_TEMPORARILY_GONE) && !IS_UNCONSCIOUS(owner)
 
 /datum/terror_handler/phobia_source/tick(seconds_per_tick, terror_buildup)
 	. = ..()
@@ -101,7 +101,7 @@
 		return
 
 	// Words can't trigger you if you can't hear them *taps head*
-	if(!owner.can_hear() || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE]))
+	if(HAS_TRAIT(owner, TRAIT_DEAF) || owner == hearing_args[HEARING_SPEAKER] || !owner.has_language(hearing_args[HEARING_LANGUAGE]))
 		return
 
 	if(trigger_regex.Find(hearing_args[HEARING_RAW_MESSAGE]))

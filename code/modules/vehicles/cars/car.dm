@@ -24,13 +24,13 @@
 	if(car_traits & CAN_KIDNAP)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/dump_kidnapped_mobs, VEHICLE_CONTROL_DRIVE)
 
-/obj/vehicle/sealed/car/mouse_drop_receive(atom/dropping, mob/M, params)
-	if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !is_driver(M))
+/obj/vehicle/sealed/car/mouse_drop_receive(atom/dropping, mob/user, params)
+	if(!isliving(user) || (HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && !is_driver(user)))
 		return
-	if((car_traits & CAN_KIDNAP) && isliving(dropping) && M != dropping)
+	if((car_traits & CAN_KIDNAP) && isliving(dropping) && user != dropping)
 		var/mob/living/kidnapped = dropping
-		kidnapped.visible_message(span_warning("[M] starts forcing [kidnapped] into [src]!"))
-		mob_try_forced_enter(M, kidnapped)
+		kidnapped.visible_message(span_warning("[user] starts forcing [kidnapped] into [src]!"))
+		mob_try_forced_enter(user, kidnapped)
 	return ..()
 
 /obj/vehicle/sealed/car/mob_try_exit(mob/future_pedestrian, mob/user, silent = FALSE)

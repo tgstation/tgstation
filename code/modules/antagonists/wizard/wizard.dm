@@ -28,8 +28,6 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/datum/action/cooldown/grand_ritual/ritual
 	/// Perks that wizard learn
 	var/list/perks = list()
-	/// Button that hide perks hud.
-	var/atom/movable/screen/perk/more/compact_button
 
 /datum/antagonist/wizard_minion
 	name = "Wizard Minion"
@@ -96,6 +94,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	owner.add_traits(list(TRAIT_MAGICALLY_GIFTED, TRAIT_SEE_BLESSED_TILES), REF(src))
 	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
 		blessed_hud.check_hud(owner.current)
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/space_wizard))
 
 /datum/antagonist/wizard/Destroy()
 	QDEL_NULL(ritual)

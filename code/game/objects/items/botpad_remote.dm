@@ -5,6 +5,7 @@
 	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "botpad_controller"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	// ID of the remote, used for linking up
 	var/id = "botlauncher"
 	var/obj/machinery/botpad/connected_botpad
@@ -16,12 +17,12 @@
 	return ..()
 
 /obj/item/botpad_remote/attack_self(mob/living/user)
-	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
+	playsound(src, /datum/sound_effect/terminal_type, 25, FALSE)
 	try_launch(user)
 	return
 
 /obj/item/botpad_remote/attack_self_secondary(mob/living/user)
-	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
+	playsound(src, /datum/sound_effect/terminal_type, 25, FALSE)
 	if(connected_botpad)
 		connected_botpad.recall(user)
 		return

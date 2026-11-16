@@ -127,20 +127,20 @@
 	contains = list(/obj/item/gun/energy/laser/soul)
 
 /datum/supply_pack/goody/smg_single
-	name = "Disabler SMG Single_Pack"
+	name = "Disabler SMG Single Pack"
 	desc = "Contains one disabler SMG, capable of rapidly firing weak disabler beams."
 	cost = PAYCHECK_COMMAND * 6
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/gun/energy/disabler/smg)
 
 /datum/supply_pack/goody/hell_single
-	name = "Hellgun Kit Single-Pack"
-	desc = "Contains one hellgun degradation kit, to convert regular laser guns into an older pattern of laser gun, \
-		infamous for its ability to horribly disfigure targets with burns. \
-		Technically violates the Space Geneva Convention when used on humanoids."
-	cost = PAYCHECK_CREW * 2
+	name = "Type 4 'Hellfire' Laser Gun Single-Pack"
+	desc = "Contains a Hellfire Gun, an overclocked laser gun that fires \"enhanced\" laser beams that burn hotter than normal, \
+		at the expense of higher energy consumption."
+	cost = PAYCHECK_CREW * 8
 	access_view = ACCESS_WEAPONS
-	contains = list(/obj/item/weaponcrafting/gunkit/hellgun)
+	contains = list(/obj/item/gun/energy/laser/hellgun)
+	order_flags = ORDER_CONTRABAND
 
 /datum/supply_pack/goody/thermal_single
 	name = "Thermal Pistol Holster Single-Pack"
@@ -148,6 +148,13 @@
 	cost = PAYCHECK_COMMAND * 15
 	access_view = ACCESS_WEAPONS
 	contains = list(/obj/item/storage/belt/holster/energy/thermal)
+
+/datum/supply_pack/goody/syringegun_single
+	name = "Syringe Gun Single-Pack"
+	desc = "Contains a single syringe gun."
+	cost = PAYCHECK_CREW * 10
+	access_view = ACCESS_MEDICAL
+	contains = list(/obj/item/gun/syringe)
 
 /datum/supply_pack/goody/sologamermitts
 	name = "Insulated Gloves Single-Pack"
@@ -203,6 +210,12 @@
 	cost = PAYCHECK_CREW * 3
 	contains = list(/obj/item/storage/toolbox/mechanical)
 
+/datum/supply_pack/goody/autolatheboard
+	name = "Autolathe Circuit Board"
+	desc = "A single autolathe circuit board for your construction needs."
+	cost = PAYCHECK_CREW * 2
+	contains = list(/obj/item/circuitboard/machine/autolathe)
+
 /datum/supply_pack/goody/valentine
 	name = "Valentine Card"
 	desc = "Make an impression on that special someone! Comes with one valentine card and a free candy heart!"
@@ -244,6 +257,12 @@
 	desc = "A cool spray to dye your hair with awesome colors!"
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/dyespray)
+
+/datum/supply_pack/goody/pilotsuit
+	name = "Mech Pilot Suit"
+	desc = "For when you need to look the part during your pre-battle checks. Can be reskinned with alt-click."
+	cost = PAYCHECK_CREW * 2
+	contains = list(/obj/item/clothing/under/costume/mech_suit)
 
 /datum/supply_pack/goody/beach_ball
 	name = "Beach Ball Single-Pack"
@@ -434,3 +453,30 @@
 	desc = "If you in your carelessness lost the key to your golfcart you can purchase one. Unfortunately not covered by warranty."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/key/golfcart)
+
+/datum/supply_pack/goody/handheld_crew_monitor
+	name = "Handheld Crew Monitor"
+	desc = "A crate containing a handheld crew monitor."
+	cost = /obj/item/sensor_device::custom_premium_price * 1.25 // 1.25X base vending machine value
+	contains = list(
+		/obj/item/sensor_device,
+	)
+	crate_name = "handheld crew monitor crate"
+
+/datum/supply_pack/goody/camera
+	name = "Broadcast Camera"
+	desc = "A single broadcast camera which broadcasts to the station's entertainment monitors, for all your theatrical needs."
+	cost = PAYCHECK_COMMAND * 8
+	contains = list(/obj/item/broadcast_camera/cargo)
+
+/datum/supply_pack/goody/rock_tape
+	name = "Boombox tape (Rock)"
+	desc = "A classic rock track by George Patel, 'Bainrock'. Requires a boombox to play."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/music_tape/rock)
+
+/datum/supply_pack/goody/hiphop_tape
+	name = "Boombox tape (HipHop)"
+	desc = "A trendy hiphop track by F'norkiz Gamma, 'Groovepad'. Requires a boombox to play."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/music_tape/hiphop)

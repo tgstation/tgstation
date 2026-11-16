@@ -52,15 +52,16 @@
 	if(is_ready())
 		teleport(AM)
 
-/obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
-		if(power_station?.engaged)
-			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
-			update_appearance()
-		return
-	if(default_deconstruction_crowbar(W))
-		return
-	return ..()
+/obj/machinery/teleport/hub/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/teleport/hub/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/teleport/hub/on_set_panel_open(old_value)
+	if(panel_open && power_station?.engaged)
+		power_station.engaged = FALSE
+		update_appearance()
 
 /obj/machinery/teleport/hub/proc/teleport(atom/movable/M as mob|obj, turf/T)
 	var/obj/machinery/computer/teleporter/com = power_station.teleporter_console
@@ -78,7 +79,7 @@
 	var/turf/start_turf = get_turf(M)
 	if(!do_teleport(M, target, channel = TELEPORT_CHANNEL_BLUESPACE))
 		return
-	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, /datum/sound_effect/portal_enter, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	use_energy(active_power_usage)
 	new /obj/effect/temp_visual/portal_animation(start_turf, src, M)
 	if(!calibrated && ishuman(M) && prob(30 - ((accuracy) * 10))) //oh dear a problem
@@ -178,15 +179,11 @@
 		balloon_alert(user, "data uploaded from buffer")
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/teleport/station/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
-		update_appearance()
-		return
+/obj/machinery/teleport/station/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-	else if(default_deconstruction_crowbar(W))
-		return
-	else
-		return ..()
+/obj/machinery/teleport/station/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/teleport/station/interact(mob/user)
 	toggle(user)

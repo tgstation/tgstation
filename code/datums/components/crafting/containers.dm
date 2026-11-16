@@ -27,7 +27,6 @@
 		/obj/item/stack/sheet/mineral/bamboo = 20
 	)
 	result = /obj/item/storage/basket
-	crafting_flags = CRAFT_SKIP_MATERIALS_PARITY
 	category = CAT_CONTAINERS
 	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED | CRAFT_SKIP_MATERIALS_PARITY
 	steps = list(

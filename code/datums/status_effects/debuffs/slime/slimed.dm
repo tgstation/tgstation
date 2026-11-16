@@ -6,7 +6,7 @@
 /atom/movable/screen/alert/status_effect/slimed
 	name = "Covered in Slime"
 	desc = "You are covered in slime and it's eating away at you! Click to start cleaning it off, or find a faster way to wash it away!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "slimed"
 	clickable_glow = TRUE
 
@@ -111,7 +111,7 @@
 		))
 		to_chat(owner, span_userdanger("[feedback_text] as the layer of slime eats away at you!"))
 
-/datum/status_effect/slimed/get_examine_text()
+/datum/status_effect/slimed/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] [owner.p_are()] covered in bubbling slime!")
 
 #undef MIN_HEALTH

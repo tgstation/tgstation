@@ -178,7 +178,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			insuls.name = "insuls"
 			insuls.desc = "A mere copy of the true insuls."
 			insuls.siemens_coefficient = 0.99999
-			user.equip_to_slot(insuls, ITEM_SLOT_GLOVES)
+			if(!user.equip_to_slot_if_possible(insuls, ITEM_SLOT_GLOVES) && !user.put_in_hands(insuls))
+				insuls.forceMove(user.drop_location())
 	GLOB.bible_icon_state = icon_state
 	GLOB.bible_inhand_icon_state = inhand_icon_state
 	SSblackbox.record_feedback("text", "religion_book", 1, "[choice]")
@@ -215,7 +216,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return BLESSING_FAILED
 
 	var/mob/living/carbon/human/built_in_his_image = blessed
-	for(var/obj/item/bodypart/bodypart as anything in built_in_his_image.bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in built_in_his_image.get_bodyparts())
 		if(!IS_ORGANIC_LIMB(bodypart))
 			balloon_alert(user, "can't heal inorganic!")
 			return BLESSING_IGNORED
@@ -231,7 +232,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 
 	built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
 	to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
-	playsound(built_in_his_image, SFX_PUNCH, 25, TRUE, -1)
+	playsound(built_in_his_image, /datum/sound_effect/punch, 25, TRUE, -1)
 	built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
 
@@ -257,7 +258,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	if(target_mob.stat == DEAD)
 		if(GLOB.religious_sect?.sect_dead_bless(target_mob, user) == BLESSING_FAILED)
 			target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
-			playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+			playsound(target_mob, /datum/sound_effect/punch, 25, TRUE, -1)
 		return
 
 	if(user == target_mob)
@@ -274,14 +275,14 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			SEND_SIGNAL(target_mob, COMSIG_LIVING_BLESSED, user, src, bless_result)
 			return
 
-	if(iscarbon(target_mob))
-		var/mob/living/carbon/carbon_target = target_mob
-		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
-			carbon_target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5, 60)
-			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
+	if(ishuman(target_mob))
+		var/mob/living/carbon/human/human_target = target_mob
+		if(!istype(human_target.head, /obj/item/clothing/head/helmet))
+			human_target.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5, 60)
+			human_target.balloon_alert(human_target, "you feel dumber!")
 	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
 			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
-	playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+	playsound(target_mob, /datum/sound_effect/punch, 25, TRUE, -1)
 	log_combat(user, target_mob, "attacked", src)
 
 /obj/item/book/bible/interact_with_atom(atom/bible_smacked, mob/living/user, list/modifiers)
@@ -365,13 +366,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible/syndicate/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_SPIRIT, added_damage = 25)
 	AddComponent(/datum/component/effect_remover, \
 		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
 		success_forcesay = "BEGONE FOUL MAGIKS!!", \
 		tip_text = "Clear rune", \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 /obj/item/book/bible/syndicate/attack_self(mob/living/carbon/human/user, modifiers)
 	if(!uses || !istype(user))

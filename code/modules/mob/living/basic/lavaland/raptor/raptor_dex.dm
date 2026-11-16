@@ -7,6 +7,10 @@
 	/// Raptor scan data we have stored
 	var/list/scan_data = list("raptor_scan" = FALSE)
 
+/obj/item/raptor_dex/Initialize(mapload)
+	. = ..()
+	register_item_context()
+
 /obj/item/raptor_dex/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -25,7 +29,8 @@
 
 	scan_data = list()
 	scan_data["raptor_scan"] = TRUE
-	scan_data["raptor_image"] = icon2base64(icon(icon = my_raptor.icon, icon_state = my_raptor.icon_state, dir = SOUTH, frame = 1))
+	scan_data["raptor_icon"] = my_raptor.icon
+	scan_data["raptor_icon_state"] = my_raptor.icon_state
 	scan_data["raptor_attack"] = my_raptor.melee_damage_lower
 	scan_data["raptor_health"] = my_raptor.health
 	scan_data["raptor_max_health"] = my_raptor.maxHealth
@@ -61,6 +66,12 @@
 			scan_data["inherited_traits"] += GLOB.raptor_inherit_traits[index]
 
 	playsound(src, 'sound/mobs/non-humanoids/orbie/orbie_send_out.ogg', 20)
-	balloon_alert(my_raptor, "scanned")
+	my_raptor.balloon_alert(user, "scanned")
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/raptor_dex/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
+	if(!istype(target, /mob/living/basic/raptor))
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = "Scan Raptor"
+	return CONTEXTUAL_SCREENTIP_SET

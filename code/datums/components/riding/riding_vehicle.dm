@@ -160,6 +160,7 @@
 
 /datum/component/riding/vehicle/lavaboat/dragonboat
 	vehicle_move_delay = 1
+	keytype = null
 
 /datum/component/riding/vehicle/lavaboat/dragonboat/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	return list(
@@ -168,11 +169,6 @@
 		TEXT_EAST =  list(1, 2),
 		TEXT_WEST =  list(1, 2),
 	)
-
-/datum/component/riding/vehicle/lavaboat/dragonboat
-	vehicle_move_delay = 1
-	keytype = null
-
 
 /datum/component/riding/vehicle/janicart
 	keytype = /obj/item/key/janitor
@@ -448,6 +444,14 @@
 	vehicle_move_delay = 0
 	ride_check_flags = RIDER_NEEDS_ARMS
 
+/datum/component/riding/vehicle/wheelchair/get_rider_offsets_and_layers(pass_index, mob/offsetter)
+	return list(
+		TEXT_NORTH = list(0, 2),
+		TEXT_SOUTH = list(0, 2),
+		TEXT_EAST =  list(0, 2),
+		TEXT_WEST =  list(0, 2),
+	)
+
 /datum/component/riding/vehicle/wheelchair/get_parent_offsets_and_layers()
 	return list(
 		TEXT_NORTH = list(0, 0),
@@ -458,7 +462,7 @@
 
 /datum/component/riding/vehicle/wheelchair/hand
 	/// Magic number used in calculating the speed of the wheelchair
-	var/delay_multiplier = 6.7
+	var/delay_multiplier = 6.2
 
 /datum/component/riding/vehicle/wheelchair/hand/driver_move(obj/vehicle/vehicle_parent, mob/living/user, direction)
 	vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / clamp(user.usable_hands, 1, 2)

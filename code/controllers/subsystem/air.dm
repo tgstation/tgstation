@@ -6,7 +6,7 @@ SUBSYSTEM_DEF(air)
 	)
 	priority = FIRE_PRIORITY_AIR
 	wait = 0.5 SECONDS
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/cached_cost = 0
@@ -422,11 +422,14 @@ SUBSYSTEM_DEF(air)
 			var/datum/pipeline/linepipe = pack[SSAIR_REBUILD_PIPELINE]
 			var/list/border = pack[SSAIR_REBUILD_QUEUE]
 			expand_pipeline(linepipe, border)
-			if(state != SS_RUNNING) //expand_pipeline can fail a tick check, we shouldn't let things get too fucky here
+			if(length(border)) //expand_pipeline failed a tick check before finishing, resume it next fire
 				return
 
 			linepipe.building = FALSE
 			queue.len--
+			// machinery was claimed by another pipeline before we could expand somehow, check if it has no pipes or machines left we can just delete it
+			if(!length(linepipe.members) && !length(linepipe.other_atmos_machines))
+				qdel(linepipe)
 			if (MC_TICK_CHECK)
 				return
 
@@ -564,8 +567,7 @@ SUBSYSTEM_DEF(air)
 			if(enemy_tile.current_cycle == -INFINITY)
 				continue
 			// .air instead of .return_air() because we can guarantee that the proc won't do anything
-			if(potential_diff.air.compare(enemy_tile.air, MOLES))
-				//testing("Active turf found. Return value of compare(): [T.air.compare(enemy_tile.air, MOLES)]")
+			if(potential_diff.air.compare(enemy_tile.air, FALSE))
 				if(!potential_diff.excited)
 					potential_diff.excited = TRUE
 					SSair.active_turfs += potential_diff
@@ -715,9 +717,10 @@ SUBSYSTEM_DEF(air)
 // pipenet can be built.
 /datum/controller/subsystem/air/proc/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		var/list/targets = AM.get_rebuild_targets()
-		for(var/datum/pipeline/build_off as anything in targets)
-			build_off.build_pipeline_blocking(AM)
+		var/datum/pipeline/build_target = AM.get_rebuild_target()
+		while(build_target)
+			build_target.build_pipeline_blocking(AM)
+			build_target = AM.get_rebuild_target()
 		CHECK_TICK
 
 GLOBAL_LIST_EMPTY(colored_turfs)
@@ -744,9 +747,10 @@ GLOBAL_LIST_EMPTY(colored_images)
 
 	for(var/A in 1 to atmos_machines.len)
 		AM = atmos_machines[A]
-		var/list/targets = AM.get_rebuild_targets()
-		for(var/datum/pipeline/build_off as anything in targets)
-			build_off.build_pipeline_blocking(AM)
+		var/datum/pipeline/build_target = AM.get_rebuild_target()
+		while(build_target)
+			build_target.build_pipeline_blocking(AM)
+			build_target = AM.get_rebuild_target()
 		CHECK_TICK
 
 
@@ -785,7 +789,6 @@ GLOBAL_LIST_EMPTY(colored_images)
 	strings_to_mix["[gas_string]-[gastype]"] = canonical_mix
 	gas_string = preprocess_gas_string(gas_string)
 
-	var/list/gases = canonical_mix.gases
 	var/list/gas = params2list(gas_string)
 	if(gas["TEMP"])
 		canonical_mix.temperature = text2num(gas["TEMP"])
@@ -793,12 +796,12 @@ GLOBAL_LIST_EMPTY(colored_images)
 		gas -= "TEMP"
 	else // if we do not have a temp in the new gas mix lets assume room temp.
 		canonical_mix.temperature = T20C
+	var/list/cached_moles = canonical_mix.moles
 	for(var/id in gas)
 		var/path = id
 		if(!ispath(path))
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
-		ADD_GAS(path, gases)
-		gases[path][MOLES] = text2num(gas[id])
+		cached_moles[path] = text2num(gas[id])
 
 	if(istype(canonical_mix, /datum/gas_mixture/immutable))
 		return canonical_mix

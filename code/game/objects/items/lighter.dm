@@ -38,9 +38,15 @@
 	)
 	/// Whether the lighter starts with fuel
 	var/spawns_with_reagent = TRUE
+	/// Lighting middleman, lets us do a flicker effect
+	var/datum/light_middleman/middleman
 
 /obj/item/lighter/Initialize(mapload)
 	. = ..()
+	if(IS_OVERLAY_LIGHT_SYSTEM(light_system))
+		middleman = new(src, "lighter")
+		RegisterSignal(middleman, COMSIG_LIGHT_MIDDLEMAN_UPDATED, PROC_REF(light_updated))
+		middleman.being_overriding_light()
 	create_reagents(maximum_fuel, REFILLABLE | DRAINABLE)
 	if(spawns_with_reagent)
 		reagents.add_reagent(/datum/reagent/fuel, maximum_fuel)
@@ -54,6 +60,11 @@
 	)
 	update_appearance()
 
+/obj/item/lighter/Destroy(force)
+	if(!isnull(middleman))
+		QDEL_NULL(middleman)
+	return ..()
+
 /obj/item/lighter/grind_results()
 	return list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
 
@@ -64,10 +75,14 @@
 	else
 		. += span_notice("It contains [get_fuel()] units of fuel out of [maximum_fuel].")
 
+/obj/item/lighter/proc/light_updated(datum/source)
+	SIGNAL_HANDLER
+	fire_flicker_middleman(middleman)
+
 /// Destroy the lighter when it's shot by a bullet
 /obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))
-	playsound(victim, SFX_RICOCHET, 100, TRUE)
+	playsound(victim, /datum/sound_effect/ricochet, 100, TRUE)
 	new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 	do_sparks(1, TRUE, src)
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
@@ -78,7 +93,7 @@
 		return
 	set_lit(FALSE)
 
-/obj/item/lighter/suicide_act(mob/living/carbon/user)
+/obj/item/lighter/suicide_act(mob/living/user)
 	if (lit)
 		user.visible_message(span_suicide("[user] begins holding \the [src]'s flame up to [user.p_their()] face! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
@@ -125,7 +140,7 @@
 			if(male_model.fire_stacks && !(male_model.on_fire))
 				male_model.ignite_mob()
 	else
-		hitsound = SFX_SWING_HIT
+		hitsound = /datum/sound_effect/swing_hit
 		force = 0
 		heat = 0
 		attack_verb_continuous = null //human_defense.dm takes care of it
@@ -210,13 +225,13 @@
 	if(cig.lit)
 		to_chat(user, span_warning("\The [cig] is already lit!"))
 	if(target_mob == user)
-		cig.attackby(src, user)
+		cig.attempt_light(user, src)
 		return
 
 	if(fancy)
-		cig.light(span_rose("[user] whips \the [src] out and holds it for [target_mob]. [user.p_Their()] arm is as steady as the unflickering flame [user.p_they()] light[user.p_s()] \the [cig] with."))
+		cig.attempt_light(user, src, span_rose("[user] whips \the [src] out and holds it for [target_mob]. [user.p_Their()] arm is as steady as the unflickering flame [user.p_they()] light[user.p_s()] \the [cig] with."))
 	else
-		cig.light(span_notice("[user] holds \the [src] out for [target_mob], and lights [target_mob.p_their()] [cig.name]."))
+		cig.attempt_light(user, src, span_notice("[user] holds \the [src] out for [target_mob], and lights [target_mob.p_their()] [cig.name]."))
 
 ///Checks if the lighter is able to perform a welding task.
 /obj/item/lighter/tool_use_check(mob/living/user, amount, heat_required)
@@ -245,6 +260,10 @@
 	if(!lit)
 		return FALSE
 
+	if (reagents.spark_act(0, SPARK_ACT_ENCLOSED, banned_reagents = /datum/reagent/fuel) & SPARK_ACT_DESTRUCTIVE)
+		qdel(src)
+		return FALSE
+
 	if(used > 0)
 		burned_fuel_for = 0
 
@@ -257,7 +276,7 @@
 
 ///Returns the amount of fuel
 /obj/item/lighter/proc/get_fuel()
-	return reagents.get_reagent_amount(/datum/reagent/fuel)
+	return reagents.get_reagent_amount(/datum/reagent/fuel) + reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
 
 /obj/item/lighter/greyscale
 	name = "cheap lighter"

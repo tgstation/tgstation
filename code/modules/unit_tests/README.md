@@ -76,6 +76,8 @@ You can find more information about all of these from their respective doc comme
 
 `TEST_FOCUS(test_path)` - _Only_ run the test provided within the parameters. Useful for reducing noise. For example, if we only want to run our example square test, we can add `TEST_FOCUS(/datum/unit_test/square)`. Should _never_ be pushed in a pull request--you will be laughed at.
 
+`TEST_REPEAT(test_path, times_to_run)` - Run the provided test `times_to_run` times in a row. Useful for debugging flaky tests that don't always fail. Should _also_ never be pushed in a pull request.
+
 ## Final Notes
 
 - Writing tests before you attempt to fix the bug can actually speed up development a lot! It means you don't have to go in game and folllow the same exact steps manually every time. This process is known as "TDD" (test driven development). Write the test first, make sure it fails, _then_ start work on the fix/feature, and you'll know you're done when your tests pass. If you do try this, do make sure to confirm in a non-testing environment just to double check.

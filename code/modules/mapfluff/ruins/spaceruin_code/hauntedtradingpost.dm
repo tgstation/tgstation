@@ -213,7 +213,7 @@
 /obj/machinery/button/door/selfdestructs/attempt_press(mob/user)
 	. = ..()
 	do_sparks(rand(1,3), src)
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	qdel(src)
 
 //trap that gloms onto the first machine it finds on its tile, and lives inside it
@@ -282,7 +282,7 @@
 	if(uses_remaining == 0) //deletes trap if it triggers when it has no uses left. should only happen if var edited but lets just be safe
 		qdel(src)
 		return
-	if (target.stat) //ensure the guy triggering us is alive
+	if (IS_UNCONSCIOUS_OR_CRIT(target)) //ensure the guy triggering us is alive
 		return
 	if (!faction_check_atom(target)) //and make sure it ain't someone on our team
 		COOLDOWN_START(src, trigger_cooldown, 4 SECONDS)

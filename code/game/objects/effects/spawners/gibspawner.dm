@@ -129,6 +129,4 @@
 		gibdirections = list(list(NORTH, NORTHEAST, NORTHWEST), list(SOUTH, SOUTHEAST, SOUTHWEST), list(WEST, NORTHWEST, SOUTHWEST), list(EAST, NORTHEAST, SOUTHEAST), GLOB.alldirs, GLOB.alldirs)
 	gibtypes[/obj/effect/decal/cleanable/blood/gibs/robot_debris/limb] = pick(0, 1, 2)
 	. = ..()
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(2, 1, drop_location())
-	sparks.start()
+	do_sparks(2, TRUE, drop_location())

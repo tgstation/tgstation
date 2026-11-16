@@ -37,10 +37,12 @@
 	desc = "A telecrystal in its rawest and purest form; can be utilized on active uplinks to increase their telecrystal count."
 	item = /obj/item/stack/telecrystal
 	cost = 1
-	// Don't add telecrystals to the purchase_log since
-	// it's just used to buy more items (including itself!)
-	purchase_log_vis = FALSE
 	purchasable_from = NONE
+
+// Don't add telecrystals to the purchase_log since
+// it's just used to buy more items (including itself!)
+/datum/uplink_item/bundles_tc/telecrystal/log_purchase(atom/spawned_item, datum/uplink_handler/uplink_handler)
+	return
 
 /datum/uplink_item/bundles_tc/bundle_a
 	name = "Syndi-kit Tactical"
@@ -69,7 +71,6 @@
 /datum/uplink_item/bundles_tc/surplus
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
-			If the rumors are true, it will fill it's contents based on your current reputation. \
 			Contents are sorted to always be worth " + TC_VALUE_SURPLUS + " TC. The Syndicate will only provide one surplus item per agent."
 	item = /obj/structure/closet/crate // will be replaced in purchase()
 	cost = 20
@@ -93,8 +94,6 @@
 		if(!handler.check_if_restricted(uplink_item))
 			continue
 		if(!uplink_item.surplus)
-			continue
-		if(handler.not_enough_reputation(uplink_item))
 			continue
 		possible_items += uplink_item
 	return possible_items
@@ -132,13 +131,35 @@
 		"style" = /datum/pod_style/syndicate,
 		"spawn" = surplus_crate,
 	))
-	return source //For log icon
+	return surplus_crate //For log icon
+
+/datum/uplink_item/bundles_tc/surplus/log_purchase(atom/spawned_item, datum/uplink_handler/uplink_handler)
+	. = ..()
+	var/list/entries = list()
+	for(var/obj/item/loot in spawned_item)
+		if(entries[loot.type])
+			var/datum/uplink_purchase_entry/existing_entry = entries[loot.type]
+			existing_entry.amount_purchased += 1
+			continue
+
+		var/datum/uplink_item/original_datum = SStraitor.uplink_items_by_type[loot.type]
+		var/datum/uplink_purchase_entry/custom_entry = new()
+		custom_entry.set_item(loot)
+		custom_entry.base_cost = 0
+		custom_entry.spent_cost = 0
+		custom_entry.amount_purchased = 1
+		custom_entry.name = "Surplus Item: [original_datum?.name || format_text(loot.name)]"
+		custom_entry.desc = "[original_datum?.desc || loot.desc]<br>Obtained via <i>surplus crate</i>."
+		entries[loot.type] = custom_entry
+
+	for(var/entry_type, entry_datum in entries)
+		uplink_handler.purchase_log.log_purchase_custom(entry_datum)
 
 /datum/uplink_item/bundles_tc/surplus/united
 	name = "United Surplus Crate"
 	desc = "A shiny and large crate to be delivered directly to you via Supply Pod. It has an advanced locking mechanism with an anti-tampering protocol. \
 			It is recommended that you only attempt to open it by having another agent purchase a Surplus Crate Key. Unite and fight. \
-			Rumored to contain a valuable assortment of items based on your current reputation. Contents are sorted to always be worth " + TC_VALUE_SURPLUS + " TC. \
+			Contents are sorted to always be worth " + TC_VALUE_SURPLUS + " TC. \
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
 	item = /obj/structure/closet/crate/secure/syndicrate

@@ -8,3 +8,4 @@
 	end_sound = 'sound/mobs/non-humanoids/cyborg/wash_end.ogg'
 	vary = TRUE
 	extra_range = 5
+	use_sound_tokens = TRUE

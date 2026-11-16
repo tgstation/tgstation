@@ -7,12 +7,12 @@
 /datum/preference/choiced/gender/init_possible_values()
 	return list(MALE, FEMALE, PLURAL, NEUTER)
 
-/datum/preference/choiced/gender/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/gender/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	if(!target.dna.species.sexes)
 		value = PLURAL //disregard gender preferences on this species
 	target.gender = value
 
-/datum/preference/choiced/gender/create_informed_default_value(datum/preferences/preferences)
+/datum/preference/choiced/gender/create_default_value()
 	// The only reason I'm limiting this to male or female
 	// is that hairstyle randomization handles enbies poorly
 	return pick(MALE, FEMALE)

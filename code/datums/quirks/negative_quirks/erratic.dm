@@ -7,7 +7,7 @@
 	lose_text = span_notice("You feel more stable.")
 	medical_record_text = "Patient has a bipolar personality disorder."
 	medical_symptom_text = "Exhibits sudden and unpredictable changes in personality, mood, and behavior, often swinging between extremes of emotion and demeanor."
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED|QUIRK_PROCESSES|QUIRK_TRAUMALIKE
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES|QUIRK_TRAUMALIKE
 	hardcore_value = 3
 	mail_goodies = list(/obj/item/storage/pill_bottle/psicodine)
 	/// Cooldown between personality randomizations
@@ -29,7 +29,7 @@
 /datum/quirk/erratic/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, randomize_cooldown))
 		return
-	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS) || quirk_holder.stat >= UNCONSCIOUS)
+	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS) || IS_UNCONSCIOUS(quirk_holder))
 		return
 
 	COOLDOWN_START(src, randomize_cooldown, rand(6, 12) MINUTES)

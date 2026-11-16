@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(machines)
 	dependencies = list(
 		/datum/controller/subsystem/atoms,
 	)
-	flags = SS_KEEP_TIMING
+	ss_flags = SS_KEEP_TIMING
 	wait = 2 SECONDS
 
 	/// Assosciative list of all machines that exist.
@@ -105,7 +105,7 @@ SUBSYSTEM_DEF(machines)
 			currentrun.len--
 			if(QDELETED(thing) || thing.process_early(wait * 0.1) == PROCESS_KILL)
 				processing_early -= thing
-				thing.datum_flags &= ~DF_ISPROCESSING
+				thing?.datum_flags &= ~DF_ISPROCESSING
 			if (MC_TICK_CHECK)
 				return
 		current_part = apc_steps[1]

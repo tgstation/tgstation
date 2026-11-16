@@ -93,7 +93,7 @@
 
 	spit(target, modifiers, projectile_type)
 
-	playsound(owner, SFX_ALIEN_SPIT_ACID, vol = 25, vary = TRUE)
+	playsound(owner, /datum/sound_effect/alien_spit_acid, vol = 25, vary = TRUE)
 
 	owner.changeNext_move(CLICK_CD_RANGE)
 
@@ -114,7 +114,7 @@
 
 	spit(target, modifiers, burst_projectile_type, count = burst_count, spread = 10)
 
-	playsound(owner, SFX_ALIEN_SPIT_ACID, vol = 40, vary = TRUE)
+	playsound(owner, /datum/sound_effect/alien_spit_acid, vol = 40, vary = TRUE)
 	playsound(owner, 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg', vol = 40, vary = TRUE)
 
 	owner.changeNext_move(CLICK_CD_RANGE)
@@ -150,7 +150,7 @@
 	if (host.wear_suit?.breakouttime)
 		something_to_melt = TRUE
 		melted_something |= melt_restraints_in_slot(host, ITEM_SLOT_OCLOTHING)
-	if (host.shoes?.tied == SHOES_KNOTTED)
+	if (astype(host.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes)?.tied == SHOES_KNOTTED)
 		something_to_melt = TRUE
 		melted_something |= melt_restraints_in_slot(host, ITEM_SLOT_FEET)
 	if (istype(host.loc, /obj/structure/closet))
@@ -161,7 +161,7 @@
 		melted_something |= melt_cocoon(host, host.loc)
 
 	if (melted_something)
-		playsound(host, SFX_SIZZLE, vol = 80, vary = TRUE, ignore_walls = FALSE)
+		playsound(host, /datum/sound_effect/sizzle, vol = 80, vary = TRUE, ignore_walls = FALSE)
 		StartCooldown(20 SECONDS)
 	if (!something_to_melt)
 		host.balloon_alert(host, "not restrained!")

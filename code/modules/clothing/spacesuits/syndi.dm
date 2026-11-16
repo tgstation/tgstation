@@ -81,6 +81,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 	icon_state = "syndicate-orange"
 	inhand_icon_state = "syndicate-orange"
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/orange
+	cerulean_flipper_palette = "#bdbdbd"
 
 //Blue syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/blue
@@ -186,7 +187,8 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "syndicate-contract-helm"
 	inhand_icon_state = "contractor_helmet"
-	visor_dirt = null
+	visor_dirt = "void_dirt"
+	has_visor = TRUE
 
 /obj/item/clothing/suit/space/syndicate/contract
 	name = "contractor space suit"

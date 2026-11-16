@@ -9,27 +9,23 @@
  */
 
 GLOBAL_LIST_INIT(ore_vent_minerals_lavaland, list(
-		/datum/material/iron = 13,
-		/datum/material/glass = 12,
-		/datum/material/plasma = 9,
+		/datum/material/iron = 14,
+		/datum/material/glass = 13,
+		/datum/material/plasma = 10,
+		/datum/material/silver = 7,
 		/datum/material/titanium = 6,
-		/datum/material/silver = 5,
 		/datum/material/gold = 5,
-		/datum/material/diamond = 3,
-		/datum/material/uranium = 3,
-		/datum/material/bluespace = 3,
+		/datum/material/uranium = 4,
 		/datum/material/plastic = 1,
 	))
 
 GLOBAL_LIST_INIT(ore_vent_minerals_triple_z, list(
-		/datum/material/iron = 24,
-		/datum/material/glass = 23,
-		/datum/material/plasma = 16,
+		/datum/material/iron = 25,
+		/datum/material/glass = 24,
+		/datum/material/plasma = 17,
 		/datum/material/titanium = 10,
-		/datum/material/silver = 8,
-		/datum/material/gold = 7,
-		/datum/material/diamond = 4,
-		/datum/material/uranium = 4,
-		/datum/material/bluespace = 3,
+		/datum/material/silver = 10,
+		/datum/material/gold = 8,
+		/datum/material/uranium = 5,
 		/datum/material/plastic = 1,
 	))

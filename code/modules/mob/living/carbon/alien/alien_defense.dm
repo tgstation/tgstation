@@ -57,7 +57,7 @@ In all, this is a lot like the monkey code. /N
 
 /mob/living/carbon/alien/get_shove_flags(mob/living/shover, obj/item/weapon)
 	. = ..()
-	if(isnull(weapon) || stat != CONSCIOUS)
+	if(isnull(weapon) || IS_UNCONSCIOUS_OR_CRIT(src))
 		. &= ~(SHOVE_CAN_MOVE|SHOVE_CAN_HIT_SOMETHING|SHOVE_CAN_STAGGER)
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/human/user, list/modifiers)
@@ -77,12 +77,12 @@ In all, this is a lot like the monkey code. /N
 
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
+			if(prob(50))
+				Unconscious(2 SECONDS)
 			sound_damage(30, 240 SECONDS)
 
 		if(EXPLODE_LIGHT)
 			take_overall_damage(30,0)
-			if(prob(50))
-				Unconscious(20)
 			sound_damage(15, 120 SECONDS)
 
 	return TRUE

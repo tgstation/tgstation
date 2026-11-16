@@ -9,7 +9,7 @@
 	light_range = 6
 	ai_controller = /datum/ai_controller/basic_controller/bot/vibebot
 	light_power = 2
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 
 
 	hackables = "vibing scanners"

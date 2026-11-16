@@ -58,6 +58,7 @@
 		COMSIG_CARBON_APPLY_OVERLAY,
 		COMSIG_CARBON_REMOVE_OVERLAY,
 		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
+		COMSIG_LIVING_CHAT_INDICATOR_UPDATED,
 	)
 	// Always supplied to update_signals
 	var/list/default_update_signals = list(
@@ -118,6 +119,8 @@
 /datum/component/reflection/proc/check_can_reflect(atom/movable/target)
 	if(target == parent || !(target in view(1, parent)))
 		return FALSE
+	if(target.invisibility >= INVISIBILITY_MAXIMUM)
+		return FALSE
 	var/atom/movable/mov_parent = parent
 	if(target.loc != mov_parent.loc && get_dir(mov_parent, target) != reflected_dir)
 		return FALSE
@@ -141,7 +144,7 @@
 	if(!LAZYFIND(reflected_movables, target)) // not lazyaccess - value may be null
 		LAZYSET(reflected_movables, target, null)
 		RegisterSignals(target, check_reflect_signals, PROC_REF(update_reflection))
-		RegisterSignals(target, COMSIG_QDELETING, PROC_REF(nuke_reflection))
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(nuke_reflection))
 	update_reflection(target)
 
 /datum/component/reflection/proc/nuke_reflection(atom/movable/target)
@@ -200,6 +203,9 @@
 
 	// purely for vv
 	reflection.name = "[target.name]'s reflection"
+
+	SEND_SIGNAL(target, COMSIG_REFLECTION_UPDATED, parent, reflection)
+	SEND_SIGNAL(parent, COMSIG_REFLECTED_IMAGE_UPDATED, reflection)
 
 ///Called when the target movable changes its appearance or dir.
 /datum/component/reflection/proc/update_reflection(atom/movable/source)

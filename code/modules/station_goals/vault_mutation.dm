@@ -1,7 +1,7 @@
 
 /datum/mutation/breathless
 	name = "Breathless"
-	desc = "A mutation within the skin that allows for filtering and absorption of oxygen from the skin."
+	desc = "The subject's skin filters and absorbs oxygen from the air, removing the need to breathe."
 	text_gain_indication = span_notice("Your lungs feel great.")
 	text_lose_indication = span_warning("Your lungs feel normal again.")
 	locked = TRUE
@@ -16,7 +16,7 @@
 
 /datum/mutation/quick
 	name = "Quick"
-	desc = "A mutation within the leg muscles that allows it to operate at 20% more than the usual capacity."
+	desc = "The subject's leg muscles strengthen, allowing for faster movement."
 	text_gain_indication = span_notice("Your legs feel faster and stronger.")
 	text_lose_indication = span_warning("Your legs feel weaker and slower.")
 	locked = TRUE
@@ -31,24 +31,24 @@
 
 /datum/mutation/tough
 	name = "Tough"
-	desc = "A mutation within the epidermis that makes it more resistant to tear."
+	desc = "The subject gains another layer of epidermis which is more resistant to bruise, cut, or tear."
 	text_gain_indication = span_notice("Your skin feels tougher.")
 	text_lose_indication = span_warning("Your skin feels weaker.")
 	locked = TRUE
 
 /datum/mutation/tough/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	acquirer.physiology.brute_mod *= 0.7
+	MODIFY_PHYSIOLOGY(acquirer, BRUTE, 0.7)
 	ADD_TRAIT(acquirer, TRAIT_PIERCEIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/tough/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.physiology.brute_mod /= 0.7
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 1 / 0.7)
 	REMOVE_TRAIT(owner, TRAIT_PIERCEIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/dextrous
 	name = "Dextrous"
-	desc = "A mutation within the nerve system that allows for more responsive and quicker action."
+	desc = "The subject's neurons move faster, allowing for more responsive and quicker action."
 	text_gain_indication = span_notice("Your limbs feel more dextrous and responsive.")
 	text_lose_indication = span_warning("Your limbs feel less dextrous and responsive.")
 	locked = TRUE
@@ -63,39 +63,39 @@
 
 /datum/mutation/fire_immunity
 	name = "Fire Immunity"
-	desc = "A mutation within the body that allows it to become nonflammable and withstand higher temperature."
+	desc = "The subject becomes completely nonflammable and can withstand higher temperatures."
 	text_gain_indication = span_notice("Your body feels like it can withstand fire.")
 	text_lose_indication = span_warning("Your body feels vulnerable to fire again.")
 	locked = TRUE
 
 /datum/mutation/fire_immunity/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	acquirer.physiology.burn_mod *= 0.5
+	MODIFY_PHYSIOLOGY(acquirer, BURN, 0.5)
 	acquirer.add_traits(list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
 
 /datum/mutation/fire_immunity/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.physiology.burn_mod /= 0.5
+	MODIFY_PHYSIOLOGY(owner, BURN, 2)
 	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
 
 /datum/mutation/quick_recovery
 	name = "Quick Recovery"
-	desc = "A mutation within the nervous system that allows it to recover from being knocked down."
+	desc = "The subject has fewer nerve endings, allowing them to recover from incapacitation faster."
 	text_gain_indication = span_notice("You feel like you can recover from a fall easier.")
 	text_lose_indication = span_warning("You feel like recovering from a fall is a challenge again.")
 	locked = TRUE
 
 /datum/mutation/quick_recovery/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	acquirer.physiology.stun_mod *= 0.5
+	MODIFY_PHYSIOLOGY(acquirer, PHYS_COEFF_STUN, 0.5)
 
 /datum/mutation/quick_recovery/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.physiology.stun_mod /= 0.5
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STUN, 2)
 
 /datum/mutation/plasmocile
 	name = "Plasmocile"
-	desc = "A mutation in the lungs that provides it immunity to plasma's toxic nature."
+	desc = "The subject's lungs mutate, gaining immunity to viral agents and the toxic nature of plasma."
 	text_gain_indication = span_notice("Your lungs feel resistant to airborne contaminant.")
 	text_lose_indication = span_warning("Your lungs feel vulnerable to airborne contaminant again.")
 	locked = TRUE
@@ -137,4 +137,3 @@
 /datum/mutation/plasmocile/proc/remove_buff(obj/item/organ/lungs/our_lungs)
 	our_lungs.plas_breath_dam_min = initial(our_lungs.plas_breath_dam_min)
 	our_lungs.plas_breath_dam_max = initial(our_lungs.plas_breath_dam_max)
-

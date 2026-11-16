@@ -71,7 +71,7 @@
 	fire = 100
 	acid = 70
 
-/obj/machinery/door/poddoor/shutters/radiation/open()
+/obj/machinery/door/poddoor/shutters/radiation/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	. = ..()
 	rad_insulation = RAD_NO_INSULATION
 
@@ -99,3 +99,15 @@
 	icon_state = "open"
 	density = FALSE
 	opacity = FALSE
+
+/obj/machinery/door/poddoor/shutters/syndicate
+	icon = 'icons/obj/doors/syndicateshutters.dmi'
+
+/obj/machinery/door/poddoor/shutters/syndicate/preopen
+	icon_state = "open"
+	density = FALSE
+	opacity = FALSE
+
+/obj/machinery/door/poddoor/shutters/syndicate/indestructible
+	name = "hardened syndicate shutters"
+	resistance_flags = INDESTRUCTIBLE

@@ -68,11 +68,11 @@
 /obj/machinery/atmospherics/pipe/destroy_network()
 	QDEL_NULL(parent)
 
-/obj/machinery/atmospherics/pipe/get_rebuild_targets()
+/obj/machinery/atmospherics/pipe/get_rebuild_target()
 	if(!QDELETED(parent))
 		return
 	replace_pipenet(parent, new /datum/pipeline)
-	return list(parent)
+	return parent
 
 /obj/machinery/atmospherics/pipe/return_air()
 	if(air_temporary)
@@ -89,13 +89,14 @@
 		return air_temporary.remove(amount)
 	return parent.air.remove(amount)
 
-/obj/machinery/atmospherics/pipe/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/pipe_meter))
-		var/obj/item/pipe_meter/meter = item
-		user.dropItemToGround(meter)
-		meter.setAttachLayer(piping_layer)
-	else
+/obj/machinery/atmospherics/pipe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/pipe_meter))
 		return ..()
+
+	var/obj/item/pipe_meter/meter = tool
+	user.dropItemToGround(meter)
+	meter.setAttachLayer(piping_layer)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/pipe/return_pipenet()
 	return parent

@@ -9,7 +9,6 @@
 	icon = 'icons/obj/machines/destructive_scanner.dmi'
 	icon_state = "tube_open"
 	circuit = /obj/item/circuitboard/machine/destructive_scanner
-	layer = MOB_LAYER
 	var/scanning = FALSE
 
 // Late load to ensure the component initialization occurs after the machines are initialized
@@ -96,7 +95,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 	balloon_alert(user, "safety sensor BIOS disabled")
 	return TRUE
 
@@ -104,8 +103,11 @@
 	. = ..()
 	icon_state = scanning ? "tube_on" : "tube_open"
 
-/obj/machinery/destructive_scanner/attackby(obj/item/object, mob/user, list/modifiers, list/attack_modifiers)
-	if (!scanning && default_deconstruction_screwdriver(user, "tube_open", "tube_open", object) || default_deconstruction_crowbar(object))
-		update_icon()
-		return
-	return ..()
+/obj/machinery/destructive_scanner/screwdriver_act(mob/living/user, obj/item/tool)
+	return scanning ? NONE : default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/destructive_scanner/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/destructive_scanner/can_crowbar_deconstruct()
+	return ..() && !scanning

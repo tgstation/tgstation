@@ -5,7 +5,7 @@
 /datum/martial_art/plasma_fist
 	name = "Plasma Fist"
 	id = MARTIALART_PLASMAFIST
-	help_verb = /mob/living/proc/plasma_fist_help
+	help_verb = "Recall Teachings"
 	var/nobomb = FALSE
 	var/plasma_power = 1 //starts at a 1, 2, 4 explosion.
 	var/plasma_increment = 1 //how much explosion power gets added per kill (1 = 1, 2, 4. 2 = 2, 4, 8 and so on)
@@ -40,7 +40,7 @@
 	return FALSE
 
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/attacker, mob/living/defender)
-	attacker.say("TORNADO SWEEP!", forced="plasma fist")
+	INVOKE_ASYNC(attacker, TYPE_PROC_REF(/atom/movable, say), "TORNADO SWEEP!", forced = "plasma fist")
 	dance_rotate(attacker, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), attacker, 'sound/items/weapons/punch1.ogg', 15, TRUE, -1))
 	tornado_spell.cast(attacker)
 	log_combat(attacker, defender, "tornado sweeped (Plasma Fist)")
@@ -58,7 +58,7 @@
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(defender, get_dir(defender, get_step_away(defender, attacker)))
 	defender.throw_at(throw_target, 200, 4,attacker)
-	attacker.say("HYAH!", forced="plasma fist")
+	INVOKE_ASYNC(attacker, TYPE_PROC_REF(/atom/movable, say), "HYAH!", forced = "plasma fist")
 	log_combat(attacker, defender, "threw back (Plasma Fist)")
 	return TRUE
 
@@ -67,7 +67,7 @@
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
-	attacker.say("PLASMA FIST!", forced="plasma fist")
+	INVOKE_ASYNC(attacker, TYPE_PROC_REF(/atom/movable, say), "PLASMA FIST!", forced = "plasma fist")
 	defender.visible_message(
 		span_danger("[attacker] hits [defender] with THE PLASMA FIST TECHNIQUE!"),
 		span_userdanger("You're suddenly hit with THE PLASMA FIST TECHNIQUE by [attacker]!"),
@@ -103,7 +103,7 @@
 	return TRUE
 
 /datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/user, mob/living/target)
-	user.say("APOTHEOSIS!!", forced="plasma fist")
+	INVOKE_ASYNC(user, TYPE_PROC_REF(/atom/movable, say), "APOTHEOSIS!!", forced = "plasma fist")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_attacker = user
 		human_attacker.set_species(/datum/species/plasmaman)
@@ -162,18 +162,17 @@
 	add_to_streak("G", defender)
 	return check_streak(attacker, defender) ? MARTIAL_ATTACK_SUCCESS : MARTIAL_ATTACK_INVALID
 
-/mob/living/proc/plasma_fist_help()
-	set name = "Recall Teachings"
-	set desc = "Remember the martial techniques of the Plasma Fist."
-	set category = "Plasma Fist"
+/datum/martial_art/plasma_fist/get_style_help()
+	. = list()
 
-	var/datum/martial_art/plasma_fist/martial = GET_ACTIVE_MARTIAL_ART(src)
-	to_chat(usr, "<b><i>You clench your fists and have a flashback of knowledge...</i></b>")
-	to_chat(usr, "[span_notice("Tornado Sweep")]: Punch Punch Shove. Repulses opponent and everyone back.")
-	to_chat(usr, "[span_notice("Throwback")]: Shove Punch Shove. Throws the opponent and an item at them.")
-	to_chat(usr, "[span_notice("The Plasma Fist")]: Punch Shove Shove Shove Punch. Instantly gibs an opponent.[martial.nobomb ? "" : " Each kill with this grows your [span_notice("Apotheosis")] explosion size."]")
+	var/datum/martial_art/plasma_fist/martial = GET_ACTIVE_MARTIAL_ART(holder)
+	. += "<b><i>You clench your fists and have a flashback of knowledge...</i></b>"
+	. += "[span_notice("Tornado Sweep")]: Punch Punch Shove. Repulses opponent and everyone back."
+	. += "[span_notice("Throwback")]: Shove Punch Shove. Throws the opponent and an item at them."
+	. += "[span_notice("The Plasma Fist")]: Punch Shove Shove Shove Punch. Instantly gibs an opponent.[martial.nobomb ? "" : " Each kill with this grows your [span_notice("Apotheosis")] explosion size."]"
 	if(!martial.nobomb)
-		to_chat(usr, "[span_notice("Apotheosis")]: Use [span_notice("The Plasma Fist")] on yourself. Sends you away in a glorious explosion.")
+		. += "[span_notice("Apotheosis")]: Use [span_notice("The Plasma Fist")] on yourself. Sends you away in a glorious explosion."
+	return .
 
 
 /obj/effect/temp_visual/plasma_soul

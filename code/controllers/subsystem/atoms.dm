@@ -6,12 +6,15 @@ SUBSYSTEM_DEF(atoms)
 		/datum/controller/subsystem/mapping,
 		/datum/controller/subsystem/job,
 	)
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	/// A stack of list(source, desired initialized state)
 	/// We read the source of init changes from the last entry, and assert that all changes will come with a reset
 	var/list/initialized_state = list()
 	var/base_initialized
+
+	/// How many InitializeAtoms calls are still creating atoms, including ones asleep in CreateAtoms
+	var/active_initializations = 0
 
 	var/list/late_loaders = list()
 
@@ -33,6 +36,10 @@ SUBSYSTEM_DEF(atoms)
 
 /datum/controller/subsystem/atoms/Initialize()
 	init_start_time = world.time
+	#ifdef NAVMAP_BAKE_GENERATION
+	initialized = INITIALIZATION_INNEW_REGULAR
+	return SS_INIT_SUCCESS
+	#endif
 	setupGenetics() //to set the mutations' sequence
 
 	initialized = INITIALIZATION_INNEW_MAPLOAD
@@ -47,12 +54,14 @@ SUBSYSTEM_DEF(atoms)
 
 	// Generate a unique mapload source for this run of InitializeAtoms
 	var/static/uid = 0
-	uid = (uid + 1) % (SHORT_REAL_LIMIT - 1)
+	uid = WRAP_UID(uid + 1)
 	var/source = "subsystem init [uid]"
 	set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, source)
 
 	// This may look a bit odd, but if the actual atom creation runtimes for some reason, we absolutely need to set initialized BACK
+	active_initializations++
 	CreateAtoms(atoms, atoms_to_return, source)
+	active_initializations--
 	clear_tracked_initalize(source)
 	SSicon_smooth.free_deferred(source)
 
@@ -105,6 +114,9 @@ SUBSYSTEM_DEF(atoms)
 					stoplag()
 					if(mapload_source)
 						set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, mapload_source)
+					// Another initializer may have completed this atom while we yielded.
+					if(A.flags_1 & INITIALIZED_1)
+						continue
 				PROFILE_INIT_ATOM_BEGIN()
 				InitAtom(A, TRUE, mapload_arg)
 				PROFILE_INIT_ATOM_END(A)
@@ -167,7 +179,7 @@ SUBSYSTEM_DEF(atoms)
 
 /// Returns TRUE if anything is currently being initialized
 /datum/controller/subsystem/atoms/proc/initializing_something()
-	return length(initialized_state) > 1
+	return active_initializations > 0
 
 /datum/controller/subsystem/atoms/Recover()
 	initialized = SSatoms.initialized

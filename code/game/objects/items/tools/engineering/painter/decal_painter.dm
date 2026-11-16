@@ -14,7 +14,7 @@
 	/// The current base icon state of the decal being printed.
 	VAR_PRIVATE/selected_decal_icon_state = "warningline"
 	/// Current custom color
-	VAR_PRIVATE/selected_custom_color
+	var/selected_custom_color
 
 	/// Current active decal category. Reference to a global singleton
 	VAR_PRIVATE/datum/paintable_decal_category/current_category

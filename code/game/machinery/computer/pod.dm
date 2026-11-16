@@ -133,14 +133,14 @@
 
 /obj/machinery/computer/pod/old
 	name = "\improper DoorMex control console"
-	icon_state = "oldcomp"
+	icon_state = MAP_SWITCH("oldcomp", "/obj/machinery/computer/pod/old")
 	icon_screen = "library"
 	icon_keyboard = null
 
 /obj/machinery/computer/pod/old/mass_driver_controller
 	name = "\improper Mass Driver Controller"
-	icon = 'icons/obj/machines/wallmounts.dmi'
-	icon_state = "airlock_control_standby"
+	icon = MAP_SWITCH('icons/obj/machines/wallmounts.dmi', 'icons/obj/fluff/map_previews.dmi')
+	icon_state = MAP_SWITCH("airlock_control_standby", "/obj/machinery/computer/pod/old/mass_driver_controller")
 	icon_screen = null
 	density = FALSE
 

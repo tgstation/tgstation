@@ -72,7 +72,7 @@
 			TeleporterSend()
 
 /obj/machinery/abductor/console/ui_status(mob/user, datum/ui_state/state)
-	if(!isabductor(user) && !isobserver(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_KNOWLEDGE) && !isobserver(user))
 		return UI_CLOSE
 	return ..()
 
@@ -266,13 +266,16 @@
 	vest = V
 	return TRUE
 
-/obj/machinery/abductor/console/attackby(obj/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(O, /obj/item/abductor/gizmo) && AddGizmo(O))
+/obj/machinery/abductor/console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/abductor/gizmo) && AddGizmo(tool))
 		to_chat(user, span_notice("You link the tool to the console."))
-	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest) && AddVest(O))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/clothing/suit/armor/abductor/vest) && AddVest(tool))
 		to_chat(user, span_notice("You link the vest to the console."))
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/machinery/abductor/console/proc/Dispense(items_list, cost=1)
 	if(experiment && experiment.credits >= cost)

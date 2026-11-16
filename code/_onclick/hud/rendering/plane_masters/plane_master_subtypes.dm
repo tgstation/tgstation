@@ -67,6 +67,39 @@
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE, offset), relay_layer = EMISSIVE_SPACE_LAYER)
 
+/atom/movable/screen/plane_master/parallax_white/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+
+	if(isnull(mymob.client))
+		return
+
+	RegisterSignals(mymob.client, list(SIGNAL_ADDTRAIT(TRAIT_PARALLAX_DISPLAYED(assigned_map)), SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_DISPLAYED(assigned_map))), PROC_REF(parallax_updated), override = TRUE)
+	parallax_updated(mymob.client)
+
+/atom/movable/screen/plane_master/parallax_white/hide_from(mob/oldmob)
+	. = ..()
+	if(isnull(oldmob.client))
+		return
+	UnregisterSignal(oldmob.client, list(SIGNAL_ADDTRAIT(TRAIT_PARALLAX_DISPLAYED(assigned_map)), SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_DISPLAYED(assigned_map))))
+
+/atom/movable/screen/plane_master/parallax_white/proc/parallax_updated(client/source)
+	SIGNAL_HANDLER
+	if(isnull(source))
+		return
+	if(HAS_TRAIT(source, TRAIT_PARALLAX_DISPLAYED(assigned_map)))
+		// Gives parallax a fullwhite backdrop to multiply against
+		color = list(
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			0, 0, 0, 0,
+			1, 1, 1, 1,
+			0, 0, 0, 0
+			)
+	else
+		color = initial(color)
+
 ///Contains space parallax
 /atom/movable/screen/plane_master/parallax
 	name = "Parallax"
@@ -91,6 +124,35 @@
 	if(GLOB.narsie_summon_count >= 1)
 		narsie_start_midway(GLOB.narsie_effect_last_modified) // We assume we're on the start, so we can use this number
 	offset_increase(0, SSmapping.max_plane_offset)
+
+/atom/movable/screen/plane_master/parallax/show_to(mob/mymob)
+	. = ..()
+	if(!.)
+		return
+
+	// Huds have a 1 to 1 for mobs so we're just gonna hook to this mob's potential clients forever!
+	// We have to do it this way instead of just using show_to/hide from because otherwise we immediately remove the signals as soon as we hide ourselves
+	// Perhaps we need separate "hook to mob" and "display" procs?
+	var/list/parallax_signals = list(
+		SIGNAL_ADDTRAIT(TRAIT_PARALLAX_DISPLAYED(assigned_map)) = PROC_REF(parallax_updated),
+		SIGNAL_REMOVETRAIT(TRAIT_PARALLAX_DISPLAYED(assigned_map)) = PROC_REF(parallax_updated)
+	)
+	AddComponent(/datum/component/connect_client_behalf, mymob, parallax_signals)
+	if(!isnull(mymob.client))
+		update_connections(mymob.client, TRUE)
+
+/atom/movable/screen/plane_master/parallax/proc/parallax_updated(client/source)
+	SIGNAL_HANDLER
+	update_connections(source)
+
+/atom/movable/screen/plane_master/parallax/proc/update_connections(client/updating, displayed_already = FALSE)
+	if(isnull(updating?.mob))
+		return
+	if(HAS_TRAIT(updating, TRAIT_PARALLAX_DISPLAYED(assigned_map)))
+		if(!displayed_already)
+			show_to(updating.mob)
+	else
+		hide_from(updating.mob)
 
 /atom/movable/screen/plane_master/parallax/proc/on_offset_increase(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
@@ -263,13 +325,54 @@
 	plane = AREA_PLANE
 
 /atom/movable/screen/plane_master/weather
-	name = "Weather"
-	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects."
+	name = "Non-Particle Weather"
+	documentation = "Holds the main tiling 32x32 sprites of weather. We mask against walls that are on the edge of weather effects. Used when the player has particle weather disabled."
 	plane = WEATHER_PLANE
 	start_hidden = TRUE
 	critical = PLANE_CRITICAL_DISPLAY
+	/// Is this a particle variant?
+	var/particle_weather = FALSE
 
 /atom/movable/screen/plane_master/weather/set_home(datum/plane_master_group/home)
+	. = ..()
+	if(!.)
+		return
+	home.AddComponent(/datum/component/hide_weather_planes, src)
+	RegisterSignal(home, COMSIG_PLANE_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+	update_state()
+
+/atom/movable/screen/plane_master/weather/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	update_state()
+
+/atom/movable/screen/plane_master/weather/proc/update_state()
+	var/mob/mymob = home.our_hud?.mymob
+	if(!istype(mymob))
+		return
+
+	// If the client wants particle weather, only show the PARTICLE_WEATHER_PLANE, otherwise only show the normal WEATHER_PLANE
+	if (mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather) == particle_weather)
+		set_alpha(255)
+	else
+		set_alpha(0)
+
+/atom/movable/screen/plane_master/weather/particle
+	name = "Particle Weather"
+	documentation = "Holds the main tiling 32x32 sprites of weather. Used when the player has particle weather enabled."
+	plane = PARTICLE_WEATHER_PLANE
+	particle_weather = TRUE
+
+/atom/movable/screen/plane_master/weather_mask
+	name = "Weather Mask"
+	documentation = "Used to mask particle weather effects to cut out areas unaffected by weather."
+	plane = WEATHER_MASK_PLANE
+	appearance_flags = PLANE_MASTER | NO_CLIENT_COLOR
+	render_target = WEATHER_MASK_RENDER_TARGET
+	render_relay_planes = list()
+	start_hidden = TRUE
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/weather_mask/set_home(datum/plane_master_group/home)
 	. = ..()
 	if(!.)
 		return
@@ -302,33 +405,13 @@
 /atom/movable/screen/plane_master/o_light_visual
 	name = "Overlight light visual"
 	documentation = "Holds overlay lighting objects, or the sort of lighting that's a well, overlay stuck to something.\
-		<br>Exists because lighting updating is really slow, and movement needs to feel smooth.\
-		<br>We draw to the game plane, and mask out space for ourselves on the lighting plane so any color we have has the chance to display."
+		<br>Exists because lighting updating is really slow, and movement needs to feel smooth (also being an overlay lets us muck with it easier)."
 	plane = O_LIGHTING_VISUAL_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(RENDER_PLANE_LIGHTING)
+	render_relay_planes = list(RENDER_PLANE_O_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
-
-/atom/movable/screen/plane_master/o_light_visual/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
-	. = ..()
-	// I'd love for this to be HSL but filters don't work with blend modes
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_TURF_LIGHTING, offset), BLEND_MULTIPLY, relay_color = list(
-		-1, -1, -1, 0,
-		-1, -1, -1, 0,
-		-1, -1, -1, 0,
-		0, 0, 0, OVERLAY_LIGHTING_WEIGHT,
-		1, 1, 1, 0,
-	))
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR, offset), relay_color = list(
-		SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0, 0,
-		0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0, 0,
-		0, 0, SPECULAR_EMISSIVE_OVERLAY_CONTRAST, 0,
-		0, 0, 0, 1,
-		-SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, -SPECULAR_EMISSIVE_CUTOFF, 0,
-	))
 
 /atom/movable/screen/plane_master/above_lighting
 	name = "Above lighting"
@@ -401,35 +484,31 @@
 	plane = CAMERA_STATIC_PLANE
 	render_relay_planes = list(RENDER_PLANE_GAME)
 
-/atom/movable/screen/plane_master/camera_static/show_to(mob/mymob)
+/atom/movable/screen/plane_master/camera_static/set_home(datum/plane_master_group/home)
 	. = ..()
-	if(!.)
-		return
-	var/datum/hud/our_hud = home.our_hud
-	if(isnull(our_hud))
-		return
+	if(home)
+		RegisterSignal(home, COMSIG_PLANE_GROUP_PERSPECTIVE_CHANGED, PROC_REF(perspective_changed))
+		update_perspective()
 
-	// We'll hide the slate if we're not seeing through a camera eye
-	// This can call on a cycle cause we don't clear in hide_from
-	// Yes this is the best way of hooking into the hud, I hate myself too
-	RegisterSignal(our_hud, COMSIG_HUD_EYE_CHANGED, PROC_REF(eye_changed), override = TRUE)
-	eye_changed(our_hud, null, our_hud.mymob?.canon_client?.eye)
-
-/atom/movable/screen/plane_master/camera_static/proc/eye_changed(datum/hud/source, atom/old_eye, atom/new_eye)
+/atom/movable/screen/plane_master/camera_static/proc/perspective_changed(datum/source, atom/old_perspective, atom/new_perspective)
 	SIGNAL_HANDLER
+	update_perspective()
 
-	if(istype(new_eye, /obj/effect/landmark/ai_multicam_room))
+/atom/movable/screen/plane_master/camera_static/proc/update_perspective()
+	var/atom/perspective = home.get_perspective()
+
+	if(istype(perspective, /obj/effect/landmark/ai_multicam_room))
 		if(force_hidden)
-			unhide_plane(source.mymob)
+			unhide_plane(home.our_hud?.mymob)
 		return
 
-	if(!iscameramob(new_eye))
+	if(!iscameramob(perspective))
 		if(!force_hidden)
-			hide_plane(source.mymob)
+			hide_plane(home.our_hud?.mymob)
 		return
 
 	if(force_hidden)
-		unhide_plane(source.mymob)
+		unhide_plane(home.our_hud?.mymob)
 
 /atom/movable/screen/plane_master/high_game
 	name = "High Game"

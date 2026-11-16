@@ -50,17 +50,17 @@
 	switch (stage)
 		if (STAGE_DROP_ITEM)
 			show_instruction(keybinding_message(
-				/datum/keybinding/mob/drop_item,
+				/datum/keybinding/dextrous/drop_item,
 				"Press '%KEY%' to drop your current item",
 				"Click '<b>DROP</b>' to drop your current item",
 			))
 		if (STAGE_PICK_SOMETHING_UP)
 			show_instruction("Pick something up!")
 
-/datum/tutorial/drop/proc/on_swap_hands()
+/datum/tutorial/drop/proc/on_swap_hands(mob/living/source, obj/item/swapped_to, obj/item/swapped_from)
 	SIGNAL_HANDLER
 
-	if (isnull(user.get_active_held_item()))
+	if (isnull(swapped_to))
 		if (stage != STAGE_PICK_SOMETHING_UP)
 			stage = STAGE_PICK_SOMETHING_UP
 			show_instructions()

@@ -40,9 +40,8 @@ export const AntagInfoBloodWorm = (props) => {
             <Stack.Item>
               <Section fill title="Powers">
                 <LabeledList>
-                  <LabeledList.Item label="Space Immunity">
-                  You are immune to low temperature, low pressure and don't need to breathe.
-                  Your hosts don't have to breathe either, but their bodies remain vulnerable to space.
+                  <LabeledList.Item label="Breathless">
+                  You don't need to breathe. This extends to your hosts as well.
                   </LabeledList.Item>
                   <LabeledList.Item label="Blood Consumption">
                   You can grow by using Leech Blood or Invade Corpse to consume blood,
@@ -89,6 +88,10 @@ export const AntagInfoBloodWorm = (props) => {
             <Stack.Item>
               <Section fill title="Weaknesses">
                 <LabeledList>
+                  <LabeledList.Item label="Extreme Cold">
+                  Your species is highly pressure and cold resistant, but extremely low pressures and temperatures can still harm you.
+                  This doesn't apply to you while in a host and you can equip your host with a space suit to protect it too.
+                  </LabeledList.Item>
                   <LabeledList.Item label="High Heat">
                   Your species is averse to heat and will rapidly burn up in hot environments. Your body is also flammable, so stay away from fires.
                   This weakness applies even while in a host, but can be covered by equipping your host with fire-resistant gear.
@@ -132,7 +135,7 @@ export const AntagInfoBloodWorm = (props) => {
                   You can use this as insurance to get a last ditch escape attempt.
                   </LabeledList.Item>
                   <LabeledList.Item label="Medbay Buffet">
-                  Medbay's blood freezers are all-you-can-eat buffets for you! They are only half synthetic and their high volumes grant you a lot of growth.
+                  Medbay's blood freezers can be a decent source of synthetic blood if you can't find any monkeys.
                   Be careful of nearby crew, as the sounds of breaking freezers can travel through walls.
                   </LabeledList.Item>
                   <LabeledList.Item label="Fast Food">

@@ -30,6 +30,7 @@
 	human.physique = human.gender
 	human.real_name = human.generate_random_mob_name()
 	human.name = human.get_visible_name()
+	human.voice = SStts.random_tts_voice(human.gender)
 	human.set_eye_color(random_eye_color())
 	human.skin_tone = pick(GLOB.skin_tones)
 	// No underwear generation handled here

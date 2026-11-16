@@ -35,7 +35,7 @@
 
 /obj/vehicle/sealed/mecha/honker/play_stepsound()
 	if(squeak)
-		playsound(src, SFX_CLOWN_STEP, 70, 1)
+		playsound(src, /datum/sound_effect/clown_step, 70, 1)
 	squeak = !squeak
 
 
@@ -59,6 +59,10 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 2,
 	)
+
+/obj/vehicle/sealed/mecha/honker/dark/Initialize(mapload, built_manually)
+	. = ..()
+	add_minimap_blip(src, MINIMAP_SYNDICATE_MECH_BLIP, "syndiemech")
 
 /obj/vehicle/sealed/mecha/honker/dark/loaded
 	equip_by_category = list(

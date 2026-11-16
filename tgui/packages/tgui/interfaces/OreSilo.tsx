@@ -2,8 +2,8 @@ import { useState } from 'react';
 import {
   Box,
   Button,
+  DmIcon,
   Icon,
-  Image,
   Input,
   NoticeBox,
   Section,
@@ -24,6 +24,7 @@ import type { Material } from './Fabrication/Types';
 type Machine = {
   name: string;
   icon: string;
+  icon_state: string;
   on_hold: boolean;
   location: string;
 };
@@ -183,10 +184,11 @@ const MachineDisplay = (props: MachineProps) => {
         }
       >
         <Box className="FabricatorRecipe__Icon">
-          <Image
-            width={'32px'}
-            height={'32px'}
-            src={`data:image/jpeg;base64,${machine.icon}`}
+          <DmIcon
+            width="32px"
+            height="32px"
+            icon={machine.icon}
+            icon_state={machine.icon_state}
           />
         </Box>
         <Box className="FabricatorRecipe__Label">{machineName}</Box>

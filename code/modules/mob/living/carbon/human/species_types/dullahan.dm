@@ -31,6 +31,8 @@
 
 	/// The dullahan relay that's associated with the owner, used to handle many things such as talking and hearing.
 	var/obj/item/dullahan_relay/my_head
+	/// Do we try to prevent reset_perspective() from working? Useful to stop perspective changes when they're looking through their head.
+	var/prevent_perspective_change = FALSE
 	/// Did our owner's first client connection get handled yet? Useful for when some proc needs to be called once we're sure that a client has moved into our owner, like for Dullahans.
 	var/owner_first_client_connection_handled = FALSE
 
@@ -44,6 +46,7 @@
 	human.lose_hearing_sensitivity(TRAIT_GENERIC)
 	RegisterSignal(human, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(on_gained_part))
 	RegisterSignal(human, COMSIG_CARBON_DEFIB_BRAIN_CHECK, PROC_REF(defib_check))
+	RegisterSignal(human, COMSIG_HUMAN_FORCED_PERSPECTIVE_MANAGEMENT, PROC_REF(perspective_manager))
 
 	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
 	head.speech_span = null
@@ -60,7 +63,6 @@
 	eyes.eye_color_left = human.eye_color_left
 	eyes.eye_color_right = human.eye_color_right
 	eyes.bodypart_insert(head)
-	human.update_body()
 	head.update_limb()
 	head.update_icon_dropped()
 	RegisterSignal(head, COMSIG_QDELETING, PROC_REF(on_head_destroyed))
@@ -95,6 +97,21 @@
 	my_head.owner.gib(DROP_ALL_REMAINS)
 	QDEL_NULL(my_head)
 
+/// Handles perspective management for the dullahan's detached head and vision perspective. Will set the index of the potential_perspective_list if we need to hand that back for update_perspective arg
+/datum/species/dullahan/proc/perspective_manager(datum/source, list/potential_perspective_list, atom/new_eye, force_reset)
+	SIGNAL_HANDLER
+	if(prevent_perspective_change || (new_eye != source) || (new_eye != my_head))
+		return NONE
+
+	var/mob/living/carbon/human/dullahan = source
+	var/dullahan_eye = dullahan.client?.eye
+	if(dullahan_eye && new_eye != dullahan_eye)
+		potential_perspective_list += dullahan_eye
+		return COMSIG_UPDATE_NEW_PERSPECTIVE
+
+	dullahan.update_fullscreen()
+	return NONE
+
 /datum/species/dullahan/proc/defib_check(mob/living/carbon/human/human)
 	SIGNAL_HANDLER
 	return human.can_defib_brain(locate(/obj/item/organ/brain) in my_head.loc) || DEFIB_POSSIBLE
@@ -111,7 +128,7 @@
 
 	UnregisterSignal(human, COMSIG_CARBON_ATTACH_LIMB)
 	UnregisterSignal(human, COMSIG_CARBON_DEFIB_BRAIN_CHECK)
-	human.regenerate_limb(BODY_ZONE_HEAD, FALSE)
+	human.regenerate_limb(BODY_ZONE_HEAD, null)
 	human.become_hearing_sensitive()
 	prevent_perspective_change = FALSE
 	human.reset_perspective(human)
@@ -196,6 +213,13 @@
 	modifies_speech = TRUE
 
 /obj/item/organ/tongue/dullahan/handle_speech(datum/source, list/speech_args)
+	// If we're not in a dullahan any more (e.g. a changeling transformed into another species), we have nothing to relay and we scrap ourselves to avoid further executions
+	if(!isdullahan(owner))
+		qdel(src)
+		return
+	// Say modes (such as the changeling hivemind) are handled by /mob/living/say() from our own body, so leave the message alone
+	if(SSradio.get_available_say_mode(owner, speech_args[SPEECH_MODS][RADIO_KEY]))
+		return
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
 		if(isdullahan(human))
@@ -204,7 +228,9 @@
 				var/obj/head = dullahan_species.my_head.loc
 				if(speech_args[SPEECH_MODS][WHISPER_MODE]) // whisper away
 					speech_args[SPEECH_SPANS] |= SPAN_ITALICS
-				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], message_range = speech_args[SPEECH_RANGE], message_mods = speech_args[SPEECH_MODS])
+				// The body's own speech is blanked below, so its treat_message() (capitalization, accents, ...) never runs on this message
+				var/list/treated_message = human.treat_message(speech_args[SPEECH_MESSAGE])
+				head.say(treated_message["message"], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], message_range = speech_args[SPEECH_RANGE], message_mods = speech_args[SPEECH_MODS])
 	speech_args[SPEECH_MESSAGE] = ""
 
 /obj/item/organ/ears/dullahan
@@ -267,10 +293,10 @@
 	if (!istype(detached_head))
 		return // It's so over
 	detached_head.real_name = headless.real_name
-	detached_head.name = headless.real_name
+	detached_head.name = "[headless.real_name]'s head"
 	name = headless.real_name
 	detached_head.voice = headless.voice
-	detached_head.pitch = pitch
+	detached_head.pitch = headless.pitch
 	var/obj/item/organ/brain/brain = locate(/obj/item/organ/brain) in detached_head
 	brain.name = "[headless.name]'s brain"
 
@@ -279,13 +305,16 @@
 
 /obj/item/dullahan_relay/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
+	if(isnull(owner))
+		return FALSE
+
 	var/dist = get_dist(speaker, src) - message_range
-	if(dist > 0 && dist <= EAVESDROP_EXTRA_RANGE)
-		raw_message = stars(raw_message)
-	if(message_range != INFINITY && dist > EAVESDROP_EXTRA_RANGE)
-		return FALSE
-	if(!owner)
-		return FALSE
+	if(message_range != INFINITY)
+		if(dist > EAVESDROP_RANGE)
+			return FALSE
+		if(dist > 0)
+			raw_message = stars(raw_message)
+
 	return owner.Hear(speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, spans, message_mods, message_range = INFINITY)
 
 ///Stops dullahans from gibbing when regenerating limbs

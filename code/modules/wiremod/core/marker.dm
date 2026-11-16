@@ -4,6 +4,7 @@
 	Acts as a normal multitool otherwise. Use in hand to clear marked entity so that you can mark another entity."
 	icon_state = "multitool_circuit"
 	apc_scanner = FALSE // would conflict with mark clearing
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 	/// The marked atom of this multitool
 	var/atom/marked_atom

@@ -18,8 +18,8 @@
 		return
 	var/mob/living/owner = user.mob
 	owner.resist()
-	if (owner.hud_used?.resist_icon)
-		owner.hud_used.resist_icon.icon_state = "[owner.hud_used.resist_icon.base_icon_state]_on"
+	if (owner.hud_used?.screen_objects[HUD_MOB_RESIST])
+		owner.hud_used.screen_objects[HUD_MOB_RESIST].icon_state = "[owner.hud_used.screen_objects[HUD_MOB_RESIST].base_icon_state]_on"
 	return TRUE
 
 /datum/keybinding/living/resist/up(client/user, turf/target)
@@ -27,8 +27,8 @@
 	if(.)
 		return
 	var/mob/living/owner = user.mob
-	if (owner.hud_used?.resist_icon)
-		owner.hud_used.resist_icon.icon_state = owner.hud_used.resist_icon.base_icon_state
+	if (owner.hud_used?.screen_objects[HUD_MOB_RESIST])
+		owner.hud_used.screen_objects[HUD_MOB_RESIST].icon_state = owner.hud_used.screen_objects[HUD_MOB_RESIST].base_icon_state
 
 /datum/keybinding/living/look_up
 	hotkey_keys = list("L")
@@ -152,7 +152,7 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_move_intent_alternative
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "toggle_move_intent_alt"
 	full_name = "press to cycle move intent"
 	description = "Pressing this cycle to the opposite move intent, does not cycle back"
@@ -167,7 +167,7 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_throw_mode
-	hotkey_keys = list("Southwest") // END
+	hotkey_keys = list("R", "Southwest") // END
 	name = "toggle_throw_mode"
 	full_name = "Toggle throw mode"
 	description = "Toggle throwing the current item or not."
@@ -213,17 +213,36 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	if(!user.mob)
+	var/mob/living/living_user = astype(user.mob, /mob/living)
+	if(!living_user)
 		return FALSE
-	if(!HAS_TRAIT(user.mob, TRAIT_CAN_HOLD_ITEMS))
+	var/obj/item/object = living_user.get_active_held_item()
+	if(isnull(object))
 		return FALSE
-	return TRUE
+	return living_user.can_hold_items(object) || HAS_TRAIT(object, TRAIT_BORG_GIVE)
 
 /datum/keybinding/living/give/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
 	if(.)
 		return
 	var/mob/living/living_user = user.mob
-	if(!HAS_TRAIT(living_user, TRAIT_CAN_HOLD_ITEMS))
+	var/obj/item/held_item = living_user.get_active_held_item()
+	if(isnull(held_item))
+		return
+	if(!living_user.can_hold_items(held_item) && !HAS_TRAIT(held_item, TRAIT_BORG_GIVE))
 		return
 	living_user.give()
+
+/datum/keybinding/living/view_pet_data
+	hotkey_keys = list("Shift")
+	name = "view_pet_commands"
+	full_name = "View Pet Commands"
+	description = "Hold down to see all the commands you can give your pets!"
+	keybind_signal = COMSIG_KB_LIVING_VIEW_PET_COMMANDS
+
+/datum/keybinding/living/cancel_interactions
+	name = "stop_interactions"
+	full_name = "Cancel Interactions"
+	description = "Cancels any ongoing interactions (such as using a tool, performing surgery, or climbing). \
+		Note that some interactions cannot be interrupted, and you can't cancel other player's interaction with this hotkey."
+	keybind_signal = COMSIG_KB_LIVING_STOP_INTERACTIONS_DOWN

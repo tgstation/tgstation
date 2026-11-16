@@ -11,7 +11,7 @@
 	// - list(/obj/item/plush/lizard = list("name" = "Tests-The-Loadout", "color" = "#FF0000"))
 
 // Loadouts are applied with job equip code.
-/datum/preference/loadout/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/loadout/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return
 
 // Sanitize on load to ensure no invalid paths from older saves get in
@@ -58,6 +58,14 @@
 
 		// Set into sanitize list using converted path key
 		var/list/data = passed_list[path]
-		LAZYSET(sanitized_list, real_path, LAZYLISTDUPLICATE(data))
+		data = LAZYLISTDUPLICATE(data)
+		// GAGS can't render malformed colors, so fall back to the item's defaults
+		var/saved_colors = data?[INFO_GREYSCALE]
+		if(saved_colors && (!istext(saved_colors) || !findtext(saved_colors, GLOB.is_greyscale_colors)))
+			data -= INFO_GREYSCALE
+			if(optional_loadout_owner)
+				to_chat(optional_loadout_owner, span_boldnotice("The saved colors for [loadout_item.name] \
+					in your character loadout were invalid and have been reset."))
+		LAZYSET(sanitized_list, real_path, data)
 
 	return sanitized_list

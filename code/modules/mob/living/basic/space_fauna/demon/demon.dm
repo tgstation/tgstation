@@ -47,7 +47,7 @@
 	lighting_cutoff_green = 10
 	lighting_cutoff_blue = 20
 
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 
 	/// Typepath of the antag datum to add to the demon when applicable
 	var/datum/antagonist/antag_type = null

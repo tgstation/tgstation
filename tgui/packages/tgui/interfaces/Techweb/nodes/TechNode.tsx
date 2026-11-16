@@ -1,15 +1,17 @@
+import { memo } from 'react';
 import {
   Box,
   Button,
   Collapsible,
+  ImageButton,
   ProgressBar,
   Section,
   Stack,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
-
 import { Experiment } from '../../ExperimentConfigure';
-import { useRemappedBackend } from '../helpers';
+import { MaterialCostSequence } from '../../Fabrication/MaterialCostSequence';
+import { type ResearchData, useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
 import { LockedExperiment } from '../LockedExperiment';
 import type { TechwebNode } from '../types';
@@ -26,30 +28,35 @@ export function TechNode(props: Props) {
   const {
     node_cache,
     design_cache,
+    SHEET_MATERIAL_AMOUNT,
+    build_types,
+    department_flags,
     experiments,
     points = [],
-    nodes,
+    node_tiers,
     point_types_abbreviations = [],
     queue_nodes = [],
   } = data;
   const { node, nodetails, nocontrols } = props;
   const {
-    id,
+    path,
     can_unlock,
     have_experiments_done,
     tier,
     enqueued_by_user,
     is_free,
+    discount_boosted,
   } = node;
   const {
     name,
     description,
     costs,
-    design_ids,
-    prereq_ids,
+    unlocked_designs,
+    prerequisite_nodes,
     required_experiments,
     discount_experiments,
-  } = node_cache[id];
+    discount_boosts,
+  } = node_cache[path];
   const [techwebRoute, setTechwebRoute] = useTechWebRoute();
 
   const expcompl = required_experiments.filter(
@@ -68,8 +75,8 @@ export function TechNode(props: Props) {
     </ProgressBar>
   );
 
-  const techcompl = prereq_ids.filter(
-    (x) => nodes.find((y) => y.id === x)?.tier === 0,
+  const techcompl = prerequisite_nodes.filter(
+    (prerequisite) => node_tiers[prerequisite] === 0,
   ).length;
   const techProgress = (
     <ProgressBar
@@ -78,19 +85,27 @@ export function TechNode(props: Props) {
         average: [0.25, 0.5],
         bad: [-Infinity, 0.25],
       }}
-      value={techcompl / prereq_ids.length}
+      value={techcompl / prerequisite_nodes.length}
     >
-      Tech ({techcompl}/{prereq_ids.length})
+      Tech ({techcompl}/{prerequisite_nodes.length})
     </ProgressBar>
   );
 
   // Notice that this logic will have to be changed if we make the discounts
   // pool-specific
-  const nodeDiscount = Object.keys(discount_experiments)
+  const nodeDiscountExperiments = Object.keys(discount_experiments)
     .filter((x) => experiments[x]?.completed)
     .reduce((tot, curr) => {
       return tot + discount_experiments[curr];
     }, 0);
+
+  // Will need to be changed (along with some backend/DM code) if boosts should
+  // ever vary by point type. As is, this simply adds up all discount boosts.
+  const nodeDiscountBoosts = discount_boosted
+    ? Object.keys(discount_boosts).reduce((tot, curr) => {
+        return tot + discount_boosts[curr];
+      }, 0)
+    : 0;
 
   return (
     <Section
@@ -100,11 +115,11 @@ export function TechNode(props: Props) {
         !nocontrols && (
           <>
             {tier > 0 &&
-              (!!can_unlock && (is_free || queue_nodes.length === 0) ? (
+              (can_unlock && (is_free || queue_nodes.length === 0) ? (
                 <Button
                   icon="lightbulb"
                   disabled={!can_unlock || tier > 1 || queue_nodes.length > 0}
-                  onClick={() => act('researchNode', { node_id: id })}
+                  onClick={() => act('researchNode', { node_path: path })}
                 >
                   Research
                 </Button>
@@ -112,11 +127,11 @@ export function TechNode(props: Props) {
                 <Button
                   icon="trash"
                   color="bad"
-                  onClick={() => act('dequeueNode', { node_id: id })}
+                  onClick={() => act('dequeueNode', { node_path: path })}
                 >
                   Dequeue
                 </Button>
-              ) : id in queue_nodes && !enqueued_by_user ? (
+              ) : path in queue_nodes && !enqueued_by_user ? (
                 <Button icon="check" color="good">
                   Queued
                 </Button>
@@ -125,10 +140,10 @@ export function TechNode(props: Props) {
                   icon="lightbulb"
                   disabled={
                     !have_experiments_done ||
-                    id in queue_nodes ||
-                    techcompl < prereq_ids.length
+                    path in queue_nodes ||
+                    techcompl < prerequisite_nodes.length
                   }
-                  onClick={() => act('enqueueNode', { node_id: id })}
+                  onClick={() => act('enqueueNode', { node_path: path })}
                 >
                   Enqueue
                 </Button>
@@ -137,7 +152,7 @@ export function TechNode(props: Props) {
               <Button
                 icon="tasks"
                 onClick={() => {
-                  setTechwebRoute({ route: 'details', selectedNode: id });
+                  setTechwebRoute({ route: 'details', selectedNode: path });
                 }}
               >
                 Details
@@ -150,7 +165,10 @@ export function TechNode(props: Props) {
       {tier !== 0 && (
         <Stack className="Techweb__NodeProgress">
           {costs.map((k) => {
-            const reqPts = Math.max(0, k.value - nodeDiscount);
+            const reqPts = Math.max(
+              0,
+              k.value - nodeDiscountExperiments - nodeDiscountBoosts,
+            );
             const nodeProg = Math.min(reqPts, points[k.type]) || 0;
             return (
               <Stack.Item key={k.type} grow basis={0}>
@@ -171,7 +189,7 @@ export function TechNode(props: Props) {
               </Stack.Item>
             );
           })}
-          {prereq_ids.length > 0 && (
+          {prerequisite_nodes.length > 0 && (
             <Stack.Item grow basis={0}>
               {techProgress}
             </Stack.Item>
@@ -186,16 +204,13 @@ export function TechNode(props: Props) {
       <Box className="Techweb__NodeDescription" mb={2}>
         {description}
       </Box>
-      <Box className="Techweb__NodeUnlockedDesigns" mb={2}>
-        {design_ids.map((k, i) => (
-          <Button
-            key={k}
-            className={`${design_cache[k].class} Techweb__DesignIcon`}
-            tooltip={design_cache[k].name}
-            tooltipPosition={i % 15 < 7 ? 'right' : 'left'}
-          />
-        ))}
-      </Box>
+      <NodeDesigns
+        designs={unlocked_designs}
+        design_cache={design_cache}
+        build_types={build_types}
+        department_flags={department_flags}
+        SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+      />
       {required_experiments.length > 0 && (
         <Collapsible
           className="Techweb__NodeExperimentsRequired"
@@ -234,3 +249,77 @@ export function TechNode(props: Props) {
     </Section>
   );
 }
+
+type DesignsProps = {
+  designs: string[];
+  design_cache: ResearchData['design_cache'];
+  build_types: ResearchData['build_types'];
+  department_flags: ResearchData['department_flags'];
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+/** The designs a node unlocks. These only change with the catalogue, so live updates skip them */
+const NodeDesigns = memo(function NodeDesigns(props: DesignsProps) {
+  const {
+    designs,
+    design_cache,
+    build_types,
+    department_flags,
+    SHEET_MATERIAL_AMOUNT,
+  } = props;
+
+  return (
+    <Box className="Techweb__NodeUnlockedDesigns" mb={2}>
+      {designs.map((id, index) => (
+        <ImageButton
+          key={id}
+          className={`$Techweb__DesignIcon`}
+          imageSize={32}
+          asset={['', design_cache[id].class]}
+          tooltip={
+            <Stack vertical>
+              <Stack.Item mt={0.3} ml={0.3} mb={0.3}>
+                {design_cache[id].name}
+              </Stack.Item>
+              {design_cache[id].build_types !== null && (
+                <>
+                  <Stack.Item mt={-2} mb={-2} ml={-3}>
+                    <ul>
+                      <li>
+                        {Object.keys(build_types)
+                          .filter((key) => design_cache[id].build_types & +key)
+                          .map((key) => build_types[key])
+                          .join(', ')}
+                      </li>
+                      {!!Object.keys(department_flags).find(
+                        (key) => !(+key & design_cache[id].department_flags),
+                      ) && (
+                        <li>
+                          {Object.keys(department_flags)
+                            .filter(
+                              (key) => design_cache[id].department_flags & +key,
+                            )
+                            .map((key) => department_flags[key])
+                            .join(', ')}
+                        </li>
+                      )}
+                    </ul>
+                  </Stack.Item>
+                  <Stack.Divider />
+                  <Stack.Item mt={-1}>
+                    <MaterialCostSequence
+                      design={design_cache[id]}
+                      amount={1}
+                      SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+                    />
+                  </Stack.Item>
+                </>
+              )}
+            </Stack>
+          }
+          tooltipPosition={index % 15 < 7 ? 'right' : 'left'}
+        />
+      ))}
+    </Box>
+  );
+});

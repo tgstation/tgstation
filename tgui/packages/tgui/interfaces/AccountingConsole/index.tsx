@@ -150,7 +150,7 @@ export const AccountingConsole = () => {
               <Stack.Item grow />
               <Stack.Item>
                 <Button p={0.75} pl={1} pr={1} disabled textColor="black">
-                  {station_time} ST
+                  {station_time} PT
                 </Button>
               </Stack.Item>
             </Stack>

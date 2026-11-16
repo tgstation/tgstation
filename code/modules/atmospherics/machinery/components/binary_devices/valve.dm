@@ -16,6 +16,8 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	pipe_state = "mvalve"
 	custom_reconcilation = TRUE
 	use_power = NO_POWER_USE
+	light_mask_on = TRUE
+	light_mask_off = TRUE
 	///Type of valve (manual or digital), used to set the icon of the component in update_icon_nopipes()
 	var/valve_type = MANUAL_VALVE
 	///Bool to stop interactions while the opening/closing animation is going
@@ -111,7 +113,7 @@ It's like a regular ol' straight pipe, but you can turn it on and off.
 	open = add_input_port("Open", PORT_TYPE_SIGNAL)
 	close = add_input_port("Close", PORT_TYPE_SIGNAL)
 
-	is_open = add_output_port("Is Open", PORT_TYPE_NUMBER)
+	is_open = add_output_port("Is Open", PORT_TYPE_BOOLEAN)
 	opened = add_output_port("Opened", PORT_TYPE_SIGNAL)
 	closed = add_output_port("Closed", PORT_TYPE_SIGNAL)
 

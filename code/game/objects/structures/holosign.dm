@@ -48,6 +48,13 @@
 	if(!. && isprojectile(mover)) // Its short enough to be shot over
 		return TRUE
 
+/obj/structure/holosign/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	take_damage(150/severity, BRUTE, ENERGY, FALSE)
+
 /obj/structure/holosign/proc/attack_holosign(mob/living/user, list/modifiers)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -69,6 +76,8 @@
 	alpha = 0
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	var/obj/effect/overlay/vis/overlay = SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = KEEP_APART|RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	if(isnull(overlay)) // Signs being deleted get no vis overlays
+		return
 	if (color || cached_color_filter)
 		overlay.add_atom_colour(cached_color_filter || color, FIXED_COLOUR_PRIORITY)
 
@@ -106,7 +115,7 @@
 
 	if(iscarbon(mover))
 		var/mob/living/carbon/moving_carbon = mover
-		if(moving_carbon.stat) // Lets not prevent dragging unconscious/dead people.
+		if(IS_UNCONSCIOUS_OR_CRIT(moving_carbon)) // Lets not prevent dragging unconscious/dead people.
 			return TRUE
 		if(allow_walk && moving_carbon.move_intent == MOVE_INTENT_WALK)
 			return TRUE
@@ -166,7 +175,7 @@
 	. = ..()
 	if(iscarbon(mover))
 		var/mob/living/carbon/C = mover
-		if(C.stat) // Lets not prevent dragging unconscious/dead people.
+		if(IS_UNCONSCIOUS_OR_CRIT(C)) // Lets not prevent dragging unconscious/dead people.
 			return TRUE
 		if(allow_walk && C.move_intent != MOVE_INTENT_WALK)
 			return FALSE
@@ -191,6 +200,10 @@
 	alpha = 150
 	rad_insulation = RAD_LIGHT_INSULATION
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
+
+/obj/structure/holosign/barrier/atmos/emp_act(severity)
+	. = ..()
+	investigate_log("was destroyed due to EMP", INVESTIGATE_ATMOS)
 
 /obj/structure/holosign/barrier/atmos/proc/clearview_transparency()
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

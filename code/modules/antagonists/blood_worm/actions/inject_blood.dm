@@ -114,12 +114,12 @@
 	var/healing_left = damage_regen_rate * seconds_between_ticks
 
 	if (owner.get_brute_loss() > 0 && healing_left > 0)
-		var/amount_healed = max(0, owner.adjust_brute_loss(-healing_left, forced = TRUE, updating_health = FALSE))
+		var/amount_healed = max(0, owner.adjust_brute_loss(-healing_left, updating_health = FALSE))
 		healing_left -= amount_healed
 		. |= amount_healed
 
 	if (owner.get_fire_loss() > 0 && healing_left > 0)
-		var/amount_healed = max(0, owner.adjust_fire_loss(-healing_left, forced = TRUE, updating_health = FALSE))
+		var/amount_healed = max(0, owner.adjust_fire_loss(-healing_left, updating_health = FALSE))
 		healing_left -= amount_healed
 		. |= amount_healed
 

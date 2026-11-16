@@ -84,15 +84,16 @@
 /datum/supply_pack/imports/dumpstercorpse
 	name = "A....Dumpster?"
 	desc = "Why does it smell so bad...."
-	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/mob/living/carbon/human)
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/effect/mob_spawn/corpse/human/damaged)
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
 
-/datum/supply_pack/imports/dumpstercorpse/generate()
-	. = ..()
-	var/mob/living/carbon/human/corpse = locate() in .
-	corpse.death()
+/datum/supply_pack/imports/dumpstercorpse/fill(obj/container)
+	var/mob/living/carbon/human/corpse = GLOB.lost_crew_manager.create_lost_crew(revivable = FALSE, forced_class = /datum/corpse_damage_class/station/morgue)
+	corpse.forceMove(container)
+	if(order_flags & ORDER_ADMIN_SPAWNED)
+		corpse.flags_1 |= ADMIN_SPAWNED_1
 
 /datum/supply_pack/imports/dumpsterloot
 	name = "A....Dumpster"
@@ -364,3 +365,66 @@
 		/obj/item/stack/ore/bluespace_crystal/artificial = 2,
 		/obj/item/stock_parts/subspace/ansible,
 	)
+
+/datum/supply_pack/imports/fan_upgrade
+	name = "Cargo Shuttle Upgrade: Air Renewal"
+	desc = "Do you or your coworkers have a bad habit of leaving your cargo shuttle shutter doors open to the cold, cold, vaccuum of space? \
+		With this handy engineering retrofit, your shuttle will now be equip with a few handy plastic flaps and a subscription for air refills."
+	cost = CARGO_CRATE_VALUE * 40 // HELLA expensive.
+	order_flags = ORDER_NOT_DEPARTMENTAL
+	access_view = ACCESS_CARGO
+	storage_override = /obj/item/folder
+	contains = list(
+		/obj/item/paper/fluff/certificate,
+	)
+
+/datum/supply_pack/imports/fan_upgrade/generate(atom/A, datum/bank_account/paying_account, crate_override)
+	if(SSshuttle.renew_cargo_air)
+		return ..()
+
+	for(var/obj/spawnpoint as anything in GLOB.cargo_shuttle_flaps_landmarks)
+		new /obj/structure/plasticflaps(spawnpoint.loc)
+		SSshuttle.renew_cargo_air = TRUE
+		order_flags = ORDER_INVISIBLE
+	return ..()
+
+/obj/item/paper/fluff/certificate
+	name = "Certificate of Shuttle Upgrade"
+	color = COLOR_LIGHT_ORANGE
+	desc = "A note from the Nanotrasen Mechanics Society detailing your new shuttle upgrade."
+	default_raw_text = "Hey boss. We got those flaps installed for ya, nothing to it really. You'll find 'em over the blast doors or the exits, \
+		whichever the mechanics were able to get to. They're all set to go without any tweaking, so don't futz with them. Otherwise, you let us know \
+		if anything seems out of place."
+
+/datum/supply_pack/imports/jet_boots
+	name = "Jet Boots"
+	desc = "These days, it's hard enough to get yourself access to a personal cruiser, let alone your own personal hyperspace tunnel.\
+		Why not travel in style? Introducing the all new, nuVoid Jet Boots. Sleek, off white finish. Self-propelling mini-ion thrusters.\
+		Genuine carbo-fuel microjets for that old-world finish. Don't just arrive, arrive in style. No financing required or available."
+	order_flags = ORDER_NOT_DEPARTMENTAL
+	access_view = ACCESS_CARGO
+	cost = CARGO_CRATE_VALUE * 200 // One pair of these boots are really gosh darn expensive.
+	contains = list(/obj/item/clothing/shoes/bhop/rocket/jet)
+	crate_name = "nuVoid Jet Boots Crate"
+	crate_type = /obj/structure/closet/crate/goldcrate
+
+/datum/supply_pack/imports/angry_mob
+	name = "Pitchfork and Torches Gardening Crate"
+	desc = "Sometimes, you need to help organize some \"gardening\" enthusiasts, and you just need some extra tools!\
+		Load up on \"gardening\" gear this this helpful supply crate."
+	cost = CARGO_CRATE_VALUE * 5
+	order_flags = ORDER_CONTRABAND
+	contains = list(
+		/obj/item/cultivator/rake/pitchfork = 4,
+		/obj/item/flashlight/flare/torch = 4,
+	)
+	crate_name = "gardening kit"
+	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/imports/hydro_vaporizers
+	name = "Hydro-Vaporizers"
+	desc = "Cerulean vaporizer devices, for all your liquid respiration needs."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/vaporizer = 3)
+	crate_name = "hydro-vaporizer crate"
+	crate_type = /obj/structure/closet/crate/internals //it is technically o2

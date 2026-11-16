@@ -223,7 +223,7 @@
 	if(user)
 		balloon_alert(user, "circuitry fried")
 		user.log_message("emagged [src].", LOG_ATTACK)
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	set_status()
 	return TRUE
 
@@ -670,7 +670,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/firealarm, 26)
 	alarm_trigger = add_input_port("Set", PORT_TYPE_SIGNAL)
 	reset_trigger = add_input_port("Reset", PORT_TYPE_SIGNAL)
 
-	is_on = add_output_port("Is On", PORT_TYPE_NUMBER)
+	is_on = add_output_port("Is On", PORT_TYPE_BOOLEAN)
 	triggered = add_output_port("Triggered", PORT_TYPE_SIGNAL)
 	reset = add_output_port("Reset", PORT_TYPE_SIGNAL)
 

@@ -16,6 +16,10 @@
 	var/obj/machinery/atmospherics/pipe/target
 	///The piping layer of the target
 	var/target_layer = PIPING_LAYER_DEFAULT
+	///The visual meter pressure level
+	var/meter_value = "0"
+	///The emissive button state
+	var/button_value = "0"
 
 /datum/armor/machinery_meter
 	energy = 100
@@ -74,27 +78,43 @@
 
 /obj/machinery/meter/process_atmos()
 	var/datum/gas_mixture/pipe_air = target?.return_air()
+	var/new_meter_value = "0"
+	var/new_button_value = "0"
+
 	if(isnull(pipe_air))
 		icon_state = "meter0"
+		if((meter_value != new_meter_value) || (button_value != new_button_value))
+			meter_value = new_meter_value
+			button_value = new_button_value
+			update_appearance(UPDATE_OVERLAYS)
 		return FALSE
 
 	var/env_pressure = pipe_air.return_pressure()
 	if(env_pressure <= 0.15 * ONE_ATMOSPHERE)
 		icon_state = "meter0"
+		new_meter_value = "0"
+		new_button_value = "0"
 	else if(env_pressure <= 1.8 * ONE_ATMOSPHERE)
 		var/val = round(env_pressure / (ONE_ATMOSPHERE * 0.3) + 0.5)
 		icon_state = "meter1_[val]"
+		new_meter_value = "1_[val]"
+		new_button_value = "1"
 	else if(env_pressure <= 30 * ONE_ATMOSPHERE)
 		var/val = round(env_pressure / (ONE_ATMOSPHERE * 5) - 0.35) + 1
 		icon_state = "meter2_[val]"
+		new_meter_value = "2_[val]"
+		new_button_value = "2"
 	else if(env_pressure <= 59 * ONE_ATMOSPHERE)
 		var/val = round(env_pressure / (ONE_ATMOSPHERE * 5) - 6) + 1
 		icon_state = "meter3_[val]"
+		new_meter_value = "3_[val]"
+		new_button_value = "3"
 	else
 		icon_state = "meter4"
+		new_meter_value = "4"
+		new_button_value = "4"
 
 	var/env_temperature = pipe_air.temperature
-
 	var/new_greyscale = greyscale_colors
 
 	if(env_pressure == 0 || env_temperature == 0)
@@ -119,6 +139,20 @@
 	if(new_greyscale != greyscale_colors)//dont update if nothing has changed since last update
 		greyscale_colors = new_greyscale
 		set_greyscale(greyscale_colors)
+
+	if((meter_value != new_meter_value) || (button_value != new_button_value))
+		meter_value = new_meter_value
+		button_value = new_button_value
+		update_appearance(UPDATE_OVERLAYS)
+
+/obj/machinery/meter/update_overlays()
+	. = ..()
+	if(!is_operational)
+		return
+
+	. += emissive_appearance('icons/obj/pipes_n_cables/meter.dmi', "buttons[button_value]-emissive", src, alpha = src.alpha)
+	if(meter_value != "0")
+		. += emissive_appearance('icons/obj/pipes_n_cables/meter.dmi', "pressure[meter_value]", src, alpha = src.alpha)
 
 /obj/machinery/meter/proc/status()
 	if (target)

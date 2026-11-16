@@ -5,19 +5,19 @@
 	base_icon_state = "securecrate"
 	secure = TRUE
 	locked = TRUE
-	max_integrity = 500
+	max_integrity = 300
 	armor_type = /datum/armor/crate_secure
-	damage_deflection = 25
+	damage_deflection = 10
 
 	var/tamperproof = 0
 
 /datum/armor/crate_secure
-	melee = 30
-	bullet = 50
-	laser = 50
-	energy = 100
-	fire = 80
-	acid = 80
+	melee = 15
+	bullet = 25
+	laser = 25
+	energy = 50
+	fire = 40
+	acid = 40
 
 /obj/structure/closet/crate/secure/Initialize(mapload)
 	. = ..()
@@ -145,55 +145,6 @@
 	for(var/i in 1 to rand(4,6))
 		if(prob(30))
 			new /obj/item/storage/bag/trash/filled(src)
-
-/obj/structure/closet/crate/secure/owned
-	name = "private crate"
-	desc = "A crate cover designed to only open for who purchased its contents."
-	icon_state = "privatecrate"
-	base_icon_state = "privatecrate"
-	///Account of the person buying the crate if private purchasing.
-	var/datum/bank_account/buyer_account
-	///Department of the person buying the crate if buying via the NIRN app.
-	var/datum/bank_account/department/department_account
-	///Is the secure crate opened or closed?
-	var/privacy_lock = TRUE
-	///Is the crate being bought by a person, or a budget card?
-	var/department_purchase = FALSE
-
-/obj/structure/closet/crate/secure/owned/examine(mob/user)
-	. = ..()
-	. += span_notice("It's locked with a privacy lock, and can only be unlocked by the buyer's ID.")
-
-/obj/structure/closet/crate/secure/owned/Initialize(mapload, datum/bank_account/_buyer_account)
-	. = ..()
-	buyer_account = _buyer_account
-	if(IS_DEPARTMENTAL_ACCOUNT(buyer_account))
-		department_purchase = TRUE
-		department_account = buyer_account
-
-/obj/structure/closet/crate/secure/owned/togglelock(mob/living/user, silent)
-	if(privacy_lock)
-		if(!broken)
-			var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-			if(id_card)
-				if(id_card.registered_account)
-					if(id_card.registered_account == buyer_account || (department_purchase && (id_card.registered_account?.account_job?.paycheck_department) == (department_account.department_id)))
-						if(iscarbon(user))
-							add_fingerprint(user)
-						locked = !locked
-						user.visible_message(span_notice("[user] unlocks [src]'s privacy lock."),
-										span_notice("You unlock [src]'s privacy lock."))
-						privacy_lock = FALSE
-						update_appearance()
-					else if(!silent)
-						to_chat(user, span_warning("Bank account does not match with buyer!"))
-				else if(!silent)
-					to_chat(user, span_warning("No linked bank account detected!"))
-			else if(!silent)
-				to_chat(user, span_warning("No ID detected!"))
-		else if(!silent)
-			to_chat(user, span_warning("[src] is broken!"))
-	else ..()
 
 /obj/structure/closet/crate/secure/freezer/interdyne
 	name = "\improper Interdyne freezer"

@@ -136,7 +136,7 @@
 		return FALSE
 	var/datum/gas_mixture/merger = new
 	merger.assert_gas(spawn_id)
-	merger.gases[spawn_id][MOLES] = spawn_mol * seconds_per_tick
+	merger.moles[spawn_id] = spawn_mol * seconds_per_tick
 	merger.temperature = spawn_temp
 	O.assume_air(merger)
 

@@ -1,18 +1,18 @@
 PROCESSING_SUBSYSTEM_DEF(instruments)
 	name = "Instruments"
 	wait = 0.5
-	flags = SS_KEEP_TIMING
+	ss_flags = SS_KEEP_TIMING
 	priority = FIRE_PRIORITY_INSTRUMENTS
 	/// List of all instrument data, associative id = datum
 	var/static/list/datum/instrument/instrument_data = list()
 	/// List of all song datums.
 	var/static/list/datum/song/songs = list()
 	/// Max lines in songs
-	var/static/musician_maxlines = 600
+	var/static/musician_maxlines = 1000
 	/// Max characters per line in songs
 	var/static/musician_maxlinechars = 300
 	/// Deciseconds between hearchecks. Too high and instruments seem to lag when people are moving around in terms of who can hear it. Too low and the server lags from this.
-	var/static/musician_hearcheck_mindelay = 5
+	var/static/musician_hearcheck_mindelay = 4
 	/// Maximum instrument channels total instruments are allowed to use. This is so you don't have instruments deadlocking all sound channels.
 	var/static/max_instrument_channels = MAX_INSTRUMENT_CHANNELS
 	/// Current number of channels allocated for instruments
@@ -52,6 +52,6 @@ PROCESSING_SUBSYSTEM_DEF(instruments)
 /datum/controller/subsystem/processing/instruments/proc/reserve_instrument_channel(datum/instrument/I)
 	if(current_instrument_channels > max_instrument_channels)
 		return
-	. = SSsounds.reserve_sound_channel(I)
+	. = SSsounds.reserve_sound_channel_for_datum(I)
 	if(!isnull(.))
 		current_instrument_channels++

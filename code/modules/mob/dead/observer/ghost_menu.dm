@@ -103,6 +103,9 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 			"desc" = GLOB.poll_ignore_desc[key],
 		))
 
+	var/current_width = user.client?.view_size?.width || 0
+	data["current_extra_view"] = current_width > 0 ? (current_width - 1) / 2 : 0
+
 	data["hud_info"] = list(
 		list(
 			"name" = "Data HUDs",

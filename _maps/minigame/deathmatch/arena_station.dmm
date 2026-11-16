@@ -601,7 +601,7 @@
 /area/deathmatch)
 "wd" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/structure/reagent_dispensers/keg/beer,
 /turf/open/indestructible,
 /area/deathmatch)
 "yA" = (

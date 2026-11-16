@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 ))
 
 // ~wound categories: wounding_types
-/// any brute weapon/attack that doesn't have sharpness. rolls for blunt bone wounds
+/// any brute weapon/attack that doesn't have sharpness. rolls for blunt wounds
 #define WOUND_BLUNT "wound_blunt"
 /// any brute weapon/attack with sharpness = SHARP_EDGED. rolls for slash wounds
 #define WOUND_SLASH "wound_slash"
@@ -69,37 +69,6 @@ GLOBAL_LIST_INIT(wound_severities_chronological, list(
 #define WOUND_COMPETITION_OVERPOWER_GREATERS "wound_submit"
 /// Wounds using this competition mode will remove any wounds of a lower severity than itself in a random wound roll. Used for ensuring the worse case scenario of a given injury_roll.
 #define WOUND_COMPETITION_OVERPOWER_LESSERS "wound_dominate"
-
-// ~biology defines
-// What kind of biology a limb has, and what wounds it can suffer
-/// Has absolutely fucking nothing, no wounds
-#define BIO_INORGANIC NONE
-/// Has bone - allows the victim to suffer T2-T3 bone blunt wounds
-#define BIO_BONE (1<<0)
-/// Has flesh - allows the victim to suffer fleshy slash pierce and burn wounds
-#define BIO_FLESH (1<<1)
-/// Has metal - allows the victim to suffer robotic blunt and burn wounds
-#define BIO_METAL (1<<2)
-/// Has wood - should probably be able to catch on fire, or something
-#define BIO_WOOD (1<<3)
-/// Is wired internally - allows the victim to suffer electrical wounds (robotic T1-T3 slash/pierce)
-#define BIO_WIRED (1<<4)
-/// Has bloodflow - can suffer bleeding wounds and can bleed
-#define BIO_BLOODED (1<<5)
-/// Is connected by a joint - can suffer T1 bone blunt wounds (dislocation)
-#define BIO_JOINTED (1<<6)
-/// Skin is covered in thick chitin and is resistant to cutting
-#define BIO_CHITIN (1<<7)
-/// Robotic - can suffer all metal/wired wounds, such as: UNIMPLEMENTED PLEASE UPDATE ONCE SYNTH WOUNDS 9/5/2023 ~Niko
-#define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
-/// Has flesh and bone - See BIO_BONE and BIO_FLESH
-#define BIO_FLESH_BONE (BIO_BONE|BIO_FLESH)
-/// Standard humanoid - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt, except dislocations. Think human heads/chests
-#define BIO_STANDARD_UNJOINTED (BIO_FLESH_BONE|BIO_BLOODED)
-/// Standard humanoid limbs - can bleed and suffer all flesh/bone wounds, such as: T1-3 slash/pierce/burn/blunt. Can also bleed, and be dislocated. Think human arms and legs
-#define BIO_STANDARD_JOINTED (BIO_STANDARD_UNJOINTED|BIO_JOINTED)
-/// Xenomorph limbs (xenos are immune to wounds anyhow)
-#define BIO_STANDARD_ALIEN (BIO_CHITIN|BIO_BONE|BIO_BLOODED|BIO_JOINTED)
 
 // "Where" a specific biostate is within a given limb
 // Interior is hard shit, the last line, shit like bones
@@ -140,6 +109,18 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 #define WOUND_SERIES_LOSS_BASIC "wound_series_loss_basic"
 /// Cranial fissure wound.
 #define WOUND_SERIES_CRANIAL_FISSURE "wound_series_cranial_fissure"
+/// Robotic wounds.
+
+/// T1-T3 Basic metal blunt wounds. T1 requires jointed and metal, T2-3 require only metal. From: robotic_blunt.dm
+#define WOUND_SERIES_METAL_BLUNT_BASIC "wound_series_metal_blunt_basic"
+/// T1-T3 Basic metal burn wounds. Requires metal. From: robotic_burn.dm
+#define WOUND_SERIES_METAL_BURN_OVERHEAT "wound_series_metal_burn_basic"
+/// Currently unused.
+#define WOUND_SERIES_METAL_SLASH_LEAK "wound_series_metal_slash_leak_basic"
+/// Currently unused.
+#define WOUND_SERIES_METAL_PIERCE_LEAK "wound_series_metal_pierce_leak_basic"
+/// Bruise wound.
+#define WOUND_SERIES_BRUISING "wound_series_bruising"
 
 /// A assoc list of (wound typepath -> wound_pregen_data instance). Every wound should have a pregen data.
 GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())
@@ -212,13 +193,15 @@ GLOBAL_LIST_INIT(wound_series_collections, generate_wound_series_collection())
 /// Allows for determining of which wound series are caused by what.
 GLOBAL_LIST_INIT(wounding_types_to_series, list(
 	WOUND_BLUNT = list(
-		WOUND_SERIES_BONE_BLUNT_BASIC
+		WOUND_SERIES_BONE_BLUNT_BASIC,
+		WOUND_SERIES_METAL_BLUNT_BASIC,
 	),
 	WOUND_SLASH = list(
 		WOUND_SERIES_FLESH_SLASH_BLEED,
 	),
 	WOUND_BURN = list(
 		WOUND_SERIES_FLESH_BURN_BASIC,
+		WOUND_SERIES_METAL_BURN_OVERHEAT,
 	),
 	WOUND_PIERCE = list(
 		WOUND_SERIES_FLESH_PUNCTURE_BLEED
@@ -323,7 +306,6 @@ GLOBAL_LIST_INIT(biotypes_to_scar_file, list(
 // 1. Exterior is mangled: A critical slash or pierce wound on that limb
 // 2. Interior is mangled: At least a severe bone wound on that limb
 // Lack of exterior or interior count as mangled exterior/interior respectively
-// see [/obj/item/bodypart/proc/get_mangled_state] for more information, as well as GLOB.bio_state_anatomy
 #define BODYPART_MANGLED_NONE NONE
 #define BODYPART_MANGLED_INTERIOR (1<<0)
 #define BODYPART_MANGLED_EXTERIOR (1<<1)

@@ -46,22 +46,20 @@
 #define ITEM_SLOT_BELT (1<<9)
 /// Back slot
 #define ITEM_SLOT_BACK (1<<10)
-/// Dextrous simplemob "hands" (used for Drones and Dextrous Guardians)
-#define ITEM_SLOT_DEX_STORAGE (1<<11)
 /// Neck slot (ties, bedsheets, scarves)
-#define ITEM_SLOT_NECK (1<<12)
+#define ITEM_SLOT_NECK (1<<11)
 /// A character's hand slots
-#define ITEM_SLOT_HANDS (1<<13)
+#define ITEM_SLOT_HANDS (1<<12)
 /// Suit Storage slot
-#define ITEM_SLOT_SUITSTORE (1<<14)
+#define ITEM_SLOT_SUITSTORE (1<<13)
 /// Left Pocket slot
-#define ITEM_SLOT_LPOCKET (1<<15)
+#define ITEM_SLOT_LPOCKET (1<<14)
 /// Right Pocket slot
-#define ITEM_SLOT_RPOCKET (1<<16)
+#define ITEM_SLOT_RPOCKET (1<<15)
 /// Handcuff slot
-#define ITEM_SLOT_HANDCUFFED (1<<17)
+#define ITEM_SLOT_HANDCUFFED (1<<16)
 /// Legcuff slot (bolas, beartraps)
-#define ITEM_SLOT_LEGCUFFED (1<<18)
+#define ITEM_SLOT_LEGCUFFED (1<<17)
 
 /// Total amount of slots
 #define SLOTS_AMT 19 // Keep this up to date!
@@ -85,6 +83,8 @@ DEFINE_BITFIELD(no_equip_flags, list(
 /// Slots that are physically on you
 #define ITEM_SLOT_ON_BODY (ITEM_SLOT_ICLOTHING | ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_EYES | ITEM_SLOT_EARS | \
 	ITEM_SLOT_MASK | ITEM_SLOT_HEAD | ITEM_SLOT_FEET | ITEM_SLOT_ID | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK )
+/// Slots that are used for storage
+#define ITEM_SLOT_STORAGE (ITEM_SLOT_POCKETS | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_SUITSTORE)
 
 //Bit flags for the flags_inv variable, which determine when a piece of clothing hides another. IE a helmet hiding glasses.
 //Make sure to update obscured_slots if you add more.
@@ -139,6 +139,21 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define NECK (1<<11)
 #define FULL_BODY ALL
 
+DEFINE_BITFIELD(body_parts_covered, list(
+	"CHEST" = CHEST,
+	"GROIN" = GROIN,
+	"HEAD" = HEAD,
+	"LEG_LEFT" = LEG_LEFT,
+	"LEG_RIGHT" = LEG_RIGHT,
+	"FOOT_LEFT" = FOOT_LEFT,
+	"FOOT_RIGHT" = FOOT_RIGHT,
+	"ARM_LEFT" = ARM_LEFT,
+	"ARM_RIGHT" = ARM_RIGHT,
+	"HAND_LEFT" = HAND_LEFT,
+	"HAND_RIGHT" = HAND_RIGHT,
+	"NECK" = NECK,
+))
+
 //defines for the index of hands
 #define LEFT_HANDS 1
 #define RIGHT_HANDS 2
@@ -163,17 +178,20 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define DIGITIGRADE_STYLE 2
 
 //Flags (actual flags, fucker ^) for /obj/item/var/supports_variations_flags
-/// No alternative sprites or handling based on bodytype
-#define CLOTHING_NO_VARIATION (1<<0)
 /// Has a sprite for digitigrade legs specifically.
-#define CLOTHING_DIGITIGRADE_VARIATION (1<<1)
+#define CLOTHING_DIGITIGRADE_VARIATION (1<<0)
 /// The sprite works fine for digitigrade legs as-is.
-#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<2)
+#define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<1)
 /// Auto-generates the leg portion of the sprite with GAGS
-#define CLOTHING_DIGITIGRADE_MASK (1<<3)
-
+#define CLOTHING_DIGITIGRADE_MASK (1<<2)
 /// All variation flags which render "correctly" on a digitigrade leg setup
 #define DIGITIGRADE_VARIATIONS (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON|CLOTHING_DIGITIGRADE_MASK)
+/// The clothing flag which cuts away the legs
+#define CLOTHING_CERULEAN_MASK_LEGS (1<<3)
+///The clothing flag which cuts pixels between the legs
+#define CLOTHING_CERULEAN_MASK_INBETWEEN (1<<4)
+/// All variation flags which can render on cerulean bodyshapes
+#define CERULEAN_MASKING (CLOTHING_CERULEAN_MASK_LEGS|CLOTHING_CERULEAN_MASK_INBETWEEN)
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)
@@ -183,7 +201,9 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define HEADCOVERSMOUTH (1<<4)
 #define PEPPERPROOF (1<<5) //protects against pepperspray
 #define EARS_COVERED (1<<6)
+#define ALLOW_SURGERY_THROUGH (1<<7) //item will not obstruct body part access, such as for surgery, despite covering the body part
 
+#define TINT_MILD 1.5 //Threshold of tint level to apply mild tint overlay
 #define TINT_DARKENED 2 //Threshold of tint level to apply weld mask overlay
 #define TINT_BLIND 3 //Threshold of tint level to obscure vision fully
 
@@ -209,10 +229,11 @@ GLOBAL_LIST_INIT(any_suit_storage, typecacheof(list(
 	/obj/item/flashlight,
 	/obj/item/tank/internals/emergency_oxygen,
 	/obj/item/tank/internals/plasmaman,
+	/obj/item/vaporizer,
 	/obj/item/lighter,
 	/obj/item/pen,
 	/obj/item/modular_computer/pda,
-	/obj/item/toy,
+	/obj/item/toy/plush,
 	/obj/item/radio,
 	/obj/item/storage/bag/books,
 	/obj/item/storage/fancy/cigarettes,
@@ -224,7 +245,8 @@ GLOBAL_LIST_INIT(any_suit_storage, typecacheof(list(
 	/obj/item/cigarette,
 	/obj/item/gun/energy/laser/bluetag,
 	/obj/item/gun/energy/laser/redtag,
-	/obj/item/storage/belt/holster
+	/obj/item/storage/belt/holster,
+	/obj/item/storage/belt/sheath
 )))
 
 //Allowed equipment lists for security vests.
@@ -242,10 +264,12 @@ GLOBAL_LIST_INIT(detective_vest_allowed, list(
 	/obj/item/taperecorder,
 	/obj/item/tank/internals/emergency_oxygen,
 	/obj/item/tank/internals/plasmaman,
+	/obj/item/vaporizer,
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
 	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+	/obj/item/gun/energy/laser/scatter/shotty/compact,
 ))
 
 GLOBAL_LIST_INIT(security_vest_allowed, list(
@@ -258,10 +282,12 @@ GLOBAL_LIST_INIT(security_vest_allowed, list(
 	/obj/item/restraints/handcuffs,
 	/obj/item/tank/internals/emergency_oxygen,
 	/obj/item/tank/internals/plasmaman,
+	/obj/item/vaporizer,
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
 	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+	/obj/item/gun/energy/laser/scatter/shotty/compact,
 	/obj/item/pen/red/security,
 ))
 
@@ -275,6 +301,7 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
 	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+	/obj/item/gun/energy/laser/scatter/shotty/compact,
 ))
 
 //Allowed list for all chaplain suits (except the honkmother robe)
@@ -287,6 +314,7 @@ GLOBAL_LIST_INIT(chaplain_suit_allowed, list(
 	/obj/item/flashlight/flare/candle,
 	/obj/item/tank/internals/emergency_oxygen,
 	/obj/item/tank/internals/plasmaman,
+	/obj/item/vaporizer,
 	/obj/item/gun/ballistic/bow/divine,
 	/obj/item/gun/ballistic/revolver/chaplain,
 	/obj/item/toy/plush/carpplushie/nullrod,
@@ -302,6 +330,7 @@ GLOBAL_LIST_INIT(mining_suit_allowed, list(
 	/obj/item/flashlight,
 	/obj/item/grapple_gun,
 	/obj/item/tank/internals,
+	/obj/item/vaporizer,
 	/obj/item/gun/energy/recharge/kinetic_accelerator,
 	/obj/item/kinetic_crusher,
 	/obj/item/knife,
@@ -384,3 +413,46 @@ GLOBAL_LIST_INIT(tool_items, list(
 #define LOCATION_NECK "around your neck"
 /// Items placed in the id slot
 #define LOCATION_ID "in your ID slot"
+
+// For [pressure_protected_bodyparts]
+/// Head is protected natively, i.e. there's no head to protect at all
+#define PRESSURE_HEAD_PROTECTED_NATIVELY (1<<0)
+/// Head is protected by equipment
+#define PRESSURE_HEAD_PROTECTED_BY_EQUIPMENT (1<<1)
+/// Chest is protected natively, i.e. there's no chest to protect at all
+#define PRESSURE_CHEST_PROTECTED_NATIVELY (1<<2)
+/// Chest is protected by equipment
+#define PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT (1<<3)
+/// Legs are protected natively, i.e. there's no legs to protect at all
+#define PRESSURE_LEGS_PROTECTED_NATIVELY (1<<4)
+/// Legs are protected by equipment
+#define PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT (1<<5)
+/// Arms are protected natively, i.e. there's no arms to protect at all
+#define PRESSURE_ARMS_PROTECTED_NATIVELY (1<<6)
+/// Arms are protected by equipment
+#define PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT (1<<7)
+
+/// Combination flag of all equipment protection flags
+#define PRESSURE_EQUIPMENT_FLAGS (PRESSURE_HEAD_PROTECTED_BY_EQUIPMENT | PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT | PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT | PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT)
+/// Combination flag of all native protection flags
+#define PRESSURE_NATIVE_FLAGS (PRESSURE_HEAD_PROTECTED_NATIVELY | PRESSURE_CHEST_PROTECTED_NATIVELY | PRESSURE_LEGS_PROTECTED_NATIVELY | PRESSURE_ARMS_PROTECTED_NATIVELY)
+
+/// Combination flag of head protection flags
+#define PRESSURE_HEAD_PROTECTED (PRESSURE_HEAD_PROTECTED_NATIVELY | PRESSURE_HEAD_PROTECTED_BY_EQUIPMENT)
+/// Combination flag of chest protection flags
+#define PRESSURE_CHEST_PROTECTED (PRESSURE_CHEST_PROTECTED_NATIVELY | PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT)
+/// Combination flag of leg protection flags
+#define PRESSURE_LEGS_PROTECTED (PRESSURE_LEGS_PROTECTED_NATIVELY | PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT)
+/// Combination flag of arm protection flags
+#define PRESSURE_ARMS_PROTECTED (PRESSURE_ARMS_PROTECTED_NATIVELY | PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT)
+
+DEFINE_BITFIELD(pressure_protected_bodyparts, list(
+	"Head (native)" = PRESSURE_HEAD_PROTECTED_NATIVELY,
+	"Head (equipment)" = PRESSURE_HEAD_PROTECTED_BY_EQUIPMENT,
+	"Chest (native)" = PRESSURE_CHEST_PROTECTED_NATIVELY,
+	"Chest (equipment)" = PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT,
+	"Legs (native)" = PRESSURE_LEGS_PROTECTED_NATIVELY,
+	"Legs (equipment)" = PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT,
+	"Arms (native)" = PRESSURE_ARMS_PROTECTED_NATIVELY,
+	"Arms (equipment)" = PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT,
+))

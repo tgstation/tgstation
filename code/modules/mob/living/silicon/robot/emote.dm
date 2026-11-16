@@ -1,4 +1,5 @@
 /datum/emote/silicon
+	abstract_type = /datum/emote/silicon
 	trait_required = TRAIT_SILICON_EMOTES_ALLOWED
 	emote_type = EMOTE_AUDIBLE
 

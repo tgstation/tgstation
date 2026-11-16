@@ -99,11 +99,11 @@
 /datum/supply_pack/engineering/shuttle_engine
 	name = "Shuttle Engine Crate"
 	desc = "Through advanced bluespace-shenanigans, our engineers have managed to fit an entire \
-		shuttle engine into one tiny little crate."
+		shuttle engine into one tiny little box."
 	cost = CARGO_CRATE_VALUE * 6
-	access = ACCESS_CE
-	access_view = ACCESS_CE
-	contains = list(/obj/machinery/power/shuttle_engine/propulsion/burst)
+	access = ACCESS_ENGINEERING
+	access_view = ACCESS_ENGINEERING
+	contains = list(/obj/item/flatpack/shuttle_engine)
 	crate_name = "shuttle engine crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering
 
@@ -123,7 +123,7 @@
 	desc = "Did someone let the air out of the shuttle again? We've got you covered. \
 		Contains two portable air pumps."
 	cost = CARGO_CRATE_VALUE * 4.5
-	access_view = ACCESS_ATMOSPHERICS
+	access_view = ACCESS_ATMOS_EQUIP
 	contains = list(/obj/machinery/portable_atmospherics/pump = 2)
 	crate_name = "portable air pump crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
@@ -132,7 +132,7 @@
 	name = "Portable Scrubber Crate"
 	desc = "Clean up that pesky plasma leak with your very own set of two portable scrubbers."
 	cost = CARGO_CRATE_VALUE * 4.5
-	access_view = ACCESS_ATMOSPHERICS
+	access_view = ACCESS_ATMOS_EQUIP
 	contains = list(/obj/machinery/portable_atmospherics/scrubber = 2)
 	crate_name = "portable scrubber crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
@@ -141,7 +141,7 @@
 	name = "Huge Portable Scrubber Crate"
 	desc = "A huge portable scrubber for huge atmospherics mistakes."
 	cost = CARGO_CRATE_VALUE * 7.5
-	access_view = ACCESS_ATMOSPHERICS
+	access_view = ACCESS_ATMOS_EQUIP
 	contains = list(/obj/machinery/portable_atmospherics/scrubber/huge/movable/cargo)
 	crate_name = "huge portable scrubber crate"
 	crate_type = /obj/structure/closet/crate/large
@@ -343,4 +343,16 @@
 	access_view = ACCESS_ENGINEERING
 	contains = list(/obj/item/golfcart_kit = 1, /obj/item/key/golfcart = 2, /obj/item/stock_parts/power_store/cell/lead = 1)
 	crate_name = "golf cart parts kit"
+	crate_type = /obj/structure/closet/crate/engineering
+
+/datum/supply_pack/engineering/concrete_mix
+	name = "Concrete Mix"
+	desc = "Feeling lazy? Need a structure and quick? Use near-instant concrete mix! Just add water."
+	cost = CARGO_CRATE_VALUE * 5
+	access_view = ACCESS_ENGINEERING
+	contains = list(
+		/obj/item/reagent_containers/cup/jerrycan/concrete_mix = 2,
+		/obj/item/reagent_containers/cup/bucket = 1,
+	)
+	crate_name = "concrete mix crate"
 	crate_type = /obj/structure/closet/crate/engineering

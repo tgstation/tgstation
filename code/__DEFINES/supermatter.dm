@@ -93,6 +93,9 @@
 /// In-game factors like the destabilizing crystal [/obj/item/destabilizing_crystal].
 /// Purged when SM heals to 100
 #define SM_DELAM_PRIO_IN_GAME 1
+/// Forced by admins.
+/// Not purged when SM heals to 100
+#define SM_DELAM_PRIO_ADMIN 2
 
 /// Purge the current forced delam and make it zero again (back to normal).
 /// Needs to be higher priority than current forced_delam though.
@@ -195,3 +198,12 @@
 #define SUPERMATTER_TESLA_COLOUR "#00ffff"
 #define SUPERMATTER_SINGULARITY_RAYS_COLOUR "#750000"
 #define SUPERMATTER_SINGULARITY_LIGHT_COLOUR "#400060"
+
+/// After this many sequential healing emitter hits, diminishing returns starts to apply.
+#define HEALING_EMITTER_SOFTCAP 18
+/// Every following emitter beam reduces in effectiveness by this factor.
+/// I.e. the first beam is 0.92x effective, the second is 0.84x effective, and so on, down to 0.02x effective at 30 beams.
+#define HEALING_EMITTER_DIMINISHING_FACTOR 0.08
+/// The SM must not be hit with a healing beam for this long before the diminishing returns reset.
+/// By default the SM has three emitters that fire 2-10 seconds, so between 18 and 90! beams per minute.
+#define HEALING_EMITTER_COOLDOWN (4 MINUTES)

@@ -14,6 +14,7 @@
 	circuit = /obj/item/circuitboard/computer/base_construction
 	off_action = /datum/action/innate/camera_off/base_construction
 	jump_action = null
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/camera_advanced/base_construction")
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
 	light_color = LIGHT_COLOR_PINK
@@ -65,12 +66,12 @@
 	eyeobj = new /mob/eye/camera/remote/base_construction(spawn_spot, src)
 	return TRUE
 
-/obj/machinery/computer/camera_advanced/base_construction/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/computer/camera_advanced/base_construction/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	//If we have an internal RCD, we can refill it by slapping the console with some materials
-	if(internal_rcd && (istype(W, /obj/item/rcd_ammo) || istype(W, /obj/item/stack/sheet)))
-		internal_rcd.attackby(W, user, modifiers)
-	else
-		return ..()
+	if(!internal_rcd || (!istype(tool, /obj/item/rcd_ammo) && !istype(tool, /obj/item/stack/sheet)))
+		return NONE
+	internal_rcd.item_interaction(user, tool, modifiers)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/camera_advanced/base_construction/Destroy()
 	qdel(internal_rcd)

@@ -44,10 +44,10 @@
 /datum/antagonist/blob/get_preview_icon()
 	var/datum/blobstrain/reagent/reactive_spines/reactive_spines = /datum/blobstrain/reagent/reactive_spines
 
-	var/icon/icon = icon('icons/mob/nonhuman-player/blob.dmi', "blob_core")
-	icon.Blend(initial(reactive_spines.color), ICON_MULTIPLY)
-	icon.Blend(icon('icons/mob/nonhuman-player/blob.dmi', "blob_core_overlay"), ICON_OVERLAY)
-	icon.Scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
+	var/datum/universal_icon/icon = uni_icon('icons/mob/nonhuman-player/blob.dmi', "blob_core")
+	icon.blend_color(initial(reactive_spines.color), ICON_MULTIPLY)
+	icon.blend_icon(uni_icon('icons/mob/nonhuman-player/blob.dmi', "blob_core_overlay"), ICON_OVERLAY)
+	icon.scale(ANTAGONIST_PREVIEW_ICON_SIZE, ANTAGONIST_PREVIEW_ICON_SIZE)
 
 	return icon
 
@@ -159,17 +159,17 @@
 	pref_flag = ROLE_BLOB_INFECTION
 
 /datum/antagonist/blob/infection/get_preview_icon()
-	var/icon/blob_icon = ..()
+	var/datum/universal_icon/blob_icon = ..()
 
 	var/datum/blobstrain/reagent/reactive_spines/reactive_spines = /datum/blobstrain/reagent/reactive_spines
-	var/icon/blob_head = icon('icons/mob/nonhuman-player/blob.dmi', "blob_head")
-	blob_head.Blend(initial(reactive_spines.complementary_color), ICON_MULTIPLY)
+	var/datum/universal_icon/blob_head = uni_icon('icons/mob/nonhuman-player/blob.dmi', "blob_head")
+	blob_head.blend_color(initial(reactive_spines.complementary_color), ICON_MULTIPLY)
 
-	var/icon/human_icon = render_preview_outfit(/datum/outfit/job/miner)
-	human_icon.Blend(blob_head, ICON_OVERLAY)
-	human_icon.ChangeOpacity(0.7)
+	var/datum/universal_icon/human_icon = render_preview_outfit(/datum/outfit/job/miner)
+	human_icon.blend_icon(blob_head, ICON_OVERLAY)
+	human_icon.change_opacity(0.7)
 
-	blob_icon.Blend(finish_preview_icon(human_icon), ICON_OVERLAY)
+	blob_icon.blend_icon(finish_preview_icon(human_icon), ICON_OVERLAY)
 
 	return blob_icon
 

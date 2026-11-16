@@ -6,7 +6,7 @@ import rspack, { type StatsOptions } from '@rspack/core';
 export function createStats(verbose: boolean): StatsOptions {
   return {
     assets: verbose,
-    builtAt: verbose,
+    builtAt: false,
     cached: false,
     children: false,
     chunks: false,
@@ -29,6 +29,9 @@ export default defineConfig({
     tgui: './packages/tgui',
     'tgui-panel': './packages/tgui-panel',
     'tgui-say': './packages/tgui-say',
+    'tgui-chat-dark': './packages/tgui-chat-dark',
+    'tgui-escape-menu': './packages/tgui-escape-menu',
+    'tgui-lobby': './packages/tgui-lobby',
   },
   mode: 'production',
   module: {
@@ -121,6 +124,10 @@ export default defineConfig({
       failOnError: true,
       exclude: /node_modules/,
     }),
+    new rspack.IgnorePlugin({
+      resourceRegExp: /\.test\.tsx?$/,
+      contextRegExp: /__mocks__/,
+    }),
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
@@ -128,6 +135,8 @@ export default defineConfig({
       tgui: path.resolve(dirname, './packages/tgui'),
       'tgui-panel': path.resolve(dirname, './packages/tgui-panel'),
       'tgui-say': path.resolve(dirname, './packages/tgui-say'),
+      'tgui-escape-menu': path.resolve(dirname, './packages/tgui-escape-menu'),
+      'tgui-lobby': path.resolve(dirname, './packages/tgui-lobby'),
       'tgui-dev-server': path.resolve(dirname, './packages/tgui-dev-server'),
     },
   },

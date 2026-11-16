@@ -7,7 +7,6 @@
 	lose_text = span_notice("You suddenly feel like your lungs just got a lot better at breathing!")
 	medical_record_text = "Patient suffers from asthma."
 	hardcore_value = 2
-	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/reagent_containers/inhaler_canister/albuterol)
 
 	/// At this percentage of inflammation, our lung pressure mult reaches 0. From 0-1.
@@ -84,10 +83,7 @@
 /datum/quirk/item_quirk/asthma/proc/on_life(mob/living/source, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	if (quirk_holder.stat == DEAD)
-		return
-
-	if (HAS_TRAIT(quirk_holder, TRAIT_STASIS) || HAS_TRAIT(quirk_holder, TRAIT_NO_TRANSFORM))
+	if (quirk_holder.stat == DEAD || HAS_TRAIT(quirk_holder, TRAIT_STASIS))
 		return
 
 	var/obj/item/organ/lungs/holder_lungs = quirk_holder.get_organ_slot(ORGAN_SLOT_LUNGS)

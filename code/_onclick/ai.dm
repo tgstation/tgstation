@@ -52,6 +52,9 @@
 		if(LAZYACCESS(modifiers, CTRL_CLICK))
 			CtrlShiftClickOn(A)
 			return
+		if(LAZYACCESS(modifiers, MIDDLE_CLICK))
+			ShiftMiddleClickOn(A)
+			return
 		ShiftClickOn(A)
 		return
 	if(LAZYACCESS(modifiers, ALT_CLICK)) // alt and alt-gr (rightalt)
@@ -269,15 +272,24 @@
 		togglelock(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
+/mob/living/silicon/ai/ShiftMiddleClickOn(atom/A)
+	if(control_disabled || incapacitated)
+		return
+	if(!can_see(A))
+		return
+	if(!point_at(A, TRUE))
+		return
+	log_message("points at [A] using holopad", LOG_EMOTE)
+
 /* AI Turrets */
 /obj/machinery/turretid/ai_click_alt(mob/living/silicon/ai/user) //toggles lethal on turrets
-	if(ailock)
+	if(is_ai_locked(user))
 		return CLICK_ACTION_BLOCKING
 	toggle_lethal(user)
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/turretid/AICtrlClick(mob/living/silicon/ai/user) //turns off/on Turrets
-	if(ailock)
+	if(is_ai_locked(user))
 		return
 	toggle_on(user)
 

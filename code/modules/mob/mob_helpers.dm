@@ -62,7 +62,7 @@
 
 /mob/living/carbon/get_random_valid_zone(base_zone, base_probability = 80, list/blacklisted_parts, even_weights, bypass_warning)
 	var/list/limbs = list()
-	for(var/obj/item/bodypart/part as anything in bodyparts)
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
 		var/limb_zone = part.body_zone //cache the zone since we're gonna check it a ton.
 		if(limb_zone in blacklisted_parts)
 			continue
@@ -178,6 +178,7 @@
 
 		M.overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 1 SECONDS), shake_dur)
+		return
 
 	//How much time to allot for each pixel moved
 	var/time_scalar = (1 / ICON_SIZE_ALL) * TILES_PER_SECOND
@@ -227,7 +228,7 @@
 		var/shake_dur = max(duration, 2 SECONDS)
 		recoiled_mob.overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(recoiled_mob, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 1 SECONDS), shake_dur)
-
+		return
 
 	animate(client_to_shake, pixel_x = oldx+mpx, pixel_y = oldy+mpy, time = duration, flags = ANIMATION_RELATIVE)
 	animate(pixel_x = oldx, pixel_y = oldy, time = backtime_duration, easing = BACK_EASING)
@@ -249,11 +250,20 @@
 	return ""
 
 /**
- * Checks if this mob is an antag
+ * Checks if this mob is an antag.
+ *
  * By default excludes antags like Valentines, which are "fake antags"
+ *
+ * * blacklisted_antag_flags: Antag flags to ignore when checking if this mob is an antag.
+ * * ignored_antag_types: List of specific antag types to ignore when checking if this mob is an antag.
+ *
+ * Returns TRUE if this mob is considered any valid antag
+ * Returns FALSE if the mob is otherwise normal
  */
-/mob/proc/is_antag(blacklisted_antag_flags = ANTAG_FAKE)
+/mob/proc/is_antag(blacklisted_antag_flags = ANTAG_FAKE, list/ignored_antag_types)
 	for(var/datum/antagonist/antag_datum as anything in mind?.antag_datums)
+		if(is_type_in_list(antag_datum, ignored_antag_types))
+			continue
 		if(!blacklisted_antag_flags || !(antag_datum.antag_flags & blacklisted_antag_flags))
 			return TRUE
 
@@ -403,10 +413,6 @@
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
 
-///Can the mob hear
-/mob/proc/can_hear()
-	return !HAS_TRAIT(src, TRAIT_DEAF)
-
 /**
  * Get the list of keywords for policy config
  *
@@ -431,10 +437,6 @@
 ///Can the mob see reagents inside of containers?
 /mob/proc/can_see_reagents()
 	return stat == DEAD || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
-
-///Can this mob hold items
-/mob/proc/can_hold_items(obj/item/I)
-	return length(held_items)
 
 /// Returns this mob's default lighting alpha
 /mob/proc/default_lighting_cutoff()
@@ -498,7 +500,7 @@
 	if(iscyborg(mob) || islarva(mob))
 		divided_health = (mob.health + mob.maxHealth) / (mob.maxHealth * 2)
 	else if(iscarbon(mob) || isAI(mob) || isbrain(mob))
-		divided_health = abs(HEALTH_THRESHOLD_DEAD - mob.health) / abs(HEALTH_THRESHOLD_DEAD - mob.maxHealth)
+		divided_health = abs(mob.dead_threshold - mob.health) / abs(mob.dead_threshold - mob.maxHealth)
 	return divided_health * 100
 
 /**

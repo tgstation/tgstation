@@ -16,10 +16,10 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 4, STAMINA = 1, OXY = 1)
+	physiology = list(BURN = 1.25, TOX = 4)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
-	speed = -0.1
+	speed = 0.2
 	maxHealth = 90
 	health = 90
 	melee_damage_lower = 15
@@ -44,6 +44,7 @@
 	stamina_crit_threshold = BASIC_MOB_NO_STAMCRIT
 	stamina_recovery = 5
 	max_stamina_slowdown = 12
+	faction = list(FACTION_BLOOD_SPIDER)
 
 /mob/living/basic/flesh_spider/Initialize(mapload)
 	. = ..()
@@ -61,7 +62,7 @@
 	)
 	AddComponent(\
 		/datum/component/regenerator,\
-		regeneration_delay = 4 SECONDS,\
+		regeneration_delay = 3 SECONDS,\
 		brute_per_second = maxHealth / 6,\
 		outline_colour = COLOR_PINK,\
 	)

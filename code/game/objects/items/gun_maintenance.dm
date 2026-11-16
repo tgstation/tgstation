@@ -77,3 +77,4 @@
 	inhand_icon_state = "toolbox_blue"
 	uses = 1
 	max_uses = 1
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/plastic = SMALL_MATERIAL_AMOUNT)

@@ -7,8 +7,13 @@
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 7
 
-/datum/round_event/radiation_storm
+/datum/round_event_control/radiation_storm/New()
+	. = ..()
+	if(max_occurrences > 0 && weight > 0 && check_holidays(CHERNOBYL_ANNIVERSARY))
+		weight *= 2
+		max_occurrences += 2
 
+/datum/round_event/radiation_storm
 
 /datum/round_event/radiation_storm/setup()
 	start_when = 3

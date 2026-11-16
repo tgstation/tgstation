@@ -54,6 +54,10 @@
 	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
 	// Check if our (possibly other) wearer is on fire once the cooldown ends
 	addtimer(CALLBACK(src, PROC_REF(check_fire_state)), extinguish_cooldown)
+	activate_fire_safety(owner)
+
+/// Extinguish our suit
+/obj/item/clothing/under/plasmaman/proc/activate_fire_safety(mob/living/owner)
 	owner.visible_message(span_warning("[owner]'s suit automatically extinguishes [owner.p_them()]!"), span_warning("Your suit automatically extinguishes you."))
 	owner.extinguish_mob()
 	new /obj/effect/particle_effect/water(get_turf(owner))
@@ -77,6 +81,7 @@
 	desc = "A cartridge loaded with a compressed extinguisher mix, used to refill the automatic extinguisher on plasma envirosuits."
 	icon_state = "plasmarefill"
 	icon = 'icons/obj/canisters.dmi'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/under/plasmaman/cargo
 	name = "cargo plasma envirosuit"
@@ -157,27 +162,8 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/obj/item/clothing/under/plasmaman/clown/check_fire_state(datum/source, datum/status_effect/fire_handler/status_effect)
-	if (!ishuman(loc))
-		return
-
-	// This is weird but basically we're calling this proc once the cooldown ends in case our wearer gets set on fire again during said cooldown
-	// This is why we're ignoring source and instead checking by loc
-	var/mob/living/carbon/human/owner = loc
-	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE))
-		return
-
-	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))
-		return
-
-	extinguishes_left -= 1
-	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
-	// Check if our (possibly other) wearer is on fire once the cooldown ends
-	addtimer(CALLBACK(src, PROC_REF(check_fire_state)), extinguish_cooldown)
+/// Sprays lube instead of water
+/obj/item/clothing/under/plasmaman/clown/activate_fire_safety(mob/living/owner)
 	owner.visible_message(span_warning("[owner]'s suit spews space lube everywhere!"), span_warning("Your suit spews space lube everywhere!"))
 	owner.extinguish_mob()
-	var/datum/effect_system/fluid_spread/foam/foam = new
-	var/datum/reagents/foamreagent = new /datum/reagents(15)
-	foamreagent.add_reagent(/datum/reagent/lube, 15)
-	foam.set_up(4, holder = src, location = get_turf(owner), carry = foamreagent)
-	foam.start() //Truly terrifying.
+	do_foam(4, src, get_turf(owner), /datum/reagent/lube, 15)

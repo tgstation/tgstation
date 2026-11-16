@@ -1,15 +1,15 @@
 /datum/disease/parrot_possession
 	name = "Parrot Possession"
 	max_stages = 1
-	spread_text = "Paranormal"
+	spread_text = "None"
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	disease_flags = CURABLE
-	cure_text = "Holy Water."
+	cure_text = /datum/reagent/water/holywater::name
 	cures = list(/datum/reagent/water/holywater)
 	cure_chance = 10
 	agent = "Avian Vengence"
 	viable_mobtypes = list(/mob/living/carbon/human)
-	desc = "Subject is possessed by the vengeful spirit of a parrot. Call the priest."
+	desc = "Subject is possessed by the vengeful spirit of a parrot. Call the Chaplain."
 	severity = DISEASE_SEVERITY_MEDIUM
 	infectable_biotypes = MOB_ORGANIC|MOB_UNDEAD|MOB_ROBOTIC|MOB_MINERAL
 	bypasses_immunity = TRUE //2spook
@@ -28,7 +28,7 @@
 	var/potential_phrase = parrot_controller.blackboard[BB_PARROT_REPEAT_STRING]
 
 	if(SPT_PROB(speak_chance, seconds_per_tick) && !isnull(potential_phrase))
-		affected_mob.say(potential_phrase, forced = "parrot possession")
+		INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), potential_phrase, forced = "parrot possession")
 
 
 /datum/disease/parrot_possession/cure(add_resistance = FALSE)

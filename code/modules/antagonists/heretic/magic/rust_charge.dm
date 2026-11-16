@@ -2,8 +2,7 @@
 /datum/action/cooldown/mob_cooldown/charge/rust
 	name = "Rust Charge"
 	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, \
-		will deal high damage to others and rust around you during the charge. \
-		As it is the rust that empowers you with this ability, no focus is needed."
+		will deal high damage to others and rust around you during the charge."
 	charge_distance = 10
 	charge_damage = 25
 	cooldown_time = 45 SECONDS
@@ -14,9 +13,8 @@
 	if(!istype(start_turf) || !HAS_TRAIT(start_turf, TRAIT_RUSTY))
 		return FALSE
 	StartCooldown(135 SECONDS, 135 SECONDS)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.damage_resistance += 100
+	var/mob/living/living = owner
+	living.damage_resistance += 100
 	RegisterSignal(owner, COMSIG_FINISHED_CHARGE, PROC_REF(affect_aoe))
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
@@ -65,6 +63,5 @@
 			continue
 		nearby_mob.apply_damage(charge_damage, BRUTE, wound_bonus = CANT_WOUND)
 		nearby_mob.Knockdown(5 SECONDS)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.damage_resistance -= 100
+	var/mob/living/living = owner
+	living.damage_resistance -= 100

@@ -24,7 +24,7 @@ export function TechwebNodeDetail(props: NodeDetailProps) {
   const { nodes } = data;
 
   const selectedNodeData =
-    selectedNode && nodes.find((x) => x.id === selectedNode);
+    selectedNode && nodes.find((x) => x.path === selectedNode);
 
   if (!selectedNodeData) return;
 
@@ -46,16 +46,16 @@ export function TechNodeDetail(props: TechNodeDetailProps) {
   const { data } = useRemappedBackend();
   const { nodes, node_cache } = data;
 
-  const { prereq_ids, unlock_ids } = node_cache[node.id];
+  const { prerequisite_nodes, unlocked_nodes } = node_cache[node.path];
 
   const [tabIndex, setTabIndex] = useState(Tab.REQUIRED);
   const [techwebRoute, setTechwebRoute] = useTechWebRoute();
 
-  const prereqNodes = nodes.filter((x) => prereq_ids.includes(x.id));
-  const complPrereq = prereq_ids.filter(
-    (x) => nodes.find((y) => y.id === x)?.tier === 0,
+  const prereqNodes = nodes.filter((x) => prerequisite_nodes.includes(x.path));
+  const complPrereq = prerequisite_nodes.filter(
+    (x) => nodes.find((y) => y.path === x)?.tier === 0,
   ).length;
-  const unlockedNodes = nodes.filter((x) => unlock_ids.includes(x.id));
+  const unlockedNodes = nodes.filter((x) => unlocked_nodes.includes(x.path));
 
   return (
     <Flex direction="column" height="100%">
@@ -97,7 +97,7 @@ export function TechNodeDetail(props: TechNodeDetailProps) {
           <Section scrollable fill>
             <VirtualList>
               {prereqNodes.map((n) => (
-                <TechNode key={n.id} node={n} />
+                <TechNode key={n.path} node={n} />
               ))}
             </VirtualList>
           </Section>
@@ -108,7 +108,7 @@ export function TechNodeDetail(props: TechNodeDetailProps) {
           <Section scrollable fill>
             <VirtualList>
               {unlockedNodes.map((n) => (
-                <TechNode key={n.id} node={n} />
+                <TechNode key={n.path} node={n} />
               ))}
             </VirtualList>
           </Section>

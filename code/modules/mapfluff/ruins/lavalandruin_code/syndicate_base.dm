@@ -28,9 +28,9 @@
 	warning_channel = "Syndicate"
 	include_in_cims = FALSE
 
-/obj/machinery/power/supermatter_crystal/shard/syndicate/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/scalpel/supermatter)) //You can already yoink the docs as a free objective win, another would be just gross
+/obj/machinery/power/supermatter_crystal/shard/syndicate/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/scalpel/supermatter)) //You can already yoink the docs as a free objective win, another would be just gross
 		to_chat(user, span_danger("This shard's already in Syndicate custody, taking it again could cause more harm than good."))
-		return
-	else
-		. = ..()
+		return ITEM_INTERACT_BLOCKING
+
+	return NONE

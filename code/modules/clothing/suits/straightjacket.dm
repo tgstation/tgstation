@@ -8,7 +8,9 @@
 	equip_delay_self = 5 SECONDS
 	strip_delay = 6 SECONDS
 	breakouttime = 5 MINUTES
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
+	clothing_traits = list(TRAIT_RESTRAINED)
 
 /obj/item/clothing/suit/jacket/straight_jacket/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_DANGEROUS_OBJECT, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_DANGEROUS_EQUIP, INNATE_TRAIT)

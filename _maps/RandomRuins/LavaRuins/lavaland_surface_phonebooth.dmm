@@ -9,7 +9,7 @@
 /turf/open/floor/iron/dark/smooth_edge,
 /area/ruin/powered/lavaland_phone_booth)
 "e" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/powered/lavaland_phone_booth)
 "k" = (
 /obj/machinery/vending/snack/green{
@@ -32,7 +32,7 @@
 "v" = (
 /obj/structure/lattice,
 /obj/structure/billboard/Phone_booth,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/powered/lavaland_phone_booth)
 "z" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -62,7 +62,7 @@
 /area/ruin/powered/lavaland_phone_booth)
 "V" = (
 /obj/structure/lattice,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/ruin/powered/lavaland_phone_booth)
 "W" = (
 /obj/machinery/vending/cigarette{

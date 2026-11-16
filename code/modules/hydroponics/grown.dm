@@ -66,8 +66,6 @@
 		pixel_x = base_pixel_x + rand(-5, 5)
 		pixel_y = base_pixel_y + rand(-5, 5)
 
-	make_dryable()
-
 	// Go through all traits in their genes and call on_new_plant from them.
 	for(var/datum/plant_gene/trait/trait in seed.genes)
 		trait.on_new_plant(src, loc)
@@ -82,13 +80,14 @@
 	reagents.clear_reagents()
 	seed.prepare_result(src)
 	transform *= TRANSFORM_USING_VARIABLE(seed.potency, 100) + 0.5 //Makes the resulting produce's sprite larger or smaller based on potency!
+	ADD_TRAIT(src, TRAIT_VALID_DNA_INFUSION, INNATE_TRAIT)
 
 /obj/item/food/grown/Destroy()
 	if(isatom(seed))
 		QDEL_NULL(seed)
 	return ..()
 
-/obj/item/food/grown/proc/make_dryable()
+/obj/item/food/grown/make_dryable()
 	AddElement(/datum/element/dryable, type)
 
 /obj/item/food/grown/make_leave_trash()
@@ -105,11 +104,12 @@
 
 	return new trash_type(location || drop_location())
 
-/obj/item/food/grown/blend_requirements()
-	if(dry_grind && !HAS_TRAIT(src, TRAIT_DRIED))
-		to_chat(usr, span_warning("[src] needs to be dry before it can be ground up!"))
-		return
-	return TRUE
+/obj/item/food/grown/blend_requirements(atom/movable/grinder, mob/living/user)
+	if(!dry_grind || HAS_TRAIT(src, TRAIT_DRIED))
+		return TRUE
+	if (user)
+		to_chat(user, span_warning("[src] needs to be dry before it can be ground up!"))
+	return FALSE
 
 /// Turns the nutriments and vitamins into the distill reagent or fruit wine
 /obj/item/food/grown/proc/ferment()

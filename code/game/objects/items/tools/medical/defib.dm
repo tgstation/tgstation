@@ -1,6 +1,7 @@
 //backpack item
 #define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
 #define DEFIB_CAN_HURT(source) (source.combat || (source.req_defib && !source.defib.safety))
+#define DEFIB_RESET_TIMER 3 MINUTES
 
 /obj/item/defibrillator
 	name = "defibrillator"
@@ -17,12 +18,14 @@
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/item_action/toggle_paddles)
 	armor_type = /datum/armor/item_defibrillator
-
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*4, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.5)
 	var/obj/item/shockpaddles/paddle_type = /obj/item/shockpaddles
 	/// If the paddles are equipped (1) or on the defib (0)
 	var/on = FALSE
-	/// If you can zap people with the defibs on harm mode
+	/// If TRUE, will allow you to zap people while in combat mode.
 	var/safety = TRUE
+	/// If TRUE, will not attempt to retoggle safeties if emp'd again.
+	var/recently_emped = FALSE
 	/// If there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/powered = FALSE
 	/// If the cell can be removed via screwdriver
@@ -103,7 +106,7 @@
 		. += powered_state
 		if(!QDELETED(cell) && charge_state)
 			var/ratio = cell.charge / cell.maxcharge
-			ratio = CEILING(ratio*4, 1) * 25
+			ratio = ceil(ratio*4) * 25
 			. += "[charge_state][ratio]"
 	if(!cell && nocell_state)
 		. += "[nocell_state]"
@@ -115,19 +118,19 @@
 	cell = locate(/obj/item/stock_parts/power_store) in contents
 	update_power()
 
-/obj/item/defibrillator/ui_action_click()
-	INVOKE_ASYNC(src, PROC_REF(toggle_paddles))
+/obj/item/defibrillator/ui_action_click(mob/user, actiontype)
+	INVOKE_ASYNC(src, PROC_REF(toggle_paddles), user)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/defibrillator/attack_hand(mob/user, list/modifiers)
 	if(loc == user)
 		if(user.get_slot_by_item(src) & slot_flags)
-			ui_action_click()
+			ui_action_click(user, modifiers)
 		else
 			balloon_alert(user, "equip the unit first!")
 		return
 	else if(istype(loc, /obj/machinery/defibrillator_mount))
-		ui_action_click() //checks for this are handled in defibrillator.mount.dm
+		ui_action_click(user, modifiers) //checks for this are handled in defibrillator.mount.dm
 	return ..()
 
 /obj/item/defibrillator/screwdriver_act(mob/living/user, obj/item/tool)
@@ -143,7 +146,7 @@
 
 /obj/item/defibrillator/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	if(item == paddles)
-		toggle_paddles()
+		toggle_paddles(user)
 		return NONE
 	if(!istype(item, /obj/item/stock_parts/power_store/cell))
 		return NONE
@@ -164,11 +167,8 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/defibrillator/emag_act(mob/user, obj/item/card/emag/emag_card)
-
-	safety = !safety
-
-	var/enabled_or_disabled = (safety ? "enabled" : "disabled")
-	balloon_alert(user, "safety protocols [enabled_or_disabled]")
+	obj_flags |= EMAGGED
+	toggle_safety(user)
 
 	return TRUE
 
@@ -178,18 +178,39 @@
 		deductcharge(STANDARD_CELL_CHARGE / severity)
 	if (. & EMP_PROTECT_SELF)
 		return
-
 	update_power()
+	if((obj_flags & EMAGGED) || recently_emped)
+		return
+	toggle_safety()
+	recently_emped = TRUE
 
-/obj/item/defibrillator/proc/toggle_paddles()
-	set name = "Toggle Paddles"
-	set category = "Object"
+/obj/item/defibrillator/proc/toggle_safety(mob/living/user, force_safety = FALSE)
+	if(force_safety && !(obj_flags & EMAGGED))
+		safety = TRUE
+	else
+		safety = FALSE
+
+	var/enabled_or_disabled = (safety ? "enabled" : "disabled")
+	if(user)
+		balloon_alert(user, "safety protocols [enabled_or_disabled]")
+
+	if(obj_flags & EMAGGED)
+		return
+
+	addtimer(CALLBACK(src, PROC_REF(force_safety_on)), DEFIB_RESET_TIMER)
+
+/obj/item/defibrillator/proc/force_safety_on()
+	recently_emped = FALSE
+	if(obj_flags & EMAGGED)
+		return
+
+	toggle_safety(null, TRUE)
+
+/obj/item/defibrillator/proc/toggle_paddles(mob/living/user)
 	on = !on
-
-	var/mob/living/carbon/user = usr
 	if(on)
 		//Detach the paddles into the user's hands
-		if(!usr.put_in_hands(paddles))
+		if(!user.put_in_hands(paddles))
 			on = FALSE
 			to_chat(user, span_warning("You need a free hand to hold the paddles!"))
 			update_power()
@@ -259,9 +280,10 @@
 	desc = "A belt-equipped defibrillator that can be rapidly deployed."
 	icon_state = "defibcompact"
 	inhand_icon_state = null
-	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE|ITEM_SLOT_DEX_STORAGE
+	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_SUITSTORE
 	worn_icon = 'icons/mob/clothing/belt.dmi'
 	worn_icon_state = "defibcompact"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4, /datum/material/silver = SHEET_MATERIAL_AMOUNT*3, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 1.5)
 	w_class = WEIGHT_CLASS_NORMAL
 	paddle_state = "defibcompact-paddles"
 	powered_state = "defibcompact-powered"
@@ -274,9 +296,12 @@
 	cell = new(src)
 	update_power()
 
-/obj/item/defibrillator/compact/loaded/cmo // subtype for the spy steal objective
-	name = "chief medical officer's compact defibrillator"
+/obj/item/defibrillator/compact/loaded/cmo // special version for the CMO, is a theft objective.
+	name = "experimental compact defibrillator"
+	desc = "A belt-equipped defibrillator that can be rapidly deployed. This one is customized with various experimental \
+		components to significantly increase recharge rate. Nifty."
 	icon_state = "defibcmo"
+	cooldown_duration = 2.5 SECONDS
 	resistance_flags = INDESTRUCTIBLE // So no cheesy getting rid of like other steal/head items
 
 /obj/item/defibrillator/compact/combat
@@ -549,7 +574,7 @@
 			H.emote("scream")
 			shock_pulling(45, H)
 			if(H.can_heartattack() && !H.undergoing_cardiac_arrest())
-				if(!H.stat)
+				if(!IS_UNCONSCIOUS_OR_CRIT(H))
 					H.visible_message(span_warning("[H] thrashes wildly, clutching at [H.p_their()] chest!"),
 						span_userdanger("You feel a horrible agony in your chest!"))
 				H.set_heartattack(TRUE)
@@ -582,7 +607,7 @@
 				return
 			if(H.stat == DEAD)
 				H.visible_message(span_warning("[H]'s body convulses a bit."))
-				playsound(src, SFX_BODYFALL, 50, TRUE)
+				playsound(src, /datum/sound_effect/bodyfall, 50, TRUE)
 				playsound(src, 'sound/machines/defib/defib_zap.ogg', 75, TRUE, -1)
 				shock_pulling(30, H)
 
@@ -718,3 +743,4 @@
 
 #undef HALFWAYCRITDEATH
 #undef DEFIB_CAN_HURT
+#undef DEFIB_RESET_TIMER

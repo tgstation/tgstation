@@ -1,13 +1,6 @@
 ADMIN_VERB(reset_tram, R_DEBUG|R_ADMIN, "Reset Tram", "Reset a tram controller or its contents.", ADMIN_CATEGORY_DEBUG)
-	var/static/list/debug_tram_list = list(
-		TRAMSTATION_LINE_1,
-		BIRDSHOT_LINE_1,
-		BIRDSHOT_LINE_2,
-		HILBERT_LINE_1,
-	)
-
 	var/datum/transport_controller/linear/tram/broken_controller
-	var/selected_transport_id = tgui_input_list(user, "Which tram?", "Off the rails", debug_tram_list)
+	var/selected_transport_id = tgui_input_list(user, "Which tram?", "Off the rails", SStransport.debug_tram_list)
 	if(isnull(selected_transport_id))
 		return
 	var/reset_type = tgui_input_list(user, "How hard of a reset?", "How bad is it screwed up", list("Clear Tram Contents", "Controller", "Controller and Contents", "Delete Datum", "Cancel"))

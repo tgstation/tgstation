@@ -13,10 +13,10 @@
 	resistance = -3
 	stage_speed = -3
 	transmittable = -4
-	level = 6
+	level = 7
 	base_message_chance = 3
-	symptom_delay_min = 1
-	symptom_delay_max = 1
+	symptom_delay = 1
+	delay_variation = 0
 	required_organ = ORGAN_SLOT_LUNGS
 	threshold_descs = list(
 		"Resistance 8" = "Additionally regenerates lost blood."

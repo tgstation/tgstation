@@ -8,7 +8,8 @@
 	agent = "H0NI<42 Virus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spreading_modifier = 0.75
-	desc = "If left untreated the subject will probably drive others to insanity."
+	desc = "A strange virus rumored to originate from unwashed clown costumes. \
+		If left untreated the subject's vocal cords will be affected, likely driving others to insanity."
 	severity = DISEASE_SEVERITY_MEDIUM
 	required_organ = ORGAN_SLOT_TONGUE
 
@@ -29,7 +30,7 @@
 				to_chat(affected_mob, span_danger("Your thoughts are interrupted by a loud <b>HONK!</b>"))
 		if(4)
 			if(SPT_PROB(2.5, seconds_per_tick))
-				affected_mob.say( pick( list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...") ) , forced = "pierrot's throat")
+				INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), pick(list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...")), forced = "pierrot's throat")
 
 
 /datum/disease/pierrot_throat/after_add()

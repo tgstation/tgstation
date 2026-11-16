@@ -8,14 +8,14 @@
 	anchored = TRUE
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 10)
 
-/obj/structure/dresser/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(I.tool_behaviour == TOOL_WRENCH)
-		to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
-		if(I.use_tool(src, user, 20, volume=50))
-			to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
-			set_anchored(!anchored)
-	else
-		return ..()
+/obj/structure/dresser/wrench_act(mob/living/user, obj/item/tool)
+	to_chat(user, span_notice("You begin to [anchored ? "unwrench" : "wrench"] [src]."))
+	if(!tool.use_tool(src, user, 20, volume=50))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You successfully [anchored ? "unwrench" : "wrench"] [src]."))
+	set_anchored(!anchored)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/dresser/atom_deconstruct(disassembled = TRUE)
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)

@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 				admins_by_rank[composed_rank.name] |= list(stored_key)
 
 		// Then, pull the full list of DB ranks
-		var/datum/db_query/query_extract_ranks = SSdbcore.NewQuery("SELECT rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
+		var/datum/db_query/query_extract_ranks = SSdbcore.NewQuery("SELECT `rank`, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
 		if(!query_extract_ranks.warn_execute())
 			qdel(query_extract_ranks)
 			return
@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 		QDEL_NULL(query_extract_admins)
 
 		// Then, pull the full list of DB ranks to purity check against
-		var/datum/db_query/query_extract_ranks = SSdbcore.NewQuery("SELECT rank, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
+		var/datum/db_query/query_extract_ranks = SSdbcore.NewQuery("SELECT `rank`, flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]")
 		if(!query_extract_ranks.warn_execute())
 			qdel(query_extract_ranks)
 			return
@@ -1082,7 +1082,7 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 	if(use_db)
 		var/datum/db_query/query_db_rank_info = SSdbcore.NewQuery({"
 			SELECT flags, exclude_flags, can_edit_flags FROM [format_table_name("admin_ranks")]
-			WHERE rank = :rank_name
+			WHERE `rank` = :rank_name
 		"}, list("rank_name" = admin_rank))
 		if(!query_db_rank_info.warn_execute())
 			qdel(query_db_rank_info)
@@ -1169,19 +1169,19 @@ GLOBAL_LIST_INIT(permission_action_types, list(
 				query_update_rank = SSdbcore.NewQuery({"
 					UPDATE [format_table_name("admin_ranks")]
 					SET flags = :flags
-					WHERE rank = :rank_name
+					WHERE `rank` = :rank_name
 				"}, list("rank_name" = admin_rank, "flags" = new_flags))
 			if("Excluded Rights")
 				query_update_rank = SSdbcore.NewQuery({"
 					UPDATE [format_table_name("admin_ranks")]
 					SET exclude_flags = :exclude_flags
-					WHERE rank = :rank_name
+					WHERE `rank` = :rank_name
 				"}, list("rank_name" = admin_rank, "exclude_flags" = new_flags))
 			if("Editing Rights")
 				query_update_rank = SSdbcore.NewQuery({"
 					UPDATE [format_table_name("admin_ranks")]
 					SET can_edit_flags = :can_edit_flags
-					WHERE rank = :rank_name
+					WHERE `rank` = :rank_name
 				"}, list("rank_name" = admin_rank, "can_edit_flags" = new_flags))
 
 		if(!query_update_rank.warn_execute())

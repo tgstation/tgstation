@@ -128,7 +128,7 @@
 /datum/component/fearful/proc/on_examine(mob/living/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if (source.stat >= UNCONSCIOUS)
+	if (IS_UNCONSCIOUS(source))
 		return
 
 	if(terror_buildup >= TERROR_BUILDUP_HEART_ATTACK)
@@ -148,13 +148,12 @@
 	if(hugger == parent)
 		return
 
-	if(isnightmare(hugger))
+	if(HAS_TRAIT(hugger, TRAIT_NIGHTMARISH))
 		var/lit_tiles = 0
 		var/unlit_tiles = 0
 
 		for(var/turf/open/turf_to_check in range(1, source))
-			var/light_amount = turf_to_check.get_lumcount()
-			if(light_amount > LIGHTING_TILE_IS_DARK)
+			if(turf_to_check.check_lumcount_above(LIGHTING_TILE_IS_DARK))
 				lit_tiles++
 			else
 				unlit_tiles++
@@ -182,12 +181,13 @@
 			)
 		return COMPONENT_BLOCK_MISC_HELP
 
+	if(terror_buildup >= TERROR_BUILDUP_TERROR)
+		source.visible_message(
+			span_notice("[source] seems to relax as [hugger] gives [source.p_them()] a comforting hug."),
+			span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
+			span_hear("You hear shuffling and a sigh of relief."),
+		)
 	terror_buildup -= HUG_TERROR_AMOUNT
-	source.visible_message(
-		span_notice("[source] seems to relax as [hugger] gives [source.p_them()] a comforting hug."),
-		span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
-		span_hear("You hear shuffling and a sigh of relief."),
-	)
 
 /// Remove all terror buildup when we become fearless
 /datum/component/fearful/proc/fearless_added(datum/source)

@@ -12,6 +12,41 @@
 
 	volume = 1000
 
+/obj/machinery/portable_atmospherics/pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Turn [on ? "off" : "on"]"
+	if(target_pressure < MAX_OUTPUT_PRESSURE)
+		context[SCREENTIP_CONTEXT_CTRL_SHIFT_LMB] = "Maximize target pressure"
+	if(holding)
+		context[SCREENTIP_CONTEXT_ALT_RMB] = "Eject holding tank"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/portable_atmospherics/pump/click_alt(mob/user)
+	if(is_operational)
+		on = !on
+		if(on)
+			SSair.start_processing_machine(src)
+		update_appearance()
+		balloon_alert(user, "turned [on ? "on" : "off"]")
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
+
+/obj/machinery/portable_atmospherics/pump/click_alt_secondary(mob/user)
+	if(holding)
+		replace_tank(user, FALSE)
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
+/obj/machinery/portable_atmospherics/pump/click_ctrl_shift(mob/user)
+	if(target_pressure == MAX_OUTPUT_PRESSURE)
+		return CLICK_ACTION_BLOCKING
+
+	target_pressure = MAX_OUTPUT_PRESSURE
+	investigate_log("was set to [target_pressure] kPa by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "pressure output set to [target_pressure] kPa")
+	update_appearance()
+	return CLICK_ACTION_SUCCESS
+
 /obj/machinery/portable_atmospherics/pump/on_deconstruction(disassembled)
 	var/turf/local_turf = get_turf(src)
 	local_turf.assume_air(air_contents)
@@ -119,11 +154,11 @@
 			if(on)
 				SSair.start_processing_machine(src)
 			if(on && !holding)
-				var/plasma = air_contents.gases[/datum/gas/plasma]
-				var/n2o = air_contents.gases[/datum/gas/nitrous_oxide]
-				if(n2o || plasma)
-					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [ADMIN_VERBOSEJMP(src)]")
-					log_admin("[key_name(usr)] turned on a pump that contains [n2o ? "N2O" : ""][n2o && plasma ? " & " : ""][plasma ? "Plasma" : ""] at [AREACOORD(src)]")
+				var/plasma_moles = air_contents.moles[/datum/gas/plasma]
+				var/n2o_moles = air_contents.moles[/datum/gas/nitrous_oxide]
+				if(n2o_moles || plasma_moles)
+					message_admins("[ADMIN_LOOKUPFLW(usr)] turned on a pump that contains [n2o_moles ? "N2O" : ""][n2o_moles && plasma_moles ? " & " : ""][plasma_moles ? "Plasma" : ""] at [ADMIN_VERBOSEJMP(src)]")
+					log_admin("[key_name(usr)] turned on a pump that contains [n2o_moles ? "N2O" : ""][n2o_moles && plasma_moles ? " & " : ""][plasma_moles ? "Plasma" : ""] at [AREACOORD(src)]")
 			else if(on && direction == PUMP_OUT)
 				usr.investigate_log("started a transfer into [holding].", INVESTIGATE_ATMOS)
 			. = TRUE

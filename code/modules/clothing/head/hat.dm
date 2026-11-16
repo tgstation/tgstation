@@ -65,6 +65,7 @@
 	flags_cover = NONE
 	dirt_state = null
 	alternate_worn_layer = HAIR_LAYER
+	texture_type = /datum/bodypart_texture/mesh/black
 
 /datum/armor/bio_hood_plague
 	bio = 100
@@ -94,10 +95,8 @@
 
 	var/mob/living/carbon/human/human_user = user
 	var/obj/item/clothing/suit/costume/bear_suit/our_suit = human_user.wear_suit
-	if(!our_suit || !istype(our_suit))
-		return
-
-	our_suit.make_friendly(user, src)
+	if(istype(our_suit))
+		our_suit.make_friendly(user, src)
 
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
@@ -137,7 +136,7 @@
 	victim.visible_message(span_warning("\The [bullet] sends [victim]'s hat flying!"))
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
 	throw_at(get_edge_target_turf(loc, pick(GLOB.alldirs)), range = 3, speed = 3)
-	playsound(victim, SFX_RICOCHET, 100, TRUE)
+	playsound(victim, /datum/sound_effect/ricochet, 100, TRUE)
 
 /datum/armor/head_cowboy
 	melee = 5
@@ -226,7 +225,13 @@
 /obj/item/clothing/head/costume/jesteralt
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
-	icon_state = "jester2"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/jesteralt"
+	post_init_icon_state = "jester_alt"
+	greyscale_config = /datum/greyscale_config/jester_hat_alt
+	greyscale_config_worn = /datum/greyscale_config/jester_hat_alt/worn
+	greyscale_colors = "#E10000#E1E100"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/rice_hat
 	name = "rice hat"
@@ -278,6 +283,7 @@
 	name = "delinquent hat"
 	desc = "Good grief."
 	icon_state = "delinquent"
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/hats/intern
 	name = "\improper CentCom Head Intern beancap"
@@ -386,6 +392,7 @@
 
 /obj/item/clothing/head/costume/nightcap
 	abstract_type = /obj/item/clothing/head/costume/nightcap
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/costume/nightcap/blue
 	name = "blue nightcap"
@@ -404,3 +411,10 @@
 	worn_icon_state = "paper"
 	dog_fashion = /datum/dog_fashion/head
 	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	item_flags = CAN_BE_OVERSLOT
+
+/obj/item/clothing/head/costume/paper_hat/savior
+	name = "ancient paper hat"
+	desc = "An ancient hat made of paper. \"Savior of the Universe\" is spelled out on the rim in orange marker. "
+	icon_state = "paper_savior"
+	worn_icon_state = "paper_savior"

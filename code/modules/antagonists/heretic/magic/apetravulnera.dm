@@ -38,7 +38,7 @@
 		return FALSE
 
 	var/a_limb_got_damaged = FALSE
-	for(var/obj/item/bodypart/bodypart in cast_on.bodyparts)
+	for(var/obj/item/bodypart/bodypart in cast_on.get_bodyparts())
 		if(bodypart.brute_dam < 15)
 			continue
 		a_limb_got_damaged = TRUE
@@ -47,7 +47,7 @@
 
 	if(!a_limb_got_damaged)
 		var/datum/wound/slash/crit_wound = new wound_type()
-		crit_wound.apply_wound(pick(cast_on.bodyparts))
+		crit_wound.apply_wound(pick(cast_on.get_bodyparts()))
 
 	cast_on.visible_message(
 		span_danger("[cast_on]'s scratches and bruises are torn open by an unholy force!"),

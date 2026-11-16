@@ -45,7 +45,7 @@
 
 /obj/machinery/transport/destination_sign/Initialize(mapload)
 	. = ..()
-	RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(update_sign))
+	RegisterSignal(SStransport, COMSIG_TRANSPORT_UPDATED, PROC_REF(update_sign))
 	SStransport.displays += src
 	available_faces = list(
 		TRAMSTATION_LINE_1,
@@ -106,6 +106,9 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		sign_face = null
 		update_appearance()
+		return
+
+	if(controller && (controller?.specific_transport_id != configured_transport_id))
 		return
 
 	if(!controller || !controller.controller_operational || isnull(destination_platform))

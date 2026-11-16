@@ -87,7 +87,7 @@
 
 	/**
 	 * Parent types.
-	 * 
+	 *
 	 * Abstract-ness is a meta-property of a class that is used to indicate
 	 * that the class is intended to be used as a base class for others, and
 	 * should not (or cannot) be instantiated.
@@ -123,6 +123,7 @@
  * Returns [QDEL_HINT_QUEUE]
  */
 /datum/proc/Destroy(force = FALSE)
+	PROTECTED_PROC(TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	tag = null
@@ -137,24 +138,19 @@
 				continue
 			qdel(timer)
 
-	#ifdef REFERENCE_TRACKING
-	#ifdef REFERENCE_TRACKING_DEBUG
+#if defined(REFERENCE_TRACKING) && defined(REFERENCE_TRACKING_DEBUG)
 	found_refs = null
-	#endif
-	#endif
+#endif
 
 	//BEGIN: ECS SHIT
-	var/list/dc = _datum_components
-	if(dc)
-		for(var/component_key in dc)
-			var/component_or_list = dc[component_key]
+	if(_datum_components)
+		for(var/component_key, component_or_list in _datum_components)
 			if(islist(component_or_list))
 				for(var/datum/component/component as anything in component_or_list)
-					qdel(component, FALSE)
+					qdel(component)
 			else
-				var/datum/component/C = component_or_list
-				qdel(C, FALSE)
-		dc.Cut()
+				qdel(component_or_list)
+		_datum_components = null
 
 	_clear_signal_refs()
 	//END: ECS SHIT
@@ -172,41 +168,39 @@
 /datum/proc/_clear_signal_refs()
 	var/list/lookup = _listen_lookup
 	if(lookup)
-		for(var/sig in lookup)
-			var/list/comps = lookup[sig]
-			if(length(comps))
-				for(var/datum/component/comp as anything in comps)
+		for(var/sig, _comps in lookup)
+			if(length(_comps))
+				for(var/datum/component/comp as anything in _comps)
 					comp.UnregisterSignal(src, sig)
 			else
-				var/datum/component/comp = comps
+				var/datum/component/comp = _comps
 				comp.UnregisterSignal(src, sig)
-		_listen_lookup = lookup = null
+		_listen_lookup = null
 
-	for(var/target in _signal_procs)
-		UnregisterSignal(target, _signal_procs[target])
+	for(var/target, signal in _signal_procs)
+		UnregisterSignal(target, signal)
 
 #ifdef DATUMVAR_DEBUGGING_MODE
 /datum/proc/save_vars()
 	cached_vars = list()
-	for(var/i in vars)
-		if(i == "cached_vars")
+	for(var/var_name, var_value in vars)
+		if(var_name == NAMEOF(src, cached_vars))
 			continue
-		cached_vars[i] = vars[i]
+		cached_vars[var_name] = var_value
 
 /datum/proc/check_changed_vars()
 	. = list()
-	for(var/i in vars)
-		if(i == "cached_vars")
+	for(var/var_name, var_value in vars)
+		if(var_name == NAMEOF(src, cached_vars))
 			continue
-		if(cached_vars[i] != vars[i])
-			.[i] = list(cached_vars[i], vars[i])
+		if(cached_vars[var_name] != var_value)
+			.[var_name] = list(cached_vars[var_name], var_value)
 
 /datum/proc/txt_changed_vars()
-	var/list/l = check_changed_vars()
-	var/t = "[src]([REF(src)]) changed vars:"
-	for(var/i in l)
-		t += "\"[i]\" \[[l[i][1]]\] --> \[[l[i][2]]\] "
-	t += "."
+	var/list/output = list("[src]([REF(src)]) changed vars:")
+	for(var/var_name, var_data in check_changed_vars())
+		output += "\"[var_name]\" \[[var_data[1]]\] --> \[[var_data[2]]\]"
+	return jointext(output, " ")
 
 /datum/proc/to_chat_check_changed_vars(target = world)
 	to_chat(target, txt_changed_vars())
@@ -492,11 +486,11 @@
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	return atom_cast.filters[name]
 
-/// Returns filter data associated with the passed key
-/datum/proc/get_filter_data(name)
+/// Returns filter data associated with the passed key - a copy, unless copy_data is FALSE
+/datum/proc/get_filter_data(name, copy_data = TRUE)
 	for (var/list/filter_info as anything in filter_data)
 		if (filter_info["name"] == name)
-			return filter_info.Copy()
+			return copy_data ? filter_info.Copy() : filter_info
 
 /// Removes the passed filter, or multiple filters, if supplied with a list.
 /datum/proc/remove_filter(name_or_names, update = TRUE)

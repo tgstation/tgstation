@@ -86,3 +86,30 @@
 	description = "What a tasty can of Wellcheers! The salty grape flavor is a great pick-me-up."
 	mood_change = 3
 	timeout = 7 MINUTES
+
+/datum/mood_event/sweetcoffee
+	description = "The bitter sweet taste of coffee was not too bad"
+	mood_change = 2
+	timeout = 5 MINUTES
+
+/datum/mood_event/sweettea
+	description = "Let your worries dissolve like sugar in tea."
+	mood_change = 4
+	timeout = 2.5 MINUTES
+
+//rubywise ruin events
+/datum/mood_event/rubywise_unsatisfied
+	description = "How sweet it would be, just a morsel of meat..."
+	mood_change = -3
+	timeout = 10 SECONDS //Enough to be maintained between ticks
+
+/datum/mood_event/rubywise_satisfied
+	description = "An Appetite... SATISFIED."
+	mood_change = 5
+	timeout = 3 MINUTES
+
+//Completed Farstar Amarita communion
+/datum/mood_event/farstar_shared
+	description = "I can feel a sense of appreciation from somewhere very, very far away."
+	mood_change = 3
+	timeout = 10 MINUTES

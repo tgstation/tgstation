@@ -272,7 +272,7 @@
 "qu" = (
 /obj/structure/table/wood,
 /obj/item/retractor,
-/obj/item/stack/medical/gauze{
+/obj/item/stack/medical/wrap/gauze{
 	pixel_x = 4;
 	pixel_y = 1
 	},

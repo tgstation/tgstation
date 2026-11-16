@@ -43,6 +43,15 @@
 		test_screenshot("[slime_type]", get_flat_icon_for_all_directions(slime))
 		testable_species -= slime_type
 
+	for (var/datum/status_effect/golem/effect_type as anything in subtypesof(/datum/status_effect/golem))
+		if (!effect_type::overlay_state_prefix)
+			continue
+		var/mob/living/carbon/human/golem = allocate(/mob/living/carbon/human/dummy/consistent)
+		golem.set_species(/datum/species/golem)
+		golem.apply_status_effect(effect_type)
+		test_screenshot("[/datum/species/golem]-[effect_type]", get_flat_icon_for_all_directions(golem))
+	// We don't remove it from the list because we still want a normal screenshot
+
 	// The rest of the species
 	for (var/datum/species/species_type as anything in testable_species)
 		test_screenshot("[species_type]", get_flat_icon_for_all_directions(make_dummy(species_type, /datum/outfit/job/assistant/consistent)))

@@ -65,21 +65,16 @@
 /mob/living/silicon/ai/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
-	if(stat != DEAD)
-		if(health <= HEALTH_THRESHOLD_DEAD)
-			death()
-			return
-		else if(stat >= UNCONSCIOUS)
-			set_stat(CONSCIOUS)
+	if(stat != DEAD && health <= dead_threshold)
+		death()
+	else if(stat < DEAD)
+		set_stat(STABLE)
 	diag_hud_set_status()
 
 /mob/living/silicon/ai/update_sight()
-	set_invis_see(initial(see_invisible))
-	set_sight(initial(sight))
+	. = ..()
 	if(aiRestorePowerRoutine)
 		clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-
-	return ..()
 
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()

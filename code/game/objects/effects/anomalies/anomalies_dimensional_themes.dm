@@ -36,7 +36,7 @@
 
 /datum/dimension_theme/New()
 	if (material)
-		var/datum/material/using_mat = GET_MATERIAL_REF(material)
+		var/datum/material/using_mat = SSmaterials.get_material(material)
 		window_colour = using_mat.color
 
 /**
@@ -117,7 +117,7 @@
 		return FALSE
 	if (isindestructiblewall(affected_turf))
 		return FALSE
-	affected_turf.ChangeTurf(replace_walls)
+	affected_turf.ChangeTurf(replace_walls, flags = CHANGETURF_INHERIT_MOUNTS)
 	return TRUE
 
 /**
@@ -131,7 +131,7 @@
 
 	if (replace_floors.len == 0)
 		return FALSE
-	affected_floor.replace_floor(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR)
+	affected_floor.replace_floor(pick_weight(replace_floors), flags = CHANGETURF_INHERIT_AIR | CHANGETURF_INHERIT_MOUNTS)
 	return TRUE
 
 /**
@@ -230,7 +230,7 @@
 /datum/dimension_theme/proc/apply_materials(turf/affected_turf)
 	PROTECTED_PROC(TRUE)
 
-	var/list/custom_materials = list(GET_MATERIAL_REF(material) = SHEET_MATERIAL_AMOUNT)
+	var/list/custom_materials = list(SSmaterials.get_material(material) = SHEET_MATERIAL_AMOUNT)
 
 	if (istype(affected_turf, /turf/open/floor/material) || istype(affected_turf, /turf/closed/wall/material))
 		affected_turf.set_custom_materials(custom_materials)
@@ -383,7 +383,7 @@
 	icon_state = "small"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/glass = 1)
-	sound = SFX_SHATTER
+	sound = /datum/sound_effect/shatter
 
 /datum/dimension_theme/fancy
 	name = "Fancy"
@@ -451,7 +451,7 @@
 	name = "Jungle"
 	icon = 'icons/obj/tiles.dmi'
 	icon_state = "tile_grass"
-	sound = SFX_CRUNCHY_BUSH_WHACK
+	sound = /datum/sound_effect/crunchy_bush_whack
 	replace_floors = list(/turf/open/floor/grass = 1)
 	replace_walls = /turf/closed/wall/mineral/wood
 	replace_objs = list(

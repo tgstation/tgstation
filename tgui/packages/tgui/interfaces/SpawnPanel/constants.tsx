@@ -32,11 +32,15 @@ export const spawnLocationIcons = {
   "In targeted mob's hand": 'crosshairs',
 };
 
-export const directionIcons = {
-  1: 'arrow-up',
-  2: 'arrow-down',
-  4: 'arrow-right',
-  8: 'arrow-left',
+export const directionRotation = {
+  1: 0,
+  5: 45,
+  4: 90,
+  6: 135,
+  2: 180,
+  10: 225,
+  8: 270,
+  9: 315,
 };
 
 export const directionNames = {
@@ -44,4 +48,8 @@ export const directionNames = {
   2: 'SOUTH',
   4: 'EAST',
   8: 'WEST',
+  5: 'NORTHEAST',
+  6: 'SOUTHEAST',
+  9: 'NORTHWEST',
+  10: 'SOUTHWEST',
 };

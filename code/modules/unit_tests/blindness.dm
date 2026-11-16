@@ -12,6 +12,7 @@
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/clothing/glasses/blindfold/blindfold = new(dummy.loc)
 	TEST_ASSERT(!dummy.is_blind(), "Dummy was blind on initialize, and shouldn't be.")
+	dummy.mock_client = new()
 
 	// Become blind
 	dummy.become_blind("unit_test")
@@ -70,6 +71,7 @@
 /datum/unit_test/nearsighted_quirk/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/clothing/glasses/regular/glasses = allocate(/obj/item/clothing/glasses/regular)
+	dummy.mock_client = new()
 
 	// Become quirk nearsighted
 	// Have to do a transfer here so we don't get glasses
@@ -106,6 +108,7 @@
 /datum/unit_test/eye_damage/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/organ/eyes/eyes = dummy.get_organ_slot(ORGAN_SLOT_EYES)
+	dummy.mock_client = new()
 	TEST_ASSERT_NOTNULL(eyes, "Eye damage unit test spawned a dummy without eyes!")
 
 	// Test blindness due to eye damage
@@ -154,6 +157,7 @@
 /datum/unit_test/nearsighted_effect/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	var/datum/status_effect/grouped/nearsighted/myopia
+	dummy.mock_client = new()
 
 	/* APPLICATION */
 	// Let's test regular nearsightedness first

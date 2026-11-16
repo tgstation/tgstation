@@ -17,7 +17,7 @@
 /datum/tutorial/switch_hands/New(mob/user)
 	. = ..()
 
-	hand_to_watch = (user.active_hand_index % user.held_items.len) + 1
+	hand_to_watch = user.get_inactive_hand_index()
 
 /datum/tutorial/switch_hands/Destroy(force)
 	user.client?.screen -= hand_preview
@@ -50,17 +50,9 @@
 
 	switch (stage)
 		if (STAGE_SHOULD_SWAP_HAND)
-			var/datum/keybinding/mob/select_hand/hand_keybinding
-			var/hand_name
-			if (IS_RIGHT_INDEX(hand_to_watch))
-				hand_keybinding = /datum/keybinding/mob/select_hand/right
-				hand_name = "right"
-			else
-				hand_keybinding = /datum/keybinding/mob/select_hand/left
-				hand_name = "left"
-
+			var/hand_name = IS_RIGHT_INDEX(hand_to_watch) ? "right" : "left"
 			show_instruction(keybinding_message(
-				hand_keybinding,
+				/datum/keybinding/dextrous/swap_hands/row,
 				"Press '%KEY%' to use your [hand_name] hand",
 				"Click '<b>SWAP</b>' to use your [hand_name] hand",
 			))
@@ -68,14 +60,14 @@
 		if (STAGE_PICK_UP_ITEM)
 			show_instruction("Pick something up!")
 
-/datum/tutorial/switch_hands/proc/on_swap_hands()
+/datum/tutorial/switch_hands/proc/on_swap_hands(mob/living/source, obj/item/swapped_to, obj/item/swapped_from)
 	SIGNAL_HANDLER
 
 	//FIXME: this checking breaks easily
-	if (isnull(user.get_active_held_item()))
+	if (isnull(swapped_to))
 		stage = STAGE_PICK_UP_ITEM
 		show_instructions()
-	else if (isnull(user.get_inactive_held_item()))
+	else if (isnull(swapped_from))
 		stage = STAGE_SHOULD_SWAP_HAND
 		show_instructions()
 	else

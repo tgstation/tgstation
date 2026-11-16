@@ -6,11 +6,11 @@
 	LAZYADD(mod_link.holder.update_on_z, link_visual)
 	link_visual.appearance_flags |= KEEP_TOGETHER
 	link_visual.makeHologram(0.75)
-	mod_link.visual_overlays = user.overlays - user.active_thinking_indicator
+	mod_link.visual_overlays = user.overlays.Copy()
 	link_visual.add_overlay(mod_link.visual_overlays)
 	mod_link.visual = link_visual
 	mod_link.holder.become_hearing_sensitive(REF(mod_link))
-	mod_link.holder.RegisterSignals(user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY), proc_path)
+	mod_link.holder.RegisterSignals(user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_LIVING_CHAT_INDICATOR_UPDATED), proc_path)
 	return link_visual
 
 /proc/get_link_visual_generic(datum/mod_link/mod_link, atom/movable/visuals, proc_path)
@@ -32,7 +32,7 @@
 	playsound(mod_link.get_other().holder, 'sound/machines/terminal/terminal_processing.ogg', 50, vary = TRUE, frequency = -1)
 	LAZYREMOVE(mod_link.holder.update_on_z, mod_link.visual)
 	mod_link.holder.lose_hearing_sensitivity(REF(mod_link))
-	mod_link.holder.UnregisterSignal(old_user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_ATOM_DIR_CHANGE))
+	mod_link.holder.UnregisterSignal(old_user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_LIVING_CHAT_INDICATOR_UPDATED, COMSIG_ATOM_DIR_CHANGE))
 	QDEL_NULL(mod_link.visual)
 
 /proc/on_user_set_dir_generic(datum/mod_link/mod_link, newdir)
@@ -106,7 +106,7 @@
 				. = ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/control/proc/can_call()
-	return get_charge() && wearer && wearer.stat < DEAD
+	return get_charge() && wearer && wearer.stat != DEAD
 
 /obj/item/mod/control/proc/make_link_visual()
 	return make_link_visual_generic(mod_link, PROC_REF(on_overlay_change))
@@ -131,7 +131,7 @@
 	if(QDELETED(mod_link.link_call))
 		return
 	mod_link.visual.cut_overlay(mod_link.visual_overlays)
-	mod_link.visual_overlays = wearer.overlays - wearer.active_thinking_indicator
+	mod_link.visual_overlays = wearer.overlays.Copy()
 	mod_link.visual.add_overlay(mod_link.visual_overlays)
 
 /obj/item/mod/control/proc/on_wearer_set_dir(atom/source, dir, newdir)
@@ -143,6 +143,7 @@
 	desc = "An intricate piece of machinery that creates a holographic video call with another MODlink-compatible device. Essentially a video necklace."
 	icon_state = "modlink"
 	actions_types = list(/datum/action/item_action/call_link)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	/// The installed power cell.
 	var/obj/item/stock_parts/power_store/cell
 	/// The MODlink datum we operate.
@@ -205,14 +206,16 @@
 		return
 	cell.use(0.02 * STANDARD_CELL_RATE * seconds_per_tick, force = TRUE)
 
-/obj/item/clothing/neck/link_scryer/attackby(obj/item/attacked_by, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(cell || !istype(attacked_by, /obj/item/stock_parts/power_store/cell))
-		return
-	if(!user.transferItemToLoc(attacked_by, src))
-		return
-	cell = attacked_by
+/obj/item/clothing/neck/link_scryer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(cell || !istype(tool, /obj/item/stock_parts/power_store/cell))
+		return ..()
+
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	cell = tool
 	balloon_alert(user, "cell installed")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/neck/link_scryer/update_name(updates)
 	. = ..()
@@ -260,7 +263,7 @@
 				balloon_alert(user, "frequency set")
 				. = ITEM_INTERACT_SUCCESS
 
-/obj/item/clothing/neck/link_scryer/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/neck/link_scryer/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!QDELETED(mod_link.link_call))
 		. += mutable_appearance('icons/mob/clothing/neck.dmi', "modlink_active")
@@ -276,12 +279,12 @@
 		call_link(user, mod_link)
 
 /obj/item/clothing/neck/link_scryer/proc/get_user()
-	var/mob/living/carbon/user = loc
-	return istype(user) && user.wear_neck == src ? user : null
+	var/mob/living/user = loc
+	return istype(user) && user.get_item_by_slot(ITEM_SLOT_NECK) == src ? user : null
 
 /obj/item/clothing/neck/link_scryer/proc/can_call()
 	var/mob/living/user = loc
-	return istype(user) && cell?.charge && user.stat < DEAD
+	return istype(user) && cell?.charge && user.stat != DEAD
 
 /obj/item/clothing/neck/link_scryer/proc/make_link_visual()
 	var/mob/living/user = mod_link.get_user_callback.Invoke()
@@ -311,7 +314,7 @@
 		return
 	var/mob/living/user = loc
 	mod_link.visual.cut_overlay(mod_link.visual_overlays)
-	mod_link.visual_overlays = user.overlays - user.active_thinking_indicator
+	mod_link.visual_overlays = user.overlays.Copy()
 	mod_link.visual.add_overlay(mod_link.visual_overlays)
 
 /obj/item/clothing/neck/link_scryer/proc/on_user_set_dir(atom/source, dir, newdir)

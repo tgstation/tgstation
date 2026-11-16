@@ -12,7 +12,7 @@
 	integrity_failure = 0
 	armor_type = /datum/armor/door_window
 	visible = FALSE
-	flags_1 = ON_BORDER_1
+	flags_1 = parent_type::flags_1 | ON_BORDER_1
 	opacity = FALSE
 	pass_flags_self = PASSGLASS | PASSWINDOW
 	can_atmos_pass = ATMOS_PASS_PROC
@@ -170,7 +170,7 @@
 	if(!SSticker)
 		return
 	var/mob/M = AM
-	if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) || ((isdrone(M) || iscyborg(M)) && M.stat != CONSCIOUS))
+	if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) || ((isdrone(M) || iscyborg(M)) && IS_UNCONSCIOUS_OR_CRIT(M)))
 		return
 	bumpopen(M)
 
@@ -235,7 +235,7 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/machinery/door/window/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/window/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	if(!density)
 		return TRUE
 
@@ -336,7 +336,7 @@
 	if(disassembled)
 		return
 
-	playsound(src, SFX_SHATTER, 70, TRUE)
+	playsound(src, /datum/sound_effect/shatter, 70, TRUE)
 
 	for(var/i in 1 to shards)
 		drop_debris(new /obj/item/shard(src))
@@ -353,11 +353,15 @@
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/door/window/rust_heretic_act()
+	if(HAS_TRAIT(src, TRAIT_RUSTY))
+		return FALSE
+
 	add_atom_colour(COLOR_RUSTED_GLASS, FIXED_COLOUR_PRIORITY)
 	AddElement(/datum/element/rust)
 	set_armor(/datum/armor/none)
 	take_damage(get_integrity() * 0.5)
 	modify_max_integrity(initial(max_integrity) * 0.2)
+	return TRUE
 
 /obj/machinery/door/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C + (reinf ? 1600 : 800))
@@ -370,7 +374,7 @@
 		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[base_state]spark", src)
-		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, /datum/sound_effect/sparks, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
 		return TRUE
 	return FALSE
@@ -393,24 +397,24 @@
 	. = ..()
 	if(density || operating)
 		to_chat(user, span_warning("You need to open the door to access the maintenance panel!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	add_fingerprint(user)
 	tool.play_tool_sound(src)
 	toggle_panel_open()
 	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance panel."))
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/window/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!panel_open || density || operating)
-		return
+		return ITEM_INTERACT_BLOCKING
 	add_fingerprint(user)
 	user.visible_message(span_notice("[user] removes the electronics from \the [src]."), \
 	span_notice("You start to remove electronics from \the [src]..."))
 	if(!tool.use_tool(src, user, 40, volume=50))
-		return
+		return ITEM_INTERACT_BLOCKING
 	if(!panel_open || density || operating || !loc)
-		return
+		return ITEM_INTERACT_BLOCKING
 	var/obj/structure/windoor_assembly/windoor_assembly = new /obj/structure/windoor_assembly(loc)
 	switch(base_state)
 		if("left")
@@ -424,14 +428,14 @@
 			windoor_assembly.facing = "r"
 			windoor_assembly.secure = TRUE
 	windoor_assembly.set_anchored(TRUE)
-	windoor_assembly.state= "02"
+	windoor_assembly.cables_added = TRUE
 	windoor_assembly.setDir(dir)
 	windoor_assembly.update_appearance()
 	windoor_assembly.created_name = name
 	if(obj_flags & EMAGGED)
 		to_chat(user, span_warning("You discard the damaged electronics."))
 		qdel(src)
-		return
+		return ITEM_INTERACT_SUCCESS
 	to_chat(user, span_notice("You remove the airlock electronics."))
 	var/obj/item/electronics/airlock/dropped_electronics
 	if(!electronics)
@@ -446,7 +450,7 @@
 		electronics = null
 		dropped_electronics.forceMove(drop_location())
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/window/interact(mob/user) //for sillycones
 	try_to_activate_door(user)
@@ -535,12 +539,24 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holding
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
 
+/obj/machinery/door/window/brigdoor/security/holodeck
+	name = "cell door"
+	desc = "For keeping in criminal scum."
+	req_one_access = COMMON_ACCESS
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holodeck/left, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holodeck/right, 0)
+
+/obj/machinery/door/window/brigdoor/security/holodeck/right
+	icon_state = "rightsecure"
+	base_state = "rightsecure"
+
 /*
  * Subtype used in unit tests to ensure instant windoor open/close
 */
 /obj/machinery/door/window/instant
 
-/obj/machinery/door/window/instant/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/window/instant/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	if(!density || operating || !try_to_force_door_open(forced))
 		return FALSE
 

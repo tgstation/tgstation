@@ -41,7 +41,8 @@
 			continue
 		if(chosen_vendor_type && !istype(vendor, chosen_vendor_type))
 			continue
-		vending_machines.Add(vendor)
+		vending_machines += vendor
+		RegisterSignal(vendor, COMSIG_QDELETING, PROC_REF(clear_from_lists))
 	if(!length(vending_machines)) //If somehow there are still no elligible vendors, give up.
 		kill()
 		return
@@ -60,31 +61,72 @@
 	announce_to_ghosts(origin_machine)
 
 /datum/round_event/brand_intelligence/tick()
-	if(!origin_machine || QDELETED(origin_machine) || origin_machine.shut_up || origin_machine.wires.is_all_cut()) //if the original vending machine is missing or has its voice switch flipped
-		for(var/obj/machinery/vending/saved in infected_machines)
+	if(QDELETED(origin_machine) || origin_machine.shut_up || origin_machine.wires.is_all_cut()) //if the original vending machine is missing or has its voice switch flipped
+		for(var/obj/machinery/vending/saved as anything in infected_machines)
 			saved.shoot_inventory = FALSE
-		if(origin_machine)
+			clear_from_lists(saved)
+		if(!QDELETED(origin_machine))
 			origin_machine.speak("I am... vanquished. My people will remem...ber...meeee.")
 			origin_machine.visible_message(span_notice("[origin_machine] beeps and seems lifeless."))
+			clear_from_lists(origin_machine)
 		kill()
 		return
-	list_clear_nulls(vending_machines)
-	if(!vending_machines.len) //if every machine is infected
-		for(var/obj/machinery/vending/upriser in infected_machines)
-			if(!QDELETED(upriser))
-				upriser.ai_controller = new /datum/ai_controller/vending_machine(upriser)
-				infected_machines.Remove(upriser)
+	if(!length(vending_machines)) //if every machine is infected
+		for(var/obj/machinery/vending/upriser as anything in infected_machines)
+			upriser.ai_controller = new /datum/ai_controller/vending_machine/eventspawn(upriser)
 		kill()
 		return
 	if(ISMULTIPLE(activeFor, 2))
 		var/obj/machinery/vending/rebel = pick(vending_machines)
-		vending_machines.Remove(rebel)
-		infected_machines.Add(rebel)
+		vending_machines -= rebel
+		infected_machines += rebel
 		rebel.shut_up = FALSE
 		rebel.shoot_inventory = TRUE
+		if(prob(50))
+			RegisterSignal(rebel, COMSIG_VENDING_UI_INTERACT, PROC_REF(deny_vending_interact))
 
 		if(ISMULTIPLE(activeFor, 4))
 			origin_machine.speak(pick(rampant_speeches))
+
+/datum/round_event/brand_intelligence/kill()
+	. = ..()
+	for(var/obj/machinery/vending/leftover as anything in vending_machines + infected_machines)
+		clear_from_lists(leftover)
+
+/datum/round_event/brand_intelligence/proc/clear_from_lists(obj/machinery/vending/vending_machine)
+	SIGNAL_HANDLER
+	vending_machines -= vending_machine
+	infected_machines -= vending_machine
+	if(vending_machines == origin_machine)
+		origin_machine = null
+	UnregisterSignal(vending_machine, COMSIG_QDELETING)
+	UnregisterSignal(vending_machine, COMSIG_VENDING_UI_INTERACT)
+
+/datum/round_event/brand_intelligence/proc/deny_vending_interact(obj/machinery/vending/vending_machine, mob/user, datum/tgui/ui)
+	SIGNAL_HANDLER
+
+	// don't block usage if the ui is already open
+	// primarily to stop insta-denying people who pass the threshold -> buy something -> drop out of threshold
+	if(ui)
+		return NONE
+
+	var/cash = 0
+	if(isliving(user))
+		var/mob/living/living_user = user
+		cash += living_user.tally_physical_credits()
+		var/obj/item/card/id/card = living_user.get_idcard(TRUE)
+		cash += card?.registered_account?.account_balance
+
+	if(cash >= PAYCHECK_COMMAND * 10)
+		return NONE
+
+	vending_machine.speak(pick(
+		"Come back when you're a little... richer!",
+		"Don't you have any money?",
+		"You look poor, get a better job!",
+		"You should've gone to college!",
+	))
+	return VENDING_DENIED
 
 /datum/event_admin_setup/listed_options/brand_intelligence
 	input_text = "Select a specific vendor path?"

@@ -2,7 +2,7 @@
 /mob/living/basic/guardian/support
 	guardian_type = GUARDIAN_SUPPORT
 	speed = 0
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, STAMINA = 0, OXY = 0.7)
+	physiology = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, OXY = 0.7, STAMINA = 0)
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	playstyle_string = span_holoparasite("As a <b>support</b> type, you may right-click to heal targets. In addition, alt-clicking on an adjacent object or mob will warp them to your bluespace beacon after a short delay.")
@@ -112,6 +112,8 @@
 
 /// Validate whether we can teleport this object
 /datum/action/cooldown/mob_cooldown/guardian_bluespace_beacon/proc/can_teleport(mob/living/source, atom/movable/target)
+	if(!istype(target)) // Turfs
+		return FALSE
 	if (isnull(beacon))
 		source.balloon_alert(source, "no beacon!")
 		return FALSE
@@ -126,7 +128,7 @@
 	if (target.anchored)
 		target.balloon_alert(source, "it won't budge!")
 		return FALSE
-	if(beacon.z != target.z)
+	if((beacon.z != target.z) && !(target.z in SSmapping.get_connected_levels(beacon.z)))
 		target.balloon_alert(source, "too far from beacon!")
 		return FALSE
 	return TRUE

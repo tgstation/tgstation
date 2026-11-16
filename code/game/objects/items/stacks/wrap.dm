@@ -94,6 +94,7 @@
 	max_amount = 25
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/package_wrap
+	mats_per_unit = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.1)
 
 /obj/item/stack/package_wrap/grind_results()
 	return list(/datum/reagent/cellulose = 5)
@@ -218,6 +219,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	amount = 5
 	merge_type = /obj/item/stack/package_wrap/small
+
+/obj/item/stack/package_wrap/one
+	amount = 1
 
 /obj/item/c_tube
 	name = "cardboard tube"

@@ -19,10 +19,11 @@
 #define RPD_USE_SOUND 'sound/items/deconstruct.ogg'
 
 /obj/item/pipe_dispenser
-	name = "rapid pipe dispenser"
+	name = "rapid pipe dispenser (RPD)"
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rpd"
+	inhand_icon_state = "rpd"
 	worn_icon_state = "RPD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -40,7 +41,7 @@
 	pickup_sound = 'sound/items/handling/tools/rpd_pickup.ogg'
 	sound_vary = TRUE
 	///Sparks system used when changing device in the UI
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	///Direction of the device we are going to spawn, set up in the UI
 	var/p_dir = NORTH
 	///Initial direction of the smart pipe we are going to spawn, set up in the UI
@@ -80,8 +81,7 @@
 
 /obj/item/pipe_dispenser/Initialize(mapload)
 	. = ..()
-	spark_system = new
-	spark_system.set_up(5, 0, src)
+	spark_system = new(src, 5, FALSE)
 	spark_system.attach(src)
 	if(!first_atmos)
 		first_atmos = GLOB.atmos_pipe_recipes[GLOB.atmos_pipe_recipes[1]][1]
@@ -127,7 +127,7 @@
 
 /obj/item/pipe_dispenser/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide..."))
-	playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
+	playsound(get_turf(user), /datum/sound_effect/tool_switch, 20, TRUE)
 	playsound(get_turf(user), RPD_USE_SOUND, 50, TRUE)
 	return BRUTELOSS
 
@@ -188,6 +188,7 @@
 
 			available_recipe += list(list(
 				"pipe_name" = info.name,
+				"pipe_desc" = info.desc,
 				"pipe_index" = i,
 				"previews" = info.get_preview(p_dir, info == recipe)
 			))
@@ -208,7 +209,7 @@
 	if(.)
 		return
 
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+	playsound(src, /datum/sound_effect/tool_switch, 20, TRUE)
 
 	switch(action)
 		if("color")
@@ -335,7 +336,7 @@
 		can_destroy = is_type_in_list(attack_target, destroyables)
 	if(can_destroy)
 		var/turf/ground = get_turf(src)
-		playsound(ground, SFX_TOOL_SWITCH, 20, TRUE)
+		playsound(ground, /datum/sound_effect/tool_switch, 20, TRUE)
 		playsound(ground, RPD_USE_SOUND, 50, TRUE)
 		qdel(attack_target)
 		return ITEM_INTERACT_SUCCESS
@@ -357,7 +358,7 @@
 				balloon_alert(user, "already configured for its directions!")
 				return ITEM_INTERACT_FAILURE
 
-			playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
+			playsound(get_turf(src), /datum/sound_effect/tool_switch, 20, TRUE)
 
 			// Something else could have changed the target's state while we were waiting in do_after
 			// Most of the edge cases don't matter, but atmos components being able to have live connections not described by initializable directions sounds like a headache at best and an exploit at worst
@@ -422,7 +423,7 @@
 				if(isclosedturf(attack_target))
 					balloon_alert(user, "target is blocked!")
 					return ITEM_INTERACT_FAILURE
-				playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
+				playsound(get_turf(src), /datum/sound_effect/tool_switch, 20, TRUE)
 
 				if(!do_after(user, disposal_build_speed, target = attack_target))
 					return ITEM_INTERACT_FAILURE
@@ -455,7 +456,7 @@
 					balloon_alert(user, "something in the way!")
 					return ITEM_INTERACT_FAILURE
 
-				playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
+				playsound(get_turf(src), /datum/sound_effect/tool_switch, 20, TRUE)
 				if(!do_after(user, transit_build_speed, target = attack_target))
 					return ITEM_INTERACT_FAILURE
 
@@ -536,7 +537,7 @@
 
 	var/list/pipe_layer_numbers = get_active_pipe_layers()
 	for(var/layer_to_build in pipe_layer_numbers)
-		playsound(get_turf(src), SFX_TOOL_SWITCH, 20, vary = TRUE)
+		playsound(get_turf(src), /datum/sound_effect/tool_switch, 20, vary = TRUE)
 		if(!do_after(user, atmos_build_speed, target = atom_to_target))
 			return FALSE
 		if(!recipe.all_layers && (layer_to_build == 1 || layer_to_build == MAX_PIPE_LAYERS))
@@ -608,6 +609,7 @@
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
 	icon_state = "datadisk1"
 	upgrade_flags = RPD_UPGRADE_UNWRENCH
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25)
 
 #undef ATMOS_CATEGORY
 #undef DISPOSALS_CATEGORY

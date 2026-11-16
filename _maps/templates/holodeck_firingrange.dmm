@@ -25,9 +25,7 @@
 "k" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "n" = (
 /obj/item/target,
@@ -48,15 +46,12 @@
 "t" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "y" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/holofloor{
-	dir = 8;
-	icon_state = "white"
+/turf/open/floor/holofloor/white{
+	dir = 8
 	},
 /area/template_noop)
 "z" = (
@@ -80,9 +75,8 @@
 /area/template_noop)
 "F" = (
 /obj/structure/window/reinforced/spawner/directional/west,
-/turf/open/floor/holofloor{
-	dir = 10;
-	icon_state = "white"
+/turf/open/floor/holofloor/white{
+	dir = 10
 	},
 /area/template_noop)
 "G" = (
@@ -108,9 +102,7 @@
 /turf/open/floor/holofloor,
 /area/template_noop)
 "K" = (
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "L" = (
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -138,9 +130,7 @@
 /area/template_noop)
 "S" = (
 /obj/structure/training_machine,
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "T" = (
 /obj/effect/turf_decal/tile/red{
@@ -150,15 +140,11 @@
 /area/template_noop)
 "U" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "Y" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/holofloor{
-	icon_state = "white"
-	},
+/turf/open/floor/holofloor/white,
 /area/template_noop)
 "Z" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{

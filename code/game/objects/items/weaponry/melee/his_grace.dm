@@ -97,7 +97,7 @@
 		INVOKE_ASYNC(src, PROC_REF(awaken), user)
 
 /obj/item/his_grace/attack(mob/living/M, mob/user)
-	if(awakened && M.stat)
+	if(awakened && IS_UNCONSCIOUS_OR_CRIT(M))
 		if(gender == FEMALE)
 			var/dx = M.x - user.x
 			var/dy = M.y - user.y
@@ -148,7 +148,7 @@
 	else
 		adjust_bloodthirst(1 * seconds_per_tick) //don't cool off rapidly once we're at the point where His Grace consumes all.
 	var/mob/living/master = get_atom_on_turf(src, /mob/living)
-	if(!isnull(master) && (src in master.held_items))
+	if(!isnull(master) && (master.is_holding(src)))
 		switch(bloodthirst)
 			if(HIS_GRACE_CONSUME_OWNER to HIS_GRACE_FALL_ASLEEP)
 				master.visible_message(span_boldwarning("[src] turns on [master]!"), "<span class='his_grace big bold'>[src] turns on you!</span>")
@@ -176,7 +176,7 @@
 	var/mob/living/L = pick(targets)
 	step_to(src, L)
 	if(Adjacent(L))
-		if(!L.stat)
+		if(!IS_UNCONSCIOUS_OR_CRIT(L))
 			L.visible_message(span_warning("[src] lunges at [L]!"), "<span class='his_grace big bold'>[src] lunges at you!</span>")
 			do_attack_animation(L, null, src)
 			playsound(L, 'sound/items/weapons/smash.ogg', 50, TRUE)

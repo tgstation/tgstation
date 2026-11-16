@@ -117,14 +117,13 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/recharger/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!anchored || charging)
-		return ITEM_INTERACT_BLOCKING
-	. = default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool)
-	if(.)
-		update_appearance()
+	return (!anchored || charging) ? ITEM_INTERACT_BLOCKING : default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/recharger/crowbar_act(mob/living/user, obj/item/tool)
-	return (!anchored || charging) ? ITEM_INTERACT_BLOCKING : default_deconstruction_crowbar(tool)
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/recharger/can_crowbar_deconstruct()
+	return ..() && anchored && !charging
 
 /obj/machinery/recharger/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -156,6 +155,11 @@
 			if(charging_cell.charge >= charging_cell.maxcharge) //Inserted thing is at max charge/ammo, notify those around us
 				playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 				say("[charging] has finished recharging!")
+				// Modular computers (mainly PDAs) can remain on and drain their cell while charging.
+				// Unless we stop, the computer will constantly spam the finished recharging message.
+				if(istype(charging, /obj/item/modular_computer))
+					update_appearance()
+					return PROCESS_KILL
 			else
 				using_power = TRUE
 		update_appearance()
@@ -167,7 +171,7 @@
 			if(power_pack.stored_ammo.len < power_pack.max_ammo)
 				power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
 				use_energy(active_power_usage * seconds_per_tick)
-				if(power_pack.stored_ammo >= power_pack.max_ammo)
+				if(power_pack.stored_ammo.len >= power_pack.max_ammo)
 					playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
 					say("[charging] has finished recharging!")
 				else

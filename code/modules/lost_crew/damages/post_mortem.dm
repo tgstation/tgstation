@@ -16,7 +16,9 @@
 	if (!length(organs_we_can_take))
 		return
 	for(var/i in 1 to organs_to_take)
-		var/obj/organ = pick(organs_we_can_take)
+		if(!length(organs_we_can_take))
+			break
+		var/obj/organ = pick_n_take(organs_we_can_take)
 		if(prob(organ_save_chance) && saved_movables) //if lucky, we can save the organ and have it be delivered with the body
 			organ.moveToNullspace()
 			saved_movables += organ
@@ -36,12 +38,18 @@
 
 /datum/corpse_damage/post_mortem/limb_loss/apply_to_body(mob/living/carbon/human/body, severity, list/saved_movables, list/datum/callback/on_revive_and_player_occupancy)
 	var/limbs_to_take = round(min_limbs + (max_limbs - min_limbs) * severity)
-	var/list/limbs_we_can_take = body.bodyparts - body.get_bodypart(BODY_ZONE_HEAD) - body.get_bodypart(BODY_ZONE_CHEST)
+	var/list/limbs_we_can_take = list()
+	for(var/zone in GLOB.limb_zones)
+		var/bodypart = body.get_bodypart(zone)
+		if(bodypart)
+			limbs_we_can_take += bodypart
 
 	if(!limbs_we_can_take.len)
 		return
 	for(var/i in 1 to limbs_to_take)
-		var/obj/limb = pick(limbs_we_can_take)
+		if(!length(limbs_we_can_take))
+			break
+		var/obj/limb = pick_n_take(limbs_we_can_take)
 		if(prob(limb_save_chance) && saved_movables)
 			limb.moveToNullspace()
 			saved_movables += limb

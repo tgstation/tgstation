@@ -21,12 +21,48 @@
 			"label": "Build All"
 		},
 		{
+			"label": "Build all navmaps",
+			"detail": "Generate every station navmap and save the files in build/navmaps.",
 			"type": "process",
 			"command": "tools/build/build.sh",
-			"args": ["-DLOWMEMORYMODE"],
+			"windows": {
+				"command": ".\\tools\\build\\build.bat"
+			},
+			"args": ["navmap-bake"],
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": ["$dreammaker"],
+			"group": "build",
+			"runOptions": {
+				"instanceLimit": 1
+			},
+			"presentation": {
+				"reveal": "always",
+				"focus": false,
+				"panel": "dedicated",
+				"clear": true,
+				"close": false
+			}
+		},
+		{
+			"type": "process",
+			"command": "tools/build/build.sh",
+			"args": [
+				"-DSKIP_LAVALAND",
+				"-DSKIP_SPACE_LEVELS",
+				"-DFORCE_MAP=\"runtimestation\""
+			],
 			"windows": {
 				"command": ".\\tools\\build\\build.bat",
-				"args": ["-DLOWMEMORYMODE"]
+				"args": [
+					"-DSKIP_LAVALAND",
+					"-DSKIP_SPACE_LEVELS",
+					"-DFORCE_MAP=\"runtimestation\""
+				]
 			},
 			"options": {
 				"env": {
@@ -43,10 +79,22 @@
 		{
 			"type": "process",
 			"command": "tools/build/build.sh",
-			"args": ["-DLOWMEMORYMODE", "-DABSOLUTE_MINIMUM"],
+			"args": [
+				"-DSKIP_LAVALAND",
+				"-DSKIP_SPACE_LEVELS",
+				"-DAUTOSTART_GAME",
+				"-DMINIMAL_CENTCOM",
+				"-DFORCE_MAP=\"runtimestation_minimal\""
+			],
 			"windows": {
 				"command": ".\\tools\\build\\build.bat",
-				"args": ["-DLOWMEMORYMODE", "-DABSOLUTE_MINIMUM"]
+				"args": [
+					"-DSKIP_LAVALAND",
+					"-DSKIP_SPACE_LEVELS",
+					"-DAUTOSTART_GAME",
+					"-DMINIMAL_CENTCOM",
+					"-DFORCE_MAP=\"runtimestation_minimal\""
+				]
 			},
 			"options": {
 				"env": {
@@ -94,20 +142,24 @@
 			"type": "process",
 			"command": "tools/build/build.sh",
 			"args": [
-				"-DLOWMEMORYMODE",
+				"-DSKIP_LAVALAND",
+				"-DSKIP_SPACE_LEVELS",
 				"-DTESTING",
 				"-DREAGENTS_TESTING",
 				"-DTIMER_DEBUG",
-				"-DREFERENCE_DOING_IT_LIVE"
+				"-DREFERENCE_DOING_IT_LIVE",
+				"-DFORCE_MAP=\"runtimestation\""
 			],
 			"windows": {
 				"command": ".\\tools\\build\\build.bat",
 				"args": [
-					"-DLOWMEMORYMODE",
+					"-DSKIP_LAVALAND",
+					"-DSKIP_SPACE_LEVELS",
 					"-DTESTING",
 					"-DREAGENTS_TESTING",
 					"-DTIMER_DEBUG",
-					"-DREFERENCE_DOING_IT_LIVE"
+					"-DREFERENCE_DOING_IT_LIVE",
+					"-DFORCE_MAP=\"runtimestation\""
 				]
 			},
 			"options": {

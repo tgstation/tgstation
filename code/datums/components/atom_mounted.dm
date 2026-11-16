@@ -2,15 +2,19 @@
 /datum/component/atom_mounted
 	/// The closed turf our object is currently linked to.
 	var/atom/hanging_support_atom
+	/// The original layer of the hanging parent
+	VAR_FINAL/original_layer
 
 /datum/component/atom_mounted/Initialize(target_structure)
-	. = ..()
 	if(!isobj(parent) || !isatom(target_structure))
 		return COMPONENT_INCOMPATIBLE
+
 	hanging_support_atom = target_structure
 	RegisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
-	if(isclosedturf(hanging_support_atom))
+	if(isturf(hanging_support_atom))
 		RegisterSignal(hanging_support_atom, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
+		RegisterSignal(hanging_support_atom, COMSIG_ATOM_LEANED_UPON, PROC_REF(on_leaned_upon))
+		RegisterSignal(hanging_support_atom, COMSIG_ATOM_NO_LONGER_LEANED_UPON, PROC_REF(on_no_longer_leaned_upon))
 	else
 		RegisterSignal(hanging_support_atom, COMSIG_QDELETING, PROC_REF(on_structure_delete))
 
@@ -22,12 +26,14 @@
 
 /datum/component/atom_mounted/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_WALLMOUNTED, INNATE_TRAIT)
-	var/list/signals = list(COMSIG_MOVABLE_MOVED)
-	if(is_area_shuttle(get_area(parent)))
-		signals += COMSIG_ATOM_BEFORE_SHUTTLE_MOVE
-	UnregisterSignal(parent, signals)
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE))
+
+	if(original_layer)
+		var/obj/hanging_parent = parent
+		hanging_parent.layer = original_layer
 
 /datum/component/atom_mounted/Destroy(force)
+	UnregisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE)
 	hanging_support_atom = null
 	return ..()
 
@@ -37,25 +43,52 @@
 /datum/component/atom_mounted/proc/on_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if (parent in view(user.client?.view || world.view, user))
+	if(parent in view(user.client?.view || world.view, user))
 		examine_list += span_notice("\The [hanging_support_atom] is currently supporting [span_bold("\the [parent]")]. Deconstruction or excessive damage would cause it to [span_bold("fall to the ground")].")
 
 /// When the type of turf changes, if it is changing into a floor we should drop our contents
-/datum/component/atom_mounted/proc/on_turf_changing(datum/source, path, new_baseturfs, flags, post_change_callbacks)
+/datum/component/atom_mounted/proc/on_turf_changing(turf/source, path, new_baseturfs, flags, post_change_callbacks)
 	SIGNAL_HANDLER
 
-	if(ispath(path, /turf/open))
-		drop_wallmount()
+	var/reload = FALSE
+
+	//For special effects where we explicitly want to preserve objects after change
+	if(flags & CHANGETURF_INHERIT_MOUNTS || locate(/obj/structure/wall_support) in source)
+		reload = TRUE
+	//if we transforming from open to open turf we can skip deconstruction under some conditions
+	else if(isopenturf(source) && ispath(path, /turf/open))
+		//we are transforming from plating into anything that isn't a groundless turf
+		if(isplatingturf(source) && !isgroundlessturf(path))
+			reload = TRUE
+		//we are transforming into plating turf
+		else if(ispath(LAZYACCESS(source.baseturfs, length(source.baseturfs)), /turf/open/floor/plating))
+			reload = TRUE
+
+	if(reload)
+		var/obj/target = parent
+		qdel(src)
+		post_change_callbacks += CALLBACK(target, TYPE_PROC_REF(/obj, remount))
+		return
+
+	drop_wallmount()
 
 ///When the atom the object is mounted on is destroyed deconstruct
 /datum/component/atom_mounted/proc/on_structure_delete(datum/source, force)
 	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
 
-	drop_wallmount()
+	if (istype(source, /obj/structure/wall_support))
+		var/obj/target = parent
+		if(!target.find_and_mount_on_atom())
+			drop_wallmount()
+	else
+		drop_wallmount()
 
 /// If we get dragged from our wall (by a singulo for instance) we should deconstruct
 /datum/component/atom_mounted/proc/on_move(datum/source, atom/old_loc, dir, forced, list/old_locs)
 	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
+
 	// If we're having our lighting messed with we're likely to get dragged about
 	// That shouldn't lead to a decon
 	if(HAS_TRAIT(parent, TRAIT_LIGHTING_DEBUGGED))
@@ -65,6 +98,7 @@
 ///Called when the object is about to be shuttle rotated so we have to delete ourself and mount again later
 /datum/component/atom_mounted/proc/detach(datum/source, newT, rotation, move_mode, moving_dock)
 	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
 
 	qdel(src)
 
@@ -78,6 +112,25 @@
 	var/obj/hanging_parent = parent
 	hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls apart!"), vision_distance = 5)
 	hanging_parent.deconstruct(FALSE)
+
+/datum/component/atom_mounted/proc/on_leaned_upon(datum/source, mob/leaner)
+	SIGNAL_HANDLER
+
+	var/obj/hanging_parent = parent
+	if(hanging_parent.loc == leaner.loc)
+		original_layer = hanging_parent.layer
+		hanging_parent.layer = min(hanging_parent.layer, MOB_LAYER - 0.01)
+
+/datum/component/atom_mounted/proc/on_no_longer_leaned_upon(datum/source, mob/leaner, list/mob/remaining_leaners)
+	SIGNAL_HANDLER
+
+	var/obj/hanging_parent = parent
+	for(var/mob/remaining_leaner as anything in remaining_leaners)
+		if(hanging_parent.loc == remaining_leaner.loc)
+			return
+
+	hanging_parent.layer = original_layer
+	original_layer = null
 
 /// Returns a list of potential turfs to mount on. This should not check if those turfs are valid but only locate them
 /obj/proc/get_turfs_to_mount_on()
@@ -113,7 +166,7 @@
 	return isclosedturf(target)
 
 /// Returns an list of object types we can mount on if the turf is unmountable
-/obj/proc/get_moutable_objects()
+/obj/proc/get_mountable_objects()
 	PROTECTED_PROC(TRUE)
 	SHOULD_BE_PURE(TRUE)
 	RETURN_TYPE(/list/obj)
@@ -123,6 +176,7 @@
 		/obj/structure/window,
 		/obj/structure/fence,
 		/obj/structure/falsewall,
+		/obj/structure/wall_support,
 	)
 
 	return attachables
@@ -156,9 +210,9 @@
 		if(is_mountable_turf(target))
 			attachable_atom = target //your usual wallmount
 		else
-			var/list/obj/attachables = get_moutable_objects()
+			var/list/obj/attachables = get_mountable_objects()
 			for(var/obj/attachable in target)
-				if(is_type_in_list(attachable, attachables))
+				if(is_type_in_list(attachable, attachables) && !QDELING(attachable))
 					attachable_atom = attachable
 					break
 		if(attachable_atom)
@@ -175,8 +229,8 @@
 		obj_flags |= MOUNT_ON_LATE_INITIALIZE
 	return FALSE
 
-///Used to remount an object after shuttle move
-/obj/proc/remount(datum/source, oldT)
+///Used to remount an object in special cases
+/obj/proc/remount()
 	SIGNAL_HANDLER
 	PRIVATE_PROC(TRUE)
 

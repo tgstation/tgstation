@@ -4,7 +4,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "aU" = (
-/turf/open/genturf,
+/turf/template_noop,
 /area/icemoon/underground/unexplored/rivers)
 "bh" = (
 /mob/living/basic/mining/wolf,

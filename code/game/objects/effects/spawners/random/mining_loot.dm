@@ -58,7 +58,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "modkit"
 	loot = list(
-		/obj/item/borg/upgrade/modkit/aoe/mobs/andturfs = 1,
+		/obj/item/borg/upgrade/modkit/cooldown/aoe/mobs/andturfs = 1,
 		/obj/item/borg/upgrade/modkit/cooldown/repeater = 1,
 		/obj/item/borg/upgrade/modkit/resonator_blasts = 1,
 		/obj/item/borg/upgrade/modkit/bounty = 1,

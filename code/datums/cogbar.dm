@@ -65,6 +65,8 @@
 		unique = TRUE,
 		alpha = 0,
 	)
+	if(isnull(cog)) // Users being deleted get no vis overlays
+		return
 	cog.pixel_y = ICON_SIZE_Y + offset_y
 	animate(cog, alpha = user.alpha, time = COGBAR_ANIMATION_TIME)
 

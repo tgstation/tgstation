@@ -508,3 +508,287 @@
   Nari Harimoto:
   - map: Nanotrasen found the budget to add a small circuit workshop to the engineering
       department on every station except for tramstation.
+2026-01-20:
+  Ezel:
+  - balance: sabre, parsnip, gladius sheathe can now be worn on suit storages
+  - bugfix: mirrors gladius belt worn sprite so it doesn't overlap with belted revolvers
+  - image: adds mirrored belt sprites
+  LT3:
+  - bugfix: Fixed lights being able to run on emergency power forever
+  SmArtKar:
+  - qol: You can now clamp cables by RMBing them with wirecutters in order to prevent
+      them from connecting to other cables in a certain direction.
+  - refactor: Refactored cable interaction and some of connection code
+  carpotoxin:
+  - bugfix: fixed the queue'ing of roundstart antags
+  combustor:
+  - bugfix: Adds a request console to the CE's office in catwalk
+  vinylspiders:
+  - refactor: faction list structures have been refactored, please report any unusual
+      faction related behavior
+2026-01-21:
+  Fghj240:
+  - balance: advanced disease cures are now based on their symptoms
+  - balance: spaceacillin is a little worse at curing viruses
+  - balance: health analyzers can only detect a limited amount of unique advanced
+      disease cures
+  - balance: advanced disease resistance affects natural recovery
+  - balance: advanced disease cure resistance cap raised
+  - balance: advanced disease stage speed starts higher and scales slower
+  - balance: low level virus symptoms have had their stats increased
+  - balance: vomiting symptom thresholds slightly increased
+  - balance: you don't count as sleeping for the purpose of natural recovery if made
+      unconscious by means other than sleeping
+  Hardly:
+  - spellcheck: Fixed a typo with Deltastation's Server Room Entrance's camera.
+  Melbert:
+  - bugfix: Syncing instruments no longer fails if starting instrument is held
+2026-01-22:
+  Absolucy:
+  - refactor: Refactored turrets so they only process if something potentially "interesting"
+      is within its range.
+  ElGitificador:
+  - bugfix: fixed experimentor irradiate goo failure locking experimentor
+  Jacquerel:
+  - bugfix: You can't shoot yourself using a wand or staff that you can't use, or
+      that has no charge
+  - rscadd: Most wands and staves now do something funnier if you use them to kill
+      yourself
+  Melbert:
+  - balance: Pressure damage scales over time. It starts at 2 per second (pre-buff
+      value) but increases by 0.5 damage every 1.2 minutes you are exposed, up to
+      5 per second (requiring 7.2 full minutes of exposure).
+  - balance: Rebalanced Unstable Mutagen's / Uranium's botany use. It now always increases
+      instability (on par with L4Z), and occasionally increases instability even more
+      at the costs of some toxins. It also scales with volume
+  - rscadd: Adds "Toxin Resistance" gene to botany which makes the plant immune to
+      toxin damage. Given (and graftable from) Death Berries.
+  - rscadd: Adds "Toxin Adaptation" gene to botany which makes the plant heal from
+      toxin damage. Only in strange seeds (for now).
+  - code_imp: Cleaned up a smidge of botany code
+  SmArtKar:
+  - bugfix: Fixed people hanged on meat spikes sometimes rotating sideways
+  - rscadd: Multiple new reagents such as napalm, sorium, TATP, smoke/sonic/flash
+      powders and other explosives can now be used to rig cells or tools.
+  - rscadd: Plasma and gunpowder rigged items can now have controlled current requirement/delay
+      by adding some stabilizing agent alongside the main reagent.
+  - balance: Creating chemical smoke inside of a mob now makes them violently cough
+      it up, damaging their lungs a bit.
+  - bugfix: Chemically-rigged lightbulbs now once again explode.
+  - refactor: Refactored how power cells, welding tools, lightbulbs, cigarettes (and
+      now, lighters) handle being rigged with chemicals.
+  - code_imp: Dreamchecker no longer throws an error if you run the game with the
+      MAP_TEST flag
+  VigilDLX:
+  - bugfix: Fixed Medipen Refiller taking more than it refilled
+  lelandkemble:
+  - bugfix: Fixes light deconstruction succeeding when they're fully constructed,
+      and failing when they're not.
+  - map: Catwalk AI sat's door accesses have been brought in line with other maps
+  - bugfix: Paywall firing pins are registerable again, & they'll keep being registerable
+      after being unregistered.
+  necromanceranne:
+  - qol: The white ship has a unique GPS signal. Just look for the 'Distress Signal'
+      co-ordinate.
+  - balance: The infiltrator and blood-red modsuit have had their armor values swapped.
+  se:
+  - balance: Killing yourself with a tadpole now only bursts your chest open and not
+      your entire body, and frankly even that is pretty impressive work for a single
+      frog to manage.
+  - bugfix: Killing yourself in various other ways that gib or dust you will no longer
+      delete the items you were wearing, consistent with most of the other ways of
+      killing yourself that gib or dust you.
+2026-01-23:
+  ArcaneMusic:
+  - spellcheck: The slime management console no longer reads a variable name out incorrectly.
+  JohnFulpWillard:
+  - rscadd: Masks now fit snouted species a little bit better, maybe.
+  LT3:
+  - bugfix: Emergency lighting consumes its cell at the expected rate
+  SmArtKar:
+  - bugfix: Fixed fancytypes in admin menus being mangled
+  jlsnow301:
+  - bugfix: Fixed the regex mode toggle in the spawn (verb) panel.
+  lelandkemble:
+  - map: The last full wooden barricades on top of dense objects have been excised
+2026-01-24:
+  JoshAdamPowell:
+  - admin: Someone gave Centcom permission to access the anomalous materials research
+      department. The result surely can't be good...
+2026-01-25:
+  EEASAS:
+  - rscadd: Mustard. find it in the produce ordering computer or receive it in the
+      mail
+  - bugfix: Adds ketchup to the produce ordering computer
+  LT3:
+  - bugfix: Fixed lights breaking forever if they lose power
+  vinylspiders:
+  - bugfix: fixes the sql schema revision being wrong in the code
+2026-01-26:
+  Cirrial:
+  - bugfix: Fixed right-click menu pick up of items not working in rare cases.
+  Cyberboss:
+  - bugfix: Fixed placing people onto tables.
+  JoshAdamPowell:
+  - bugfix: 'Removed a ferry console which should not be at the heretic beach
+
+      :cl:'
+  Melbert:
+  - rscdel: Admins can no longer use the NAP button
+  - bugfix: Fix wallet (again)
+  - bugfix: Fix alt stunsword skin
+  - qol: Dna console has a minor visual indicator for invalid pairs (such as A-A or
+      C-T)
+  - qol: Chameleon ID's selection pool has been trimmed down, removing all the weird
+      random IDs and trims like "Head Occultist", to make it easier to find the real
+      job trims. You can (of course) manually forge the ID to set whatever job text
+      you want.
+  - qol: Chameleon items format their name slightly differently, making it easier
+      to search
+  RikuTheKiller:
+  - refactor: Refactored girders and wall construction. Report any bugs.
+  SmArtKar:
+  - bugfix: Fixed cables not disconnecting their neighbors when destroyed
+  Swan:
+  - bugfix: fixes the HFR health dropping exponentially once it starts taking damage
+      from having too many moles
+  SyncIt21:
+  - qol: added examines & screen tips for wall frame items
+  - qol: added examines & screen tips for washing items in sinks
+  - bugfix: plumbing components inside shuttles reconnect to their machine counterparts
+      correctly
+  - bugfix: plumbing iv drip has its red & blue connectors visible again
+  - bugfix: sinks consume reagents when washing and won't wash when it becomes dry
+  - bugfix: map loaded plumbing machines begin processing
+  - bugfix: 'placing stack of ducts by hand of ducts works again
+
+      fix; plumbing machinery properly reconnects when un wrenching ducts in circular
+      connections'
+  - refactor: sinks are now proper wall mounted components meaning destroying their
+      attached walls will cause it to get destroyed & sink frames are wall frame items
+      that can be carried in hand
+  Y0SH1M4S73R:
+  - bugfix: Service cyborgs did not receive any benefit from installing the piercing
+      hypospray upgrade, so it can no longer be installed in them.
+  tontyGH:
+  - bugfix: Viruses that heal their hosts through radiation no longer cause phantom
+      pain.
+2026-01-27:
+  KREKS:
+  - image: resprites banners
+  Melbert:
+  - qol: Banners drop centered
+  - balance: Inexorable's crit damage is halted in hard crit while you have Epinephrine
+      or similar, so you can actually get healed out of hard crit
+  - balance: Atropine stops crit damage like Epinephrine
+  SmArtKar:
+  - qol: Ashwalkers are now desensetized to non-ashie deaths, and enjoy witnessing
+      gibbings
+  - bugfix: Some specific death moodlets now properly register when their target has
+      been dusted or gibbed in their description
+  - rscadd: Added back IEDs made by attaching some wire and tape to a soda can filled
+      with fuel, plasma, or any other explosive of your choice. They need to be lit
+      on fire with a lighter or a welding tool.
+  - rscadd: You can now attach a lid to beakers with alt-click, preventing them from
+      being spilled when thrown.
+  - rscadd: Added beakerbombs, made by attaching an assembly (with optional power
+      cell and wiring) to a lidded beaker.
+  - balance: Rigged explosions now create flames.
+  - balance: Plasma explosions now limit their explosion potency past a certain point
+      based on their volume
+  Thunder12345:
+  - bugfix: The Sanguine Excavation bitrunning domain will drop the cache on killing
+      the boss again.
+2026-01-28:
+  Cyberboss:
+  - bugfix: The lootpanel will now properly close with distance from the target like
+      most other tguis.
+  - qol: The lootpanel will now automatically refresh when new items enter it. Removed
+      the manual refresh button.
+  Ezel, Toriate:
+  - rscadd: you can now craft katana sheaths with 3 leather
+  - balance: Energy katana and hanzo katana and the normal katana now comes in a sheath
+      this allows them to counterattack aswell
+  - balance: Normal katanas aren't a huge item anymore but instead bulky this will
+      allow them to be stored in the suspicous dufflebag/bag of holding
+  - balance: Toy katana is now bulky too but comes in a sheath that can't counterattack
+      but looks like the normal katana's one as metabreaker
+  - balance: Normal and hanzo katana can't be wielded on your back or belt anymore
+      without a sheath
+  - balance: nukie base gets a katana with a sheath which can be stored now but still
+      force 20
+  - map: Most maps now include the katana sheaths if premapped in.
+  - image: energy katana sheath and katana sheaths by  Toriate
+  Melbert:
+  - rscadd: A bullet to the brain has a rare chance of providing a free lobotomy
+  - qol: Operating computers, Vitals readers, and the health analyzer MODsuit module
+      (when active) can be used in the place of a health analyzer to display precise
+      health stats during a Tend Wounds surgery
+  SmArtKar:
+  - bugfix: Fixed some reagents still using old (and now, incorrect) math for their
+      metabolization values
+  lelandkemble:
+  - bugfix: Improvised mounted weaponry now drops a reasonable amount of cable
+  - spellcheck: spine implant emp damaging text spells "shearing" correctly
+2026-01-29:
+  Geoengi:
+  - balance: X-ray eyes now possess flash sensitivity, requiring additional flash
+      protection to negate bright lights.
+  - balance: X-ray goggles also no longer have pseudo night vision, putting them more
+      in line with the eyes.
+  - balance: Moth thermal eyes are hyper-sensitive to flashes, like their x-ray brothers.
+  - bugfix: Penlight messages for examining zombie and x-ray eyes work as they should,
+      with maintenance eyes losing a superfluous period.
+  - image: X-ray goggles now have a relatively unique, blue tint and glasses color
+      to represent their capabilities.
+  Melbert:
+  - rscadd: Desensitization to death is no longer binary - some antagonists are now
+      more used to it than others.
+  - rscadd: Witnessing the death of a fellow humanoid (or dying yourself) will slightly
+      desensitize you to future deaths.
+  - rscadd: Adds an achievement for managing to max out desensitization across a round.
+  - rscadd: Desensitized crewmembers care less when splattered with blood.
+  - rscadd: Holodeck mobs have a reduced death mood impact.
+  - rscadd: Adds doppler radar towers to Lavaland and the Icemoon. These towers ensure
+      weather radios have accurate readings.
+  - rscadd: Adding a weather anomaly core to a radar tower upgrades it, giving you
+      control of weather - allowing you to cancel storms or even spawn a weather event
+      of your choice. However, the core will expire after use, requiring replacement.
+  - rscadd: You can construct radar towers with plasteel. Even on the station. Yes,
+      you can summon weather onto the station.
+  - balance: Limits weather anomaly cores to 5.
+  SmArtKar:
+  - qol: Plastic surgery can now be done on detached heads.
+  - refactor: Refactored how disfiguration is handled to be stored on head's side
+  - bugfix: Robotic (and other non-huskable) heads no longer become disfigured from
+      husking
+  - bugfix: Attaching a head from a husk to a different body no longer permanently
+      turns them into an Unknown.
+  lelandkemble:
+  - bugfix: You can no longer oneshot the hierophant with an EMP
+  - rscadd: Added the ability to modify sabre sheaths into gun-powered sheaths, making
+      their counterattacks much more potent at the risk of great personal harm on
+      failure, especially if you have a weak, fleshy arm.
+2026-01-30:
+  Boopideedoo:
+  - rscadd: added a fire extinguisher to the seed vault
+  ERRORNAME:
+  - image: Shadow people and Nightmare resprite
+  - image: Unique sprites for light eater and heart of darkness
+  Melbert:
+  - qol: Secure prosthetic surgical operation ignores clothing
+  - bugfix: Fix hand surgery (stomach pump, etc) being blocked by the patient being
+      on combat mode rather than the surgeon
+  SmArtKar:
+  - bugfix: Lipoplasty can no longer be used to infinitely farm meat or increase patient's
+      nutrition level
+  - bugfix: If your chest has somehow been swapped, you will drop the correct type
+      of meat when undergoing lipoplasty
+  - code_imp: Removed magic numbers in human meat related code
+  - bugfix: Moved floppy disk sticker reskins to alt-right-click
+  SyncIt21:
+  - bugfix: selecting layer and colour of a stack of ducts works correctly
+  - bugfix: floor light constructs now deconstruct when floor is deconstructed
+  - bugfix: RLD created lights now fall off when floor/wall is destroyed
+  Y0SH1M4S73R:
+  - bugfix: wire bundle circuit components work once again

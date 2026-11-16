@@ -98,8 +98,10 @@
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
 		cost *= (1 - applied_coupon.discount_pct_off)
-	if(paying_account?.add_to_accounts && !(pack.order_flags & ORDER_GOODY)) //privately purchased and not a goody means 1.1x the cost
-		cost *= 1.1
+	if(pack.order_flags & ORDER_GOODY)
+		cost *= (paying_account?.goody_order_cost_modifier || 1.0)
+	else
+		cost *= (paying_account?.private_order_cost_modifier || 1.0)
 	return round(cost)
 
 /datum/supply_order/proc/generateRequisition(turf/T)
@@ -109,7 +111,7 @@
 	var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 	requisition_text += "<hr/>"
 	requisition_text += "Order #[id]<br/>"
-	requisition_text+= "Time of Order: [station_time_timestamp()]<br/>"
+	requisition_text += "Time of Order: [UNDERLINED_HTML_TEXT("[server_timestamp(ic_time = TRUE)]", "Shift Time: [round_timestamp()]")]<br/>"
 	requisition_text += "Item: [pack.name]<br/>"
 	requisition_text += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
 	requisition_text += "Requested by: [orderer]<br/>"
@@ -118,7 +120,7 @@
 	requisition_text += "Rank: [orderer_rank]<br/>"
 	requisition_text += "Comment: [reason]<br/>"
 
-	requisition_paper.add_raw_text(requisition_text)
+	requisition_paper.add_raw_text(requisition_text, advanced_html = TRUE)
 	requisition_paper.update_appearance()
 	return requisition_paper
 
@@ -188,7 +190,7 @@
 		account_holder = paying_account.account_holder
 	else
 		account_holder = "Cargo"
-	var/obj/structure/closet/crate/crate = pack.generate(A, paying_account)
+	var/obj/structure/closet/crate/crate = pack.generate(A, paying_account, initial(pack.storage_override))
 	if(pack.order_flags & ORDER_CONTRABAND)
 		for(var/atom/movable/item_within as anything in crate.get_all_contents())
 			ADD_TRAIT(item_within, TRAIT_CONTRABAND, INNATE_TRAIT)
@@ -220,6 +222,11 @@
 /// Custom material order to append cargo crate value to the final order cost
 /datum/supply_order/disposable/materials/get_final_cost()
 	return (..() + CARGO_CRATE_VALUE)
+
+/// Custom material order to append cargo crate value to the final manifest cost
+/datum/supply_order/disposable/materials/generateManifest(obj/container, owner, packname, cost)
+	cost += CARGO_CRATE_VALUE
+	return ..()
 
 #undef MANIFEST_ERROR_CHANCE
 #undef MANIFEST_ERROR_NAME

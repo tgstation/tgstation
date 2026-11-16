@@ -4,7 +4,7 @@
 /mob/living/basic/blood_worm/examining(atom/target, list/result)
 	add_special_examining_messages(target, result)
 
-/mob/living/basic/blood_worm/proc/on_host_examining(datum/source, atom/target, list/examine_strings)
+/mob/living/basic/blood_worm/proc/on_host_examining(datum/source, atom/target, list/examine_strings, list/examine_overrides)
 	SIGNAL_HANDLER
 	add_special_examining_messages(target, examine_strings)
 
@@ -35,57 +35,45 @@
 
 	var/potential_gain = total_blood_after - total_blood_now
 
-	var/rounded_volume = CEILING(cached_blood_volume, 1)
+	var/rounded_volume = ceil(cached_blood_volume)
 
 	var/growth_string = ""
 	if (HAS_TRAIT(bloodbag, TRAIT_BLOOD_WORM_HOST))
 		growth_string = ", but consuming it is impossible, as they are a host"
 	else if (total_blood_now < cocoon_action?.total_blood_required)
-		var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
-		if (rounded_growth > 0)
-			growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
+		if(cocoon_action.total_blood_required > 0)
+			var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
+			if (rounded_growth > 0)
+				growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
+			else
+				growth_string = ", but consuming it wouldn't contribute to your growth"
 		else
-			growth_string = ", but consuming it wouldn't contribute to your growth"
+			growth_string = ", but you do not need to consume to grow"
 	else
 		if (!istype(src, /mob/living/basic/blood_worm/adult))
 			growth_string = ". You are already ready to mature"
 		else
 			growth_string = ". You are already fully grown"
 
-	var/synth_string = "[CEILING(synth_content * 100, 1)]%"
+	var/synth_string = "[ceil(synth_content * 100)]%"
 	switch(synth_content)
 		if (-INFINITY to 0)
 			synth_string = "not"
 		if (1 to INFINITY)
 			synth_string = "fully"
 		if (0 to 1)
-			synth_string = "[CEILING(synth_content * 100, 1)]%"
+			synth_string = "[ceil(synth_content * 100)]%"
 
 	result += span_notice("[target.p_They()] [target.p_have()] [rounded_volume] unit[rounded_volume == 1 ? "" : "s"] of blood[growth_string]. [target.p_Their()] blood is <b>[synth_string]</b> synthetic.")
 
-/mob/living/basic/blood_worm/get_status_tab_items()
-	return ..() + get_special_status_tab_items()
+/mob/living/basic/blood_worm/proc/get_info_title()
+	. = "Worm Health: [round((health / maxHealth) * 100)]%"
 
-/mob/living/basic/blood_worm/proc/on_host_get_status_tab_items(datum/source, list/items)
-	SIGNAL_HANDLER
-	items += "Worm Health: [round((health / maxHealth) * 100)]%"
-	items += get_special_status_tab_items()
-
-/mob/living/basic/blood_worm/proc/get_special_status_tab_items()
-	. = list()
-
-	var/normal = consumed_normal_blood
-	var/synth = consumed_synth_blood
-	var/total = normal + synth
-
-	var/total_required = cocoon_action?.total_blood_required
-
-	if (total_required > 0)
-		. += "Growth: [FLOOR(total / total_required * 100, 1)]%"
-	. += "Blood Consumed"
-	. += "- Normal: [CEILING(normal, 1)]u"
-	. += "- Synthetic: [CEILING(synth, 1)]u (MAX: [maximum_synth_blood]u)"
-	. += "- Total: [CEILING(total, 1)]u (REQ: [total_required]u)"
+/mob/living/basic/blood_worm/proc/get_info_desc()
+	. = "Blood Consumed<br/>"
+	. += "- Normal: [ceil(consumed_normal_blood)]u<br/>"
+	. += "- Synthetic: [ceil(consumed_synth_blood)]u (MAX: [maximum_synth_blood]u)<br/>"
+	. += "- Total: [ceil(consumed_normal_blood + consumed_synth_blood)]u<br/>"
 
 /// Sends text to the blood worm, whether they are possessing a host or not.
 /mob/living/basic/blood_worm/proc/to_chat_self(text)

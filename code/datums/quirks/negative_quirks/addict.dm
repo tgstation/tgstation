@@ -3,7 +3,7 @@
 	desc = "You are addicted to something that doesn't exist. Suffer."
 	gain_text = span_danger("You suddenly feel the craving for... something? You're not sure what it is.")
 	medical_record_text = "Patient has a history with SOMETHING but he refuses to tell us what it is."
-	abstract_parent_type = /datum/quirk/item_quirk/addict
+	abstract_type = /datum/quirk/item_quirk/addict
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	no_process_traits = list(TRAIT_LIVERLESS_METABOLISM)
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
@@ -95,16 +95,16 @@
 	associated_typepath = /datum/quirk/item_quirk/addict/junkie
 	customization_options = list(/datum/preference/choiced/junkie)
 
-/datum/quirk/item_quirk/addict/junkie/add_unique(client/client_source)
-
-	var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/junkie)
-	if(addiction && (addiction != "Random"))
-		reagent_type = GLOB.possible_junkie_addictions[addiction]
+/datum/quirk/item_quirk/addict/junkie/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source, unique = TRUE, announce = TRUE)
+	if(!quirk_transfer)
+		var/addiction = client_source?.prefs.read_preference(/datum/preference/choiced/junkie)
+		if(addiction && (addiction != "Random"))
+			reagent_type = GLOB.possible_junkie_addictions[addiction]
 	return ..()
 
 /datum/quirk/item_quirk/addict/remove()
 	if(!QDELETED(quirk_holder) && reagent_instance)
-		for(var/addiction_type in subtypesof(/datum/addiction))
+		for(var/addiction_type in GLOB.addictions)
 			quirk_holder.mind.remove_addiction_points(addiction_type, MAX_ADDICTION_POINTS)
 
 /datum/quirk/item_quirk/addict/smoker
@@ -165,6 +165,29 @@
 		else
 			quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
 
+/datum/quirk/item_quirk/addict/smoker/is_species_appropriate(datum/species/mob_species)
+	if(!..())
+		return FALSE
+
+	var/obj/item/organ/lungs/normal_lungs = mob_species::mutantlungs
+	var/obj/item/organ/lungs/smoker_lungs = mob_species::smoker_lungs
+	// don't think about this one too hard ok?
+	if(isnull(normal_lungs))
+		return TRUE
+	// both lungs need to breathe the same thing. if they don't, block the quirk
+	// ...at least until someone wants to add a subtype for whatever species fails the check
+	if(normal_lungs::safe_plasma_min > 0)
+		return smoker_lungs::safe_plasma_min > 0
+	if(normal_lungs::safe_nitro_min > 0)
+		return smoker_lungs::safe_nitro_min > 0
+	if(normal_lungs::safe_oxygen_min > 0)
+		return smoker_lungs::safe_oxygen_min > 0
+	// edge case: smoker lungs that are a subtype of the normal lungs. probably safe
+	if(ispath(smoker_lungs, normal_lungs))
+		return TRUE
+	// default to false because whatever setup we have at this point is weird and arcane
+	return FALSE
+
 /datum/quirk/item_quirk/addict/alcoholic
 	name = "Alcoholic"
 	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
@@ -221,7 +244,7 @@
 /datum/quirk/item_quirk/addict/alcoholic/remove()
 	UnregisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK)
 
-/datum/quirk/item_quirk/addict/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze)
+/datum/quirk/item_quirk/addict/alcoholic/proc/check_brandy(mob/source, datum/reagent/booze, seconds_per_tick, metabolization_rate)
 	SIGNAL_HANDLER
 
 	//we don't care if it is not alcohol

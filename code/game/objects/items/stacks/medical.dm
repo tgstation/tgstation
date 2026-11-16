@@ -16,7 +16,22 @@
 	cost = 250
 	source = /datum/robot_energy_storage/medical
 	merge_type = /obj/item/stack/medical
-	apply_verb = "treating"
+
+	/// Verb used when applying this object to someone
+	var/apply_verb = "applying"
+	/// If set and this used as a splint for a broken bone wound,
+	/// This is used as a multiplier for applicable slowdowns (lower = better) (also for speeding up burn recoveries)
+	var/splint_factor
+	/// Like splint_factor but for burns instead of bone wounds. This is a multiplier used to speed up burn recoveries
+	var/burn_cleanliness_bonus
+	/// How much blood flow this stack can absorb if used as a bandage on a cut wound.
+	/// note that absorption is how much we lower the flow rate, not the raw amount of blood we suck up
+	var/absorption_capacity
+	/// How quickly we lower the blood flow on a cut wound we're bandaging.
+	/// Expected lifetime of this bandage in seconds is thus absorption_capacity/absorption_rate,
+	/// or until the cut heals, whichever comes first
+	var/absorption_rate
+
 	/// How long it takes to apply it to yourself
 	var/self_delay = 5 SECONDS
 	/// How long it takes to apply it to someone else
@@ -38,6 +53,7 @@
 	/// The sound this makes when starting healing with this item
 	var/heal_begin_sound = null
 	/// The sound this makes when healed successfully with this item
+	/// You can optionally make this a list to play multiple sounds - assoc sound => volume
 	var/heal_end_sound = null
 	/// The sound this makes when doing a continuous loop of healing with this item
 	var/heal_continuous_sound = null
@@ -181,7 +197,10 @@
 	if(!use(1) || !repeating || amount <= 0)
 		var/atom/alert_loc = QDELETED(src) ? user : src
 		alert_loc.balloon_alert(user, repeating ? "all used up!" : "treated [parse_zone(healed_zone)]")
-		if(heal_end_sound)
+		if(islist(heal_end_sound))
+			for(var/sound, volume in heal_end_sound)
+				playsound(patient, sound, volume || 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+		else if(heal_end_sound)
 			playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 		return
 	if(heal_continuous_sound && (continuous || !silent))
@@ -208,14 +227,17 @@
 	else
 		// behavior 2: assess injury, giving the user time to manually pick another zone
 		try_heal_manual_target(patient, user)
-	if(heal_end_sound)
+	if(islist(heal_end_sound))
+		for(var/sound, volume in heal_end_sound)
+			playsound(patient, sound, volume || 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+	else if(heal_end_sound)
 		playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/stack/medical/proc/try_heal_auto_change_zone(mob/living/carbon/patient, mob/living/user, preferred_target, last_zone)
 	PRIVATE_PROC(TRUE)
 
 	var/list/other_affected_limbs = list()
-	for(var/obj/item/bodypart/limb as anything in patient.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in patient.get_bodyparts())
 		if(!try_heal_checks(patient, user, limb.body_zone, silent = TRUE))
 			continue
 		other_affected_limbs += limb.body_zone
@@ -354,6 +376,7 @@
 	singular_name = "bruise pack"
 	desc = "A therapeutic gel pack and bandages designed to treat blunt-force trauma."
 	icon_state = "brutepack"
+	inhand_icon_state = "brutepack"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	heal_brute = 40
@@ -369,12 +392,186 @@
 	user.visible_message(span_suicide("[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/stack/medical/gauze
-	name = "medical gauze"
-	desc = "A roll of elastic cloth, perfect for stabilizing all kinds of wounds, from cuts and burns, to broken bones. "
+/obj/item/stack/medical/wrap
+	name = "wrap"
+	desc = "Something you can wrap around someone, like a hug."
 	gender = PLURAL
-	singular_name = "medical gauze"
 	icon_state = "gauze"
+	apply_verb = "wrapping"
+	works_on_dead = TRUE
+	/// Whether this wrap can be applied to limbs even if they lack wounds
+	var/always_applicable = FALSE
+
+/obj/item/stack/medical/wrap/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+	AddComponent( \
+		/datum/component/limb_applicable, \
+		apply_category = LIMB_ITEM_GAUZE, \
+		override_existing = TRUE, \
+		can_apply = CALLBACK(src, PROC_REF(can_gauze_limb)), \
+		do_apply = CALLBACK(src, PROC_REF(do_gauze_limb)), \
+		on_apply = CALLBACK(src, PROC_REF(on_gauze_limb)), \
+	)
+	RegisterSignals(src, list(COMSIG_ITEM_APPLIED_TO_LIMB, COMSIG_ITEM_UNAPPLIED_FROM_LIMB), PROC_REF(update_wounds))
+
+/obj/item/stack/medical/wrap/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	return NONE // uses component
+
+/// Callback for limb applicability component
+/obj/item/stack/medical/wrap/proc/can_gauze_limb(mob/user, mob/living/patient, obj/item/bodypart/limb)
+	var/can_gauze = always_applicable
+	for(var/datum/wound/wound as anything in limb.wounds)
+		if(wound.wound_flags & ACCEPTS_GAUZE)
+			can_gauze = TRUE
+			break
+
+	. = NONE
+	var/surgery_prepped = HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE)
+	if(!surgery_prepped)
+		. |= LIMB_APPLICABLE_BLOCK_ITEM_INTERACTION
+
+	if(!can_gauze)
+		if(!surgery_prepped)
+			patient.balloon_alert(user, LAZYLEN(limb.wounds) ? "can't gauze!" : "no wounds!")
+		. |= LIMB_APPLICABLE_BLOCK_APPLICATION
+		return .
+
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if(current_gauze && (current_gauze.absorption_capacity * 1.2 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
+		if(!surgery_prepped)
+			patient.balloon_alert(user, pick("already bandaged!", "bandage is clean!")) // good enough
+		. |= LIMB_APPLICABLE_BLOCK_APPLICATION
+		return .
+
+/// Callback for limb applicability component
+/obj/item/stack/medical/wrap/proc/do_gauze_limb(mob/user, mob/living/patient, obj/item/bodypart/limb)
+
+	var/scanned_wound = FALSE
+	var/any_wound = FALSE
+	for(var/datum/wound/wound as anything in limb.wounds)
+		if(wound.wound_flags & ACCEPTS_GAUZE)
+			any_wound = TRUE
+			if(HAS_TRAIT(wound, TRAIT_WOUND_SCANNED))
+				scanned_wound = TRUE
+		if(any_wound && scanned_wound)
+			break
+
+	var/treatment_delay = (user == patient ? self_delay : other_delay)
+	if(any_wound)
+		if(scanned_wound)
+			treatment_delay *= 0.5
+			if(user == patient)
+				user.visible_message(
+					span_warning("[user] begins expertly wrapping the wounds on [user.p_their()]'s [limb.plaintext_zone] with [src]..."),
+					span_warning("You begin quickly wrapping the wounds on your [limb.plaintext_zone] with [src], keeping the holo-image indications in mind..."),
+					visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+				)
+			else
+				user.visible_message(
+					span_warning("[user] begins expertly wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src]..."),
+					span_warning("You begin quickly wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src], keeping the holo-image indications in mind..."),
+					visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+				)
+
+		else
+			if(user == patient)
+				user.visible_message(
+					span_warning("[user] begins wrapping the wounds on [user.p_their()] [limb.plaintext_zone] with [src]..."),
+					span_warning("You begin wrapping the wounds on your [limb.plaintext_zone] with [src]..."),
+					visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+				)
+			else
+				user.visible_message(
+					span_warning("[user] begins wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src]..."),
+					span_warning("You begin wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src]..."),
+					visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+				)
+
+	else
+		treatment_delay *= 1.25
+		if(user == patient)
+			user.visible_message(
+				span_notice("[user] begins to wrap [patient]'s [limb.plaintext_zone] with [src]..."),
+				span_notice("You begin to wrap your [limb.plaintext_zone] with [src]..."),
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
+		else
+			user.visible_message(
+				span_notice("[user] begins to wrap [patient]'s [limb.plaintext_zone] with [src]..."),
+				span_notice("You begin to wrap [patient]'s [limb.plaintext_zone] with [src]..."),
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
+
+	if(heal_begin_sound)
+		playsound(src, heal_begin_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+
+	if(!do_after(user, treatment_delay, patient))
+		return FALSE
+
+	if(islist(heal_end_sound))
+		for(var/sound, volume in heal_end_sound)
+			playsound(patient, sound, volume || 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+	else if(heal_end_sound)
+		playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+	return TRUE
+
+/// Callback for limb applicability component
+/obj/item/stack/medical/wrap/proc/on_gauze_limb(mob/user, mob/living/patient, obj/item/bodypart/limb)
+	var/any_wound = FALSE
+	for(var/datum/wound/wound as anything in limb.wounds)
+		if(wound.wound_flags & ACCEPTS_GAUZE)
+			any_wound = TRUE
+			break
+
+	patient.balloon_alert(user, "wrapped [limb.plaintext_zone]")
+	if(any_wound)
+		if(user == patient)
+			user.visible_message(
+				span_green("[user] applies [src] to [user.p_their()]'s [limb.plaintext_zone]."),
+				span_green("You bandage the wounds on your [limb.plaintext_zone]."),
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
+		else
+			user.visible_message(
+				span_green("[user] applies [src] to [patient]'s [limb.plaintext_zone]."),
+				span_green("You bandage the wounds on [patient]'s [limb.plaintext_zone]."),
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
+
+	else
+		if(user == patient)
+			user.visible_message(
+				span_notice("[user] applies [src] to [user.p_their()]'s [limb.plaintext_zone]."),
+				span_notice("You wrap your [limb.plaintext_zone] with [src]."),
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
+		else
+			user.visible_message(
+				span_notice("[user] applies [src] to [patient]'s [limb.plaintext_zone]."),
+				span_notice("You wrap [patient]'s [limb.plaintext_zone] with [src]."),
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
+
+	if(limb.cached_bleed_rate)
+		add_mob_blood(patient)
+	// Dressing burns provides a "one-time" bonus to sanitization and healing
+	// However, any notable infection will reduce the effectiveness of this bonus
+	for(var/datum/wound/burn/flesh/wound in limb.wounds)
+		wound.sanitization += sanitization * (wound.infection > 0.1 ? 0.2 : 1)
+		wound.flesh_healing += flesh_regeneration * (wound.infection > 0.1 ? 0 : 1)
+
+/// Used via signal to update wounds
+/obj/item/stack/medical/wrap/proc/update_wounds(datum/source, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+	worn_icon_state = loc == limb ? "[limb.body_zone][rand(1, 3)]" : "nothing"
+	for(var/datum/wound/gauzed as anything in limb.wounds)
+		gauzed.update_inefficiencies()
+	limb.owner?.update_damage_overlays()
+
+/obj/item/stack/medical/wrap/gauze
+	name = "medical gauze"
+	desc = "A roll of elastic cloth, perfect for stabilizing all kinds of wounds, from cuts and burns, to broken bones."
+	singular_name = "medical gauze"
 	self_delay = 5 SECONDS
 	other_delay = 2 SECONDS
 	max_amount = 12
@@ -386,149 +583,87 @@
 	flesh_regeneration = 5
 	splint_factor = 0.7
 	burn_cleanliness_bonus = 0.35
-	merge_type = /obj/item/stack/medical/gauze
-	apply_verb = "wrapping"
-	works_on_dead = TRUE
-	var/obj/item/bodypart/gauzed_bodypart
-	heal_end_sound = SFX_BANDAGE_END
-	heal_begin_sound = SFX_BANDAGE_BEGIN
-	drop_sound = SFX_CLOTH_DROP
-	pickup_sound = SFX_CLOTH_PICKUP
+	merge_type = /obj/item/stack/medical/wrap/gauze
+	heal_end_sound = list(/datum/sound_effect/bandage_end = 75, /datum/sound_effect/cloth_rip = 50)
+	heal_begin_sound = /datum/sound_effect/bandage_begin
+	drop_sound = /datum/sound_effect/cloth_drop
+	pickup_sound = /datum/sound_effect/cloth_pickup
+	always_applicable = TRUE
+	/// tracks how many times we've been scrubbed thoroughly
+	var/times_cleaned = 0
 
-/obj/item/stack/medical/gauze/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
-	. = ..()
-	register_context()
-
-/obj/item/stack/medical/gauze/grind_results()
+/obj/item/stack/medical/wrap/gauze/grind_results()
 	return list(/datum/reagent/cellulose = 2)
 
-/obj/item/stack/medical/gauze/Destroy(force)
+/obj/item/stack/medical/wrap/gauze/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
+	if(held_item?.tool_behaviour == TOOL_WIRECUTTER || held_item?.get_sharpness())
+		context[SCREENTIP_CONTEXT_LMB] = "Shred into cloth"
+		. = CONTEXTUAL_SCREENTIP_SET
 
-	if (gauzed_bodypart)
-		gauzed_bodypart.current_gauze = null
-		SEND_SIGNAL(gauzed_bodypart, COMSIG_BODYPART_UNGAUZED, src)
-	gauzed_bodypart = null
-
-/obj/item/stack/medical/gauze/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
-	if(iscarbon(target))
-		context[SCREENTIP_CONTEXT_LMB] = "Apply Gauze"
-		return CONTEXTUAL_SCREENTIP_SET
-	return NONE
-
-/obj/item/stack/medical/gauze/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+/obj/item/stack/medical/wrap/gauze/update_name(updates)
 	. = ..()
-	if(isnull(held_item))
+	var/base_cap = initial(absorption_capacity)
+	if(!base_cap)
 		return
-	if(held_item.tool_behaviour == TOOL_WIRECUTTER || held_item.get_sharpness())
-		context[SCREENTIP_CONTEXT_LMB] = "Shred Into Cloth"
-		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/stack/medical/gauze/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
-	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
-	if(isnull(limb))
-		if(!silent)
-			patient.balloon_alert(user, "no [parse_zone(healed_zone)]!")
-		return FALSE
-	if(!LAZYLEN(limb.wounds))
-		if(!silent)
-			patient.balloon_alert(user, "no wounds!") // good problem to have imo
-		return FALSE
-	if(limb.current_gauze && (limb.current_gauze.absorption_capacity * 1.2 > absorption_capacity)) // ignore if our new wrap is < 20% better than the current one, so someone doesn't bandage it 5 times in a row
-		if(!silent)
-			patient.balloon_alert(user, pick("already bandaged!", "bandage is clean!")) // good enough
-		return FALSE
-	for(var/datum/wound/woundies as anything in limb.wounds)
-		if(woundies.wound_flags & ACCEPTS_GAUZE)
-			return TRUE
-	if(!silent)
-		patient.balloon_alert(user, "can't gauze!")
-	return FALSE
-
-// gauze is only relevant for wounds, which are handled in the wounds themselves
-/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/living/user, healed_zone, silent, auto_change_zone, continuous)
-	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
-	var/treatment_delay = (user == patient ? self_delay : other_delay)
-	var/any_scanned = FALSE
-	for(var/datum/wound/woundies as anything in limb.wounds)
-		if(HAS_TRAIT(woundies, TRAIT_WOUND_SCANNED))
-			any_scanned = TRUE
-			break
-
-	if(any_scanned)
-		treatment_delay *= 0.5
-		if(user == patient)
-			if(!silent)
-				user.visible_message(
-					span_warning("[user] begins expertly wrapping the wounds on [p_their()]'s [limb.plaintext_zone] with [src]..."),
-					span_warning("You begin quickly wrapping the wounds on your [limb.plaintext_zone] with [src], keeping the holo-image indications in mind..."),
-					visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
-				)
-		else
-			if(!silent)
-				user.visible_message(
-					span_warning("[user] begins expertly wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src]..."),
-					span_warning("You begin quickly wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src], keeping the holo-image indications in mind..."),
-					visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
-				)
+	if(absorption_capacity <= 0)
+		name = "used [initial(name)]"
+	else if(absorption_capacity <= base_cap * 0.2)
+		name = "dirty [initial(name)]"
+	else if(absorption_capacity <= base_cap * 0.8)
+		name = "worn [initial(name)]"
 	else
-		if(!silent)
-			user.visible_message(
-				span_warning("[user] begins wrapping the wounds on [patient]'s [limb.plaintext_zone] with [src]..."),
-				span_warning("You begin wrapping the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone] with [src]..."),
-				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
-			)
-	playsound(src, heal_begin_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+		name = initial(name)
 
-	if(!do_after(user, treatment_delay, target = patient))
-		return
+/obj/item/stack/medical/wrap/gauze/can_merge(obj/item/stack/medical/wrap/gauze/check, inhand)
+	. = ..()
+	if(!.)
+		return .
+	// need to be in +- 0.5 dirtiness of each other
+	// otherwise you can merge a completely used bandage with a brand new one, which would magically unuse it
+	if(check.absorption_capacity < absorption_capacity - 0.25 || check.absorption_capacity > absorption_capacity + 0.25)
+		return FALSE
+	return .
 
-	if(!silent)
-		patient.balloon_alert(user, "wrapped [parse_zone(healed_zone)]")
-		user.visible_message(
-			span_green("[user] applies [src] to [patient]'s [limb.plaintext_zone]."),
-			span_green("You bandage the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone]."),
-			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
-		)
-		if(heal_end_sound)
-			playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+/obj/item/stack/medical/wrap/gauze/wash(clean_types)
+	. = ..()
+	if(!(clean_types & CLEAN_TYPE_HARD_DECAL)) // gotta scrub realllly hard to clean gauze
+		return .
+	times_cleaned += 1
+	var/clean_to = initial(absorption_capacity) * (3 / (times_cleaned + 3))
+	if(absorption_capacity < clean_to)
+		absorption_capacity = clean_to
+		update_appearance(UPDATE_NAME)
+		. |= COMPONENT_CLEANED
 
-	if(limb.cached_bleed_rate)
-		add_mob_blood(patient)
-
-	// Dressing burns provides a "one-time" bonus to sanitization and healing
-	// However, any notable infection will reduce the effectiveness of this bonus
-	for(var/datum/wound/burn/flesh/wound in limb.wounds)
-		wound.sanitization += sanitization * (wound.infection > 0.1 ? 0.2 : 1)
-		wound.flesh_healing += flesh_regeneration * (wound.infection > 0.1 ? 0 : 1)
-
-	limb.apply_gauze(src)
-
-/obj/item/stack/medical/gauze/twelve
+/obj/item/stack/medical/wrap/gauze/twelve
 	amount = 12
 
-/obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
+/obj/item/stack/medical/wrap/gauze/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.tool_behaviour == TOOL_WIRECUTTER || tool.get_sharpness())
 		if(get_amount() < 2)
 			balloon_alert(user, "not enough gauze!")
-			return
-		new /obj/item/stack/sheet/cloth(I.drop_location())
+			return ITEM_INTERACT_BLOCKING
+		new /obj/item/stack/sheet/cloth(tool.drop_location())
 		if(IsReachableBy(user))
-			user.visible_message(span_notice("[user] cuts [src] into pieces of cloth with [I]."), \
-				span_notice("You cut [src] into pieces of cloth with [I]."), \
+			user.visible_message(span_notice("[user] cuts [src] into pieces of cloth with [tool]."), \
+				span_notice("You cut [src] into pieces of cloth with [tool]."), \
 				span_hear("You hear cutting."))
 		else //telekinesis
-			visible_message(span_notice("[I] cuts [src] into pieces of cloth."), \
+			visible_message(span_notice("[tool] cuts [src] into pieces of cloth."), \
 				blind_message = span_hear("You hear cutting."))
-		use(2)
-	else
-		return ..()
+		use(absorption_capacity <= initial(absorption_capacity) * 0.5 ? 1 : 2)
+		return ITEM_INTERACT_SUCCESS
 
-/obj/item/stack/medical/gauze/suicide_act(mob/living/user)
+	return NONE
+
+
+/obj/item/stack/medical/wrap/gauze/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins tightening [src] around [user.p_their()] neck! It looks like [user.p_they()] forgot how to use medical supplies!"))
 	return OXYLOSS
 
-/obj/item/stack/medical/gauze/improvised
+/obj/item/stack/medical/wrap/gauze/improvised
 	name = "improvised gauze"
 	singular_name = "improvised gauze"
 	desc = "A roll of cloth roughly cut from something that does a decent job of stabilizing wounds, but less efficiently so than real medical gauze."
@@ -541,7 +676,7 @@
 	absorption_capacity = 4
 	sanitization = 1
 	flesh_regeneration = 3
-	merge_type = /obj/item/stack/medical/gauze/improvised
+	merge_type = /obj/item/stack/medical/wrap/gauze/improvised
 
 	/*
 	The idea is for the following medical devices to work like a hybrid of the old brute packs and tend wounds,
@@ -566,11 +701,11 @@
 	stop_bleeding = 0.5
 	merge_type = /obj/item/stack/medical/suture
 	apply_verb = "suturing"
-	drop_sound = SFX_SUTURE_DROP
-	pickup_sound = SFX_SUTURE_PICKUP
-	heal_begin_sound = SFX_SUTURE_BEGIN
-	heal_continuous_sound = SFX_SUTURE_CONTINUOUS
-	heal_end_sound = SFX_SUTURE_END
+	drop_sound = /datum/sound_effect/suture_drop
+	pickup_sound = /datum/sound_effect/suture_pickup
+	heal_begin_sound = /datum/sound_effect/suture_begin
+	heal_continuous_sound = /datum/sound_effect/suture_continuous
+	heal_end_sound = list(/datum/sound_effect/suture_end = 75, 'sound/items/snip.ogg' = 50)
 
 /obj/item/stack/medical/suture/grind_results()
 	return list(/datum/reagent/medicine/spaceacillin = 2)
@@ -592,6 +727,7 @@
 	gender = PLURAL
 	singular_name = "ointment"
 	icon_state = "ointment"
+	inhand_icon_state = "ointment"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	amount = 8
@@ -608,7 +744,7 @@
 	return list(/datum/reagent/medicine/c2/lenturi = 10)
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is squeezing [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?"))
+	user.visible_message(span_suicide("[user] is squeezing [src] into [user.p_their()] mouth! [capitalize(user.p_do())]n't [user.p_they()] know that stuff is toxic?"))
 	return TOXLOSS
 
 /obj/item/stack/medical/mesh
@@ -625,11 +761,11 @@
 	repeating = TRUE
 	sanitization = 0.75
 	flesh_regeneration = 3
-	pickup_sound = SFX_REGEN_MESH_PICKUP
-	drop_sound = SFX_REGEN_MESH_DROP
-	heal_begin_sound = SFX_REGEN_MESH_BEGIN
-	heal_continuous_sound = SFX_REGEN_MESH_CONTINUOUS
-	heal_end_sound = SFX_REGEN_MESH_END
+	pickup_sound = /datum/sound_effect/regen_mesh_pickup
+	drop_sound = /datum/sound_effect/regen_mesh_drop
+	heal_begin_sound = /datum/sound_effect/regen_mesh_begin
+	heal_continuous_sound = /datum/sound_effect/regen_mesh_continuous
+	heal_end_sound = /datum/sound_effect/regen_mesh_end
 	merge_type = /obj/item/stack/medical/mesh
 
 	///This var determines if the sterile packaging of the mesh has been opened.
@@ -757,7 +893,7 @@
 		return BRUTELOSS
 
 	patient.emote("scream")
-	for(var/obj/item/bodypart/bone as anything in patient.bodyparts)
+	for(var/obj/item/bodypart/bone as anything in patient.get_bodyparts())
 		// fine to just, use these raw, its a meme anyway
 		var/datum/wound/blunt/bone/severe/oof_ouch = new
 		oof_ouch.apply_wound(bone, wound_source = "bone gel")
@@ -814,7 +950,7 @@
 	self_delay = 3 SECONDS
 	other_delay = 1 SECONDS
 	apply_verb = "applying to"
-	pickup_sound = SFX_CLOTH_PICKUP
+	pickup_sound = /datum/sound_effect/cloth_pickup
 
 /obj/item/stack/medical/bandage/grind_results()
 	return list(/datum/reagent/medicine/c2/libital = 2)

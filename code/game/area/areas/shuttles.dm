@@ -54,6 +54,7 @@
 	name = "Syndicate Infiltrator EVA"
 
 /area/shuttle/syndicate/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Syndicate Infiltrator Hall"
 
 /area/shuttle/syndicate/engineering
@@ -71,6 +72,10 @@
 /area/shuttle/pirate/flying_dutchman
 	name = "Flying Dutchman"
 	requires_power = FALSE
+
+/area/shuttle/pirate/siren
+	default_gravity = ZERO_GRAVITY
+	area_flags = NO_GRAVITY
 
 ////////////////////////////Bounty Hunter Shuttles////////////////////////////
 
@@ -130,7 +135,6 @@
 		var/atom/movable/screen/splash/Spl = new(null, null, boarder.client, TRUE)
 		Spl.fade(TRUE)
 		boarder.playsound_local(get_turf(boarder), 'sound/announcer/ApproachingTG.ogg', 25)
-	boarder.update_parallax_teleport()
 
 /area/shuttle/pod_1
 	name = "Escape Pod One"
@@ -192,6 +196,12 @@
 
 /area/shuttle/escape/engine
 	name = "Escape Shuttle Engine"
+
+/area/shuttle/escape/tombstone
+	ambience_index = AMBIENCE_SPOOKY
+
+/area/shuttle/escape/xenobio
+	name = "Escape Shuttle Xenobiology"
 
 /area/shuttle/transport
 	name = "Transport Shuttle"
@@ -283,8 +293,6 @@
 		to_chat(L, "<span class='reallybig redtext'>The battle is won. Your bloodlust subsides.</span>", confidential = TRUE)
 		for(var/obj/item/chainsaw/doomslayer/chainsaw in L)
 			qdel(chainsaw)
-		var/obj/item/skeleton_key/key = new(L)
-		L.put_in_hands(key)
 	else
 		to_chat(L, span_warning("You are not yet worthy of passing. Drag a severed head to the barrier to be allowed entry to the hall of champions."), confidential = TRUE)
 

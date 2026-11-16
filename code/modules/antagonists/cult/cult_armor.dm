@@ -58,11 +58,19 @@
 	inhand_icon_state = null
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/alt
 
+/obj/item/clothing/suit/hooded/cultrobes/alt/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/cult)
+
 /obj/item/clothing/head/hooded/cult_hoodie/alt
 	name = "cultist hood"
 	desc = "An armored hood worn by the followers of Nar'Sie."
 	icon_state = "cult_hoodalt"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/hooded/cult_hoodie/alt/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/cult)
 
 ///'Ghost' subtype, given to cultists spawned by Spirit Realm. Can't be dropped.
 /obj/item/clothing/suit/hooded/cultrobes/alt/ghost
@@ -95,6 +103,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/hardened/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/cult)
 
 /obj/item/clothing/suit/hooded/cultrobes/hardened/proc/on_bible_smacked(obj/item/book/bible/source, mob/user)
 	SIGNAL_HANDLER
@@ -151,7 +160,7 @@
 		return
 	if(!SPT_PROB(15, seconds_per_tick))
 		return
-	var/obj/item/bodypart/bone_to_wound = pick(wearer.bodyparts)
+	var/obj/item/bodypart/bone_to_wound = pick(wearer.get_bodyparts())
 	var/wound_type = pick(list(
 		/datum/wound/blunt/bone/moderate,
 		/datum/wound/pierce/bleed/moderate,
@@ -173,6 +182,10 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+
+/obj/item/clothing/head/hooded/cult_hoodie/hardened/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/cult)
 
 /**
  * Shielded armor

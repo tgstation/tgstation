@@ -90,7 +90,6 @@
 	overlay_icon_state = "bg_alien_border"
 	button_icon = 'icons/mob/actions/actions_xeno.dmi'
 	button_icon_state = "tailsweep"
-	panel = "Alien"
 	sound = 'sound/effects/magic/tail_swing.ogg'
 
 	cooldown_time = 15 SECONDS

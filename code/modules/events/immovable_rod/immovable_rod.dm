@@ -28,10 +28,13 @@
 	var/dnd_style_level_up = TRUE
 	/// Whether the rod can loop across other z-levels. The rod will still loop when the z-level is self-looping even if this is FALSE.
 	var/loopy_rod = FALSE
+	/// Whether or not this rod should be shown to ghosts for auto-orbiting.
+	var/should_augury = TRUE
 
 /obj/effect/immovablerod/Initialize(mapload, atom/target_atom, atom/specific_target, force_looping = FALSE)
 	. = ..()
-	SSaugury.register_doom(src, 2000)
+	if(should_augury)
+		SSaugury.register_doom(src, SEVERITY_ROD)
 
 	var/turf/real_destination = get_turf(target_atom)
 	destination_turf = real_destination
@@ -42,7 +45,7 @@
 
 	SSpoints_of_interest.make_point_of_interest(src)
 
-	RegisterSignal(src, COMSIG_ATOM_ENTERING, PROC_REF(on_entering_atom))
+	RegisterSignals(src, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING), PROC_REF(on_entering_atom))
 
 	if(special_target)
 		GLOB.move_manager.home_onto(src, special_target)
@@ -50,7 +53,7 @@
 		GLOB.move_manager.move_towards(src, real_destination)
 
 /obj/effect/immovablerod/Destroy(force)
-	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
+	UnregisterSignal(src, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING))
 	SSaugury.unregister_doom(src)
 	destination_turf = null
 	special_target = null
@@ -164,9 +167,7 @@
 	// they ALSO collapse into a singulo.
 	if(istype(clong, /obj/effect/immovablerod))
 		visible_message(span_danger("[src] collides with [clong]! This cannot end well."))
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(2, holder = src, location = get_turf(src))
-		smoke.start()
+		do_smoke(2, src, get_turf(src))
 		var/obj/singularity/bad_luck = new(get_turf(src))
 		bad_luck.energy = 800
 		qdel(clong)
@@ -229,7 +230,7 @@
 
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
 	for(var/mob/living/nearby_mob in urange(8, src))
-		if(nearby_mob.stat != CONSCIOUS)
+		if(IS_UNCONSCIOUS_OR_CRIT(nearby_mob))
 			continue
 		shake_camera(nearby_mob, 2, 3)
 
@@ -247,6 +248,7 @@
 		span_boldwarning("[strongman] suplexes [src] into the ground!"),
 		span_warning("As you suplex [src] into the ground, your body ripples with power!")
 		)
+	sound_to_playing_players('sound/items/handling/lead_pipe/lead_pipe_drop.ogg')
 	new /obj/structure/festivus/anchored(drop_location())
 	new /obj/effect/anomaly/flux(drop_location())
 

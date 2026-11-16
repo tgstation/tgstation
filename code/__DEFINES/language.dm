@@ -1,7 +1,20 @@
-#define NO_STUTTER 1
-#define TONGUELESS_SPEECH 2
-#define LANGUAGE_HIDE_ICON_IF_UNDERSTOOD 4
-#define LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD 8
+// Language flags
+/// Language is never stuttered
+#define LANGUAGE_NO_STUTTER (1<<0)
+/// Language is speakable without a tongue
+#define LANGUAGE_TONGUELESS_SPEECH (1<<1)
+/// Language icon is hidden if the language is understood
+#define LANGUAGE_HIDE_ICON_IF_UNDERSTOOD (1<<2)
+/// Language icon is hidden if the language is not understood
+#define LANGUAGE_HIDE_ICON_IF_NOT_UNDERSTOOD (1<<3)
+
+// Returns from display_icon_type
+/// Display no icon for this language
+#define DISPLAY_LANGUAGE_ICON_NONE 0
+/// Display the full icon for this language
+#define DISPLAY_LANGUAGE_ICON_FULL 1
+/// Display a blended icon for this language, indicating partial understanding
+#define DISPLAY_LANGUAGE_ICON_PARTIAL 2
 
 // LANGUAGE SOURCE DEFINES
 /// For use in full removal only.

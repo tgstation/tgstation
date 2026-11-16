@@ -7,7 +7,8 @@
 	strip_delay = 4 SECONDS
 	equip_delay_other = 2 SECONDS
 	fishing_modifier = -2
-	visor_dirt = null
+	visor_dirt = "space_dirt"
+	has_visor = TRUE
 
 /datum/armor/space_pirate
 	melee = 30
@@ -33,6 +34,7 @@
 	strip_delay = 4 SECONDS
 	equip_delay_other = 2 SECONDS
 	fishing_modifier = -3
+	cerulean_flipper_palette = "#86563b"
 
 /obj/item/clothing/head/helmet/space/pirate/tophat
 	name = "designer pirate helmet"

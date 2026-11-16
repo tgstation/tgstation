@@ -6,7 +6,7 @@
 	name = "telecommunications monitoring console"
 	desc = "Monitors the details of the telecommunications network it's synced with."
 	circuit = /obj/item/circuitboard/computer/comm_monitor
-
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/telecomms/monitor")
 	icon_screen = "comm_monitor"
 
 	/// Weakref of the currently selected tcomms machine

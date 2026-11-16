@@ -39,6 +39,7 @@
 		wheelToggle = FALSE
 		return
 	wheels.forceMove(get_turf(user))
+	wheels.setDir(user.dir)
 	wheels.buckle_mob(user)
 	wheelToggle = TRUE
 
@@ -89,3 +90,4 @@
 	wheels = /obj/vehicle/ridden/scooter/skateboard/wheelys/skishoes
 	custom_premium_price = PAYCHECK_CREW * 1.6
 	custom_price = PAYCHECK_CREW * 1.6
+	clothing_traits = list(TRAIT_NO_SNOWPRINTS)

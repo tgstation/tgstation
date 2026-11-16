@@ -106,21 +106,20 @@
 
 	///How many telecrystals the uplink should have
 	var/telecrystals = 0
-	///How much progression should be shown in the uplink, set on purchase of the item.
-	var/current_progression = 0
 
-/obj/item/disk/computer/virus/frame/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(!istype(attacking_item, /obj/item/stack/telecrystal))
-		return
+/obj/item/disk/computer/virus/frame/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/telecrystal))
+		return ..()
+
 	if(!charges)
-		to_chat(user, span_notice("[src] is out of charges, it's refusing to accept [attacking_item]."))
-		return
-	var/obj/item/stack/telecrystal/telecrystal_stack = attacking_item
+		to_chat(user, span_notice("[src] is out of charges, it's refusing to accept [tool]."))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/telecrystal/telecrystal_stack = tool
 	telecrystals += telecrystal_stack.amount
 	to_chat(user, span_notice("You slot [telecrystal_stack] into [src]. The next time it's used, it will also give telecrystals."))
 	telecrystal_stack.use(telecrystal_stack.amount)
-
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/disk/computer/virus/frame/send_virus(obj/item/modular_computer/pda/source, obj/item/modular_computer/pda/target, mob/living/user, message)
 	. = ..()
@@ -145,11 +144,9 @@
 				target_mind = user.mind
 			else
 				target_mind = pick(backup_players)
-		hidden_uplink = target.AddComponent(/datum/component/uplink, target_mind, enabled = TRUE, starting_tc = telecrystals, has_progression = TRUE)
+		hidden_uplink = target.AddComponent(/datum/component/uplink, target_mind, enabled = TRUE, starting_tc = telecrystals)
 		hidden_uplink.unlock_code = unlock_code
 		hidden_uplink.uplink_handler.owner = target_mind
-		hidden_uplink.uplink_handler.progression_points = min(SStraitor.current_global_progression, current_progression)
-		SStraitor.register_uplink_handler(hidden_uplink.uplink_handler)
 	else
 		hidden_uplink.uplink_handler.add_telecrystals(telecrystals)
 	telecrystals = 0

@@ -15,24 +15,15 @@
 		FREQ_CTF_BLUE,
 	)
 
-/obj/machinery/telecomms/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/telecomms/screwdriver_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
 
-	var/icon_closed = initial(icon_state)
-	var/icon_open = "[initial(icon_state)]_o"
-	if(!on)
-		icon_closed = "[initial(icon_state)]_off"
-		icon_open = "[initial(icon_state)]_o_off"
+/obj/machinery/telecomms/multitool_act(mob/living/user, obj/item/tool)
+	attack_hand(user)
+	return ITEM_INTERACT_SUCCESS
 
-	if(default_deconstruction_screwdriver(user, icon_open, icon_closed, attacking_item))
-		return
-	// Using a multitool lets you access the receiver's interface
-	else if(attacking_item.tool_behaviour == TOOL_MULTITOOL)
-		attack_hand(user)
-
-	else if(default_deconstruction_crowbar(attacking_item))
-		return
-	else
-		return ..()
+/obj/machinery/telecomms/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/telecomms/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

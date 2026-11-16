@@ -57,3 +57,9 @@
 /datum/wires/firealarm/always_reveal_wire(color)
 	// to maintain previous behavior of "anyone can multitool a fire alarm to disable it"
 	return get_color_of_wire(WIRE_FIRE_DETECT) == color
+
+/datum/wires/firealarm/can_reveal_wires(mob/user)
+	if(HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES) || HAS_TRAIT(user, TRAIT_KNOW_ATMOS_WIRES))
+		return TRUE
+
+	return ..()

@@ -12,6 +12,7 @@
 /obj/item/clothing/suit/utility
 	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
+	cerulean_flipper_palette = FLIPPERS
 
 /obj/item/clothing/suit/utility/fire
 	name = "emergency firesuit"
@@ -42,6 +43,7 @@
 /obj/item/clothing/suit/utility/fire/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/adjust_fishing_difficulty, 7)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/firesuit)
 
 /datum/armor/utility_fire
 	melee = 15
@@ -53,10 +55,10 @@
 	fire = 100
 	acid = 50
 
-/obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
+		. += emissive_appearance((bodyshape & BODYSHAPE_CERULEAN) ? CERULEAN_SUIT_FILE : icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/suit/utility/fire/firefighter
 	icon_state = "firesuit"
@@ -65,6 +67,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	cerulean_flipper_palette = "#725c3e"
 
 /obj/item/clothing/suit/utility/fire/heavy
 	name = "heavy firesuit"
@@ -83,6 +86,7 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	cerulean_flipper_palette = "#525765"
 
 /*
  * Bomb protection
@@ -103,12 +107,15 @@
 	equip_delay_other = 7 SECONDS
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/bombsuit
 
 /obj/item/clothing/head/utility/bomb_hood/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/clothing_dirt, "bomb_dirt")
 	AddElement(/datum/element/adjust_fishing_difficulty, 8)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, texture_type)
 
 /datum/armor/utility_bomb_hood
 	melee = 20
@@ -137,10 +144,13 @@
 	strip_delay = 7 SECONDS
 	equip_delay_other = 7 SECONDS
 	resistance_flags = NONE
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/bombsuit
 
 /obj/item/clothing/suit/utility/bomb_suit/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/adjust_fishing_difficulty, 8)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, texture_type)
 
 /datum/armor/utility_bomb_suit
 	melee = 20
@@ -154,19 +164,23 @@
 /obj/item/clothing/head/utility/bomb_hood/security
 	icon_state = "bombsuit_sec"
 	inhand_icon_state = null
+	texture_type = /datum/bodypart_texture/mesh/bombsuit_red
 
 /obj/item/clothing/suit/utility/bomb_suit/security
 	icon_state = "bombsuit_sec"
 	inhand_icon_state = null
 	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
+	texture_type = /datum/bodypart_texture/mesh/bombsuit_red
 
 /obj/item/clothing/head/utility/bomb_hood/white
 	icon_state = "bombsuit_white"
 	inhand_icon_state = null
+	texture_type = /datum/bodypart_texture/mesh/bombsuit_white
 
 /obj/item/clothing/suit/utility/bomb_suit/white
 	icon_state = "bombsuit_white"
 	inhand_icon_state = null
+	texture_type = /datum/bodypart_texture/mesh/bombsuit_white
 
 /*
 * Radiation protection
@@ -190,6 +204,7 @@
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 	AddElement(/datum/element/radiation_protected_clothing)
 	AddComponent(/datum/component/clothing_dirt, "rad_dirt")
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/black)
 
 /datum/armor/utility_radiation
 	bio = 60
@@ -215,8 +230,10 @@
 	equip_delay_other = 6 SECONDS
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
+	cerulean_flipper_palette = "#ffdb57"
 
 /obj/item/clothing/suit/utility/radiation/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/radiation_protected_clothing)
 	AddElement(/datum/element/adjust_fishing_difficulty, 7)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/black)

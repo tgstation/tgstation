@@ -3,7 +3,7 @@
 	guardian_type = GUARDIAN_EXPLOSIVE
 	melee_damage_lower = 15
 	melee_damage_upper = 15
-	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, STAMINA = 0, OXY = 0.6)
+	physiology = list(BRUTE = 0.6, BURN = 0.6, TOX = 0.6, OXY = 0.6, STAMINA = 0)
 	range = 13
 	playstyle_string = span_holoparasite("As an <b>explosive</b> type, you have moderate close combat abilities and are capable of converting nearby items and objects into disguised bombs via right-click.")
 	creator_name = "Explosive"
@@ -37,6 +37,7 @@
 	cooldown_time = 20 SECONDS
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
+	default_button_position = ui_guardian_special
 	/// After this amount of time passses, bomb deactivates.
 	var/decay_time = 1 MINUTES
 	/// Static list of signals that activate the bomb.

@@ -143,8 +143,8 @@
 	cost = CARGO_CRATE_VALUE * 1.6
 	access_view = ACCESS_CHAPEL_OFFICE
 	contains = list(/obj/item/clothing/under/misc/burial,
-					/obj/item/food/grown/harebell,
-					/obj/item/food/grown/poppy/geranium,
+					/obj/item/food/grown/flower/harebell,
+					/obj/item/food/grown/flower/poppy/geranium,
 				)
 	crate_name = "coffin"
 	crate_type = /obj/structure/closet/crate/coffin
@@ -159,7 +159,7 @@
 	crate_type = null
 	special_pod = /obj/structure/closet/supplypod/bluespacepod
 
-/datum/supply_pack/misc/empty/generate(atom/A, datum/bank_account/paying_account)
+/datum/supply_pack/misc/empty/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	return
 
 /datum/supply_pack/misc/religious_supplies
@@ -221,7 +221,7 @@
 	var/contents_uplink_type = UPLINK_TRAITORS
 
 ///Generate assorted uplink items, taking into account the same surplus modifiers used for surplus crates
-/datum/supply_pack/misc/syndicate/fill(obj/structure/closet/crate/C)
+/datum/supply_pack/misc/syndicate/fill(obj/container)
 	var/list/uplink_items = list()
 	for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
 		if(item.purchasable_from & contents_uplink_type && item.item)
@@ -236,7 +236,7 @@
 		if(crate_value < uplink_item.cost)
 			continue
 		crate_value -= uplink_item.cost
-		new uplink_item.item(C)
+		new uplink_item.item(container)
 
 ///Syndicate supply crate that can have its contents value changed by admins, uses a seperate datum to avoid having admins touch the original one.
 /datum/supply_pack/misc/syndicate/custom_value
@@ -269,3 +269,4 @@
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/structure/reagent_dispensers/water_cooler/jugless = 1, /obj/item/reagent_containers/cooler_jug/punch = 1)
 	crate_name = "punch cooler crate"
+

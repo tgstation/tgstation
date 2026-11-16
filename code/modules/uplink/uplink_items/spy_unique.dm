@@ -174,7 +174,7 @@
 /datum/uplink_item/spy_unique/katana
 	name = "Katana"
 	desc = "A really sharp Katana. Did I mention it's sharp?"
-	item = /obj/item/katana
+	item = /obj/item/storage/belt/sheath/katana
 	cost = /datum/uplink_item/dangerous/doublesword::cost // Puts it in the same pool as Desword
 	uplink_item_flags = SYNDIE_ILLEGAL_TECH | SYNDIE_TRIPS_CONTRABAND
 

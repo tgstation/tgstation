@@ -8,7 +8,7 @@
 	/// (PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_PDA)
 	var/can_run_on_flags = PROGRAM_ALL
 	/// Program-specific bitflags that tells the ModPC what the app is able to do special.
-	/// (PROGRAM_REQUIRES_NTNET|PROGRAM_ON_NTNET_STORE|PROGRAM_ON_SYNDINET_STORE|PROGRAM_UNIQUE_COPY|PROGRAM_HEADER|PROGRAM_RUNS_WITHOUT_POWER)
+	/// (PROGRAM_REQUIRES_NTNET|PROGRAM_ON_NTNET_STORE|PROGRAM_ON_SYNDINET_STORE|PROGRAM_UNIQUE_COPY|PROGRAM_HEADER)
 	var/program_flags = PROGRAM_ON_NTNET_STORE
 	///How much power running this program costs.
 	var/power_cell_use = PROGRAM_BASIC_CELL_USE
@@ -252,3 +252,7 @@
 		INVOKE_ASYNC(computer, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), user)
 	computer.update_appearance(UPDATE_ICON)
 	return TRUE
+
+///Called when the program is made the active program.
+/datum/computer_file/program/proc/on_made_active_program(mob/user)
+	return

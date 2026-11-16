@@ -5,72 +5,74 @@
 	abstract_type = /obj/item/organ/cyberimp
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
+	visual = FALSE
 	/// icon of the bodypart overlay we're going to be applying to our owner
 	var/aug_icon = 'icons/mob/human/species/misc/bodypart_overlay_augmentations.dmi'
 	/// icon_state of the bodypart overlay we're going to be applying to our owner
 	var/aug_overlay = null
 	/// Does the implant have an emissive overlay too?
 	var/emissive_overlay = FALSE
+	/// Mob layer the overlay will be placed onto
+	var/overlay_layer = BODY_ADJ_LAYER
 	/// Bodypart overlay we're going to apply to whoever we're implanted into
-	var/datum/bodypart_overlay/augment/bodypart_aug = null
+	var/datum/bodypart_overlay/simple/augment/bodypart_aug = null
 
 /obj/item/organ/cyberimp/Initialize(mapload)
 	. = ..()
 	if (aug_overlay)
-		bodypart_aug = new(src)
+		visual = TRUE
+		bodypart_aug = new()
+		bodypart_aug.icon = aug_icon
+		bodypart_aug.icon_state = get_overlay_state()
+		bodypart_aug.emissive = emissive_overlay
+		bodypart_aug.set_layer("", overlay_layer)
 
 /obj/item/organ/cyberimp/Destroy()
-	QDEL_NULL(bodypart_aug)
-	return ..()
+	. = ..()
+	QDEL_NULL(bodypart_aug) // Do this after Remove() has done its thing, otherwise on_bodypart_remove() will not properly remove the overlay
 
+/// Returns what icon_state the bodypart overlay should be in.
+/// Defaults to whatever is set in the variable, but can be overridden by subtypes which need multiple states
 /obj/item/organ/cyberimp/proc/get_overlay_state()
 	return aug_overlay
 
-/obj/item/organ/cyberimp/proc/get_overlay(image_layer, obj/item/bodypart/limb)
-	. = list()
-	. += image(icon = aug_icon, icon_state = get_overlay_state(), layer = image_layer)
-	if (emissive_overlay)
-		. += emissive_appearance(aug_icon, "[get_overlay_state()]_e", limb.owner || limb, image_layer)
+/// Refreshes the overlay's icon_state, then calls update_bodyparts if necessary
+/obj/item/organ/cyberimp/proc/update_overlay_state()
+	if(isnull(bodypart_aug))
+		return
+
+	var/old_aug_state = bodypart_aug.icon_state
+	bodypart_aug.icon_state = get_overlay_state()
+	if(old_aug_state != bodypart_aug.icon_state)
+		owner?.update_body_parts()
 
 /obj/item/organ/cyberimp/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()
-	if (bodypart_aug)
-		limb.add_bodypart_overlay(bodypart_aug)
+	if(isnull(bodypart_aug))
+		return
+
+	limb.add_bodypart_overlay(bodypart_aug)
 
 /obj/item/organ/cyberimp/on_bodypart_remove(obj/item/bodypart/limb)
 	. = ..()
-	if (bodypart_aug)
-		limb.remove_bodypart_overlay(bodypart_aug)
+	if(isnull(bodypart_aug))
+		return
 
-/datum/bodypart_overlay/augment
-	layers = EXTERNAL_ADJACENT
-	/// Implant that owns this overlay
-	var/obj/item/organ/cyberimp/implant
+	limb.remove_bodypart_overlay(bodypart_aug)
 
-/datum/bodypart_overlay/augment/New(obj/item/organ/cyberimp/implant)
+/datum/bodypart_overlay/simple/augment
+	layers = list("" = BODY_ADJ_LAYER)
+	draw_on_husks = HUSK_OVERLAY_NORMAL
+	offset_location = ENTIRE_BODY
+	overlay_flags = NONE
+	/// Whether the overlay has an emissive appeareance too
+	var/emissive = FALSE
+
+/datum/bodypart_overlay/simple/augment/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
 	. = ..()
-	src.implant = implant
-
-/datum/bodypart_overlay/augment/Destroy(force)
-	implant = null
-	return ..()
-
-/datum/bodypart_overlay/augment/generate_icon_cache()
-	. = ..()
-	. += implant.get_overlay_state()
-
-/datum/bodypart_overlay/augment/get_overlay(layer, obj/item/bodypart/limb)
-	layer = bitflag_to_layer(layer)
-	var/list/imageset = implant.get_overlay(layer, limb)
-	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
-		return imageset
-
-	var/list/all_images = list()
-	for(var/image/overlay as anything in imageset)
-		all_images += overlay
-		all_images += emissive_blocker(overlay.icon, overlay.icon_state, limb, layer = overlay.layer, alpha = overlay.alpha)
-
-	return all_images
+	if(emissive)
+		var/mutable_appearance/emissive_overlay = emissive_appearance(icon, icon_state + (layer_index ? "_[layer_index]" : "") + "_e", limb, layer = layer_real)
+		.[emissive_overlay] = LIMB_OVERLAY_META
 
 /obj/item/organ/cyberimp/feel_for_damage(self_aware)
 	// No feeling in implants (yet?)
@@ -102,6 +104,7 @@
 	name = "anti-drop implant"
 	desc = "This cybernetic brain implant will allow you to force your hand muscles to contract, preventing item dropping. Twitch ear to toggle."
 	icon_state = "brain_implant_antidrop"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 4, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 4)
 	var/active = FALSE
 	var/list/stored_items = list()
 	slot = ORGAN_SLOT_BRAIN_CEREBELLUM
@@ -110,16 +113,15 @@
 /obj/item/organ/cyberimp/brain/anti_drop/ui_action_click()
 	active = !active
 	if(active)
-		var/list/hold_list = owner.get_empty_held_indexes()
-		if(LAZYLEN(hold_list) == owner.held_items.len)
+		var/list/held_list = owner.get_active_held_indexes()
+		if(!length(held_list))
 			to_chat(owner, span_notice("You are not holding any items, your hands relax..."))
 			active = FALSE
 			return
-		for(var/obj/item/held_item as anything in owner.held_items)
-			if(!held_item)
-				continue
+		for(var/held_index in held_list)
+			var/obj/item/held_item = owner.get_item_for_held_index(held_index)
 			stored_items += held_item
-			to_chat(owner, span_notice("Your [owner.get_held_index_name(owner.get_held_index_of_item(held_item))]'s grip tightens."))
+			to_chat(owner, span_notice("Your [owner.get_held_index_name(held_index)]'s grip tightens."))
 			ADD_TRAIT(held_item, TRAIT_NODROP, IMPLANT_TRAIT)
 			RegisterSignal(held_item, COMSIG_ITEM_DROPPED, PROC_REF(on_held_item_dropped))
 	else
@@ -131,7 +133,7 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	var/range = severity ? 10 : 5
+	var/range = 10 / severity
 	var/atom/throw_target
 	if(active)
 		release_items()
@@ -165,6 +167,7 @@
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	icon_state = "brain_implant_rebooter"
 	slot = ORGAN_SLOT_BRAIN_CNS
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 
 	var/static/list/signalCache = list(
 		COMSIG_LIVING_STATUS_STUN,
@@ -210,9 +213,7 @@
 	owner.set_stamina_loss(0)
 	addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living, set_stamina_loss), 0), stun_resistance_time)
 
-	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
-	sparks.set_up(5, 1, src)
-	sparks.start()
+	do_sparks(5, TRUE, src)
 
 	give_stun_buffs(owner)
 	addtimer(CALLBACK(src, PROC_REF(remove_stun_buffs), owner), stun_resistance_time)
@@ -237,7 +238,7 @@
 	if((organ_flags & ORGAN_FAILING) || . & EMP_PROTECT_SELF)
 		return
 	organ_flags |= ORGAN_FAILING
-	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
+	addtimer(CALLBACK(src, PROC_REF(reboot)), 9 SECONDS / severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING
@@ -249,6 +250,7 @@
 	icon_state = "brain_implant_connector"
 	slot = ORGAN_SLOT_BRAIN_CNS
 	actions_types = list(/datum/action/item_action/organ_action/use)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3)
 
 /obj/item/organ/cyberimp/brain/connector/ui_action_click()
 
@@ -354,6 +356,7 @@
 	slot = ORGAN_SLOT_BRAIN_HIPPOCAMPUS
 	emp_stun_duration = 0 SECONDS
 	emp_immobilize_duration = 4 SECONDS
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2.5)
 	/// Lazylist of surgeries this implant provides
 	var/list/loaded_surgeries
 
@@ -481,6 +484,7 @@
 	slot = ORGAN_SLOT_BREATHING_TUBE
 	w_class = WEIGHT_CLASS_TINY
 	aug_overlay = "breathing_tube"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
 	. = ..()

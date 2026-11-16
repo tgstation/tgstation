@@ -13,6 +13,9 @@
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
+
+	liver_traits = list(TRAIT_BARTENDER_METABOLISM)
+
 	display_order = JOB_DISPLAY_ORDER_BARTENDER
 	bounty_types = CIV_JOB_DRINK
 	departments_list = list(
@@ -30,6 +33,7 @@
 
 	job_flags = STATION_JOB_FLAGS
 	rpg_title = "Tavernkeeper"
+	tgui_icon = FA_ICON_COCKTAIL
 
 /datum/job/bartender/award_service(client/winner, award)
 	winner.give_award(award, winner.mob)
@@ -53,7 +57,7 @@
 	backpack_contents = list(
 		/obj/item/storage/box/beanbag = 1,
 		)
-	belt = /obj/item/modular_computer/pda/bar
+	belt = /obj/item/modular_computer/pda/crew/bar
 	ears = /obj/item/radio/headset/headset_srv
 	glasses = /obj/item/clothing/glasses/sunglasses/reagent
 	shoes = /obj/item/clothing/shoes/laceup

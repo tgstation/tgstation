@@ -10,15 +10,15 @@
 	name = "Confusion"
 	desc = "The virus interferes with the proper function of the neural system, leading to bouts of confusion and erratic movement."
 	illness = "Shattered Reality"
-	stealth = 1
-	resistance = -1
-	stage_speed = -3
-	transmittable = 0
-	level = 4
+	stealth = 2
+	resistance = 1
+	stage_speed = 1
+	transmittable = 2
+	level = 3
 	severity = 2
 	base_message_chance = 25
-	symptom_delay_min = 10
-	symptom_delay_max = 30
+	symptom_delay = 20
+	symptom_cure = /datum/reagent/medicine/synaptizine
 	threshold_descs = list(
 		"Resistance 6" = "Causes brain damage over time.",
 		"Transmission 6" = "Increases confusion duration and strength.",
@@ -26,6 +26,7 @@
 	)
 	var/brain_damage = FALSE
 	var/causes_illiteracy = FALSE
+	var/suppress_warning = FALSE
 
 /datum/symptom/confusion/Start(datum/disease/advance/advanced_disease)
 	. = ..()

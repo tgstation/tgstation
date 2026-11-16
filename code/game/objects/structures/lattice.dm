@@ -66,15 +66,16 @@
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
 
-/obj/structure/lattice/attackby(obj/item/C, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/lattice/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/turf/underneath = get_turf(src)
+	return underneath.item_interaction(user, tool) //hand this off to the turf instead (for building plating, catwalks, etc)
+
+/obj/structure/lattice/wirecutter_act(mob/living/user, obj/item/tool)
 	if(resistance_flags & INDESTRUCTIBLE)
-		return
-	if(C.tool_behaviour == TOOL_WIRECUTTER)
-		to_chat(user, span_notice("Slicing [name] joints ..."))
-		deconstruct()
-	else
-		var/turf/T = get_turf(src)
-		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
+		return NONE
+	to_chat(user, span_notice("Slicing [name] joints ..."))
+	deconstruct()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/lattice/atom_deconstruct(disassembled = TRUE)
 	if(!isnull(build_material) && number_of_mats >= 1)
@@ -158,13 +159,6 @@
 	desc = "A heavily reinforced catwalk used to build bridges in hostile environments. It doesn't look like anything could make this budge."
 	resistance_flags = INDESTRUCTIBLE
 
-/obj/structure/lattice/catwalk/mining/attackby(obj/item/C, mob/user, list/modifiers, list/attack_modifiers)
-	// Allow cable placement even though we're indestructible
-	if(istype(C, /obj/item/stack/cable_coil))
-		var/turf/T = get_turf(src)
-		return T.attackby(C, user)
-	return ..()
-
 /obj/structure/lattice/catwalk/mining/deconstruction_hints(mob/user)
 	return
 
@@ -181,21 +175,22 @@
 /obj/structure/lattice/catwalk/lava/deconstruction_hints(mob/user)
 	return span_notice("The rods look like they could be <b>cut</b>, but the <i>heat treatment will shatter off</i>. There's space for a <i>tile</i>.")
 
-/obj/structure/lattice/catwalk/lava/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(!ismetaltile(attacking_item))
-		return
-	var/obj/item/stack/tile/iron/attacking_tiles = attacking_item
+/obj/structure/lattice/catwalk/lava/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!ismetaltile(tool))
+		return ..()
+	var/obj/item/stack/tile/iron/attacking_tiles = tool
 	if(!attacking_tiles.use(1))
 		to_chat(user, span_warning("You need one floor tile to build atop [src]."))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	to_chat(user, span_notice("You construct new plating with [src] as support."))
 	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 
-	var/turf/turf_we_place_on = get_turf(src)
-	turf_we_place_on.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+	var/turf/base = get_turf(src)
+	base.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/lattice/catwalk/boulder
 	name = "boulder platform"
@@ -214,10 +209,10 @@
 	fast_emissive_blocker(src)
 	AddElement(/datum/element/elevation, pixel_shift = 8)
 
-/obj/structure/lattice/catwalk/boulder/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(ismetaltile(attacking_item))
+/obj/structure/lattice/catwalk/boulder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(ismetaltile(tool))
 		balloon_alert(user, "too unstable!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	return ..()
 
 /obj/structure/lattice/catwalk/boulder/CanAllowThrough(atom/movable/mover, border_dir)

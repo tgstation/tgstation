@@ -1,0 +1,13 @@
+{
+	"dm_type": "/datum/bt_node/subtree/tip_reaction",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_true",
+	"vars": {
+		"key": "BB_BASIC_MOB_TIP_REACTING",
+		"observer_abort": "BT_ABORT_LOWER_PRIORITY"
+	},
+	"child": {
+		"type": "leaf",
+		"behavior": "/datum/bt_node/ai_behavior/tipped_reaction"
+	}
+}

@@ -7,6 +7,7 @@
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "tpump"
 	vent_movement = NONE
+	light_mask_on = TRUE
 	///Percent of the heat delta to transfer
 	var/heat_transfer_rate = 0
 	///Maximum allowed transfer percentage
@@ -14,6 +15,7 @@
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/usb_port, typecacheof(list(/obj/item/circuit_component/atmos_temperature_pump), only_root_path = TRUE))
 	register_context()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -41,7 +43,11 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/update_icon_nopipes()
-	icon_state = "tpump_[on && is_operational ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
+	var/new_icon_state = "tpump_[on && is_operational ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
+	var/old_icon_state = icon_state
+	icon_state = new_icon_state
+	if(new_icon_state != old_icon_state)
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/process_atmos()
 	if(!on || !is_operational)

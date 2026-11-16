@@ -135,13 +135,9 @@
 
 /// Helper to shoot some smoke into the air around the passed atom
 /datum/round_event/radiation_leak/proc/puff_some_smoke(atom/where)
+	// Causes radioation and mutations
 	var/turf/below_where = get_turf(where)
-	var/datum/effect_system/fluid_spread/smoke/chem/gross_smoke = new()
-	gross_smoke.chemholder.add_reagent(/datum/reagent/toxin/polonium, 10) // Polonium (it causes radiation)
-	gross_smoke.chemholder.add_reagent(/datum/reagent/toxin/mutagen, 10) // Mutagen (it causes mutations. Also it's green... Primarily because it's green.)
-	gross_smoke.attach(below_where)
-	gross_smoke.set_up(2, holder = where, location = below_where, silent = TRUE)
-	gross_smoke.start()
+	do_chem_smoke(2, where, below_where, list(/datum/reagent/toxin/polonium = 10, /datum/reagent/toxin/mutagen = 10))
 	playsound(below_where, 'sound/effects/smoke.ogg', 50, vary = TRUE)
 
 /**

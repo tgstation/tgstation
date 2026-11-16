@@ -22,7 +22,7 @@
 				if(cached_reagent.type != reagent)
 					continue
 			if(REAGENT_PARENT_TYPE) //to simulate typesof() which returns the type and then child types
-				if(cached_reagent.type != reagent && type2parent(cached_reagent.type) != reagent)
+				if(cached_reagent.type != reagent && cached_reagent::parent_type != reagent)
 					continue
 			else
 				if(!istype(cached_reagent, reagent))

@@ -1,3 +1,5 @@
+/datum/unit_test/teleporter
+
 /datum/unit_test/teleporter/Run()
 	// Put down the teleporter machinery
 	var/obj/machinery/teleport/hub/hub = allocate(/obj/machinery/teleport/hub)
@@ -16,3 +18,23 @@
 	computer.set_teleport_target(beacon)
 	beacon.turn_off()
 	TEST_ASSERT_NULL(computer.target_ref, "Teleporter beacon isn't properly turned off.")
+
+///Checks that the hand teleporter makes a portal, that that portal is linked to another portal, and that that portal is closed
+/datum/unit_test/hand_teleporter
+
+/datum/unit_test/hand_teleporter/Run()
+	var/mob/living/carbon/human/consistent/scientist = EASY_ALLOCATE()
+	var/obj/item/hand_tele/teleporter = EASY_ALLOCATE()
+	var/turf/turf_the_portal_will_be_on = get_step(run_loc_floor_bottom_left, EAST)
+
+	teleporter.last_portal_location = "portal_location_dangerous" // The define doesn't reach all the way out here, but surely it'll never change
+	teleporter.away_restricted = FALSE
+
+	scientist.put_in_active_hand(teleporter)
+	click_wrapper(scientist, turf_the_portal_will_be_on, list(RIGHT_CLICK = TRUE, BUTTON = RIGHT_CLICK))
+	var/obj/effect/portal/working_portal = locate() in turf_the_portal_will_be_on
+	TEST_ASSERT_NOTNULL(working_portal, "Hand teleporter failed to create a portal right-clicking with PORTAL_LOCATION_DANGEROUS")
+	TEST_ASSERT_NOTNULL(working_portal.linked, "Hand teleporter failed to properly link a created portal")
+
+	click_wrapper(scientist, working_portal)
+	TEST_ASSERT(QDELETED(working_portal), "Hand teleporter failed to dispel its created portal")

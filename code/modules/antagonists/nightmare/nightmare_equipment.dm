@@ -3,14 +3,14 @@
  */
 /obj/item/light_eater
 	name = "light eater" //as opposed to heavy eater
-	icon = 'icons/obj/weapons/changeling_items.dmi'
-	icon_state = "arm_blade"
-	inhand_icon_state = "arm_blade"
+	icon = 'icons/obj/weapons/nightmare_items.dmi'
+	icon_state = "light_eater"
+	inhand_icon_state = "light_eater"
 	icon_angle = 180
 	force = 25
 	armour_penetration = 35
-	lefthand_file = 'icons/mob/inhands/antag/changeling_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
+	lefthand_file = 'icons/mob/inhands/antag/nightmare_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/nightmare_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
 	resistance_flags = INDESTRUCTIBLE | ACID_PROOF | FIRE_PROOF | LAVA_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_HUGE
@@ -60,7 +60,7 @@
 		target.Paralyze(issilicon(target) ? 2 SECONDS : 1 SECONDS)
 	else
 		user.visible_message(span_boldwarning("[user] gores [target] with [src], ripping into them!"), span_userdanger("You gore [target] with [src], ripping into them!"))
-		target.apply_damage(damage = force, forced = TRUE)
+		target.apply_damage(damage = force)
 	remove_crit()
 
 /obj/item/light_eater/proc/prepare_crit_timer()

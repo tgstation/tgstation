@@ -49,8 +49,7 @@
 
 /obj/machinery/biogenerator/Initialize(mapload)
 	. = ..()
-	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator])
-		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator] = new /datum/techweb/autounlocking/biogenerator
+	GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator] ||= new /datum/techweb/autounlocking/biogenerator()
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/biogenerator]
 	soundloop = new(src, processing)
 	if(mapload)
@@ -203,9 +202,7 @@
 	return NONE
 
 /obj/machinery/biogenerator/screwdriver_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		return ITEM_INTERACT_BLOCKING
-
+	. = default_deconstruction_screwdriver(user, tool)
 	if(processing)
 		stop_process(FALSE)
 
@@ -213,18 +210,17 @@
 		beaker.forceMove(drop_location())
 		beaker = null
 
-	update_appearance(UPDATE_ICON)
-	return ITEM_INTERACT_SUCCESS
+	return .
 
 /obj/machinery/biogenerator/crowbar_act(mob/living/user, obj/item/tool)
-	if(!default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_BLOCKING
+	. = default_deconstruction_crowbar(user, tool)
+	if(!(. & ITEM_INTERACT_SUCCESS))
+		return
 	var/turf/drop_location = drop_location()
 	if(biomass > 0)
 		drop_location.visible_message(span_warning("Biomass spills from \the [src]'s biomass tank!"))
 		playsound(drop_location, 'sound/effects/slosh.ogg', 25, vary = TRUE)
 		new /obj/effect/decal/cleanable/greenglow(drop_location)
-	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/biogenerator/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
@@ -359,10 +355,10 @@
 
 
 /obj/machinery/biogenerator/proc/use_biomass(list/materials, amount = 1, remove_biomass = TRUE)
-	if(materials.len != 1 || materials[1] != GET_MATERIAL_REF(/datum/material/biomass))
+	if(materials.len != 1 || materials[1] != SSmaterials.get_material(/datum/material/biomass))
 		return FALSE
 
-	var/cost = materials[GET_MATERIAL_REF(/datum/material/biomass)] * amount / efficiency
+	var/cost = materials[SSmaterials.get_material(/datum/material/biomass)] * amount / efficiency
 	if (cost > biomass)
 		return FALSE
 
@@ -392,13 +388,12 @@
 		if(!use_biomass(design.materials, amount))
 			return FALSE
 
+		var/drop_location = drop_location()
 		if(istype(design.build_path, /obj/item/stack/sheet))
-			new design.build_path(drop_location(), amount)
-
+			design.create_result(drop_location, amount = amount)
 		else
-			var/drop_location = drop_location()
 			for(var/i in 1 to amount)
-				new design.build_path(drop_location)
+				design.create_result(drop_location)
 
 	return TRUE
 
@@ -498,28 +493,28 @@
 	data["categories"] = list()
 	data["max_visual_biomass"] = max_visual_biomass
 
-	var/categories = show_categories.Copy()
+	var/list/categories = show_categories.Copy()
 	for(var/category in categories)
 		categories[category] = list()
 
-	for(var/design_id in stored_research.researched_designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+	for(var/design_path in stored_research.researched_designs)
+		var/datum/design/design = SSresearch.techweb_designs[design_path]
 		for(var/category in categories)
 			if(category in design.category)
 				categories[category] += design
 
-	for(var/category in categories)
+	for(var/category, category_designs in categories)
 		var/list/cat = list(
 			"name" = category,
 			"items" = (category == selected_cat ? list() : null))
 
-		for(var/item in categories[category])
-			var/datum/design/design = item
+		for(var/datum/design/design as anything in category_designs)
 			cat["items"] += list(list(
-				"id" = design.id,
+				"path" = design.type,
 				"name" = design.name,
-				"is_reagent" = design.make_reagent != null,
-				"cost" = design.materials[GET_MATERIAL_REF(/datum/material/biomass)] / efficiency,
+				"icon" = design.asset_id,
+				"is_reagent" = !isnull(design.make_reagent),
+				"cost" = design.materials[SSmaterials.get_material(/datum/material/biomass)] / efficiency,
 			))
 		data["categories"] += list(cat)
 
@@ -541,24 +536,23 @@
 			return TRUE
 
 		if("create")
+			var/design_path = text2path(params["design_path"])
+			if(!design_path)
+				return
+
+			if(!stored_research.researched_designs[design_path])
+				return
+
+			var/datum/design/design = SSresearch.techweb_designs[design_path]
+			if(!istype(design))
+				stack_trace("Invalid design ID passed into biogenerator ui_act()")
+				return
+
 			var/amount = text2num(params["amount"])
 			if(!amount)
 				return
-
-			var/id = params["id"]
-			if(!stored_research.researched_designs.Find(id))
-				stack_trace("ID did not map to a researched datum [id]")
-				return
-
-			var/datum/design/design = SSresearch.techweb_design_by_id(id)
 			amount = clamp(amount, 1, (design.make_reagent && beaker ? beaker.reagents.maximum_volume - beaker.reagents.total_volume : max_output))
-
-			if(design && !istype(design, /datum/design/error_design))
-				create_product(design, amount)
-
-			else
-				stack_trace("ID could not be turned into a valid techweb design datum [id]")
-				return
+			create_product(design, amount)
 
 			return TRUE
 

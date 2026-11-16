@@ -17,14 +17,15 @@
 
 	src.pixel_shift = pixel_shift
 
-	RegisterSignal(target, COMSIG_ATOM_ENTERING, PROC_REF(on_source_entering))
+	RegisterSignals(target, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING), PROC_REF(on_source_entering))
 	RegisterSignal(target, COMSIG_ATOM_EXITING, PROC_REF(on_source_exiting))
+	RegisterSignal(target, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(on_source_after_shuttle_move))
 
 	var/atom/atom_target = target
 	register_turf(atom_target, atom_target.loc)
 
 /datum/element/elevation/Detach(atom/movable/source)
-	UnregisterSignal(source, list(COMSIG_ATOM_ENTERING, COMSIG_ATOM_EXITING))
+	UnregisterSignal(source, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING, COMSIG_ATOM_EXITING, COMSIG_ATOM_AFTER_SHUTTLE_MOVE))
 	unregister_turf(source, source.loc)
 	REMOVE_TRAIT(source, TRAIT_ELEVATING_OBJECT, ref(src))
 	return ..()
@@ -52,6 +53,14 @@
 /datum/element/elevation/proc/on_source_exiting(atom/movable/source, atom/exiting)
 	SIGNAL_HANDLER
 	unregister_turf(source, exiting)
+
+/// Shuttle movement bypasses ordinary entry/exit
+/datum/element/elevation/proc/on_source_after_shuttle_move(atom/movable/source, turf/old_turf)
+	SIGNAL_HANDLER
+	if(source.loc == old_turf)
+		return
+	unregister_turf(source, old_turf)
+	register_turf(source, source.loc)
 
 /datum/element/elevation/proc/register_turf(atom/movable/source, atom/location)
 	if(!isturf(location))
@@ -130,15 +139,19 @@
 		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON,
 		COMSIG_TURF_RESET_ELEVATION,
 	))
-	REMOVE_TRAIT(source, TRAIT_ELEVATED_TURF, ELEVATION_SOURCE(src))
 	for(var/mob/living/living in source)
 		deelevate_mob(living)
 		UnregisterSignal(living, list(COMSIG_LIVING_SET_BUCKLED, SIGNAL_ADDTRAIT(TRAIT_IGNORE_ELEVATION), SIGNAL_REMOVETRAIT(TRAIT_IGNORE_ELEVATION)))
+	REMOVE_TRAIT(source, TRAIT_ELEVATED_TURF, ELEVATION_SOURCE(src))
 	return ..()
 
 /datum/element/elevation_core/proc/on_entered(turf/source, atom/movable/entered, atom/old_loc)
 	SIGNAL_HANDLER
-	if((isnull(old_loc) || !HAS_TRAIT_FROM(old_loc, TRAIT_ELEVATED_TURF, ELEVATION_SOURCE(src))) && isliving(entered))
+	// If the movement has been aborted by something else within the chain we need to abort
+	if(!isliving(entered) || entered.loc != source)
+		return
+
+	if(isnull(old_loc) || !HAS_TRAIT_FROM(old_loc, TRAIT_ELEVATED_TURF, ELEVATION_SOURCE(src)))
 		register_new_mob(entered, elevate_time = isturf(old_loc) && source.Adjacent(old_loc) ? ELEVATE_TIME : 0)
 
 /datum/element/elevation_core/proc/on_initialized_on(turf/source, atom/movable/spawned)
@@ -178,7 +191,6 @@
 	// we want to avoid accidentally double-elevating anything they're buckled to (namely vehicles)
 	if(target.has_offset(source = ELEVATION_SOURCE(src)))
 		return
-	ADD_TRAIT(target, TRAIT_MOB_ELEVATED, ELEVATION_SOURCE(src))
 	// We are buckled to something
 	if(target.buckled)
 		// We are buckled to a vehicle, so it also must be elevated
@@ -189,15 +201,18 @@
 			pass()
 		// We are buckled to some other object - perhaps the object itself - so skip
 		else
+			ADD_TRAIT(target, TRAIT_MOB_ELEVATED, ELEVATION_SOURCE(src))
 			return
+
 	target.add_offsets(ELEVATION_SOURCE(src), z_add = pixel_shift, animate = elevate_time > 0)
+	ADD_TRAIT(target, TRAIT_MOB_ELEVATED, ELEVATION_SOURCE(src))
 
 /// Reverts elevation of the mob.
 /datum/element/elevation_core/proc/deelevate_mob(mob/living/target, elevate_time = ELEVATE_TIME)
-	REMOVE_TRAIT(target, TRAIT_MOB_ELEVATED, ELEVATION_SOURCE(src))
 	target.remove_offsets(ELEVATION_SOURCE(src), animate = elevate_time > 0)
 	if(isvehicle(target.buckled))
 		animate(target.buckled, pixel_z = -pixel_shift, time = elevate_time, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	REMOVE_TRAIT(target, TRAIT_MOB_ELEVATED, ELEVATION_SOURCE(src))
 
 /**
  * If the mob is buckled or unbuckled to/from a vehicle, shift it up/down

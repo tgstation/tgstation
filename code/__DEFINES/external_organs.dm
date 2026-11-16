@@ -11,3 +11,11 @@
 
 /// Tail spine defines
 #define SPINE_KEY_LIZARD "lizard"
+
+//wing flight defines
+///can't generate lift, will only fly in 0G, while atmos is present
+#define WINGS_FLIGHTLESS 1
+///can generate lift and fly if atmos is present
+#define WINGS_AIRWORTHY 2
+///can fly regardless of atmos
+#define WINGS_MAGIC 3

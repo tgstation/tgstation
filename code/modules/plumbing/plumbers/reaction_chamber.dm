@@ -8,7 +8,6 @@
 	desc = "Keeps chemicals separated until given conditions are met."
 	icon_state = "reaction_chamber"
 	buffer = 200
-	reagent_flags = TRANSPARENT | NO_REACT
 	reagents = /datum/reagents/plumbing/reaction_chamber
 
 	/**

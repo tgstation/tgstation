@@ -22,7 +22,7 @@
 	. = ..()
 	AddElement(/datum/element/floor_placeable)
 
-/obj/item/clothing/head/cone/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/cone/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)

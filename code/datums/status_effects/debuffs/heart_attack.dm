@@ -98,7 +98,7 @@
 		owner.adjust_oxy_loss(oxyloss_sum)
 
 	if(time_until_stoppage <= 0)
-		if(owner.stat == CONSCIOUS)
+		if(!IS_UNCONSCIOUS_OR_CRIT(owner))
 			to_chat(owner, span_userdanger("You feel a terrible pain in your chest, as if your heart has stopped!"))
 		owner.adjust_eye_blur(20 SECONDS)
 		human_owner.set_heartattack(TRUE)
@@ -121,12 +121,12 @@
 
 	time_until_stoppage--
 
-/datum/status_effect/heart_attack/get_examine_text()
+/datum/status_effect/heart_attack/get_examine_text(mob/examiner)
 	if(!time_until_stoppage <= ATTACK_STAGE_THREE)
 		return
 	var/mob/living/carbon/human/human_owner = owner
 	var/cannot_grasp = (human_owner.usable_hands <= 0 || owner.incapacitated & INCAPABLE_RESTRAINTS || HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
-	return span_warning("[owner.p_they()] looks to be doubling over" + "[cannot_grasp ? " in pain!" : ", clutching [owner.p_their()] chest in pain!"]")
+	return span_warning("[owner.p_they()] look[owner.p_s()] to be doubling over" +"[cannot_grasp ? " in pain!" : ", clutching [owner.p_their()] chest in pain!"]")
 
 /datum/status_effect/heart_attack/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_HIGH, type)

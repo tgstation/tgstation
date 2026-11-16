@@ -23,7 +23,6 @@
 	speak_emote = list("gurgles")
 	attack_sound = 'sound/items/weapons/pierce.ogg'
 	throw_blocked_message = "bounces harmlessly off of"
-	crusher_loot = /obj/item/crusher_trophy/legion_skull
 	death_message = "wails in chorus and dissolves into quivering flesh."
 	ai_controller = /datum/ai_controller/basic_controller/legion
 	/// What kind of mob do we spawn?
@@ -34,6 +33,8 @@
 	var/mob/living/stored_mob = null
 	/// Do we have emissives?
 	var/has_emissive = TRUE
+	/// Used for replacing the word "human" or "monkey" in the description with the name of the species of the stored mob (if any)
+	var/desc_word_to_replace = "human"
 
 /mob/living/basic/mining/legion/Initialize(mapload)
 	. = ..()
@@ -72,17 +73,31 @@
 		new corpse_type(loc)
 	return ..()
 
+/mob/living/basic/mining/legion/update_name()
+	. = ..()
+	if (stored_mob && (!HAS_TRAIT(stored_mob, TRAIT_LESSER_HUMANOID) || stored_mob == GLOB.the_one_and_only_punpun))
+		name = stored_mob.real_name
+	else
+		name = initial(name)
+
+/mob/living/basic/mining/legion/update_desc()
+	. = ..()
+	desc = initial(desc)
+	if(!stored_mob || !desc_word_to_replace)
+		return
+	var/replacement = LOWER_TEXT(astype(stored_mob, /mob/living/carbon)?.dna?.species?.name) || initial(stored_mob.name)
+	desc = replacetext(desc, desc_word_to_replace, replacement)
+
+
 /mob/living/basic/mining/legion/update_overlays()
 	. = ..()
 	if (stat != DEAD && has_emissive) // Shouldn't really happen but just in case
-		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_NO_BLOOM)
+		. += emissive_appearance(icon, "[icon_living]_e", src, effect_type = EMISSIVE_BLOOM)
 
 /// Put a corpse in this guy
 /mob/living/basic/mining/legion/proc/consume(mob/living/carbon/human/consumed)
 	new /obj/effect/gibspawner/generic(consumed.loc)
 	gender = consumed.gender
-	if (!ismonkey(consumed) || consumed == GLOB.the_one_and_only_punpun)
-		name = consumed.real_name
 	consumed.investigate_log("has been killed by hivelord infestation.", INVESTIGATE_DEATHS)
 	consumed.death()
 	consumed.extinguish_mob()
@@ -94,6 +109,7 @@
 	ai_controller?.set_blackboard_key(BB_LEGION_RECENT_LINES, consumed.copy_recent_speech(line_chance = 80))
 	stored_mob = consumed
 	visible_message(span_warning("[src] staggers to [p_their()] feet!"))
+	update_appearance(UPDATE_NAME|UPDATE_DESC)
 	if (prob(75))
 		return
 	// Congratulations you have won a special prize: cancer
@@ -142,9 +158,7 @@
 	maxHealth = 60
 	health = 60
 	speed = 2
-	crusher_drop_chance = 20
 	corpse_type = /obj/effect/mob_spawn/corpse/human/legioninfested/dwarf
-
 
 /// Like a Legion but larger and spawns regular Legions, not currently used anywhere and very soulful
 /mob/living/basic/mining/legion/large
@@ -164,6 +178,7 @@
 	pixel_x = -16
 	sentience_type = SENTIENCE_BOSS
 	has_emissive = FALSE
+	desc_word_to_replace = ""
 
 /mob/living/basic/mining/legion/large/Initialize(mapload)
 	. = ..()
@@ -174,6 +189,7 @@
 		max_spawned = 3,\
 		spawn_text = "peels itself off from",\
 		faction = faction,\
+		spawner_logic = SPAWN_CONTINUOUS_BEHAVIOR,\
 	)
 
 /// Create what we want to drop on death, in proc form so we can always return a static list

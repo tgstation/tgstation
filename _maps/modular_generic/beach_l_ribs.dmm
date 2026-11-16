@@ -10,9 +10,7 @@
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 10
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "aJ" = (
 /obj/modular_map_connector,
@@ -45,9 +43,7 @@
 	dir = 8
 	},
 /mob/living/basic/mining/goldgrub/baby,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "gP" = (
 /obj/effect/turf_decal/weather/sand{
@@ -72,9 +68,7 @@
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 6
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid10"
-	},
+/turf/open/misc/asteroid/variant_10,
 /area/template_noop)
 "iD" = (
 /obj/structure/flora/rock/pile/style_3,
@@ -82,9 +76,7 @@
 /area/template_noop)
 "jT" = (
 /obj/item/fish/boned,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid_dug"
-	},
+/turf/open/misc/asteroid/crater,
 /area/template_noop)
 "ky" = (
 /obj/structure/flora/ash/cacti{
@@ -100,9 +92,7 @@
 /obj/item/flashlight/lantern{
 	icon_state = "floodlight"
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid11"
-	},
+/turf/open/misc/asteroid/variant_11,
 /area/template_noop)
 "ml" = (
 /obj/effect/turf_decal/weather/sand{
@@ -135,24 +125,18 @@
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 8
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid_dug"
-	},
+/turf/open/misc/asteroid/crater,
 /area/template_noop)
 "pk" = (
 /obj/structure/flora/rock/pile/style_3,
 /obj/effect/turf_decal/weather/sand,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "pr" = (
 /obj/effect/turf_decal/trimline/dark/corner{
 	dir = 4
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "pZ" = (
 /obj/effect/turf_decal/weather/sand{
@@ -180,16 +164,12 @@
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 5
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "tA" = (
 /obj/effect/turf_decal/weather/sand,
 /obj/effect/turf_decal/trimline/dark/warning,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "uf" = (
 /obj/structure/flora/rock/pile/style_2,
@@ -199,16 +179,12 @@
 /obj/effect/turf_decal/weather/sand{
 	dir = 6
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "uy" = (
 /obj/item/stack/sheet/bone,
 /mob/living/basic/mining/goldgrub/baby,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid_dug"
-	},
+/turf/open/misc/asteroid/crater,
 /area/template_noop)
 "uS" = (
 /obj/effect/turf_decal/weather/sand{
@@ -225,18 +201,14 @@
 	icon_state = "cactus3p"
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid7"
-	},
+/turf/open/misc/asteroid/variant_7,
 /area/template_noop)
 "wy" = (
 /obj/item/chair/wood,
 /obj/effect/turf_decal/weather/sand{
 	dir = 10
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid6"
-	},
+/turf/open/misc/asteroid/variant_6,
 /area/template_noop)
 "wI" = (
 /obj/effect/turf_decal/weather/sand{
@@ -246,9 +218,7 @@
 	dir = 9
 	},
 /obj/structure/holosign/barrier/engineering,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "xA" = (
 /obj/effect/turf_decal/weather/sand{
@@ -269,39 +239,29 @@
 	dir = 10
 	},
 /obj/structure/holosign/barrier/engineering,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "xS" = (
 /obj/effect/turf_decal/trimline/dark/corner{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "xU" = (
 /obj/structure/chair/wood{
 	dir = 8
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "zh" = (
 /obj/structure/flora/ash/cacti{
 	icon_state = "cactus2"
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid7"
-	},
+/turf/open/misc/asteroid/variant_7,
 /area/template_noop)
 "zH" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid2"
-	},
+/turf/open/misc/asteroid/variant_2,
 /area/template_noop)
 "Cv" = (
 /obj/structure/flora/ash/cacti{
@@ -324,9 +284,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "DX" = (
 /obj/structure/flora/rock/pile/style_2,
@@ -341,9 +299,7 @@
 /obj/structure/flora/bush/reed/style_random{
 	pixel_y = 6
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "ED" = (
 /obj/structure/flora/rock/pile/style_random,
@@ -353,9 +309,7 @@
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 8
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "Ff" = (
 /obj/effect/turf_decal/weather/sand{
@@ -375,9 +329,7 @@
 /obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "floor4"
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid3"
-	},
+/turf/open/misc/asteroid/variant_3,
 /area/template_noop)
 "Ft" = (
 /obj/structure/rack,
@@ -392,9 +344,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "FD" = (
 /obj/effect/turf_decal/weather/sand,
@@ -414,9 +364,7 @@
 /obj/item/flashlight/lantern{
 	icon_state = "floodlight"
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid11"
-	},
+/turf/open/misc/asteroid/variant_11,
 /area/template_noop)
 "Go" = (
 /obj/effect/turf_decal/weather/sand{
@@ -429,9 +377,7 @@
 /area/template_noop)
 "Iw" = (
 /obj/item/fishing_hook/bone,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid_dug"
-	},
+/turf/open/misc/asteroid/crater,
 /area/template_noop)
 "Jy" = (
 /obj/effect/turf_decal/weather/sand{
@@ -446,9 +392,7 @@
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 9
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid_dug"
-	},
+/turf/open/misc/asteroid/crater,
 /area/template_noop)
 "La" = (
 /obj/structure/flora/ash/cacti{
@@ -462,15 +406,11 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid10"
-	},
+/turf/open/misc/asteroid/variant_10,
 /area/template_noop)
 "LD" = (
 /obj/effect/turf_decal/trimline/dark/corner,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "LK" = (
 /obj/effect/turf_decal/weather/sand{
@@ -480,9 +420,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "Mg" = (
 /obj/effect/turf_decal/weather/sand{
@@ -502,9 +440,7 @@
 /obj/item/flashlight/lantern{
 	icon_state = "floodlight"
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid9"
-	},
+/turf/open/misc/asteroid/variant_9,
 /area/template_noop)
 "Oi" = (
 /obj/structure/table_frame,
@@ -516,18 +452,14 @@
 	dir = 5
 	},
 /obj/item/binoculars,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/variant_5,
 /area/template_noop)
 "OJ" = (
 /obj/structure/statue/bone/rib,
 /obj/effect/decal/cleanable/blood/xeno{
 	icon_state = "floor5"
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "OM" = (
 /obj/effect/decal/cleanable/dirt,
@@ -546,9 +478,7 @@
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 1
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid8"
-	},
+/turf/open/misc/asteroid/variant_8,
 /area/template_noop)
 "Rs" = (
 /obj/effect/turf_decal/weather/sand{
@@ -576,9 +506,7 @@
 	pixel_x = 7
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid7"
-	},
+/turf/open/misc/asteroid/variant_7,
 /area/template_noop)
 "SE" = (
 /obj/effect/turf_decal/weather/sand{
@@ -601,9 +529,7 @@
 	dir = 5
 	},
 /obj/structure/holosign/barrier/engineering,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid9"
-	},
+/turf/open/misc/asteroid/variant_9,
 /area/template_noop)
 "TL" = (
 /obj/structure/flora/rock/pile/style_random,
@@ -627,9 +553,7 @@
 /obj/structure/flora/ash/cacti{
 	icon_state = "cactus4"
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "Wd" = (
 /obj/effect/turf_decal/weather/sand,
@@ -638,9 +562,7 @@
 /area/template_noop)
 "WA" = (
 /obj/effect/turf_decal/trimline/dark/corner,
-/turf/open/misc/asteroid{
-	icon_state = "asteroid8"
-	},
+/turf/open/misc/asteroid/variant_8,
 /area/template_noop)
 "YD" = (
 /obj/effect/turf_decal/weather/sand{
@@ -658,9 +580,7 @@
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 1
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid10"
-	},
+/turf/open/misc/asteroid/variant_10,
 /area/template_noop)
 "YQ" = (
 /obj/structure/statue/bone/rib{
@@ -675,9 +595,7 @@
 /obj/effect/turf_decal/trimline/dark/warning{
 	dir = 6
 	},
-/turf/open/misc/asteroid{
-	icon_state = "asteroid0"
-	},
+/turf/open/misc/asteroid/variant_0,
 /area/template_noop)
 "ZO" = (
 /turf/template_noop,

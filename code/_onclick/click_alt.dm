@@ -119,7 +119,7 @@
 ///alt and alt-shift click.
 ///Returns FALSE if the mob is unable to open the loot panel at the target and TRUE if the loot panel was opened.
 /mob/living/proc/try_open_loot_panel_on(atom/target)
-	if(!CAN_I_SEE(target) || (is_blind() && !IN_GIVEN_RANGE(src, target, 1)))
+	if(!(src in viewers(target)) || (is_blind() && !IN_GIVEN_RANGE(src, target, 1)))
 		return FALSE
 
 	// No alt clicking to view turf from beneath

@@ -15,7 +15,7 @@
 		/obj/item/stock_parts/micro_laser = 3,
 		/obj/item/stock_parts/scanning_module = 3,
 		/obj/item/wirecutters = 2,
-		/obj/item/stack/sticky_tape/duct = 3,
+		/obj/item/stack/medical/wrap/sticky_tape/duct = 3,
 	)
 	contraband = list(
 		/obj/item/assembly/health = 2,

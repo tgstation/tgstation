@@ -6,11 +6,22 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 
 	///associative list of the form: list(lift_id = list(all transport_controller datums attached to lifts of that type))
 	var/list/transports_by_type = list()
+	///all tram navigation beacons linked to the subsystem
 	var/list/nav_beacons = list()
+	///all tram crossing signals linked to the subsystem
 	var/list/crossing_signals = list()
+	///all tram guideway sensors linked to the subsystem
 	var/list/sensors = list()
+	///all tram doors linked to the subsystem
 	var/list/doors = list()
+	///all tram info displays linked to the subsystem
 	var/list/displays = list()
+	///list of default tram IDs for admin tools/debugging
+	var/list/debug_tram_list = list(
+		TRAMSTATION_LINE_1,
+		HERETIC_LINE_1,
+		HILBERT_LINE_1,
+	)
 	///how much time a tram can take per movement before we notify admins and slow down the tram. in milliseconds
 	var/max_time = 15
 	///how many times the tram can move costing over max_time milliseconds before it gets slowed down
@@ -183,6 +194,8 @@ PROCESSING_SUBSYSTEM_DEF(transport)
 			transport_controller.dispatch_transport()
 			return
 	else
+		playsound(transport_controller.nav_beacon, 'sound/machines/tram/door_chime.ogg', 45, vary = FALSE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
+		stoplag(1.4 SECONDS)
 		transport_controller.set_status_code(DOORS_READY, FALSE)
 		transport_controller.cycle_doors(CYCLE_CLOSED)
 

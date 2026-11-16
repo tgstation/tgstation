@@ -40,7 +40,7 @@ export const VirusDisplay = (props) => {
 const Info = (props) => {
   const { act } = useBackend<Data>();
   const {
-    virus: { agent, can_rename, cure, description, index, name, spread },
+    virus: { agent, can_rename, description, index, name, spread },
   } = props;
 
   return (
@@ -66,7 +66,6 @@ const Info = (props) => {
         {capitalizeFirst(agent)}
       </LabeledList.Item>
       <LabeledList.Item label="Spread">{spread}</LabeledList.Item>
-      <LabeledList.Item label="Possible Cure">{cure}</LabeledList.Item>
     </LabeledList>
   );
 };
@@ -84,7 +83,7 @@ const Traits = (props) => {
   return (
     <Section title="Statistics">
       <LabeledList>
-        <Tooltip content="Decides the cure complexity.">
+        <Tooltip content="Protection from cures and natural recovery.">
           <LabeledList.Item color={getColor(resistance)} label="Resistance">
             {resistance}
           </LabeledList.Item>

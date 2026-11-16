@@ -17,22 +17,26 @@
 /obj/item/reagent_containers/cup/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = TRUE)
 	. = ..()
 	if(!.) //if the bottle wasn't caught
-		var/mob/thrower = throwingdatum?.get_thrower()
-		if(!istype(thrower))
-			return
-		smash(hit_atom, thrower, throwingdatum)
+		smash(hit_atom, throwingdatum?.get_thrower(), throwingdatum)
 
-/obj/item/reagent_containers/cup/glass/proc/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top = FALSE)
+/obj/item/reagent_containers/cup/glass/proc/smash(atom/target, atom/thrower, datum/thrownthing/throwingdatum, break_top = FALSE)
 	if(!isGlass)
-		return
+		return FALSE
 	if(QDELING(src) || !target) //Invalid loc
-		return
-	if(bartender_check(target, thrower) && throwingdatum)
-		return
-	splash_reagents(QDELETED(target) ? target.drop_location() : target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
-	var/obj/item/broken_bottle/B = new (loc)
-	B.mimic_broken(src, target, break_top)
+		return FALSE
+	if(ismob(thrower) && bartender_check(target, thrower) && throwingdatum)
+		return FALSE
+	var/splash_target = QDELETED(target) ? target.drop_location() : target
+	var/splash_thrower = ismob(thrower) ? thrower : null
+	splash_reagents(splash_target, splash_thrower, allow_closed_splash = TRUE)
+	var/obj/item/broken_bottle/broken = new (loc)
+	broken.mimic_broken(src, target, break_top)
+	post_smash(target, thrower, throwingdatum, broken)
 	qdel(src)
+	return TRUE
+
+/obj/item/reagent_containers/cup/glass/proc/post_smash(atom/target, atom/thrower, datum/thrownthing/throwingdatum, obj/item/broken_bottle/broken)
+	return
 
 /obj/item/reagent_containers/cup/glass/bullet_act(obj/projectile/proj)
 	. = ..()
@@ -114,6 +118,7 @@
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon = 'icons/obj/drinks/coffee.dmi'
 	icon_state = "coffee"
+	inhand_icon_state = "coffee"
 	base_icon_state = "coffee"
 	list_reagents = list(/datum/reagent/consumable/coffee = 30)
 	resistance_flags = FREEZE_PROOF
@@ -127,10 +132,6 @@
 	icon_state = "coffee_empty"
 	list_reagents = null
 	lid_open = TRUE
-
-/obj/item/reagent_containers/cup/glass/coffee/Initialize(mapload)
-	. = ..()
-	register_context()
 
 /obj/item/reagent_containers/cup/glass/coffee/examine(mob/user)
 	. = ..()
@@ -247,7 +248,7 @@
 	var/mutable_appearance/cap_overlay
 	var/flip_chance = 10
 	custom_price = PAYCHECK_LOWER * 0.8
-	reagent_container_liquid_sound = SFX_PLASTIC_BOTTLE_LIQUID_SLOSH
+	reagent_container_liquid_sound = /datum/sound_effect/plastic_bottle_liquid_slosh
 
 /obj/item/reagent_containers/cup/glass/waterbottle/Initialize(mapload)
 	cap_overlay = mutable_appearance(cap_icon, cap_icon_state)
@@ -376,14 +377,6 @@
 		base_container_type = /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton, \
 	)
 
-/obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
-	if(bartender_check(target, thrower) && throwingdatum)
-		return
-	splash_reagents(QDELETED(target) ? target.drop_location() : target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
-	var/obj/item/broken_bottle/bottle_shard = new(drop_location())
-	bottle_shard.mimic_broken(src, target)
-	qdel(src)
-
 /obj/item/reagent_containers/cup/glass/colocup
 	name = "colo cup"
 	desc = "A cheap, mass produced style of cup, typically used at parties. They never seem to come out red, for some reason..."
@@ -440,7 +433,6 @@
 
 /obj/item/reagent_containers/cup/glass/shaker/Initialize(mapload)
 	. = ..()
-	register_context()
 	if(prob(10))
 		name = "\improper Nanotrasen 20th Anniversary Shaker"
 		desc += " It has an emblazoned Nanotrasen logo on it."
@@ -513,6 +505,7 @@
 	desc = "Every good spaceman knows it's a good idea to bring along a couple of pints of whiskey wherever they go."
 	custom_price = PAYCHECK_COMMAND * 2
 	icon = 'icons/obj/drinks/bottles.dmi'
+	worn_icon_state = "flask"
 	icon_state = "flask"
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2.5)
 	volume = 60
@@ -521,12 +514,14 @@
 /obj/item/reagent_containers/cup/glass/flask/gold
 	name = "captain's flask"
 	desc = "A gold flask belonging to the captain."
+	worn_icon_state = "flask_gold"
 	icon_state = "flask_gold"
 	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
 
 /obj/item/reagent_containers/cup/glass/flask/det
 	name = "detective's flask"
 	desc = "The detective's only true friend."
+	worn_icon_state = "detflask"
 	icon_state = "detflask"
 	list_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 30)
 

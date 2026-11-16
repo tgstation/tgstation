@@ -15,20 +15,18 @@
 
 	parent_atom.set_opacity(FALSE)
 	if(isliving(parent_atom))
-		var/mob/living/L = parent_atom
-		ADD_TRAIT(L, TRAIT_UNDENSE, SHRUNKEN_TRAIT)
-		RegisterSignal(L, COMSIG_MOB_SAY, PROC_REF(handle_shrunk_speech))
-		L.add_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
-		if(iscarbon(L))
-			var/mob/living/carbon/C = L
-			C.unequip_everything()
-			C.visible_message(span_warning("[C]'s belongings fall off of [C.p_them()] as they shrink down!"),
+		var/mob/living/living = parent_atom
+		ADD_TRAIT(living, TRAIT_UNDENSE, SHRUNKEN_TRAIT)
+		RegisterSignal(living, COMSIG_MOB_SAY, PROC_REF(handle_shrunk_speech))
+		living.add_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
+		living.damage_resistance -= 100
+		if(iscarbon(living))
+			var/mob/living/carbon/carbon = living
+			carbon.unequip_everything()
+			carbon.visible_message(span_warning("[carbon]'s belongings fall off of [carbon.p_them()] as [carbon.p_they()] shrink down!"),
 			span_userdanger("Your belongings fall away as everything grows bigger!"))
-			if(ishuman(C))
-				var/mob/living/carbon/human/H = C
-				H.physiology.damage_resistance -= 100//carbons take double damage while shrunk
-		if(!L.GetComponent(/datum/component/squashable))
-			newsquash = L.AddComponent( \
+		if(!living.GetComponent(/datum/component/squashable))
+			newsquash = living.AddComponent( \
 				/datum/component/squashable, \
 				squash_chance = 75, \
 				squash_damage = 10, \
@@ -52,13 +50,11 @@
 	parent_atom.transform = parent_atom.transform.Scale(2,2)
 	parent_atom.set_opacity(oldopac)
 	if(isliving(parent_atom))
-		var/mob/living/L = parent_atom
-		L.remove_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
-		REMOVE_TRAIT(L, TRAIT_UNDENSE, SHRUNKEN_TRAIT)
-		UnregisterSignal(L, COMSIG_MOB_SAY)
-		if(ishuman(L))
-			var/mob/living/carbon/human/H = L
-			H.physiology.damage_resistance += 100
+		var/mob/living/living = parent_atom
+		living.remove_movespeed_modifier(/datum/movespeed_modifier/shrink_ray)
+		REMOVE_TRAIT(living, TRAIT_UNDENSE, SHRUNKEN_TRAIT)
+		UnregisterSignal(living, COMSIG_MOB_SAY)
+		living.damage_resistance += 100
 	else
 		parent_atom.set_density(olddens) // this is handled by the UNDENSE trait on mobs
 	return ..()

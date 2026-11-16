@@ -1,0 +1,1 @@
+/obj/item/stack/sheet/xenochitin : /obj/item/stack/sheet/animalhide/xeno{@OLD}

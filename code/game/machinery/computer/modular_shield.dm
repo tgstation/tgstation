@@ -2,7 +2,7 @@
 	name = "modular shield control console"
 	desc = "Used to remotely monitor and toggle modular shield generators."
 	circuit = /obj/item/circuitboard/computer/modular_shield_console
-
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control")
 	///the list of generators that are linked to us
 	var/list/obj/machinery/modular_shield_generator/generators = list()
 

@@ -2,6 +2,7 @@
 /obj/machinery/computer/atmos_control
 	name = "atmospherics monitoring"
 	desc = "Used to monitor the station's atmospherics sensors."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/atmos_control")
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/atmos_control
@@ -109,6 +110,7 @@
 	data["maxOutput"] = MAX_OUTPUT_PRESSURE
 	data["control"] = control
 	data["reconnecting"] = reconnecting
+	data["defaultGas"] = get_default_gas()
 	data += return_atmos_handbooks()
 	return data
 
@@ -227,6 +229,13 @@
 		if("reconnect")
 			reconnect(ui.user)
 			return TRUE
+
+/obj/machinery/computer/atmos_control/proc/get_default_gas()
+	for(var/gas_path, gas_id in GLOB.meta_gas_info[META_GAS_ID])
+		if(gas_id == atmos_chambers[1])
+			return gas_id
+
+	return null
 
 /obj/machinery/computer/atmos_control/nocontrol
 	control = FALSE

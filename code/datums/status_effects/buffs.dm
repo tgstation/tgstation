@@ -55,7 +55,7 @@
 /datum/status_effect/his_grace/tick(seconds_between_ticks)
 	bloodlust = 0
 	var/graces = 0
-	for(var/obj/item/his_grace/HG in owner.held_items)
+	for(var/obj/item/his_grace/HG as anything in owner.get_held_items_of_type(/obj/item/his_grace))
 		if(HG.bloodthirst > bloodlust)
 			bloodlust = HG.bloodthirst
 		if(HG.awakened)
@@ -66,10 +66,10 @@
 		return
 	var/grace_heal = bloodlust * 0.02
 	var/need_mob_update = FALSE
-	need_mob_update += owner.adjust_brute_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner.adjust_fire_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner.adjust_tox_loss(-grace_heal * seconds_between_ticks, forced = TRUE)
-	need_mob_update += owner.adjust_oxy_loss(-(grace_heal * 2) * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	need_mob_update += owner.adjust_brute_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjust_fire_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjust_tox_loss(-grace_heal * seconds_between_ticks)
+	need_mob_update += owner.adjust_oxy_loss(-(grace_heal * 2) * seconds_between_ticks, updating_health = FALSE)
 	if(need_mob_update)
 		owner.updatehealth()
 
@@ -94,7 +94,7 @@
 
 /datum/status_effect/blooddrunk
 	id = "blooddrunk"
-	duration = 10
+	duration = 1 SECONDS
 	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/blooddrunk
 
@@ -105,25 +105,21 @@
 
 /datum/status_effect/blooddrunk/on_apply()
 	owner.add_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.brute_mod *= 0.1
-		human_owner.physiology.burn_mod *= 0.1
-		human_owner.physiology.tox_mod *= 0.1
-		human_owner.physiology.oxy_mod *= 0.1
-		human_owner.physiology.stamina_mod *= 0.1
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 0.1)
+	MODIFY_PHYSIOLOGY(owner, BURN, 0.1)
+	MODIFY_PHYSIOLOGY(owner, TOX, 0.1)
+	MODIFY_PHYSIOLOGY(owner, OXY, 0.1)
+	MODIFY_PHYSIOLOGY(owner, STAMINA, 0.1)
 	owner.add_stun_absorption(source = id, priority = 4)
 	owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1, use_reverb = FALSE)
 	return TRUE
 
 /datum/status_effect/blooddrunk/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.brute_mod *= 10
-		human_owner.physiology.burn_mod *= 10
-		human_owner.physiology.tox_mod *= 10
-		human_owner.physiology.oxy_mod *= 10
-		human_owner.physiology.stamina_mod *= 10
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 10)
+	MODIFY_PHYSIOLOGY(owner, BURN, 10)
+	MODIFY_PHYSIOLOGY(owner, TOX, 10)
+	MODIFY_PHYSIOLOGY(owner, OXY, 10)
+	MODIFY_PHYSIOLOGY(owner, STAMINA, 10)
 	owner.remove_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
 	owner.remove_stun_absorption(id)
 
@@ -185,7 +181,6 @@
 	id = "Exercised"
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REFRESH // New effects will add to total duration
-	alert_type = null
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	alert_type = /atom/movable/screen/alert/status_effect/exercised
 	/// Having any of these reagents in your system extends the duration
@@ -240,7 +235,7 @@
 	if(duration + bonus_time >= exhaustion_limit)
 		duration = exhaustion_limit
 		to_chat(new_owner, span_userdanger("Your muscles are exhausted! Might be a good idea to sleep..."))
-		new_owner.emote("scream")
+		INVOKE_ASYNC(new_owner, TYPE_PROC_REF(/mob, emote), "scream")
 		return // exhaustion_limit
 
 	return bonus_time
@@ -249,10 +244,10 @@
 	duration += workout_duration(new_owner, bonus_time)
 	return ..()
 
-/datum/status_effect/exercised/refresh(mob/living/new_owner, bonus_time)
-	duration += workout_duration(new_owner, bonus_time)
-	new_owner.clear_mood_event("exercise") // we need to reset the old mood event in case our fitness skill changes
-	new_owner.add_mood_event("exercise", /datum/mood_event/exercise, new_owner.mind.get_skill_level(/datum/skill/athletics))
+/datum/status_effect/exercised/refresh(effect, bonus_time)
+	duration += workout_duration(owner, bonus_time)
+	owner.clear_mood_event("exercise") // we need to reset the old mood event in case our fitness skill changes
+	owner.add_mood_event("exercise", /datum/mood_event/exercise, owner.mind.get_skill_level(/datum/skill/athletics))
 
 /datum/status_effect/exercised/on_apply()
 	if(!owner.mind)
@@ -266,7 +261,7 @@
 /atom/movable/screen/alert/status_effect/exercised
 	name = "Exercise"
 	desc = "You feel well exercised! Sleeping will improve your fitness."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "exercised"
 
 //Hippocratic Oath: Applied when the Rod of Asclepius is activated.
@@ -307,7 +302,7 @@
 	QDEL_NULL(aura_healing)
 	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_HIPPOCRATIC_OATH, TRAIT_MEDICAL_HUD), HIPPOCRATIC_OATH_TRAIT)
 
-/datum/status_effect/hippocratic_oath/get_examine_text()
+/datum/status_effect/hippocratic_oath/get_examine_text(mob/examiner)
 	return span_notice("[owner.p_They()] seem[owner.p_s()] to have an aura of healing and helpfulness about [owner.p_them()].")
 
 /datum/status_effect/hippocratic_oath/tick(seconds_between_ticks)
@@ -340,11 +335,11 @@
 			if(itemUser.health < itemUser.maxHealth)
 				new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
 			var/need_mob_update = FALSE
-			need_mob_update += itemUser.adjust_brute_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjust_fire_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjust_brute_loss(-0.6 * seconds_between_ticks, updating_health = FALSE)
+			need_mob_update += itemUser.adjust_fire_loss(-0.6 * seconds_between_ticks, updating_health = FALSE)
 			need_mob_update += itemUser.adjust_tox_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE) //Because Slime People are people too
-			need_mob_update += itemUser.adjust_oxy_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjust_stamina_loss(-3 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjust_oxy_loss(-0.6 * seconds_between_ticks, updating_health = FALSE)
+			need_mob_update += itemUser.adjust_stamina_loss(-3 * seconds_between_ticks, updating_stamina = FALSE)
 			need_mob_update += itemUser.adjust_organ_loss(ORGAN_SLOT_BRAIN, -0.6 * seconds_between_ticks)
 			if(need_mob_update)
 				itemUser.updatehealth()
@@ -369,7 +364,7 @@
 	status_type = STATUS_EFFECT_REFRESH
 
 /datum/status_effect/good_music/tick(seconds_between_ticks)
-	if(owner.can_hear())
+	if(!HAS_TRAIT(owner, TRAIT_DEAF))
 		owner.adjust_dizzy(-4 SECONDS)
 		owner.adjust_jitter(-4 SECONDS)
 		owner.adjust_confusion(-1 SECONDS)
@@ -378,7 +373,7 @@
 /atom/movable/screen/alert/status_effect/regenerative_core
 	name = "Regenerative Core Tendrils"
 	desc = "You can move faster than your broken body could normally handle!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_icon = 'icons/obj/medical/organs/mining_organs.dmi'
 	overlay_state = "legion_core_stable"
 
@@ -422,7 +417,7 @@
 /atom/movable/screen/alert/status_effect/lightningorb
 	name = "Lightning Orb"
 	desc = "The speed surges through you!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "lightningorb"
 
 /datum/status_effect/mayhem
@@ -525,11 +520,7 @@
 	owner.balloon_alert_to_viewers("health buffed")
 	to_chat(owner, span_nicegreen("You feel healthy, like if your body is little stronger than it was a moment ago."))
 
-	if(isanimal(owner))	//dumb animals have their own proc for healing.
-		var/mob/living/simple_animal/healthy_animal = owner
-		healthy_animal.adjustHealth(-(health_increase * healing_modifier))
-	else
-		owner.adjust_brute_loss(-(health_increase * healing_modifier))
+	owner.adjust_brute_loss(-(health_increase * healing_modifier))
 
 /datum/status_effect/limited_buff/health_buff/maxed_out()
 	. = ..()
@@ -561,7 +552,7 @@
 /atom/movable/screen/alert/status_effect/nest_sustenance
 	name = "Nest Vitalization"
 	desc = "The resin seems to pulsate around you. It seems to be sustaining your vital functions. You feel ill..."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "nest_life"
 
 /**
@@ -575,14 +566,11 @@
 	alert_type = null
 
 /datum/status_effect/blessing_of_insanity/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		var/datum/physiology/owner_physiology = human_owner.physiology
-		owner_physiology.brute_mod *= 0.5
-		owner_physiology.burn_mod *= 0.5
-		owner_physiology.tox_mod *= 0.5
-		owner_physiology.oxy_mod *= 0.5
-		owner_physiology.stamina_mod *= 0.5
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 0.5)
+	MODIFY_PHYSIOLOGY(owner, BURN, 0.5)
+	MODIFY_PHYSIOLOGY(owner, TOX, 0.5)
+	MODIFY_PHYSIOLOGY(owner, OXY, 0.5)
+	MODIFY_PHYSIOLOGY(owner, STAMINA, 0.5)
 	owner.add_filter("mad_glow", 2, list("type" = "outline", "color" = "#eed811c9", "size" = 2))
 	owner.AddElement(/datum/element/forced_gravity, 0)
 	owner.AddElement(/datum/element/simple_flying)
@@ -593,14 +581,11 @@
 	return TRUE
 
 /datum/status_effect/blessing_of_insanity/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		var/datum/physiology/owner_physiology = human_owner.physiology
-		owner_physiology.brute_mod *= 2
-		owner_physiology.burn_mod *= 2
-		owner_physiology.tox_mod *= 2
-		owner_physiology.oxy_mod *= 2
-		owner_physiology.stamina_mod *= 2
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 2)
+	MODIFY_PHYSIOLOGY(owner, BURN, 2)
+	MODIFY_PHYSIOLOGY(owner, TOX, 2)
+	MODIFY_PHYSIOLOGY(owner, OXY, 2)
+	MODIFY_PHYSIOLOGY(owner, STAMINA, 2)
 	owner.remove_filter("mad_glow")
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 	owner.RemoveElement(/datum/element/simple_flying)
@@ -641,7 +626,7 @@
 /atom/movable/screen/alert/status_effect/radiation_immunity
 	name = "Radiation shielding"
 	desc = "You're immune to radiation, get settled quick!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "radiation_shield"
 
 /// Throw an alert we're in darkness!! Nightvision can make it hard to tell so this is useful
@@ -673,5 +658,83 @@
 /atom/movable/screen/alert/status_effect/shadow_regeneration
 	name = "Shadow Regeneration"
 	desc = "Bathed in soothing darkness, you will slowly heal yourself"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "lightless"
+
+/// Applies desensitized mood modifier to the mob, carrying between mind transfers
+/datum/status_effect/desensitized
+	id = "desensitized"
+	duration = STATUS_EFFECT_PERMANENT
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+	/// How much to multiply desensitization level by
+	var/magnitude = 1.0
+	/// Effect ID for removal purposes
+	var/effect_id
+
+/datum/status_effect/desensitized/on_creation(mob/living/new_owner, effect_id, magnitude)
+	src.effect_id = effect_id
+	src.magnitude = max(DESENSITIZED_MINIMUM, magnitude)
+	return ..()
+
+/datum/status_effect/desensitized/on_apply()
+	owner.mind?.desensitized_level *= magnitude
+	RegisterSignal(owner, COMSIG_MOB_MIND_TRANSFERRED_INTO, PROC_REF(add_magnitude))
+	RegisterSignal(owner, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, PROC_REF(remove_magnitude))
+	return TRUE
+
+/datum/status_effect/desensitized/on_remove()
+	owner.mind?.desensitized_level /= magnitude
+	UnregisterSignal(owner, list(COMSIG_MOB_MIND_TRANSFERRED_INTO, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF))
+
+/datum/status_effect/desensitized/before_remove(effect_id, magnitude)
+	if(istext(src.effect_id) && istext(effect_id)) // if an id is set, they must match
+		return src.effect_id == effect_id
+	if(isnum(magnitude)) // otherwise if a magnitude is passed, it must match
+		return src.magnitude == magnitude
+	return FALSE
+
+/datum/status_effect/desensitized/proc/add_magnitude(datum/source, mob/living/old_body, datum/mind/swapping)
+	SIGNAL_HANDLER
+	swapping.desensitized_level *= magnitude
+
+/datum/status_effect/desensitized/proc/remove_magnitude(datum/source, mob/living/old_body, datum/mind/swapping)
+	SIGNAL_HANDLER
+	swapping.desensitized_level /= magnitude
+
+//used by the garibaldi cocktail to grant revolutionaries wound resistance and fearlessness
+/datum/status_effect/rev_resilience
+	id = "rev_resilience"
+	duration = 5 SECONDS //gets refreshed by metabolism
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/rev_resilience/on_apply()
+	to_chat(owner, span_warning("You feel your revolutionary spirit surging! You feel like nothing the oppressors could throw at you could wound your pride!"))
+	owner.add_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), TRAIT_STATUS_EFFECT(id))
+	return TRUE
+
+/datum/status_effect/rev_resilience/on_remove()
+	to_chat(owner, span_notice("You feel your surge of revolutionary zeal fade. You hope you don't get shot in the foot..."))
+	owner.remove_traits(list(TRAIT_HARDLY_WOUNDED,TRAIT_ANALGESIA,TRAIT_FEARLESS), TRAIT_STATUS_EFFECT(id))
+
+//status effect granted when taking attack damage while metabolizing synthpax
+/datum/status_effect/synthpax_immunity
+	id = "synthpax_immune"
+	duration = 5 SECONDS
+	status_type = STATUS_EFFECT_REFRESH
+	alert_type = null
+
+/datum/status_effect/synthpax_immunity/on_creation(mob/living/new_owner, duration = 5 SECONDS)
+	src.duration = duration
+	return ..()
+
+/datum/status_effect/synthpax_immunity/on_apply()
+	ADD_TRAIT(owner, TRAIT_SYNTHPAX_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_PACIFISM, METABOLIZATION_TRAIT(/datum/reagent/pax/peaceborg))
+	return TRUE
+
+/datum/status_effect/synthpax_immunity/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_SYNTHPAX_IMMUNE, TRAIT_STATUS_EFFECT(id))
+	if(owner.reagents.has_reagent(/datum/reagent/pax/peaceborg))
+		ADD_TRAIT(owner, TRAIT_PACIFISM, METABOLIZATION_TRAIT(/datum/reagent/pax/peaceborg))

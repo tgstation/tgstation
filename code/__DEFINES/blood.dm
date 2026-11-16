@@ -28,6 +28,12 @@
 // Keys for indexing blood data lists. HIGHLY INCOMPLETE.
 /// Indexing a blood reagent data list with this returns how synthetic the blood is, used for blood worms to nerf common blood sources like monkeys.
 #define BLOOD_DATA_SYNTH_CONTENT "synth_content"
+/// Specifically for Ethereal blood, indicating that it's non-zappy
+#define BLOOD_DATA_ENRICHED_ETHEREAL "enriched"
+/// The blood type of the blood, self evident
+#define BLOOD_DATA_TYPE "blood_type"
+/// The DNA within the blood, either a DNA string or some arbitrary string if the DNA is unknown
+#define BLOOD_DATA_DNA "blood_DNA"
 
 /// Returns whether this mob always has synthetic blood. Used to cap growth for blood worms from easily accessible sources of blood.
 #define IS_BLOOD_ALWAYS_SYNTHETIC(mob) (!ishuman(mob) || HAS_TRAIT(mob, TRAIT_BORN_MONKEY) || HAS_TRAIT(mob, TRAIT_SPAWNED_MOB))

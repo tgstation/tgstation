@@ -11,9 +11,13 @@
 #define SHUTTLE_RECHARGING "recharging"
 #define SHUTTLE_PREARRIVAL "landing"
 
+/// Emergency shuttle either not called, or was recalled and is on cooldown
 #define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
+/// Emergency shuttle has left the station or has docked at central command
 #define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
+/// Emergency shuttle is docked at the station, is travelling to central command, is at central command, or is SOMEWHERE in between
 #define EMERGENCY_AT_LEAST_DOCKED (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_CALL)
+/// Emergency shuttle is called and can no longer be recalled
 #define EMERGENCY_PAST_POINT_OF_NO_RETURN ((SSshuttle.emergency && SSshuttle.emergency.mode == SHUTTLE_CALL && !SSshuttle.past_restriction_point()) || EMERGENCY_AT_LEAST_DOCKED)
 
 // Shuttle return values
@@ -100,18 +104,22 @@
 #define SHUTTLE_DEFAULT_UNDERLYING_AREA /area/space
 
 /// Shuttle unlocks
-// Needs Alien Technology researched.
+/// Needs Alien Technology researched.
 #define SHUTTLE_UNLOCK_ALIENTECH "abductor"
-// Needs bubblegum to die.
+/// Needs bubblegum to die.
 #define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
-// Needs one to set the holodeck to Medieval Sim.
+/// Needs one to set the holodeck to Medieval Sim.
 #define SHUTTLE_UNLOCK_MEDISIM "holodeck"
-// Needs a rune to be cleared by a null rod.
+/// Needs a rune to be cleared by a null rod.
 #define SHUTTLE_UNLOCK_NARNAR "narnar"
-// Needs someone to be polymorphed - Pride Mirror, Magic Mirror, Race Swap, Polymorph Staff/Wand. Badmin Mirror doesn't count, neither does xenobio.
+/// Needs someone to be polymorphed - Pride Mirror, Magic Mirror, Race Swap, Polymorph Staff/Wand. Badmin Mirror doesn't count, neither does xenobio.
 #define SHUTTLE_UNLOCK_WABBAJACK "wabbajack"
-// Needs cargo budget to be almost empty to be purchasable.
+/// Needs cargo budget to be almost empty to be purchasable.
 #define SHUTTLE_UNLOCK_SCRAPHEAP "scrapheap"
+/// Needs biohazard to be triggered - Blob, Zombies, or a Severe Disease
+#define SHUTTLE_UNLOCK_TOMBSTONE "tombstone"
+/// Needs all samples for station's DNA vault goal to be completed.
+#define SHUTTLE_UNLOCK_ARK "ark"
 
 //Shuttle Events
 

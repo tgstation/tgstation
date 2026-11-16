@@ -2,38 +2,47 @@
 GLOBAL_LIST_INIT(magicarp_spell_types, list(
 	/obj/projectile/magic/animate = "dancing",
 	/obj/projectile/magic/arcane_barrage = "arcane",
+	/obj/projectile/magic/babel = "babbling",
 	/obj/projectile/magic/change = "transforming",
 	/obj/projectile/magic/death = "grim",
 	/obj/projectile/magic/door = "unbarred",
 	/obj/projectile/magic/fireball = "blazing",
+	/obj/projectile/magic/freeze = "frigid",
+	/obj/projectile/magic/levitate = "weightless",
 	/obj/projectile/magic/resurrection = "vital",
 	/obj/projectile/magic/spellblade = "vorpal",
+	/obj/projectile/magic/swap = "quantum",
 	/obj/projectile/magic/teleport = "warping",
-	/obj/projectile/magic/babel = "babbling",
 ))
 
 /// A reduced list of spells for magicarp spawned in xenobiology, less disruptive
 GLOBAL_LIST_INIT(xenobiology_magicarp_spell_types, list(
 	/obj/projectile/magic/animate = "dancing",
-	/obj/projectile/magic/teleport = "warping",
+	/obj/projectile/magic/arcane_barrage = "arcane",
 	/obj/projectile/magic/door = "unbarred",
 	/obj/projectile/magic/fireball = "blazing",
+	/obj/projectile/magic/freeze = "frigid",
+	/obj/projectile/magic/levitate = "weightless",
 	/obj/projectile/magic/spellblade = "vorpal",
-	/obj/projectile/magic/arcane_barrage = "arcane",
+	/obj/projectile/magic/swap = "quantum",
+	/obj/projectile/magic/teleport = "warping",
 ))
 
 /// Associative list of magicarp spells to colours, expand this list if you expand the other lists
 GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	/obj/projectile/magic/animate = COLOR_CARP_RUSTY,
 	/obj/projectile/magic/arcane_barrage = COLOR_CARP_PURPLE,
+	/obj/projectile/magic/babel = COLOR_CARP_BROWN,
 	/obj/projectile/magic/change = COLOR_CARP_PINK,
 	/obj/projectile/magic/death = COLOR_CARP_DARK_BLUE,
 	/obj/projectile/magic/door = COLOR_CARP_GREEN,
 	/obj/projectile/magic/fireball = COLOR_CARP_RED,
+	/obj/projectile/magic/freeze = COLOR_CARP_TURQUOISE,
+	/obj/projectile/magic/levitate = COLOR_CARP_DARK_PURPLE,
 	/obj/projectile/magic/resurrection = COLOR_CARP_PALE_GREEN,
 	/obj/projectile/magic/spellblade = COLOR_CARP_SILVER,
+	/obj/projectile/magic/swap = COLOR_CARP_LIGHT_BLUE,
 	/obj/projectile/magic/teleport = COLOR_CARP_GRAPE,
-	/obj/projectile/magic/babel = COLOR_CARP_BROWN,
 ))
 
 /**

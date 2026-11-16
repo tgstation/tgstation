@@ -1,6 +1,7 @@
 /obj/machinery/computer/cargo
 	name = "supply console"
 	desc = "Used to order supplies, approve requests, and control the shuttle."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/cargo")
 	icon_screen = "supply"
 	circuit = /obj/item/circuitboard/computer/cargo
 	light_color = COLOR_BRIGHT_ORANGE
@@ -66,7 +67,7 @@
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.contraband = TRUE
 	board.obj_flags |= EMAGGED
-	update_static_data(user)
+	update_static_data_for_all_viewers()
 	return TRUE
 
 /obj/machinery/computer/cargo/on_construction(mob/user)
@@ -80,16 +81,18 @@
 		ui = new(user, src, interface_type, name)
 		ui.open()
 
-/obj/machinery/computer/cargo/ui_data()
+/obj/machinery/computer/cargo/ui_data(mob/user)
 	var/list/data = list()
 	data["department"] = "Cargo" // Hardcoded here, for customization in budgetordering.dm AKA NT IRN
 	data["location"] = SSshuttle.supply.getStatusText()
 	var/datum/bank_account/bank = SSeconomy.get_dep_account(cargo_account)
-	if(bank)
-		data["points"] = bank.account_balance
+	var/datum/bank_account/buyer = astype(user, /mob/living)?.get_bank_account()
+	data["points"] = bank?.account_balance
 	data["grocery"] = SSshuttle.chef_groceries.len
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
+	data["goody_order_cost_modifier"] = buyer?.goody_order_cost_modifier || 1.0
+	data["private_order_cost_modifier"] = buyer?.private_order_cost_modifier || 1.0
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched
@@ -147,61 +150,60 @@
 /obj/machinery/computer/cargo/ui_static_data(mob/user)
 	var/list/data = list()
 	data["max_order"] = CARGO_MAX_ORDER
-	data["supplies"] = list()
+	var/datum/asset/json/cargo_catalogue/catalogue = get_asset_datum(/datum/asset/json/cargo_catalogue)
+	var/list/groups
 
-	for(var/pack_id in SSshuttle.supply_packs)
-		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
-		if(!data["supplies"][pack.group])
-			data["supplies"][pack.group] = list(
-				"name" = pack.group,
-				"packs" = get_packs_data(pack.group),
-			)
+	var/list/packs_by_group = get_packs_data_by_group(catalogue)
+	if(catalogue.needs_build)
+		packs_by_group = get_packs_data_by_group(catalogue.ensure_ready())
+	for(var/group in packs_by_group)
+		var/list/available_packs = packs_by_group[group]
+		if(!length(available_packs)) // Somehow????
+			continue
+		LAZYSET(groups, group, available_packs)
 
+	data["catalogue"] = catalogue.get_window_data(user, groups, show_contraband = TRUE)
 	data["displayed_currency_full_name"] = " [MONEY_NAME]"
 	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
 
 	return data
 
-/**
- * returns a list of supply packs for a certain group
- * * group - the group of packs to return
- * * express - if this is an express console
- */
-/obj/machinery/computer/cargo/proc/get_packs_data(group, express = FALSE)
-	var/list/packs = list()
-	for(var/pack_id in SSshuttle.supply_packs)
-		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
-		if(pack.group != group)
-			continue
+/obj/machinery/computer/cargo/ui_assets(mob/user)
+	return list(get_asset_datum(/datum/asset/json/cargo_catalogue))
+
+/// Returns the packs this console shows by group, as index/price pairs into the catalogue - packs it's missing get skipped and mark it for a rebuild
+/obj/machinery/computer/cargo/proc/get_packs_data_by_group(datum/asset/json/cargo_catalogue/catalogue)
+	var/list/packs_by_group = list()
+	for(var/pack_id, pack_data in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = pack_data
 
 		if(pack.order_flags & ORDER_INVISIBLE)
 			continue
 
-		// Express console packs check
-		if(express && (pack.order_flags & (ORDER_EMAG_ONLY | ORDER_SPECIAL)))
+		if((pack.order_flags & ORDER_EMAG_ONLY) && !(obj_flags & EMAGGED))
 			continue
-
-		if(!express && (((pack.order_flags & ORDER_EMAG_ONLY) && !(obj_flags & EMAGGED)) || ((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED)) || (pack.order_flags & ORDER_POD_ONLY)))
+		if((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED))
 			continue
 
 		if((pack.order_flags & ORDER_CONTRABAND) && !contraband)
 			continue
 
-		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
-		packs += list(list(
-			"name" = pack.name,
-			"cost" = pack.get_cost() * get_discount(),
-			"id" = pack_id,
-			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
-			"first_item_icon" = first_item?.icon,
-			"first_item_icon_state" = first_item?.icon_state,
-			"goody" = (pack.order_flags & ORDER_GOODY),
-			"access" = pack.access,
-			"contraband" = (pack.order_flags & ORDER_CONTRABAND),
-			"contains" = pack.get_contents_ui_data(),
-		))
+		if(!is_express && (pack.order_flags & ORDER_POD_ONLY))
+			continue
 
-	return packs
+		var/index = catalogue.pack_indices[pack]
+		if(isnull(index))
+			catalogue.needs_build = TRUE
+			continue
+
+		var/list/packs = packs_by_group[pack.group]
+		if(isnull(packs))
+			packs = list()
+			packs_by_group[pack.group] = packs
+
+		packs += list(index, pack.get_cost() * get_discount())
+
+	return packs_by_group
 
 /**
  * returns the discount multiplier applied to all supply packs,
@@ -297,6 +299,7 @@
 			if(pack.access_view && !(pack.access_view in access) && personal_department)
 				// We want to block cargo requests when a player is requesting a restricted pack that they don't have access to.
 				// BUT only when it's requested with non-cargo funds, as cargo had direct oversight over their own purchases with their own budget.
+				// HOWEVER, this shouldn't prevent someone from buying something using their own personal funds.
 				say("ERROR: User lacks the requisite access for this purchase request.")
 				return
 
@@ -386,17 +389,17 @@
 				return
 
 			if(SSshuttle.supply.getDockedId() == docking_home)
+				ui.user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				say("The supply shuttle is departing.")
-				ui.user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				//create the paper from the SSshuttle.shopping_list
 				if(length(SSshuttle.shopping_list))
 					var/obj/item/paper/requisition/requisition_paper = new(get_turf(src))
-					requisition_paper.name = "requisition form - [station_time_timestamp()]"
+					requisition_paper.name = "requisition form - [server_timestamp(ic_time = TRUE)] (PT: [round_timestamp()])"
 					var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 					requisition_text += "<hr/>"
-					requisition_text += "Time of Order: [station_time_timestamp()]<br/><br/>"
+					requisition_text += "Time of Order: [UNDERLINED_HTML_TEXT("[server_timestamp(ic_time = TRUE)]", "Shift Time: [round_timestamp()]")]<br/><br/>"
 					for(var/datum/supply_order/order as anything in SSshuttle.shopping_list)
 						requisition_text += "<b>[order.pack.name]</b></br>"
 						requisition_text += "- Order ID: [order.id]</br>"
@@ -411,7 +414,7 @@
 						if(reason)
 							requisition_text += "- Reason Given: [reason]</br>"
 						requisition_text += "</br></br>"
-					requisition_paper.add_raw_text(requisition_text)
+					requisition_paper.add_raw_text(requisition_text, advanced_html = TRUE)
 					requisition_paper.color = "#9ef5ff"
 					requisition_paper.update_appearance()
 

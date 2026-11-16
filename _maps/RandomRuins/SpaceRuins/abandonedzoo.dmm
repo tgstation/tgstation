@@ -52,6 +52,10 @@
 /area/ruin/space/has_grav/abandonedzoo)
 "aG" = (
 /obj/structure/table/reinforced,
+/obj/item/tgui_book/manual/idc{
+	pixel_y = 4;
+	pixel_x = 3
+	},
 /obj/item/gun/energy/floragun,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)

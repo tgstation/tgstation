@@ -33,17 +33,15 @@
 		return
 	. += base_icon_state + "_some"
 
-/obj/structure/closet/crate/bin/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/storage/bag/trash) && !opened)
-		var/obj/item/storage/bag/trash/T = W
-		to_chat(user, span_notice("You fill the bag."))
-		for(var/obj/item/O in src)
-			T.atom_storage?.attempt_insert(O, user, TRUE)
-		T.update_appearance()
-		do_animate()
-		return TRUE
-	else
+/obj/structure/closet/crate/bin/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/storage/bag/trash) || !opened)
 		return ..()
+	var/obj/item/storage/bag/trash/garbage_bag = tool
+	to_chat(user, span_notice("You fill the bag."))
+	for(var/obj/item/garbage in src)
+		garbage_bag.atom_storage?.attempt_insert(garbage, user, TRUE)
+	do_animate()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/closet/crate/bin/proc/do_animate()
 	playsound(loc, open_sound, 15, TRUE, -3)

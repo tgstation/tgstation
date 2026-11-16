@@ -79,7 +79,7 @@
 /datum/component/obeys_commands/proc/on_examine(mob/living/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if (IS_DEAD_OR_INCAP(source))
+	if (source.incapacitated)
 		return
 	if (!(user in source.ai_controller?.blackboard[BB_FRIENDS_LIST]))
 		return
@@ -103,7 +103,7 @@
 /datum/component/obeys_commands/proc/display_menu(mob/living/friend)
 
 	var/mob/living/living_parent = parent
-	if (IS_DEAD_OR_INCAP(living_parent) || friend.stat != CONSCIOUS)
+	if (living_parent.incapacitated || IS_UNCONSCIOUS_OR_CRIT(friend))
 		return
 	if (!(friend in living_parent.ai_controller?.blackboard[BB_FRIENDS_LIST]))
 		return // Not our friend, can't boss us around

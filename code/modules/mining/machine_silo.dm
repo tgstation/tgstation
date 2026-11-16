@@ -73,7 +73,7 @@
 
 	materials = new ( \
 		src, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+		SSmaterials.get_materials_by_flag(MATERIAL_SILO_STORED), \
 		INFINITY, \
 		MATCONTAINER_EXAMINE, \
 		container_signals = list( \
@@ -109,6 +109,19 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	return TRUE
+
+/obj/machinery/ore_silo/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	for(var/datum/remote_materials/remote as anything in ore_connected_machines)
+		if(prob(35))
+			switch(severity)
+				if(EMP_HEAVY)
+					remote.disconnect()
+				if(EMP_LIGHT)
+					remote.toggle_holding()
 
 /obj/machinery/ore_silo/proc/setup_radio()
 	radio = new(src)
@@ -159,14 +172,10 @@
 	silo_log(context, "WITHDRAWN", -sheets.amount * SHEET_MATERIAL_AMOUNT, "[sheets.name]", sheets.custom_materials, user_data)
 
 /obj/machinery/ore_silo/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/ore_silo/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
 	I.set_buffer(src)
@@ -253,7 +262,8 @@
 		var/atom/parent = remote.parent
 		data["machines"] += list(
 			list(
-				"icon" = icon2base64(icon(initial(parent.icon), initial(parent.icon_state), frame = 1)),
+				"icon" = parent.icon,
+				"icon_state" = parent.icon_state,
 				"name" = parent.name,
 				"on_hold" = !!holds[remote],
 				"location" = get_area_name(parent, TRUE),
@@ -568,7 +578,7 @@
 	var/alist/user_data
 
 /datum/ore_silo_log/New(obj/machinery/M, _action, _amount, _noun, list/mats=list(), alist/user_data)
-	timestamp = station_time_timestamp()
+	timestamp = round_timestamp()
 	machine_name = M.name
 	area_name = get_area_name(M, TRUE)
 	action = _action

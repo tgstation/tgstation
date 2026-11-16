@@ -1,4 +1,5 @@
 /area/station/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	icon_state = "hall"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
@@ -92,6 +93,7 @@
 /area/station/hallway/secondary/service
 	name = "\improper Service Hallway"
 	icon_state = "hall_service"
+	tacmap_color = TACMAP_AREA_SERVICE
 
 /area/station/hallway/secondary/spacebridge
 	name = "\improper Space Bridge"

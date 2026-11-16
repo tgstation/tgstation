@@ -143,12 +143,8 @@
 			for(var/datum/wound/iter_wound as anything in carbidate.all_wounds)
 				iter_wound.adjust_blood_flow(-wound_clotting * seconds_per_tick)
 
-		else if (isanimal(candidate))
-			var/mob/living/simple_animal/animal_candidate = candidate
-			animal_candidate.adjustHealth(-simple_heal * seconds_per_tick, updating_health = FALSE)
-		else if (isbasicmob(candidate))
-			var/mob/living/basic/basic_candidate = candidate
-			basic_candidate.adjust_health(-simple_heal * seconds_per_tick, updating_health = FALSE)
+		else if(isanimal_or_basicmob(candidate))
+			candidate.adjust_brute_loss(-simple_heal * seconds_per_tick, updating_health = FALSE)
 
 		candidate.adjust_blood_volume(blood_heal * seconds_per_tick, maximum = BLOOD_VOLUME_NORMAL)
 
@@ -161,7 +157,7 @@
 /atom/movable/screen/alert/aura_healing
 	name = "Aura Healing"
 	icon_state = "template"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	clickable_glow = TRUE
 	click_master = FALSE
 

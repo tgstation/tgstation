@@ -20,6 +20,8 @@
 	. = ..()
 
 	twitchers.Remove(source)
+	if(!length(twitchers))
+		STOP_PROCESSING(SSdcs, src)
 	UnregisterSignal(source, list(COMSIG_ATOM_ORBIT_BEGIN, COMSIG_ATOM_ORBIT_STOP))
 
 /datum/element/orbit_twitcher/process(seconds_per_tick)
@@ -29,6 +31,11 @@
 				living.emote("twitch_s", forced = TRUE)
 			else
 				living.emote("twitch", forced = TRUE)
+
+			// if we're in a bodybag or morgue slab go up a level and shake that as well
+			var/obj/container = get(living, /obj/structure/bodycontainer) || get(living, /obj/structure/closet/body_bag)
+			if(!isnull(container))
+				container.Shake(2, 1, 0.3 SECONDS, 0.1 SECONDS)
 
 /datum/element/orbit_twitcher/proc/orbit_begin(atom/source, atom/orbiter)
 	SIGNAL_HANDLER
@@ -42,7 +49,7 @@
 
 	twitchers.Remove(source)
 
-	if(!twitchers.len)
+	if(!length(twitchers))
 		STOP_PROCESSING(SSdcs, src)
 
 /datum/element/orbit_twitcher/OnTargetDelete(datum/source)

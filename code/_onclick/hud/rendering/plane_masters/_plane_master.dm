@@ -1,6 +1,3 @@
-// I hate this place
-INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
-
 /atom/movable/screen/plane_master
 	screen_loc = "CENTER"
 	icon_state = "blank"
@@ -64,15 +61,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// If this plane master is outside of our visual bounds right now
 	var/is_outside_bounds = FALSE
 
+	/// Has this plane master had its offset made concrete? Avoids modifications/uses that are going to immediately break
+	var/offset_already_updated = FALSE
+
 /atom/movable/screen/plane_master/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset = 0)
 	. = ..()
 	src.offset = offset
 	true_alpha = alpha
 	real_plane = plane
+	update_offset()
 
 	if(!set_home(home))
 		return INITIALIZE_HINT_QDEL
-	update_offset()
 	if(!documentation && !(istype(src, /atom/movable/screen/plane_master) || istype(src, /atom/movable/screen/plane_master/rendering_plate)))
 		stack_trace("Plane master created without a description. Document how your thing works so people will know in future, and we can display it in the debug menu")
 	if(start_hidden)
@@ -83,7 +83,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(home)
 		// NOTE! We do not clear ourselves from client screens
 		// We relay on whoever qdel'd us to reset our hud, and properly purge us
-		home.plane_masters -= "[plane]"
+		home.plane_masters -= plane
 		home = null
 	. = ..()
 	QDEL_LIST(relays)
@@ -94,9 +94,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	if(!istype(home, /datum/plane_master_group))
 		return FALSE
 	src.home = home
+	assigned_map = home.map
 	if(home.map)
 		screen_loc = "[home.map]:[screen_loc]"
-		assigned_map = home.map
 	return TRUE
 
 /// Updates our "offset", basically what layer of multiz we're meant to render
@@ -109,6 +109,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		render_relay_planes[i] = GET_NEW_PLANE(render_relay_planes[i], offset)
 	if(initial(render_target))
 		render_target = OFFSET_RENDER_TARGET(initial(render_target), offset)
+	offset_already_updated = TRUE
 
 /atom/movable/screen/plane_master/proc/set_alpha(new_alpha)
 	true_alpha = new_alpha

@@ -52,7 +52,7 @@
 /// Max amounts of fire stacks a mob can get
 #define MAX_FIRE_STACKS 20
 /// If a mob has a higher threshold than this, the icon shown will be increased to the big fire icon.
-#define MOB_BIG_FIRE_STACK_THRESHOLD 3
+#define MOB_BIG_FIRE_STACK_THRESHOLD 5
 
 // Grouped effect sources, see also code/__DEFINES/traits.dm
 
@@ -62,6 +62,7 @@
 #define STASIS_LEGION_EATEN "stasis_eaten"
 #define STASIS_SLIME_BZ "stasis_slime_bz"
 #define STASIS_ELDRITCH_ETHER "stasis_eldritch_ether"
+#define STASIS_CRATE_EFFECT "stasis_crate"
 
 #define STASIS_NETPOD_EFFECT "stasis_netpod"
 

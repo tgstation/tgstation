@@ -4,10 +4,12 @@
 //RAPID CONSTRUCTION DEVICE
 
 /obj/item/construction/rcd
-	name = "rapid-construction-device (RCD)"
+	name = "rapid construction device (RCD)"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
+	inhand_icon_state = "rcd"
 	worn_icon_state = "RCD"
+	inside_belt_icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_premium_price = PAYCHECK_COMMAND * 2
@@ -20,6 +22,7 @@
 	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
 	sound_vary = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 3)
 
 	/// main category of currently selected design[Structures, Airlocks, Airlock Access]
 	var/root_category
@@ -43,7 +46,7 @@
 	/// variable for R walls to deconstruct them
 	var/canRturf = FALSE
 	/// integrated airlock electronics for setting access to a newly built airlocks
-	var/obj/item/electronics/airlock/airlock_electronics
+	var/obj/item/electronics/airlock/rcd/airlock_electronics
 
 	COOLDOWN_DECLARE(destructive_scan_cooldown)
 
@@ -53,6 +56,10 @@
 /obj/effect/rcd_hologram
 	name = "hologram"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/item/electronics/airlock/rcd
+	item_flags = parent_type::item_flags | ABSTRACT
+	custom_materials = null
 
 /obj/effect/rcd_hologram/Initialize(mapload)
 	. = ..()
@@ -122,7 +129,7 @@
 		// There isn't an easy programmatical way to check if rcd_act will place a floor or a wall, so just repeat using it for free
 		if(success && isopenturf(T))
 			T.rcd_act(user, src, list("[RCD_DESIGN_MODE]" = RCD_TURF, "[RCD_DESIGN_PATH]" = /turf/open/floor/plating/rcd))
-		playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
+		playsound(get_turf(user), /datum/sound_effect/tool_switch, 20, TRUE)
 		user.gib(DROP_ALL_REMAINS)
 		return MANUAL_SUICIDE
 
@@ -163,7 +170,7 @@
 
 			//check if we can build our window on the grill
 			if(target_turf.is_blocked_turf(exclude_mobs = !is_full_tile, source_atom = null, ignore_atoms = structures_to_ignore, type_list = TRUE))
-				playsound(user, SFX_TOOL_SWITCH, 20, TRUE)
+				playsound(user, /datum/sound_effect/tool_switch, 20, TRUE)
 				balloon_alert(user, "tile is blocked!")
 				return FALSE
 
@@ -183,7 +190,7 @@
 				ignore_types += /obj/structure/girder
 
 			if(ignore_types && target_turf.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = ignore_types, type_list = TRUE))
-				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
+				playsound(get_turf(user), /datum/sound_effect/tool_switch, 20, TRUE)
 				balloon_alert(user, "something is on the girder!")
 				return FALSE
 
@@ -218,7 +225,7 @@
 
 			//check if the structure can fit on this turf
 			if(target_turf.is_blocked_turf(exclude_mobs = ignore_mobs, source_atom = null, ignore_atoms = ignored_types, type_list = TRUE))
-				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
+				playsound(get_turf(user), /datum/sound_effect/tool_switch, 20, TRUE)
 				balloon_alert(user, "something is on the tile!")
 				return FALSE
 
@@ -385,7 +392,7 @@
 	return data
 
 /obj/item/construction/rcd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+	playsound(src, /datum/sound_effect/tool_switch, 20, TRUE)
 
 	switch(action)
 		if("root_category")
@@ -510,6 +517,7 @@
 	desc = "A reverse-engineered RCD with black market upgrades that allow this device to deconstruct reinforced walls. Property of Donk Co."
 	icon_state = "ircd"
 	inhand_icon_state = "ircd"
+	inside_belt_icon_state = "ircd"
 	energyfactor = 0.066 * STANDARD_CELL_CHARGE
 	canRturf = TRUE
 
@@ -524,6 +532,7 @@
 	desc = "A higher-end model of the rapid construction device, prefitted with improved cooling and disruption prevention. Provided to the chief engineer."
 	icon_state = "cercd"
 	inhand_icon_state = "cercd"
+	inside_belt_icon_state = "cercd"
 	construction_upgrades = RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
 	matter = 160
 
@@ -545,7 +554,7 @@
 
 // Ranged RCD
 /obj/item/construction/rcd/arcd
-	name = "advanced rapid-construction-device (ARCD)"
+	name = "advanced rapid construction device (ARCD)"
 	desc = "A prototype RCD with ranged capability and infinite capacity."
 	max_matter = INFINITY
 	matter = INFINITY
@@ -568,8 +577,9 @@
 	ranged = TRUE
 	has_ammobar = FALSE
 	resistance_flags = FIRE_PROOF | INDESTRUCTIBLE // should NOT be destroyed unless the equipment is destroyed
-	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON | DROPDEL // already qdeleted in the equipment's Destroy() but you can never be too sure
+	item_flags = NOBLUDGEON | DROPDEL // already qdeleted in the equipment's Destroy() but you can never be too sure
 	delay_mod = 0.5
+	custom_materials = null
 
 /obj/item/construction/rcd/exosuit/ui_status(mob/user, datum/ui_state/state)
 	if(ismecha(owner))
@@ -636,12 +646,13 @@
 	desc = "Highly compressed matter for the RCD."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcdammo"
+	inhand_icon_state = "rcdammo"
 	w_class = WEIGHT_CLASS_TINY
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT *6, /datum/material/glass=SHEET_MATERIAL_AMOUNT*4)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass=SHEET_MATERIAL_AMOUNT*3)
 	var/ammoamt = 40
 
 /obj/item/rcd_ammo/large
-	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*24, /datum/material/glass=SHEET_MATERIAL_AMOUNT*16)
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*24, /datum/material/glass=SHEET_MATERIAL_AMOUNT*12)
 	ammoamt = 160

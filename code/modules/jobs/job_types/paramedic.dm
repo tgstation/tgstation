@@ -15,7 +15,7 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_MED
 
-	mind_traits = list(MEDICAL_MIND_TRAITS)
+	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_MEDICAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_PARAMEDIC
@@ -37,6 +37,7 @@
 	)
 	rpg_title = "Corpse Runner"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_TRUCK_MEDICAL
 
 
 /datum/outfit/job/paramedic
@@ -56,7 +57,7 @@
 	head = /obj/item/clothing/head/soft/paramedic
 	gloves = /obj/item/clothing/gloves/latex/nitrile
 	shoes = /obj/item/clothing/shoes/workboots/black
-	l_pocket = /obj/item/modular_computer/pda/medical/paramedic
+	l_pocket = /obj/item/modular_computer/pda/crew/medical/paramedic
 	r_pocket = /obj/item/storage/box/bandages
 
 	backpack = /obj/item/storage/backpack/medic
@@ -67,6 +68,8 @@
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
 	pda_slot = ITEM_SLOT_LPOCKET
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/medical/paramedic
 
 /datum/outfit/job/doctor/mod
 	name = "Paramedic (MODsuit)"
@@ -79,4 +82,3 @@
 	mask = /obj/item/clothing/mask/breath/medical
 	r_pocket = /obj/item/flashlight/pen
 	internals_slot = ITEM_SLOT_SUITSTORE
-

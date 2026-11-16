@@ -32,7 +32,7 @@
 		if(O.anchored || HAS_TRAIT(O, TRAIT_UNDERFLOOR))
 			continue
 		var/mob/living/target = locate() in view(4,src)
-		if(target && !target.stat && prob(object_launch_prob))
+		if(target && !IS_UNCONSCIOUS_OR_CRIT(target) && prob(object_launch_prob))
 			O.throw_at(target, 5, 10)
 
 /obj/effect/anomaly/grav/proc/on_entered(datum/source, atom/movable/AM)
@@ -46,7 +46,7 @@
 	gravShock(AM)
 
 /obj/effect/anomaly/grav/proc/gravShock(mob/living/living_debris)
-	if(boing && isliving(living_debris) && !living_debris.stat && !living_debris.mob_negates_gravity())
+	if(boing && isliving(living_debris) && !IS_UNCONSCIOUS_OR_CRIT(living_debris) && !living_debris.mob_negates_gravity())
 		living_debris.Knockdown(4 SECONDS)
 		var/atom/target = get_edge_target_turf(living_debris, get_dir(src, get_step_away(living_debris, src)))
 		living_debris.throw_at(target, 5, 1)

@@ -17,7 +17,7 @@
 	return "At least 1u"
 
 /datum/bounty/virus/can_claim()
-	return ..() && shipped
+	return shipped
 
 /datum/bounty/virus/applies_to(obj/export)
 	if(shipped)
@@ -60,7 +60,7 @@
 	return virus.totalStealth() == stat_value
 
 /datum/bounty/virus/transmit
-	stat_name = "transmissible"
+	stat_name = "transmission"
 
 /datum/bounty/virus/transmit/accepts_virus(datum/disease/advance/virus)
 	return virus.totalTransmittable() == stat_value
