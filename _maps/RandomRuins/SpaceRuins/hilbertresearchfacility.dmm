@@ -2166,7 +2166,7 @@
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "WI" = (
 /obj/structure/table/wood,
-/obj/item/food/cornchips/blue,
+/obj/item/food/chips/corn/blue,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/powered/hilbertresearchfacility)
 "WQ" = (

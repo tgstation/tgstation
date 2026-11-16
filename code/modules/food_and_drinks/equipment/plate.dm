@@ -4,8 +4,8 @@
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "plate"
 	sound_vary = TRUE
-	pickup_sound = SFX_FOOD_PLATE_PICKUP
-	drop_sound = SFX_FOOD_PLATE_DROP
+	pickup_sound = /datum/sound_effect/food_plate_pickup
+	drop_sound = /datum/sound_effect/food_plate_drop
 	w_class = WEIGHT_CLASS_BULKY //No backpack.
 	///How many things fit on this plate?
 	var/max_items = 8

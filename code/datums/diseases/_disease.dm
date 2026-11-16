@@ -84,7 +84,7 @@
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
 
-	if(severity >= DISEASE_SEVERITY_BIOHAZARD)
+	if(severity == DISEASE_SEVERITY_BIOHAZARD)
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE] = TRUE
 
 /// Updates the spread flags set, ensuring signals are updated as necessary
@@ -302,7 +302,7 @@
 		return FALSE
 	if(!(spread_flags & DISEASE_SPREAD_AIRBORNE) && !force_spread)
 		return FALSE
-	if(affected_mob.can_spread_airborne_diseases())
+	if(!affected_mob.can_spread_airborne_diseases())
 		return FALSE
 	if(!has_required_infectious_organ(affected_mob, ORGAN_SLOT_LUNGS)) //also if you lack lungs
 		return FALSE

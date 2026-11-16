@@ -9,7 +9,7 @@
 ///from the [EX_ACT] wrapper macro: (severity, target)
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"
 ///from base of atom/emp_act(severity): (severity). return EMP protection flags
-#define COMSIG_ATOM_PRE_EMP_ACT "atom_emp_act"
+#define COMSIG_ATOM_PRE_EMP_ACT "atom_pre_emp_act"
 ///from base of atom/emp_act(severity): (severity, protection)
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"
 ///from base of atom/fire_act(): (exposed_temperature, exposed_volume)

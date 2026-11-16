@@ -29,7 +29,7 @@
 	SIGNAL_HANDLER
 	to_chat(user, span_danger("As you open [letter], boxing gloves spring out and deliver you a swift uppercut!"))
 	var/mob/living/userasliving = user
-	playsound(user, SFX_PUNCH, 25, TRUE)
+	playsound(user, /datum/sound_effect/punch, 25, TRUE)
 	userasliving.Knockdown((extrapower ? 2 : 4) SECONDS, (extrapower ? 4 : 6) SECONDS)
 	userasliving.adjust_stamina_loss(extrapower ? 40 : 80)
 	forceMove(user.loc)

@@ -39,8 +39,8 @@
 /datum/storage/cigarette_box
 	max_slots = 6
 	display_contents = FALSE
-	rustle_sound = SFX_CIG_PACK_INSERT
-	remove_rustle_sound = SFX_CIG_PACK_RUSTLE
+	rustle_sound = /datum/sound_effect/cig_pack_insert
+	remove_rustle_sound = /datum/sound_effect/cig_pack_rustle
 
 /datum/storage/cigarette_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()

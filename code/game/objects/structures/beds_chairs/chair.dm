@@ -230,8 +230,8 @@
 	desc = "A comfortable, secure seat. It has a more sturdy looking buckling system, for smoother flights."
 	icon_state = "shuttle_chair"
 	buildstacktype = /obj/item/stack/sheet/mineral/titanium
-	buckle_sound = SFX_SEATBELT_BUCKLE
-	unbuckle_sound = SFX_SEATBELT_UNBUCKLE
+	buckle_sound = /datum/sound_effect/seatbelt_buckle
+	unbuckle_sound = /datum/sound_effect/seatbelt_unbuckle
 	resistance_flags = FIRE_PROOF
 	max_integrity = 120
 	custom_materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2)

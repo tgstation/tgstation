@@ -320,7 +320,13 @@
 		if(can_shoot)
 			controller.override_blackboard_key(BB_MONKEY_GUN_NEURONS_ACTIVATED, TRUE)
 	else
-		living_pawn.throw_item(real_target)
+		if(controller.blackboard[BB_MONKEY_THROW_COOLDOWN] > world.time)
+			return FALSE
+		if(!real_target || !los_check(living_pawn, real_target, pass_args = PASSTABLE | PASSMOB))
+			return FALSE
+		if(!living_pawn.throw_item(real_target))
+			return FALSE
+		controller.set_blackboard_key(BB_MONKEY_THROW_COOLDOWN, world.time + rand(3 SECONDS, 5 SECONDS))
 		controller.override_blackboard_key(BB_MONKEY_GUN_WORKED, TRUE)
 	return TRUE
 

@@ -89,7 +89,7 @@
 	return image(/obj/item/bonesetter)
 
 /datum/surgery_operation/limb/repair_hairline/all_required_strings()
-	return list("the limb must have a hairline fracture") + ..()
+	return list("the limb must have a [LOWER_TEXT(/datum/wound/blunt/bone/severe::name)]") + ..()
 
 /datum/surgery_operation/limb/repair_hairline/state_check(obj/item/bodypart/limb)
 	if(!(locate(/datum/wound/blunt/bone/severe) in limb.wounds))
@@ -142,7 +142,7 @@
 	return image(/obj/item/bonesetter)
 
 /datum/surgery_operation/limb/reset_compound/all_required_strings()
-	return list("the limb must have a compound fracture") + ..()
+	return list("the limb must have a [LOWER_TEXT(/datum/wound/blunt/bone/critical::name)]") + ..()
 
 /datum/surgery_operation/limb/reset_compound/state_check(obj/item/bodypart/limb)
 	var/datum/wound/blunt/bone/critical/fracture = locate() in limb.wounds
@@ -320,4 +320,106 @@
 		span_notice("You successfully repair [limb.owner || limb]'s skull."),
 		span_notice("[surgeon] successfully repairs [limb.owner || limb]'s skull with [tool]."),
 		span_notice("[surgeon] successfully repairs [limb.owner || limb]'s skull.")
+	)
+
+// Robotic compound fracture fix
+/datum/surgery_operation/limb/realign_superstructure
+	name = "repair superstructure"
+	desc = "Bend the outer structure of a mechanical body part back into place."
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED | OPERATION_MECHANIC
+	implements = list(
+		TOOL_HEMOSTAT = 1,
+		TOOL_BONESET = 1,
+	)
+	time = 5 SECONDS
+	all_surgery_states_required = SURGERY_SKIN_OPEN
+	preop_sound = 'sound/machines/airlock/airlock_alien_prying.ogg'
+
+/datum/surgery_operation/limb/realign_superstructure/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/blunt/robotic/critical/blunt_wound in limb.wounds)
+		if(HAS_TRAIT(blunt_wound, TRAIT_WOUND_SCANNED))
+			. *= 0.5
+
+/datum/surgery_operation/limb/realign_superstructure/get_default_radial_image()
+	return image(/obj/item/bonesetter)
+
+/datum/surgery_operation/limb/realign_superstructure/all_required_strings()
+	return list("the limb must have a [LOWER_TEXT(/datum/wound/blunt/robotic/critical::name)]") + ..()
+
+/datum/surgery_operation/limb/realign_superstructure/state_check(obj/item/bodypart/limb)
+	var/datum/wound/blunt/robotic/critical/fracture = locate() in limb.wounds
+	if(isnull(fracture))
+		return FALSE
+	return TRUE
+
+/datum/surgery_operation/limb/realign_superstructure/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	display_results(
+		surgeon,
+		limb.owner,
+		span_notice("You begin to bend the shell of [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to bend the shell of [FORMAT_LIMB_OWNER(limb)] with [tool]."),
+		span_notice("[surgeon] begins to bend the shell of [FORMAT_LIMB_OWNER(limb)]."),
+	)
+	display_pain(limb.owner, "You feel a strong pulling on your [limb.plaintext_zone]!")
+
+/datum/surgery_operation/limb/realign_superstructure/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	var/datum/wound/blunt/robotic/critical/fracture = locate() in limb.wounds
+	fracture?.replace_wound(new /datum/wound/blunt/robotic/severe)
+
+	display_results(
+		surgeon,
+		limb.owner,
+		span_notice("You successfully realign the shell of [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully realigns the shell of [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
+		span_notice("[surgeon] successfully realigns the shell of [FORMAT_LIMB_OWNER(limb)]!"),
+	)
+
+/datum/surgery_operation/limb/attach_fastenings
+	name = "secure components"
+	desc = "connect wires and secure internals in a patient's mechanical body part."
+	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED | OPERATION_MECHANIC
+	implements = list(
+		TOOL_SCALPEL = 1,
+	)
+	time = 4 SECONDS
+	any_surgery_states_required = ALL_SURGERY_SKIN_STATES
+
+/datum/surgery_operation/limb/attach_fastenings/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
+	. = ..()
+	for(var/datum/wound/blunt/robotic/severe/blunt_wound in limb.wounds)
+		if(HAS_TRAIT(blunt_wound, TRAIT_WOUND_SCANNED))
+			. *= 0.5
+
+/datum/surgery_operation/limb/attach_fastenings/get_default_radial_image()
+	return image(/obj/item/bonesetter)
+
+/datum/surgery_operation/limb/attach_fastenings/all_required_strings()
+	return list("the limb must have [LOWER_TEXT(/datum/wound/blunt/robotic/severe::name)]") + ..()
+
+/datum/surgery_operation/limb/attach_fastenings/state_check(obj/item/bodypart/limb)
+	var/datum/wound/blunt/robotic/severe/fracture = locate() in limb.wounds
+	if(isnull(fracture))
+		return FALSE
+	return TRUE
+
+/datum/surgery_operation/limb/attach_fastenings/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	display_results(
+		surgeon,
+		limb.owner,
+		span_notice("You begin to secure the components in [FORMAT_LIMB_OWNER(limb)]..."),
+		span_notice("[surgeon] begins to secure the components in [FORMAT_LIMB_OWNER(limb)] with [tool]."),
+		span_notice("[surgeon] begins to secure the components in [FORMAT_LIMB_OWNER(limb)]."),
+	)
+	display_pain(limb.owner, "You feel pressure on your [limb.plaintext_zone]...")
+
+/datum/surgery_operation/limb/attach_fastenings/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
+	var/datum/wound/blunt/robotic/severe/fracture = locate() in limb.wounds
+	qdel(fracture)
+	display_results(
+		surgeon,
+		limb.owner,
+		span_notice("You successfully secure the components in [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully secure the components in [FORMAT_LIMB_OWNER(limb)] with [tool]!"),
+		span_notice("[surgeon] successfully secure the components in [FORMAT_LIMB_OWNER(limb)]!"),
 	)

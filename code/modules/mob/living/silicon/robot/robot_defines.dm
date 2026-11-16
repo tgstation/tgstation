@@ -63,6 +63,10 @@
 
 	// Overlay for borg eye lights
 	var/mutable_appearance/eye_lights
+
+	/// The condition of the Borg's eyes
+	var/eye_lights_enabled = TRUE
+
 	///Holds a reference to the timer taking care of blinking lights on dead cyborgs
 	var/eye_flash_timer = null
 	// Overlay for borg hat

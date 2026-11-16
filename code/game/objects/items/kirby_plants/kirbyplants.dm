@@ -11,8 +11,8 @@
 	throw_speed = 2
 	throw_range = 4
 	item_flags = NO_PIXEL_RANDOM_DROP
-	drop_sound = SFX_POTTED_PLANT_DROP
-	pickup_sound = SFX_POTTED_PLANT_PICKUP
+	drop_sound = /datum/sound_effect/potted_plant_drop
+	pickup_sound = /datum/sound_effect/potted_plant_pickup
 
 	/// Can this plant be trimmed by someone with TRAIT_BONSAI
 	var/trimmable = TRUE

@@ -279,7 +279,7 @@
 	balloon_alert(user, "reagent synthesis circuits shorted")
 	audible_message(span_danger("[src] buzzes oddly!"))
 	flick_overlay_view(mutable_appearance(icon, "[base_icon_state]_spark"), 1 SECONDS)
-	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
 /mob/living/basic/bot/medbot/examine()

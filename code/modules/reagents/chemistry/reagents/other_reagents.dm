@@ -1206,6 +1206,24 @@
 /datum/reagent/space_cleaner/sterilizine/on_burn_wound_processing(datum/wound/burn/flesh/burn_wound)
 	burn_wound.sanitization += 0.9
 
+/datum/reagent/dinitrogen_plasmide
+	name = "Dinitrogen Plasmide"
+	description = "A compound of nitrogen and stabilized plasma, this substance is commonly used in industrial cooling due to its extreme thermal conductivity."
+	ph = 4.8
+	specific_heat = SPECIFIC_HEAT_DEFAULT * 4
+	color = "#b779cc"
+	taste_description = "dull plasma"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	overdose_threshold = 40 // it takes a lot
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/dinitrogen_plasmide/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	holder.remove_reagent(type, 1.2 * seconds_per_tick)
+	holder.add_reagent(/datum/reagent/stable_plasma, 0.4 * seconds_per_tick)
+	holder.add_reagent(/datum/reagent/nitrogen, 0.8 * seconds_per_tick)
+
+
 /datum/reagent/iron
 	name = "Iron"
 	description = "Pure iron is a metal."
@@ -3098,6 +3116,23 @@
 	// Or non-real turfs
 	if (isclosedturf(exposed_turf) || isopenturf(exposed_turf))
 		metal_morph(exposed_turf)
+
+/datum/reagent/metalgen/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	if(methods & (VAPOR|INHALE))
+		var/obj/item/organ/lungs = exposed_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+		if(!isnull(lungs))
+			metal_morph(lungs)
+
+	if(methods & (INGEST))
+		var/obj/item/organ/stomach = exposed_mob.get_organ_slot(ORGAN_SLOT_STOMACH)
+		if(!isnull(stomach))
+			metal_morph(stomach)
+
+	if(methods & (INJECT|PATCH))
+		var/obj/item/organ/liver = exposed_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+		if(!isnull(liver))
+			metal_morph(liver)
 
 ///turn an object into a special material
 /datum/reagent/metalgen/proc/metal_morph(atom/target)

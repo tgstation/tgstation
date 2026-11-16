@@ -154,6 +154,7 @@
 	install_default_programs()
 	register_context()
 	update_appearance()
+	ADD_TRAIT(src, TRAIT_PASS_ID_ACCESS_IN_CONTENTS, INNATE_TRAIT)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/modular_computer/LateInitialize()
@@ -821,7 +822,7 @@
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
 	if(!issilicon(user))
-		playsound(src, SFX_KEYBOARD_CLICKS, 10, TRUE, FALSE)
+		playsound(src, /datum/sound_effect/keyboard_clicks, 10, TRUE, FALSE)
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
 		toggle_flashlight(user)
 		return

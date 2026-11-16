@@ -158,6 +158,6 @@
 	return ..()
 
 /mob/living/keybind_face_direction(direction)
-	if(!(mobility_flags & MOBILITY_MOVE))
+	if(HAS_TRAIT_NOT_FROM(src, TRAIT_IMMOBILIZED, BUCKLED_TRAIT))
 		return
 	return ..()

@@ -66,7 +66,7 @@
 		span_warning("[changed] falls out of your pockets!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
-	playsound(src, SFX_RUSTLE, 50, TRUE, -5, frequency = 0.8)
+	playsound(src, /datum/sound_effect/rustle, 50, TRUE, -5, frequency = 0.8)
 
 /mob/living/carbon/human/proc/husk_trait_toggle(datum/source)
 	SIGNAL_HANDLER

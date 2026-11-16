@@ -93,7 +93,7 @@
 	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targeting safeties.")) // heheehe. funny
 
 	audible_message(span_danger("[src] buzzes oddly!"))
-	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 	internal_ext.chem = /datum/reagent/clf3 //Refill the internal extinguisher with liquid fire
 	internal_ext.power = 3

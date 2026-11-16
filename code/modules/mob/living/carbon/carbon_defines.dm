@@ -120,6 +120,8 @@
 	var/obscured_slots = NONE
 	/// Covered hide flags (hideflags that can be seen, BUT can't be interacted with)
 	var/covered_slots = NONE
+	/// Pressure protection flags that indicate which bodyparts are protected from pressure damage and how they're protected
+	var/pressure_protected_bodyparts = NONE
 
 	/// Lazylist of all hair masks applied to this mob's hairstyles
 	var/list/hair_masks

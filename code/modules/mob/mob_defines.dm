@@ -9,6 +9,7 @@
 /mob
 	density = TRUE
 	layer = MOB_LAYER
+	flags_1 = NAV_IRRELEVANT_1 //Mobs move too much and are really not relevant for navigation
 	abstract_type = /mob
 	animate_movement = SLIDE_STEPS
 	hud_possible = list(ANTAG_HUD)
@@ -188,7 +189,7 @@
 	var/list/alerts = list()
 	var/list/screens = list()
 	/// Assoc list of client_colour datum -> source it came from
-	var/list/client_colours = list()
+	var/list/client_colours
 	/// List of filter names used in the past client color update for cleanup
 	var/list/color_filter_store
 	var/datum/hud/hud_type = /datum/hud

@@ -2,94 +2,166 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"type": "byond",
-			"request": "launch",
-			"name": "Launch DreamSeeker (With selected flags)",
-			"preLaunchTask": "Build All",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
-		},
-		{
-			"type": "byond",
-			"request": "launch",
-			"name": "Launch DreamSeeker (low memory mode)",
-			"preLaunchTask": "Build All (low memory mode)",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
-		},
-		{
-			"type": "byond",
-			"request": "launch",
-			"name": "Launch DreamSeeker (absolute minimum)",
-			"preLaunchTask": "Build All (absolute minimum)",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
-		},
-		{
-			"type": "byond",
-			"request": "launch",
-			"name": "Launch DreamSeeker (testing)",
-			"preLaunchTask": "Build All (testing)",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
-		},
-		{
-			"type": "byond",
-			"request": "launch",
-			"name": "Launch DreamSeeker (testing + low memory mode)",
-			"preLaunchTask": "Build All (testing + low memory mode)",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
-		},
-		{
-			"type": "byond",
-			"request": "launch",
-			"name": "Launch DreamSeeker (map testing)",
-			"preLaunchTask": "Build All (map testing)",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
-		},
-		{
-			"type": "byond",
+			"type": "auxtools",
 			"request": "launch",
 			"name": "Launch DreamDaemon (With selected flags)",
 			"preLaunchTask": "Build All",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
-			"dreamDaemon": true
+			"dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+			"server": "dreamdaemon",
+			"defines": ["CBT"]
 		},
 		{
-			"type": "byond",
+			"type": "auxtools",
 			"request": "launch",
 			"name": "Launch DreamDaemon (low memory mode)",
 			"preLaunchTask": "Build All (low memory mode)",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
-			"dreamDaemon": true
+			"dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+			"server": "dreamdaemon",
+			"defines": [
+				"CBT",
+				"SKIP_LAVALAND",
+				"SKIP_SPACE_LEVELS",
+				"FORCE_MAP=\"runtimestation\""
+			]
 		},
 		{
-			"type": "byond",
+			"type": "auxtools",
 			"request": "launch",
 			"name": "Launch DreamDaemon (absolute minimum)",
 			"preLaunchTask": "Build All (absolute minimum)",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
-			"dreamDaemon": true
+			"dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+			"server": "dreamdaemon",
+			"defines": [
+				"CBT",
+				"SKIP_LAVALAND",
+				"SKIP_SPACE_LEVELS",
+				"AUTOSTART_GAME",
+				"MINIMAL_CENTCOM",
+				"FORCE_MAP=\"runtimestation_minimal\""
+			]
 		},
 		{
-			"type": "byond",
+			"type": "auxtools",
 			"request": "launch",
 			"name": "Launch DreamDaemon (testing)",
 			"preLaunchTask": "Build All (testing)",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
-			"dreamDaemon": true
+			"dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+			"server": "dreamdaemon",
+			"defines": [
+				"CBT",
+				"TESTING",
+				"REAGENTS_TESTING",
+				"TIMER_DEBUG",
+				"REFERENCE_DOING_IT_LIVE"
+			]
 		},
 		{
-			"type": "byond",
+			"type": "auxtools",
 			"request": "launch",
 			"name": "Launch DreamDaemon (testing + low memory mode)",
 			"preLaunchTask": "Build All (testing + low memory mode)",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
-			"dreamDaemon": true
+			"dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+			"server": "dreamdaemon",
+			"defines": [
+				"CBT",
+				"SKIP_LAVALAND",
+				"SKIP_SPACE_LEVELS",
+				"TESTING",
+				"REAGENTS_TESTING",
+				"TIMER_DEBUG",
+				"REFERENCE_DOING_IT_LIVE",
+				"FORCE_MAP=\"runtimestation\""
+			]
 		},
 		{
-			"type": "byond",
+			"type": "auxtools",
 			"request": "launch",
 			"name": "Launch DreamDaemon (map testing)",
 			"preLaunchTask": "Build All (map testing)",
-			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
-			"dreamDaemon": true
+			"dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+			"server": "dreamdaemon",
+			"defines": ["CBT", "TESTING", "MAP_TEST"]
+		},
+		{
+			"type": "auxtools",
+			"request": "launch",
+			"name": "Launch DreamSeeker (With selected flags)",
+			"preLaunchTask": "Build All",
+			"dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+			"server": "dreamseeker",
+			"defines": ["CBT"]
+		},
+		{
+			"type": "auxtools",
+			"request": "launch",
+			"name": "Launch DreamSeeker (low memory mode)",
+			"preLaunchTask": "Build All (low memory mode)",
+			"dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+			"server": "dreamseeker",
+			"defines": [
+				"CBT",
+				"SKIP_LAVALAND",
+				"SKIP_SPACE_LEVELS",
+				"FORCE_MAP=\"runtimestation\""
+			]
+		},
+		{
+			"type": "auxtools",
+			"request": "launch",
+			"name": "Launch DreamSeeker (absolute minimum)",
+			"preLaunchTask": "Build All (absolute minimum)",
+			"dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+			"server": "dreamseeker",
+			"defines": [
+				"CBT",
+				"SKIP_LAVALAND",
+				"SKIP_SPACE_LEVELS",
+				"AUTOSTART_GAME",
+				"MINIMAL_CENTCOM",
+				"FORCE_MAP=\"runtimestation_minimal\""
+			]
+		},
+		{
+			"type": "auxtools",
+			"request": "launch",
+			"name": "Launch DreamSeeker (testing)",
+			"preLaunchTask": "Build All (testing)",
+			"dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+			"server": "dreamseeker",
+			"defines": [
+				"CBT",
+				"TESTING",
+				"REAGENTS_TESTING",
+				"TIMER_DEBUG",
+				"REFERENCE_DOING_IT_LIVE"
+			]
+		},
+		{
+			"type": "auxtools",
+			"request": "launch",
+			"name": "Launch DreamSeeker (testing + low memory mode)",
+			"preLaunchTask": "Build All (testing + low memory mode)",
+			"dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+			"server": "dreamseeker",
+			"defines": [
+				"CBT",
+				"SKIP_LAVALAND",
+				"SKIP_SPACE_LEVELS",
+				"TESTING",
+				"REAGENTS_TESTING",
+				"TIMER_DEBUG",
+				"REFERENCE_DOING_IT_LIVE",
+				"FORCE_MAP=\"runtimestation\""
+			]
+		},
+		{
+			"type": "auxtools",
+			"request": "launch",
+			"name": "Launch DreamSeeker (map testing)",
+			"preLaunchTask": "Build All (map testing)",
+			"dmb": "${workspaceFolder}/${command:dreammaker.getFilenameDmb}",
+			"server": "dreamseeker",
+			"defines": ["CBT", "TESTING", "MAP_TEST"]
 		},
 		{
 			"name": "Debug External Libraries",

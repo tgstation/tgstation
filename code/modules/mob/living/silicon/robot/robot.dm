@@ -62,8 +62,8 @@
 		builtInCamera.c_tag = real_name
 		if(wires.is_cut(WIRE_CAMERA))
 			builtInCamera.camera_enabled = FALSE
-	update_icons()
 	. = ..()
+	update_icons()
 
 	LoadComponent(/datum/component/bloodysoles/bot)
 
@@ -311,20 +311,24 @@
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = model.cyborg_base_icon
-	if(!IS_UNCONSCIOUS(src) && !IsStun() && !IsParalyzed() && !low_power_mode && !is_empty_shell()) //Not dead, not stunned, not an unpiloted AI shell.
+
+	if(eye_lights_enabled && !IS_UNCONSCIOUS(src) && !IsStun() && !IsParalyzed() && !low_power_mode && !is_empty_shell()) //Eyes lights enabled, Not dead, not stunned, not an unpiloted AI shell.
+
 		if(!eye_lights)
 			eye_lights = new()
+
 		if(lamp_enabled || lamp_doom)
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]" : "[model.cyborg_base_icon]"]_l"
-			set_light_range(max(MINIMUM_USEFUL_LIGHT_RANGE, lamp_intensity))
-			set_light_color(lamp_doom ? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
-			SET_PLANE_EXPLICIT(eye_lights, ABOVE_LIGHTING_PLANE, src) //glowy eyes
+			eye_lights.color = null
+			SET_PLANE_EXPLICIT(eye_lights, ABOVE_LIGHTING_PLANE, src)  //glowy eyes
 		else
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
 			eye_lights.color = COLOR_WHITE
 			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
+
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
+		add_overlay(emissive_appearance(eye_lights.icon, eye_lights.icon_state, src, alpha = eye_lights.alpha))
 
 	var/obj/item/shield_module/shield_module = locate(/obj/item/shield_module) in src
 	if(shield_module && shield_module.active)
@@ -347,6 +351,38 @@
 		QDEL_NULL(hat_overlay)
 
 	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/silicon/robot/proc/toggle_eye_lights(forced_state)
+	if(isnull(forced_state))
+		forced_state = !eye_lights_enabled
+
+	if(forced_state == eye_lights_enabled)
+		return eye_lights_enabled
+
+	if(!forced_state)
+		if(lamp_doom) // Doomsday borgs can't turn off their eyes
+			to_chat(src, span_warning("Eye lights are blocked by the administrator mode."))
+			return eye_lights_enabled
+
+		if(lamp_enabled)
+			if(!COOLDOWN_FINISHED(src, disabled_time))
+				to_chat(src, span_warning("Eye lights controls disrupted!"))
+				return eye_lights_enabled
+
+			eye_lights_enabled = FALSE
+			toggle_headlamp(TRUE)
+			to_chat(src, span_notice("Eye lights disabled. Lighting disabled."))
+			return eye_lights_enabled
+
+		eye_lights_enabled = FALSE
+		update_icons()
+		to_chat(src, span_notice("Eye lights disabled."))
+		return eye_lights_enabled
+
+	eye_lights_enabled = TRUE
+	update_icons()
+	to_chat(src, span_notice("Eye lights enabled."))
+	return eye_lights_enabled
 
 /mob/living/silicon/robot/proc/update_worn_icons()
 	if(!hat_overlay)
@@ -371,12 +407,9 @@
 	if(same_z_layer || QDELING(src))
 		return ..()
 
-	if(eye_lights)
-		cut_overlay(eye_lights)
-		SET_PLANE_EXPLICIT(eye_lights, PLANE_TO_TRUE(eye_lights.plane), src)
-		add_overlay(eye_lights)
-
-	return ..()
+	. = ..()
+	update_icons()
+	return .
 
 /mob/living/silicon/robot/proc/self_destruct(mob/user)
 	var/turf/groundzero = get_turf(src)
@@ -530,6 +563,7 @@
 	set_light_color(lamp_doom ? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
 	set_light_on(TRUE)
 	lamp_enabled = TRUE
+	eye_lights_enabled = TRUE
 	hud_used?.screen_objects[HUD_CYBORG_LAMP]?.update_appearance()
 	update_icons()
 

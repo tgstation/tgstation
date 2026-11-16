@@ -26,7 +26,7 @@
 	volume = 250
 	possible_transfer_amounts = list(5,10)
 	var/spray_sound = 'sound/effects/spray2.ogg'
-	reagent_container_liquid_sound = SFX_DEFAULT_LIQUID_SLOSH
+	reagent_container_liquid_sound = /datum/sound_effect/default_liquid_slosh
 
 /obj/item/reagent_containers/spray/Initialize(mapload, vol)
 	. = ..()
@@ -460,3 +460,11 @@ GAME_VERB_SRC(/obj/item/reagent_containers/spray, empty, usr, "Empty Spray Bottl
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "sprayer_med_yellow"
 	list_reagents = list(/datum/reagent/medicine/c2/hercuri = 100)
+
+/obj/item/reagent_containers/spray/dinitrogen_plasmide
+	name = "coolant spray"
+	desc = "A medical spray bottle. This one contains cold dinitrogen plasmide, a potent industrial coolant."
+	icon = 'icons/obj/medical/chemical.dmi'
+	icon_state = "sprayer_med_yellow"
+	list_reagents = list(/datum/reagent/dinitrogen_plasmide = 100)
+	reagents_temperature = 20

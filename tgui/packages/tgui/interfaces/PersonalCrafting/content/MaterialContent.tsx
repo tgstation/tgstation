@@ -2,20 +2,22 @@ import { useBackend } from 'tgui/backend';
 import { Box, Stack } from 'tgui-core/components';
 
 import { findIcon } from '../helpers';
-import type { CraftingData } from '../types';
+import type { AtomData, CraftingData, IconData } from '../types';
 
 type Props = {
   atom_id: string;
   occurences: number;
+  iconData: IconData;
+  atomData: AtomData[];
 };
 
 export function MaterialContent(props: Props) {
-  const { occurences } = props;
+  const { occurences, iconData } = props;
   const { data } = useBackend<CraftingData>();
 
   const atom_id = Number(props.atom_id);
-  const name = data.atom_data[atom_id - 1].name;
-  const icon = findIcon(atom_id, data);
+  const name = props.atomData[atom_id - 1].name;
+  const icon = findIcon(atom_id, data, iconData);
 
   return (
     <Stack>

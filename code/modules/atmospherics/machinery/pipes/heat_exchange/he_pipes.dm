@@ -10,6 +10,9 @@
 
 	has_gas_visuals = FALSE
 
+	/// Tracks if we have a mob buckled to the pipe. An optimization, so we don't need to check every process tick.
+	VAR_PRIVATE/has_mob_to_cook = FALSE
+
 /obj/machinery/atmospherics/pipe/heat_exchanging/Initialize(mapload)
 	. = ..()
 
@@ -19,6 +22,12 @@
 	if(istype(target, /obj/machinery/atmospherics/pipe/heat_exchanging) != HE_type_check)
 		return FALSE
 	. = ..()
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/post_buckle_mob(mob/living/buckled_mob)
+	has_mob_to_cook = TRUE
+
+/obj/machinery/atmospherics/pipe/heat_exchanging/post_unbuckle_mob(mob/living/unbuckled_mob)
+	has_mob_to_cook = has_buckled_mobs()
 
 /obj/machinery/atmospherics/pipe/heat_exchanging/process_atmos()
 	var/environment_temperature = 0
@@ -40,7 +49,7 @@
 
 
 	//heatup/cooldown any mobs buckled to ourselves based on our temperature
-	if(has_buckled_mobs())
+	if(has_mob_to_cook)
 		var/hc = pipe_air.heat_capacity()
 		var/mob/living/heat_source = buckled_mobs[1]
 		//Best guess-estimate of the total bodytemperature of all the mobs, since they share the same environment it's ~ok~ to guess like this
@@ -73,7 +82,7 @@
 			animate(src, color = rgb(h_r, h_g, h_b), time = 20, easing = SINE_EASING)
 
 	//burn any mobs buckled based on temperature
-	if(!has_buckled_mobs())
+	if(!has_mob_to_cook)
 		return
 	var/heat_limit = 1000
 	if(pipe_air.temperature > heat_limit + 1)

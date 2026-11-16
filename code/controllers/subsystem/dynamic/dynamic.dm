@@ -149,17 +149,20 @@ SUBSYSTEM_DEF(dynamic)
 	// (actual execution, ie assigning antags, will happen after job assignment)
 	for(var/datum/dynamic_ruleset/roundstart/ruleset in queued_rulesets)
 		// NOTE: !! THIS CAN SLEEP !!
-		if(!ruleset.prepare_execution( num_real_players, antag_candidates ))
-			log_dynamic("Roundstart: Selected ruleset [ruleset.config_tag], but preparation failed! [ruleset.log_data]")
+		var/prepare = ruleset.prepare_execution( num_real_players, antag_candidates )
+		if(prepare != PREPARATION_SUCCESS)
+			log_dynamic("Roundstart: Selected ruleset [ruleset.config_tag], but preparation failed!")
+			log_dynamic("- [prepare || "Unknown error"]")
 			unqueue_ruleset(ruleset)
 			qdel(ruleset)
 			continue
 
 		// Just logs who was selected at roundstart
 		for(var/datum/mind/selected as anything in ruleset.selected_minds)
-			log_dynamic("Roundstart: [key_name(selected)] has been selected for [ruleset.config_tag].")
+			log_dynamic("- [key_name(selected)] has been selected for [ruleset.config_tag].")
 
 		rulesets_to_spawn[ROUNDSTART] -= 1
+
 	// and start ticking
 	COOLDOWN_START(src, light_ruleset_start, current_tier.ruleset_type_settings[LIGHT_MIDROUND][TIME_THRESHOLD])
 	COOLDOWN_START(src, heavy_ruleset_start, current_tier.ruleset_type_settings[HEAVY_MIDROUND][TIME_THRESHOLD])
@@ -221,7 +224,8 @@ SUBSYSTEM_DEF(dynamic)
 	var/heavy_midround_spawn = rulesets_to_spawn[HEAVY_MIDROUND]
 	var/latejoin_spawn = rulesets_to_spawn[LATEJOIN]
 
-	log_dynamic("Selected tier: [current_tier.tier]")
+	log_dynamic("Dynamic information for the round:")
+	log_dynamic("- Selected tier: [current_tier.tier]")
 	log_dynamic("- Roundstart population: [roundstart_population]")
 	log_dynamic("- Roundstart ruleset count: [roundstart_spawn]")
 	log_dynamic("- Light midround ruleset count: [light_midround_spawn]")
@@ -261,9 +265,7 @@ SUBSYSTEM_DEF(dynamic)
 		return list()
 
 	var/list/rulesets_weighted = get_roundstart_rulesets(antag_candidates)
-	var/total_weight = 0
-	for(var/ruleset in rulesets_weighted)
-		total_weight += rulesets_weighted[ruleset]
+	var/total_weight = values_sum(rulesets_weighted)
 	if(total_weight <= 0)
 		log_dynamic("Roundstart: No rulesets to pick from!")
 		return list()
@@ -275,9 +277,10 @@ SUBSYSTEM_DEF(dynamic)
 			break
 		rulesets_to_spawn[ROUNDSTART] -= 1
 		var/datum/dynamic_ruleset/roundstart/picked_ruleset = pick_weight(rulesets_weighted)
-		log_dynamic("Roundstart: Ruleset [picked_ruleset.config_tag] (Chance: [round(rulesets_weighted[picked_ruleset] / total_weight * 100, 0.01)]%)")
+		log_dynamic("Roundstart: Ruleset [picked_ruleset.config_tag]")
+		log_dynamic("- Chance to pick: [round(rulesets_weighted[picked_ruleset] / total_weight * 100, 0.01)]%")
 		if(picked_ruleset.solo)
-			log_dynamic("Roundstart: Ruleset is a solo ruleset. Cancelling other picks.")
+			log_dynamic("- Solo ruleset: Clearing previous selection.")
 			picked_rulesets.Cut()
 			rulesets_weighted -= picked_ruleset
 			picked_rulesets += picked_ruleset.type
@@ -327,9 +330,14 @@ SUBSYSTEM_DEF(dynamic)
 /datum/controller/subsystem/dynamic/proc/try_spawn_midround(range)
 	if(rulesets_to_spawn[range] <= 0)
 		return FALSE
-	var/midround_chance = get_midround_chance(range)
+	var/casualty_ratio = get_crew_casualty_ratio()
+	var/midround_chance = get_midround_chance(range, casualty_ratio)
+	log_dynamic("Midround ([range]): Rolling for a midround... ([midround_chance]% chance)")
+	log_dynamic("- Crew casualty percent: [round(casualty_ratio * 100)]%")
+	log_dynamic("- Non-admin ghost count: [length(get_non_admin_ghosts())]")
+	log_dynamic("- Living antags count: [length(GLOB.current_living_antags)]")
 	if(!prob(midround_chance))
-		log_dynamic("Midround ([range]): Ruleset chance failed ([midround_chance]% chance)")
+		log_dynamic("Midround ([range]): Ruleset chance failed.")
 		return FALSE
 
 	midround_admin_cancel = FALSE
@@ -368,18 +376,23 @@ SUBSYSTEM_DEF(dynamic)
 			stoplag()
 
 	// NOTE: !! THIS CAN SLEEP !!
-	if(!picked_ruleset.prepare_execution(player_count, picked_ruleset.collect_candidates()))
-		log_dynamic("Midround ([range]): Selected ruleset [picked_ruleset.config_tag], but preparation failed! [picked_ruleset.log_data]")
+	var/prepare = picked_ruleset.prepare_execution(player_count, picked_ruleset.collect_candidates())
+	if(prepare != PREPARATION_SUCCESS)
+		log_dynamic("Midround ([range]): Selected ruleset [picked_ruleset.config_tag], but preparation failed!")
+		log_dynamic("- Chance to pick: [round(rulesets_weighted[picked_ruleset] / values_sum(rulesets_weighted) * 100, 0.01)]%")
+		log_dynamic("- [prepare || "Unknown error"]")
 		QDEL_LIST(rulesets_weighted)
 		return FALSE
 	// Run the thing
+	log_dynamic("Midround ([range]): [picked_ruleset.config_tag]")
+	log_dynamic("- Chance to pick: [round(rulesets_weighted[picked_ruleset] / values_sum(rulesets_weighted) * 100, 0.01)]%")
 	executed_rulesets += picked_ruleset
 	rulesets_weighted -= picked_ruleset
 	picked_ruleset.execute()
 	// Post execute logging
 	for(var/datum/mind/selected as anything in picked_ruleset.selected_minds)
 		message_admins("Midround ([range]): [ADMIN_LOOKUPFLW(selected.current)] has been selected for [picked_ruleset.config_tag].")
-		log_dynamic("Midround ([range]): [key_name(selected.current)] has been selected for [picked_ruleset.config_tag].")
+		log_dynamic("- [key_name(selected.current)] has been selected for [picked_ruleset.config_tag].")
 		notify_ghosts("[selected.name] has been picked for [picked_ruleset.config_tag]!", source = selected.current)
 	// Clean up unused rulesets
 	QDEL_LIST(rulesets_weighted)
@@ -388,7 +401,9 @@ SUBSYSTEM_DEF(dynamic)
 		admin_forcing_next_light = FALSE
 	if(range == HEAVY_MIDROUND)
 		admin_forcing_next_heavy = FALSE
-	COOLDOWN_START(src, midround_cooldown, get_ruleset_cooldown(range))
+	var/next_cooldown = get_ruleset_cooldown(range)
+	COOLDOWN_START(src, midround_cooldown, next_cooldown)
+	log_dynamic("- Midround ([range]) now on a [DisplayTimeText(next_cooldown)] cooldown.")
 	return TRUE
 
 /// Gets a weighted list of midround rulesets
@@ -429,19 +444,22 @@ SUBSYSTEM_DEF(dynamic)
 			return FALSE
 
 	// NOTE: !! THIS CAN SLEEP !!
-	if(!running.prepare_execution(get_active_player_count(afk_check = TRUE), running.collect_candidates()))
+	var/prepare = running.prepare_execution(get_active_player_count(afk_check = TRUE), running.collect_candidates())
+	if(prepare != PREPARATION_SUCCESS)
 		if(alert_admins_on_fail)
-			message_admins("Midround (forced): Forced ruleset [running.config_tag], but preparation failed! [running.log_data]")
-		log_dynamic("Midround (forced): Forced ruleset [running.config_tag], but preparation failed! [running.log_data]")
+			message_admins("Midround (forced): Forced ruleset [running.config_tag], but preparation failed! [prepare || "Unknown error"]")
+		log_dynamic("Midround (forced): Forced ruleset [running.config_tag], but preparation failed!")
+		log_dynamic("- [prepare || "Unknown error"]")
 		qdel(running)
 		return FALSE
 
+	log_dynamic("Midround (forced): [running.config_tag]")
 	executed_rulesets += running
 	running.execute()
 	// Post execute logging
 	for(var/datum/mind/selected as anything in running.selected_minds)
 		message_admins("Midround (forced): [ADMIN_LOOKUPFLW(selected.current)] has been selected for [running.config_tag].")
-		log_dynamic("Midround (forced): [key_name(selected.current)] has been selected for [running.config_tag].")
+		log_dynamic("- [key_name(selected.current)] has been selected for [running.config_tag].")
 		notify_ghosts("[selected.name] has been picked for [running.config_tag]!", source = selected.current)
 	return TRUE
 
@@ -454,12 +472,17 @@ SUBSYSTEM_DEF(dynamic)
 	// because they're generally forced by events or admins (and thus have higher priority)
 	for(var/datum/dynamic_ruleset/latejoin/queued in queued_rulesets)
 		// NOTE: !! THIS CAN SLEEP !!
-		if(!queued.prepare_execution(get_active_player_count(afk_check = TRUE), list(latejoiner)))
-			message_admins("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin. (<a href='byond://?src=[REF(src)];admin_dequeue=[REF(queued)]'>REMOVE FROM QUEUE</a>)")
+		var/prepare = queued.prepare_execution(get_active_player_count(afk_check = TRUE), list(latejoiner))
+		if(prepare != PREPARATION_SUCCESS)
+			message_admins("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! [prepare || "Unknown error"] \
+				It remains queued for next latejoin. (<a href='byond://?src=[REF(src)];admin_dequeue=[REF(queued)]'>REMOVE FROM QUEUE</a>)")
 			log_dynamic("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin.")
+			log_dynamic("- [prepare || "Unknown error"]")
 			continue
+
+		log_dynamic("Latejoin (forced): [queued.config_tag]")
+		log_dynamic("- [key_name(latejoiner)] has been selected for [queued.config_tag].")
 		message_admins("Latejoin (forced): [ADMIN_LOOKUPFLW(latejoiner)] has been selected for [queued.config_tag].")
-		log_dynamic("Latejoin (forced): [key_name(latejoiner)] has been selected for [queued.config_tag].")
 		unqueue_ruleset(queued)
 		executed_rulesets += queued
 		queued.execute()
@@ -476,12 +499,17 @@ SUBSYSTEM_DEF(dynamic)
  * Returns TRUE if a ruleset was spawned, FALSE otherwise
  */
 /datum/controller/subsystem/dynamic/proc/try_spawn_latejoin(mob/living/carbon/human/latejoiner)
-
 	if(rulesets_to_spawn[LATEJOIN] <= 0)
 		return FALSE
-	var/latejoin_chance = get_latejoin_chance()
+
+	var/casualty_ratio = get_crew_casualty_ratio()
+	var/latejoin_chance = get_latejoin_chance(casualty_ratio)
+	log_dynamic("Latejoin: Rolling for a latejoin...")
+	log_dynamic("- Crew casualty percent: [round(casualty_ratio * 100)]%")
+	log_dynamic("- Failed latejoins: [failed_latejoins]")
+	log_dynamic("- Living antags count: [length(GLOB.current_living_antags)]")
 	if(!prob(latejoin_chance))
-		log_dynamic("Latejoin: Ruleset chance failed ([latejoin_chance]% chance)")
+		log_dynamic("Latejoin: Ruleset chance failed.")
 		return FALSE
 
 	var/player_count = get_active_player_count(afk_check = TRUE)
@@ -493,12 +521,18 @@ SUBSYSTEM_DEF(dynamic)
 		log_dynamic("Latejoin: No rulesets to pick from!")
 		return FALSE
 	// NOTE: !! THIS CAN SLEEP !!
-	if(!picked_ruleset.prepare_execution(player_count, list(latejoiner)))
-		log_dynamic("Latejoin: Selected ruleset [picked_ruleset.name] for [key_name(latejoiner)], but preparation failed! Latejoin chance has increased. [picked_ruleset.log_data]")
-		QDEL_LIST(rulesets_weighted)
+	var/prepare = picked_ruleset.prepare_execution(player_count, list(latejoiner))
+	if(prepare != PREPARATION_SUCCESS)
 		failed_latejoins++
+		log_dynamic("Latejoin: Selected ruleset [picked_ruleset.name] for [key_name(latejoiner)], but preparation failed! [prepare || "Unknown error"] ([latejoin_chance]% chance)")
+		log_dynamic("- Chance to pick: [round(rulesets_weighted[picked_ruleset] / values_sum(rulesets_weighted) * 100, 0.01)]%")
+		log_dynamic("- Latejoin chance has increased ([failed_latejoins] failed latejoins).")
+		log_dynamic("- [prepare || "Unknown error"]")
+		QDEL_LIST(rulesets_weighted)
 		return FALSE
 	// Run the thing
+	log_dynamic("Latejoin: [picked_ruleset.config_tag]]")
+	log_dynamic("- Chance to pick: [round(rulesets_weighted[picked_ruleset] / values_sum(rulesets_weighted) * 100, 0.01)]%")
 	executed_rulesets += picked_ruleset
 	rulesets_weighted -= picked_ruleset
 	picked_ruleset.execute()
@@ -506,13 +540,15 @@ SUBSYSTEM_DEF(dynamic)
 	if(!(latejoiner.mind in picked_ruleset.selected_minds))
 		stack_trace("Dynamic: Latejoin [picked_ruleset.type] executed, but the latejoiner was not in its selected minds list!")
 	message_admins("Latejoin: [ADMIN_LOOKUPFLW(latejoiner)] has been selected for [picked_ruleset.config_tag].")
-	log_dynamic("Latejoin: [key_name(latejoiner)] has been selected for [picked_ruleset.config_tag].")
+	log_dynamic("- [key_name(latejoiner)] has been selected for [picked_ruleset.config_tag].")
 	// Clean up unused rulesets
 	QDEL_LIST(rulesets_weighted)
 	rulesets_to_spawn[LATEJOIN] -= 1
 	failed_latejoins = 0
 	admin_forcing_next_latejoin = FALSE
-	COOLDOWN_START(src, latejoin_cooldown, get_ruleset_cooldown(LATEJOIN))
+	var/next_cooldown = get_ruleset_cooldown(LATEJOIN)
+	COOLDOWN_START(src, latejoin_cooldown, next_cooldown)
+	log_dynamic("- Latejoin now on a [DisplayTimeText(next_cooldown)] cooldown.")
 	return TRUE
 
 /// Gets a weighted list of latejoin rulesets
@@ -564,21 +600,16 @@ SUBSYSTEM_DEF(dynamic)
 /**
  * Gets the chance of a midround ruleset being selected
  */
-/datum/controller/subsystem/dynamic/proc/get_midround_chance(range)
+/datum/controller/subsystem/dynamic/proc/get_midround_chance(range, casualty_ratio = get_crew_casualty_ratio())
 	if(admin_forcing_next_light && range == LIGHT_MIDROUND)
 		return 100
 	if(admin_forcing_next_heavy && range == HEAVY_MIDROUND)
 		return 100
 
-	var/chance = 0
-	var/num_antags = length(GLOB.current_living_antags)
-	var/num_dead = length(GLOB.dead_player_list)
-	var/num_alive = get_active_player_count(afk_check = TRUE)
-	if(num_dead + num_alive <= 0)
-		return 0
-
-	chance += 100 - (200 * (num_dead / (num_alive + num_dead)))
-	if(num_antags < 0)
+	// guaranteed to stop spawning antags at 50% total casualties
+	var/chance = 100 - (300 * casualty_ratio)
+	// big cash injection for if all antags are dead. we gotta get goin!
+	if(length(GLOB.current_living_antags) <= 0)
 		chance += 50
 
 	return chance
@@ -586,20 +617,16 @@ SUBSYSTEM_DEF(dynamic)
 /**
  * Gets the chance of a latejoin ruleset being selected
  */
-/datum/controller/subsystem/dynamic/proc/get_latejoin_chance()
+/datum/controller/subsystem/dynamic/proc/get_latejoin_chance(casualty_ratio = get_crew_casualty_ratio())
 	if(admin_forcing_next_latejoin)
 		return 100
 
-	var/chance = 0
-	var/num_antags = length(GLOB.current_living_antags)
-	var/num_dead = length(GLOB.dead_player_list)
-	var/num_alive = get_active_player_count(afk_check = TRUE)
-	if(num_dead + num_alive <= 0)
-		return 0
-
-	chance += 100 - (200 * (num_dead / (num_alive + num_dead)))
-	if(num_antags < 0)
+	// guaranteed to stop spawning antags at 50% total casualties
+	var/chance = 100 - (300 * casualty_ratio)
+	// big cash injection for if all antags are dead. we gotta get goin!
+	if(length(GLOB.current_living_antags) <= 0)
 		chance += 50
+
 	chance += (failed_latejoins * 15)
 	// Reduced chance before lights start
 	if(!COOLDOWN_FINISHED(src, light_ruleset_start))

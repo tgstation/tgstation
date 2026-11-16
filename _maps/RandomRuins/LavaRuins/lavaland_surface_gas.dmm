@@ -215,12 +215,12 @@
 /area/ruin/thelizardsgas_lavaland)
 "iT" = (
 /obj/structure/rack,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
+/obj/item/food/chips/corn/random,
+/obj/item/food/chips/corn/random,
+/obj/item/food/chips/corn/random,
+/obj/item/food/chips/corn/random,
+/obj/item/food/chips/corn/random,
+/obj/item/food/chips/corn/random,
 /obj/structure/sign/poster/contraband/eat/directional/north,
 /turf/open/floor/iron{
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface

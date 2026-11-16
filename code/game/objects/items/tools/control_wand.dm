@@ -38,9 +38,9 @@
 	)
 	COOLDOWN_DECLARE(shock_cooldown)
 	/// sound played when mode is switched
-	var/mode_switch_sound = SFX_REMOTE_MODE_SWITCH
+	var/mode_switch_sound = /datum/sound_effect/remote_mode_switch
 	/// sound played when an action is done
-	var/action_sound = SFX_REMOTE_ACTION
+	var/action_sound = /datum/sound_effect/remote_action
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()

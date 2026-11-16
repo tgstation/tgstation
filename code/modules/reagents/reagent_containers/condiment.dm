@@ -144,6 +144,8 @@
 	volume = 20
 	list_reagents = list(/datum/reagent/consumable/salt = 20)
 	fill_icon_thresholds = null
+	pickup_sound = /datum/sound_effect/seasoning_shaker_pickup
+	drop_sound = /datum/sound_effect/seasoning_shaker_drop
 
 /obj/item/reagent_containers/condiment/saltshaker/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to swap forms with the salt shaker! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -179,6 +181,8 @@
 	volume = 20
 	list_reagents = list(/datum/reagent/consumable/blackpepper = 20)
 	fill_icon_thresholds = null
+	pickup_sound = /datum/sound_effect/seasoning_shaker_pickup
+	drop_sound = /datum/sound_effect/seasoning_shaker_drop
 
 /obj/item/reagent_containers/condiment/milk
 	name = "space milk"

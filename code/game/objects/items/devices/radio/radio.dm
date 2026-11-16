@@ -12,8 +12,8 @@
 	dog_fashion = /datum/dog_fashion/back
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
@@ -739,7 +739,7 @@
 	wires?.cut(WIRE_TX)
 
 /obj/item/radio/entertainment/speakers/on_receive_message(list/data)
-	playsound(src, SFX_MUFFLED_SPEECH, 60, TRUE, -4, ignore_walls = FALSE, volume_preference = /datum/preference/numeric/volume/sound_radio_noise)
+	playsound(src, /datum/sound_effect/muffled_speech, 60, TRUE, -4, ignore_walls = FALSE, volume_preference = /datum/preference/numeric/volume/sound_radio_noise)
 
 	return ..()
 

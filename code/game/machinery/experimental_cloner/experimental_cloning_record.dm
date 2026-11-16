@@ -18,6 +18,8 @@
 	var/voice
 	/// The TTS voice filter of the cloned subject
 	var/voice_filter
+	/// The TTS voice pitch of the cloned subject
+	var/voice_pitch
 	/// The height of the cloned subject
 	var/height
 
@@ -41,6 +43,7 @@
 
 	voice = subject.voice
 	voice_filter = subject.voice_filter
+	voice_pitch = subject.pitch
 
 /// Duplicates our data
 /datum/experimental_cloning_record/proc/create_copy()
@@ -55,6 +58,7 @@
 	new_record.brain_traumas = brain_traumas.Copy()
 	new_record.voice = voice
 	new_record.voice_filter = voice_filter
+	new_record.voice_pitch = voice_pitch
 	return new_record
 
 /// Apply record data to a clone
@@ -66,6 +70,7 @@
 	subject.mind?.set_level(/datum/skill/athletics, athletics_level, silent = TRUE)
 	subject.voice = voice
 	subject.voice_filter = voice_filter
+	subject.pitch = voice_pitch
 
 	dna.copy_dna(subject.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 

@@ -42,7 +42,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 			misc_list[++misc_list.len] = list(
 				"name" = name,
 				"rank" = rank,
-				"trim" = job?.tgui_icon,
+				"trim" = trim,
 				)
 			continue
 		for(var/department_type in job.departments_list)
@@ -56,7 +56,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 			var/list/entry = list(
 				"name" = name,
 				"rank" = rank,
-				"trim" = job.tgui_icon,
+				"trim" = trim,
 				)
 			var/list/department_list = manifest_out[department.department_name]
 			if(istype(job, department.department_head))
@@ -133,6 +133,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		rank = assignment,
 		species = record_dna.species.name,
 		trim = assignment,
+		voice = person.voice,
 		// Locked specifics
 		locked_dna = record_dna,
 		mind_ref = person.mind,
@@ -150,6 +151,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		rank = assignment,
 		species = record_dna.species.name,
 		trim = assignment,
+		voice = person.voice,
 		// Crew specific
 		lock_ref = REF(lockfile),
 		major_disabilities = person.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY, from_scan = TRUE),

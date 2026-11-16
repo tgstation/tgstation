@@ -30,7 +30,7 @@
 	force = 2
 	w_class = WEIGHT_CLASS_SMALL
 	throwforce = 9
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	attack_verb_continuous = list("stubs", "pokes")
 	attack_verb_simple = list("stub", "poke")
 	sharpness = SHARP_EDGED

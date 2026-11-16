@@ -61,12 +61,19 @@ export type CraftingData = {
   forced_mode: BooleanLike;
   mode: BooleanLike;
   // Static
-  atom_data: AtomData[];
-  categories: string[];
   complexity: number;
   diet: Diet;
   foodtypes: string[];
-  icon_data: Record<number, string>;
   material_occurences: Material[];
-  recipes: Recipe[];
+  json_to_use: string;
+  visible_recipes: string[];
 };
+
+export type RecipeServerData = {
+  categories: string[];
+  recipes: Recipe[];
+  icon_data: IconData;
+  atom_data: AtomData[];
+};
+
+export type IconData = Record<number, string>;

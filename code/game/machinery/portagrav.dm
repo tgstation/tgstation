@@ -155,7 +155,7 @@
 	if(user)
 		balloon_alert(user, "unsafe gravity unlocked")
 		user.log_message("emagged [src].", LOG_ATTACK)
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
 /obj/machinery/power/portagrav/proc/toggle_on(mob/user)

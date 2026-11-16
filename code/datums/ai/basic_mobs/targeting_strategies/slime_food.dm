@@ -26,7 +26,7 @@
 	if(isnull(slime_faction))
 		slime_faction = string_list(list(FACTION_SLIME))
 
-	if(FAST_FACTION_CHECK(slime_faction, candidate.get_faction(), hunter.allies, candidate.allies, FALSE))
+	if(FACTION_CHECK(slime_faction, candidate.get_faction(), hunter.allies, candidate.allies, FALSE))
 		return FALSE
 
 	if(!hunter.can_feed_on(candidate, check_adjacent = FALSE))

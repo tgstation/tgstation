@@ -28,6 +28,7 @@
 	combat_mode = TRUE
 	move_resist = INFINITY // This mob IS the floor
 	physiology = list(STAMINA = 0)
+	faction = null
 
 	/// Looping heartbeat sound
 	var/datum/looping_sound/heartbeat/soundloop

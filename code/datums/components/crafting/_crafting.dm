@@ -515,7 +515,7 @@
 	var/list/craftability = list()
 	for(var/datum/crafting_recipe/recipe as anything in get_visible_recipes(user))
 		if(check_contents(user, recipe, surroundings) && check_tools(user, recipe, surroundings))
-			craftability["[REF(recipe)]"] = TRUE
+			craftability[REF(recipe)] = TRUE
 
 	data["craftability"] = craftability
 	return data
@@ -525,17 +525,13 @@
 	var/list/material_occurences = list()
 
 	data["forced_mode"] = forced_mode
-	data["recipes"] = list()
-	data["categories"] = list()
 	data["foodtypes"] = FOOD_FLAGS
+	data["diet"] = astype(user, /mob/living/carbon)?.dna?.species?.get_species_diet()
+	data["json_to_use"] = SSassets.transport.get_asset_url("[mode ? /datum/asset/json/crafting_recipes/cooking::name : /datum/asset/json/crafting_recipes::name].json")
 
-	if(user.has_dna())
-		var/mob/living/carbon/carbon = user
-		data["diet"] = carbon.dna.species.get_species_diet()
-
+	data["visible_recipes"] = list()
 	for(var/datum/crafting_recipe/recipe as anything in get_visible_recipes(user))
-		if(recipe.category)
-			data["categories"] |= recipe.category
+		data["visible_recipes"] += REF(recipe)
 
 		// Materials
 		for(var/req in recipe.reqs)
@@ -543,50 +539,16 @@
 		for(var/req in recipe.chem_catalysts)
 			material_occurences[req] += 1
 
-		data["recipes"] += list(build_crafting_data(recipe))
-
-	var/list/datums = mode ? GLOB.cooking_recipes_datums : GLOB.crafting_recipes_datums
-
-	// Prepare atom data
-
-	//load sprite sheets and select the correct one based on the mode
-	var/static/list/sprite_sheets
-	if(isnull(sprite_sheets))
-		sprite_sheets = ui_assets()
-	var/datum/asset/spritesheet_batched/sheet = sprite_sheets[mode ? 2 : 1]
-
-	data["icon_data"] = list()
-	for(var/datum/atom as anything in datums)
-		var/atom_id = datums.Find(atom)
-		var/atom_name = ""
-		if(ispath(atom, /atom))
-			// future todo: some atoms have intentionally misleading names,
-			// and while their crafting recipe reveals their true nature,
-			// the displayed name here does not
-			var/atom/atom_path = atom
-			atom_name = atom_path::name
-		else if(ispath(atom, /datum/reagent))
-			var/datum/reagent/reagent_path = atom
-			atom_name = reagent_path::name
-
-		data["atom_data"] += list(list(
-			"name" = atom_name,
-			"is_reagent" = ispath(atom, /datum/reagent),
-		))
-
-		var/icon_size = sheet.icon_size_id("a[atom_id]")
-		if(!endswith(icon_size, "32x32"))
-			data["icon_data"]["[atom_id]"] = "[icon_size] a[atom_id]"
-
 	// Prepare materials data
+	var/list/datums = mode ? GLOB.cooking_recipes_datums : GLOB.crafting_recipes_datums
 	for(var/atom/atom as anything in material_occurences)
 		if(material_occurences[atom] == 1)
 			continue // Don't include materials that appear only once
-		var/id = datums.Find(atom)
+
 		data["material_occurences"] += list(list(
-				"atom_id" = "[id]",
-				"occurences" = material_occurences[atom]
-			))
+			"atom_id" = CRAFTING_COMPONENT_ID(datums, atom),
+			"occurences" = material_occurences[atom]
+		))
 
 	return data
 
@@ -653,110 +615,9 @@
 	return list(
 		get_asset_datum(/datum/asset/spritesheet_batched/crafting),
 		get_asset_datum(/datum/asset/spritesheet_batched/crafting/cooking),
+		get_asset_datum(/datum/asset/json/crafting_recipes),
+		get_asset_datum(/datum/asset/json/crafting_recipes/cooking),
 	)
-
-/datum/component/personal_crafting/proc/build_crafting_data(datum/crafting_recipe/recipe)
-	var/list/data = list()
-	var/list/datums = mode ? GLOB.cooking_recipes_datums : GLOB.crafting_recipes_datums
-
-	data["ref"] = "[REF(recipe)]"
-	var/atom/atom = recipe.result
-
-	data["id"] = datums.Find(atom)
-
-	var/recipe_data = recipe.crafting_ui_data()
-	for(var/new_data in recipe_data)
-		data[new_data] = recipe_data[new_data]
-
-	// Category
-	data["category"] = recipe.category
-
-	// Name, Description
-	data["name"] = recipe.name
-
-	if(ispath(recipe.result, /datum/reagent))
-		var/datum/reagent/reagent = recipe.result
-		if(recipe.result_amount > 1)
-			data["name"] = "[data["name"]] [recipe.result_amount]u"
-		data["desc"] = recipe.desc || initial(reagent.description)
-
-	else if(ispath(recipe.result, /obj/item/pipe))
-		var/obj/item/pipe/pipe_obj = recipe.result
-		var/obj/pipe_real = initial(pipe_obj.pipe_type)
-		data["desc"] = recipe.desc || initial(pipe_real.desc)
-
-	else
-		if(ispath(recipe.result, /obj/item/stack) && recipe.result_amount > 1)
-			data["name"] = "[data["name"]] [recipe.result_amount]x"
-		data["desc"] = recipe.desc || initial(atom.desc)
-
-	if(ispath(recipe.result, /obj/item/food))
-		var/obj/item/food/food = recipe.result
-		data["has_food_effect"] = !!food.crafted_food_buff
-
-	// Crafting
-	if(recipe.non_craftable)
-		data["non_craftable"] = recipe.non_craftable
-	data["mass_craftable"] = recipe.mass_craftable
-	if(recipe.steps)
-		data["steps"] = recipe.steps
-
-	// Tools
-	if(recipe.tool_behaviors)
-		data["tool_behaviors"] = recipe.tool_behaviors
-	if(recipe.tool_paths)
-		data["tool_paths"] = list()
-		for(var/req_atom in recipe.tool_paths)
-			data["tool_paths"] += datums.Find(req_atom)
-
-	// Machinery
-	if(recipe.machinery)
-		data["machinery"] = list()
-		for(var/req_atom in recipe.machinery)
-			data["machinery"] += datums.Find(req_atom)
-
-	// Structures
-	if(recipe.structures)
-		data["structures"] = list()
-		for(var/req_atom in recipe.structures)
-			data["structures"] += datums.Find(req_atom)
-
-	// Ingredients / Materials
-	data["reqs"] = list()
-	if(recipe.reqs.len)
-		for(var/req_atom in recipe.reqs)
-			var/id = datums.Find(req_atom)
-			data["reqs"]["[id]"] = recipe.reqs[req_atom]
-
-	// Catalysts
-	if(LAZYLEN(recipe.chem_catalysts))
-		data["chem_catalysts"] = list()
-		for(var/req_atom, chem_amount in recipe.chem_catalysts)
-			var/id = datums.Find(req_atom)
-			data["chem_catalysts"]["[id]"] = chem_amount
-
-	// Reaction data
-	if(ispath(recipe.reaction))
-		data["is_reaction"] = TRUE
-		// May be called before chemical reactions list is setup
-		var/datum/chemical_reaction/reaction = GLOB.chemical_reactions_list[recipe.reaction] || new recipe.reaction()
-		if(istype(reaction))
-			if(!data["steps"])
-				data["steps"] = list()
-			if(reaction.required_container)
-				var/id = datums.Find(reaction.required_container)
-				data["reqs"]["[id]"] = 1
-				data["steps"] += "Add all ingredients into \a [initial(reaction.required_container.name)]"
-			else if(length(recipe.reqs) > 1 || length(reaction.required_catalysts))
-				data["steps"] += "Mix all ingredients together"
-			if(reaction.required_temp > T20C)
-				data["steps"] += "Heat up to [reaction.required_temp]K"
-		else
-			stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
-	else if(!isnull(recipe.reaction))
-		stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
-
-	return data
 
 #undef COOKING
 #undef CRAFTING

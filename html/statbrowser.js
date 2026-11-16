@@ -327,39 +327,77 @@ function draw_status() {
     current_tab = 'Status';
   }
   statcontentdiv.textContent = '';
-  var table = document.createElement('table');
-  for (var i = 0; i < status_tab_parts.length; i++) {
-    var part = status_tab_parts[i];
+  let lastdiv;
+  const table = document.createElement('table');
+  for (let i = 0; i < status_tab_parts.length; i++) {
+    const part = status_tab_parts[i];
+    // status tab elements can be a simple string, or an array with instructions
     if (!Array.isArray(part)) {
-      var div = document.createElement('div');
-      if (part.trim() == '') {
+      // if it's a string, just make a div and slap the text in it
+      const div = document.createElement('div');
+      lastdiv = div;
+      if (part.trim() === '') {
         table.appendChild(document.createElement('br'));
       } else {
         div.textContent = part;
         table.appendChild(div);
       }
+      continue;
+    }
+
+    // complex handling needed
+    let div;
+    const base = part[0].trim();
+    // 'same_line' = append the following content to the last div created
+    // as a link, rather than creating a new div
+    if (base === 'same_line') {
+      const a = document.createElement('a');
+      a.href = 'byond://?' + part[2];
+      a.textContent = part[1];
+      lastdiv.appendChild(a);
     } else {
-      var div;
-      if (part[0].trim() == 'same_line') {
-        var a = document.createElement('a');
+      div = document.createElement('div');
+      lastdiv = div;
+    }
+
+    // '' = newline
+    if (base === '') {
+      table.appendChild(document.createElement('br'));
+      // 'img' = display an image with optional caption
+    } else if (base === 'img') {
+      if (part.length > 3) {
+        const img_with_caption_table = document.createElement('table');
+        const mainrow = document.createElement('tr');
+        const img = document.createElement('img');
+        img.src = part[1];
+        img.alt = part[2];
+        img.title = part[2];
+        const img_td = document.createElement('td');
+        img_td.appendChild(img);
+        mainrow.appendChild(img_td);
+        const caption_td = document.createElement('td');
+        caption_td.textContent = part[3];
+        caption_td.title = part.length > 4 ? part[4] : '';
+        mainrow.appendChild(caption_td);
+        img_with_caption_table.appendChild(mainrow);
+        table.appendChild(img_with_caption_table);
+      } else {
+        const img = document.createElement('img');
+        img.src = part[1];
+        img.alt = part[2];
+        div.appendChild(img);
+        table.appendChild(div);
+      }
+      // default = interpret it as a link
+    } else {
+      div.textContent = base;
+      if (part[2]) {
+        const a = document.createElement('a');
         a.href = 'byond://?' + part[2];
         a.textContent = part[1];
         div.appendChild(a);
-      } else {
-        div = document.createElement('div');
-        if (part[0].trim() == '') {
-          table.appendChild(document.createElement('br'));
-        } else {
-          div.textContent = part[0];
-          if (part[2]) {
-            var a = document.createElement('a');
-            a.href = 'byond://?' + part[2];
-            a.textContent = part[1];
-            div.appendChild(a);
-          }
-          table.appendChild(div);
-        }
       }
+      table.appendChild(div);
     }
   }
   document.getElementById('statcontent').appendChild(table);

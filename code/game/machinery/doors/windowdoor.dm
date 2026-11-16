@@ -12,7 +12,7 @@
 	integrity_failure = 0
 	armor_type = /datum/armor/door_window
 	visible = FALSE
-	flags_1 = ON_BORDER_1
+	flags_1 = parent_type::flags_1 | ON_BORDER_1
 	opacity = FALSE
 	pass_flags_self = PASSGLASS | PASSWINDOW
 	can_atmos_pass = ATMOS_PASS_PROC
@@ -336,7 +336,7 @@
 	if(disassembled)
 		return
 
-	playsound(src, SFX_SHATTER, 70, TRUE)
+	playsound(src, /datum/sound_effect/shatter, 70, TRUE)
 
 	for(var/i in 1 to shards)
 		drop_debris(new /obj/item/shard(src))
@@ -374,7 +374,7 @@
 		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[base_state]spark", src)
-		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, /datum/sound_effect/sparks, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
 		return TRUE
 	return FALSE
