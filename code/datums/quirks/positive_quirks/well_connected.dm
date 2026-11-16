@@ -14,14 +14,14 @@
 	)
 	quirk_flags = QUIRK_HIDE_FROM_SCAN
 
-	VAR_PRIVATE/datum/weakref/affected_account
+	VAR_PRIVATE/datum/autoref/affected_account
 
 /datum/quirk/well_connected/add_unique(client/client_source)
 	var/datum/bank_account/account = quirk_holder.get_bank_account()
 	if(isnull(account))
 		return
 
-	affected_account = WEAKREF(account)
+	affected_account = AUTOREF(account)
 	account.private_order_cost_modifier *= 0.8
 	account.goody_order_cost_modifier *= 0.8
 	account.black_market_cost_modifier *= 0.8
