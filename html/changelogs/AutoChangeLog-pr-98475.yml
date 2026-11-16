@@ -1,0 +1,4 @@
+author: "btcbuster"
+delete-after: True
+changes:
+  - balance: "You no longer lose ore when smelting it."
