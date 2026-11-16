@@ -1,4 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - bugfix: "Fixed misplaced wallet runtiming on maps with no closets"
