@@ -8,6 +8,8 @@ SUBSYSTEM_DEF(trading_card_game)
 	/// List of keyword files
 	/// These allow you to add on hovor logic to parts of a card's text, displaying extra info
 	var/list/keyword_files = list("keywords.json")
+	/// Defined preconstructed deck lists for purchasing at vendors.
+	var/list/precon_files = list("precons.json")
 	/// What cardpack types to load
 	var/card_packs = list(/obj/item/cardpack/series_one, /obj/item/cardpack/resin)
 	var/list/cached_guar_rarity = list()
@@ -16,6 +18,7 @@ SUBSYSTEM_DEF(trading_card_game)
 	var/list/cached_cards = list()
 	/// List of loaded keywords matched with their hovor text
 	var/list/keywords = list()
+	var/list/precons = list()
 	var/loaded = FALSE
 
 //Let's load the cards before the map fires, so we can load cards on the map safely
@@ -30,6 +33,8 @@ SUBSYSTEM_DEF(trading_card_game)
 	styleKeywords()
 	for(var/card_file in card_files)
 		loadCardFile(card_file, card_directory)
+	for(var/precon_file in precon_files)
+		loadPreconFile(precon_file, card_directory)
 
 ///Empty the rarity cache so we can safely add new cards
 /datum/controller/subsystem/trading_card_game/proc/clearCards()
@@ -51,6 +56,26 @@ SUBSYSTEM_DEF(trading_card_game)
 			stack_trace("Dupe detected, [keyword] was defined by [directory]/[filename] after it already had a value!")
 			continue
 		keywords[keyword] = keyword_data[keyword]
+
+///Loads precon decklists from the provided json file.
+/datum/controller/subsystem/trading_card_game/proc/loadPreconFile(filename, directory = "strings/tcg")
+	var/list/precon_data = json_decode(file2text("[directory]/[filename]"))
+	for(var/precon in precon_data)
+		var/should_import = TRUE
+		if(precons[precon])
+			stack_trace("Dupe detected, [precon] was defined by [directory]/[filename] after it already had a value!")
+			continue
+		var/total = 0
+		for(var/card_path in precon_data[precon]["list"])
+			total = total + precon_data[precon]["list"][card_path]
+			var/list/split = splittext(card_path, "/")
+			if(!(cached_cards[split[1]]["ALL"][split[2]]))
+				stack_trace("Precon definition [precon] in [directory]/[filename] contains unknown card path '[card_path]'!")
+				should_import = FALSE
+		if(total != 30)
+			stack_trace("Precon definition [precon] in [directory]/[filename] is not a legal deck size of 30!")
+		if(should_import == TRUE)
+			precons[precon] = precon_data[precon]
 
 ///Styles our keywords, converting them from just the raw text to the output we want
 /datum/controller/subsystem/trading_card_game/proc/styleKeywords()
@@ -187,3 +212,12 @@ SUBSYSTEM_DEF(trading_card_game)
 			toSend += "\nID:[id] [template.name] [(cardsByCount[id] * 100) / totalCards]% Total:[cardsByCount[id]]"
 	message_admins(toSend)
 	qdel(pack)
+
+///Returns a /datum/card from the card path, which should be in the form "series_id/card_id".
+/datum/controller/subsystem/trading_card_game/proc/get_card_datum_from_path(var/path)
+	var/list/split = splittext(path, "/")
+	. = get_card_datum(split[1], split[2])
+
+///Returns a /datum/card from a series and id.
+/datum/controller/subsystem/trading_card_game/proc/get_card_datum(var/series, var/id)
+	. = cached_cards[series]["ALL"][id]

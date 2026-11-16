@@ -1,0 +1,36 @@
+{
+	"command": {
+		"list": {
+			"coreset2020/flamboyantborg": 3,
+			"coreset2020/lawyer": 3,
+			"coreset2020/sloth": 3,
+			"coreset2020/blue_warp": 2,
+			"coreset2020/re_education": 3,
+			"coreset2020/bsa_barrage": 2,
+			"coreset2020/ian": 3,
+			"coreset2020/warden": 3,
+			"coreset2020/det": 1,
+			"coreset2020/just_losses": 2,
+			"coreset2020/good_planning": 1,
+			"coreset2020/HOS": 1,
+			"coreset2020/ert_command": 1,
+			"coreset2020/captain": 2
+		}
+	},
+	"crew": {
+		"list": {
+			"coreset2020/adrenals": 2,
+			"coreset2020/assistant": 3,
+			"coreset2020/monkey": 3,
+			"coreset2020/jannie": 3,
+			"coreset2020/bepis": 3,
+			"coreset2020/clown": 1,
+			"coreset2020/bartender": 3,
+			"coreset2020/chef": 3,
+			"coreset2020/geneticist": 2,
+			"coreset2020/doc": 2,
+			"coreset2020/weekend_at_bernies": 3,
+			"coreset2020/immoral_surgeon": 2
+		}
+	}
+}
