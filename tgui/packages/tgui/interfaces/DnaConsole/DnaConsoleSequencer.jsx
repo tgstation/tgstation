@@ -148,7 +148,12 @@ function buildGenomePairs(sequence, renderGene) {
 }
 
 const GenomeSequencer = (props) => {
-  const { mutation, clickable = true } = props;
+  const {
+    mutation,
+    clickable = true,
+    sequenceOverride,
+    disabledOverride,
+  } = props;
   if (!mutation) {
     return <Box color="average">No genome selected for sequencing.</Box>;
   }
@@ -159,17 +164,19 @@ const GenomeSequencer = (props) => {
       </Box>
     );
   }
-  const sequence = mutation.Sequence;
+  const sequence = sequenceOverride || mutation.Sequence;
   const defaultSeq = mutation.DefaultSeq;
   const pairs = buildGenomePairs(sequence, (i) => (
     <GeneCycler
       width="22px"
       textAlign="center"
+      style={{ pointerEvents: clickable ? 'auto' : 'none' }}
       disabled={
-        clickable && (!!mutation.Scrambled || mutation.Class !== MUT_NORMAL)
+        disabledOverride ??
+        (!!mutation.Scrambled || mutation.Class !== MUT_NORMAL)
       }
       className={
-        defaultSeq?.charAt(i) === 'X' && !mutation.Active
+        defaultSeq?.charAt(i) === 'X' && !mutation.Active && clickable
           ? classes(['outline-solid', 'outline-color-orange'])
           : false
       }
@@ -205,35 +212,13 @@ export const GenomePreview = (props) => {
       </Box>
       <Box style={{ fontStyle: 'normal' }}>
         <GenomeSequencer
-          mutation={{
-            Sequence: mutation_sequence,
-            // no other data is needed when clickable is false
-          }}
+          mutation={{ Sequence: mutation_sequence }} // no other data is needed
+          disabledOverride={false}
           clickable={false}
         />
       </Box>
     </NoticeBox>
   );
-};
-
-// Read only version of the genome sequencer.
-const GenomeSequencerReadOnly = (props) => {
-  const { sequence } = props;
-  const pairs = buildGenomePairs(sequence, (i) => {
-    const gene = sequence.charAt(i);
-    return (
-      <Button
-        key={i}
-        width="22px"
-        textAlign="center"
-        color={GENE_COLORS[gene] || GENE_COLORS.X}
-        style={{ pointerEvents: 'none' }} //Probably a better way but hehe >:)
-      >
-        {gene}
-      </Button>
-    );
-  });
-  return <Box m={-0.5}>{pairs}</Box>;
 };
 
 export const DnaConsoleSequencer = (props) => {
@@ -341,7 +326,11 @@ export const DnaConsoleSequencer = (props) => {
             </Section>
             {!!scannerSequence && (
               <Section title="Held Scanner">
-                <GenomeSequencerReadOnly sequence={scannerSequence} />
+                <GenomeSequencer
+                  mutation={mutation}
+                  sequenceOverride={scannerSequence}
+                  clickable={false}
+                />
               </Section>
             )}
           </>

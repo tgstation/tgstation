@@ -112,7 +112,7 @@ it will be sent to all connected chats.
  * * fallback - An optional fallback string to display if TGUI chat is not working
  */
 /proc/tgui_component_to_chat(mob/user, component_name, list/component_data, fallback)
-	if(winget(user, OUTPUT_ELEMENT_ID, OUTPUT_ELEMENT_PARAM) == OUTPUT_ELEMENT_VALUE_LEGACY)
+	if(winget(user, OUTPUT_SELECTOR_LEGACY_OUTPUT_SELECTOR, OUTPUT_ELEMENT_PARAM) == OUTPUT_ELEMENT_VALUE_LEGACY)
 		to_chat(user, fallback || span_alert("Unsupported action in legacy chat."))
 		return
 
