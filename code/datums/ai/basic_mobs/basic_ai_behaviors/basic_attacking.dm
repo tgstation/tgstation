@@ -98,7 +98,7 @@
 	var/atom/final_target = hiding_target ? hiding_target : target
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
-	if(!is_target_blocked(basic_mob, final_target))
+	if(!is_target_blocked(basic_mob, final_target, controller))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 	if(avoid_friendly_fire && check_friendly_in_path(basic_mob, target, strategy))
@@ -108,7 +108,7 @@
 	basic_mob.RangedAttack(final_target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/basic_ranged_attack/proc/is_target_blocked(basic_mob, final_target)
+/datum/bt_node/ai_behavior/basic_ranged_attack/proc/is_target_blocked(basic_mob, final_target, controller)
 	var/selected_shoot_method = controller.blackboard[BB_RANGED_CAN_SHOOT_METHOD] || can_shoot_method
 	switch(selected_shoot_method)
 		if(CAN_SHOOT_METHOD_ALWAYSSHOOT)
