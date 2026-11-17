@@ -235,3 +235,6 @@
   scolastico:
   - bugfix: Pressing "Force Reconnect" in the chat panel's websocket settings no longer
       breaks the websock
+2026-11-17:
+  CabinetOnFire:
+  - bugfix: mulebots now use stairs and ladders wow
