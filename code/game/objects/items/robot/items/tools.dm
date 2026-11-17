@@ -183,6 +183,7 @@
 		if(!QDELETED(tool)) //if we are sharing tools from our other omnitool brothers we don't want to re delete them if they got deleted first
 			qdel(tool)
 	atoms.Cut()
+	reference = null
 
 	return ..()
 
@@ -253,8 +254,11 @@
 	var/list/radial_menu_options = list()
 	var/list/tool_map = list()
 	for(var/obj/item/tool as anything in omni_toolkit)
+		var/image/tool_image = image(icon = initial(tool.icon), icon_state = initial(tool.icon_state))
+		if(tool == reference)
+			tool_image.underlays += image(icon = 'icons/hud/radial.dmi', icon_state = "module_selected")
 		var/tool_name = initial(tool.name)
-		radial_menu_options[tool_name] = image(icon = initial(tool.icon), icon_state = initial(tool.icon_state))
+		radial_menu_options[tool_name] = tool_image
 		tool_map[tool_name] = tool
 
 	//assign the new tool behaviour
