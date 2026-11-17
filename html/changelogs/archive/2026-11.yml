@@ -212,12 +212,22 @@
       again
   - qol: Ambient game tracks will no longer play over admin web music
 2026-11-16:
+  Imaginos16 , mrmelbert , ben10omnitrix:
+  - rscadd: fox tails and ears are now available as customization options for felinids.
+  - rscadd: adds fox tails to fox infusion
   Maia-J:
   - bugfix: The Grey Tide spear illusions attack their target again.
   - bugfix: Mirage grenades spawn mirages again.
   Melbert:
   - bugfix: Fixes several mobs taking damage from damage types they are intended to
       be immune to
+  - code_imp: Tweaked bluespace interference code slightly to make it less laggy,
+      report any weird teleports you experience
+  - bugfix: The Reticence, Gygax, Clarke, Phazon, and Odysseus all mistakenly drained
+      10x less power to move than intended; this has been fixed
+  - bugfix: Some mecha equipment (Mounted sleeper, syringe gun, beam gun, wormhole
+      generator, teleporter, repair droid, punch-face, and paddy clamp) mistakenly
+      drained 10x less power on usage than intended; this has been fixed
   Xander3359:
   - bugfix: Fixed misplaced wallet runtiming on maps with no closets
   btcbuster:
@@ -225,3 +235,8 @@
   scolastico:
   - bugfix: Pressing "Force Reconnect" in the chat panel's websocket settings no longer
       breaks the websock
+2026-11-17:
+  CabinetOnFire:
+  - bugfix: mulebots now use stairs and ladders wow
+  thegrb93:
+  - bugfix: Fix cyborg medical omni-tool from not having drapes at first.
