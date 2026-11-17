@@ -108,7 +108,7 @@
 	basic_mob.RangedAttack(final_target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/bt_node/ai_behavior/basic_ranged_attack/proc/is_target_blocked(basic_mob, final_target, controller)
+/datum/bt_node/ai_behavior/basic_ranged_attack/proc/is_target_blocked(basic_mob, final_target, datum/ai_controller/controller)
 	var/selected_shoot_method = controller.blackboard[BB_RANGED_CAN_SHOOT_METHOD] || can_shoot_method
 	switch(selected_shoot_method)
 		if(CAN_SHOOT_METHOD_ALWAYSSHOOT)
