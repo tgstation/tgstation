@@ -1,4 +1,0 @@
-author: "thegrb93"
-delete-after: True
-changes:
-  - bugfix: "Fix cyborg medical omni-tool from not having drapes at first."

@@ -238,3 +238,5 @@
 2026-11-17:
   CabinetOnFire:
   - bugfix: mulebots now use stairs and ladders wow
+  thegrb93:
+  - bugfix: Fix cyborg medical omni-tool from not having drapes at first.
