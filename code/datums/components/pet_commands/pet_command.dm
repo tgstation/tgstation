@@ -203,8 +203,10 @@
 	clear_radial_selection()
 	return
 
-/// Report that an immediate command action has completed to the pet's command component.
+/// Report that an immediate command action has completed if this command is still active.
 /datum/pet_command/proc/finish_command(datum/ai_controller/controller)
+	if(controller.blackboard[BB_ACTIVE_PET_COMMAND] != src)
+		return FALSE
 	var/mob/living/parent = weak_parent.resolve()
 	var/signal_result = SEND_SIGNAL(parent, COMSIG_LIVING_PET_COMMAND_FINISHED, src)
 	if(signal_result & COMPONENT_PET_COMMAND_HANDLED)

@@ -170,6 +170,11 @@
 			return "[parent] growls at [target]"
 	return ..()
 
+/datum/pet_command/attack/refuse_target(mob/living/parent, atom/target)
+	. = ..()
+	var/refusal_message = target ? "[parent] refuses to attack [target]." : "[parent] refuses to attack."
+	parent.visible_message(span_notice(refusal_message))
+
 // Refuse to target things we can't target, chiefly other friends
 /datum/pet_command/attack/set_command_target(mob/living/parent, atom/target)
 	if (!target)

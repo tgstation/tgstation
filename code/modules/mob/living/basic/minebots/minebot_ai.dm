@@ -254,7 +254,8 @@
 	return TRUE
 
 /datum/pet_command/protect_owner/minebot/execute_action(datum/ai_controller/controller)
-	if(controller.blackboard[BB_MINEBOT_AUTO_DEFEND])
-		var/mob/living/living_pawn = controller.pawn
-		living_pawn.set_combat_mode(TRUE)
+	if(!controller.blackboard[BB_MINEBOT_AUTO_DEFEND])
+		return
+	var/mob/living/living_pawn = controller.pawn
+	living_pawn.set_combat_mode(TRUE)
 	finish_command(controller)

@@ -10,7 +10,7 @@
 	///Users currently viewing our radial options
 	var/list/radial_viewers = list()
 	///The last atom each friend pointed at, consumed by their next command
-	var/list/pointed_targets = list()
+	var/list/pointed_targets = alist()
 	///Friend who gave the active command, if it came from a player
 	var/datum/weakref/active_commander
 	///radius of our radial menu

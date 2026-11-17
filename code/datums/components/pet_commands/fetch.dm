@@ -81,8 +81,10 @@
 	var/mob/thrower = throwingdatum?.get_thrower()
 	if(!istype(thrower))
 		return
-	try_activate_command(thrower, explicit_command = FALSE)
-	set_command_target(parent, thrown_thing)
+	if(!try_activate_command(thrower, explicit_command = FALSE))
+		return
+	if(!set_command_target(parent, thrown_thing))
+		return
 	parent.ai_controller.set_blackboard_key(BB_FETCH_DELIVER_TO, thrower)
 
 // Don't try and fetch turfs or anchored objects if someone points at them
