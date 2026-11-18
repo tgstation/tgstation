@@ -119,6 +119,7 @@
  * Clears radiation from irradiated organs if their damage is fully healed.
  */
 /mob/living/carbon/proc/heal_radiation(amount = 1, updating_health = TRUE, required_biotype = NONE, organ_multiplier = 0)
+	amount = -1 * abs(amount)
 	. = adjust_tox_loss(amount, updating_health = updating_health, required_biotype = required_biotype)
 	if(organ_multiplier <= 0)
 		return .
@@ -134,7 +135,7 @@
 			continue
 		if((required_biotype & MOB_MINERAL) && !IS_MINERAL_ORGAN(organ))
 			continue
-		organ.apply_organ_damage(-amount * organ_multiplier)
+		organ.apply_organ_damage(amount * organ_multiplier)
 		if(organ.damage <= 0)
 			organ.clear_radiation()
 
