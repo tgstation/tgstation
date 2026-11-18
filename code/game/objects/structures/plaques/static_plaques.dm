@@ -135,9 +135,9 @@
 /obj/structure/plaque/static_plaque/golden/commission/wawa
 	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 04/06/2564\nDecomissioned 9/07/2565\n'Forever Vertical'"
 
-// Catwalk: added Apr 10, 2025 (#90532), removed X (#?????) - TBD
+// Catwalk: added Apr 10, 2025 (#90532), removed late 2026 (#98342) - 1 year, 8 months, 20+ days
 /obj/structure/plaque/static_plaque/golden/commission/catwalk
-	desc = "Spinward Sector Station SS-13\n'Catwalk' Class Outpost\nCommissioned 10/04/2565\n'The New Level'"
+	desc = "Spinward Sector Station SS-13\n'Catwalk' Class Outpost\nCommissioned 10/04/2565\nDecommissioned late 2566\n'The New Level'"
 
 // Other Stations
 
