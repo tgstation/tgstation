@@ -14,14 +14,14 @@ runs:
       uses: ./.github/actions/configure_byond_version
 
     - name: Find fastest APT mirror
-      if: ${{ env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && runner.os != 'Windows' && !inputs.avoid_downloading }}
+      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && runner.os != 'Windows' && !inputs.avoid_downloading
       uses: vegardit/fast-apt-mirror.sh@v1
       with:
         sample-size: 8192
         sample-time: 5
 
     - name: Install libcurl
-      if: ${{ env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && runner.os != 'Windows' && !inputs.avoid_downloading }}
+      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && runner.os != 'Windows' && !inputs.avoid_downloading
       shell: bash
       run: |
         sudo dpkg --add-architecture i386
