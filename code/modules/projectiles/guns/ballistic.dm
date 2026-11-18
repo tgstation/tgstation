@@ -843,6 +843,7 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 	if(sawn_off)
 		return
 	user.visible_message(span_notice("[user] shortens [src]!"), span_notice("You shorten [src]."))
+	do_sparks(2)
 	. = do_sawoff()
 	update_appearance()
 
