@@ -42,7 +42,7 @@
 	if(CONFIG_GET(number/default_laws) == 0 || CONFIG_GET(flag/silicon_asimov_superiority_override)) // Default lawset is set to Asimov
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "robot",
+			SPECIES_PERK_ICON = FA_ICON_ROBOT,
 			SPECIES_PERK_NAME = "Asimov Superiority",
 			SPECIES_PERK_DESC = "The AI and their cyborgs are, by default, subservient only \
 				to humans. As a human, silicons are required to both protect and obey you.",
@@ -53,9 +53,17 @@
 	if(human_authority_setting == HUMAN_AUTHORITY_NON_HUMAN_WHITELIST || human_authority_setting == HUMAN_AUTHORITY_ENFORCED)
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
-			SPECIES_PERK_ICON = "bullhorn",
+			SPECIES_PERK_ICON = FA_ICON_BULLHORN,
 			SPECIES_PERK_NAME = "Chain of Command",
 			SPECIES_PERK_DESC = "Nanotrasen only recognizes humans for command roles, such as Captain.",
 		))
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = FA_ICON_PERSON_BURST,
+		SPECIES_PERK_NAME = "Indomitable Human Spirit",
+		SPECIES_PERK_DESC = "Human spirit shines even through the darkest of times. \
+			When wounded, a human's adrenaline lasts longer than that of other species.",
+	))
 
 	return to_add
