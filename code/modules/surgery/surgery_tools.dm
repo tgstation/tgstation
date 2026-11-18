@@ -757,6 +757,8 @@
 	inhand_icon_state = "cruelsaw"
 	icon_angle = 0
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	usesound = 'sound/items/weapons/slash.ogg'
+	operating_sound = 'sound/items/weapons/slash.ogg'
 	surgical_tray_overlay = "saw_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
 
