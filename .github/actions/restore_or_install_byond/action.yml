@@ -3,7 +3,7 @@ name: Restore or Install BYOND
 description: Attempts to restore a specified BYOND version from cache; if it can't, it installs it.
 
 inputs:
-  skip_cache_download:
+  avoid_downloading:
     required: false
 
 runs:
@@ -14,14 +14,14 @@ runs:
       uses: ./.github/actions/configure_byond_version
 
     - name: Find fastest APT mirror
-      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && runner.os != 'Windows'
+      if: ${{ env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && runner.os != 'Windows' && !inputs.avoid_downloading }}
       uses: vegardit/fast-apt-mirror.sh@v1
       with:
         sample-size: 8192
         sample-time: 5
 
     - name: Install libcurl
-      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && runner.os != 'Windows'
+      if: ${{ env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && runner.os != 'Windows' && !inputs.avoid_downloading }}
       shell: bash
       run: |
         sudo dpkg --add-architecture i386
@@ -38,7 +38,7 @@ runs:
       with:
         path: ~/BYOND
         key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
-        lookup-only: ${{ inputs.skip_cache_download }}
+        lookup-only: ${{ inputs.avoid_downloading }}
 
     - name: Install BYOND
       if: ${{ !steps.restore_byond_cache.outputs.cache-hit }}
