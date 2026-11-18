@@ -108,8 +108,8 @@
 		// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
 		// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator knows that they are overriding the codebase defaults when they remove the comment.
 		var/list/working_list = list(
-				JOB_CONFIG_TOTAL_POSITIONS = job_config_line(default_positions, commented = TRUE),
-				JOB_CONFIG_SPAWN_POSITIONS = job_config_line(starting_positions, commented = TRUE),
+				(JOB_CONFIG_TOTAL_POSITIONS) = job_config_line(default_positions, commented = TRUE),
+				(JOB_CONFIG_SPAWN_POSITIONS) = job_config_line(starting_positions, commented = TRUE),
 		)
 
 		working_list += generate_job_config_excluding_legacy(occupation)
