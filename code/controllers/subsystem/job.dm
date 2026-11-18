@@ -125,12 +125,14 @@ SUBSYSTEM_DEF(job)
 	return overflow_jobs
 
 /// Changes the overflow role to a new job type. We want to log/otherwise track who set it and when using a string that invoked this public proc.
-/datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role, invoker = null)
-	if(isnull(invoker))
-		if(IsAdminAdvancedProcCall())
-			invoker = "[usr] (admin)"
-		else
-			invoker = "!Unknown!"
+/datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
+	var/invoker = "!Unknown!"
+
+	if(IsAdminAdvancedProcCall())
+		invoker = "[usr] (admin)"
+	else
+		var/callee/invoked_by = caller
+		invoker = invoked_by.proc
 
 	var/datum/job/new_overflow = ispath(new_overflow_role) ? get_job_type(new_overflow_role) : get_job(new_overflow_role)
 	job_debug("SET_OVRFLW: Attempting to set new overflow role: [new_overflow_role] by [invoker]")
@@ -377,7 +379,7 @@ SUBSYSTEM_DEF(job)
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		// Any errors with the configs has already been said, we don't need to repeat them here.
 		load_jobs_from_config(silent = TRUE)
-	set_overflow_role(overflow_role, "[type] ([nameof(__PROC__)])")
+	set_overflow_role(overflow_role)
 	return
 
 
