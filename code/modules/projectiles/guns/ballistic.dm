@@ -833,9 +833,11 @@ GLOBAL_LIST_INIT(gun_saw_types, typecacheof(list(
 
 	//if there's any live ammo inside the gun, makes it go off
 	if(blow_up(user))
+		saw.play_tool_sound(src)
 		user.visible_message(span_danger("[src] goes off!"), span_danger("[src] goes off in your face!"))
 		return
 
+	saw.play_tool_operating_sound(src)
 	if(!do_after(user, 3 SECONDS, target = src))
 		return
 	if(sawn_off)

@@ -92,6 +92,8 @@
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
 	hitsound = 'sound/items/weapons/chainsawhit.ogg'
+	usesound = 'sound/items/weapons/drill.ogg'
+	operating_sound = 'sound/items/weapons/chainsawhit.ogg'
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SAW
 	toolspeed = 0.5

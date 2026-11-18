@@ -275,6 +275,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/items/weapons/circsawhit.ogg'
+	usesound = 'sound/items/weapons/circsawhit.ogg'
+	operating_sound = 'sound/items/handling/surgery/saw.ogg'
 	mob_throw_hit_sound = 'sound/items/weapons/pierce.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
