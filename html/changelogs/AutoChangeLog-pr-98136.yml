@@ -1,4 +1,0 @@
-author: "ArrisFairburne"
-delete-after: True
-changes:
-  - code_imp: "Improved ranged trooper AI to ignore destroying objects they can shoot through"
