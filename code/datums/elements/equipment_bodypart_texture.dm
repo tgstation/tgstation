@@ -64,12 +64,14 @@
 /datum/element/equipment_bodypart_texture/proc/limb_removed(mob/living/carbon/limb_owner, obj/item/bodypart/removed_limb)
 	SIGNAL_HANDLER
 
-	removed_limb.remove_bodypart_texture(bodypart_overlay_type)
+	if(removed_limb.body_zone == body_zone)
+		removed_limb.remove_bodypart_texture(bodypart_overlay_type)
 
 /datum/element/equipment_bodypart_texture/proc/limb_added(mob/living/carbon/limb_owner, obj/item/bodypart/added_limb)
 	SIGNAL_HANDLER
 
-	added_limb.add_bodypart_texture(bodypart_overlay_type)
+	if(added_limb.body_zone == body_zone)
+		added_limb.add_bodypart_texture(bodypart_overlay_type)
 
 /datum/element/equipment_bodypart_texture/proc/check_ignored_bodyshapes(mob/living/carbon/human/equipper, obj/item/item_to_check)
 	if(equipper.bodyshape & BODYSHAPE_CERULEAN)

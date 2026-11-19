@@ -86,7 +86,11 @@
 	. = ..()
 	cached_displacement_icon = icon(displacement_icon, displacement_icon_state)
 	cached_lighting_icon = icon(lighting_icon, lighting_icon_state)
+	// If you add more arguments, make sure to include it in the key
 	src.skip_over_flags = skip_over_flags
+
+/datum/bodypart_texture/mesh/icon_render_key()
+	return "[..()]-[skip_over_flags]"
 
 /datum/bodypart_texture/mesh/modify_bodypart_appearance(image/appearance, overlay_flags)
 	if(overlay_flags & (LIMB_OVERLAY_CORE|skip_over_flags))
