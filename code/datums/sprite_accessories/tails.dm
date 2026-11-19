@@ -75,11 +75,18 @@
 	icon_state = "short"
 	spine_key = NONE
 
+/datum/sprite_accessory/tails/felinid
+	icon = 'icons/mob/human/cat_features.dmi'
+	spine_key = SPINE_KEY_CAT
+
 /datum/sprite_accessory/tails/felinid/cat
 	name = "Cat"
-	icon = 'icons/mob/human/cat_features.dmi'
 	icon_state = "default"
 	color_src = HAIR_COLOR
+
+/datum/sprite_accessory/tails/felinid/fox
+	name = "Fox"
+	icon_state = "fox"
 
 /datum/sprite_accessory/tails/monkey
 

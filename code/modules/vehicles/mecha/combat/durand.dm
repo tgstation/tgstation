@@ -22,11 +22,15 @@
 	)
 
 	/// Bool for energy shield on/off
-	var/defense_mode = FALSE
+	VAR_FINAL/defense_mode = FALSE
 	/// Fake shield object we use as a way to redirect attacks off ourselves
-	var/obj/durand_shield/shield = null
+	VAR_FINAL/obj/durand_shield/shield = null
 	/// Is the shield currently switching modes?
-	var/switching = FALSE
+	VAR_FINAL/switching = FALSE
+	/// How much damage is converted to cell drain by active shielding?
+	var/damage_to_charge_ratio = 0.0067 * STANDARD_CELL_CHARGE
+	/// Energy used to maintain active shielding passively
+	var/passive_shield_drain = 0.01 * STANDARD_CELL_CHARGE
 
 /datum/armor/mecha_durand
 	melee = 40
@@ -54,7 +58,7 @@
 /obj/vehicle/sealed/mecha/durand/process()
 	. = ..()
 	// Defence mode can only be on with a occupant so we check if one of them can toggle it and toggle
-	if(defense_mode && !use_energy(0.01 * STANDARD_CELL_CHARGE))
+	if(defense_mode && !use_energy(passive_shield_drain))
 		toggle_defense()
 
 /obj/vehicle/sealed/mecha/durand/mob_exit(mob/M, silent = FALSE, randomstep = FALSE, forced = FALSE)
@@ -208,10 +212,10 @@
 	if(!chassis.defense_mode) //if defense mode is disabled, we're taking damage that we shouldn't be taking
 		return
 	. = ..()
-	flick("shield_impact", src)
 	if(!.)
 		return
-	if(!chassis.use_energy(. * (STANDARD_CELL_CHARGE / 150)))
+	flick("shield_impact", src)
+	if(!chassis.use_energy(. * chassis.damage_to_charge_ratio))
 		chassis.cell?.charge = 0
 		chassis.toggle_defense()
 	atom_integrity = 10000

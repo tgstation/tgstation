@@ -10,7 +10,7 @@
 	overclock_coeff = 1.25
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
-	step_energy_drain = 12 //slightly higher energy drain since you movin those wheels FAST
+	step_energy_drain = parent_type::step_energy_drain * 1.5 //slightly higher energy drain since you movin those wheels FAST
 	armor_type = /datum/armor/mecha_clarke
 	equip_by_category = list(
 		MECHA_L_ARM = null,

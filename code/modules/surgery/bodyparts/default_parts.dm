@@ -40,9 +40,12 @@
 
 /obj/item/bodypart/chest/apply_ownership(mob/living/carbon/new_owner)
 	. = ..()
-	if(ishuman(new_owner))
-		var/mob/living/carbon/human/humie = new_owner
-		humie.update_mob_height()
+	astype(new_owner, /mob/living/carbon/human)?.update_mob_height()
+	new_owner.pressure_protected_bodyparts &= ~PRESSURE_CHEST_PROTECTED_NATIVELY
+
+/obj/item/bodypart/chest/clear_ownership(mob/living/carbon/old_owner)
+	. = ..()
+	old_owner.pressure_protected_bodyparts |= PRESSURE_CHEST_PROTECTED_NATIVELY
 
 /obj/item/bodypart/chest/get_butcher_drops()
 	. = ..()
@@ -166,6 +169,9 @@
 /obj/item/bodypart/arm/clear_ownership(mob/living/carbon/old_owner)
 	. = ..()
 	old_owner.update_worn_gloves()
+	if(!old_owner.get_bodypart(body_zone == BODY_ZONE_R_ARM ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM))
+		old_owner.pressure_protected_bodyparts |= PRESSURE_ARMS_PROTECTED_NATIVELY
+
 	if(!held_index)
 		return
 
@@ -179,6 +185,7 @@
 	. = ..()
 
 	new_owner.update_worn_gloves()
+	new_owner.pressure_protected_bodyparts &= ~PRESSURE_ARMS_PROTECTED_NATIVELY
 
 	if(!held_index)
 		return
@@ -293,7 +300,7 @@
 	else
 		REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_L_ARM)
 		RegisterSignal(new_owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_L_ARM), PROC_REF(on_owner_paralysis_gain))
-	..()
+	return ..()
 
 /obj/item/bodypart/arm/left/clear_ownership(mob/living/carbon/old_owner)
 	. = ..()
@@ -341,7 +348,7 @@
 	else
 		REMOVE_TRAIT(src, TRAIT_PARALYSIS, TRAIT_PARALYSIS_R_ARM)
 		RegisterSignal(new_owner, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS_R_ARM), PROC_REF(on_owner_paralysis_gain))
-	..()
+	return ..()
 
 /obj/item/bodypart/arm/right/clear_ownership(mob/living/carbon/old_owner)
 	. = ..()
@@ -440,11 +447,14 @@
 	. = ..()
 	if(speed_modifier)
 		new_owner.update_bodypart_speed_modifier()
+	new_owner.pressure_protected_bodyparts &= ~PRESSURE_LEGS_PROTECTED_NATIVELY
 
 /obj/item/bodypart/leg/clear_ownership(mob/living/carbon/old_owner)
 	. = ..()
 	if(speed_modifier)
 		old_owner.update_bodypart_speed_modifier()
+	if(!old_owner.get_bodypart(body_zone == BODY_ZONE_L_LEG ? BODY_ZONE_R_LEG : BODY_ZONE_L_LEG))
+		old_owner.pressure_protected_bodyparts |= PRESSURE_LEGS_PROTECTED_NATIVELY
 
 /obj/item/bodypart/leg/proc/set_speed_modifier(new_modifier)
 	if(speed_modifier == new_modifier)
