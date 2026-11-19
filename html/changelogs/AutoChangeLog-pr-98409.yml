@@ -1,0 +1,7 @@
+author: "moocowswag"
+delete-after: True
+changes:
+  - qol: "Ai's will no longer be punished for having high apm"
+  - qol: "Silicons can now rapidly cycle modes on air alarms"
+  - bugfix: "Air alarm ai wires are no longer inverted"
+  - bugfix: "Air alarm screwdriver context is no longer inverted"
