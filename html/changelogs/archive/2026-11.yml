@@ -238,3 +238,15 @@
 2026-11-17:
   CabinetOnFire:
   - bugfix: mulebots now use stairs and ladders wow
+  thegrb93:
+  - bugfix: Fix cyborg medical omni-tool from not having drapes at first.
+2026-11-18:
+  ArrisFairburne:
+  - code_imp: Improved ranged trooper AI to ignore destroying objects they can shoot
+      through
+  necromanceranne:
+  - balance: Lizardpeople are now so strong. They could bend steel. You could grate
+      cheese on those abdominals. It will get caught in their scales though, which
+      means they might get scalerot, so please don't actually do that. Just admire
+      them from a comfortable, although perhaps uncomfortable for the subject of admiration,
+      distance.
