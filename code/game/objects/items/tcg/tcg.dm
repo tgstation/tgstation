@@ -476,8 +476,8 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	icon_state = "template"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW * 1.6 // Set this higher when packs increase in price
+	/// ID of the deck that it grabs from the precons json
 	var/precon_id = "coder"
-	var/series = "core2020"
 
 /obj/item/tcg_precondeck/command
 	name = "\improper 'Command' TGC Preconstructed Deck"
@@ -497,19 +497,16 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcg_precondeck/attack_self(mob/user)
 	. = ..()
-	user.temporarilyRemoveItemFromInventory(src, TRUE)
+	if(!user.temporarilyRemoveItemFromInventory(src, TRUE))
+		return
 	var/turf/turf_loc = get_turf(user)
 
-	var/obj/item/tcgcard/deck = new /obj/item/tcgcard_deck(turf_loc)
+	var/obj/item/tcgcard/deck = new(turf_loc)
 	var/list/precon_list = SStrading_card_game.precons[precon_id]["list"]
 	for(var/card_path in precon_list)
 		var/list/split = splittext(card_path, "/")
 		for(var/i in 1 to precon_list[card_path])
 			new /obj/item/tcgcard(deck, split[1], split[2])
-
-	// This will probably never matter...
-	SEND_SIGNAL(deck, COMSIG_ITEM_UNWRAPPED)
-	//deck.forceMove(turf_loc)
 	user.put_in_hands(deck)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)

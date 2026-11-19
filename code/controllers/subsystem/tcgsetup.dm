@@ -67,14 +67,14 @@ SUBSYSTEM_DEF(trading_card_game)
 			continue
 		var/total = 0
 		for(var/card_path in precon_data[precon]["list"])
-			total = total + precon_data[precon]["list"][card_path]
+			total += precon_data[precon]["list"][card_path]
 			var/list/split = splittext(card_path, "/")
 			if(!(cached_cards[split[1]]["ALL"][split[2]]))
 				stack_trace("Precon definition [precon] in [directory]/[filename] contains unknown card path '[card_path]'!")
 				should_import = FALSE
 		if(total != 30)
 			stack_trace("Precon definition [precon] in [directory]/[filename] is not a legal deck size of 30!")
-		if(should_import == TRUE)
+		if(should_import)
 			precons[precon] = precon_data[precon]
 
 ///Styles our keywords, converting them from just the raw text to the output we want
@@ -216,8 +216,8 @@ SUBSYSTEM_DEF(trading_card_game)
 ///Returns a /datum/card from the card path, which should be in the form "series_id/card_id".
 /datum/controller/subsystem/trading_card_game/proc/get_card_datum_from_path(path)
 	var/list/split = splittext(path, "/")
-	. = get_card_datum(split[1], split[2])
+	return get_card_datum(split[1], split[2])
 
 ///Returns a /datum/card from a series and id.
 /datum/controller/subsystem/trading_card_game/proc/get_card_datum(series, id)
-	. = cached_cards[series]["ALL"][id]
+	return cached_cards[series]["ALL"][id]
