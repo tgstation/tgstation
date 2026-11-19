@@ -118,9 +118,9 @@
  * * organ_multiplier - The proc can also be used to heal irradiated organs, determined by this multiplier.
  * Clears radiation from irradiated organs if their damage is fully healed.
  */
-/mob/living/carbon/proc/heal_radiation(amount = 1, updating_health = TRUE, required_biotype = NONE, organ_multiplier = 0)
+/mob/living/carbon/proc/heal_radiation(amount = 1, updating_health = TRUE, required_biotype = NONE, forced = TRUE, organ_multiplier = 1)
 	amount = -1 * abs(amount)
-	. = adjust_tox_loss(amount, updating_health = updating_health, required_biotype = required_biotype)
+	. = adjust_tox_loss(amount, updating_health = updating_health, required_biotype = required_biotype, forced = forced)
 	if(organ_multiplier <= 0)
 		return .
 
