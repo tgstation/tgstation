@@ -121,7 +121,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor_type = /datum/armor/suit_wizrobe
 	allowed = list(/obj/item/highfrequencyblade/wizard, /obj/item/storage/belt/wand_bandolier, /obj/item/teleportation_scroll)
-	flags_inv = HIDEJUMPSUIT
+	flags_inv = HIDEJUMPSUIT|HIDETAIL
 	strip_delay = 5 SECONDS
 	equip_delay_other = 5 SECONDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -179,14 +179,14 @@
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	inhand_icon_state = null
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "\improper Magus robe"
 	desc = "A set of armored robes that seem to radiate a dark power."
 	icon_state = "magusred"
 	inhand_icon_state = null
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 
 /obj/item/clothing/suit/wizrobe/santa
 	name = "Santa's suit"

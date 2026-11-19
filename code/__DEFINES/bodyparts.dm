@@ -247,3 +247,5 @@ DEFINE_BITFIELD(surgery_state, list(
 #define LIMB_OVERLAY_TALL_ICON (1<<3)
 /// Core part of the bodypart, like the actual bodypart icon
 #define LIMB_OVERLAY_CORE (1<<4)
+/// Something draped over the body, like wings
+#define LIMB_OVERLAY_DRAPED (1<<5)

@@ -156,7 +156,7 @@
 	return "[wagging ? "wagging_" : ""][sprite_datum.icon_state]" //add the wagging tag if we be wagging
 
 /datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
-	if(!(bodypart_owner.owner?.obscured_slots & HIDEJUMPSUIT))
+	if(!(bodypart_owner.owner?.obscured_slots & HIDETAIL))
 		return ..()
 	if(!mesh_in_suits)
 		return FALSE

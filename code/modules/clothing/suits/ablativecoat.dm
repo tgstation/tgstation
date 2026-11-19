@@ -38,6 +38,7 @@
 	equip_delay_other = 4 SECONDS
 	var/hit_reflect_chance = 50
 	bodyshapes_with_variations = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/hooded/ablative/Initialize(mapload)
 	. = ..()

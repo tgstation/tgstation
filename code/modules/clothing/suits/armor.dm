@@ -307,6 +307,8 @@
 	strip_delay = 8 SECONDS
 	equip_delay_other = 6 SECONDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+	bodyshapes_with_variations = parent_type::bodyshapes_with_variations | BODYSHAPE_DIGITIGRADE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	/// Type of texture applied by this
 	var/texture_type = /datum/bodypart_texture/mesh/space
 
@@ -471,7 +473,7 @@
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	slowdown = 3
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	armor_type = /datum/armor/armor_heavy
 	/// Type of texture applied by this
 	var/texture_type = /datum/bodypart_texture/mesh/black
@@ -492,7 +494,7 @@
 
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	clothing_flags = THICKMATERIAL
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -545,6 +547,7 @@
 	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
 	icon_state = "knight_green"
 	inhand_icon_state = null
+	supports_variations_flags = NONE
 	texture_type = /datum/bodypart_texture/mesh/biosuit_dark
 	allowed = list(
 		/obj/item/banner,

@@ -7,14 +7,18 @@
 	var/body_zone
 	/// Texture we apply to the bodypart
 	var/bodypart_overlay_type
+	/// Arguments to pass to the overlay when applied
+	var/list/overlay_args
 
-/datum/element/equipment_bodypart_texture/Attach(datum/target, body_zone, bodypart_overlay_type)
+/datum/element/equipment_bodypart_texture/Attach(datum/target, body_zone, bodypart_overlay_type, ...)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
 	src.body_zone = body_zone
 	src.bodypart_overlay_type = bodypart_overlay_type
+	if(length(args) >= 4)
+		src.overlay_args = args.Copy(4)
 
 	var/obj/item/target_item = target
 	RegisterSignal(target_item, COMSIG_ITEM_EQUIPPED, PROC_REF(item_equipped))
@@ -41,7 +45,8 @@
 		return
 
 	var/obj/item/bodypart/affected_bodypart = equipper.get_bodypart(body_zone)
-	affected_bodypart?.add_bodypart_texture(bodypart_overlay_type)
+	var/datum/bodypart_texture/appplied_texture = new bodypart_overlay_type(arglist(overlay_args))
+	affected_bodypart?.add_bodypart_texture(appplied_texture)
 	RegisterSignal(equipper, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(limb_removed))
 	RegisterSignal(equipper, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(limb_added))
 
