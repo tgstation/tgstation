@@ -17,8 +17,7 @@
 
 	src.body_zone = body_zone
 	src.bodypart_overlay_type = bodypart_overlay_type
-	if(length(args) >= 4)
-		src.overlay_args = args.Copy(4)
+	src.overlay_args = length(args) >= 4 ? args.Copy(4) : list()
 
 	var/obj/item/target_item = target
 	RegisterSignal(target_item, COMSIG_ITEM_EQUIPPED, PROC_REF(item_equipped))
