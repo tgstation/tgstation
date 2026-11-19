@@ -593,8 +593,9 @@
 	inhand_icon_state = "mysticrobe"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/spellbook, /obj/item/book/bible)
-	flags_inv = HIDEJUMPSUIT|HIDETAIL
+	flags_inv = HIDEJUMPSUIT
 	hoodtype = /obj/item/clothing/head/hooded/mysticrobe
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/head/hooded/mysticrobe
 	name = "mystic's hood"
