@@ -22,9 +22,6 @@
 	src.body_zone = body_zone
 	src.bodypart_overlay_type = bodypart_overlay_type
 	if(isnull(overlay_args))
-		if(!isnum(overlay_args[4]))
-			#warn Remove me before merge
-			stack_trace("Invalid overlay argument: [overlay_args[4]]")
 		src.overlay_args = length(args) >= 4 ? args.Copy(4) : list()
 
 	var/obj/item/target_item = target
