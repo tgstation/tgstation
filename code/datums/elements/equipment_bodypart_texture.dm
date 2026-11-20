@@ -50,7 +50,10 @@
 
 	var/obj/item/bodypart/affected_bodypart = equipper.get_bodypart(body_zone)
 	if(!isnull(affected_bodypart))
-		affected_bodypart.add_bodypart_texture(new bodypart_overlay_type(arglist(overlay_args)))
+		if(length(overlay_args)) // shouldn't be necessary
+			affected_bodypart.add_bodypart_texture(new bodypart_overlay_type(arglist(overlay_args)))
+		else
+			affected_bodypart.add_bodypart_texture(bodypart_overlay_type)
 	RegisterSignal(equipper, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(limb_removed))
 	RegisterSignal(equipper, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(limb_added))
 
@@ -75,7 +78,10 @@
 	SIGNAL_HANDLER
 
 	if(added_limb.body_zone == body_zone)
-		added_limb.add_bodypart_texture(new bodypart_overlay_type(arglist(overlay_args)))
+		if(length(overlay_args)) // shouldn't be necessary
+			added_limb.add_bodypart_texture(new bodypart_overlay_type(arglist(overlay_args)))
+		else
+			added_limb.add_bodypart_texture(bodypart_overlay_type)
 
 /datum/element/equipment_bodypart_texture/proc/check_ignored_bodyshapes(mob/living/carbon/human/equipper, obj/item/item_to_check)
 	if(equipper.bodyshape & BODYSHAPE_CERULEAN)
