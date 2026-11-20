@@ -70,11 +70,14 @@ GLOBAL_ALIST_EMPTY(minimaps)
 
 /// Returns an atom on the turf that we draw instead of the turf
 /turf/proc/get_alt_minimap_draw_target()
+	var/obj/alt_target
 	for(var/obj/thing in src)
-		if(thing.obj_flags & MINIMAP_ALT_DRAW_TARGET)
-			return thing
+		if(!(thing.obj_flags & MINIMAP_ALT_DRAW_TARGET))
+			continue
+		if(isnull(alt_target) || alt_target.layer < thing.layer)
+			alt_target = thing
 
-	return null
+	return alt_target
 
 /// Gets the `/datum/minimap` for a Z-level - generating it if it hasn't been yet.
 /proc/get_minimap_for_z(z) as /datum/minimap
