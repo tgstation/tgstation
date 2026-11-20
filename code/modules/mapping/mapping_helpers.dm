@@ -1664,3 +1664,4 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 #ifndef UNIT_TESTS
 	cable.deconstruct(FALSE)
 #endif
+	qdel(src)
