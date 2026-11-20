@@ -190,7 +190,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 // Hack to get around crew monitor ui status not being considered
 /datum/crewmonitor/ui_status(mob/user, datum/ui_state/state)
 	var/datum/real_host = ui_host(user)
-	if(real_host == src || isnull(real_host)) // ??
+	if(isnull(real_host)) // no host? probably destroyed, just close the ui
+		return UI_CLOSE
+	if(real_host == src) // can't imagine this happening, but better than infinite looping
 		return ..()
 
 	return min(real_host.ui_status(user, state), ..())
