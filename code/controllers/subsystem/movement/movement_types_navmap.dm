@@ -217,8 +217,8 @@
 	link_target = null
 	handle_move_attempt_failure()
 
-/datum/move_manager/proc/navmap_frustrations_move(moving, chasing, delay, timeout, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, subsystem, priority, flags, datum/extra_info, initial_path, alist/nav_cost_modifiers)
-	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/navmap_astar/frustrations, priority, flags, extra_info, delay, timeout, chasing, repath_delay, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, initial_path, FALSE, 0, TRUE, nav_cost_modifiers)
+/datum/move_manager/proc/navmap_frustrations_move(moving, chasing, delay, timeout, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, subsystem, priority, flags, datum/extra_info, initial_path, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = TRUE, alist/nav_cost_modifiers)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/navmap_astar/frustrations, priority, flags, extra_info, delay, timeout, chasing, repath_delay, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, initial_path, allow_multiz, max_path_cost, allow_nav_links, nav_cost_modifiers)
 
 /datum/move_loop/has_target/navmap_astar/frustrations
 	var/maximum_frustrations = 10
