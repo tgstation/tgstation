@@ -46,7 +46,8 @@
 
 	var/obj/item/bodypart/affected_bodypart = equipper.get_bodypart(body_zone)
 	if(!isnull(affected_bodypart))
-		affected_bodypart.add_bodypart_texture(new bodypart_overlay_type(arglist(overlay_args)))
+		// melbert todo what is wrong here?
+		affected_bodypart.add_bodypart_texture(new bodypart_overlay_type(length(overlay_args) ? arglist(overlay_args) : null))
 	RegisterSignal(equipper, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(limb_removed))
 	RegisterSignal(equipper, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(limb_added))
 
