@@ -187,6 +187,14 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	)
 	ui_interact(M)
 
+// Hack to get around crew monitor ui status not being considered
+/datum/crewmonitor/ui_status(mob/user, datum/ui_state/state)
+	var/datum/real_host = ui_host(user)
+	if(real_host == src) // ??
+		return ..()
+
+	return min(real_host.ui_status(user, state), ..())
+
 /datum/crewmonitor/ui_host(mob/user)
 	var/datum/weakref/host_ref = ui_sources[WEAKREF(user)]["host"]
 	return host_ref?.resolve()
@@ -275,13 +283,14 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		data["has_map"] = FALSE
 		return data
 
+	var/list/station_z_levels = SSmapping.levels_by_trait(ZTRAIT_STATION)
 	if(!(get_host_z(user) in station_z_levels))
 		data["has_map"] = FALSE
 		return data
 
 	data["has_map"] = TRUE
 	data["map_data"] = list()
-	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+	for(var/z in station_z_levels)
 		var/list/map_info = ensure_minimap(z)
 
 		var/map_image = map_info ? map_info["map_image"] : null
