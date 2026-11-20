@@ -39,7 +39,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	clothing_flags = THICKMATERIAL|HEADINTERNALS
 	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF
-	transparent_protection = HIDESUITSTORAGE|HIDEJUMPSUIT
+	transparent_protection = HIDESUITSTORAGE|HIDEJUMPSUIT|HIDETAIL
 	allowed = null
 	greyscale_colors = "#4d4d4d#808080"
 	greyscale_config = /datum/greyscale_config/heck_suit
@@ -126,4 +126,3 @@
 	to_chat(user, span_notice("You heal from the corpse of [butchered]."))
 	var/datum/client_colour/color_effect = user.add_client_colour(/datum/client_colour/bloodlust, HELMET_TRAIT)
 	QDEL_IN(color_effect, 1 SECONDS)
-

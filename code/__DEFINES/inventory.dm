@@ -109,6 +109,8 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define HIDEBELT (1<<14)
 ///hides antennae
 #define HIDEANTENNAE (1<<15)
+///hides tails
+#define HIDETAIL (1<<16)
 
 //Bitflags for hair appendage zones
 #define HAIR_APPENDAGE_FRONT (1<<0)

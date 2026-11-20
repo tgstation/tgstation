@@ -72,7 +72,7 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	obj_flags = CONDUCTS_ELECTRICITY
 	fire_resist = T0C+5200
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 
 /obj/item/clothing/suit/costume/justice
 	name = "justice suit"
@@ -80,7 +80,7 @@
 	icon_state = "justice"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	armor_type = /datum/armor/costume_justice
 
 /obj/item/clothing/suit/costume/justice/Initialize(mapload)
@@ -114,7 +114,7 @@
 	desc = "A plastic replica of the Syndicate space suit. You'll look just like a real murderous Syndicate agent in this! This is a toy, it is not made for use in space!"
 	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy)
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	resistance_flags = NONE
 
 /obj/item/clothing/suit/costume/hastur
@@ -123,7 +123,7 @@
 	icon_state = "hastur"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 
 /obj/item/clothing/suit/costume/imperium_monk
 	name = "\improper Imperium monk suit"
@@ -131,7 +131,7 @@
 	icon_state = "imperium_monk"
 	inhand_icon_state = "imperium_monk"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDESHOES|HIDEJUMPSUIT|HIDEBELT
+	flags_inv = HIDESHOES|HIDEJUMPSUIT|HIDETAIL|HIDEBELT
 
 /obj/item/clothing/suit/costume/imperium_monk/Initialize(mapload)
 	. = ..()
@@ -143,7 +143,7 @@
 	icon_state = "chickensuit"
 	inhand_icon_state = "chickensuit"
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET
-	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 
 /obj/item/clothing/suit/costume/monkeysuit
 	name = "monkey suit"
@@ -151,7 +151,7 @@
 	icon_state = "monkeysuit"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 
 /obj/item/clothing/suit/toggle/owlwings
 	name = "owl cloak"
@@ -181,7 +181,7 @@
 	icon_state = "cardborg"
 	inhand_icon_state = "cardborg"
 	body_parts_covered = CHEST|GROIN|LEGS
-	flags_inv = HIDEJUMPSUIT
+	flags_inv = HIDEJUMPSUIT|HIDETAIL
 	dog_fashion = /datum/dog_fashion/back
 	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 3)
 	var/in_use = FALSE
@@ -227,7 +227,7 @@
 	icon_state = "snowman"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN
-	flags_inv = HIDEJUMPSUIT
+	flags_inv = HIDEJUMPSUIT|HIDETAIL
 
 /obj/item/clothing/suit/costume/poncho
 	name = "poncho"
@@ -265,7 +265,7 @@
 	icon_state = "white_dress"
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|FEET
-	flags_inv = HIDEJUMPSUIT|HIDESHOES|HIDEBELT
+	flags_inv = HIDEJUMPSUIT|HIDETAIL|HIDESHOES|HIDEBELT
 
 /obj/item/clothing/suit/hooded/carp_costume
 	name = "carp costume"
@@ -318,7 +318,7 @@
 	inhand_icon_state = "space_suit_syndicate"
 	armor_type = /datum/armor/carp_costume_spaceproof
 	allowed = list(/obj/item/tank/internals, /obj/item/gun/ballistic/rifle/boltaction/harpoon) //I'm giving you a hint here
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -496,6 +496,7 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/costume/striped_sweater
 	name = "striped sweater"
@@ -530,7 +531,7 @@
 	icon_state = "xenos"
 	inhand_icon_state = "xenos_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDEBELT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL|HIDEBELT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
 
 /obj/item/clothing/suit/costume/nemes
@@ -594,6 +595,7 @@
 	allowed = list(/obj/item/spellbook, /obj/item/book/bible)
 	flags_inv = HIDEJUMPSUIT
 	hoodtype = /obj/item/clothing/head/hooded/mysticrobe
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/head/hooded/mysticrobe
 	name = "mystic's hood"
@@ -716,7 +718,7 @@
 	worn_icon_state = "bear"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	///Are we friendly with bears (wearing the full head/suit combo)?
 	var/full_suit = FALSE
 

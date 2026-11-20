@@ -68,7 +68,7 @@
 	slowdown = -0.3
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 
 //Bunny bag!
 /obj/item/storage/backpack/satchel/bunnysatchel
