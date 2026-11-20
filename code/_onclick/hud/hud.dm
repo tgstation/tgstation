@@ -189,6 +189,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/client/client = mymob.canon_client
 	RegisterSignal(client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
 	on_eye_change(null, null, client.eye)
+	// if we changed z while nobody was logged in, the offset got built without client prefs, and on_eye_change won't redo it since the offset matches
+	for(var/group_key in master_groups)
+		var/datum/plane_master_group/group = master_groups[group_key]
+		group.refresh_planes_offset()
 
 /datum/hud/proc/clear_client(datum/source)
 	SIGNAL_HANDLER
