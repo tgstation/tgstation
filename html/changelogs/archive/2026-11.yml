@@ -261,6 +261,8 @@
   - rscadd: Shoving someone who is on fire into someone who is not spreads fire now.
   TheRyeGuyWhoWillNowDie:
   - balance: Doubled the potency of synthflesh
+  btcbuster:
+  - spellcheck: fixed a typo on an icebox plant
   moocowswag:
   - qol: Ai's will no longer be punished for having high apm
   - qol: Silicons can now rapidly cycle modes on air alarms
