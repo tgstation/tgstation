@@ -215,7 +215,6 @@ export const StationMap = (props: StationMapProps) => {
                 padding: '3px 8px',
                 borderRadius: '3px',
                 fontSize: '12px',
-                fontFamily: 'monospace',
                 fontWeight: 'bold',
                 border: '1px solid rgba(255, 255, 255, 0.4)',
                 pointerEvents: 'none',
