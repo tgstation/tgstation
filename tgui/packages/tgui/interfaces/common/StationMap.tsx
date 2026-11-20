@@ -35,7 +35,7 @@ export const StationMap = (props: StationMapProps) => {
   );
 
   const possibleMaps = Object.keys(allMapData ?? {}).sort(
-    (a, b) => Number(a) - Number(b), // intentionally inverted
+    (a, b) => Number(b) - Number(a),
   );
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
@@ -45,9 +45,6 @@ export const StationMap = (props: StationMapProps) => {
   const [shownMap, setShownMap] = useState(possibleMaps[0]);
   const viewportRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
-
-  // react to initial z set
-  onChangeZ?.(Number(shownMap));
 
   const {
     map_image: mapImage,
@@ -85,6 +82,10 @@ export const StationMap = (props: StationMapProps) => {
       focusOnCoordinates(targetX, targetY, targetZ);
     }
   }, [targetX, targetY, targetZ, focusOnCoordinates]);
+
+  useEffect(() => {
+    onChangeZ?.(Number(shownMap));
+  }, [onChangeZ, shownMap]);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
@@ -171,24 +172,22 @@ export const StationMap = (props: StationMapProps) => {
               <Stack.Item>
                 <Button
                   icon="plus"
-                  onClick={() => {
+                  onClick={() =>
                     setShownMap(
                       possibleMaps[possibleMaps.indexOf(shownMap) + 1],
-                    );
-                    onChangeZ?.(Number(shownMap));
-                  }}
+                    )
+                  }
                   disabled={shownMap === possibleMaps[possibleMaps.length - 1]}
                 />
               </Stack.Item>
               <Stack.Item>
                 <Button
                   icon="minus"
-                  onClick={() => {
+                  onClick={() =>
                     setShownMap(
                       possibleMaps[possibleMaps.indexOf(shownMap) - 1],
-                    );
-                    onChangeZ?.(Number(shownMap));
-                  }}
+                    )
+                  }
                   disabled={shownMap === possibleMaps[0]}
                 />
               </Stack.Item>

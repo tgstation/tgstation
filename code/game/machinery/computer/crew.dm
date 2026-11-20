@@ -320,14 +320,19 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	if(.)
 		return
 	switch(action)
+		if("deselect_person")
+			if(!isAI(usr))
+				return
+			var/mob/living/silicon/ai/AI = usr
+			AI.ai_tracking_tool.reset_tracking()
+			return TRUE
 		if("select_person")
 			if(!isAI(usr))
 				return
 			var/mob/living/silicon/ai/AI = usr
 			var/mob/living/target = locate(params["ref"]) in GLOB.mob_living_list
-			if(isnull(target))
-				return TRUE
-			AI.ai_tracking_tool.track_mob(AI, target)
+			if(!isnull(target))
+				AI.ai_tracking_tool.track_mob(AI, target)
 			return TRUE
 
 /datum/crewmonitor/proc/update_data(z)

@@ -192,11 +192,12 @@ export const CrewConsole = () => {
               onTrack={(sensor) => {
                 if (is_ai) return;
                 setTrackedTarget(sensor);
-                if (hasMapBool && !showMap) setShowMap(true);
+                if (hasMapBool && !showMap && trackedTarget) setShowMap(true);
               }}
               hasMap={hasMapBool}
               showMap={showMap}
               setShowMap={setShowMap}
+              trackedTarget={trackedTarget}
             />
           </Flex.Item>
 
@@ -280,13 +281,21 @@ type CrewTableProps = {
   hasMap: boolean;
   showMap: boolean;
   setShowMap: (show: boolean) => void;
+  trackedTarget: CrewSensor | null;
 };
 
 const CrewTable = (props: CrewTableProps) => {
   const { data } = useBackend<CrewConsoleData>();
   const { sensors = [], link_allowed, is_ai } = data;
-  const { hoveredRef, setHoveredRef, onTrack, hasMap, showMap, setShowMap } =
-    props;
+  const {
+    hoveredRef,
+    setHoveredRef,
+    onTrack,
+    hasMap,
+    showMap,
+    setShowMap,
+    trackedTarget,
+  } = props;
 
   const [sortAsc, setSortAsc] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -367,6 +376,7 @@ const CrewTable = (props: CrewTableProps) => {
             onMouseEnter={() => setHoveredRef(sensor.ref)}
             onMouseLeave={() => setHoveredRef(null)}
             onTrack={onTrack}
+            isTracked={!!(trackedTarget && trackedTarget.ref === sensor.ref)}
             hasMap={hasMap}
           />
         ))}
@@ -380,14 +390,22 @@ type CrewTableEntryProps = {
   isHovered: boolean;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
-  onTrack: (sensor: CrewSensor) => void;
+  onTrack: (sensor: CrewSensor | null) => void;
   hasMap: boolean;
+  isTracked: boolean;
 };
 
 const CrewTableEntry = (props: CrewTableEntryProps) => {
   const { act, data } = useBackend<CrewConsoleData>();
   const { link_allowed, is_ai } = data;
-  const { sensor_data, onMouseEnter, onMouseLeave, onTrack, hasMap } = props;
+  const {
+    sensor_data,
+    onMouseEnter,
+    onMouseLeave,
+    onTrack,
+    hasMap,
+    isTracked,
+  } = props;
   const {
     name,
     assignment,
@@ -480,13 +498,19 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
         <Table.Cell collapsing>
           <Button
             disabled={!canTrack}
+            color={isTracked ? 'green' : undefined}
             onClick={() => {
               if (!canTrack) return;
-              act('select_person', { ref: ref });
-              onTrack(sensor_data);
+              if (isTracked) {
+                act('deselect_person', { ref: ref });
+                onTrack(null);
+              } else {
+                act('select_person', { ref: ref });
+                onTrack(sensor_data);
+              }
             }}
           >
-            {is_ai ? 'Track' : 'Find'}
+            {is_ai ? 'Track' : 'Follow'}
           </Button>
         </Table.Cell>
       ) : null}
