@@ -15,6 +15,8 @@
 	integrity_failure = 0.5
 	can_atmos_pass = ATMOS_PASS_NO
 	pass_flags_self = PASSCLOSEDTURF
+	obj_flags = parent_type::obj_flags | MINIMAP_ALT_DRAW_TARGET
+	tacmap_color = TACMAP_WINDOW
 	/// Icon state part for contents display
 	var/contents_overlay_icon = "plant"
 	/// What path boards used to construct it should build into when dropped. Needed so we don't accidentally have them build variants with items preloaded in them.

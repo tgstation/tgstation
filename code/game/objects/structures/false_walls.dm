@@ -18,11 +18,12 @@
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
 	material_flags = MATERIAL_EFFECTS
+	obj_flags = parent_type::obj_flags | MINIMAP_ALT_DRAW_TARGET
 	/// The icon this falsewall is faking being. we'll switch out our icon with this when we're in fake mode
 	var/fake_icon = 'icons/turf/walls/wall.dmi'
 	var/mineral = /obj/item/stack/sheet/iron
 	var/mineral_amount = 2
-	var/walltype = /turf/closed/wall
+	var/turf/closed/walltype = /turf/closed/wall
 	var/girder_type = /obj/structure/girder/displaced
 	var/opening = FALSE
 
@@ -40,6 +41,7 @@
 		set_custom_materials(initialized_mineral.mats_per_unit, mineral_amount)
 		qdel(initialized_mineral)
 
+	tacmap_color = walltype::tacmap_color
 	air_update_turf(TRUE, TRUE)
 	update_appearance()
 

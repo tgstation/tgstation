@@ -30,6 +30,10 @@
 #define NO_DEBRIS_AFTER_DECONSTRUCTION (1<<13)
 /// Flag which tells an object to hang onto an support atom on late initialize. Usefull only during mapload and supported by some atoms only
 #define MOUNT_ON_LATE_INITIALIZE (1<<14)
+/// Indicates this object should be drawn to represent a tile on the minimap, rather than the tile itself is on.
+/// In the event two objects with this flag overlap on the minimap, the one with a higher layer is chosen.
+/// And in the event of two objects with the same layer, the first one in contents is chosen.
+#define MINIMAP_ALT_DRAW_TARGET (1<<15)
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
