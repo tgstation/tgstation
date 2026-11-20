@@ -3,10 +3,6 @@ import { Button, Flex, Section, Stack } from 'tgui-core/components';
 
 export type StationMapProps = {
   title?: React.ReactNode;
-  //   mapImage?: string;
-  //   gridW?: number;
-  //   gridH?: number;
-  //   areaGrid?: string[][];
   allMapData?: Record<string, MapData>;
   targetZ?: number;
   targetX?: number;

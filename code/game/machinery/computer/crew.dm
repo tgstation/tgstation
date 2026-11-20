@@ -176,10 +176,6 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 /datum/crewmonitor/ui_close(mob/user)
 	ui_sources -= WEAKREF(user)
 
-/datum/crewmonitor/ui_state(mob/user)
-	. = ..()
-
-
 /datum/crewmonitor/proc/show(mob/M, source, has_map = TRUE)
 	ui_sources[WEAKREF(M)] = list(
 		"host" = WEAKREF(source),
