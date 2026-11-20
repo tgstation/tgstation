@@ -17,9 +17,9 @@
 	if(!category || QDELETED(src))
 		return
 
-	var/datum/weakref/master_ref
+	var/datum/autoref/master_ref
 	if(isatom(new_master))
-		master_ref = WEAKREF(new_master)
+		master_ref = AUTOREF(new_master)
 	var/atom/movable/screen/alert/thealert
 	if(alerts[category])
 		thealert = alerts[category]
@@ -928,8 +928,8 @@
 	use_user_hud_icon = USER_HUD_STYLE_PREFS
 	timeout = 30 SECONDS
 	clickable_glow = TRUE
-	/// Weakref to the target atom to use the action on
-	var/datum/weakref/target_ref
+	/// Autoref to the target atom to use the action on
+	var/datum/autoref/target_ref
 	/// If we want to interact on click rather than jump/orbit
 	var/click_interact = FALSE
 

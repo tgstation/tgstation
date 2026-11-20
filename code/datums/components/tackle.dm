@@ -29,7 +29,7 @@
 	///Some gloves, generally ones that increase mobility, may have a minimum distance to fly. Rocket gloves are especially dangerous with this, be sure you'll hit your target or have a clear background if you miss, or else!
 	var/min_distance
 	///A wearkef to the throwdatum we're currently dealing with, if we need it
-	var/datum/weakref/tackle_ref
+	var/datum/autoref/tackle_ref
 
 /datum/component/tackler/Initialize(stamina_cost = 25, base_knockdown = 1 SECONDS, range = 4, speed = 1, skill_mod = 0, min_distance = min_distance, silent_gain = FALSE)
 	if(!iscarbon(parent))
@@ -65,8 +65,8 @@
 /datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/tackle)
 	SIGNAL_HANDLER
 
-	tackle_ref = WEAKREF(tackle)
-	tackle.thrower = WEAKREF(user)
+	tackle_ref = AUTOREF(tackle)
+	tackle.thrower = AUTOREF(user)
 
 ///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/clicked_atom, list/modifiers)

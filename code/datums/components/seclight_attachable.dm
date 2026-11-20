@@ -22,8 +22,8 @@
 	// Internal vars.
 	/// A reference to the actual light that's attached.
 	var/obj/item/flashlight/seclite/light
-	/// A weakref to the item action we add with the light.
-	var/datum/weakref/toggle_action_ref
+	/// A autoref to the item action we add with the light.
+	var/datum/autoref/toggle_action_ref
 	/// Static typecache of all lights we consider seclites (all lights we can attach).
 	var/static/list/valid_lights = typecacheof(list(/obj/item/flashlight/seclite))
 
@@ -136,7 +136,7 @@
 	// Make a new toggle light item action for our parent
 	var/obj/item/item_parent = parent
 	var/datum/action/item_action/toggle_seclight/toggle_action = item_parent.add_item_action(/datum/action/item_action/toggle_seclight)
-	toggle_action_ref = WEAKREF(toggle_action)
+	toggle_action_ref = AUTOREF(toggle_action)
 
 	update_light()
 
@@ -204,7 +204,7 @@
 	SIGNAL_HANDLER
 
 	// This isn't OUR action specifically, we don't care.
-	if(!IS_WEAKREF_OF(action, toggle_action_ref))
+	if(!IS_AUTOREF_OF(action, toggle_action_ref))
 		return
 
 	// Toggle light fails = no light attached = shouldn't be possible

@@ -124,8 +124,8 @@
 
 //Generate a unique set of mutation for each person
 /obj/machinery/dna_vault/proc/roll_powers(mob/user)
-	var/datum/weakref/user_weakref = WEAKREF(user)
-	if((user_weakref in power_lottery) || isdead(user))
+	var/datum/autoref/user_autoref = AUTOREF(user)
+	if((user_autoref in power_lottery) || isdead(user))
 		return
 	possible_powers = list(
 		/datum/mutation/breathless,
@@ -140,7 +140,7 @@
 	gained_mutation += pick_n_take(possible_powers)
 	gained_mutation += pick_n_take(possible_powers)
 
-	power_lottery[user_weakref] = gained_mutation
+	power_lottery[user_autoref] = gained_mutation
 
 /obj/machinery/dna_vault/ui_data(mob/user)
 	var/list/data = list()
@@ -155,7 +155,7 @@
 	data["choiceA"] = ""
 	data["choiceB"] = ""
 	if(user && completed)
-		var/list/mutation_options = power_lottery[WEAKREF(user)]
+		var/list/mutation_options = power_lottery[AUTOREF(user)]
 		if(length(mutation_options))
 			var/datum/mutation/mutation1 = mutation_options[1]
 			var/datum/mutation/mutation2 = mutation_options[2]
@@ -180,7 +180,7 @@
 		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ARK] = TRUE
 
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/target, upgrade_type)
-	var/datum/weakref/human_weakref = WEAKREF(target)
+	var/datum/autoref/human_autoref = AUTOREF(target)
 	var/static/list/associated_mutation = list(
 		"Breathless" = /datum/mutation/breathless,
 		"Dextrous" = /datum/mutation/dextrous,
@@ -190,11 +190,11 @@
 		"Quick Recovery" = /datum/mutation/quick_recovery,
 		"Tough" = /datum/mutation/tough,
 	)
-	if(!(associated_mutation[upgrade_type] in power_lottery[human_weakref]) || (HAS_TRAIT(target, TRAIT_USED_DNA_VAULT)))
+	if(!(associated_mutation[upgrade_type] in power_lottery[human_autoref]) || (HAS_TRAIT(target, TRAIT_USED_DNA_VAULT)))
 		return
 	target.dna.add_mutation(associated_mutation[upgrade_type], MUTATION_SOURCE_DNA_VAULT)
 	ADD_TRAIT(target, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
-	power_lottery[human_weakref] = list()
+	power_lottery[human_autoref] = list()
 	use_energy(active_power_usage)
 
 #undef VAULT_TOXIN

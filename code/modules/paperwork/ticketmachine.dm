@@ -115,7 +115,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		if(M.buffer && !istype(M.buffer, /obj/machinery/ticket_machine))
 			return
 		var/obj/item/assembly/control/ticket_machine/controller = device
-		controller.ticket_machine_ref = WEAKREF(M.buffer)
+		controller.ticket_machine_ref = AUTOREF(M.buffer)
 		id = null
 		controller.id = null
 		to_chat(user, span_warning("You've linked [src] to [M.buffer]."))
@@ -123,8 +123,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/item/assembly/control/ticket_machine
 	name = "ticket machine controller"
 	desc = "A remote controller for the HoP's ticket machine."
-	///Weakref to our ticket machine
-	var/datum/weakref/ticket_machine_ref
+	///Autoref to our ticket machine
+	var/datum/autoref/ticket_machine_ref
 
 /obj/item/assembly/control/ticket_machine/Initialize(mapload)
 	..()
@@ -137,7 +137,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/item/assembly/control/ticket_machine/proc/find_machine()
 	for(var/obj/machinery/ticket_machine/ticketsplease as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/ticket_machine))
 		if(ticketsplease.id == id)
-			ticket_machine_ref = WEAKREF(ticketsplease)
+			ticket_machine_ref = AUTOREF(ticketsplease)
 	if(ticket_machine_ref)
 		return TRUE
 	else

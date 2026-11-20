@@ -10,7 +10,7 @@
 
 	layer = LOW_OBJ_LAYER
 
-	var/datum/weakref/partner_ref = null
+	var/datum/autoref/partner_ref = null
 	var/update_cycle
 
 	pipe_state = "heunary"
@@ -42,8 +42,8 @@
 
 		for(var/obj/machinery/atmospherics/components/unary/heat_exchanger/target in get_step(src,partner_connect))
 			if(target.dir & get_dir(src,target))
-				partner_ref = WEAKREF(target)
-				target.partner_ref = WEAKREF(src)
+				partner_ref = AUTOREF(target)
+				target.partner_ref = AUTOREF(src)
 				break
 
 	. = ..()

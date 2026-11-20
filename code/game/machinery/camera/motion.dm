@@ -9,7 +9,7 @@
 		if (elapsed > alarm_delay)
 			triggerAlarm()
 	else if (detectTime == -1)
-		for (var/datum/weakref/targetref in getTargetList())
+		for (var/datum/autoref/targetref in getTargetList())
 			var/mob/target = targetref.resolve()
 			if(QDELETED(target) || target.stat == DEAD || (!area_motion && !in_range(src, target)))
 				//If not part of a monitored area and the camera is not in range or the target is dead
@@ -26,12 +26,12 @@
 	if (detectTime == 0)
 		detectTime = world.time // start the clock
 	var/list/targets = getTargetList()
-	targets |= WEAKREF(target)
+	targets |= AUTOREF(target)
 	return TRUE
 
 /obj/machinery/camera/proc/lost_target(mob/target)
 	var/list/targets = getTargetList()
-	targets -= WEAKREF(target)
+	targets -= AUTOREF(target)
 	if (!length(targets))
 		cancelAlarm()
 
@@ -74,7 +74,7 @@
 /obj/machinery/camera/motion/thunderdome/HasProximity(atom/movable/AM as mob|obj)
 	if (!isliving(AM) || get_area(AM) != get_area(src))
 		return
-	localMotionTargets |= WEAKREF(AM)
+	localMotionTargets |= AUTOREF(AM)
 	if (!detectTime)
 		for(var/obj/machinery/computer/security/telescreen/entertainment/TV as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/computer/security/telescreen/entertainment))
 			TV.notify(TRUE)
@@ -84,7 +84,7 @@
 	if (!detectTime)
 		return
 
-	for (var/datum/weakref/targetref in localMotionTargets)
+	for (var/datum/autoref/targetref in localMotionTargets)
 		var/mob/target = targetref.resolve()
 		if(QDELETED(target) || target.stat == DEAD || get_dist(src, target) > 7 || get_area(src) != get_area(target))
 			localMotionTargets -= targetref

@@ -210,12 +210,12 @@
 	var/weld = TRUE
 	var/created = FALSE //prevents creation of more then one locker if it has multiple hits
 	var/locker_suck = TRUE
-	var/datum/weakref/locker_ref
+	var/datum/autoref/locker_ref
 
 /obj/projectile/magic/locker/Initialize(mapload)
 	. = ..()
 	var/obj/structure/closet/decay/locker_temp_instance = new(src)
-	locker_ref = WEAKREF(locker_temp_instance)
+	locker_ref = AUTOREF(locker_temp_instance)
 
 /obj/projectile/magic/locker/prehit_pierce(atom/A)
 	. = ..()

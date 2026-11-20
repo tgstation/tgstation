@@ -115,6 +115,7 @@
 #include "asset_smart_cache.dm"
 #include "atmos_pressure_tanks.dm"
 #include "atmospherics_sanity.dm"
+#include "autorefs.dm"
 #include "autowiki.dm"
 #include "bake_a_cake.dm"
 #include "barsigns.dm"

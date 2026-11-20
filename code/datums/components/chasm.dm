@@ -106,7 +106,7 @@
 				RegisterSignals(thing, list(COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_LIVING_SET_BUCKLED, COMSIG_MOVABLE_THROW_LANDED), PROC_REF(drop_stuff), TRUE)
 
 /datum/component/chasm/proc/droppable(atom/movable/dropped_thing)
-	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
+	var/datum/autoref/falling_ref = AUTOREF(dropped_thing)
 	// avoid an infinite loop, but allow falling a large distance
 	var/falling_atom = LAZYACCESS(falling_atoms, falling_ref)
 	if(falling_atom && falling_atom > 30)
@@ -133,7 +133,7 @@
 #undef CHASM_REGISTER_SIGNALS
 
 /datum/component/chasm/proc/drop(atom/movable/dropped_thing)
-	var/datum/weakref/falling_ref = WEAKREF(dropped_thing)
+	var/datum/autoref/falling_ref = AUTOREF(dropped_thing)
 	//Make sure the item is still there after our sleep
 	if(!dropped_thing || !falling_ref?.resolve())
 		LAZYREMOVE(falling_atoms, falling_ref)

@@ -312,8 +312,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	var/turf/tumor_turf = get_turf(src)
 	if(loc == null)
 		return
-	var/datum/weakref/activator_ref = WEAKREF(activator)
-	var/datum/weakref/mychild_ref = WEAKREF(mychild)
+	var/datum/autoref/activator_ref = AUTOREF(activator)
+	var/datum/autoref/mychild_ref = AUTOREF(mychild)
 	for(var/tumor_range_turfs in RANGE_TURFS(12, tumor_turf))
 		if(get_dist(tumor_range_turfs, tumor_turf) == 12)
 			var/obj/effect/temp_visual/elite_tumor_wall/newwall
@@ -413,8 +413,8 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	color = rgb(255,0,0)
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = "#FA8282"
-	var/datum/weakref/activator_ref
-	var/datum/weakref/ourelite_ref
+	var/datum/autoref/activator_ref
+	var/datum/autoref/ourelite_ref
 
 /obj/effect/temp_visual/elite_tumor_wall/Initialize(mapload, new_caster)
 	. = ..()

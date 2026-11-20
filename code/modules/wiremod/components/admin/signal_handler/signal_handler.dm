@@ -45,7 +45,7 @@
 	var/datum/port/output/event_triggered
 
 	/// The current entities that have the signal registered on it
-	var/list/datum/weakref/registered_entities = list()
+	var/list/datum/autoref/registered_entities = list()
 	/// The current registered signal
 	var/registered_signal
 
@@ -135,7 +135,7 @@
 		log_admin_circuit("[parent.get_creator()] registered the signal '[registered_signal]' on [target_datum]")
 		// We override because an admin may try registering a signal on the same object/datum again, so this prevents any runtimes from occuring
 		RegisterSignal(target_datum, registered_signal, PROC_REF(handle_signal_received), override = TRUE)
-		registered_entities |= WEAKREF(target_datum)
+		registered_entities |= AUTOREF(target_datum)
 
 /obj/item/circuit_component/signal_handler/proc/load_new_ports(list/ports_to_load)
 	for(var/datum/port/input/input_port as anything in input_signal_ports)
@@ -156,8 +156,8 @@
 
 /obj/item/circuit_component/signal_handler/proc/unregister_signals_all(datum/port/input/port)
 	CIRCUIT_TRIGGER
-	for(var/datum/weakref/weakref_of_object as anything in registered_entities)
-		var/datum/datum_to_unregister = weakref_of_object.resolve()
+	for(var/datum/autoref/autoref_of_object as anything in registered_entities)
+		var/datum/datum_to_unregister = autoref_of_object.resolve()
 		if(!datum_to_unregister)
 			continue
 		UnregisterSignal(datum_to_unregister, registered_signal)
@@ -174,7 +174,7 @@
 		return
 
 	UnregisterSignal(registered_datum, registered_signal)
-	registered_entities -= WEAKREF(registered_datum)
+	registered_entities -= AUTOREF(registered_datum)
 
 /obj/item/circuit_component/signal_handler/proc/run_ports_on_args(list/arguments)
 	var/first_arg = popleft(arguments)

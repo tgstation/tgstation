@@ -3,7 +3,7 @@
  */
 /datum/component/joint_damage
 	///the mob we will damage
-	var/datum/weakref/overlord_mob
+	var/datum/autoref/overlord_mob
 	///our last health count
 	var/previous_health_count
 
@@ -13,7 +13,7 @@
 	var/mob/living/parent_mob = parent
 	previous_health_count = parent_mob.health
 	if(overlord_mob)
-		src.overlord_mob = WEAKREF(overlord_mob)
+		src.overlord_mob = AUTOREF(overlord_mob)
 
 /datum/component/joint_damage/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(damage_overlord))

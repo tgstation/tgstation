@@ -85,7 +85,7 @@
 	var/passive_level = 1
 	/// How many points are needed to gain a visible heretic aura
 	var/points_to_aura = 8
-	/// Lazylist of weakrefs of items we can track with the heart
+	/// Lazylist of autorefs of items we can track with the heart
 	var/list/tracked_items
 
 /datum/antagonist/heretic/Destroy()
@@ -720,7 +720,7 @@
 
 /**
  * Add [target] as a sacrifice target for the heretic.
- * Generates a preview image and associates it with a weakref of the mob.
+ * Generates a preview image and associates it with a autoref of the mob.
  */
 /datum/antagonist/heretic/proc/add_sacrifice_target(mob/living/carbon/human/target)
 

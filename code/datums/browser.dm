@@ -5,7 +5,7 @@
 	var/window_id
 	var/width = 0
 	var/height = 0
-	var/datum/weakref/source_ref = null
+	var/datum/autoref/source_ref = null
 	/// window option is set using window_id
 	var/window_options = "can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;"
 	var/list/stylesheets = list()
@@ -29,7 +29,7 @@
 	if (height)
 		src.height = height
 	if (source)
-		src.source_ref = WEAKREF(source)
+		src.source_ref = AUTOREF(source)
 
 /datum/browser/proc/user_deleted(datum/source)
 	SIGNAL_HANDLER

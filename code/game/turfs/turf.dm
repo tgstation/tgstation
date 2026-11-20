@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/nav_pass = null
 	/// Terrain cost flags assigned directly to this turf. Area cost flags are combined when queried.
 	var/nav_cost_flags = NONE
-	/// Lazy alist: numeric dir -> flat list of pass_flags masks or (weakref, evaluation direction) pairs. Only present on turfs with conditional edges.
+	/// Lazy alist: numeric dir -> flat list of pass_flags masks or (autoref, evaluation direction) pairs. Only present on turfs with conditional edges.
 	var/alist/nav_blockers
 
 	/// If there's a tile over a basic floor that can be ripped out
@@ -1039,7 +1039,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Returns the packed edge bits for a turf whose pathing pass method is proc-based.
 /// The default keeps the turf conditional, matching the normal CanAStarPass behavior.
 /turf/proc/nav_bake_pathing_pass(dir, list/edge_blockers)
-	edge_blockers += WEAKREF(src)
+	edge_blockers += AUTOREF(src)
 	return NAV_GROUND(dir) | NAV_FLIGHT(dir) | NAV_COND(dir)
 
 /// Stores a static pass-flag mask or a live mover-dependent blocker.
@@ -1055,13 +1055,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		|| blocker.can_astar_pass == CANASTARPASS_ALWAYS_PROC \
 		|| (blocker.pass_flags_self & ~NAV_NON_PASS_FLAGS) \
 		|| SSnavmap.force_conditional_cache[blocker.type])
-		edge_blockers += WEAKREF(blocker)
+		edge_blockers += AUTOREF(blocker)
 		return TRUE
 
 	return FALSE
 
 /// Resolves and evaluates a live blocker within one native-to-DM callback.
-/turf/proc/nav_blocker_can_pass(datum/weakref/blocker_ref, dir, datum/can_pass_info/pass_info)
+/turf/proc/nav_blocker_can_pass(datum/autoref/blocker_ref, dir, datum/can_pass_info/pass_info)
 	var/atom/blocker = blocker_ref?.resolve()
 	if(!blocker)
 		return TRUE

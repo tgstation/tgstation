@@ -32,8 +32,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/xenobio_guide, 32)
 /obj/structure/sign/tram_plate
 	/// The tram we have info about
 	var/specific_transport_id = TRAMSTATION_LINE_1
-	/// Weakref to the tram we have info about
-	var/datum/weakref/transport_ref
+	/// Autoref to the tram we have info about
+	var/datum/autoref/transport_ref
 	/// Serial number of the tram
 	var/tram_serial
 	name = "tram information plate"
@@ -60,7 +60,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/xenobio_guide, 32)
 /obj/structure/sign/tram_plate/proc/link_tram()
 	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(tram.specific_transport_id == specific_transport_id)
-			transport_ref = WEAKREF(tram)
+			transport_ref = AUTOREF(tram)
 			break
 
 /obj/structure/sign/tram_plate/proc/set_tram_serial()

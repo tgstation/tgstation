@@ -1,7 +1,7 @@
 /datum/component/boris_circuit_container
 	dupe_mode = COMPONENT_DUPE_SOURCES
 	var/list/obj/item/circuit_component/mmi/mmi_components
-	var/datum/weakref/indicator_weakref
+	var/datum/autoref/indicator_autoref
 
 /datum/component/boris_circuit_container/Initialize()
 	. = ..()
@@ -18,7 +18,7 @@
 	var/atom/parent_atom = parent
 	var/image/indicator_image = image(DEFAULT_HUDS_DMI, parent_atom, "hudtracking", pixel_x = 8)
 	SET_PLANE_EXPLICIT(indicator_image, ABOVE_LIGHTING_PLANE, parent_atom)
-	indicator_weakref = WEAKREF(parent_atom.add_alt_appearance(
+	indicator_autoref = AUTOREF(parent_atom.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/ais,
 		"boris_circuit_container_[REF(src)]",
 		indicator_image,
@@ -26,7 +26,7 @@
 	))
 
 /datum/component/boris_circuit_container/UnregisterFromParent()
-	QDEL_NULL(indicator_weakref)
+	QDEL_NULL(indicator_autoref)
 	return ..()
 
 /datum/component/boris_circuit_container/on_source_add(source)

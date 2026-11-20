@@ -49,7 +49,7 @@
 	///Have we been visited by a bee recently, so bees dont overpollinate one plant
 	var/recent_bee_visit = FALSE
 	///The last user to add a reagent to the tray, mostly for logging purposes.
-	var/datum/weakref/lastuser
+	var/datum/autoref/lastuser
 	///If the tray generates nutrients and water on its own
 	var/self_sustaining = FALSE
 	///The icon state for the overlay used to represent that this tray is self-sustaining.
@@ -946,7 +946,7 @@
 					reagent_source.reagents.trans_to(iterating_tray.reagents, transfer_me_to_tray, target_id = not_water_reagent.type)
 			else
 				reagent_source.reagents.trans_to(iterating_tray.reagents, transfer_amount, transferred_by = user)
-			lastuser = WEAKREF(user)
+			lastuser = AUTOREF(user)
 			if(IS_EDIBLE(reagent_source) || istype(reagent_source, /obj/item/reagent_containers/applicator/pill))
 				qdel(reagent_source)
 				iterating_tray.update_appearance()

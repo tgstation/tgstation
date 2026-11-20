@@ -22,9 +22,9 @@
 	var/target_zone = BODY_ZONE_CHEST
 	/// Experiment handler component reference
 	var/datum/component/experiment_handler/experiment_handler
-	/// Lazyassoclist of mob weakrefs to the zone they had selected when opening the UI
+	/// Lazyassoclist of mob autorefs to the zone they had selected when opening the UI
 	/// When closing the UI we try to revert their zone selector to that zone
-	var/list/datum/weakref/zone_on_open
+	var/list/datum/autoref/zone_on_open
 
 /obj/machinery/computer/operating/Initialize(mapload)
 	. = ..()
@@ -137,7 +137,7 @@
 		if(!LAZYLEN(zone_on_open))
 			target_zone = user.zone_selected
 		// then we record what you were looking at for when you close it
-		LAZYSET(zone_on_open, WEAKREF(user), user.zone_selected)
+		LAZYSET(zone_on_open, AUTOREF(user), user.zone_selected)
 
 	ui = new(user, src, "OperatingComputer", name)
 	ui.open()
@@ -145,13 +145,13 @@
 /obj/machinery/computer/operating/ui_close(mob/user)
 	. = ..()
 	// reverts zone to whatever you had going into it, typically chest, so you don't have to mess around with it
-	var/zone_found = LAZYACCESS(zone_on_open, WEAKREF(user))
+	var/zone_found = LAZYACCESS(zone_on_open, AUTOREF(user))
 	if(!zone_found)
 		return
 
 	var/atom/movable/screen/zone_sel/selector = user.hud_used?.screen_objects[HUD_MOB_ZONE_SELECTOR]
 	selector?.set_selected_zone(zone_found, user, FALSE)
-	LAZYREMOVE(zone_on_open, WEAKREF(user))
+	LAZYREMOVE(zone_on_open, AUTOREF(user))
 	if(!LAZYLEN(zone_on_open))
 		zone_on_open = initial(zone_on_open)
 

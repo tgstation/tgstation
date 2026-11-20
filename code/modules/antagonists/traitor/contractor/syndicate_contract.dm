@@ -113,7 +113,7 @@
 		if (!unequipped)
 			continue
 		person_contents.moveToNullspace()
-		victim_belongings.Add(WEAKREF(person_contents))
+		victim_belongings.Add(AUTOREF(person_contents))
 
 	var/obj/structure/closet/supplypod/extractionpod/pod = source
 	// Handle the pod returning
@@ -234,7 +234,7 @@
 
 ///The annoying negative effects applied to the victim when returned to the station.
 /datum/syndicate_contract/proc/returnal_side_effects(atom/dropoff_location, mob/living/victim)
-	for(var/datum/weakref/belonging_ref in victim_belongings)
+	for(var/datum/autoref/belonging_ref in victim_belongings)
 		var/obj/item/belonging = belonging_ref.resolve()
 		if(!belonging)
 			continue

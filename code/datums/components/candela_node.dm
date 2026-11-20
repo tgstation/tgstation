@@ -214,6 +214,8 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 
 /// Candela beacon network datum
 /datum/mining_beacon_network
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	/// List of all beacon nodes within our network (node -> its connections)
 	var/list/datum/component/candela_node/linked_nodes = list()
 	/// List of beacon items tracking our network

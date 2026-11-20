@@ -49,7 +49,7 @@
 	base_icon_state = "sextractor"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/seed_extractor
-	/// Associated list of seeds, they are all weak refs.  We check the len to see how many refs we have for each
+	/// Associated list of seeds, they are all auto refs.  We check the len to see how many refs we have for each
 	// seed
 	var/list/piles = list()
 	var/max_seeds = 1000
@@ -178,7 +178,7 @@
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/to_add, atom/taking_from)
 	var/seed_id = generate_seed_hash(to_add)
 	var/list/seed_data
-	var/has_seed_data // so we remember to add a seed obj weakref to piles[seed_id] at the end of the proc. That way if some reason we runtime in this proc it won't incorrectly add data to the list
+	var/has_seed_data // so we remember to add a seed obj autoref to piles[seed_id] at the end of the proc. That way if some reason we runtime in this proc it won't incorrectly add data to the list
 	if(piles[seed_id])
 		has_seed_data = TRUE
 	else
@@ -186,7 +186,7 @@
 		seed_data["name"] = capitalize(replacetext(to_add.name,"pack of ", ""));
 		seed_data["icon"] = initial(to_add.icon)
 		seed_data["icon_state"] = initial(to_add.icon_state)
-		seed_data["refs"] = list(WEAKREF(to_add))
+		seed_data["refs"] = list(AUTOREF(to_add))
 
 	if(!isnull(taking_from))
 		if(ismob(taking_from))
@@ -201,7 +201,7 @@
 
 	// do this at the end, in case any of the previous steps failed
 	if(has_seed_data)
-		piles[seed_id]["refs"] += WEAKREF(to_add)
+		piles[seed_id]["refs"] += AUTOREF(to_add)
 	else
 		piles[seed_id] = seed_data
 
@@ -259,12 +259,12 @@
 		if("take")
 			var/item = params["item"]
 			if(piles[item] && length(piles[item]) > 0)
-				var/datum/weakref/found_seed_weakref = piles[item]["refs"][1]
-				var/obj/item/seeds/found_seed = found_seed_weakref.resolve()
+				var/datum/autoref/found_seed_autoref = piles[item]["refs"][1]
+				var/obj/item/seeds/found_seed = found_seed_autoref.resolve()
 				if(!found_seed)
 					return
 
-				piles[item]["refs"] -= found_seed_weakref
+				piles[item]["refs"] -= found_seed_autoref
 				if(usr)
 					var/mob/user = usr
 					if(user.put_in_hands(found_seed))

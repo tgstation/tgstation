@@ -54,13 +54,13 @@
 	sharpness = SHARP_POINTY
 	custom_materials = list(/datum/material/biomass = SMALL_MATERIAL_AMOUNT * 5)
 	/// What mob "fired" our tongue
-	var/datum/weakref/fired_by_ref
+	var/datum/autoref/fired_by_ref
 	/// if we missed our target
 	var/missed = TRUE
 
 /obj/item/hardened_spike/Initialize(mapload, mob/living/carbon/source)
 	. = ..()
-	src.fired_by_ref = WEAKREF(source)
+	src.fired_by_ref = AUTOREF(source)
 	addtimer(CALLBACK(src, PROC_REF(check_morph)), 5 SECONDS)
 
 /obj/item/hardened_spike/proc/check_morph()
@@ -126,7 +126,7 @@
 		return
 
 	var/datum/action/send_chems/chem_action = new(tongue_spike)
-	chem_action.transferred_ref = WEAKREF(victim)
+	chem_action.transferred_ref = AUTOREF(victim)
 	chem_action.Grant(fired_by)
 
 	to_chat(fired_by, span_notice("Link established! Use the \"Transfer Chemicals\" ability \
@@ -151,8 +151,8 @@
 	button_icon_state = "spikechemswap"
 	check_flags = AB_CHECK_CONSCIOUS
 
-	/// Weakref to the mob target that we transfer chemicals to on activation
-	var/datum/weakref/transferred_ref
+	/// Autoref to the mob target that we transfer chemicals to on activation
+	var/datum/autoref/transferred_ref
 
 /datum/action/send_chems/New(Target)
 	. = ..()

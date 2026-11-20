@@ -19,9 +19,9 @@
 	/// A player selected outfit by clicking the netpod
 	var/datum/outfit/netsuit = /datum/outfit/job/bitrunner
 	/// Holds this to see if it needs to generate a new one
-	var/datum/weakref/avatar_ref
+	var/datum/autoref/avatar_ref
 	/// The linked quantum server
-	var/datum/weakref/server_ref
+	var/datum/autoref/server_ref
 	/// The amount of brain damage done from force disconnects
 	var/disconnect_damage
 	/// Static list of outfits to select from

@@ -16,8 +16,8 @@
 	doorOpen = 'sound/machines/tram/tramopen.ogg'
 	doorClose = 'sound/machines/tram/tramclose.ogg'
 	autoclose = FALSE
-	/// Weakref to the tram we're attached
-	var/datum/weakref/transport_ref
+	/// Autoref to the tram we're attached
+	var/datum/autoref/transport_ref
 	var/retry_counter
 	var/crushing_in_progress = FALSE
 	bound_width = 64
@@ -186,12 +186,12 @@
 	close(forced = BYPASS_DOOR_CHECKS)
 
 /**
- * Set the weakref for the tram we're attached to
+ * Set the autoref for the tram we're attached to
  */
 /obj/machinery/door/airlock/tram/proc/find_tram()
 	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(tram.specific_transport_id == transport_linked_id)
-			transport_ref = WEAKREF(tram)
+			transport_ref = AUTOREF(tram)
 
 /obj/machinery/door/airlock/tram/Initialize(mapload, set_dir, unres_sides)
 	. = ..()

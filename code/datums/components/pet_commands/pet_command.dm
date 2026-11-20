@@ -4,8 +4,8 @@
  * This is abstract and should be extended for actual behaviour
  */
 /datum/pet_command
-	/// Weak reference to who follows this command
-	var/datum/weakref/weak_parent
+	/// Auto reference to who follows this command
+	var/datum/autoref/weak_parent
 	/// Unique name used for radial selection, should not be shared with other commands on one mob
 	var/command_name
 	/// Description to display in radial menu
@@ -33,7 +33,7 @@
 
 /datum/pet_command/New(mob/living/parent)
 	. = ..()
-	weak_parent = WEAKREF(parent)
+	weak_parent = AUTOREF(parent)
 
 /// Register a new guy we want to listen to
 /datum/pet_command/proc/add_new_friend(mob/living/tamer)

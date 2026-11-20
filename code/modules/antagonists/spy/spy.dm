@@ -19,9 +19,9 @@
 	var/bounties_claimed = 0
 	/// Tracks all loot items the spy has claimed, for roundend
 	var/list/all_loot = list()
-	/// Weakref to our spy uplink
+	/// Autoref to our spy uplink
 	/// Only exists for the sole purpose of letting admins see it
-	var/datum/weakref/uplink_weakref
+	var/datum/autoref/uplink_autoref
 
 /datum/antagonist/spy/on_gain()
 	if(!uplink_created)
@@ -48,7 +48,7 @@
 	if(!check_rights(R_ADMIN|R_DEBUG))
 		return
 
-	var/datum/component/spy_uplink/uplink = uplink_weakref?.resolve()
+	var/datum/component/spy_uplink/uplink = uplink_autoref?.resolve()
 	if(isnull(uplink))
 		tgui_alert(usr, "No spy uplink!", "Mission Failed")
 		return
@@ -59,7 +59,7 @@
 	if(!check_rights(R_ADMIN|R_DEBUG))
 		return
 
-	var/datum/component/spy_uplink/uplink = uplink_weakref?.resolve()
+	var/datum/component/spy_uplink/uplink = uplink_autoref?.resolve()
 	if(isnull(uplink))
 		tgui_alert(usr, "No spy uplink!", "Mission Failed")
 		return
@@ -78,7 +78,7 @@
 	if(!check_rights(R_ADMIN|R_DEBUG))
 		return
 
-	var/datum/component/spy_uplink/uplink = uplink_weakref?.resolve()
+	var/datum/component/spy_uplink/uplink = uplink_autoref?.resolve()
 	if(isnull(uplink))
 		tgui_alert(usr, "No spy uplink!", "Mission Failed")
 		return
@@ -108,7 +108,7 @@
 	if(!uplink)
 		return FALSE
 
-	uplink_weakref = WEAKREF(uplink)
+	uplink_autoref = AUTOREF(uplink)
 	uplink_created = TRUE
 
 	if(istype(spy_uplink, /obj/item/modular_computer/pda))

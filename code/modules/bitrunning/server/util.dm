@@ -12,7 +12,7 @@
 /obj/machinery/quantum_server/proc/get_avatar_data()
 	var/list/hosted_avatars = list()
 
-	for(var/datum/weakref/avatar_ref in avatar_connection_refs)
+	for(var/datum/autoref/avatar_ref in avatar_connection_refs)
 		var/datum/component/avatar_connection/connection = avatar_ref.resolve()
 		if(isnull(connection))
 			avatar_connection_refs.Remove(connection)

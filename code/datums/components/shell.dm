@@ -184,7 +184,7 @@
 
 		if(!attached_circuit.owner_id && isidcard(item))
 			source.balloon_alert(user, "owner id set for [item]")
-			attached_circuit.owner_id = WEAKREF(item)
+			attached_circuit.owner_id = AUTOREF(item)
 			return ITEM_INTERACT_SUCCESS
 
 		if(istype(item, /obj/item/circuit_component))
@@ -207,7 +207,7 @@
 		source.balloon_alert(user, "this is too large to fit into [parent]!")
 		return ITEM_INTERACT_BLOCKING
 
-	logic_board.inserter_mind = WEAKREF(user.mind)
+	logic_board.inserter_mind = AUTOREF(user.mind)
 	attach_circuit(logic_board, user)
 	return ITEM_INTERACT_SUCCESS
 

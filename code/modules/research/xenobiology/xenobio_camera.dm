@@ -37,8 +37,8 @@
 
 	light_color = LIGHT_COLOR_PINK
 
-	/// Weakref to the monkey recycler connected to this console.
-	var/datum/weakref/connected_recycler_ref
+	/// Autoref to the monkey recycler connected to this console.
+	var/datum/autoref/connected_recycler_ref
 	/// The slimes stored inside this console.
 	var/list/stored_slimes
 	/// The slime potion stored inside this console.
@@ -65,7 +65,7 @@
 	. = ..()
 	for(var/obj/machinery/monkey_recycler/recycler in GLOB.monkey_recyclers)
 		if(get_area(recycler) == get_area(src))
-			connected_recycler_ref = WEAKREF(recycler)
+			connected_recycler_ref = AUTOREF(recycler)
 			break
 
 /obj/machinery/computer/camera_advanced/xenobio/Destroy()
@@ -193,7 +193,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "linked recycler")
-	connected_recycler_ref = WEAKREF(tool.buffer)
+	connected_recycler_ref = AUTOREF(tool.buffer)
 	return ITEM_INTERACT_SUCCESS
 
 /// Validates whether the target turf can be interacted with.

@@ -7,6 +7,8 @@
  * See also: [the hallucination status effect][/datum/status_effect/hallucination].
  */
 /datum/hallucination
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	/// What is this hallucination's weight in the random hallucination pool?
 	var/random_hallucination_weight = 0
 	/// What tier of hallucination is this? Rarer ones should be higher

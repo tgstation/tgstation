@@ -16,7 +16,7 @@
 	/// Chance to respawn a mob
 	var/respawn_chance = 30
 	/// Our currently spawned mob
-	var/datum/weakref/our_mob
+	var/datum/autoref/our_mob
 	/// Weighted list of things we can spawn
 	var/list/valid_mobs = list()
 	/// List of things we want to remove from our spawner list before using it
@@ -65,7 +65,7 @@
 	if (!new_spawn)
 		return
 	if (isliving(new_spawn))
-		our_mob = WEAKREF(new_spawn)
+		our_mob = AUTOREF(new_spawn)
 
 /// Make a guy and subscribe to see if they die
 /obj/effect/mining_mob_respawner/proc/make_mob()

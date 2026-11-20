@@ -1,6 +1,6 @@
 /// Adds threats to the list and notifies players
 /obj/machinery/quantum_server/proc/add_threats(mob/living/threat)
-	spawned_threat_refs.Add(WEAKREF(threat))
+	spawned_threat_refs.Add(AUTOREF(threat))
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_THREAT_CREATED)
 	threat.AddComponent(/datum/component/virtual_entity, src)
 
@@ -23,7 +23,7 @@
 
 /// Selects a target to mutate. Gives two attempts, then crashes if it fails.
 /obj/machinery/quantum_server/proc/get_mutation_target()
-	var/datum/weakref/target_ref = pick(mutation_candidate_refs)
+	var/datum/autoref/target_ref = pick(mutation_candidate_refs)
 	var/mob/living/resolved = target_ref.resolve()
 
 	if(resolved)
@@ -40,7 +40,7 @@
 
 /// Finds any mobs with minds in the zones and gives them the bad news
 /obj/machinery/quantum_server/proc/notify_spawned_threats()
-	for(var/datum/weakref/baddie_ref as anything in spawned_threat_refs)
+	for(var/datum/autoref/baddie_ref as anything in spawned_threat_refs)
 		var/mob/living/baddie = baddie_ref.resolve()
 		if(isnull(baddie?.mind) || IS_UNCONSCIOUS(baddie))
 			continue
@@ -58,7 +58,7 @@
 
 /// Removes a specific threat - used when station spawning
 /obj/machinery/quantum_server/proc/remove_threat(mob/living/threat)
-	spawned_threat_refs.Remove(WEAKREF(threat))
+	spawned_threat_refs.Remove(AUTOREF(threat))
 
 
 /// Selects the role and waits for a ghost orbiter
@@ -144,7 +144,7 @@
 
 	var/bitrunners_alive = 0
 	var/island_brawl_exception = istype(generated_domain, /datum/lazy_template/virtual_domain/island_brawl)
-	for(var/datum/weakref/bitrunner_ref in avatar_connection_refs)
+	for(var/datum/autoref/bitrunner_ref in avatar_connection_refs)
 		var/mob/living/bitrunner = astype(bitrunner_ref.resolve(), /datum/component/avatar_connection)?.parent
 		if(!bitrunner)
 			continue
@@ -197,7 +197,7 @@
 
 /// Removes any invalid candidates from the list
 /obj/machinery/quantum_server/proc/validate_mutation_candidates()
-	for(var/datum/weakref/creature_ref as anything in mutation_candidate_refs)
+	for(var/datum/autoref/creature_ref as anything in mutation_candidate_refs)
 		var/mob/living/creature = creature_ref?.resolve()
 		if(isnull(creature) || creature.mind)
 			mutation_candidate_refs.Remove(creature_ref)

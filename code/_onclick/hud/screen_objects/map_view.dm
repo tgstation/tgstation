@@ -11,13 +11,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	plane = GAME_PLANE
 	del_on_map_removal = FALSE
 
-	// Weakrefs of all our hud viewers -> a weakref to the hud datum they last used
-	var/list/datum/weakref/viewers_to_huds = list()
-	// Weakref to the location we are displaying "from", if any
-	var/datum/weakref/display_ref
+	// Autorefs of all our hud viewers -> a autoref to the hud datum they last used
+	var/list/datum/autoref/viewers_to_huds = list()
+	// Autoref to the location we are displaying "from", if any
+	var/datum/autoref/display_ref
 
 /atom/movable/screen/map_view/Destroy()
-	for(var/datum/weakref/client_ref in viewers_to_huds)
+	for(var/datum/autoref/client_ref in viewers_to_huds)
 		hide_from_client(client_ref.resolve())
 	display_ref = null
 
@@ -34,18 +34,18 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 /atom/movable/screen/map_view/proc/set_display(atom/display_atom = null)
 	if(isnull(display_atom))
 		display_ref = null
-		for(var/datum/weakref/client_ref in viewers_to_huds)
+		for(var/datum/autoref/client_ref in viewers_to_huds)
 			var/client/viewer = client_ref.resolve()
 			if(!viewer)
 				continue
 			viewer.delete_parallax(assigned_map)
 		return
 
-	var/datum/weakref/new_display_ref = WEAKREF(display_atom)
+	var/datum/autoref/new_display_ref = AUTOREF(display_atom)
 	if(new_display_ref == display_ref)
 		return
 	display_ref = new_display_ref
-	for(var/datum/weakref/client_ref in viewers_to_huds)
+	for(var/datum/autoref/client_ref in viewers_to_huds)
 		var/client/viewer = client_ref.resolve()
 		if(isnull(viewer))
 			continue
@@ -53,7 +53,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 		var/atom/movable/screen/parallax_home/working_parallax = viewer.create_parallax(assigned_map)
 		working_parallax.set_perspective(display_atom)
 
-		var/datum/weakref/hud_ref = viewers_to_huds[client_ref]
+		var/datum/autoref/hud_ref = viewers_to_huds[client_ref]
 		var/datum/hud/real_hud = hud_ref.resolve()
 		if(isnull(real_hud))
 			continue
@@ -93,9 +93,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	// We lazy load this because there's no point creating all these if none's gonna see em
 
 	// Store this info in a client -> hud pattern, so ghosts closing the window nukes the right group
-	var/datum/weakref/client_ref = WEAKREF(show_to)
+	var/datum/autoref/client_ref = AUTOREF(show_to)
 
-	var/datum/weakref/hud_ref = viewers_to_huds[client_ref]
+	var/datum/autoref/hud_ref = viewers_to_huds[client_ref]
 	var/datum/hud/our_hud = hud_ref?.resolve()
 	if(our_hud)
 		return our_hud.get_plane_group(PLANE_GROUP_POPUP_WINDOW(src))
@@ -109,7 +109,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 		working_parallax.set_perspective(displaying_from)
 		pop_planes.set_perspective(displaying_from)
 
-	viewers_to_huds[client_ref] = WEAKREF(show_to.mob.hud_used)
+	viewers_to_huds[client_ref] = AUTOREF(show_to.mob.hud_used)
 	pop_planes.attach_to(show_to.mob.hud_used)
 	return pop_planes
 
@@ -121,9 +121,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 		return
 	hide_from.clear_map(assigned_map)
 
-	var/datum/weakref/client_ref = WEAKREF(hide_from)
+	var/datum/autoref/client_ref = AUTOREF(hide_from)
 	// Make sure we clear the *right* hud
-	var/datum/weakref/hud_ref = viewers_to_huds[client_ref]
+	var/datum/autoref/hud_ref = viewers_to_huds[client_ref]
 	viewers_to_huds -= client_ref
 	hide_from.delete_parallax(assigned_map)
 

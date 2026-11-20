@@ -5,8 +5,8 @@
 	var/list/depth_stack = list()
 	/// The current plane master group we're viewing
 	var/current_group = PLANE_GROUP_MAIN
-	/// Weakref to the mob to edit
-	var/datum/weakref/mob_ref
+	/// Autoref to the mob to edit
+	var/datum/autoref/mob_ref
 	/// Has the target been set explicitly (via VV) or implicitly (via orbit)
 	/// Orbit targets will get unset whenever you stop orbiting them
 	var/explicit_mirror = FALSE
@@ -33,7 +33,7 @@
 	if(!new_mob?.hud_used)
 		new_mob = owner.owner?.mob
 
-	mob_ref = WEAKREF(new_mob)
+	mob_ref = AUTOREF(new_mob)
 
 	if(!mirror_target)
 		UnregisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT)

@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	// Our current simple event ui data if any
 	var/list/current_event_ui_data
 	/// Pad we've launched from, we'll try to land on this one first when coming back if it still exists.
-	var/datum/weakref/last_pad
+	var/datum/autoref/last_pad
 	/// Log of recent events
 	var/list/drone_log = list()
 	/// List of tools, EXODRONE_TOOL_WELDER etc
@@ -110,7 +110,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 		var/obj/machinery/exodrone_launcher/pad = locate() in loc
 		pad.fuel_up(src)
 		pad.launch_effect()
-		last_pad = WEAKREF(pad)
+		last_pad = AUTOREF(pad)
 		drone_log("Launched from [pad.name] and set course for [target_site.display_name()]")
 	else
 		drone_log("Launched from [location.display_name()] and set course for [target_site ? target_site.display_name() : station_name()]")

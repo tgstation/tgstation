@@ -14,13 +14,13 @@
 	. = ..()
 	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
 	var/obj/effect/temp_visual/effect_trail/spike_chaser/chaser = new(get_turf(owner), target)
-	LAZYADD(active_chasers, WEAKREF(chaser))
+	LAZYADD(active_chasers, AUTOREF(chaser))
 	RegisterSignal(chaser, COMSIG_QDELETING, PROC_REF(on_chaser_destroyed))
 
 /// Remove a spike trail from our list of active trails
 /datum/action/cooldown/mob_cooldown/chasing_spikes/proc/on_chaser_destroyed(atom/chaser)
 	SIGNAL_HANDLER
-	LAZYREMOVE(active_chasers, WEAKREF(chaser))
+	LAZYREMOVE(active_chasers, AUTOREF(chaser))
 
 // Clean up after ourselves
 /datum/action/cooldown/mob_cooldown/chasing_spikes/Remove(mob/removed_from)

@@ -49,14 +49,14 @@
 /obj/effect/abstract/floating_eyes
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	// Who sees the eyes?
-	var/datum/weakref/seer_ref
+	var/datum/autoref/seer_ref
 
 /obj/effect/abstract/floating_eyes/Initialize(mapload, mob/seer)
 	. = ..()
 	if(isnull(seer))
 		return INITIALIZE_HINT_QDEL
 
-	seer_ref = WEAKREF(seer)
+	seer_ref = AUTOREF(seer)
 	var/image/make_invis = image(icon = null, icon_state = null, loc = src)
 	make_invis.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/one_person/reversed, "hallucination", make_invis, null, seer)

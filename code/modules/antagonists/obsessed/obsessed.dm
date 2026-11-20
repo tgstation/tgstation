@@ -117,7 +117,7 @@
 				var/datum/objective/polaroid/polaroid = new
 				polaroid.owner = owner
 				polaroid.target = obsessionmind
-				polaroid.obsession_weakref = WEAKREF(obsessionmind.current)
+				polaroid.obsession_autoref = AUTOREF(obsessionmind.current)
 				objectives += polaroid
 			if(OBSESSED_OBJECTIVE_HUG)
 				var/datum/objective/hug/hug = new
@@ -258,8 +258,8 @@
 
 /datum/objective/polaroid //take a picture of the target with you in it.
 	name = "polaroid"
-	/// Weakref to our obsession's original mob
-	var/datum/weakref/obsession_weakref
+	/// Autoref to our obsession's original mob
+	var/datum/autoref/obsession_autoref
 
 /datum/objective/polaroid/update_explanation_text()
 	if(target?.current)
@@ -270,7 +270,7 @@
 
 /datum/objective/polaroid/check_completion()
 	for(var/obj/item/photo/photo in owner.current?.get_all_contents())
-		if((obsession_weakref in photo.picture?.mobs_seen) && !(obsession_weakref in photo.picture?.dead_seen))
+		if((obsession_autoref in photo.picture?.mobs_seen) && !(obsession_autoref in photo.picture?.dead_seen))
 			return TRUE
 	return FALSE
 
