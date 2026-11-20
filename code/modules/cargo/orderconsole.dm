@@ -81,16 +81,18 @@
 		ui = new(user, src, interface_type, name)
 		ui.open()
 
-/obj/machinery/computer/cargo/ui_data()
+/obj/machinery/computer/cargo/ui_data(mob/user)
 	var/list/data = list()
 	data["department"] = "Cargo" // Hardcoded here, for customization in budgetordering.dm AKA NT IRN
 	data["location"] = SSshuttle.supply.getStatusText()
 	var/datum/bank_account/bank = SSeconomy.get_dep_account(cargo_account)
-	if(bank)
-		data["points"] = bank.account_balance
+	var/datum/bank_account/buyer = astype(user, /mob/living)?.get_bank_account()
+	data["points"] = bank?.account_balance
 	data["grocery"] = SSshuttle.chef_groceries.len
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
 	data["self_paid"] = self_paid
+	data["goody_order_cost_modifier"] = buyer?.goody_order_cost_modifier || 1.0
+	data["private_order_cost_modifier"] = buyer?.private_order_cost_modifier || 1.0
 	data["docked"] = SSshuttle.supply.mode == SHUTTLE_IDLE
 	data["loan"] = !!SSshuttle.shuttle_loan
 	data["loan_dispatched"] = SSshuttle.shuttle_loan && SSshuttle.shuttle_loan.dispatched

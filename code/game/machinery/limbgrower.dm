@@ -230,7 +230,7 @@
 
 			for(var/required_reagent, required_amount in consumed_reagents_list)
 				consumed_reagents_list[required_reagent] *= production_coefficient
-				if(!reagents.has_reagent(required_reagent, required_amount))
+				if(!reagents.has_reagent(required_reagent, consumed_reagents_list[required_reagent]))
 					audible_message(span_notice("[src] buzzes."))
 					playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 					return

@@ -7,6 +7,7 @@
 	medical_symptom_text = "Unable to recognize familiar faces, often relying on alternative cues such as \
 		voice, clothing, identification, or context to identify individuals."
 	hardcore_value = 5
+	mail_weight = 2
 	mail_goodies = list(/obj/item/skillchip/appraiser) // bad at recognizing faces but good at recognizing IDs
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_TRAUMALIKE
 

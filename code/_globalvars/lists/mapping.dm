@@ -12,6 +12,10 @@ GLOBAL_LIST_INIT(cardinals_multiz, list(
 	UP,
 	DOWN,
 ))
+GLOBAL_LIST_INIT(verticals, list(
+	UP,
+	DOWN,
+))
 GLOBAL_LIST_INIT(diagonals, list(
 	NORTHEAST,
 	NORTHWEST,

@@ -29,38 +29,38 @@
 /area/ruin/powered/lizard_gas)
 "cF" = (
 /obj/structure/rack,
-/obj/item/food/cornchips/blue{
+/obj/item/food/chips/corn/blue{
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/food/cornchips/blue{
+/obj/item/food/chips/corn/blue{
 	pixel_x = -5;
 	pixel_y = 1
 	},
-/obj/item/food/cornchips/green{
+/obj/item/food/chips/corn/green{
 	pixel_x = 8;
 	pixel_y = 5
 	},
-/obj/item/food/cornchips/green{
+/obj/item/food/chips/corn/green{
 	pixel_x = 8;
 	pixel_y = 1
 	},
-/obj/item/food/cornchips/red{
+/obj/item/food/chips/corn/red{
 	pixel_y = 5
 	},
-/obj/item/food/cornchips/red{
+/obj/item/food/chips/corn/red{
 	pixel_y = 3
 	},
-/obj/item/food/cornchips/red{
+/obj/item/food/chips/corn/red{
 	pixel_y = 1
 	},
-/obj/item/food/cornchips/red{
+/obj/item/food/chips/corn/red{
 	pixel_y = -1
 	},
-/obj/item/food/cornchips/purple{
+/obj/item/food/chips/corn/purple{
 	pixel_y = 4
 	},
-/obj/item/food/cornchips/purple,
+/obj/item/food/chips/corn/purple,
 /turf/open/floor/iron,
 /area/ruin/powered/lizard_gas)
 "cI" = (

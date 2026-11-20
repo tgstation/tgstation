@@ -589,6 +589,7 @@
 
 	new_profile.voice = target.voice
 	new_profile.voice_filter = target.voice_filter
+	new_profile.voice_pitch = target.pitch
 
 	return new_profile
 
@@ -790,6 +791,7 @@
 	user.mind?.set_level(/datum/skill/athletics, chosen_profile.athletics_level, silent = TRUE)
 	user.voice = chosen_profile.voice
 	user.voice_filter = chosen_profile.voice_filter
+	user.pitch = chosen_profile.voice_pitch
 
 	chosen_dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
@@ -944,6 +946,8 @@
 	var/voice
 	/// The TTS filter of the profile filter
 	var/voice_filter = ""
+	/// The TTS pitch of the profile source
+	var/voice_pitch = 0
 
 /datum/changeling_profile/Destroy()
 	qdel(dna)
@@ -983,6 +987,7 @@
 	new_profile.quirks = quirks.Copy()
 	new_profile.voice = voice
 	new_profile.voice_filter = voice_filter
+	new_profile.voice_pitch = voice_pitch
 
 /datum/antagonist/changeling/roundend_report()
 	var/list/parts = list()

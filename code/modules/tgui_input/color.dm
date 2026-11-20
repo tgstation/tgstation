@@ -22,7 +22,7 @@
 		return input(user, message, title, default) as color|null
 	var/datum/tgui_color_picker/picker = new(user, message, title, default, timeout, autofocus)
 	picker.ui_interact(user)
-	picker.wait()
+	picker.wait(user)
 	if (picker)
 		. = picker.choice
 		qdel(picker)
@@ -68,8 +68,8 @@
  * Waits for a user's response to the tgui_color_picker's prompt before returning. Returns early if
  * the window was closed by the user.
  */
-/datum/tgui_color_picker/proc/wait()
-	while (!choice && !closed && !QDELETED(src))
+/datum/tgui_color_picker/proc/wait(mob/user)
+	while (!choice && !closed && !QDELETED(src) && !QDELETED(user))
 		stoplag(1)
 
 /datum/tgui_color_picker/ui_interact(mob/user, datum/tgui/ui)

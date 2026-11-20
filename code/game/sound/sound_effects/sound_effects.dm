@@ -1039,3 +1039,69 @@ GLOBAL_LIST_INIT(sfx_datums_by_paths, init_subtypes_w_path_keys(/datum/sound_eff
 		'sound/effects/heavy_drop1.ogg',
 		'sound/effects/heavy_drop2.ogg',
 	)
+
+/datum/sound_effect/griddle_on
+	file_paths = list(
+		'sound/machines/griddle/griddle_turn_on1.ogg',
+		'sound/machines/griddle/griddle_turn_on2.ogg',
+	)
+
+/datum/sound_effect/griddle_off
+	file_paths = list(
+		'sound/machines/griddle/griddle_turn_off1.ogg',
+		'sound/machines/griddle/griddle_turn_off2.ogg',
+	)
+
+/datum/sound_effect/seasoning_shaker_pickup
+	file_paths = list(
+		'sound/items/seasoning_shaker/seasoning_shaker_pickup1.ogg',
+		'sound/items/seasoning_shaker/seasoning_shaker_pickup2.ogg',
+		'sound/items/seasoning_shaker/seasoning_shaker_pickup3.ogg',
+	)
+
+/datum/sound_effect/seasoning_shaker_drop
+	file_paths = list(
+		'sound/items/seasoning_shaker/seasoning_shaker_drop1.ogg',
+		'sound/items/seasoning_shaker/seasoning_shaker_drop2.ogg',
+	)
+
+/datum/sound_effect/towel_pickup
+	file_paths = list(
+		'sound/items/towel/towel_pickup1.ogg',
+		'sound/items/towel/towel_pickup2.ogg',
+	)
+
+/datum/sound_effect/towel_drop
+	file_paths = list(
+		'sound/items/towel/towel_drop1.ogg',
+		'sound/items/towel/towel_drop2.ogg',
+	)
+
+/datum/sound_effect/bowl_pickup
+	file_paths = list(
+		'sound/items/bowl/bowl_pickup1.ogg',
+		'sound/items/bowl/bowl_pickup2.ogg',
+		'sound/items/bowl/bowl_pickup3.ogg',
+	)
+
+/datum/sound_effect/bowl_drop
+	file_paths = list(
+		'sound/items/bowl/bowl_drop1.ogg',
+		'sound/items/bowl/bowl_drop2.ogg',
+		'sound/items/bowl/bowl_drop3.ogg',
+	)
+
+/datum/sound_effect/cucumba_pickup
+	file_paths = list(
+		'sound/items/cucumba/cucumba_pickup1.ogg',
+		'sound/items/cucumba/cucumba_pickup2.ogg',
+		'sound/items/cucumba/cucumba_pickup3.ogg',
+	)
+
+/datum/sound_effect/cucumba_drop
+	file_paths = list(
+		'sound/items/cucumba/cucumba_drop1.ogg',
+		'sound/items/cucumba/cucumba_drop2.ogg',
+		'sound/items/cucumba/cucumba_drop3.ogg',
+	)
+

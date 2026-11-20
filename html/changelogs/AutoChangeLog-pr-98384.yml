@@ -1,5 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes:
-  - rscadd: "Added the ability to alt right-click the gas analyzer to get it to point to the nearest air alarm in the current area."
-  - qol: "Added on mouseover hotkey hints to the multitool and the gas analyzer"

@@ -34,6 +34,9 @@ SUBSYSTEM_DEF(ambience)
 		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) //WHAT? I CAN'T HEAR YOU
 			continue
 
+		if(client_iterator.web_music_playing && client_iterator.prefs.read_preference(/datum/preference/toggle/sound_ambience_mute_during_music))
+			continue
+
 		//Check to see if the client-mob is in a valid area
 		var/area/current_area = get_area(client_mob)
 		if(!current_area) //Something's gone horribly wrong

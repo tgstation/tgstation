@@ -30,7 +30,6 @@ type FileEntry = {
 
 type PrintType = {
   displayText: string;
-  typepath: string;
   width: number;
   height: number;
 };
@@ -221,10 +220,9 @@ export const NtosFileManager = (props) => {
             printTypes={printTypes}
             toPrint={toPrint}
             onConfirm={(name, printType, offsetX, offsetY) => {
-              const { width, height, typepath } = printType;
+              const { width, height } = printType;
               act(printingFromUsb ? 'PRG_usbprint' : 'PRG_print', {
                 name,
-                typepath,
                 width,
                 height,
                 offsetX,

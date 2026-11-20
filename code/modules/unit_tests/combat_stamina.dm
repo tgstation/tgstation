@@ -23,3 +23,32 @@
 	tider.adjust_stamina_loss(50)
 	sleep(tider.stamina_regen_time * 2)
 	TEST_ASSERT_EQUAL(tider.get_stamina_loss(), 0, "Stamina should be fully regenerated after regen time")
+
+/// Tests stam regen timer resets on taking any amount of stamina damage, even if at the stamina damage cap
+/datum/unit_test/stam_reset
+	var/reset_count = 0
+
+/datum/unit_test/stam_reset/Run()
+	var/mob/living/carbon/human/consistent/tider = allocate(__IMPLIED_TYPE__)
+	tider.set_stamina_loss(10)
+	RegisterSignal(tider, COMSIG_LIVING_STAMINA_REGEN_RESET, PROC_REF(reset_count))
+
+	tider.adjust_stamina_loss(10)
+	TEST_ASSERT_EQUAL(reset_count, 1, "Stamina timer reset should have been triggered (normal amount of damage)")
+	tider.adjust_stamina_loss(INFINITY)
+	TEST_ASSERT_EQUAL(reset_count, 2, "Stamina timer reset should have been triggered (entering stamcrit / hitting stamina damage cap)")
+	tider.adjust_stamina_loss(10)
+	TEST_ASSERT_EQUAL(reset_count, 3, "Stamina timer reset should have been triggered (regardless of being at the stamina damage cap)")
+	tider.adjust_stamina_loss(0)
+	TEST_ASSERT_EQUAL(reset_count, 4, "Stamina timer reset should have been triggered (even for 0 damage)")
+	tider.adjust_stamina_loss(-10)
+	TEST_ASSERT_EQUAL(reset_count, 4, "Stamina timer reset should not have been triggered after healing stamina damage")
+
+	var/datum/status_effect/incapacitating/stamcrit/stamcrit_effect = tider.has_status_effect(/datum/status_effect/incapacitating/stamcrit)
+	stamcrit_effect.diminishing_return_counter += INFINITY
+	tider.adjust_stamina_loss(10)
+	TEST_ASSERT_EQUAL(reset_count, 4, "Stamina timer reset should not have been triggered after stamcrit diminishing returns are applied")
+
+/datum/unit_test/stam_reset/proc/reset_count()
+	SIGNAL_HANDLER
+	reset_count++
