@@ -1,4 +1,0 @@
-author: "scolastico"
-delete-after: True
-changes:
-  - bugfix: "Pressing \"Force Reconnect\" in the chat panel's websocket settings no longer breaks the websock"
