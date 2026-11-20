@@ -7,6 +7,8 @@ SUBSYSTEM_DEF(polling)
 	var/list/datum/candidate_poll/currently_polling
 	/// Number of polls performed since the start
 	var/total_polls = 0
+	/// Trackers behind the follow links of poll announcements, kept here so the links stay valid for the round
+	var/list/datum/poll_winner_tracker/winner_trackers = list()
 
 /datum/controller/subsystem/polling/fire()
 	if(!currently_polling) // if polls_active is TRUE then this shouldn't happen, but still..

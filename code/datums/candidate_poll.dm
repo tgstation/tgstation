@@ -154,5 +154,50 @@
 		return
 	for(var/mob/chosen in chosen_candidates)
 		var/client/chosen_client = chosen.client
+		if(isnull(chosen_client))
+			continue
+		// The chosen one is still a ghost that's about to be deleted, so the link goes through a tracker that waits for the body they get
+		var/datum/poll_winner_tracker/tracker = new(chosen_client)
 		for(var/mob/poll_recipient as anything in poll_recipients)
-			to_chat(poll_recipient, span_ooc("[isobserver(poll_recipient) ? FOLLOW_LINK(poll_recipient, chosen_client.mob) : null][span_warning(" [full_capitalize(role)] Poll: ")][key_name(chosen_client, include_name = FALSE)] was selected."))
+			to_chat(poll_recipient, span_ooc("[isobserver(poll_recipient) ? "<a href=byond://?src=[REF(tracker)];follow=1>(F)</a>" : null][span_warning(" [full_capitalize(role)] Poll: ")][key_name(chosen_client, include_name = FALSE)] was selected."))
+
+/// How long a tracker waits for the chosen candidate to be put into a body before giving up
+#define POLL_WINNER_BODY_WAIT (30 SECONDS)
+
+/**
+ * Remembers the body a chosen candidate was put into as a result of a poll, so that observers can follow it from the announcement.
+ * Only the first mob they log into after being chosen counts, any body they move to afterwards is not tracked.
+ */
+/datum/poll_winner_tracker
+	/// The body the chosen candidate was put into, null until that happens
+	var/datum/weakref/body_ref
+
+/datum/poll_winner_tracker/New(client/winner)
+	SSpolling.winner_trackers += src
+	RegisterSignal(winner, COMSIG_CLIENT_MOB_LOGIN, PROC_REF(on_winner_login))
+	addtimer(CALLBACK(src, PROC_REF(stop_waiting), WEAKREF(winner)), POLL_WINNER_BODY_WAIT)
+
+/datum/poll_winner_tracker/proc/on_winner_login(client/source, mob/new_body)
+	SIGNAL_HANDLER
+	body_ref = WEAKREF(new_body)
+	UnregisterSignal(source, COMSIG_CLIENT_MOB_LOGIN)
+
+/// The candidate was never given a body, stop listening so that we don't latch onto something unrelated later
+/datum/poll_winner_tracker/proc/stop_waiting(datum/weakref/winner_ref)
+	var/client/winner = winner_ref.resolve()
+	if(!isnull(winner))
+		UnregisterSignal(winner, COMSIG_CLIENT_MOB_LOGIN)
+
+/datum/poll_winner_tracker/Topic(href, href_list)
+	. = ..()
+	if(!href_list["follow"])
+		return
+	var/mob/dead/observer/ghost = usr
+	if(!istype(ghost))
+		return
+	var/mob/body = body_ref?.resolve()
+	if(isnull(body) || body == ghost)
+		return
+	ghost.ManualFollow(body)
+
+#undef POLL_WINNER_BODY_WAIT
