@@ -17,8 +17,8 @@
  * return UI_state The state of the UI.
  */
 /datum/proc/ui_status(mob/user, datum/ui_state/state)
-	var/src_object = ui_host(user)
-	. = UI_CLOSE
+	var/datum/src_object = ui_host(user)
+	. = (src_object == src) ? UI_CLOSE : src_object.ui_status(user, state)
 	if(!state)
 		return
 

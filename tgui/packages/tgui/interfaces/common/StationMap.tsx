@@ -1,27 +1,36 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, Flex, Section } from 'tgui-core/components';
+import { Button, Flex, Section, Stack } from 'tgui-core/components';
 
 export type StationMapProps = {
   title?: React.ReactNode;
-  mapImage?: string;
-  gridW?: number;
-  gridH?: number;
-  areaGrid?: string[][];
+  //   mapImage?: string;
+  //   gridW?: number;
+  //   gridH?: number;
+  //   areaGrid?: string[][];
+  allMapData?: Record<string, MapData>;
+  targetZ?: number;
   targetX?: number;
   targetY?: number;
   children?: React.ReactNode | ((zoom: number) => React.ReactNode);
+  onChangeZ?: (z: number) => void;
+};
+
+export type MapData = {
+  map_image?: string;
+  grid_w?: number;
+  grid_h?: number;
+  area_grid?: string[][];
 };
 
 export const StationMap = (props: StationMapProps) => {
   const {
     title = 'Station Map',
-    mapImage,
-    gridW,
-    gridH,
-    areaGrid,
+    allMapData,
+    targetZ,
     targetX,
     targetY,
     children,
+    onChangeZ,
   } = props;
 
   const [hoverArea, setHoverArea] = useState<string | null>(null);
@@ -29,36 +38,57 @@ export const StationMap = (props: StationMapProps) => {
     null,
   );
 
+  const possibleMaps = Object.keys(allMapData ?? {}).sort(
+    (a, b) => Number(a) - Number(b), // intentionally inverted
+  );
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [panStart, setPanStart] = useState({ x: 0, y: 0 });
-
+  const [shownMap, setShownMap] = useState(possibleMaps[0]);
   const viewportRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
 
-  const focusOnCoordinates = useCallback((xPct: number, yPct: number) => {
-    if (!viewportRef.current) return;
+  // react to initial z set
+  onChangeZ?.(Number(shownMap));
 
-    const rect = viewportRef.current.getBoundingClientRect();
-    const W = rect.width;
-    const H = rect.height;
+  const {
+    map_image: mapImage,
+    grid_w: gridW,
+    grid_h: gridH,
+    area_grid: areaGrid,
+  } = allMapData?.[shownMap] ?? {};
 
-    const targetZoom = 2.5;
-    setZoom(targetZoom);
+  const focusOnCoordinates = useCallback(
+    (xPct: number, yPct: number, zPct: number) => {
+      setShownMap(zPct.toString());
+      if (!viewportRef.current) return;
 
-    const panX = targetZoom * (0.5 - xPct / 100) * W;
-    const panY = targetZoom * (yPct / 100 - 0.5) * H;
+      const rect = viewportRef.current.getBoundingClientRect();
+      const W = rect.width;
+      const H = rect.height;
 
-    setPan({ x: panX, y: panY });
-  }, []);
+      const targetZoom = 2.5;
+      setZoom(targetZoom);
+
+      const panX = targetZoom * (0.5 - xPct / 100) * W;
+      const panY = targetZoom * (yPct / 100 - 0.5) * H;
+
+      setPan({ x: panX, y: panY });
+    },
+    [],
+  );
 
   useEffect(() => {
-    if (targetX !== undefined && targetY !== undefined) {
-      focusOnCoordinates(targetX, targetY);
+    if (
+      targetX !== undefined &&
+      targetY !== undefined &&
+      targetZ !== undefined
+    ) {
+      focusOnCoordinates(targetX, targetY, targetZ);
     }
-  }, [targetX, targetY, focusOnCoordinates]);
+  }, [targetX, targetY, targetZ, focusOnCoordinates]);
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
@@ -139,19 +169,47 @@ export const StationMap = (props: StationMapProps) => {
       fill
       title={title}
       buttons={
-        <>
-          <Button
-            icon="search-plus"
-            onClick={() => setZoom((z) => Math.min(z + 0.4, 4))}
-          />
-          <Button
-            icon="search-minus"
-            onClick={() => setZoom((z) => Math.max(z - 0.4, 1))}
-          />
-          <Button icon="undo" onClick={handleResetZoom}>
-            Reset
-          </Button>
-        </>
+        <Stack>
+          {Object.keys(allMapData ?? {}).length > 1 && (
+            <>
+              <Stack.Item>
+                <Button
+                  icon="plus"
+                  onClick={() => {
+                    setShownMap(
+                      possibleMaps[possibleMaps.indexOf(shownMap) + 1],
+                    );
+                    onChangeZ?.(Number(shownMap));
+                  }}
+                  disabled={shownMap === possibleMaps[possibleMaps.length - 1]}
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  icon="minus"
+                  onClick={() => {
+                    setShownMap(
+                      possibleMaps[possibleMaps.indexOf(shownMap) - 1],
+                    );
+                    onChangeZ?.(Number(shownMap));
+                  }}
+                  disabled={shownMap === possibleMaps[0]}
+                />
+              </Stack.Item>
+            </>
+          )}
+          <Stack.Item>
+            <Button
+              icon="search-minus"
+              onClick={() => setZoom((z) => Math.max(z - 0.4, 1))}
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <Button icon="undo" onClick={handleResetZoom}>
+              Reset
+            </Button>
+          </Stack.Item>
+        </Stack>
       }
     >
       <Flex align="center" justify="center" height="100%">

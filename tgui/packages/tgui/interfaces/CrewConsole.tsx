@@ -15,7 +15,7 @@ import { createSearch } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
-import { StationMap } from './common/StationMap';
+import { type MapData, StationMap } from './common/StationMap';
 
 const HEALTH_COLOR_BY_LEVEL = [
   '#17d568',
@@ -149,6 +149,7 @@ type CrewSensor = {
   area: string | undefined;
   health: number;
   ref: string;
+  z_pos?: number;
   x_pos?: number;
   y_pos?: number;
   sechud_icon?: string;
@@ -158,28 +159,20 @@ type CrewConsoleData = {
   sensors: CrewSensor[];
   link_allowed: BooleanLike;
   has_map?: BooleanLike;
-  map_image?: string;
-  grid_w?: number;
-  grid_h?: number;
-  area_grid?: string[][];
+  map_data?: Record<string, MapData>;
 };
 
 export const CrewConsole = () => {
   const { act, data } = useBackend<CrewConsoleData>();
-  const {
-    sensors = [],
-    has_map = false,
-    is_ai = false,
-    map_image,
-    grid_w,
-    grid_h,
-    area_grid,
-  } = data;
+  const { sensors = [], has_map = false, is_ai = false, map_data } = data;
 
   const hasMapBool = Boolean(has_map);
   const [hoveredRef, setHoveredRef] = useState<string | null>(null);
   const [trackedTarget, setTrackedTarget] = useState<CrewSensor | null>(null);
   const [showMap, setShowMap] = useState(hasMapBool);
+  const [activeZ, setActiveZ] = useState<number>(
+    Number(Object.keys(map_data ?? {})[0]),
+  );
   const mapVisible = hasMapBool && showMap;
 
   return (
@@ -207,23 +200,23 @@ export const CrewConsole = () => {
             />
           </Flex.Item>
 
-          {mapVisible ? (
+          {mapVisible && map_data ? (
             <Flex.Item grow={1} shrink={1} height="100%">
               <StationMap
                 title="&nbsp;"
-                mapImage={map_image}
-                gridW={grid_w}
-                gridH={grid_h}
-                areaGrid={area_grid}
+                allMapData={map_data}
+                targetZ={trackedTarget?.z_pos}
                 targetX={trackedTarget?.x_pos}
                 targetY={trackedTarget?.y_pos}
+                onChangeZ={setActiveZ}
               >
                 {(zoom) =>
                   sensors
                     .filter(
                       (sensor) =>
                         sensor.x_pos !== undefined &&
-                        sensor.y_pos !== undefined,
+                        sensor.y_pos !== undefined &&
+                        sensor.z_pos === activeZ,
                     )
                     .map((sensor) => {
                       const isHovered = hoveredRef === sensor.ref;
@@ -291,7 +284,7 @@ type CrewTableProps = {
 
 const CrewTable = (props: CrewTableProps) => {
   const { data } = useBackend<CrewConsoleData>();
-  const { sensors = [], link_allowed } = data;
+  const { sensors = [], link_allowed, is_ai } = data;
   const { hoveredRef, setHoveredRef, onTrack, hasMap, showMap, setShowMap } =
     props;
 
@@ -363,9 +356,7 @@ const CrewTable = (props: CrewTableProps) => {
             Position
           </Table.Cell>
           {trackingEnabled ? (
-            <Table.Cell bold collapsing textAlign="center">
-              Tracking
-            </Table.Cell>
+            <Table.Cell bold collapsing textAlign="center" />
           ) : null}
         </Table.Row>
         {sorted.map((sensor) => (
@@ -395,7 +386,7 @@ type CrewTableEntryProps = {
 
 const CrewTableEntry = (props: CrewTableEntryProps) => {
   const { act, data } = useBackend<CrewConsoleData>();
-  const { link_allowed } = data;
+  const { link_allowed, is_ai } = data;
   const { sensor_data, onMouseEnter, onMouseLeave, onTrack, hasMap } = props;
   const {
     name,
@@ -495,7 +486,7 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
               onTrack(sensor_data);
             }}
           >
-            Track
+            {is_ai ? 'Track' : 'Find'}
           </Button>
         </Table.Cell>
       ) : null}
