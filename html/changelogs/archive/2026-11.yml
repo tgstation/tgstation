@@ -244,3 +244,25 @@
   ArrisFairburne:
   - code_imp: Improved ranged trooper AI to ignore destroying objects they can shoot
       through
+  necromanceranne:
+  - balance: Lizardpeople are now so strong. They could bend steel. You could grate
+      cheese on those abdominals. It will get caught in their scales though, which
+      means they might get scalerot, so please don't actually do that. Just admire
+      them from a comfortable, although perhaps uncomfortable for the subject of admiration,
+      distance.
+2026-11-19:
+  san7890:
+  - rscdel: CatwalkStation has been removed from the game.
+2026-11-20:
+  Absolucy:
+  - bugfix: fixed lighting and night vision breaking after turning back from a shapeshift
+      (or getting put into a body) on an upper z-level, until you changed z-levels
+  Melbert:
+  - rscadd: Shoving someone who is on fire into someone who is not spreads fire now.
+  TheRyeGuyWhoWillNowDie:
+  - balance: Doubled the potency of synthflesh
+  moocowswag:
+  - qol: Ai's will no longer be punished for having high apm
+  - qol: Silicons can now rapidly cycle modes on air alarms
+  - bugfix: Air alarm ai wires are no longer inverted
+  - bugfix: Air alarm screwdriver context is no longer inverted

@@ -13,6 +13,8 @@
 	integrity_failure = 0.33
 	armor_type = /datum/armor/machinery_airalarm
 	resistance_flags = FIRE_PROOF
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
+	interaction_flags_click = ALLOW_SILICON_REACH
 
 	/// Current alert level of our air alarm.
 	/// [AIR_ALARM_ALERT_NONE], [AIR_ALARM_ALERT_MINOR], [AIR_ALARM_ALERT_SEVERE]
