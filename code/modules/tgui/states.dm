@@ -18,7 +18,7 @@
  */
 /datum/proc/ui_status(mob/user, datum/ui_state/state)
 	var/datum/src_object = ui_host(user)
-	. = (src_object == src) ? UI_CLOSE : src_object.ui_status(user, state)
+	. = UI_CLOSE
 	if(!state)
 		return
 
