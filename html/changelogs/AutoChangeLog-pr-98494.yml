@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "fixed lighting and night vision breaking after turning back from a shapeshift (or getting put into a body) on an upper z-level, until you changed z-levels"
