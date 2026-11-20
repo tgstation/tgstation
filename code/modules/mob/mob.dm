@@ -567,7 +567,7 @@ GAME_VERB_CONTEXT(/mob, examinate, "Examine", "", null, /atom)
 			return
 
 	else // If you aren't blind, it's in darkness (that you can't see) and farther then next to you
-		if(examine_turf && !examine_turf.is_softly_lit() && get_dist(src, examine_turf) > 1 && !has_nightvision())
+		if(examine_turf && examine_turf.is_softly_lit() && get_dist(src, examine_turf) > 1 && !has_nightvision())
 			return
 
 	face_atom(examinify)
