@@ -31,6 +31,8 @@
 /// Flag which tells an object to hang onto an support atom on late initialize. Usefull only during mapload and supported by some atoms only
 #define MOUNT_ON_LATE_INITIALIZE (1<<14)
 
+#define MINIMAP_ALT_DRAW_TARGET (1<<15)
+
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
 // Flags for the item_flags var on /obj/item

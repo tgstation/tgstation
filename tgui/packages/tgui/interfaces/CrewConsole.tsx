@@ -6,6 +6,7 @@ import {
   Icon,
   Input,
   Section,
+  Stack,
   Table,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
@@ -209,6 +210,7 @@ export const CrewConsole = () => {
           {mapVisible ? (
             <Flex.Item grow={1} shrink={1} height="100%">
               <StationMap
+                title="&nbsp;"
                 mapImage={map_image}
                 gridW={grid_w}
                 gridH={grid_h}
@@ -315,32 +317,39 @@ const CrewTable = (props: CrewTableProps) => {
 
   return (
     <Section
-      title={
-        <>
-          <Button onClick={cycleSortBy}>
-            {SORT_OPTIONS[indexOfSortingOption].name}
-          </Button>
-          <Button onClick={() => setSortAsc(!sortAsc)}>
-            <Icon
-              style={{ marginLeft: '2px' }}
-              name={sortAsc ? 'chevron-up' : 'chevron-down'}
+      title="&nbsp;"
+      buttons={
+        <Stack width="100%" align="left">
+          <Stack.Item>
+            <Button onClick={cycleSortBy}>
+              {SORT_OPTIONS[indexOfSortingOption].name}
+            </Button>
+          </Stack.Item>
+          <Stack.Item>
+            <Button onClick={() => setSortAsc(!sortAsc)}>
+              <Icon name={sortAsc ? 'chevron-up' : 'chevron-down'} />
+            </Button>
+          </Stack.Item>
+          <Stack.Item width="167px">
+            <Input
+              fluid
+              placeholder="Search for name..."
+              onChange={setSearchQuery}
+              value={searchQuery}
             />
-          </Button>
-          <Input
-            placeholder="Search for name..."
-            onChange={setSearchQuery}
-            value={searchQuery}
-          />
+          </Stack.Item>
           {hasMap ? (
-            <Button
-              style={{ marginLeft: '4px' }}
-              icon={showMap ? 'chevron-right' : 'chevron-left'}
-              tooltip={showMap ? 'Hide Map' : 'Show Map'}
-              selected={showMap}
-              onClick={() => setShowMap(!showMap)}
-            />
+            <Stack.Item>
+              <Button
+                style={{ marginLeft: '4px' }}
+                icon={showMap ? 'chevron-right' : 'chevron-left'}
+                tooltip={showMap ? 'Hide Map' : 'Show Map'}
+                selected={showMap}
+                onClick={() => setShowMap(!showMap)}
+              />
+            </Stack.Item>
           ) : null}
-        </>
+        </Stack>
       }
     >
       <Table>
@@ -429,7 +438,7 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
           )}
           <Box>
             {name}
-            {assignment !== undefined ? ` (${assignment})` : ''}
+            {assignment ? ` (${assignment})` : ''}
           </Box>
         </Flex>
       </Table.Cell>

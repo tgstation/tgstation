@@ -376,17 +376,15 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		// ID and id-related data
 		var/obj/item/card/id/id_card = tracked_living_mob.get_idcard(hand_first = FALSE)
 
-		if (id_card)
-			entry["name"] = id_card.registered_name
-			entry["assignment"] = id_card.assignment
-			var/trim_assignment = id_card.get_trim_assignment()
-			if (jobs[trim_assignment] != null)
-				entry["ijob"] = jobs[trim_assignment]
+		var/priority_level = jobs[id_card?.get_trim_assignment()]
+		entry["name"] = id_card?.registered_name || "Unknown"
+		entry["assignment"] = id_card?.assignment
+		entry["ijob"] = isnum(priority_level) ? priority_level : UNKNOWN_JOB_ID // actually jobs[id_card.get_trim_assignment()] ?? UNKNOWN_JOB_ID
 
-			if (!HAS_TRAIT(tracked_living_mob, TRAIT_UNKNOWN_APPEARANCE))
-				var/icon/job_hud = get_job_hud_icon(id_card.assignment)
-				if (job_hud)
-					entry["sechud_icon"] = icon2base64(job_hud)
+		var/datum/job/related_job = !HAS_TRAIT(tracked_living_mob, TRAIT_UNKNOWN_APPEARANCE) && SSjob.get_job(id_card?.assignment) || SSjob.get_job_type(/datum/job/unassigned)
+		var/static/alist/cached_base64_icons = alist()
+		cached_base64_icons[related_job.type] ||= icon2base64(get_job_hud_icon(related_job))
+		entry["sechud_icon"] = cached_base64_icons[related_job.type]
 
 		// Broken sensors show garbage data
 		if (uniform.has_sensor == BROKEN_SENSORS)

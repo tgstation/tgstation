@@ -13,6 +13,7 @@
 	// This layer only matters for determining when you click it vs other objects
 	layer = BELOW_OPEN_DOOR_LAYER
 	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 5)
+	obj_flags = parent_type::obj_flags | MINIMAP_ALT_DRAW_TARGET
 	/// If TRUE, we can't pass through unless the mob is resting (or fulfills more specific requirements)
 	var/require_resting = TRUE
 	/// Layer the flaps render on

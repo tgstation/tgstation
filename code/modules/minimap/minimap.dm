@@ -43,7 +43,7 @@ GLOBAL_ALIST_EMPTY(minimaps)
 		if(location.density)
 			base_map.DrawBox(location.tacmap_color, x, y)
 			continue
-		var/atom/movable/alttarget = (locate(/obj/machinery/door) in location) || (locate(/obj/structure/window) in location) || (locate(/obj/structure/fence) in location)
+		var/atom/movable/alttarget = location.get_alt_minimap_draw_target()
 		if(alttarget)
 			base_map.DrawBox(alttarget.tacmap_color, x, y)
 			continue
@@ -67,6 +67,14 @@ GLOBAL_ALIST_EMPTY(minimaps)
 	base_map.Scale(base_map.Width() * MINIMAP_PIXEL_MULTIPLIER, base_map.Height() * MINIMAP_PIXEL_MULTIPLIER)
 
 	return TRUE
+
+/// Returns an atom on the turf that we draw instead of the turf
+/turf/proc/get_alt_minimap_draw_target()
+	for(var/obj/thing in src)
+		if(thing.obj_flags & MINIMAP_ALT_DRAW_TARGET)
+			return thing
+
+	return null
 
 /// Gets the `/datum/minimap` for a Z-level - generating it if it hasn't been yet.
 /proc/get_minimap_for_z(z) as /datum/minimap
