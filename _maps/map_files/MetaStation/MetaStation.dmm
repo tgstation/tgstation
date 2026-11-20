@@ -4104,6 +4104,9 @@
 /obj/structure/table,
 /obj/item/storage/belt/utility/full,
 /obj/item/borg/upgrade/rename,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "btL" = (
@@ -17384,6 +17387,9 @@
 /obj/item/reagent_containers/spray/cleaner{
 	pixel_x = -10;
 	pixel_y = -1
+	},
+/obj/effect/turf_decal/tile/purple/anticorner/contrasted{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
@@ -40282,10 +40288,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
-"nJH" = (
-/obj/effect/turf_decal/loading_area/white,
-/turf/open/floor/iron/white,
-/area/station/science/robotics/lab)
 "nJJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -67505,6 +67507,9 @@
 /obj/item/brain_processor/organic,
 /obj/item/brain_processor/organic,
 /obj/structure/table,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "wRL" = (
@@ -101510,7 +101515,7 @@ gwf
 dMz
 tga
 btG
-nJH
+nQX
 gso
 nQX
 iYO
