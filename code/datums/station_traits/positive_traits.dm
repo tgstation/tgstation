@@ -385,7 +385,8 @@
 
 /datum/station_trait/missing_wallet/on_round_start()
 	. = ..()
-
+	if(!length(GLOB.roundstart_station_closets))
+		return // Absolute minimum map has no closets and this runtimes when picking from an empty list
 	var/obj/structure/closet/locker_to_fill = pick(GLOB.roundstart_station_closets)
 
 	var/obj/item/storage/wallet/new_wallet = new(locker_to_fill)

@@ -139,6 +139,12 @@
 	savefile_key = "sound_midi"
 	savefile_identifier = PREFERENCE_PLAYER
 
+/// Controls whether admin internet music mutes ambience
+/datum/preference/toggle/sound_ambience_mute_during_music
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_ambience_mute_during_music"
+	savefile_identifier = PREFERENCE_PLAYER
+
 /// Controls ship ambience volume
 /datum/preference/numeric/volume/sound_ship_ambience_volume
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES

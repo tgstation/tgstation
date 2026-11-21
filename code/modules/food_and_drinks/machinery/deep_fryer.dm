@@ -245,7 +245,8 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 		dunking_target.apply_damage(min(30 * bio_multiplier * cold_multiplier, reagents.total_volume), BURN, BODY_ZONE_HEAD)
 		if(reagents.reagent_list) //This can runtime if reagents has nothing in it.
 			reagents.remove_all((reagents.total_volume/2))
-		dunking_target.Paralyze(60)
+		dunking_target.Paralyze(6 SECONDS)
+		dunking_target.painful_scream()
 		user.changeNext_move(CLICK_CD_MELEE)
 	return ..()
 

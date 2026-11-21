@@ -1,4 +1,5 @@
 /area/station/maintenance
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "Generic Maintenance"
 	ambience_index = AMBIENCE_MAINT
 	area_flags = BLOBS_ALLOWED | CULT_PERMITTED | PERSISTENT_ENGRAVINGS

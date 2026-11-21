@@ -20,7 +20,7 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
-	step_energy_drain = 4
+	step_energy_drain = parent_type::step_energy_drain * 0.5
 	can_use_overclock = TRUE
 	overclock_safety_available = TRUE
 	overclock_safety = TRUE

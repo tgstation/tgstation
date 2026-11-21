@@ -361,7 +361,6 @@
 	force_wielded = 25
 
 /obj/item/spear/grey_tide/afterattack(atom/movable/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	user.add_ally("greytide([REF(user)])")
 	if(!isliving(target))
 		return
 	var/mob/living/stabbed = target
