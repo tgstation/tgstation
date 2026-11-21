@@ -13,7 +13,6 @@
 	health = 100
 	bubble_icon = "robot"
 	designation = "Default" //used for displaying the prefix & getting the current model of cyborg
-	has_limbs = TRUE
 	hud_type = /datum/hud/robot
 	unique_name = TRUE
 	mouse_drop_zone = TRUE
@@ -41,7 +40,7 @@
 	// Parts
 	var/custom_name = ""
 	var/braintype = "Cyborg"
-	var/obj/item/mmi/mmi = null
+	var/obj/item/brain_processor/mmi = null
 	///Used for deconstruction to remember what the borg was constructed out of.
 	var/obj/item/robot_suit/robot_suit = null
 	///If this is a path, this gets created as an object in Initialize.
@@ -64,12 +63,15 @@
 
 	// Overlay for borg eye lights
 	var/mutable_appearance/eye_lights
+
+	/// The condition of the Borg's eyes
+	var/eye_lights_enabled = TRUE
+
 	///Holds a reference to the timer taking care of blinking lights on dead cyborgs
 	var/eye_flash_timer = null
 	// Overlay for borg hat
 	var/mutable_appearance/hat_overlay
 
-	var/sight_mode = 0
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
 
 	// Modules (tool slots)
@@ -145,7 +147,7 @@
 /mob/living/silicon/robot/model
 	var/set_model = /obj/item/robot_model
 
-/mob/living/silicon/robot/model/Initialize(mapload)
+/mob/living/silicon/robot/model/Initialize(mapload, datum/ai_laws/innate_laws, mob/living/silicon/master_ai, aisync, lawsync)
 	. = ..()
 	INVOKE_ASYNC(model, TYPE_PROC_REF(/obj/item/robot_model, transform_to), set_model, TRUE)
 
@@ -197,11 +199,13 @@
 	cell = /obj/item/stock_parts/power_store/cell/hyper
 	radio = /obj/item/radio/borg/syndicate
 
-/mob/living/silicon/robot/model/syndicate/Initialize(mapload)
-	laws = new /datum/ai_laws/syndicate_override()
-	laws.associate(src)
+/mob/living/silicon/robot/model/syndicate/Initialize(mapload, datum/ai_laws/innate_laws, mob/living/silicon/master_ai, aisync, lawsync)
+	aisync = FALSE
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(show_playstyle)), 0.5 SECONDS)
+
+/mob/living/silicon/robot/model/syndicate/make_laws()
+	laws = new /datum/ai_laws/syndicate_override()
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)

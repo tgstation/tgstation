@@ -19,8 +19,7 @@ Bonus
 	level = 6
 	severity = 5
 	base_message_chance = 50
-	symptom_delay_min = 15
-	symptom_delay_max = 60
+	symptom_delay = 37.5
 	symptom_cure = /datum/reagent/medicine/omnizine
 	cure_color = "orange"
 	threshold_descs = list(
@@ -90,11 +89,10 @@ Bonus
 	resistance = -2
 	stage_speed = 1
 	transmittable = -2
-	level = 7
+	level = 9
 	severity = 6
 	base_message_chance = 50
-	symptom_delay_min = 3
-	symptom_delay_max = 6
+	symptom_delay = 4.5
 	symptom_cure = /datum/reagent/medicine/earthsblood // Good luck finding THAT.
 	cure_color = "red"
 	var/chems = FALSE
@@ -102,6 +100,7 @@ Bonus
 		"Stage Speed 7" = "Synthesizes Heparin and Lipolicide inside the host, causing increased bleeding and hunger.",
 		"Stealth 5" = "The symptom remains hidden until active.",
 	)
+	var/suppress_warning = FALSE
 
 /datum/symptom/flesh_death/Start(datum/disease/advance/A)
 	. = ..()

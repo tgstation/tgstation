@@ -11,5 +11,5 @@
 
 	return /datum/quirk/item_quirk/tagger::name in preferences.all_quirks
 
-/datum/preference/color/paint_color/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/color/paint_color/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return

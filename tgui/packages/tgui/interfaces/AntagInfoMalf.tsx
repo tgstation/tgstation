@@ -1,10 +1,9 @@
-import { useState } from 'react';
-import { BlockQuote, Button, Section, Stack, Tabs } from 'tgui-core/components';
+import { BlockQuote, Button, Section, Stack } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { MalfAiModules } from './common/MalfAiModules';
+
 import {
   type Objective,
   ObjectivePrintout,
@@ -178,63 +177,29 @@ function CodewordsSection(props) {
   );
 }
 
-enum Screen {
-  Intro,
-  Modules,
-}
 
 export function AntagInfoMalf(props) {
-  const [antagInfoTab, setAntagInfoTab] = useState<Screen>(Screen.Intro);
-
   return (
     <Window
       width={660}
       height={530}
-      theme={antagInfoTab === Screen.Intro ? 'hackerman' : 'malfunction'}
+      theme={'hackerman'}
     >
       <Window.Content style={{ fontFamily: 'Consolas, monospace' }}>
         <Stack vertical fill>
-          <Stack.Item>
-            <Tabs fluid>
-              <Tabs.Tab
-                icon="info"
-                selected={antagInfoTab === Screen.Intro}
-                onClick={() => setAntagInfoTab(Screen.Intro)}
-              >
-                Information
-              </Tabs.Tab>
-              <Tabs.Tab
-                icon="code"
-                selected={antagInfoTab === Screen.Modules}
-                onClick={() => setAntagInfoTab(Screen.Modules)}
-              >
-                Malfunction Modules
-              </Tabs.Tab>
-            </Tabs>
+          <Stack.Item grow>
+            <Stack fill>
+              <Stack.Item width="70%">
+                <IntroductionSection />
+              </Stack.Item>
+              <Stack.Item width="30%">
+                <FlavorSection />
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
-          {antagInfoTab === Screen.Intro ? (
-            <>
-              <Stack.Item grow>
-                <Stack fill>
-                  <Stack.Item width="70%">
-                    <IntroductionSection />
-                  </Stack.Item>
-                  <Stack.Item width="30%">
-                    <FlavorSection />
-                  </Stack.Item>
-                </Stack>
-              </Stack.Item>
-              <Stack.Item>
-                <CodewordsSection />
-              </Stack.Item>
-            </>
-          ) : (
-            <Stack.Item grow>
-              <Section fill>
-                <MalfAiModules />
-              </Section>
-            </Stack.Item>
-          )}
+          <Stack.Item>
+            <CodewordsSection />
+          </Stack.Item>
         </Stack>
       </Window.Content>
     </Window>

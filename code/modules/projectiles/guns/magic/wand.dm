@@ -3,6 +3,7 @@
 	desc = "You shouldn't have this."
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
+	worn_icon = null
 	inhand_icon_state = "wand"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -96,7 +97,7 @@
 	. = ..()
 	if (user.stat == DEAD)
 		return MANUAL_SUICIDE
-	user.visible_message(span_suicide("...but if anything [user.p_they()] look healthier than before."))
+	user.visible_message(span_suicide("...but if anything [user.p_they()] look[user.p_s()] healthier than before."))
 	return SHAME
 
 /obj/item/gun/magic/wand/death/debug
@@ -140,7 +141,7 @@
 	. = ..()
 	if (user.stat == DEAD)
 		return MANUAL_SUICIDE
-	user.visible_message(span_suicide("...but if anything [user.p_they()] look healthier than before."))
+	user.visible_message(span_suicide("...but if anything [user.p_they()] look[user.p_s()] healthier than before."))
 	return SHAME
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing
@@ -358,16 +359,12 @@
 
 // Animating a nothing wand makes it into an animating wand (and also animates it)
 /obj/item/gun/magic/wand/nothing/animate_atom_living(mob/living/owner)
-	var/obj/item/gun/magic/wand/animate/animated_wand = new()
+	var/obj/item/gun/magic/wand/animate/animated_wand = new(loc)
 	animated_wand.charges = charges
 	animated_wand.name = name + "?"
 
-	var/mob/living/basic/mimic/copy/ranged/living_wand = new(drop_location(), animated_wand, owner, TRUE) // It's already got eyes
-	QDEL_NULL(living_wand.ai_controller)
-	living_wand.ai_controller = new /datum/ai_controller/basic_controller/mimic_copy/gun/animator(living_wand)
-
 	qdel(src)
-	return living_wand
+	return animated_wand.animate_atom_living(owner)
 
 /// Also wand of doing fuck all
 /obj/item/gun/magic/wand/nothing/fake_resurrection

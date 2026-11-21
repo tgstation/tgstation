@@ -5,6 +5,7 @@
 	actions_types = null
 	implant_flags = IMPLANT_TYPE_SECURITY
 	hud_icon_state = "hud_imp_noteleport"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 3)
 
 	implant_info = "Automatically activates upon implantation. \
 		Grounds users' bluespace signatures, preventing jaunting and/or teleportation."

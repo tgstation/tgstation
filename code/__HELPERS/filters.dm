@@ -352,21 +352,34 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 		var/random_roll = rand()
 		in_atom.add_filter("wibbly-[i]", 5, wave_filter(x = X, y = Y, size = rand() * 2.5 + 0.5, offset = random_roll))
 		var/filter = in_atom.get_filter("wibbly-[i]")
-		animate(filter, offset = random_roll, time = 0, loop = -1, flags = ANIMATION_PARALLEL)
+		animate(filter, offset = random_roll, time = 0, loop = -1, flags = ANIMATION_PARALLEL, tag = "wibbly-[i]")
 		animate(offset = random_roll - 1, time = rand() * 20 + 10)
 
 /proc/remove_wibbly_filters(atom/in_atom, remove_duration = 0)
 	if(QDELETED(in_atom))
 		return
 	var/filter
+	var/list/faded_filters
 	for(var/i in 1 to 7)
 		filter = in_atom.get_filter("wibbly-[i]")
+		if(!filter)
+			continue
 		if(remove_duration == 0)
-			animate(filter)
+			animate(filter, tag = "wibbly-[i]")
 			in_atom.remove_filter("wibbly-[i]")
 			continue
-		animate(filter, x = 0, y = 0, size = 0, offset = 0, time = remove_duration)
-		addtimer(CALLBACK(in_atom, TYPE_PROC_REF(/datum, remove_filter), "wibbly-[i]"), remove_duration)
+		animate(filter, x = 0, y = 0, size = 0, offset = 0, time = remove_duration, tag = "wibbly-[i]")
+		LAZYADD(faded_filters, list(in_atom.get_filter_data("wibbly-[i]", copy_data = FALSE)))
+	if(faded_filters)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_faded_filters), in_atom, faded_filters), remove_duration)
+
+/// Removes filters once they've faded out, skipping any that were replaced in the meantime
+/proc/remove_faded_filters(atom/in_atom, list/faded_filters)
+	if(QDELETED(in_atom))
+		return
+	for(var/list/filter_info as anything in faded_filters)
+		if(filter_info in in_atom.filter_data)
+			in_atom.remove_filter(filter_info["name"])
 
 /proc/convert_list_to_filter(list/list_filter)
 	var/list/arguments = list_filter.Copy()

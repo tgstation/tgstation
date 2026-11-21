@@ -11,7 +11,7 @@
 	icon_dead = "blobbernaut_dead"
 	health = BLOBMOB_BLOBBERNAUT_HEALTH
 	maxHealth = BLOBMOB_BLOBBERNAUT_HEALTH
-	damage_coeff = list(BRUTE = 0.5, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(BRUTE = 0.5, STAMINA = 0)
 	melee_damage_lower = BLOBMOB_BLOBBERNAUT_DMG_SOLO_LOWER
 	melee_damage_upper = BLOBMOB_BLOBBERNAUT_DMG_SOLO_UPPER
 	melee_attack_cooldown = CLICK_CD_MELEE
@@ -54,7 +54,7 @@
 /mob/living/basic/blob_minion/blobbernaut/death(gibbed)
 	flick("[icon_state]_death", src)
 	playsound(src, 'sound/mobs/non-humanoids/blobmob/blobbernaut_death.ogg', 100, TRUE)
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 	return ..()
 
 /mob/living/basic/blob_minion/blobbernaut/create_mob_hud()

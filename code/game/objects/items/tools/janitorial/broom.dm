@@ -18,6 +18,7 @@
 	attack_verb_continuous = list("sweeps", "brushes off", "bludgeons", "whacks")
 	attack_verb_simple = list("sweep", "brush off", "bludgeon", "whack")
 	resistance_flags = FLAMMABLE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/pushbroom/Initialize(mapload)
 	. = ..()
@@ -25,14 +26,11 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 8, \
 		force_wielded = 12, \
-		icon_wielded = "[base_icon_state]1", \
+		update_icon_state = TRUE, \
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
-
-/obj/item/pushbroom/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
+	AddComponent(/datum/component/walking_aid)
 
 /**
  * Handles registering the sweep proc when the broom is wielded

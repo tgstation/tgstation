@@ -355,7 +355,7 @@
 		return
 	var/turf/turf = get_turf(cell)
 	forceMove(turf)
-	attackby(cell, user) //puts it into the heater
+	try_insert_cell(user, cell, TRUE) //puts it into the heater
 
 /obj/machinery/space_heater/improvised_chem_heater/heating_examine()
 	. = ..()
@@ -421,36 +421,46 @@
 			. = TRUE
 
 ///Slightly modified to ignore the open_hatch - it's always open, we hacked it.
-/obj/machinery/space_heater/improvised_chem_heater/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/space_heater/improvised_chem_heater/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(default_deconstruction_crowbar(user, item))
-		return
-	if(istype(item, /obj/item/stock_parts/power_store/cell))
-		if(cell)
-			to_chat(user, span_warning("There is already a power cell inside!"))
-			return
-		else if(!user.transferItemToLoc(item, src))
-			return
-		cell = item
-		item.add_fingerprint(usr)
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
+		return try_insert_cell(user, tool)
 
-		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
-		SStgui.update_uis(src)
 	//reagent containers
-	if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())
-		. = TRUE //no afterattack
-		var/obj/item/reagent_containers/container = item
+	if(is_reagent_container(tool) && !(tool.item_flags & ABSTRACT) && tool.is_open_container())
+		var/obj/item/reagent_containers/container = tool
 		if(!user.transferItemToLoc(container, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		replace_beaker(user, container)
 		to_chat(user, span_notice("You add [container] to [src]'s water bath."))
 		ui_interact(user)
-		return
+		return ITEM_INTERACT_SUCCESS
+
+	if(!beaker|| !is_type_in_list(tool, list(/obj/item/reagent_containers/dropper, /obj/item/ph_meter, /obj/item/ph_paper, /obj/item/reagent_containers/syringe)))
+		return NONE
 	//Dropper tools
-	if(beaker)
-		if(is_type_in_list(item, list(/obj/item/reagent_containers/dropper, /obj/item/ph_meter, /obj/item/ph_paper, /obj/item/reagent_containers/syringe)))
-			item.interact_with_atom(beaker, user)
-		return
+	tool.interact_with_atom(beaker, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/space_heater/improvised_chem_heater/proc/try_insert_cell(mob/living/user, obj/item/stock_parts/power_store/cell/battery, silent = FALSE)
+	if(cell)
+		to_chat(user, span_warning("There is already a power cell inside!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(battery, src))
+		return ITEM_INTERACT_BLOCKING
+
+	cell = battery
+	battery.add_fingerprint(user)
+
+	if(!silent)
+		user.visible_message(span_notice("\The [user] inserts a power cell into \the [src]."), span_notice("You insert the power cell into \the [src]."))
+	SStgui.update_uis(src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/space_heater/crowbar_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/space_heater/improvised_chem_heater/on_deconstruction(disassembled = TRUE)
 	. = ..()

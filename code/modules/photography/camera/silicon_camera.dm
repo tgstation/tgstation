@@ -8,7 +8,7 @@
 
 /// Checks if we can take a picture at this moment. Returns TRUE if we can, FALSE if we can't.
 /obj/item/camera/siliconcam/proc/can_take_picture(mob/living/silicon/clicker)
-	if(clicker.stat != CONSCIOUS || clicker.incapacitated)
+	if(IS_UNCONSCIOUS_OR_CRIT(clicker) || clicker.incapacitated)
 		return FALSE
 	return TRUE
 
@@ -84,7 +84,7 @@
 	picture.picture_name = "Image [number] (taken by [loc.name])"
 	stored[picture] = TRUE
 	balloon_alert(user, "image recorded")
-	user.playsound_local(get_turf(user), SFX_POLAROID, 50, TRUE, -3)
+	user.playsound_local(get_turf(user), /datum/sound_effect/polaroid, 50, TRUE, -3)
 
 /obj/item/camera/siliconcam/robot_camera
 	name = "Cyborg photo camera"
@@ -106,7 +106,7 @@
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		stored[picture] = TRUE
 		balloon_alert(user, "image recorded and saved locally")
-	playsound(src, SFX_POLAROID, 75, TRUE, -3)
+	playsound(src, /datum/sound_effect/polaroid, 75, TRUE, -3)
 
 /obj/item/camera/siliconcam/robot_camera/selectpicture(mob/living/silicon/robot/user)
 	if(istype(user) && user.connected_ai)

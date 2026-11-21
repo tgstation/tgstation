@@ -22,7 +22,7 @@
 
 /obj/item/detective_scanner/interact(mob/user)
 	. = ..()
-	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
+	if(IS_UNCONSCIOUS_OR_CRIT(user) || !user.can_read(src) || user.is_blind())
 		return ITEM_INTERACT_BLOCKING
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS
@@ -99,7 +99,7 @@
 		// Can remotely scan objects and mobs.
 		if((get_dist(scanned_atom, user) > range) || (!(scanned_atom in view(range, user)) && view_check))
 			return TRUE
-	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+	playsound(src, /datum/sound_effect/industrial_scan, 20, TRUE, -2, TRUE, FALSE)
 	scanner_busy = TRUE
 
 
@@ -150,8 +150,8 @@
 			if(!istype(present_reagent, /datum/reagent/blood))
 				continue
 
-			var/blood_DNA = present_reagent.data["blood_DNA"]
-			var/blood_type = present_reagent.data["blood_type"]
+			var/blood_DNA = present_reagent.data[BLOOD_DATA_DNA]
+			var/blood_type = present_reagent.data[BLOOD_DATA_TYPE]
 			if(!blood_DNA || !blood_type)
 				continue
 

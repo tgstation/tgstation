@@ -27,18 +27,20 @@
 	wine_power = 20
 	///Which type of lantern this gourd produces when carved.
 	var/carved_type = /obj/item/clothing/head/utility/hardhat/pumpkinhead
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 
 /obj/item/food/grown/pumpkin/juice_typepath()
 	return /datum/reagent/consumable/pumpkinjuice
 
-/obj/item/food/grown/pumpkin/attackby(obj/item/W as obj, mob/user as mob, list/modifiers, list/attack_modifiers)
-	if(W.get_sharpness())
-		user.show_message(span_notice("You carve a face into [src]!"), MSG_VISUAL)
-		new carved_type(user.loc)
-		qdel(src)
-		return
-	else
-		return ..()
+/obj/item/food/grown/pumpkin/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.get_sharpness())
+		return NONE
+
+	to_chat(user, span_notice("You carve a face into [src]!"))
+	new carved_type(user.loc)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 // Blumpkin
 /obj/item/seeds/pumpkin/blumpkin

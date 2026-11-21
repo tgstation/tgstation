@@ -1,6 +1,6 @@
 ///The plumbing RCD. All the blueprints are located in _globalvars > lists > construction.dm
 /obj/item/construction/plumbing
-	name = "Plumbing Constructor"
+	name = "plumbing constructor"
 	desc = "An expertly modified RCD outfitted to construct plumbing machinery."
 	icon_state = "plumberer2"
 	inhand_icon_state = "plumberer"
@@ -15,6 +15,7 @@
 	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
 	sound_vary = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 38, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 18, /datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
 	///category of design selected
 	var/selected_category
@@ -152,7 +153,7 @@
 	return data
 
 /obj/item/construction/plumbing/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+	playsound(src, /datum/sound_effect/tool_switch, 20, TRUE)
 
 	switch(action)
 		if("color")
@@ -298,6 +299,7 @@
 	icon_state = "plumberer_service"
 	///Extra price because it appears in bartender's vendor
 	custom_premium_price = PAYCHECK_CREW * 6
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 37.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 18.75, /datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	///Design types for plumbing service constructor
 	var/static/list/service_design_types = list(
 		//Category 1 synthesizers

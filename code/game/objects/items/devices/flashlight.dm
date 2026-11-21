@@ -29,8 +29,8 @@
 	light_power = 1
 	light_on = FALSE
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 
 	/// If we've been forcibly disabled for a temporary amount of time.
 	COOLDOWN_DECLARE(disabled_time)
@@ -93,14 +93,10 @@
 	if(light_system == COMPLEX_LIGHT)
 		update_light()
 
-/obj/item/flashlight/proc/toggle_light(mob/user)
+/obj/item/flashlight/proc/toggle_light(mob/living/user)
 	playsound(src, light_on ? sound_off : sound_on, 40, TRUE)
 	if(!COOLDOWN_FINISHED(src, disabled_time))
-		if(user)
-			balloon_alert(user, "disrupted!")
-		set_light_on(FALSE)
-		update_brightness()
-		update_item_action_buttons()
+		user?.balloon_alert(user, "disrupted!")
 		return FALSE
 	var/old_light_on = light_on
 	set_light_on(!light_on)
@@ -115,7 +111,15 @@
 	attack_self(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/flashlight/suicide_act(mob/living/carbon/human/user)
+/obj/item/flashlight/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	if(obj_flags & CONDUCTS_ELECTRICITY) // only electric lights should be effected
+		on_saboteur(src, (1 MINUTES / severity))
+
+/obj/item/flashlight/suicide_act(mob/living/user)
 	if (user.is_blind())
 		user.visible_message(span_suicide("[user] is putting [src] close to [user.p_their()] eyes and turning it on... but [user.p_theyre()] blind!"))
 		return SHAME
@@ -337,12 +341,12 @@
 	inhand_icon_state = ""
 	worn_icon_state = "pen"
 	w_class = WEIGHT_CLASS_TINY
-	obj_flags = CONDUCTS_ELECTRICITY
 	light_range = 2
 	light_power = 0.8
 	light_color = "#CCFFFF"
 	has_closed_handle = FALSE
 	COOLDOWN_DECLARE(holosign_cooldown)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 
 /obj/item/flashlight/pen/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!COOLDOWN_FINISHED(src, holosign_cooldown))
@@ -366,6 +370,7 @@
 	desc = "A high-powered UV penlight intended to help stave off infection in the field on serious burned patients. Probably really bad to look into."
 	icon_state = "penlight_surgical"
 	light_color = LIGHT_COLOR_PURPLE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	/// Our current UV cooldown
 	COOLDOWN_DECLARE(uv_cooldown)
 	/// How long between UV fryings
@@ -400,6 +405,7 @@
 	light_color = "#99ccff"
 	hitsound = 'sound/items/weapons/genhit1.ogg'
 	has_closed_handle = FALSE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25)
 
 // the desk lamps are a bit special
 /obj/item/flashlight/lamp
@@ -414,7 +420,6 @@
 	light_system = COMPLEX_LIGHT
 	light_color = LIGHT_COLOR_FAINT_BLUE
 	w_class = WEIGHT_CLASS_BULKY
-	obj_flags = CONDUCTS_ELECTRICITY
 	custom_materials = null
 	start_on = TRUE
 	has_closed_handle = FALSE
@@ -450,6 +455,7 @@
 	sound_on = 'sound/items/match_strike.ogg'
 	toggle_context = FALSE
 	has_closed_handle = FALSE
+	obj_flags = NONE
 	/// How many seconds of fuel we have left
 	var/fuel = 0
 	/// Do we randomize the fuel when initialized
@@ -671,9 +677,8 @@
 	if(get_temperature())
 		if(istype(tool, /obj/item/cigarette))
 			var/obj/item/cigarette/cig = tool
-			if(cig.lit)
+			if(!cig.attempt_light(user, src, ""))
 				return NONE
-			cig.light()
 			if(cig.loc == user)
 				user.visible_message(
 					span_rose("[user] holds [user.p_their()] [cig.name] to [src] and lights it, like a true romantic."),
@@ -808,6 +813,7 @@
 	light_color = "#ffff66"
 	light_system = OVERLAY_LIGHT
 	has_closed_handle = FALSE
+	obj_flags = NONE
 
 /obj/item/flashlight/emp
 	var/emp_max_charges = 4
@@ -819,6 +825,7 @@
 /obj/item/flashlight/emp/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_NO_EXAMINE)
 
 /obj/item/flashlight/emp/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -883,6 +890,7 @@
 	ignore_base_color = TRUE
 	has_closed_handle = FALSE
 	custom_materials = null
+	obj_flags = NONE
 	/// How much max fuel we have
 	var/max_fuel = 0
 	/// How much oxygen gets added upon cracking the stick. Doesn't actually produce a reaction with the fluid but it does allow for bootleg chemical "grenades"
@@ -1012,13 +1020,13 @@
 		user.visible_message(span_notice("[user] cracks and shakes [src]."), span_notice("You crack and shake [src], turning it on!"))
 		turn_on()
 
-/obj/item/flashlight/glowstick/suicide_act(mob/living/carbon/human/user)
+/obj/item/flashlight/glowstick/suicide_act(mob/living/user)
 	if(!get_fuel())
 		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but it's empty!"))
 		return SHAME
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
-		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!"))
+		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] [user.p_do()]n't have any!"))
 		return SHAME
 	user.visible_message(span_suicide("[user] is squirting [src]'s fluids into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
 	burn_loop(get_fuel())
@@ -1109,7 +1117,6 @@
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
 	spawn_blacklisted = TRUE
-	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = DROPDEL
 	actions_types = list()
 
@@ -1189,10 +1196,8 @@
 /obj/item/flashlight/lamp/space_bubble/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(light_on && istype(tool, /obj/item/cigarette))
-		var/obj/item/cigarette/cig = tool
-		if(cig.lit)
+		if(!astype(tool, /obj/item/cigarette).attempt_light(user, src, "[user] lights up \the [tool] using the burning coming out of the [src]. Damn."))
 			return NONE
-		cig.light(flavor_text = "[user] lights up \the [cig] using the burning coming out of the [src]. Damn.")
 		return ITEM_INTERACT_SUCCESS
 	if(!istype(tool, /obj/item/assembly/signaler/anomaly/pyro) || installed_pyro_core)
 		return NONE

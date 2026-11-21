@@ -98,6 +98,7 @@
 	desc = "A compact radio navigation gigabeacon, a device used to provide shuttle navigation waypoints in unexplored areas. Must be deployed before use."
 	icon = 'icons/obj/machines/navigation_beacon.dmi'
 	icon_state = "beacon_folded"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/folded_navigation_gigabeacon/Initialize(mapload)
 	. = ..()

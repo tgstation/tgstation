@@ -131,6 +131,7 @@
 	name = "paint remover"
 	desc = "Used to remove color from anything."
 	icon_state = "paint_neutral"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/paint/paint_remover/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isturf(interacting_with) || !isobj(interacting_with))

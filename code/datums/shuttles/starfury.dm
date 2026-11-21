@@ -1,5 +1,6 @@
 /datum/map_template/shuttle/starfury
 	port_id = "starfury"
+	prefix = "_maps/shuttles/starfury/"
 	who_can_purchase = null
 
 /datum/map_template/shuttle/starfury/fighter_one

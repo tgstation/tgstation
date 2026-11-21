@@ -40,8 +40,8 @@
 
 	user.visible_message(
 		span_notice("[user] holds [emag_card] to [src], getting the two cards stuck together!"),
-		span_notice("As you hold [emag_card] to [src], [emag_card.p_their()] magnets attract to one another, \
-			and [emag_card.p_they()] become stuck together!"),
+		span_notice("As you hold [emag_card] to [src], their magnets attract to one another, \
+			and they become stuck together!"),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 	playsound(src, 'sound/effects/bang.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -133,7 +133,7 @@
 /obj/item/card/emagfake/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	playsound(src, SFX_SPARKS, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SILENCED_SOUND_EXTRARANGE)
 	desc = /obj/item/card/emag::desc
 	obj_flags |= EMAGGED
 	if(user)

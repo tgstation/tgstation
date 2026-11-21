@@ -1,4 +1,5 @@
 /obj/machinery/computer/prisoner
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/prisoner/gulag_teleporter_computer")
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
 	/// ID card currently inserted into the computer.
 	VAR_FINAL/obj/item/card/id/advanced/prisoner/contained_id
@@ -25,7 +26,14 @@
 	id_eject(user)
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/computer/prisoner/proc/id_insert(mob/user, obj/item/card/id/advanced/prisoner/new_id)
+/**
+ * Called when the prison teleporter computer attempts to insert a new ID card, that will be assigned to the prisoner if successful.
+ * user: The mob user of the computer.
+ * new_id: The ID that we're trying to insert.
+ */
+/obj/machinery/computer/prisoner/proc/id_insert(mob/living/user, obj/item/card/id/advanced/prisoner/new_id)
+	if(!new_id)
+		new_id = user.get_active_held_item()
 	if(!istype(new_id))
 		return
 	if(!isnull(contained_id))
@@ -50,9 +58,8 @@
 	balloon_alert_to_viewers("id ejected")
 	playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 
-/obj/machinery/computer/prisoner/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/card/id/advanced/prisoner))
-		id_insert(user, weapon)
-		return TRUE
-
-	return ..()
+/obj/machinery/computer/prisoner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/card/id/advanced/prisoner))
+		return NONE
+	id_insert(user, tool)
+	return ITEM_INTERACT_SUCCESS

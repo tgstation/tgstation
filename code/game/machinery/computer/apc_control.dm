@@ -1,6 +1,7 @@
 /obj/machinery/computer/apc_control
 	name = "power flow control console"
 	desc = "Used to remotely control the flow of power to different parts of the station."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/apc_control")
 	icon_screen = "solar"
 	icon_keyboard = "power_key"
 	req_access = list(ACCESS_CE)
@@ -41,7 +42,7 @@
 	if (user)
 		user.log_message("emagged [src].", LOG_ATTACK, color="red")
 		balloon_alert(user, "access controller shorted")
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
 ///Creates a log entry in the console with a timestamp, current login ID data and the text provided in log_text
@@ -186,7 +187,7 @@
 			addtimer(CALLBACK(src, PROC_REF(restore_comp), user), rand(3,5) * 9 SECONDS)
 		if("access-apc")
 			var/ref = params["ref"]
-			playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
+			playsound(src, /datum/sound_effect/terminal_type, 50, FALSE)
 			var/obj/machinery/power/apc/remote_target = locate(ref) in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
 			if(!remote_target || !check_apc(remote_target))
 				return

@@ -19,8 +19,8 @@
 
 	/// What is the lowest amount of time we can set the timer to?
 	var/minimum_timer = SYNDIEBOMB_MIN_TIMER_SECONDS
-	/// What is the highest amount of time we can set the timer to?
-	var/maximum_timer = 100 MINUTES
+	/// What is the highest amount of time we can set the timer to? IN SECONDS
+	var/maximum_timer = 100 * 60 // 100 MINUTES // not using the MINUTES define because those are for deciseconds
 	/// What is the default amount of time we set the timer to?
 	var/timer_set = SYNDIEBOMB_MIN_TIMER_SECONDS
 	/// Can we be unanchored?
@@ -28,27 +28,29 @@
 	/// Are the wires exposed?
 	var/open_panel = FALSE
 	/// Is the bomb counting down?
-	var/active = FALSE
+	VAR_FINAL/active = FALSE
 	/// What sound do we make as we beep down the timer?
 	var/beepsound = 'sound/items/timer.ogg'
 	/// Is the delay wire pulsed?
-	var/delayedbig = FALSE
+	VAR_FINAL/delayedbig = FALSE
 	/// Is the activation wire pulsed?
-	var/delayedlittle = FALSE
+	VAR_FINAL/delayedlittle = FALSE
 	/// Should we just tell the payload to explode now? Usually triggered by an event (like cutting the wrong wire)
-	var/explode_now = FALSE
+	VAR_FINAL/explode_now = FALSE
 	/// The timer for the bomb.
-	var/detonation_timer
+	VAR_FINAL/detonation_timer
 	/// When do we beep next?
-	var/next_beep
+	VAR_FINAL/next_beep
 	/// If TRUE, more boom wires are added based on the timer set.
 	var/add_boom_wires = TRUE
 	/// Reference to the bomb core inside the bomb, which is the part that actually explodes.
 	var/obj/item/bombcore/payload = /obj/item/bombcore/syndicate
 	/// The countdown that'll show up to ghosts regarding the bomb's timer.
-	var/obj/effect/countdown/syndicatebomb/countdown
+	VAR_FINAL/obj/effect/countdown/syndicatebomb/countdown
 	/// Whether the countdown is visible on examine
-	var/examinable_countdown = TRUE
+	VAR_FINAL/examinable_countdown = TRUE
+	/// World.time that the bomb entered timestop, used to calculate how much time is left on the timer after timestop ends.
+	VAR_PRIVATE/timestop_start
 
 /obj/machinery/syndicatebomb/proc/try_detonate(ignore_active = FALSE)
 	. = (payload in src) && (active || ignore_active)
@@ -108,6 +110,7 @@
 	update_appearance()
 	countdown = new(src)
 	end_processing()
+	RegisterSignal(src, COMSIG_ATOM_TIMESTOP_FREEZE, PROC_REF(on_timestop))
 
 /obj/machinery/syndicatebomb/Destroy()
 	QDEL_NULL(countdown)
@@ -130,9 +133,28 @@
 	icon_state = "[initial(icon_state)][active ? "-active" : "-inactive"][open_panel ? "-wires" : ""]"
 	return ..()
 
+/obj/machinery/syndicatebomb/proc/on_timestop(...)
+	SIGNAL_HANDLER
+	if(!active)
+		return
+	end_processing()
+	timestop_start = world.time
+	RegisterSignal(src, COMSIG_ATOM_TIMESTOP_UNFREEZE, PROC_REF(on_timestop_end))
+
+/obj/machinery/syndicatebomb/proc/on_timestop_end(...)
+	SIGNAL_HANDLER
+	UnregisterSignal(src, COMSIG_ATOM_TIMESTOP_UNFREEZE)
+	if(!active) // defused DURING timestop? badass
+		return
+	var/time_spent_in_timestop = world.time - timestop_start
+	next_beep += time_spent_in_timestop
+	detonation_timer += time_spent_in_timestop
+	begin_processing()
+	timestop_start = null
+
 /obj/machinery/syndicatebomb/proc/seconds_remaining()
 	if(active)
-		. = max(0, round((detonation_timer - world.time) / 10))
+		. = max(0, round((detonation_timer - (timestop_start || world.time)) / 10))
 
 	else
 		. = timer_set
@@ -196,24 +218,28 @@
 	return TRUE
 
 
-/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-
-	if(is_wire_tool(I) && open_panel)
+/obj/machinery/syndicatebomb/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(is_wire_tool(tool) && open_panel)
 		wires.interact(user)
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(I, /obj/item/bombcore))
-		if(!payload)
-			if(!user.transferItemToLoc(I, src))
-				return
-			payload = I
-			to_chat(user, span_notice("You place [payload] into [src]."))
-		else
+	if(istype(tool, /obj/item/bombcore))
+		if(payload)
 			to_chat(user, span_warning("[payload] is already loaded into [src]! You'll have to remove it first."))
-	else
-		var/old_integ = atom_integrity
-		. = ..()
-		if((old_integ > atom_integrity) && active && (payload in src))
-			to_chat(user, span_warning("That seems like a really bad idea..."))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		payload = tool
+		to_chat(user, span_notice("You place [payload] into [src]."))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/machinery/syndicatebomb/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	var/old_integ = atom_integrity
+	. = ..()
+	if((old_integ > atom_integrity) && active && payload)
+		to_chat(user, span_warning("That seems like a really bad idea..."))
 
 /obj/machinery/syndicatebomb/interact(mob/user)
 	wires.interact(user)
@@ -554,23 +580,26 @@
 
 	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
 
-/obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
-		I.play_tool_sound(src)
-		for (var/obj/item/B in beakers)
-			B.forceMove(drop_location())
-			beakers -= B
-		return
-	else if(istype(I, /obj/item/reagent_containers/cup/beaker) || istype(I, /obj/item/reagent_containers/cup/bottle))
-		if(beakers.len < max_beakers)
-			if(!user.transferItemToLoc(I, src))
-				return
-			beakers += I
-			to_chat(user, span_notice("You load [src] with [I]."))
-		else
-			to_chat(user, span_warning("[I] won't fit! \The [src] can only hold up to [max_beakers] containers."))
-			return
-	..()
+/obj/item/bombcore/chemical/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/cup/beaker) && !istype(tool, /obj/item/reagent_containers/cup/bottle))
+		return NONE
+	if(beakers.len >= max_beakers)
+		to_chat(user, span_warning("[tool] won't fit! \The [src] can only hold up to [max_beakers] containers."))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	beakers += tool
+	to_chat(user, span_notice("You load [src] with [tool]."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/bombcore/chemical/crowbar_act(mob/living/user, obj/item/tool)
+	if(!beakers.len)
+		return NONE
+	tool.play_tool_sound(src)
+	for (var/obj/item/beaker in beakers)
+		beaker.forceMove(drop_location())
+		beakers -= beaker
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/bombcore/chemical/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	// Using different grenade casings, causes the payload to have different properties.

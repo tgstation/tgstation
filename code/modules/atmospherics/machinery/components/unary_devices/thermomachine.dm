@@ -69,6 +69,22 @@
 		return FALSE
 	. = ..()
 
+/obj/machinery/atmospherics/components/unary/thermomachine/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	if(prob(75 / severity))
+		set_on(!on)
+		update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
+		investigate_log("was turned [on ? "on" : "off"] due to EMP", INVESTIGATE_ATMOS)
+
+	if(prob(75 / severity))
+		target_temperature = rand(min_temperature, max_temperature)
+		investigate_log("was set to [target_temperature] K due to EMP]", INVESTIGATE_ATMOS)
+
+	update_appearance()
+
 /obj/machinery/atmospherics/components/unary/thermomachine/on_construction(mob/user, obj_color, set_layer)
 	var/obj/item/circuitboard/machine/thermomachine/board = circuit
 	if(board)
@@ -127,9 +143,16 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
 	. = ..()
-	var/image/pipe = get_pipe_image('icons/obj/machines/atmospherics/thermomachine.dmi', "pipe", dir, pipe_color, piping_layer)
+	var/image/pipe = get_pipe_image('icons/obj/machines/atmospherics/thermomachine.dmi', "pipe", dir, SELECT_ATMOS_NODE_COLOR(src, nodes[1]), piping_layer)
 	pipe.appearance_flags |= RESET_COLOR | KEEP_APART
 	. += pipe
+
+	if(on && is_operational)
+		// this is cursed but both these emissive_appearance() are needed
+		// one gives emissives to mapload machinery that are already on
+		// the other gives emissives when updates happen (on/off/pressure change/etc.)
+		. += emissive_appearance('icons/obj/machines/atmospherics/thermomachine.dmi', "thermo-emissive", src, alpha = src.alpha)
+		add_overlay(emissive_appearance('icons/obj/machines/atmospherics/thermomachine.dmi', "thermo-emissive", src, alpha = src.alpha))
 
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
 	. = ..()

@@ -69,7 +69,7 @@
  * Arguments:
  * * install_frame - The frame the circuit has been installed into for reference.
  */
-/obj/item/circuitboard/proc/completion_requirements(obj/structure/frame/install_frame)
+/obj/item/circuitboard/proc/completion_requirements(obj/structure/frame/install_frame, mob/living/user)
 	return TRUE
 
 // Circuitboard/machine

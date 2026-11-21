@@ -20,6 +20,7 @@ Happy hunting!
 	name = "overwatch camera console"
 	desc = "Allows you to view members of your operative team via their bodycam feeds. We call them 'bodycams', but they're actually a swarm of tiny, near-imperceptible camera drones that follow each target. \
 		It is believed that adversaries either don't notice the drones, or avoid attacking them in hopes that they'll capture footage of their combat prowess against our operatives."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/security/overwatch")
 	icon_screen = "commsyndie"
 	icon_keyboard = "syndie_key"
 	network = list(OPERATIVE_CAMERA_NET)
@@ -40,6 +41,7 @@ Happy hunting!
 	desc = "A set of incredibly advanced sunglasses, providing you with an array of different sensor scans and visual readouts for pretty much anything you look at. \
 		It's kind of overwhelming, actually. Wearing this for a few hours will probably give you a migrane."
 	icon_state = "sunhudmed"
+	inhand_icon_state = "sunhudmed"
 	flags_cover = GLASSESCOVERSEYES
 	flash_protect = FLASH_PROTECTION_WELDER
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_SECURITY_HUD, TRAIT_MEDICAL_HUD, TRAIT_DIAGNOSTIC_HUD)

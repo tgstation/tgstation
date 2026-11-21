@@ -1033,7 +1033,7 @@
 /obj/item/food/grown/citrus/lime,
 /obj/item/food/grown/citrus/orange,
 /obj/item/food/grown/citrus/lemon,
-/obj/item/food/grown/watermelon,
+/obj/item/food/grown/melonlike/watermelon,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/carpet/black,
 /area/centcom/central_command_areas/holding)

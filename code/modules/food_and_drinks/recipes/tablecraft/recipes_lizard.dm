@@ -25,7 +25,7 @@
 /datum/crafting_recipe/food/shredded_lungs
 	name = "Crispy shredded lung stirfry"
 	reqs = list(
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/chili = 1,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/organ/lungs = 1,
@@ -109,7 +109,6 @@
 		/obj/item/food/fries = 1,
 		/obj/item/food/meat/cutlet = 2,
 		/datum/reagent/consumable/bbqsauce = 5,
-		/obj/item/plate = 1,
 	)
 	result = /obj/item/food/lizard_fries
 	cuisine_category = CUISINE_LIZARD
@@ -180,7 +179,7 @@
 	reqs = list(
 		/obj/item/food/grilled_moonfish = 1,
 		/obj/item/food/grown/potato = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/datum/reagent/consumable/korta_milk = 5,
 		/datum/reagent/consumable/ethanol/wine = 5
 	)
@@ -270,7 +269,7 @@
 	name = "Demit nizaya"
 	reqs = list(
 		/obj/item/food/spaghetti/nizaya = 1,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/onion = 1,
 		/obj/item/food/grown/eggplant = 1,
 		/datum/reagent/consumable/korta_milk = 5,
@@ -386,6 +385,7 @@
 	result = /obj/item/food/pizza/flatbread/mushroom
 	cuisine_category = CUISINE_LIZARD
 	dish_category = DISH_BREAD
+	unit_test_spawn_extras = list(/obj/item/food/grown/mushroom/chanterelle = 3) //generic mushrooms
 
 /datum/crafting_recipe/food/nutty_flatbread
 	name = "Nut paste flatbread"

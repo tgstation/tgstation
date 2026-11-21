@@ -17,8 +17,7 @@
 	level = 4
 	severity = 4
 	base_message_chance = 100
-	symptom_delay_min = 25
-	symptom_delay_max = 80
+	symptom_delay = 52.5
 	required_organ = ORGAN_SLOT_EARS
 	symptom_cure = /datum/reagent/medicine/psicodine
 	threshold_descs = list(
@@ -26,6 +25,7 @@
 		"Stealth 4" = "The symptom remains hidden until active.",
 	)
 	var/causes_permanent_deafness = FALSE
+	var/suppress_warning = FALSE
 
 /datum/symptom/deafness/Start(datum/disease/advance/A)
 	. = ..()

@@ -65,7 +65,7 @@
 		if(1) // basically your first is a "freebie" that will still require urgent medical attention and will leave you smoking forever but could be worse tbh
 			if(ishuman(owner))
 				var/mob/living/carbon/human/human_owner = owner
-				playsound(human_owner, SFX_SEAR, 50, TRUE)
+				playsound(human_owner, /datum/sound_effect/sear, 50, TRUE)
 				var/obj/item/bodypart/affecting = human_owner.get_active_hand()
 				branded_hand = affecting
 				affecting.force_wound_upwards(/datum/wound/burn/flesh/severe/cursed_brand, wound_source = "curse of the slot machine")
@@ -130,7 +130,7 @@
 /// If our owner's stat changes, rapidly surge the damage chance.
 /datum/status_effect/slot_machine_curse/proc/on_stat_changed()
 	SIGNAL_HANDLER
-	if(owner.stat == CONSCIOUS || owner.stat == DEAD) // reset on these two states
+	if(!IS_UNCONSCIOUS_OR_CRIT(owner) || owner.stat == DEAD) // reset on these two states
 		damage_chance = initial(damage_chance)
 		return
 

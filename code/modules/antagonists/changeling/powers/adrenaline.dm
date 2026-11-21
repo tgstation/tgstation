@@ -7,7 +7,7 @@
 	chemical_cost = 25 // similar cost to biodegrade, as they serve similar purposes
 	dna_cost = 2
 	req_human = FALSE
-	req_stat = CONSCIOUS
+	req_stat = STABLE
 	disabled_by_fire = TRUE
 
 //Recover from stuns.

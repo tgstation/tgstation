@@ -14,7 +14,7 @@
 	item = /obj/item/gun/syringe/syndicate
 	cost = 4
 	surplus = 50
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
+	purchasable_from = ~UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
@@ -44,6 +44,14 @@
 	cost = 6
 	surplus = 50
 
+/datum/uplink_item/stealthy_weapons/carnivorous_blood
+	name = "Carnivorous Blood"
+	desc = "A bottle of Carnivorous Blood, an Interdyne bioweapon that, once mixed with a potential victim's blood and then inserted into their bloodstream, \
+		will rapidly consume its victim's supply of usable blood. Feed it high-protein meat to let it cultivate."
+	item = /obj/item/storage/box/syndie_kit/carnivorous_blood
+	cost = 3
+	surplus = 50
+
 /datum/uplink_item/stealthy_weapons/suppressor
 	name = "Suppressor"
 	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. It is compatible with many small ballistic guns including the Makarov, Stechkin APS and C-20r, but not revolvers or energy guns."
@@ -66,7 +74,7 @@
 			falls asleep, they will be able to move and act."
 	item = /obj/item/pen/sleepy
 	cost = 4
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_FIREBASE_OPS
 
 
 /datum/uplink_item/stealthy_weapons/origami_kit
@@ -86,7 +94,6 @@
 			also refuse to use dishonorable ranged weaponry, and armored clothing will make it harder to avoid attacks. \
 			Comes prepackaged with a set of martial arts clothing!"
 	item = /obj/item/storage/box/syndicate/sleeping_carp
-	progression_minimum = 30 MINUTES
 	population_minimum = TRAITOR_POPULATION_LOWPOP
 	cost = 17
 	surplus = 0

@@ -55,6 +55,7 @@
 	desc = "Sleek, aerodynamic gripper gloves that are less effective at actually performing takedowns, but more effective at letting the user sail through the hallways and cause accidents."
 	icon_state = "tackledolphin"
 	inhand_icon_state = null
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.25)
 
 	tackle_stam_cost = 15
 	base_knockdown = 0.5 SECONDS
@@ -96,6 +97,7 @@
 	desc = "The ultimate in high risk, high reward, perfect for when you need to stop a criminal from fifty feet away or die trying. Banned in most Spinward gridiron football and rugby leagues."
 	icon_state = "tacklerocket"
 	inhand_icon_state = null
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
 	tackle_stam_cost = 50
 	base_knockdown = 2 SECONDS
@@ -115,6 +117,7 @@
 	min_distance = 2
 	skill_mod = -1
 	fishing_modifier = -5
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/clothing/gloves/tackler/football
 	name = "football gloves"

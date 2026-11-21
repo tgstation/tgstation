@@ -49,7 +49,7 @@
 	if(!isopenturf(target.loc))
 		return TRUE
 
-	var/can_breathe_vacuum = HAS_TRAIT(target, TRAIT_NO_BREATHLESS_DAMAGE)
+	var/can_breathe_vacuum = HAS_TRAIT(target, TRAIT_NO_BREATHLESS_DAMAGE) || HAS_TRAIT(target, TRAIT_NOBREATH)
 
 	var/min_oxy = can_breathe_vacuum ? 0 : atmos_requirements["min_oxy"]
 	var/min_plasma = can_breathe_vacuum ? 0 : atmos_requirements["min_plas"]
@@ -77,14 +77,14 @@
 	return TRUE
 
 /datum/element/atmos_requirements/proc/get_atmos_req_list(turf/open/open_turf)
-	var/open_turf_gases = open_turf.air.gases
+	var/open_turf_moles = open_turf.air.moles
 	open_turf.air.assert_gases(/datum/gas/oxygen, /datum/gas/pluoxium, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/plasma)
 
 	var/list/return_gases = list()
-	return_gases["plas"] = open_turf_gases[/datum/gas/plasma][MOLES]
-	return_gases["oxy"] = open_turf_gases[/datum/gas/oxygen][MOLES] + (open_turf_gases[/datum/gas/pluoxium][MOLES] * PLUOXIUM_PROPORTION)
-	return_gases["n2"] = open_turf_gases[/datum/gas/nitrogen][MOLES]
-	return_gases["co2"] = open_turf_gases[/datum/gas/carbon_dioxide][MOLES]
+	return_gases["plas"] = open_turf_moles[/datum/gas/plasma]
+	return_gases["oxy"] = open_turf_moles[/datum/gas/oxygen] + (open_turf_moles[/datum/gas/pluoxium] * PLUOXIUM_PROPORTION)
+	return_gases["n2"] = open_turf_moles[/datum/gas/nitrogen]
+	return_gases["co2"] = open_turf_moles[/datum/gas/carbon_dioxide]
 
 	open_turf.air.garbage_collect()
 

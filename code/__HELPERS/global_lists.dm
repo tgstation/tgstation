@@ -14,13 +14,24 @@
 /proc/init_crafting_recipes()
 	for(var/datum/crafting_recipe_path as anything in valid_subtypesof(/datum/crafting_recipe))
 		var/datum/crafting_recipe/recipe = new crafting_recipe_path()
+		if(recipe.name == "" || !recipe.result)
+			qdel(recipe)
+			continue
+
 		var/is_cooking = (recipe.category in GLOB.crafting_category_food)
 		recipe.reqs = sort_list(recipe.reqs, GLOBAL_PROC_REF(cmp_crafting_req_priority))
-		if(recipe.name != "" && recipe.result)
-			if(is_cooking)
-				GLOB.cooking_recipes += recipe
-			else
-				GLOB.crafting_recipes += recipe
+
+		if(is_cooking)
+			GLOB.cooking_recipes += recipe
+			GLOB.cooking_recipes_by_typepath[crafting_recipe_path] = recipe
+			if(!(recipe.crafting_flags & CRAFT_MUST_BE_LEARNED))
+				GLOB.cooking_recipes_default += recipe
+
+		else
+			GLOB.crafting_recipes += recipe
+			GLOB.crafting_recipes_by_typepath[crafting_recipe_path] = recipe
+			if(!(recipe.crafting_flags & CRAFT_MUST_BE_LEARNED))
+				GLOB.crafting_recipes_default += recipe
 
 	var/list/global_stack_recipes = list(
 		/obj/item/stack/sheet/glass = GLOB.glass_recipes,
@@ -96,8 +107,8 @@
 		GLOB.cooking_recipes,
 	)
 	var/list/atom_lists = list(
-		GLOB.crafting_recipes_atoms,
-		GLOB.cooking_recipes_atoms,
+		GLOB.crafting_recipes_datums,
+		GLOB.cooking_recipes_datums,
 	)
 
 	for(var/list_index in 1 to length(recipe_lists))
@@ -107,25 +118,20 @@
 			// Result
 			atom_list |= recipe.result
 			// Ingredients
-			for(var/atom/req_atom as anything in recipe.reqs)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.reqs)
 			// Catalysts
-			for(var/atom/req_atom as anything in recipe.chem_catalysts)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.chem_catalysts)
 			// Reaction data - required container
 			if(recipe.reaction)
 				var/required_container = initial(recipe.reaction.required_container)
 				if(required_container)
 					atom_list |= required_container
 			// Tools
-			for(var/atom/req_atom as anything in recipe.tool_paths)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.tool_paths)
 			// Machinery
-			for(var/atom/req_atom as anything in recipe.machinery)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.machinery)
 			// Structures
-			for(var/atom/req_atom as anything in recipe.structures)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.structures)
 
 /// Creates every subtype of prototype (excluding prototype and abstract types) and adds it to list L.
 /// If no list/L is provided, one is created.

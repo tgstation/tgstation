@@ -19,7 +19,6 @@
 	speed = 6
 	verb_say = "gurgles"
 	verb_ask = "gurgles curiously"
-	can_be_held = TRUE
 	verb_exclaim = "gurgles loudly"
 	verb_yell = "gurgles loudly"
 	worn_slot_flags = ITEM_SLOT_HEAD
@@ -28,6 +27,8 @@
 	ai_controller = /datum/ai_controller/basic_controller/snail
 	/// What do we turn into if effected by a regal rat?
 	var/minion_path = /mob/living/basic/snail/angry
+	/// Are we able to be held by a player?
+	var/should_be_holdable = TRUE
 
 /mob/living/basic/snail/Initialize(mapload)
 	. = ..()
@@ -52,6 +53,9 @@
 
 	if (minion_path)
 		AddElement(/datum/element/regal_rat_minion, converted_path = minion_path, success_balloon = "gurgle", pet_commands = GLOB.regal_rat_minion_commands)
+
+	if(should_be_holdable)
+		AddElement(/datum/element/can_be_held)
 
 /mob/living/basic/snail/proc/on_entered(datum/source, obj/effect/decal/cleanable/food/salt/potential_salt)
 	SIGNAL_HANDLER
@@ -105,7 +109,7 @@
 	melee_damage_lower = 5
 	melee_damage_upper = 8
 	obj_damage = 8
-	can_be_held = FALSE
+	should_be_holdable = FALSE
 	minion_path = null
 	ai_controller = /datum/ai_controller/basic_controller/snail/trash
 

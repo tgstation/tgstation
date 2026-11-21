@@ -17,7 +17,7 @@
 
 /datum/hallucination/body/start()
 	// This hallucination is purely visual, so we don't need to bother for clientless mobs
-	if(!hallucinator.client || hallucinator.stat >= UNCONSCIOUS)
+	if(!hallucinator.client || IS_UNCONSCIOUS(hallucinator))
 		return FALSE
 
 	var/list/possible_points = list()

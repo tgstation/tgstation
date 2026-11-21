@@ -14,8 +14,11 @@
 	var/datum/universal_icon/final_icon = include_snout ? lizard_with_snout.copy() : lizard.copy()
 
 	if (!isnull(sprite_accessory) && sprite_accessory.icon_state != SPRITE_ACCESSORY_NONE)
-		var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
-		final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+		var/datum/universal_icon/accessory_icon_base = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
+		if(icon_exists(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT"))
+			var/datum/universal_icon/accessory_icon_front = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT", EAST)
+			accessory_icon_base.blend_icon(accessory_icon_front, ICON_OVERLAY)
+		final_icon.blend_icon(accessory_icon_base, ICON_OVERLAY)
 
 	final_icon.crop(11, 20, 23, 32)
 	final_icon.scale(32, 32)
@@ -81,7 +84,7 @@
 /datum/preference/choiced/lizard_legs/init_possible_values()
 	return list(NORMAL_LEGS, DIGITIGRADE_LEGS)
 
-/datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.dna.features[FEATURE_LEGS] = value
 	// Hack to update the dummy in the preference menu
 	// (Because digi legs are ONLY handled on species change)

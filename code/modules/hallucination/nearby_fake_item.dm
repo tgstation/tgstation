@@ -21,7 +21,7 @@
 
 /datum/hallucination/nearby_fake_item/start()
 	// This hallucination is purely visual, so we don't need to bother for clientless mobs
-	if(!hallucinator.client || hallucinator.stat >= UNCONSCIOUS)
+	if(!hallucinator.client || IS_UNCONSCIOUS(hallucinator))
 		return FALSE
 
 	var/list/mob_pool = list()
@@ -95,7 +95,7 @@
 	image_icon_state = "stunbaton"
 
 /datum/hallucination/nearby_fake_item/baton/generate_fake_image(mob/living/carbon/human/holder, file)
-	hallucinator.playsound_local(get_turf(holder), SFX_SPARKS, 75, TRUE, -1)
+	hallucinator.playsound_local(get_turf(holder), /datum/sound_effect/sparks, 75, TRUE, -1)
 	return ..()
 
 /datum/hallucination/nearby_fake_item/flash

@@ -39,7 +39,8 @@
 
 	soup_sound = new(parent)
 
-/datum/component/stove/Destroy()
+/datum/component/stove/Destroy(force)
+	STOP_PROCESSING(SSmachines, src)
 	QDEL_NULL(soup_sound)
 	return ..()
 
@@ -49,7 +50,6 @@
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ROBOT_SECONDARY, PROC_REF(on_attack_robot_secondary))
 	RegisterSignal(parent, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_overlay_update))
-	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstructed))
 	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_requesting_context))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_MACHINERY_REFRESH_PARTS, PROC_REF(on_refresh_parts))
@@ -57,17 +57,20 @@
 	var/obj/machinery/real_parent = parent
 	real_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
+	parent.AddComponent(/datum/component/touch_the_stove, is_active = CALLBACK(src, PROC_REF(is_active)), temperature = SOUP_BURN_TEMP + 80)
+
 /datum/component/stove/UnregisterFromParent()
 	var/obj/machinery/real_parent = parent
-	if(!QDELING(parent))
+	if(container && !QDELING(parent))
 		container.forceMove(real_parent.drop_location())
+	container = null
 
 	if (particle_type)
 		real_parent.remove_shared_particles("[particle_type]_stove_[container_x]")
 
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
-		COMSIG_OBJ_DECONSTRUCT,
+		COMSIG_ATOM_ATTACK_ROBOT_SECONDARY,
 		COMSIG_ATOM_EXITED,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
@@ -75,6 +78,11 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_MACHINERY_REFRESH_PARTS,
 	))
+
+	qdel(parent.GetComponent(/datum/component/touch_the_stove))
+
+/datum/component/stove/proc/is_active()
+	return on
 
 /datum/component/stove/process(seconds_per_tick)
 	var/obj/machinery/real_parent = parent
@@ -161,11 +169,6 @@
 
 	if(gone == container)
 		remove_container()
-
-/datum/component/stove/proc/on_deconstructed(obj/machinery/source)
-	SIGNAL_HANDLER
-
-	container.forceMove(source.drop_location())
 
 /datum/component/stove/proc/on_overlay_update(obj/machinery/source, list/overlays)
 	SIGNAL_HANDLER

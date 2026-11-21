@@ -1,0 +1,63 @@
+{
+	"dm_type": "/datum/bt_node/subtree/carp_flee",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/carp_should_flee",
+	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
+		"target_key": "BB_CURRENT_TARGET"
+	},
+	"child": {
+		"type": "selector",
+		"children": [
+			{
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/ability_available",
+				"vars": {
+					"ability_key": "BB_CARP_RIFT"
+				},
+				"child": {
+					"type": "leaf",
+					"behavior": "/datum/bt_node/ai_behavior/make_carp_rift/away",
+					"vars": {
+						"ability_key": "BB_CARP_RIFT",
+						"target_key": "BB_CURRENT_TARGET"
+					}
+				}
+			},
+			{
+				"type": "parallel",
+				"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+				"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+				"repeat_secondary": true,
+				"finish_on_primary": true,
+				"children": [
+					{
+						"type": "subplan",
+						"success_policy": "BT_SUBPLAN_LOOP_ON_SUCCESS",
+						"failure_policy": "BT_SUBPLAN_LOOP_ON_FAILURE",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/find_flee_location",
+								"vars": {
+									"target_key": "$bf3k9q2p",
+									"hiding_location_key": "BB_CURRENT_TARGET_HIDING_LOCATION",
+									"destination_key": "BB_FLEE_LOCATION"
+								}
+							}
+						]
+					},
+					{
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+						"vars": {
+							"target_key": "BB_FLEE_LOCATION",
+							"required_dist": 0,
+							"finish_on_arrival": true
+						}
+					}
+				]
+			}
+		]
+	}
+}

@@ -5,7 +5,6 @@
 	slot = ORGAN_SLOT_ZOMBIE
 	icon_state = "blacktumor"
 	var/causes_damage = TRUE
-	var/datum/species/old_species = /datum/species/human
 	var/living_transformation_time = 3 SECONDS
 	var/converts_living = FALSE
 
@@ -31,25 +30,14 @@
 
 /obj/item/organ/zombie_infection/on_mob_insert(mob/living/carbon/new_owner, special = FALSE, movement_flags)
 	. = ..()
-	RegisterSignal(new_owner, COMSIG_LIVING_DEATH, PROC_REF(organ_owner_died))
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/zombie_infection/on_mob_remove(mob/living/carbon/new_owner, special = FALSE, movement_flags)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
-	if(iszombie(new_owner) && old_species && !special)
-		// There isn't a clean way to change species during organ or bodypart removals. In lieau of a beter solution, this will do
-		spawn(0)
-			new_owner.set_species(old_species)
 	if(timer_id)
 		deltimer(timer_id)
-	UnregisterSignal(new_owner, COMSIG_LIVING_DEATH)
 	QDEL_NULL(ghost_poll)
-
-/obj/item/organ/zombie_infection/proc/organ_owner_died(mob/living/carbon/source, gibbed)
-	SIGNAL_HANDLER
-	if(iszombie(source))
-		qdel(src) // Congrats you somehow died so hard you stopped being a zombie
 
 /obj/item/organ/zombie_infection/on_find(mob/living/finder)
 	to_chat(finder, span_warning("Inside the head is a disgusting black \
@@ -61,9 +49,9 @@
 		return
 	if(!(src in owner.organs))
 		Remove(owner)
-	if(owner.mob_biotypes & MOB_MINERAL)//does not process in inorganic things
+	if(!(owner.mob_biotypes & MOB_ORGANIC) || HAS_TRAIT(owner, TRAIT_UNHUSKABLE)) // does not process in inorganic things
 		return
-	if (causes_damage && !iszombie(owner) && owner.stat != DEAD)
+	if (causes_damage && !owner.has_status_effect(/datum/status_effect/zombie) && owner.stat != DEAD)
 		owner.adjust_tox_loss(0.5 * seconds_per_tick)
 		if (SPT_PROB(5, seconds_per_tick))
 			to_chat(owner, span_danger("You feel sick..."))
@@ -71,7 +59,7 @@
 		return
 	if(owner.stat != DEAD && !converts_living)
 		return
-	if(!iszombie(owner))
+	if(!owner.has_status_effect(/datum/status_effect/zombie))
 		to_chat(owner, span_cult_large("You can feel your heart stopping, but something isn't right... \
 		life has not abandoned your broken form. You can only feel a deep and immutable hunger that \
 		not even death can stop, you will rise again!"))
@@ -85,12 +73,10 @@
 	if(!converts_living && owner.stat != DEAD)
 		return
 
-	if(!iszombie(owner))
-		old_species = owner.dna.species.type
-		// mindless zombies are nerfed a bit to encourage infecting real players instead of random morgue bodies
-		target.set_species(isnull(target.mind) ? /datum/species/zombie/infectious/mindless : /datum/species/zombie/infectious)
+	// mindless zombies are nerfed a bit to encourage infecting real players instead of random morgue bodies
+	target.apply_status_effect(isnull(target.mind) ? /datum/status_effect/zombie/mindless : /datum/status_effect/zombie)
 
-	var/stand_up = (target.stat == DEAD) || (target.stat == UNCONSCIOUS)
+	var/stand_up = IS_UNCONSCIOUS(target)
 
 	//Fully heal the zombie's damage the first time they rise
 	if(!target.heal_and_revive(0, span_danger("[target] suddenly convulses, as [target.p_they()][stand_up ? " stagger to [target.p_their()] feet and" : ""] gain a ravenous hunger in [target.p_their()] eyes!")))
@@ -112,11 +98,12 @@
 		after_assumed_control = CALLBACK(src, PROC_REF(after_ghost_control)), \
 		joinable_mobs_title = "Zombies", \
 	))
+	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE] = TRUE
 
 /obj/item/organ/zombie_infection/proc/check_ghost_control_eligibility(mob/candidate)
 	if(QDELETED(src) || QDELETED(owner))
 		return FALSE
-	if(!iszombie(owner) || owner.stat == DEAD)
+	if(!owner.has_status_effect(/datum/status_effect/zombie) || owner.stat == DEAD)
 		return FALSE
 	return TRUE
 

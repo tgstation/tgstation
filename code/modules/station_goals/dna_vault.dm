@@ -177,6 +177,7 @@
 /obj/machinery/dna_vault/proc/check_goal()
 	if(plant_dna.len >= plants_max && animal_dna.len >= animals_max && human_dna.len >= dna_max)
 		completed = TRUE
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ARK] = TRUE
 
 /obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/target, upgrade_type)
 	var/datum/weakref/human_weakref = WEAKREF(target)

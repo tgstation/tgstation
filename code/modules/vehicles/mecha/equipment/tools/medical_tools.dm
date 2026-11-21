@@ -27,9 +27,10 @@
 	name = "mounted sleeper"
 	desc = "A mounted sleeper that stabilizes patients."
 	icon_state = "mecha_sleeper_miner"
-	energy_drain = 20
+	energy_drain = STANDARD_CELL_CHARGE * 0.02
 	range = MECHA_MELEE
-	equip_cooldown = 20
+	equip_cooldown = 2 SECONDS
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 	/// ref to the patient loaded in the sleeper
 	var/mob/living/carbon/patient
 
@@ -51,7 +52,7 @@
 		return
 	to_chat(source, "[icon2html(src, source)][span_notice("You start putting [target] into [src]...")]")
 	chassis.visible_message(span_warning("[chassis] starts putting [target] into \the [src]."))
-	if(!do_after(source, equip_cooldown, target, extra_checks=CALLBACK(src, PROC_REF(patient_insertion_check), target, source)))
+	if(!do_after(source, get_equip_cooldown(atomtarget), target, extra_checks=CALLBACK(src, PROC_REF(patient_insertion_check), target, source)))
 		return
 	if(!chassis || !(get_dir(chassis, target) & chassis.dir))
 		return
@@ -97,10 +98,8 @@
 		return data
 	var/patient_state
 	switch(patient.stat)
-		if(CONSCIOUS)
-			patient_state = "Conscious"
-		if(UNCONSCIOUS)
-			patient_state = "Unconscious"
+		if(STABLE)
+			patient_state = "Stable"
 		if(DEAD)
 			patient_state = "*Dead*"
 		if(SOFT_CRIT, HARD_CRIT)
@@ -211,8 +210,9 @@
 	desc = "Equipment for medical exosuits. A chem synthesizer with syringe gun. Reagents inside are held in stasis, so no reactions will occur."
 	icon_state = "mecha_syringegun"
 	range = MECHA_MELEE|MECHA_RANGED
-	equip_cooldown = 10
-	energy_drain = 10
+	equip_cooldown = 1 SECONDS
+	energy_drain = STANDARD_CELL_CHARGE * 0.01
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	///Lazylist of syringes that we've picked up
 	var/list/syringes
 	///List of all scanned reagents, starts with epinephrine and multiver
@@ -372,9 +372,9 @@
 	name = "exosuit medical beamgun"
 	desc = "Equipment for medical exosuits. Generates a focused beam of medical nanites."
 	icon_state = "mecha_medigun"
-	energy_drain = 10
+	energy_drain = STANDARD_CELL_CHARGE * 0.01
 	range = MECHA_MELEE|MECHA_RANGED
-	equip_cooldown = 0
+	equip_cooldown = 0 SECONDS
 	///The medical gun doing the actual healing. yes its wierd but its better than copypasting the entire thing
 	var/obj/item/gun/medbeam/mech/medigun
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4, /datum/material/plasma = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT*4, /datum/material/diamond =SHEET_MATERIAL_AMOUNT)

@@ -35,7 +35,7 @@
 	icon_state = "medkit"
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
-/obj/item/storage/medkit/regular/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/regular/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins giving [user.p_them()]self aids with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -82,6 +82,22 @@
 		return
 	var/list/items_inside = list(
 		/obj/item/healthanalyzer = 1,
+		/obj/item/stack/medical/wrap/gauze/twelve = 1,
+		/obj/item/stack/medical/suture = 2,
+		/obj/item/stack/medical/mesh = 2,
+		/obj/item/reagent_containers/hypospray/medipen = 1,
+		/obj/item/surgical_drapes = 1,
+		/obj/item/scalpel = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/cautery = 1,
+	)
+	generate_items_inside(items_inside,src)
+
+/obj/item/storage/medkit/surgery/cmo/PopulateContents()
+	if(empty)
+		return
+	var/list/items_inside = list(
+		/obj/item/healthanalyzer/advanced = 1,
 		/obj/item/stack/medical/wrap/gauze/twelve = 1,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
@@ -150,7 +166,7 @@
 /obj/item/storage/medkit/fire/get_medbot_skin()
 	return "burn"
 
-/obj/item/storage/medkit/fire/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/fire/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins rubbing \the [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to start a fire!"))
 	return FIRELOSS
 
@@ -174,7 +190,7 @@
 /obj/item/storage/medkit/toxin/get_medbot_skin()
 	return "tox"
 
-/obj/item/storage/medkit/toxin/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/toxin/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins licking the lead paint off \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return TOXLOSS
 
@@ -201,7 +217,7 @@
 /obj/item/storage/medkit/o2/get_medbot_skin()
 	return "oxy"
 
-/obj/item/storage/medkit/o2/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/o2/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
@@ -225,7 +241,7 @@
 /obj/item/storage/medkit/brute/get_medbot_skin()
 	return "brute"
 
-/obj/item/storage/medkit/brute/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/brute/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -382,7 +398,7 @@
 	medbot_assembly.robot_arm = tool.type
 	medbot_assembly.medkit_type = type
 	qdel(tool)
-	var/held_index = user.is_holding(src)
+	var/held_index = user.get_held_index_of_item(src)
 	qdel(src)
 	if (held_index)
 		user.put_in_hand(medbot_assembly, held_index)
@@ -466,7 +482,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
-/obj/item/storage/organbox/suicide_act(mob/living/carbon/user)
+/obj/item/storage/organbox/suicide_act(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_RESISTCOLD)) //if they're immune to cold, just do the box suicide
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 		if(myhead)

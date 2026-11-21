@@ -53,6 +53,11 @@
 	else
 		RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_interact))
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
+	)
+	AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
+
 /datum/component/lockable_storage/UnregisterFromParent()
 	if(can_hack_open)
 		UnregisterSignal(parent, list(
@@ -70,6 +75,7 @@
 		UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	else
 		UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND)
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
 	return ..()
 
 /**
@@ -83,7 +89,7 @@
 /datum/component/lockable_storage/proc/on_requesting_context_from_item(datum/source, list/context, obj/item/held_item, mob/user)
 	SIGNAL_HANDLER
 	if(isnull(held_item))
-		if(source in user.held_items)
+		if(user.is_holding(source))
 			context[SCREENTIP_CONTEXT_LMB] = "Open storage"
 			return CONTEXTUAL_SCREENTIP_SET
 		context[SCREENTIP_CONTEXT_RMB] = "Open storage"
@@ -162,7 +168,7 @@
 
 	source.visible_message(span_warning("Sparks fly from [source]!"), blind_message = span_hear("You hear a faint electrical spark."))
 	source.balloon_alert(user, "lock destroyed")
-	playsound(source, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(source, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	break_lock()
 	return ITEM_INTERACT_SUCCESS
 
@@ -203,6 +209,13 @@
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(ui_interact), user)
 
+/datum/component/lockable_storage/proc/on_magic_unlock(obj/source, datum/spell, mob/caster)
+	SIGNAL_HANDLER
+
+	if(isturf(source.loc) || get(source, /mob) == caster)
+		numeric_input = lock_code
+		source.atom_storage.set_locked(STORAGE_NOT_LOCKED)
+
 /datum/component/lockable_storage/ui_interact(mob/user, datum/tgui/ui)
 	var/obj/source = parent
 	if(source.obj_flags & EMAGGED)
@@ -226,11 +239,14 @@
 	. = ..()
 	if(action != "keypad")
 		return TRUE
+
+	var/atom/source = parent
+	playsound(source, /datum/sound_effect/terminal_type, 50, FALSE)
+
 	var/digit = params["digit"]
 	switch(digit)
 		//locking it back up
 		if("C")
-			var/atom/source = parent
 			numeric_input = ""
 			//you can't lock it if it's already locked or lacks a lock code.
 			if(source.atom_storage.locked || isnull(lock_code))
@@ -249,7 +265,6 @@
 			//unlocking the current code.
 			if(numeric_input != lock_code)
 				return TRUE
-			var/atom/source = parent
 			source.atom_storage.set_locked(STORAGE_NOT_LOCKED)
 			numeric_input = ""
 			return TRUE

@@ -9,7 +9,6 @@
 	icon = 'icons/obj/machines/destructive_scanner.dmi'
 	icon_state = "tube_open"
 	circuit = /obj/item/circuitboard/machine/destructive_scanner
-	layer = MOB_LAYER
 	var/scanning = FALSE
 
 // Late load to ensure the component initialization occurs after the machines are initialized
@@ -96,7 +95,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 	balloon_alert(user, "safety sensor BIOS disabled")
 	return TRUE
 

@@ -1,5 +1,6 @@
 /datum/map_template/shuttle/cargo
 	port_id = "cargo"
+	prefix = "_maps/shuttles/cargo/"
 	name = "Base Shuttle Template (Cargo)"
 	who_can_purchase = null
 

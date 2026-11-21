@@ -27,6 +27,11 @@
 		mod *= effect.nextmove_modifier()
 		adj += effect.nextmove_adjust()
 	next_move = world.time + ((num + adj)*mod)
+	SEND_SIGNAL(src, COMSIG_LIVING_CHANGENEXT_MOVE, next_move, num)
+
+/mob/living/proc/change_next_special_move(num)
+	changeNext_move(num)
+	last_special = world.time + num
 
 /**
  * Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -184,18 +189,19 @@
 	SHOULD_BE_PURE(TRUE)
 	if(!isturf(loc)) //This only makes sense for things directly on turfs for now
 		return FALSE
-	var/turf/T = get_turf_pixel(src)
-	if(!T)
+	var/turf/click_loc = get_turf_pixel(src)
+	if(isnull(click_loc))
 		return FALSE
-	for(var/atom/movable/AM in T)
-		if(AM.flags_1 & PREVENT_CLICK_UNDER_1 && AM.density && AM.layer > layer)
+	for(var/atom/movable/blocker as anything in click_loc)
+		if(!blocker.density || !(blocker.flags_1 & PREVENT_CLICK_UNDER_1))
+			continue
+		if(COMPARE_LAYERS(blocker.layer, src.layer))
 			return TRUE
 	return FALSE
 
 /turf/IsObscured()
-	for(var/item in src)
-		var/atom/movable/AM = item
-		if(AM.flags_1 & PREVENT_CLICK_UNDER_1)
+	for(var/atom/movable/blocker as anything in src)
+		if(blocker.flags_1 & PREVENT_CLICK_UNDER_1)
 			return TRUE
 	return FALSE
 
@@ -276,6 +282,9 @@
 /atom/movable/IsContainedAtomAccessible(atom/contained, atom/movable/user)
 	return !!atom_storage
 
+/mob/living/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return !!contained.atom_storage
+
 /atom/proc/DirectAccess()
 	return list(src, loc)
 
@@ -354,6 +363,13 @@
 /mob/proc/RangedAttack(atom/A, modifiers)
 	if(SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
+	A.RangedAttackOn(src, modifiers)
+
+/**
+ * Atom's version of RangedAttack, for when you want to do something when a mob clicks on this with more sanity than just Click()
+ */
+/atom/proc/RangedAttackOn(mob/attacker, list/modifiers)
+	return null
 
 /**
  * Ranged secondary attack
@@ -374,7 +390,7 @@
 	. = SEND_SIGNAL(src, COMSIG_MOB_MIDDLECLICKON, A, params)
 	if(. & COMSIG_MOB_CANCEL_CLICKON)
 		return
-	swap_hand()
+	cycle_hand(WEST, FALSE)
 
 /**
  * Shift click
@@ -407,7 +423,7 @@
 
 /// Simple helper to face what you clicked on, in case it should be needed in more than one place
 /mob/proc/face_atom(atom/atom_to_face)
-	if( buckled || stat != CONSCIOUS || !atom_to_face || !x || !y || !atom_to_face.x || !atom_to_face.y )
+	if( buckled || IS_UNCONSCIOUS_OR_CRIT(src) || !atom_to_face || !x || !y || !atom_to_face.x || !atom_to_face.y )
 		return
 	var/dx = atom_to_face.x - x
 	var/dy = atom_to_face.y - y
@@ -478,9 +494,8 @@
 
 /atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, MIDDLE_CLICK) && iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.swap_hand()
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK) && ismob(usr))
+		usr.cycle_hand(WEST, FALSE)
 	else
 		var/turf/click_turf = parse_caught_click_modifiers(modifiers, get_turf(usr.client ? usr.client.eye : usr), usr.client)
 		if (click_turf)

@@ -5,8 +5,10 @@ import {
   Box,
   Button,
   ByondUi,
+  ColorBox,
   Dropdown,
   InfinitePlane,
+  Input,
   Stack,
 } from 'tgui-core/components';
 import { Window } from '../../layouts';
@@ -271,6 +273,23 @@ export function getReadablePlane(
   appearance: Appearance,
   planeToText: Record<string, number>,
 ) {
+  const {
+    plane,
+    plane_unregistered,
+    plane_decoded_true,
+    plane_decoded_offset,
+    plane_max_offset,
+  } = appearance.data;
+  if (plane_unregistered) {
+    if (typeof plane_decoded_true !== 'number') {
+      return `UNREGISTERED ${plane}`;
+    }
+    const trueName =
+      Object.keys(planeToText).find(
+        (x) => planeToText[x] === plane_decoded_true,
+      ) || plane_decoded_true.toString();
+    return `UNREGISTERED ${plane} (${trueName} at offset ${plane_decoded_offset}, max ${plane_max_offset})`;
+  }
   return (
     (Object.keys(planeToText).find(
       (x) => planeToText[x] === appearance.data.plane_true,
@@ -457,6 +476,8 @@ export function AppearanceDebug() {
     mapRefHover,
     mapRefSelected,
     updateWarning,
+    forcedPlane,
+    backdropColor,
   } = data;
   const [planeFilter, setPlaneFilter] = useState<string | null>(null);
   const [hideEmissives, setHideEmissives] = useState(false);
@@ -568,7 +589,9 @@ export function AppearanceDebug() {
               }px`}
             >
               <Dropdown
-                options={Object.keys(planeToText).sort()}
+                options={Object.keys(planeToText).sort(
+                  (a, b) => planeToText[a] - planeToText[b],
+                )}
                 placeholder="Filter by Plane"
                 selected={planeFilter || ''}
                 searchInput
@@ -613,7 +636,7 @@ export function AppearanceDebug() {
             left="12px"
             top="42px"
             width="172px"
-            height="172px"
+            height="227px"
             pl="6px"
             pr="6px"
             style={{ zIndex: 3 }}
@@ -621,11 +644,63 @@ export function AppearanceDebug() {
             <ByondUi
               width="160px"
               height="160px"
+              position="absolute"
+              top="6px"
+              left="6px"
               params={{
                 id: mapRefHover,
                 type: 'map',
               }}
             />
+          </Box>
+          <Box
+            position="absolute"
+            left="18px"
+            top="214px"
+            style={{ zIndex: 4 }}
+          >
+            <Stack vertical width="160px">
+              <Stack.Item style={{ display: 'flex', flexDirection: 'row' }}>
+                <Dropdown
+                  options={Object.keys(planeToText).sort(
+                    (a, b) => planeToText[a] - planeToText[b],
+                  )}
+                  placeholder="Set Forced Plane"
+                  selected={
+                    Object.keys(planeToText).findLast(
+                      (x) => planeToText[x] === forcedPlane,
+                    ) || ''
+                  }
+                  searchInput
+                  onSelected={(value) => {
+                    if (!(value in planeToText)) act('resetForcedPlane');
+                    act('setForcedPlane', { plane: planeToText[value] });
+                  }}
+                  width=""
+                />
+                <Button
+                  tooltip="Reset forced plane"
+                  icon="times"
+                  color="red"
+                  disabled={!forcedPlane}
+                  onClick={() => act('resetForcedPlane')}
+                  ml={0.5}
+                  width="22px"
+                  height="20px"
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <ColorBox color={backdropColor} mr={0.5} />
+                <Input
+                  value={backdropColor}
+                  onBlur={(value) => {
+                    if (!value) act('setBackdropColor', { reset: true });
+                    act('setBackdropColor', { backdropColor: value });
+                  }}
+                  onDoubleClick={() => act('pickBackdropColor')}
+                />
+              </Stack.Item>
+            </Stack>
           </Box>
           <InfinitePlane
             width="100%"

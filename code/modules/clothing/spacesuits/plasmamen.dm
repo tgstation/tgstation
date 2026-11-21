@@ -9,6 +9,7 @@
 	icon_state = "plasmaman_suit"
 	inhand_icon_state = "plasmaman_suit"
 	fishing_modifier = 0
+	bodyshapes_with_variations = NONE
 	COOLDOWN_DECLARE(extinguish_timer)
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 10
@@ -99,6 +100,8 @@
 	var/smile_color = COLOR_RED
 	var/visor_icon = "envisor"
 	var/smile_state = "envirohelm_smile"
+	/// If we've been forcibly disabled for a temporary amount of time.
+	COOLDOWN_DECLARE(disabled_time)
 
 /datum/armor/space_plasmaman
 	bio = 100
@@ -136,6 +139,7 @@
 	. = ..()
 	if(!.)
 		return
+
 	if(helmet_on)
 		to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
 		set_light_on(FALSE)
@@ -176,12 +180,12 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///By the by, helmets have the update_icon_updates_onmob element, so we don't have to call mob.update_worn_head()
-/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands && !up)
 		. += mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', visor_icon)
 
-/obj/item/clothing/head/helmet/space/plasmaman/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
+/obj/item/clothing/head/helmet/space/plasmaman/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands && smile)
 		var/mutable_appearance/smiley = mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', smile_state)
@@ -196,26 +200,31 @@
 		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 	. |= ..()
 
-/obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
+/obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/living/user)
+	if(!COOLDOWN_FINISHED(src, disabled_time))
+		user?.balloon_alert(user, "disrupted!")
+		return
+	if(!helmet_on && !up)
+		to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
+		return
+
 	helmet_on = !helmet_on
+	set_light_on(helmet_on)
 	update_appearance()
-
-	if(helmet_on)
-		if(!up)
-			to_chat(user, span_notice("Your helmet's torch can't pass through your welding visor!"))
-			set_light_on(FALSE)
-		else
-			set_light_on(TRUE)
-	else
-		set_light_on(FALSE)
-
 	update_item_action_buttons()
+
+/obj/item/clothing/head/helmet/space/plasmaman/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	on_saboteur(src, (1 MINUTES / severity))
 
 /obj/item/clothing/head/helmet/space/plasmaman/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
-	if(!helmet_on)
-		return FALSE
 	helmet_on = FALSE
+	set_light_on(helmet_on)
+	COOLDOWN_START(src, disabled_time, disrupt_duration)
 	update_appearance()
 	return TRUE
 

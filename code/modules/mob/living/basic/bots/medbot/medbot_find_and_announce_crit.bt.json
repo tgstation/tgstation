@@ -1,0 +1,16 @@
+{
+	"dm_type": "/datum/bt_node/subtree/medbot_find_and_announce_crit",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
+		"key": "BB_PATIENT_IN_CRIT"
+	},
+	"child": {
+		"type": "leaf",
+		"behavior": "/datum/bt_node/ai_behavior/announce_patient",
+		"vars": {
+			"target_key": "BB_PATIENT_IN_CRIT"
+		}
+	}
+}

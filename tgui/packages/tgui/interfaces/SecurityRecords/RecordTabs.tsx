@@ -13,7 +13,6 @@ import {
   Tabs,
 } from 'tgui-core/components';
 
-import { JOB2ICON } from '../common/JobToIcon';
 import { CRIMESTATUS2COLOR } from './constants';
 import { isRecordMatch } from './helpers';
 import type { SecurityRecord, SecurityRecordsData } from './types';
@@ -92,7 +91,7 @@ const CrewTab = (props: { record: SecurityRecord }) => {
   const { act, data } = useBackend<SecurityRecordsData>();
   const { assigned_view } = data;
   const { record } = props;
-  const { crew_ref, name, trim, wanted_status } = record;
+  const { crew_ref, name, job_icon, wanted_status } = record;
 
   /** Chooses a record */
   const selectRecord = (record: SecurityRecord) => {
@@ -122,7 +121,7 @@ const CrewTab = (props: { record: SecurityRecord }) => {
       selected={isSelected}
     >
       <Box bold={isSelected} color={CRIMESTATUS2COLOR[wanted_status]}>
-        <Icon name={JOB2ICON[trim] || 'question'} /> {name}
+        <Icon name={job_icon || 'question'} /> {name}
       </Box>
     </Tabs.Tab>
   );

@@ -6,6 +6,7 @@
 		)
 	airlock_wires = /datum/wires/airlock/command
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	tacmap_color = TACMAP_AREA_COMMAND
 
 /area/station/command/bridge
 	name = "\improper Bridge"

@@ -2,12 +2,26 @@
 "a" = (
 /turf/open/lava/smooth,
 /area/template_noop)
+"i" = (
+/obj/item/toy/hazard_warning{
+	pixel_x = 13;
+	pixel_y = 15
+	},
+/turf/open/lava/smooth,
+/area/template_noop)
 
 (1,1,1) = {"
 a
 a
+a
 "}
 (2,1,1) = {"
+i
+a
+a
+"}
+(3,1,1) = {"
+a
 a
 a
 "}

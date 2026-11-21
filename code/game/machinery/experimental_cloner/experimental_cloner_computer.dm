@@ -3,6 +3,7 @@
 	name = "experimental cloner control console"
 	desc = "It scans DNA structures."
 	circuit = /obj/item/circuitboard/computer/experimental_cloner
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/crew")
 	icon_screen = "crew"
 	icon_keyboard = "med_key"
 	light_color = LIGHT_COLOR_GREEN
@@ -19,6 +20,10 @@
 /obj/machinery/computer/experimental_cloner/Initialize(mapload, obj/item/circuitboard/circuit)
 	. = ..()
 	find_connections = mapload
+
+/obj/machinery/computer/experimental_cloner/Destroy(force)
+	QDEL_NULL(stored_record)
+	return ..()
 
 /obj/machinery/computer/experimental_cloner/post_machine_initialize()
 	. = ..()
@@ -109,7 +114,7 @@
 	data["is_cloning"] = !!output?.running
 	data["cloning_name"] = output?.loaded_record?.name
 	data["cloning_species"] = output?.loaded_record?.dna?.species?.name
-	data["cloning_progress"] = output? ((output.cloning_time - cloning_time_left) / output.cloning_time) * 100 : 0
+	data["cloning_progress"] = output?.cloning_time > 0 ? ((output.cloning_time - cloning_time_left) / output.cloning_time) * 100	: 0
 
 	return data
 

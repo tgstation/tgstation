@@ -42,3 +42,5 @@
 ## Force tab indents on dm files
 *.dm whitespace=indent-with-non-tab
 
+# Mark compiled behavior trees as generated files, to avoid clogging up github diff. We have the actual thingy to give a useful BT diff anyways.
+build/behavior_trees/**/*.compiled.json linguist-generated

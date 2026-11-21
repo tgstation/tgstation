@@ -50,6 +50,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/computer/shuttle,
 		/obj/machinery/computer/emergency_shuttle,
 		/obj/machinery/computer/gateway_control,
+		/obj/machinery/ai_law_rack,
 	)))
 
 GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
@@ -122,6 +123,9 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	var/name = "generic module"
 	var/category = "generic category"
 	var/description = "generic description"
+	/// Icons for the module picker interface. If icon_state is not set, the interface will attempt to use the active ability's icon.
+	var/icon = 'icons/mob/actions/actions_AI.dmi'
+	var/icon_state = ""
 	var/cost = 5
 	/// Minimum amount of APCs that has to be under the AI's control to purchase this module.
 	var/minimum_apcs = 0
@@ -565,7 +569,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		to_chat(clicker, span_warning("You cannot overload that device!"))
 		return FALSE
 
-	clicker.playsound_local(clicker, SFX_SPARKS, 50, 0)
+	clicker.playsound_local(clicker, /datum/sound_effect/sparks, 50, 0)
 	adjust_uses(-1)
 	if(uses)
 		desc = "[initial(desc)] It has [uses] use\s remaining."
@@ -583,7 +587,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	cost = 15
 	power_type = /datum/action/innate/ai/blackout
 	unlock_text = span_notice("You hook into the powernet and route bonus power towards the station's lighting.")
-	unlock_sound = SFX_SPARKS
+	unlock_sound = /datum/sound_effect/sparks
 
 /datum/action/innate/ai/blackout
 	name = "Blackout"
@@ -603,7 +607,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		else
 			apc.overload++
 	to_chat(owner, span_notice("Overcurrent applied to the powernet."))
-	owner.playsound_local(owner, SFX_SPARKS, 50, 0)
+	owner.playsound_local(owner, /datum/sound_effect/sparks, 50, 0)
 	adjust_uses(-1)
 	if(QDELETED(src) || uses) //Not sure if not having src here would cause a runtime, so it's here to be safe
 		return
@@ -783,7 +787,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	one_purchase = TRUE
 	power_type = /datum/action/innate/ai/emergency_lights
 	unlock_text = span_notice("You hook into the powernet and locate the connections between light fixtures and their fallbacks.")
-	unlock_sound = SFX_SPARKS
+	unlock_sound = /datum/sound_effect/sparks
 
 /datum/action/innate/ai/emergency_lights
 	name = "Disable Emergency Lights"
@@ -846,6 +850,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/ai_module/malf/upgrade/upgrade_cameras
 	name = "Upgrade Camera Network"
 	description = "Install broad-spectrum scanning and electrical redundancy firmware to the camera network, enabling EMP-proofing and light-amplified X-ray vision. Upgrade is done immediately upon purchase." //I <3 pointless technobabble
+	icon = 'icons/obj/machines/camera.dmi'
+	icon_state = "xraycamera"
 	//This used to have motion sensing as well, but testing quickly revealed that giving it to the whole cameranet is PURE HORROR.
 	cost = 35 //Decent price for omniscience!
 	upgrade = TRUE
@@ -883,6 +889,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 /datum/ai_module/malf/upgrade/upgrade_turrets
 	name = "AI Turret Upgrade"
 	description = "Improves the power and health of all AI turrets. This effect is permanent. Upgrade is done immediately upon purchase."
+	icon = 'icons/obj/weapons/turrets.dmi'
+	icon_state = "standard_off"
 	cost = 30
 	upgrade = TRUE
 	unlock_text = span_notice("You establish a power diversion to your turrets, upgrading their health and damage.")
@@ -901,6 +909,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	name = "Enhanced Surveillance"
 	description = "Via a combination of hidden microphones and lip reading software, \
 		you are able to use your cameras to listen in on conversations. Upgrade is done immediately upon purchase."
+	icon = 'icons/obj/service/broadcast.dmi'
+	icon_state = "microphone"
 	cost = 30
 	upgrade = TRUE
 	unlock_text = span_notice("OTA firmware distribution complete! Cameras upgraded: Enhanced surveillance package online.")
@@ -916,6 +926,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	description = "Allows you to hack into a mech's onboard computer, shunting all processes into it and ejecting any occupants. \
 		Upgrade is done immediately upon purchase. Do not allow the mech to leave the station's vicinity or allow it to be destroyed. \
 		If your core is destroyed, you will be lose connection with the Doomsday Device and the countdown will cease."
+	icon = 'icons/mob/rideables/mecha.dmi'
+	icon_state = "durand"
 	cost = 30
 	upgrade = TRUE
 	unlock_text = span_notice("Virus package compiled. Select a target mech at any time. <b>You must remain on the station at all times. \
@@ -1069,7 +1081,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	cost = 20
 	power_type = /datum/action/innate/ai/ranged/emag
 	unlock_text = span_notice("You download an illicit software package from a syndicate database leak and integrate it into your firmware, fighting off a few kernel intrusions along the way.")
-	unlock_sound = SFX_SPARKS
+	unlock_sound = /datum/sound_effect/sparks
 
 /datum/action/innate/ai/ranged/emag
 	name = "Targeted Safeties Override"
@@ -1097,7 +1109,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		/obj/structure,
 		/obj/item/radio/intercom,
 		/obj/item/modular_computer,
-		/mob/living/simple_animal/bot,
+		/mob/living/basic/bot,
 		/mob/living/silicon,
 	)
 

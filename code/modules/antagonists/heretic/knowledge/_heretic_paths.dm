@@ -62,6 +62,8 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 	var/guaranteed_side_tier2
 	/// Knowledge guaranteed to show up in the third draft
 	var/guaranteed_side_tier3
+	/// Discount applied to shop knowledge costs for this path (subtracted from each tier cost, minimum 1)
+	var/shop_cost_discount = 0
 
 
 /datum/heretic_knowledge_tree_column/proc/get_ui_data(datum/antagonist/heretic/our_heretic, category)
@@ -88,6 +90,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 	var/datum/status_effect/heretic_passive/passive = new start.eldritch_passive()
 	data["passive"] = list(
 		"name" = initial(passive.name),
+		"recharge" = initial(passive.recharge_description),
 		"description" = passive.passive_descriptions.Copy(),
 	)
 	qdel(passive)
@@ -232,6 +235,10 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 
 	/// costs by index mapped to depth
 	var/list/shop_costs = list(1, 2, 2, 2, 3)
+	var/discount = heretic_path.shop_cost_discount
+	if(discount)
+		for(var/i in 1 to length(shop_costs))
+			shop_costs[i] = max(1, shop_costs[i] - discount)
 
 	// Relevant variables that we pull from the path
 	var/knowledge_tier1 = heretic_path.knowledge_tier1
@@ -288,6 +295,7 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 		list(
 			"parent_knowledge" = knowledge_tier1,
 			"guaranteed_knowledge" = guaranteed_draft_t1,
+			"supplementary_knowledge" = list(/datum/heretic_knowledge/spell/cloak_of_shadows),
 			"probabilities" = list("1" = 50, "2" = 50, "3" = 0, "4" = 0, "5" = 0),
 			HKT_DEPTH = HKT_DEPTH_DRAFT_1,
 		),
@@ -310,12 +318,19 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 		)
 	)
 	/// generate 3 drafts for each draft tier, while banning you from picking multiple drafts
-	for(var/draft in drafts)
+	for(var/list/draft as anything in drafts)
 		var/parent_knowledge_path = draft["parent_knowledge"]
 		var/datum/heretic_knowledge/guaranteed_draft = draft["guaranteed_knowledge"]
 		var/list/probabilities = draft["probabilities"]
 		var/depth = draft[HKT_DEPTH]
 		var/list/draft_blacklist = list()
+
+		for(var/datum/heretic_knowledge/supplementary as anything in draft["supplementary_knowledge"])
+			final_draft[supplementary] = make_knowledge_entry(supplementary, null, HERETIC_KNOWLEDGE_DRAFT, depth, 0)
+			final_draft[supplementary][HKT_PURCHASED_DEPTH] = supplementary::drafting_tier
+			var/supplementary_id = final_draft[supplementary][HKT_ID]
+			draft_blacklist[supplementary] = supplementary_id
+			heretic_research_tree[parent_knowledge_path][HKT_NEXT] |= supplementary_id
 
 		for(var/cycle in 1 to 3)
 			var/datum/heretic_knowledge/selected_knowledge
@@ -337,21 +352,14 @@ GLOBAL_LIST_INIT(heretic_path_datums, init_heretic_path_datums())
 				stack_trace("Failed to select a knowledge for heretic path [heretic_path] at depth [depth]. This should never happen.")
 				continue
 
-			final_draft[selected_knowledge] = make_knowledge_entry(
-				selected_knowledge,
-				null,
-				HERETIC_KNOWLEDGE_DRAFT,
-				depth,
-				0,
-			)
+			final_draft[selected_knowledge] = make_knowledge_entry(selected_knowledge, null, HERETIC_KNOWLEDGE_DRAFT, depth, 0)
 			final_draft[selected_knowledge][HKT_PURCHASED_DEPTH] = selected_knowledge::drafting_tier
 			var/draft_id = final_draft[selected_knowledge][HKT_ID]
 			draft_blacklist[selected_knowledge] = draft_id
 			heretic_research_tree[parent_knowledge_path][HKT_NEXT] |= draft_id
 
 		var/list/blacklist_ids = assoc_to_values(draft_blacklist)
-		for(var/blacklist_path in draft_blacklist)
-			var/id = draft_blacklist[blacklist_path]
+		for(var/blacklist_path, id in draft_blacklist)
 			final_draft[blacklist_path][HKT_BAN] += (blacklist_ids - id)
 
 	// all possible drafts are added to the shop, this time with costs

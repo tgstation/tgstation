@@ -21,9 +21,7 @@
 /// The caliber used as the default for ballistic guns.
 #define CALIBER_10MM "10mm"
 /// The caliber used by most revolver variants.
-#define CALIBER_357 ".357"
-/// The caliber used by the detective's revolver.
-#define CALIBER_38 ".38"
+#define CALIBER_357_38 ".357 or .38"
 /// The caliber used by the C-20r SMG, the tommygun, and the M1911 pistol.
 #define CALIBER_45 ".45"
 /// The caliber used by sniper rifles.
@@ -60,8 +58,6 @@
 #define CALIBER_HOOK "hook"
 /// The caliber used by the changeling tentacle mutation.
 #define CALIBER_TENTACLE "tentacle"
-/// The caliber used by pipeguns and pipe pistols
-#define CALIBER_JUNK "junk"
 /// The caliber used by the (gatfruit) peashooter
 #define CALIBER_PEA "pea"
 /// The caliber used in the naval cannon
@@ -105,3 +101,8 @@
 
 /// For how long projectile tracers linger
 #define PROJECTILE_TRACER_DURATION 0.3 SECONDS
+
+/// Ammo pressure values
+#define AMMO_CASING_PRESSURE_LOW 1
+#define AMMO_CASING_PRESSURE_MEDIUM 2
+#define AMMO_CASING_PRESSURE_EXTREME 3

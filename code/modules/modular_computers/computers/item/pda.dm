@@ -32,8 +32,8 @@
 	shell_capacity = SHELL_CAPACITY_SMALL
 	action_slots = ALL
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
@@ -362,6 +362,7 @@
 
 /obj/item/modular_computer/pda/silicon/Destroy()
 	silicon_owner = null
+	robotact = null
 	return ..()
 
 ///Silicons don't have the tools (or hands) to make circuits setups with their own PDAs.

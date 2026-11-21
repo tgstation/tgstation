@@ -88,8 +88,9 @@
 	speaking = FALSE
 	times_spoken_to++
 
-/obj/structure/speaking_tile/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	return interact(user)
+/obj/structure/speaking_tile/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/speaking_tile/attack_paw(mob/user, list/modifiers)
 	return interact(user)
@@ -139,7 +140,7 @@
 /obj/item/rupee/proc/put_in_crossers_hands(mob/crosser)
 	if(crosser.put_in_hands(src))
 		if(src != crosser.get_active_held_item())
-			crosser.swap_hand()
+			crosser.swap_hand(crosser.get_held_index_of_item(src))
 		equip_to_best_slot(crosser)
 
 /obj/item/rupee/equipped(mob/user, slot)

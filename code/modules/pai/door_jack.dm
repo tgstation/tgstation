@@ -110,9 +110,11 @@
 	playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 50, TRUE)
 	balloon_alert(src, "overriding...")
 	// Now begin hacking
-	if(!do_after(src, 15 SECONDS, hacking_cable.hacking_machine, timed_action_flags = NONE,	progress = TRUE))
+	if(!do_after(src, 15 SECONDS, hacking_cable.hacking_machine, timed_action_flags = NONE))
 		balloon_alert(src, "failed! retracting...")
 		QDEL_NULL(hacking_cable)
+		return FALSE
+	if(!hacking_cable?.hacking_machine)
 		return FALSE
 	var/obj/machinery/door/door = hacking_cable.hacking_machine
 	balloon_alert(src, "success")

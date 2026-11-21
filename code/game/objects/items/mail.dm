@@ -98,16 +98,19 @@
 		postmark_image.appearance_flags |= RESET_COLOR|KEEP_APART
 		. += postmark_image
 
-/obj/item/mail/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/mail/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Destination tagging
-	if(istype(W, /obj/item/dest_tagger))
-		var/obj/item/dest_tagger/destination_tag = W
+	if(!istype(tool, /obj/item/dest_tagger))
+		return NONE
+	var/obj/item/dest_tagger/destination_tag = tool
 
-		if(sort_tag != destination_tag.currTag)
-			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
-			to_chat(user, span_notice("*[tag]*"))
-			sort_tag = destination_tag.currTag
-			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', vol = 100, vary = TRUE)
+	if(sort_tag == destination_tag.currTag)
+		return ITEM_INTERACT_BLOCKING
+	var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
+	to_chat(user, span_notice("*[tag]*"))
+	sort_tag = destination_tag.currTag
+	playsound(loc, 'sound/machines/beep/twobeep_high.ogg', vol = 100, vary = TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mail/multitool_act(mob/living/user, obj/item/tool)
 	if(user.get_inactive_held_item() == src)
@@ -122,7 +125,7 @@
 		return FALSE
 	return after_unwrap(user)
 
-/// proc for unwrapping a mail. Goes just for an unwrapping procces, returns FALSE if it fails.
+/// Proc for attempting to open a letter. Returns FALSE if it fails.
 /obj/item/mail/proc/unwrap(mob/user)
 	if(recipient_ref)
 		var/datum/mind/recipient = recipient_ref.resolve()
@@ -137,7 +140,7 @@
 		return FALSE
 	return TRUE
 
-// proc that goes after unwrapping a mail.
+/// Handles additional effects after a letter has successfully been opened, like moving contents to the user, and playing sound effects.
 /obj/item/mail/proc/after_unwrap(mob/user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	for(var/obj/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
@@ -146,6 +149,8 @@
 		else
 			stuff.forceMove(drop_location())
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
+	if(recipient_ref) // We only want to care about mail with an owner.
+		SSeconomy.mail_opened += 1
 	qdel(src)
 	return TRUE
 
@@ -194,12 +199,10 @@
 		// 5% is not too high or low so that stacking multiple quirks doesn't tilt the weighted list too much
 		for(var/datum/quirk/quirk as anything in body.quirks)
 			if(LAZYLEN(quirk.mail_goodies))
-				var/quirk_goodie = pick(quirk.mail_goodies)
-				goodies[quirk_goodie] = 5
+				goodies[pick(quirk.mail_goodies)] = quirk.mail_weight
 
-		if(LAZYLEN(GLOB.holiday_mail))
-			var/holiday_goodie = pick(GLOB.holiday_mail)
-			goodies[holiday_goodie] = 5
+		if(length(GLOB.holiday_mail))
+			goodies[pick(GLOB.holiday_mail)] = 5
 
 	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)

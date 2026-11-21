@@ -1,6 +1,6 @@
 /obj/item/gun/ballistic/revolver
 	name = "\improper .357 revolver"
-	desc = "A suspicious revolver. Uses .357 ammo."
+	desc = "A revolver. Uses .357 ammo. Can also fit .38 Special."
 	icon_state = "revolver"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder
 	fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
@@ -31,7 +31,7 @@
 	else
 		chambered = magazine.stored_ammo[1]
 		if (ispath(chambered))
-			chambered = new chambered(src)
+			chambered = new chambered(magazine)
 			magazine.stored_ammo[1] = chambered
 	if(chambered)
 		RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
@@ -41,7 +41,7 @@
 	chamber_round()
 
 /obj/item/gun/ballistic/revolver/click_alt(mob/user)
-	spin()
+	spin_chamber(user)
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/revolver/fire_sounds()
@@ -57,19 +57,20 @@
 		if(play_click)
 			playsound(src, 'sound/items/weapons/gun/general/ballistic_click.ogg', fire_sound_volume, vary_fire_sound, frequency = click_frequency_to_use)
 
-/obj/item/gun/ballistic/revolver/verb/spin()
-	set name = "Spin Chamber"
-	var/mob/user = usr
+GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
+	spin_chamber(usr)
 
-	if(user.stat || !in_range(user, src))
+/obj/item/gun/ballistic/revolver/verb/spin_chamber(mob/living/user)
+	if(!istype(user) || IS_UNCONSCIOUS_OR_CRIT(user) || !in_range(user, src))
 		return
 
 	if (recent_spin > world.time)
 		return
+
 	recent_spin = world.time + spin_delay
 
 	if(do_spin())
-		playsound(usr, SFX_REVOLVER_SPIN, 30, FALSE)
+		playsound(usr, /datum/sound_effect/revolver_spin, 30, FALSE)
 		visible_message(span_notice("[user] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
 		balloon_alert(user, "chamber spun")
 	else
@@ -100,13 +101,20 @@
 	if(last_fire && last_fire + 15 SECONDS > world.time)
 		return span_rose("[user] touches the end of [src] to \the [A], using the residual heat to ignite it in a puff of smoke. What a badass.")
 
+/obj/item/gun/ballistic/revolver/syndicate
+	name = "suspicious revolver"
+	desc = "A suspicious revolver. Uses .357 ammo. Can also fit .38 Special."
+	projectile_damage_multiplier = 1.5
+
 /obj/item/gun/ballistic/revolver/c38
 	name = "\improper .38 revolver"
-	desc = "A classic, if not outdated, lethal firearm. Uses .38 Special rounds."
+	desc = "A classic, if not outdated, lethal firearm. Uses .38 Special rounds. It can also technically hold .357 round, but this gun was never designed \
+		with that much pressure in mind."
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	icon_state = "c38"
 	base_icon_state = "c38"
 	fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
+	pressure_threshold = AMMO_CASING_PRESSURE_LOW
 
 // 38 special skins
 /datum/atom_skin/det_revolver
@@ -151,48 +159,45 @@
 
 /obj/item/gun/ballistic/revolver/c38/detective
 	name = "\improper Colt Detective Special"
-	desc = "A classic, if not outdated, law enforcement firearm. Uses .38 Special rounds. \nSome spread rumors that if you loosen the barrel with a wrench, you can \"improve\" it."
-
-	can_modify_ammo = TRUE
-	initial_caliber = CALIBER_38
-	initial_fire_sound = 'sound/items/weapons/gun/revolver/shot.ogg'
-	alternative_caliber = CALIBER_357
-	alternative_fire_sound = 'sound/items/weapons/gun/revolver/shot_alt.ogg'
-	alternative_ammo_misfires = TRUE
-	misfire_probability = 0
-	misfire_percentage_increment = 25 //about 1 in 4 rounds, which increases rapidly every shot
-
+	desc = "A classic, if not outdated, law enforcement firearm. Uses .38 Special rounds. It can also technically hold .357 round, but this gun was never designed \
+		with that much pressure in mind. This one feels special. Like it has weight to it."
 	obj_flags = UNIQUE_RENAME
+	force = 18
+	throwforce = 20
+	wound_bonus = 10
 
 /obj/item/gun/ballistic/revolver/c38/detective/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/det_revolver)
 
-/obj/item/gun/ballistic/revolver/badass
+/obj/item/gun/ballistic/revolver/syndicate/badass
 	name = "\improper Badass Revolver"
-	desc = "A 7-chamber revolver manufactured by Waffle Corp to make their operatives feel Badass. Offers no tactical advantage whatsoever. Uses .357 ammo."
+	desc = "A 7-chamber revolver manufactured by Waffle Corp to make their operatives feel Badass. Offers no tactical advantage whatsoever. Uses .357 ammo. Can also fit \
+		.38 Special."
 	icon_state = "revolversyndie"
 
-/obj/item/gun/ballistic/revolver/badass/nuclear
+/obj/item/gun/ballistic/revolver/syndicate/badass/nuclear
 	pin = /obj/item/firing_pin/implant/pindicate
 
-/obj/item/gun/ballistic/revolver/cowboy
+/obj/item/gun/ballistic/revolver/syndicate/cowboy
 	desc = "A classic revolver, refurbished for modern use. Uses .357 ammo."
 	//There's already a cowboy sprite in there!
 	icon_state = "lucky"
 
-/obj/item/gun/ballistic/revolver/cowboy/nuclear
+/obj/item/gun/ballistic/revolver/syndicate/cowboy/nuclear
 	pin = /obj/item/firing_pin/implant/pindicate
 
 /obj/item/gun/ballistic/revolver/mateba
 	name = "\improper Unica 6 auto-revolver"
-	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo."
+	desc = "A retro high-powered autorevolver typically used by officers of the New Russia military. Uses .357 ammo. Can also fit .38 Special."
 	icon_state = "mateba"
+	projectile_damage_multiplier = 1.5
 
 /obj/item/gun/ballistic/revolver/golden
 	name = "\improper Golden revolver"
-	desc = "This ain't no game, ain't never been no show, And I'll gladly gun down the oldest lady you know. Uses .357 ammo."
+	desc = "This ain't no game, ain't never been no show, And I'll gladly gun down the oldest lady you know. Uses .357 ammo. Can also fit .38 Special."
 	icon_state = "goldrevolver"
 	fire_sound = 'sound/items/weapons/resonator_blast.ogg'
+	projectile_damage_multiplier = 1.5
 	recoil = 8
 	pin = /obj/item/firing_pin
 
@@ -247,7 +252,10 @@
 		spun = TRUE
 
 /obj/item/gun/ballistic/revolver/russian/can_shoot()
-	return TRUE // we ALWAYS want to shoot. even if we don't have a chambered round, even if our chambered round has no bullet
+	SHOULD_CALL_PARENT(FALSE)
+	// we ALWAYS want to shoot.
+	// even if we don't have a chambered round, even if our chambered round has no bullet
+	return TRUE
 
 /obj/item/gun/ballistic/revolver/russian/load_gun(obj/item/ammo, mob/living/user)
 	. = ..()
@@ -262,7 +270,7 @@
 
 /obj/item/gun/ballistic/revolver/russian/attack_self(mob/user)
 	if(!spun)
-		spin()
+		spin_chamber(user)
 		return TRUE
 	return ..()
 
@@ -359,7 +367,7 @@
 	user.visible_message(
 		span_danger("[user][is_target_face ? "": " cowardly"] aims \the [src] at [user.p_their()] [aimed_at_readable] as it goes off!"),
 		span_danger("You[is_target_face ? "": " cowardly"] aim \the [src] at your [aimed_at_readable] as it goes off![user.stat >= HARD_CRIT ? " <b>Everything suddenly goes black.</b>" : ""]"),
-		span_hear("You hear a grunt[user.stat == CONSCIOUS ? "" : ", followed by a thud"]!"),
+		span_hear("You hear a grunt[!IS_UNCONSCIOUS_OR_CRIT(user) ? "" : ", followed by a thud"]!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)

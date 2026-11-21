@@ -92,8 +92,6 @@
 	var/list/restricted_roles = list()
 	/// The species able to purchase this uplink item.
 	var/list/restricted_species = list()
-	/// The minimum amount of progression needed for this item to be added to uplinks.
-	var/progression_minimum = 0
 	/// The minimum number of joined players (so not observers) needed for this item to be added to uplinks.
 	var/population_minimum = 0
 	/// Whether this purchase is visible in the purchase log.
@@ -151,10 +149,14 @@
 	var/atom/spawned_item = spawn_item(item, user, uplink_handler, source)
 	log_uplink("[key_name(user)] purchased [src] for [cost] telecrystals from [source]'s uplink")
 	user.playsound_local(get_turf(user), 'sound/effects/kaching.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
-	if(purchase_log_vis && uplink_handler.purchase_log)
-		uplink_handler.purchase_log.LogPurchase(spawned_item, src, cost)
+	if(uplink_handler.purchase_log)
+		log_purchase(spawned_item, uplink_handler)
 	if(lock_other_purchases)
 		uplink_handler.shop_locked = TRUE
+	return spawned_item
+
+/datum/uplink_item/proc/log_purchase(atom/spawned_item, datum/uplink_handler/uplink_handler)
+	uplink_handler.purchase_log.log_purchase(spawned_item, src, cost)
 
 /// Spawns an item in the world
 /datum/uplink_item/proc/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)

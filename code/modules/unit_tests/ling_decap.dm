@@ -18,7 +18,7 @@
 	TEST_ASSERT_NULL(locate(/obj/item/organ/brain) in noggin, "Changeling's head failed to drop its brain.")
 	TEST_ASSERT_NULL(oldbrain.brainmob.mind, "Changeling's mind was moved to their brain after decapitation and organ dropping, but it should have remained in their body.")
 
-	TEST_ASSERT_EQUAL(ling.stat, CONSCIOUS, "Changeling was not conscious after losing their head.")
+	TEST_ASSERT_EQUAL(ling.stat, STABLE, "Changeling was not conscious after losing their head.")
 
 	// Cleanup
 	qdel(noggin)

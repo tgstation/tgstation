@@ -82,6 +82,7 @@
 	name = "wrapped egg"
 	desc = "A chocolate egg containing a little something special. Unwrap and enjoy!"
 	icon_state = "egg"
+	inhand_icon_state = "egg"
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/food/egg.dmi'
@@ -98,7 +99,7 @@
 	var/static/list/prize_list = list(/obj/item/clothing/head/costume/bunnyhead,
 		/obj/item/clothing/suit/costume/bunnysuit,
 		/obj/item/storage/backpack/satchel/bunnysatchel,
-		/obj/item/food/grown/carrot,
+		/obj/item/food/grown/carrotlike/carrot,
 		/obj/item/toy/balloon,
 		/obj/item/toy/gun,
 		/obj/item/toy/sword,

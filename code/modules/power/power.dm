@@ -324,18 +324,17 @@
 
 // attach a wire to a power machine - leads from the turf you are standing on
 //almost never called, overwritten by all power machines but terminal and generator
-/obj/machinery/power/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/coil = W
-		var/turf/T = user.loc
-		if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !isfloorturf(T))
-			return
-		if(get_dist(src, user) > 1)
-			return
-		coil.place_turf(T, user)
-	else
-		return ..()
-
+/obj/machinery/power/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/cable_coil))
+		return NONE
+	var/obj/item/stack/cable_coil/coil = tool
+	var/turf/userturf = user.loc
+	if(userturf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE || !isfloorturf(userturf))
+		return ITEM_INTERACT_BLOCKING
+	if(get_dist(src, user) > 1)
+		return ITEM_INTERACT_BLOCKING
+	coil.place_turf(userturf, user)
+	return ITEM_INTERACT_SUCCESS
 
 ///////////////////////////////////////////
 // Powernet handling helpers
@@ -484,7 +483,7 @@
 		if(!in_range(source, victim))
 			return FALSE
 
-	if(victim.wearing_shock_proof_gloves())
+	if(victim.get_item_by_slot(ITEM_SLOT_GLOVES)?.siemens_coefficient == 0)
 		SEND_SIGNAL(victim, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
 		return FALSE //to avoid spamming with insulated gloves on
 

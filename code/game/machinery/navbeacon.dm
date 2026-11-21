@@ -119,24 +119,23 @@
 	. = ..()
 	icon_state = "[base_icon_state][panel_open]"
 
-/obj/machinery/navbeacon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/navbeacon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/turf/our_turf = loc
 	if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-		return // prevent intraction when T-scanner revealed
+		return ITEM_INTERACT_BLOCKING// prevent interaction when T-scanner revealed
 
-	if (attacking_item.GetID())
-		if(!panel_open)
-			if (allowed(user))
-				controls_locked = !controls_locked
-				balloon_alert(user, "controls [controls_locked ? "locked" : "unlocked"]")
-				SStgui.update_uis(src)
-			else
-				balloon_alert(user, "access denied")
-		else
-			balloon_alert(user, "panel open!")
-		return
-
-	return ..()
+	if(!tool.GetID())
+		return NONE
+	if(panel_open)
+		balloon_alert(user, "panel open!")
+		return ITEM_INTERACT_BLOCKING
+	if (!allowed(user))
+		balloon_alert(user, "access denied")
+		return ITEM_INTERACT_BLOCKING
+	controls_locked = !controls_locked
+	balloon_alert(user, "controls [controls_locked ? "locked" : "unlocked"]")
+	SStgui.update_uis(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/navbeacon/attack_ai(mob/user)
 	interact(user)

@@ -1,6 +1,6 @@
 ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to CC.", ADMIN_CATEGORY_EVENTS)
-	var/datum/fax_panel_interface/ui = new /datum/fax_panel_interface(user.mob)
-	ui.ui_interact(user.mob)
+	var/datum/fax_panel_interface/tgui = new(user.mob)
+	tgui.ui_interact(user.mob)
 
 /// Admin Fax Panel. Tool for sending fax messages faster.
 /datum/fax_panel_interface

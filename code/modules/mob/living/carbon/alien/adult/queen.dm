@@ -83,7 +83,7 @@
 		/datum/action/cooldown/alien/promote,
 	)
 	grant_actions_by_list(innate_actions)
-
+	add_movespeed_mod_immunities(type, /datum/movespeed_modifier/tail_dragger)
 	return ..()
 
 /mob/living/carbon/alien/adult/royal/queen/set_name()
@@ -132,14 +132,14 @@
 	return TRUE
 
 /datum/action/cooldown/alien/promote/Activate(atom/target)
-	var/obj/item/queen_promotion/existing_promotion = locate() in owner.held_items
+	var/obj/item/queen_promotion/existing_promotion = owner.is_holding_item_of_type(__IMPLIED_TYPE__)
 	if(existing_promotion)
 		to_chat(owner, span_noticealien("You discard [existing_promotion]."))
 		owner.temporarilyRemoveItemFromInventory(existing_promotion)
 		qdel(existing_promotion)
 		return TRUE
 
-	if(!owner.get_empty_held_indexes())
+	if(!length(owner.get_empty_held_indexes()))
 		to_chat(owner, span_warning("You must have an empty hand before preparing the parasite."))
 		return FALSE
 
@@ -175,7 +175,7 @@
 		to_chat(queen, span_noticealien("You cannot promote a child right now!"))
 		return
 
-	if(to_promote.stat != CONSCIOUS || !to_promote.mind || !to_promote.key)
+	if(IS_UNCONSCIOUS_OR_CRIT(to_promote) || !to_promote.mind || !to_promote.key)
 		return
 
 	queen.adjustPlasma(-promotion.promotion_plasma_cost)

@@ -57,27 +57,6 @@
 	* Can be set to ALWAYS_BLACKLIST_RESULT or NEVER_BLACKLIST_RESULT to override the default behavior.
 	*/
 	var/blacklist_result = BLACKLIST_RESULT_IF_NOT_IN_REQS
-	/// Global crafting blacklist. These should be excluded from all crafting recipes no matter what.
-	var/static/list/global_blacklist = typecacheof(list(
-		/obj/item/cautery/augment,
-		/obj/item/cautery/cruel/augment,
-		/obj/item/circular_saw/augment,
-		/obj/item/circular_saw/cruel/augment,
-		/obj/item/crowbar/cyborg,
-		/obj/item/hemostat/augment,
-		/obj/item/hemostat/cruel/augment,
-		/obj/item/multitool/cyborg,
-		/obj/item/retractor/augment,
-		/obj/item/retractor/cruel/augment,
-		/obj/item/scalpel/augment,
-		/obj/item/scalpel/cruel/augment,
-		/obj/item/screwdriver/cyborg,
-		/obj/item/surgicaldrill/augment,
-		/obj/item/surgicaldrill/cruel/augment,
-		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/wirecutters/cyborg,
-		/obj/item/wrench/cyborg,
-	))
 
 /datum/crafting_recipe/New()
 	if(!name && result)

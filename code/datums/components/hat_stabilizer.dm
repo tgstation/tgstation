@@ -104,13 +104,13 @@
 	else
 		base_examine += span_notice("There's nothing placed on [parent]. Yet.")
 
-/datum/component/hat_stabilizer/proc/get_worn_overlays(atom/movable/source, list/overlays, mutable_appearance/standing, isinhands, icon_file)
+/datum/component/hat_stabilizer/proc/get_worn_overlays(atom/movable/source, list/overlays, mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	SIGNAL_HANDLER
 	if(isinhands)
 		return
 	if(!attached_hat)
 		return
-	var/mutable_appearance/worn_overlay = attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER - 0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+	var/mutable_appearance/worn_overlay = attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER - 0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi', bodyshape = bodyshape)
 	worn_overlay.appearance_flags |= RESET_COLOR
 	// loose hats are slightly angled
 	if(loose_hat)
@@ -121,13 +121,13 @@
 	worn_overlay.pixel_z = pixel_z_offset + attached_hat.worn_y_offset
 	overlays += worn_overlay
 
-/datum/component/hat_stabilizer/proc/get_separate_worn_overlays(atom/movable/source, list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+/datum/component/hat_stabilizer/proc/get_separate_worn_overlays(atom/movable/source, list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, bodyshape = NONE)
 	SIGNAL_HANDLER
 	if (isinhands)
 		return
 	if(!attached_hat)
 		return
-	var/mutable_appearance/worn_overlay = attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER - 0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+	var/mutable_appearance/worn_overlay = attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER - 0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi', bodyshape = bodyshape)
 	for (var/mutable_appearance/overlay in worn_overlay.overlays)
 		overlay.layer = -ABOVE_BODY_FRONT_HEAD_LAYER + 0.1
 	// loose hats are slightly angled

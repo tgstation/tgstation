@@ -46,7 +46,7 @@
  */
 
 /mob/living/carbon/proc/dream_sequence(list/dream_fragments, datum/dream/current_dream)
-	if(stat != UNCONSCIOUS || HAS_TRAIT(src, TRAIT_CRITICAL_CONDITION))
+	if(!IS_UNCONSCIOUS(src) || stat >= HARD_CRIT)
 		REMOVE_TRAIT(src, TRAIT_DREAMING, DREAMING_SOURCE)
 		current_dream.OnDreamEnd(src)
 		SEND_SIGNAL(src, COMSIG_END_DREAMING, current_dream)
@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(dreams, populate_dream_list())
 	addtimer(CALLBACK(src, PROC_REF(StopSound), dreamer), 5 SECONDS)
 
 /datum/dream/hear_something/proc/ReserveSoundChannel()
-	reserved_sound_channel = SSsounds.reserve_sound_channel(src)
+	reserved_sound_channel = SSsounds.reserve_sound_channel_for_datum(src)
 	UnregisterSignal(SSsounds, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /datum/dream/hear_something/proc/PlayRandomSound(mob/living/carbon/dreamer)

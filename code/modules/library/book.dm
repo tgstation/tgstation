@@ -123,6 +123,7 @@
 	if(!can_read_book(user))
 		return
 
+	playsound(user, 'sound/items/handling/paper_pickup.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
 	credit_book_to_reader(user)
 	display_content(user)
@@ -204,7 +205,7 @@
 
 	name = newtitle
 	book_data.set_title(html_decode(newtitle)) //Don't want to double encode here
-	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	playsound(src, /datum/sound_effect/writing_pen, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/book/proc/vandalize_contents(mob/living/user, obj/item/tool)
@@ -216,7 +217,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	book_data.set_content(html_decode(content))
-	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	playsound(src, /datum/sound_effect/writing_pen, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/book/proc/vandalize_author(mob/living/user, obj/item/tool)
@@ -228,7 +229,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	book_data.set_author(html_decode(author)) //Setting this encodes, don't want to double up
-	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	playsound(src, /datum/sound_effect/writing_pen, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	return ITEM_INTERACT_SUCCESS
 
 /// Called when user clicks on the book with a carving utensil. Attempts to carve the book.
@@ -281,14 +282,14 @@
 	if(!ui)
 		ui = new(user, src, ui_name)
 		ui.open()
-		playsound(src, SFX_PAGE_TURN, 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, /datum/sound_effect/page_turn, 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/tgui_book/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	if(action == "play_flip_sound")
-		playsound(src, SFX_PAGE_TURN, 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, /datum/sound_effect/page_turn, 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/tgui_book/manual/ui_state(mob/user)
 	return GLOB.book_state
@@ -407,6 +408,7 @@
 			disease_data["spread_by"] = disease_type::spread_text || get_disease_spread_text(disease_type::spread_flags)
 			disease_data["cured_by"] = disease_type::cure_text
 			disease_data["id"] = disease_type
+			disease_data["level"] = "N/A"
 			disease_info += list(disease_data)
 
 		for(var/datum/symptom/symptom_type as anything in valid_subtypesof(/datum/symptom))
@@ -419,6 +421,7 @@
 			symptom_data["spread_by"] = "N/A"
 			symptom_data["cured_by"] = symptom_type::symptom_cure::name
 			symptom_data["id"] = symptom_type
+			symptom_data["level"] = "[symptom_type::level]"
 			disease_info += list(symptom_data)
 
 		var/list/advanced_virus_info = list(

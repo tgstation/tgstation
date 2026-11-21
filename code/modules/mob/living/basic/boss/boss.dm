@@ -8,7 +8,7 @@
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	faction = list(FACTION_MINING, FACTION_BOSS)
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	physiology = list(TOX = 0, OXY = 0, STAMINA = 0)
 	obj_damage = 400
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
@@ -18,7 +18,7 @@
 	pull_force = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	/// Name for the GPS signal of the megafauna
 	var/gps_name = null
 	/// What crusher trophy/trophies this mob drops, if any
@@ -44,6 +44,7 @@
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/death_drops, string_list(regular_loot))
+	AddElement(/datum/element/block_mining_mob_respawns, 10)
 	handle_crusher_loot()
 	handle_achievements()
 
@@ -81,11 +82,12 @@
 		return
 	if(should_devour(target))
 		devour(target)
-	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
+	return
 
 /// Determines if this mob is worth devouring
 /mob/living/basic/boss/proc/should_devour(mob/living/victim)
-	return victim.stat == DEAD || (victim.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(victim, TRAIT_NODEATH))
+	return victim.stat == DEAD || (victim.health <= victim.dead_threshold && HAS_TRAIT(victim, TRAIT_NODEATH))
 
 /// Devours a target and restores health to the megafauna
 /mob/living/basic/boss/proc/devour(mob/living/victim)
@@ -128,4 +130,3 @@
 		guaranteed_drop = 0.6,\
 		drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
 	)
-

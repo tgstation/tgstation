@@ -1,6 +1,6 @@
 /datum/mutation/self_amputation
 	name = "Autotomy"
-	desc = "Allows a creature to voluntary discard a random appendage."
+	desc = "The subject gains the ability to voluntarily discard a random appendage."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your joints feel loose.")
 	instability = POSITIVE_INSTABILITY_MINOR

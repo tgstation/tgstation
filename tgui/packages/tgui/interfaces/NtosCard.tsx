@@ -123,7 +123,7 @@ export const NtosCardContent = (props) => {
                 selectedList={modified_card.access_on_card}
                 wildcardFlags={wildcard_flags}
                 wildcardSlots={modified_card.wildcard_slots}
-                trim_access={modified_card.trim_access}
+                trimAccess={modified_card.trim_access}
                 accessFlags={access_flags}
                 accessFlagNames={access_flag_names}
                 showBasic={!!show_basic}

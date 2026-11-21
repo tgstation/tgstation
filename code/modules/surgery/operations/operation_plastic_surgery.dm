@@ -29,7 +29,7 @@
 		return TRUE //skip name selection if fixing disfigurement
 
 	var/list/names = list()
-	if(isabductor(surgeon))
+	if(HAS_MIND_TRAIT(surgeon, TRAIT_ABDUCTOR_KNOWLEDGE))
 		for(var/j in 1 to 9)
 			names += "Subject [limb.owner.gender == MALE ? "i" : "o"]-[pick("a", "b", "c", "d", "e")]-[rand(10000, 99999)]"
 
@@ -92,8 +92,8 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You alter [oldname]'s appearance completely, [limb.owner.p_they()] is now [operation_args[OPERATION_NEW_NAME]]."),
-		span_notice("[surgeon] alters [oldname]'s appearance completely, [limb.owner.p_they()] is now [operation_args[OPERATION_NEW_NAME]]!"),
+		span_notice("You alter [oldname]'s appearance completely, [limb.owner.p_they()] [limb.owner.p_are()] now [operation_args[OPERATION_NEW_NAME]]."),
+		span_notice("[surgeon] alters [oldname]'s appearance completely, [limb.owner.p_they()] [limb.owner.p_are()] now [operation_args[OPERATION_NEW_NAME]]!"),
 		span_notice("[surgeon] finishes the operation on [limb.owner ? "[limb.owner]'s face." : limb]."),
 	)
 	display_pain(limb.owner, "The pain fades, your face feels new and unfamiliar!")

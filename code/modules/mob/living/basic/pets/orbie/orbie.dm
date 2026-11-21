@@ -21,12 +21,12 @@
 	pass_flags = PASSMOB
 	move_force = 0
 	move_resist = 0
-	pull_force = 0
+	pull_force = MOVE_FORCE_NONE
 	minimum_survivable_temperature = TCMB
 	maximum_survivable_temperature = INFINITY
 	death_message = "fades out of existence!"
 	ai_controller = /datum/ai_controller/basic_controller/orbie
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 	///are we happy or not?
 	var/happy_state = FALSE
 	///overlay for our neutral eyes

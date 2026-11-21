@@ -14,6 +14,7 @@
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/wiremod_scanner/Initialize(mapload)
 	. = ..()
@@ -53,7 +54,7 @@
 /obj/item/circuit_component/wiremod_scanner/proc/handle_interaction(atom/source, mob/user, atom/target, ...)
 	SIGNAL_HANDLER
 	source.balloon_alert(user, "scanned object")
-	playsound(source, SFX_TERMINAL_TYPE, 25, FALSE)
+	playsound(source, /datum/sound_effect/terminal_type, 25, FALSE)
 	attacker.set_output(user)
 	attacking.set_output(target)
 	signal.set_output(COMPONENT_SIGNAL)

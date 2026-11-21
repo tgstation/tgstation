@@ -114,21 +114,28 @@ Each gas mixture has an associative list, gases, which maps according to a key t
 
 Each type of gas is defined by defining a new subtype of /datum/gas. These datums do not get instantiated; they merely serve as a convenient and familiar means for a coder unfamiliar with the inner workings of listmos to define a new gas. Additionally, the type paths serve a second use as the keys used to access a particular gas within the gases list. It is easiest to demonstrate the manipulation of gas, including these list accesses, with an example.
 
+### Vectorized xgm-like system
+Current system uses two associative arrays: `moles` and `moles_archived` with the key being `/datum/gas`. The gas metadata array is stored in a static variable `gas_mixture::gas_meta`. The layout of keys in the array is `gas_meta[META_INDEX][gas_path]`. This allows us to use vector functions like `values_sum` and `values_dot` (introduced in BYOND v516). This approach showed improvement of ~20% on process_cell and memory footprint stayed the same.
+
+While these vector functions are extremely fast, they can only work with associative arrays of number. To calculate total moles you would write `values_sum(moles)` and to calculate heat capacity, it would be `values_dot(moles, gas_meta[META_GAS_SPECIFIC_HEAT])`. This does not seem like a lot, but when a subsytem is doing 1000 updates each simulation tick every microsecond matters.
+
+Another benefit of using one-dimensional associative arrays is that for any arithmetic or logic operation a missing key acts like a 0. For example you could write `moles[/datum/gas/oxygen] += 10` even if `/datum/gas/oxygen` is not in the list.
+
 ### Interfacing with a Gas Mixture
 
 ```DM
 var/datum/gas_mixture/air = new
 air.assert_gas(/datum/gas/oxygen)
-air.gases[/datum/gas/oxygen][MOLES] = 100
-world << air.gases[/datum/gas/oxygen][GAS_META][META_GAS_NAME] //outputs "Oxygen"
-world << air.gases.heat_capacity() //outputs 2000 (100 mol * 20 J/K/mol)
-air.gases[/datum/gas/oxygen][MOLES] -= 110
+air.moles[/datum/gas/oxygen] = 100
+world << air.gas_meta[META_GAS_NAME][/datum/gas/oxygen] //outputs "Oxygen"
+world << air.heat_capacity() //outputs 2000 (100 mol * 20 J/K/mol)
+air.moles[/datum/gas/oxygen] -= 110
 air.garbage_collect() //oxygen is now removed from the gases list, since it was empty
 ```
 
 _Snippet 4.2: gas mixture usage examples_
 
-Of particular note in this snippet are the two procs assert_gas() and garbage_collect(). These procs are very important while interfacing with gas mixtures. If you are uncertain about whether a given mixture has a particular gas, you must use assert_gas() before any reads or writes from the gas. If you fail to use assert_gas() then there will be runtime errors when you try to access the inner lists. When you remove any number of moles from a given gas, be sure to call garbage_collect(). This proc removes all gases which have mole counts less than or equal to 0. This is a memory and performance enhancement for list accesses achieved by reducing the size of the list, and also saves us from having to do sanity checks for negative moles whenever gas is removed. As a quick reference, here is a list of common procs/vars/list indices which the average coder may wish to use when interfacing with a gas mixture.
+Of particular note in this snippet are the two procs assert_gas() and garbage_collect(). These procs are very important while interfacing with gas mixtures. If you are uncertain about whether a given mixture has a particular gas, you must use assert_gas() before any reads or writes from the gas. When you remove any number of moles from a given gas, be sure to call garbage_collect(). This proc removes all gases which have mole counts less than or equal to 0. This is a memory and performance enhancement for list accesses achieved by reducing the size of the list, and also saves us from having to do sanity checks for negative moles whenever gas is removed. As a quick reference, here is a list of common procs/vars/list indices which the average coder may wish to use when interfacing with a gas mixture.
 
 ##### Gas Mixture Datum
 
@@ -149,9 +156,13 @@ It's also implemented by `/datum/gas_mixture/immutable/planetary`, which is used
 
 ##### Gas List
 
-- _`gases[path][MOLES]`_ - Quantity of a particular gas within a mixture.
-- _`gases[path][GAS_META][META_GAS_NAME]`_ - The long name of a gas, ex. "Oxygen" or "Hyper-noblium"
-- _`gases[path][GAS_META][META_GAS_ID]`_ - The internal ID of a given gas, ex. "o2" or "nob"
+- _`moles[path]`_ - Quantity of a particular gas within a mixture.
+- _`gas_meta[META_GAS_NAME][path]`_ - The long name of a gas, ex. "Oxygen" or "Hyper-noblium"
+- _`gas_meta[META_GAS_ID][path]`_ - The internal ID of a given gas, ex. "o2" or "nob"
+
+##### Gas Meta
+As was said previously gas metadata is stored in a static variable `gas_mixture.gas_meta`. This is done so you can easily access this variable from within gas_mixture, but if you are outside of gas_mixture code and you need gas metadata you can use convenience macro `GAS_META`. There is also third name for that list and it is `GLOB.meta_gas_info`. All of those variables point to the same list and you can use either. As the rule of thumb, in the performance critical code use `GAS_META` or `gas_meta`, otherwise `GLOB.meta_gas_info`.
+
 
 ### Reactions
 

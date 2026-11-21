@@ -3,7 +3,7 @@
 	guardian_type = GUARDIAN_GASEOUS
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 0)
+	physiology = list(OXY = 0, STAMINA = 0)
 	range = 7
 	playstyle_string = span_holoparasite("As a <b>gaseous</b> type, you have only light damage resistance, but you can expel gas in an area. In addition, your punches cause sparks, and you make your summoner inflammable.")
 	creator_name = "Gaseous"
@@ -33,19 +33,14 @@
 	. = ..()
 	if (QDELETED(src))
 		return
-	RegisterSignal(summoner, COMSIG_LIVING_IGNITED, PROC_REF(on_summoner_ignited))
+	ADD_TRAIT(summoner, TRAIT_NOFIRE, REF(src))
 	RegisterSignal(summoner, COMSIG_LIVING_LIFE, PROC_REF(on_summoner_life))
 
 /mob/living/basic/guardian/gaseous/cut_summoner(different_person)
 	if (!isnull(summoner))
-		UnregisterSignal(summoner, list(COMSIG_LIVING_IGNITED, COMSIG_LIVING_LIFE))
+		REMOVE_TRAIT(summoner, TRAIT_NOFIRE, REF(src))
+		UnregisterSignal(summoner, COMSIG_LIVING_LIFE)
 	return ..()
-
-/// Prevent our summoner from being on fire
-/mob/living/basic/guardian/gaseous/proc/on_summoner_ignited(mob/living/source)
-	SIGNAL_HANDLER
-	source.extinguish_mob()
-	source.set_fire_stacks(0, remove_wet_stacks = FALSE)
 
 /// Maintain our summoner at a stable body temperature
 /mob/living/basic/guardian/gaseous/proc/on_summoner_life(mob/living/source, seconds_per_tick)
@@ -164,7 +159,7 @@
 
 	var/datum/gas_mixture/mix_to_spawn = new()
 	mix_to_spawn.add_gas(active_gas)
-	mix_to_spawn.gases[active_gas][MOLES] = possible_gases[active_gas] * seconds_per_tick
+	mix_to_spawn.moles[active_gas] = possible_gases[active_gas] * seconds_per_tick
 	mix_to_spawn.temperature = T20C
 	var/turf/open/our_turf = get_turf(owner)
 	our_turf.assume_air(mix_to_spawn)

@@ -79,7 +79,7 @@
 	if(marked == target)
 		to_chat(user, span_warning("This specimen is already marked!"))
 		return
-	if(isabductor(target) || iscow(target))
+	if(HAS_TRAIT(target, TRAIT_ABDUCTOR_QUICK_SCAN))
 		marked_target_weakref = WEAKREF(target)
 		to_chat(user, span_notice("You mark [target] for future retrieval."))
 	else
@@ -241,7 +241,7 @@
 	fail_message = span_abductor("Firing error, please contact Command.")
 
 /obj/item/firing_pin/abductor/pin_auth(mob/living/user)
-	. = isabductor(user)
+	return HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_KNOWLEDGE)
 
 /obj/item/gun/energy/alien
 	name = "alien pistol"
@@ -252,7 +252,7 @@
 	inhand_icon_state = "alienpistol"
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
-/obj/item/gun/energy/shrink_ray
+/obj/item/gun/energy/recharge/shrink_ray
 	name = "shrink ray blaster"
 	desc = "This is a piece of frightening alien tech that enhances the magnetic pull of atoms in a localized space to temporarily make an object shrink. \
 			That or it's just space magic. Either way, it shrinks stuff."
@@ -261,20 +261,21 @@
 	inhand_icon_state = "shrink_ray"
 	icon_state = "shrink_ray"
 	automatic_charge_overlays = FALSE
-	fire_delay = 3 SECONDS
-	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
+	recharge_time = 2 SECONDS
+	recharge_sound = 'sound/items/eshield_recharge.ogg'
+	holds_charge = TRUE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
 
-/obj/item/gun/energy/shrink_ray/suicide_act(mob/living/user)
+/obj/item/gun/energy/recharge/shrink_ray/suicide_act(mob/living/user)
 	. = ..()
 	user.visible_message(span_suicide("[user] points [src] at [user.p_their()] head, it looks like [user.p_theyre()] going to commit suicide!"))
 	// we want an animation, so lets manually handle suicide.
 	addtimer(CALLBACK(src, PROC_REF(shrink_death), user), 0)
 	return MANUAL_SUICIDE
 
-/obj/item/gun/energy/shrink_ray/proc/shrink_death(mob/living/user)
-	var/shrink = user.transform.Scale(0.1,0.1)
-	animate(user, 30 SECONDS, transform=shrink)
+/obj/item/gun/energy/recharge/shrink_ray/proc/shrink_death(mob/living/user)
+	var/shrink = user.transform.Scale(0.1, 0.1)
+	animate(user, 30 SECONDS, transform = shrink)
 	// Have to wait until the animate is done
 	sleep(30 SECONDS)
 	user.gib(DROP_ALL_REMAINS)
@@ -571,6 +572,7 @@ Return to step 11 of normal process."}
 	icon_angle = 180
 	surgical_tray_overlay = "scalpel_alien"
 	toolspeed = 0.25
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/hemostat/alien
 	name = "alien hemostat"
@@ -579,6 +581,7 @@ Return to step 11 of normal process."}
 	surgical_tray_overlay = "hemostat_alien"
 	icon_angle = 180
 	toolspeed = 0.25
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/retractor/alien
 	name = "alien retractor"
@@ -587,6 +590,7 @@ Return to step 11 of normal process."}
 	surgical_tray_overlay = "retractor_alien"
 	icon_angle = 180
 	toolspeed = 0.25
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circular_saw/alien
 	name = "alien saw"
@@ -595,6 +599,7 @@ Return to step 11 of normal process."}
 	surgical_tray_overlay = "saw_alien"
 	icon_angle = 180
 	toolspeed = 0.25
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/surgicaldrill/alien
 	name = "alien drill"
@@ -603,6 +608,7 @@ Return to step 11 of normal process."}
 	surgical_tray_overlay = "drill_alien"
 	icon_angle = 180
 	toolspeed = 0.25
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/cautery/alien
 	name = "alien cautery"
@@ -612,6 +618,7 @@ Return to step 11 of normal process."}
 	surgical_tray_overlay = "cautery_alien"
 	icon_angle = 180
 	toolspeed = 0.25
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/head/helmet/abductor
 	name = "agent headgear"

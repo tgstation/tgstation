@@ -147,7 +147,7 @@
 		return TRUE
 	. = TRUE
 	if(isAI(user) || iscyborg(user))
-		if(aidisabled)
+		if(aidisabled || user.has_status_effect(/datum/status_effect/firewalled))
 			. = FALSE
 		else if(istype(malfai) && !(malfai == user || (user in malfai.connected_robots)))
 			. = FALSE
@@ -155,7 +155,7 @@
 		balloon_alert(user, "it's disabled!")
 	return .
 
-/obj/machinery/power/apc/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+/obj/machinery/power/apc/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
 	if(isalien(shocking))
 		return FALSE
 	shock_source = src

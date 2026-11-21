@@ -43,9 +43,7 @@
 
 			if(player_mob.stat == DEAD)
 				return FALSE
-			if(issilicon(player_mob) || isbrain(player_mob))
-				return FALSE
-			if(istype(player_mob) && (player_mob.dna?.species?.id == SPECIES_ZOMBIE_INFECTIOUS))
+			if(HAS_TRAIT(player_mob, TRAIT_NEVER_CONSIDERED_ALIVE))
 				return FALSE
 			return TRUE
 
@@ -174,6 +172,15 @@
 /proc/get_active_player_count(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
 	return length(get_active_player_list(alive_check, afk_check, human_check))
 
+/proc/get_crew_casualty_ratio()
+	var/total_crew = 0
+	var/dead_or_mia = 0
+	for(var/datum/mind/crew_mind as anything in get_crewmember_minds())
+		if(isnull(crew_mind.current) || crew_mind.current.stat >= HARD_CRIT)
+			dead_or_mia += 1
+		total_crew += 1
+	return total_crew > 0 ? (dead_or_mia / total_crew) : 0
+
 ///Uses stripped down and bastardized code from respawn character
 /proc/make_body(mob/dead/observer/ghost_player)
 	if(!ghost_player || !ghost_player.key)
@@ -189,6 +196,12 @@
 
 	return new_character
 
+/proc/get_non_admin_ghosts()
+	. = GLOB.current_observers_list | GLOB.dead_player_list
+	for(var/client/admin as anything in GLOB.admins)
+		. -= admin.mob
+	return .
+
 ///sends a whatever to all playing players; use instead of to_chat(world, where needed)
 /proc/send_to_playing_players(thing)
 	for(var/player_mob in GLOB.player_list)
@@ -203,7 +216,7 @@
 			flashed_client = player_mob.client
 	if(!flashed_client || (!flashed_client.prefs.read_preference(/datum/preference/toggle/window_flashing) && !ignorepref))
 		return
-	winset(flashed_client, "mainwindow", "flash=5")
+	winset(flashed_client, SKIN_MAINWINDOW, "flash=5")
 
 /**
  * Recursively checks if an item is inside a given type/atom, even through layers of storage.
@@ -307,17 +320,20 @@
 
 	return FALSE
 
-///Disable power in the station APCs
+/**
+ * Disables power in most station APCs temporarily
+ *
+ * * duration_min - the minimum duration of the power failure in seconds (not deciseconds)
+ * * duration_max - the maximum duration of the power failure in seconds (not deciseconds)
+ */
 /proc/power_fail(duration_min, duration_max)
 	for(var/obj/machinery/power/apc/current_apc as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc))
-		if(!current_apc.cell || !SSmapping.level_trait(current_apc.z, ZTRAIT_STATION))
-			continue
-		var/area/apc_area = current_apc.area
-		if(is_type_in_typecache(apc_area, GLOB.typecache_powerfailure_safe_areas))
+		if(!current_apc.cell || !SSmapping.level_trait(current_apc.z, ZTRAIT_STATION) || HAS_TRAIT(current_apc.area, TRAIT_AREA_BLOCK_POWER_FAIL))
 			continue
 
-		var/duration = rand(duration_min,duration_max)
+		var/duration = rand(duration_min, duration_max)
 		current_apc.energy_fail(duration)
+		CHECK_TICK
 
 /**
  * Sends a round tip to a target. If selected_tip is null, a random tip will be sent instead (5% chance of it being silly).

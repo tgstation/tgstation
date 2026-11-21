@@ -58,7 +58,7 @@
 		LAZYNULL(motion_targets)
 
 /datum/motion_group/proc/track_mob(mob/gain_mob)
-	if(!ismob(gain_mob) || !LAZYLEN(motion_cameras))
+	if(!isliving(gain_mob) || !LAZYLEN(motion_cameras))
 		return
 
 	for(var/obj/machinery/camera/camera as anything in motion_cameras)
@@ -66,7 +66,7 @@
 		return //??
 
 /datum/motion_group/proc/untrack_mob(mob/lost_mob)
-	if(!ismob(lost_mob) || !LAZYLEN(motion_cameras))
+	if(!isliving(lost_mob) || !LAZYLEN(motion_cameras))
 		return
 
 	for(var/obj/machinery/camera/camera as anything in motion_cameras)

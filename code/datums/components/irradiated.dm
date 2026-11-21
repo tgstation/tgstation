@@ -143,7 +143,7 @@
 	human_parent.apply_damage(RADIATION_BURN_SPLOTCH_DAMAGE, BURN, affected_limb, wound_clothing = FALSE)
 	playsound(
 		human_parent,
-		SFX_SIZZLE,
+		/datum/sound_effect/sizzle,
 		50,
 		vary = TRUE,
 	)
@@ -188,7 +188,7 @@
 
 	return COMSIG_GEIGER_COUNTER_SCAN_SUCCESSFUL
 
-/datum/component/irradiated/proc/on_healthscan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
+/datum/component/irradiated/proc/on_healthscan(datum/source, list/render_list, scanpower, mob/user, mode, tochat)
 	SIGNAL_HANDLER
 
 	render_list += "<span class='alert ml-1'>"

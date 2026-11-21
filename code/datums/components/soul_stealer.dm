@@ -62,7 +62,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 /datum/component/soul_stealer/proc/try_capture(mob/living/carbon/human/victim, mob/living/captor)
-	if(victim.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(victim))
 		return
 	var/obj/item/soulstone/soulstone = new soulstone_type(parent)
 	soulstone.attack(victim, captor)

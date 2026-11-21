@@ -306,7 +306,7 @@
 // If it takes any more effort, it loses a bit of the comedy.
 // Therefore, only show up if it's reasonable for that gag to happen.
 /datum/customer_data/moth/can_use(datum/venue/venue, obj/machinery/restaurant_portal/portal)
-	var/mob/living/carbon/buffet = portal.turned_on_portal?.resolve()
+	var/mob/living/carbon/human/buffet = portal.turned_on_portal?.resolve()
 	if (!istype(buffet))
 		return FALSE
 	if(QDELETED(buffet.head) && QDELETED(buffet.gloves) && QDELETED(buffet.shoes))

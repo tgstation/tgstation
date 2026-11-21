@@ -258,7 +258,7 @@
 			continue
 
 		if (preference.is_randomizable())
-			preference.apply_to_human(src, preference.create_random_value(preferences))
+			preference.apply_to_human(src, preference.create_random_value(preferences), preferences)
 
 	fully_replace_character_name(real_name, generate_random_mob_name())
 
@@ -283,9 +283,11 @@
  */
 /mob/living/carbon/human/proc/update_mob_height()
 	var/old_height = mob_height
-	mob_height = dna?.species?.update_species_heights(src) || base_mob_height
+	var/obj/item/bodypart/chest/chest = get_bodypart(BODY_ZONE_CHEST)
+	mob_height = chest?.update_mob_heights(src) || base_mob_height
 	if(old_height != mob_height)
 		regenerate_icons()
+		readjust_atom_huds()
 	SEND_SIGNAL(src, COMSIG_HUMAN_HEIGHT_UPDATED, old_height)
 
 /**
@@ -303,7 +305,7 @@
  * Args:
  * location - The turf the human will be spawned on.
  */
-/mob/living/carbon/human/proc/make_full_human_copy(turf/location, client/quirk_client)
+/mob/living/carbon/human/proc/make_full_human_copy(turf/location)
 	RETURN_TYPE(/mob/living/carbon/human)
 
 	var/mob/living/carbon/human/clone = new(location)
@@ -333,6 +335,8 @@
 		fitness_modifier *= 2
 	if (HAS_TRAIT(src, TRAIT_STRENGTH))
 		fitness_modifier *= 1.5
+	if (islizard(src))
+		fitness_modifier *= 1.2
 	if (HAS_TRAIT(src, TRAIT_ROD_SUPLEX))
 		fitness_modifier *= 2 // To be able to suplex a rod, you must possess an incredible amount of power
 	if (HAS_TRAIT(src, TRAIT_EASILY_WOUNDED))

@@ -4,7 +4,6 @@
 	pref_flag = ROLE_BROTHER
 	var/special_role = ROLE_BROTHER
 	antag_hud_name = "brother"
-	hijack_speed = 0.5
 	ui_name = "AntagInfoBrother"
 	suicide_cry = "FOR MY BROTHER!!"
 	antag_moodlet = /datum/mood_event/focused
@@ -70,7 +69,11 @@
 	if (flashed.stat == DEAD || issilicon(flashed) || isdrone(flashed))
 		return
 
-	if (flashed.stat != CONSCIOUS)
+	if (flashed.stat != STABLE)
+		flashed.balloon_alert(source, "in critical!")
+		return
+
+	if (IS_UNCONSCIOUS(flashed))
 		flashed.balloon_alert(source, "unconscious!")
 		return
 
@@ -94,7 +97,7 @@
 		return
 
 	if (HAS_MIND_TRAIT(flashed, TRAIT_UNCONVERTABLE))
-		flashed.balloon_alert(source, "[flashed.p_they()] resist!")
+		flashed.balloon_alert(source, "[flashed.p_they()] resist[flashed.p_s()]!")
 		return
 
 	if (!team.add_brother(flashed, key_name(source))) // Shouldn't happen given the former, more specific checks but just in case
@@ -133,7 +136,7 @@
 	var/mob/living/carbon/human/dummy/consistent/brother1 = new
 	var/mob/living/carbon/human/dummy/consistent/brother2 = new
 
-	brother1.dna.features[FEATURE_ETHEREAL_COLOR] = GLOB.color_list_ethereal["Faint Red"]
+	brother1.dna.features[FEATURE_MUTANT_COLOR] = GLOB.color_list_ethereal["Faint Red"]
 	brother1.set_species(/datum/species/ethereal)
 
 	brother2.dna.features[FEATURE_MOTH_ANTENNAE] = "Plain"
@@ -218,6 +221,7 @@
 	if (!new_member.has_antag_datum(/datum/antagonist/brother))
 		add_brother(new_member.current)
 	else
+		// the only place a joining member spends a conversion slot; converts get here via add_brother()
 		set_brothers_left(brothers_left - 1)
 
 /datum/team/brother_team/remove_member(datum/mind/member)
@@ -244,16 +248,16 @@
 		return FALSE
 #endif
 
-	set_brothers_left(brothers_left - 1)
+	// this spends a conversion slot via add_member()
+	new_brother.mind.add_antag_datum(/datum/antagonist/brother, src)
+
 	for (var/datum/mind/brother_mind as anything in members)
 		if (brother_mind == new_brother.mind)
 			continue
 
 		to_chat(brother_mind, span_notice("[span_bold("[new_brother.real_name]")] has been converted to aid you as your brother!"))
-		if (brothers_left == 0)
+		if (brothers_left <= 0)
 			to_chat(brother_mind, span_notice("You cannot recruit any more brothers."))
-
-	new_brother.mind.add_antag_datum(/datum/antagonist/brother, src)
 
 	return TRUE
 
@@ -273,14 +277,16 @@
 
 	add_objective(new /datum/objective/convert_brother)
 
-	var/is_hijacker = prob(10)
+	var/is_hijacker = prob(HIJACK_PROB)
 	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (brothers_left > 2) - is_hijacker))
 		forge_single_objective()
+
 	if(is_hijacker)
-		if(!locate(/datum/objective/hijack) in objectives)
+		if(!(locate(/datum/objective/hijack) in objectives))
 			add_objective(new /datum/objective/hijack)
-	else if(!locate(/datum/objective/escape) in objectives)
-		add_objective(new /datum/objective/escape)
+	else
+		if(!(locate(/datum/objective/escape) in objectives))
+			add_objective(new /datum/objective/escape)
 
 /datum/team/brother_team/proc/forge_single_objective()
 	if(prob(50))

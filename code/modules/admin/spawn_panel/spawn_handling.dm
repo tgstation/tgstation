@@ -96,8 +96,8 @@
 		pod = new()
 
 	for(var/i in 1 to amount)
-		if(istype(atom_to_spawn, /turf))
-			var/turf/original_turf = target
+		if(ispath(atom_to_spawn, /turf))
+			var/turf/original_turf = get_turf(target) //Get_turf is required here, because if target is not a turf we are cooked chat.
 			var/turf/created_turf = original_turf.ChangeTurf(atom_to_spawn.type)
 			if(created_turf && atom_name)
 				created_turf.name = atom_name

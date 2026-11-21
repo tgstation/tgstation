@@ -13,7 +13,7 @@
 	/// Does it need cleaning?
 	var/dirty = FALSE
 	/// Time from starting until meat appears
-	var/gibtime = 40
+	var/gibtime = 4 SECONDS
 	/// Average efficiency multiplier for how much meat we meet when we meat the meat per meat of each of meat's meat limbs
 	var/efficiency = 0.25
 	/// If the gibber should give the 'Subject may not have abiotic items on' message
@@ -35,19 +35,19 @@
 
 /obj/machinery/gibber/RefreshParts()
 	. = ..()
-	gibtime = 40
+	gibtime = initial(gibtime)
 	efficiency = initial(efficiency)
 	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
 		efficiency += matter_bin.tier * 0.25
 	for(var/datum/stock_part/servo/servo in component_parts)
-		gibtime -= 5 * servo.tier
+		gibtime -= 0.5 SECONDS * servo.tier
 		if(servo.tier >= 2)
 			ignore_clothing = TRUE
 
 /obj/machinery/gibber/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Outputting <b>[efficiency]%</b> of meat after <b>[gibtime*0.1]</b> seconds of processing.")
+		. += span_notice("The status display reads: Outputting <b>[efficiency*100]%</b> of meat after <b>[gibtime*0.1]</b> seconds of processing.")
 		for(var/datum/stock_part/servo/servo in component_parts)
 			if(servo.tier >= 2)
 				. += span_notice("[src] has been upgraded to process inorganic materials.")
@@ -112,8 +112,8 @@
 			return
 
 		if(!ignore_clothing)
-			for(var/obj/item/I in C.held_items + C.get_equipped_items())
-				if(!HAS_TRAIT(I, TRAIT_NODROP))
+			for(var/obj/item/item as anything in C.get_equipped_items(INCLUDE_HELD))
+				if(!HAS_TRAIT(item, TRAIT_NODROP))
 					to_chat(user, span_warning("Subject may not have abiotic items on!"))
 					return
 
@@ -145,10 +145,9 @@
 	. = ..()
 	icon_state = panel_open ? "[base_icon_state]_open" : base_icon_state
 
-/obj/machinery/gibber/verb/eject()
-	set name = "Empty gibber"
-	set src in oview(1)
-	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+GAME_VERB_SRC(/obj/machinery/gibber, eject, oview(1), "Empty gibber", null)
+
+	if (IS_UNCONSCIOUS_OR_CRIT(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(!usr.can_perform_action(src))
 		return
@@ -233,11 +232,9 @@
 	var/mob/living/carbon/human/agent_whiskey = victim
 	var/drop_chance = 0
 	for (var/obj/item/bodypart/limb as anything in agent_whiskey.get_bodyparts())
-		if (!limb.butcher_drops)
-			continue
-
-		for (var/obj/item/drop_type as anything in limb.butcher_drops)
-			var/amount = limb.butcher_drops[drop_type] || 1
+		var/list/limb_butcher_drops = limb.get_butcher_drops()
+		for (var/obj/item/drop_type as anything in limb_butcher_drops)
+			var/amount = limb_butcher_drops[drop_type] || 1
 			drop_chance += amount * efficiency
 			if (drop_chance > 1)
 				amount = floor(drop_chance)

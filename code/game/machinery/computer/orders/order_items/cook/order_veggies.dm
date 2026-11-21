@@ -11,7 +11,7 @@
 
 /datum/orderable_item/veggies/carrot
 	name = "Carrot"
-	purchase_path = /obj/item/food/grown/carrot
+	purchase_path = /obj/item/food/grown/carrotlike/carrot
 
 /datum/orderable_item/veggies/eggplant
 	name = "Eggplant"
@@ -40,7 +40,7 @@
 
 /datum/orderable_item/veggies/watermelon
 	name = "Watermelon"
-	purchase_path = /obj/item/food/grown/watermelon
+	purchase_path = /obj/item/food/grown/melonlike/watermelon
 
 /datum/orderable_item/veggies/corn
 	name = "Corn"
@@ -84,6 +84,7 @@
 	name = "Jar of pickles"
 	purchase_path = /obj/item/storage/fancy/pickles_jar
 	cost_per_order = 60
+	max_per_order = 4
 
 /datum/orderable_item/veggies/pickled_voltvine
 	name = "Pickled Voltvine"
@@ -113,7 +114,7 @@
 
 /datum/orderable_item/veggies/parsnip
 	name = "Parsnip"
-	purchase_path = /obj/item/food/grown/parsnip
+	purchase_path = /obj/item/food/grown/carrotlike/parsnip
 
 /datum/orderable_item/veggies/redbeet
 	name = "Red Beet"
@@ -153,7 +154,7 @@
 
 /datum/orderable_item/veggies/trumpet
 	name = "Spaceman's Trumpet"
-	purchase_path = /obj/item/food/grown/trumpet
+	purchase_path = /obj/item/food/grown/flower/trumpet
 	cost_per_order = 25
 
 /datum/orderable_item/veggies/banana

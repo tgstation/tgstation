@@ -65,7 +65,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/item/relic/lavaland,
+/obj/item/assembly/relic/lavaland,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "en" = (
@@ -466,7 +466,7 @@
 /area/ruin/unpowered/no_grav)
 "Ew" = (
 /obj/structure/stone_tile/slab,
-/obj/item/relic/lavaland,
+/obj/item/assembly/relic/lavaland,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "Fh" = (
@@ -698,7 +698,7 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/obj/item/relic/lavaland,
+/obj/item/assembly/relic/lavaland,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "PW" = (
@@ -864,7 +864,7 @@
 /turf/closed/wall/tomb,
 /area/ruin/unpowered/no_grav)
 "WP" = (
-/obj/item/relic/lavaland,
+/obj/item/assembly/relic/lavaland,
 /obj/structure/stone_tile/slab,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)

@@ -220,9 +220,9 @@ Simple datum which is instanced once per type and is used for every object of sa
 /datum/material/proc/on_throw_impact(obj/item/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
 	SIGNAL_HANDLER
 	if (caught)
-		impact_affect_touch(source, hit_atom, astype(throwing_datum.thrower.resolve(), /mob/living))
+		impact_affect_touch(source, hit_atom, astype(throwing_datum.thrower?.resolve(), /mob/living))
 	else if (!isliving(hit_atom)) // Hit mobs have armor checking
-		impact_affect_throw_impact(source, hit_atom, astype(throwing_datum.thrower.resolve(), /mob/living))
+		impact_affect_throw_impact(source, hit_atom, astype(throwing_datum.thrower?.resolve(), /mob/living))
 
 /datum/material/proc/on_throw_impact_living(obj/item/source, mob/living/target, def_zone, blocked, datum/thrownthing/throwing_datum)
 	SIGNAL_HANDLER
@@ -233,7 +233,7 @@ Simple datum which is instanced once per type and is used for every object of sa
 		if (!skin_contact)
 			break
 
-	impact_affect_throw_impact(source, target, astype(throwing_datum.thrower.resolve(), /mob/living), def_zone, !!skin_contact)
+	impact_affect_throw_impact(source, target, astype(throwing_datum.thrower?.resolve(), /mob/living), def_zone, !!skin_contact)
 
 /datum/material/proc/impact_affect_touch(obj/item/source, mob/living/user, mob/living/initiator)
 	var/arm_dir = IS_LEFT_INDEX(user.active_hand_index) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM

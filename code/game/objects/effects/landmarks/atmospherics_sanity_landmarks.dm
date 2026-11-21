@@ -21,11 +21,18 @@
 	icon_state = "atmos_sanity_start"
 
 /**
- * Marks an area as a goal for atmospheric connectivity; ignored if the map contains the mark all station areas landmark!
+ * Marks an area as a goal for atmospheric connectivity; ignored if the map contains the mark all station areas landmark
  */
 /obj/effect/landmark/atmospheric_sanity/goal_area
 	name = "Atmospheric Sanity Goal"
 	icon_state = "atmos_sanity_goal"
+
+/**
+ * Marks an area as forbidden from atmospheric connectivity; ignored if the map contains the "mark all station areas" landmark
+ */
+/obj/effect/landmark/atmospheric_sanity/forbidden_area
+	name = "Atmospheric Sanity Forbidden"
+	icon_state = "atmos_sanity_forbidden"
 
 /**
  * Marks an area as ignored for purposes of default station connectivity.

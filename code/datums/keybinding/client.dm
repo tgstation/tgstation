@@ -76,7 +76,13 @@
 	. = ..()
 	if(.)
 		return
-	user.mob.button_pressed_F12()
+
+	if(user.mob.hud_used)
+		user.mob.hud_used.show_hud() //Shows the next hud preset
+		to_chat(user, span_info("Switched HUD mode. Press F12 to toggle."))
+	else
+		to_chat(user, span_warning("This mob type does not use a HUD."))
+
 	return TRUE
 
 /datum/keybinding/client/close_every_ui

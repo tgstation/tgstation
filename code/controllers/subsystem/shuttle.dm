@@ -472,7 +472,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(isnull(emergency) || emergency.mode != SHUTTLE_CALL)
 		return FALSE
 
-	var/is_admin = !!user.client?.holder
+	var/is_admin = !!user?.client?.holder
 	if(is_admin)
 		return admin_recall(user)
 
@@ -538,7 +538,7 @@ SUBSYSTEM_DEF(shuttle)
 			var/mob/living/silicon/ai/AI = thing
 			if(AI.deployed_shell && !AI.deployed_shell.client)
 				continue
-			if(AI.stat || !AI.client)
+			if(IS_UNCONSCIOUS_OR_CRIT(AI) || !AI.client)
 				continue
 		else if(istype(thing, /obj/machinery/computer/communications))
 			var/obj/machinery/computer/communications/C = thing
@@ -747,7 +747,7 @@ SUBSYSTEM_DEF(shuttle)
 	old_area.turfs_to_uncontain_by_zlevel[bottomleft.z] += proposal.reserved_turfs
 
 	var/area/shuttle/transit/new_area = new()
-	new_area.parallax_movedir = travel_dir
+	new_area.set_parallax_movedir(travel_dir)
 	new_area.contents = proposal.reserved_turfs
 	LISTASSERTLEN(new_area.turfs_by_zlevel, bottomleft.z, list())
 	new_area.turfs_by_zlevel[bottomleft.z] = proposal.reserved_turfs

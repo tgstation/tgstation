@@ -38,6 +38,7 @@ GLOBAL_LIST_INIT(trait_to_hud, list(
 /// Assoc list of traits that block other traits' huds to list of hud (traits) that they block
 GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 	TRAIT_BLOCK_SECHUD = list(TRAIT_SECURITY_HUD, TRAIT_SECURITY_HUD_ID_ONLY),
+	TRAIT_BLOCK_MEDHUD = list(TRAIT_MEDICAL_HUD, TRAIT_MEDICAL_HUD_SENSOR_ONLY),
 ))
 
 /datum/atom_hud

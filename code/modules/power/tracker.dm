@@ -151,7 +151,7 @@
 				new material_type.sheet_type(get_turf(src))
 	else
 		//When smashed to bits
-		playsound(src, SFX_SHATTER, 70, TRUE)
+		playsound(src, /datum/sound_effect/shatter, 70, TRUE)
 
 		new material_type.shard_type(get_turf(src))
 		new material_type.shard_type(get_turf(src))
@@ -160,6 +160,7 @@
 
 /obj/item/electronics/tracker
 	name = "tracker electronics"
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
 
 #undef TRACKER_Z_OFFSET
 #undef TRACKER_EDGE_Z_OFFSET

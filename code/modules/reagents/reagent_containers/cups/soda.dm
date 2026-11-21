@@ -28,11 +28,17 @@
 	var/fuse_color = null
 	/// Timer for our explosion
 	var/fuse_timer = null
+	/// Icon file the crushed can we leave behind uses.
+	var/crushed_icon = /obj/item/trash/can::icon
+	/// Icon state the crushed can we leave behind uses. Set from our own icon_state when left null.
+	var/crushed_icon_state
 
 /obj/item/reagent_containers/cup/soda_cans/Initialize(mapload, vol)
 	. = ..()
 	AddElement(/datum/element/slapcrafting, string_list(list(/datum/crafting_recipe/improv_explosive)))
 	AddElement(/datum/element/atmos_sensitive, mapload) //Enables soda cans to explode in vaccuum.
+	if(isnull(crushed_icon_state))
+		crushed_icon_state = icon_state
 
 /obj/item/reagent_containers/cup/soda_cans/random/Initialize(mapload)
 	..()
@@ -40,35 +46,39 @@
 	new T(loc)
 	return INITIALIZE_HINT_QDEL
 
-/obj/item/reagent_containers/cup/soda_cans/suicide_act(mob/living/carbon/human/H)
+/obj/item/reagent_containers/cup/soda_cans/suicide_act(mob/living/user)
 	if(!reagents.total_volume)
-		H.visible_message(span_warning("[H] is trying to take a big sip from [src]... The can is empty!"))
+		user.visible_message(span_warning("[user] is trying to take a big sip from [src]... The can is empty!"))
 		return SHAME
 	if(!is_drainable())
-		open_soda(H)
+		open_soda(user)
 		sleep(1 SECONDS)
-	H.visible_message(span_suicide("[H] takes a big sip from [src]! It looks like [H.p_theyre()] trying to commit suicide!"))
-	playsound(H,'sound/items/drink.ogg', 80, TRUE)
-	reagents.trans_to(H, src.reagents.total_volume, transferred_by = H) //a big sip
+	user.visible_message(span_suicide("[user] takes a big sip from [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	playsound(user,'sound/items/drink.ogg', 80, TRUE)
+	reagents.trans_to(user, src.reagents.total_volume, transferred_by = user) //a big sip
 	sleep(0.5 SECONDS)
-	H.say(pick(
+	user.say(pick(
 		"Now, Outbomb Cuban Pete, THAT was a game.",
 		"All these new fangled arcade games are too slow. I prefer the classics.",
 		"They don't make 'em like Orion Trail anymore.",
 		"You know what they say. Worst day of spess carp fishing is better than the best day at work.",
 		"They don't make 'em like good old-fashioned singularity engines anymore.",
 	))
-	if(H.age >= 30)
-		H.Stun(50)
-		sleep(5 SECONDS)
-		playsound(H,'sound/items/drink.ogg', 80, TRUE)
-		H.say(pick(
-			"Another day, another dollar.",
-			"I wonder if I should hold?",
-			"Diversifying is for young'ns.",
-			"Yeap, times were good back then.",
-		))
-		return MANUAL_SUICIDE_NONLETHAL
+
+	if(ishuman(user))
+		var/mob/living/carbon/human/drinker = user
+		if (drinker.age >= 30)
+			drinker.Stun(50)
+			sleep(5 SECONDS)
+			playsound(drinker,'sound/items/drink.ogg', 80, TRUE)
+			drinker.say(pick(
+				"Another day, another dollar.",
+				"I wonder if I should hold?",
+				"Diversifying is for young'ns.",
+				"Yeap, times were good back then.",
+			))
+			return MANUAL_SUICIDE_NONLETHAL
+
 	sleep(2 SECONDS) //dramatic pause
 	return TOXLOSS
 
@@ -88,7 +98,8 @@
 		)
 	playsound(src, 'sound/items/weapons/pierce.ogg', rand(10, 50), TRUE)
 	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(target.drop_location())
-	crushed_can.icon_state = icon_state
+	crushed_can.icon = crushed_icon
+	crushed_can.icon_state = crushed_icon_state
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
 
@@ -99,7 +110,8 @@
 	if(!proj.damage || proj.damage_type != BRUTE)
 		return
 	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(loc)
-	crushed_can.icon_state = icon_state
+	crushed_can.icon = crushed_icon
+	crushed_can.icon_state = crushed_icon_state
 	var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
 	crushed_can.throw_at(throw_target, rand(1,2), 7)
 	qdel(src)
@@ -120,7 +132,7 @@
 
 	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
 	add_container_flags(OPENCONTAINER)
-	playsound(src, SFX_CAN_OPEN, 50, TRUE)
+	playsound(src, /datum/sound_effect/can_open, 50, TRUE)
 	throwforce = 0
 
 /**
@@ -272,7 +284,8 @@
 	burst_soda(hit_atom, hide_message = TRUE)
 	visible_message(span_danger("[src]'s impact with [hit_atom] causes it to rupture, spilling everywhere!"))
 	var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(loc)
-	crushed_can.icon_state = icon_state
+	crushed_can.icon = crushed_icon
+	crushed_can.icon_state = crushed_icon_state
 	moveToNullspace()
 	QDEL_IN(src, 1 SECONDS) // give it a second so it can still be logged for the throw impact
 
@@ -318,6 +331,7 @@
 	name = "Space Cola"
 	desc = "Cola. in space."
 	icon_state = "cola"
+	inhand_icon_state = "cola"
 	list_reagents = list(/datum/reagent/consumable/space_cola = 30)
 	drink_type = SUGAR
 
@@ -325,6 +339,7 @@
 	name = "T-Borg's tonic water"
 	desc = "Quinine tastes funny, but at least it'll keep that Space Malaria away."
 	icon_state = "tonic"
+	inhand_icon_state = "tonic"
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/tonic = 50)
 	drink_type = ALCOHOL
@@ -333,6 +348,7 @@
 	name = "soda water"
 	desc = "A can of soda water. Why not make a scotch and soda?"
 	icon_state = "sodawater"
+	inhand_icon_state = "sodawater"
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/sodawater = 50)
 
@@ -340,6 +356,7 @@
 	name = "orange soda"
 	desc = "You wanted ORANGE. It gave you Lemon Lime."
 	icon_state = "lemon-lime"
+	inhand_icon_state = "lemon-lime"
 	list_reagents = list(/datum/reagent/consumable/lemon_lime = 30)
 	drink_type = FRUIT
 
@@ -358,6 +375,7 @@
 	name = "Space-Up!"
 	desc = "Tastes like a hull breach in your mouth."
 	icon_state = "space-up"
+	inhand_icon_state = "space-up"
 	list_reagents = list(/datum/reagent/consumable/space_up = 30)
 	drink_type = SUGAR | JUNKFOOD
 
@@ -365,6 +383,7 @@
 	name = "Star-kist"
 	desc = "The taste of a star in liquid form. And, a bit of tuna...?"
 	icon_state = "starkist"
+	inhand_icon_state = "starkist"
 	list_reagents = list(/datum/reagent/consumable/space_cola = 15, /datum/reagent/consumable/orangejuice = 15)
 	drink_type = SUGAR | FRUIT | JUNKFOOD
 
@@ -372,6 +391,7 @@
 	name = "Space Mountain Wind"
 	desc = "Blows right through you like a space wind."
 	icon_state = "space_mountain_wind"
+	inhand_icon_state = "space_mountain_wind"
 	list_reagents = list(/datum/reagent/consumable/spacemountainwind = 30)
 	drink_type = SUGAR | JUNKFOOD
 
@@ -379,6 +399,7 @@
 	name = "Thirteen Loko"
 	desc = "The CMO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkenness, or even death. Please Drink Responsibly."
 	icon_state = "thirteen_loko"
+	inhand_icon_state = "thirteen_loko"
 	list_reagents = list(/datum/reagent/consumable/ethanol/thirteenloko = 30)
 	drink_type = SUGAR | JUNKFOOD
 
@@ -386,6 +407,7 @@
 	name = "Dr. Gibb"
 	desc = "A delicious mixture of 42 different flavors."
 	icon_state = "dr_gibb"
+	inhand_icon_state = "dr_gibb"
 	list_reagents = list(/datum/reagent/consumable/dr_gibb = 30)
 	drink_type = SUGAR | JUNKFOOD
 
@@ -393,6 +415,7 @@
 	name = "Pwr Game"
 	desc = "The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to."
 	icon_state = "purple_can"
+	inhand_icon_state = "purple_can"
 	list_reagents = list(/datum/reagent/consumable/pwr_game = 30)
 
 /obj/item/reagent_containers/cup/soda_cans/shamblers
@@ -414,6 +437,7 @@
 	name = "Wellcheers Juice"
 	desc = "A strange purple drink, smelling of saltwater. Somewhere in the distance, you hear seagulls."
 	icon_state = "wellcheers"
+	inhand_icon_state = "wellcheers"
 	list_reagents = list(/datum/reagent/consumable/wellcheers = 30)
 	drink_type = SUGAR | JUNKFOOD
 
@@ -437,6 +461,7 @@
 	name = "24-Volt Energy"
 	desc = "Recharge, with 24-Volt Energy!"
 	icon_state = "volt_energy"
+	inhand_icon_state = "volt_energy"
 	list_reagents = list(/datum/reagent/consumable/volt_energy = 30)
 	drink_type = SUGAR | JUNKFOOD
 
@@ -444,6 +469,7 @@
 	name = "Kansumi Melon Soda"
 	desc = "Japan's favourite melon soda, now available in can form!"
 	icon_state = "melon_soda"
+	inhand_icon_state = "melon_soda"
 	list_reagents = list(/datum/reagent/consumable/melon_soda = 30)
 	drink_type = SUGAR | JUNKFOOD
 
@@ -457,6 +483,7 @@
 	name = "space beer"
 	desc = "Canned beer. In space."
 	icon_state = "space_beer"
+	inhand_icon_state = "space_beer"
 	volume = 40
 	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 40)
 	drink_type = GRAIN
@@ -465,6 +492,7 @@
 	name = "rice beer"
 	desc = "A light, rice-based lagered beer popular on Mars. Considered a hate crime against Bavarians under the Reinheitsgebot Act of 1516."
 	icon_state = "ebisu"
+	inhand_icon_state = "ebisu"
 	list_reagents = list(/datum/reagent/consumable/ethanol/rice_beer = 40)
 
 /obj/item/reagent_containers/cup/soda_cans/beer/rice/Initialize(mapload)

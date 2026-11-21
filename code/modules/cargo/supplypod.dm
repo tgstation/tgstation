@@ -253,11 +253,10 @@
 	if(decal)
 		. += decal
 
-/obj/structure/closet/supplypod/tool_interact(obj/item/W, mob/user)
+/obj/structure/closet/supplypod/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(bluespace) //We dont want to worry about interacting with bluespace pods, as they are due to delete themselves soon anyways.
-		return FALSE
-	else
-		..()
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/structure/closet/supplypod/ex_act() //Explosions dont do SHIT TO US! This is because supplypods create explosions when they land.
 	return FALSE
@@ -361,7 +360,7 @@
 	if (!isnull(boom) && (boom[1] + boom[2] + boom[3] + boom[4] + boom[5])) // spawn explosion only if there is actual explosion range
 		explosion(turf_underneath, boom[1], boom[2], boom[3], flame_range = boom[4], flash_range = boom[5], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod), explosion_cause = src)
 	else if (!effectQuiet && !(pod_flags & FIRST_SOUNDS)) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
-		playsound(src, SFX_EXPLOSION, landingSound ? soundVolume * 0.25 : soundVolume, TRUE)
+		playsound(src, /datum/sound_effect/explosion, landingSound ? soundVolume * 0.25 : soundVolume, TRUE)
 	if (landingSound)
 		playsound(turf_underneath, landingSound, soundVolume, FALSE, FALSE)
 	if (effectMissile) //If we are acting like a missile, then right after we land and finish fucking shit up w explosions, we should delete
@@ -796,6 +795,7 @@
 	desc = "This disk provides a firmware update to the Express Supply Console, granting the use of Nanotrasen's Bluespace Drop Pods to the supply department."
 	icon_state = "datadisk12"
 	sticker_icon_state = "o_cargopod"
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/disk/cargo/bluespace_pod/setup_reskins()
 	return

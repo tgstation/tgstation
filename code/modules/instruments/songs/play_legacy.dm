@@ -77,7 +77,7 @@
 		return
 	// and play
 	var/turf/source = get_turf(parent)
-	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
+	if((world.time - SSinstruments.musician_hearcheck_mindelay) > last_hearcheck)
 		do_hearcheck()
 	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
@@ -88,5 +88,5 @@
 		var/pref_volume = M?.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_instruments)
 		if(!pref_volume)
 			continue
-		M.playsound_local(source, null, volume * using_instrument.volume_multiplier * (pref_volume/100), sound_to_use = music_played)
+		M.playsound_local(source, null, volume * using_instrument.volume_multiplier * (pref_volume/100), sound_to_use = music_played, falloff_exponent = exponential_falloff)
 		// Could do environment and echo later but not for now

@@ -50,17 +50,19 @@
 		active = FALSE
 		toggleFirepit()
 
-/obj/structure/firepit/attackby(obj/item/W,mob/living/user,list/modifiers)
-	if(!active)
-		var/msg = W.ignition_effect(src, user)
-		if(msg)
-			active = TRUE
-			visible_message(msg)
-			toggleFirepit()
-		else
-			return ..()
-	else
-		W.fire_act()
+/obj/structure/firepit/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(active)
+		tool.fire_act()
+		return ITEM_INTERACT_SUCCESS
+
+	var/msg = tool.ignition_effect(src, user)
+	if(!msg)
+		return NONE
+
+	visible_message(msg)
+	toggleFirepit()
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/structure/firepit/proc/toggleFirepit()
 	active = !active

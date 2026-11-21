@@ -1,0 +1,100 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/syndicate,
+/area/centcom/syndicate_mothership/control)
+"j" = (
+/obj/effect/landmark/start/nukeop_elevator,
+/obj/machinery/light/small/red/directional/north{
+	allow_break_on_init = 0
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/control)
+"l" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
+"s" = (
+/turf/open/floor/plating,
+/area/centcom/syndicate_mothership/control)
+"u" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
+"w" = (
+/obj/effect/landmark/start/nukeop_elevator,
+/turf/open/floor/mineral/plastitanium,
+/area/centcom/syndicate_mothership/control)
+"F" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
+"I" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership/control)
+"T" = (
+/obj/effect/landmark/nukeop_elevator/interior,
+/turf/closed/indestructible/syndicate,
+/area/centcom/syndicate_mothership/control)
+"W" = (
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wideplating,
+/obj/machinery/door/poddoor/shutters/syndicate/indestructible{
+	name = "Base Lift";
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_half,
+/area/centcom/syndicate_mothership/control)
+
+(1,1,1) = {"
+a
+a
+a
+a
+s
+"}
+(2,1,1) = {"
+a
+j
+w
+a
+a
+"}
+(3,1,1) = {"
+W
+I
+F
+w
+a
+"}
+(4,1,1) = {"
+W
+u
+l
+w
+a
+"}
+(5,1,1) = {"
+a
+j
+w
+a
+a
+"}
+(6,1,1) = {"
+T
+a
+a
+a
+s
+"}

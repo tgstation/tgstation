@@ -167,9 +167,10 @@
  * - effect_type: The smoke typepath to spawn.
  * - log: Should the system log the smoke spawned?
  */
-/proc/do_smoke(range = 0, atom/holder = null, location = null, amount = null, smoke_type = /datum/effect_system/fluid_spread/smoke, effect_type = /obj/effect/particle_effect/fluid/smoke, log = FALSE)
+/proc/do_smoke(range = 0, atom/holder = null, location = null, amount = null, smoke_type = /datum/effect_system/fluid_spread/smoke, effect_type, log = FALSE)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type(location, range, amount, holder)
-	smoke.effect_type = effect_type
+	if(effect_type)
+		smoke.effect_type = effect_type
 	smoke.start(log = log)
 
 /////////////////////////////////////////////
@@ -297,8 +298,8 @@
 		if(!distcheck || get_dist(location, chilly) < blast) // Otherwise we'll get silliness like people using Nanofrost to kill people through walls with cold air
 			air.temperature = temperature
 
-		if(air.gases[/datum/gas/plasma])
-			var/mole_count = air.gases[/datum/gas/plasma][MOLES]
+		if(air.moles[/datum/gas/plasma])
+			var/mole_count = air.moles[/datum/gas/plasma]
 			air.adjust_gas(/datum/gas/nitrogen, mole_count)
 			air.adjust_gas(/datum/gas/plasma, -mole_count)
 			air.garbage_collect()

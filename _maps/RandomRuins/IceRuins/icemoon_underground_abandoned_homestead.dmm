@@ -4,7 +4,7 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "cP" = (
-/mob/living/simple_animal/hostile/asteroid/polarbear,
+/mob/living/basic/mining/polarbear,
 /turf/open/floor/wood/large{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -321,7 +321,7 @@
 	},
 /area/ruin/powered/shuttle)
 "Sv" = (
-/turf/open/genturf,
+/turf/template_noop,
 /area/icemoon/underground/unexplored/rivers)
 "SJ" = (
 /obj/structure/railing{

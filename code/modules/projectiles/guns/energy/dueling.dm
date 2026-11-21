@@ -165,16 +165,15 @@
 	setting_overlay = mutable_appearance(icon,setting_iconstate())
 	add_overlay(setting_overlay)
 
-/obj/item/gun/energy/dueling/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/gun/energy/dueling))
-		var/obj/item/gun/energy/dueling/other_gun = W
-
-		if(!check_valid_duel(user, FALSE) && !other_gun.check_valid_duel(user, FALSE))
-			var/datum/duel/D = new(src, other_gun)
-			to_chat(user,span_notice("Pairing established. Pairing code: [D.pairing_code]"))
-			return
-
-	return ..()
+/obj/item/gun/energy/dueling/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/gun/energy/dueling))
+		return NONE
+	var/obj/item/gun/energy/dueling/other_gun = tool
+	if(check_valid_duel(user, FALSE) || other_gun.check_valid_duel(user, FALSE))
+		return ITEM_INTERACT_BLOCKING
+	var/datum/duel/newduel = new(src, other_gun)
+	to_chat(user,span_notice("Pairing established. Pairing code: [newduel.pairing_code]"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/energy/dueling/examine_more(mob/user)
 	. = ..()

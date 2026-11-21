@@ -93,7 +93,7 @@
 	REMOVE_TRAIT(owner, TRAIT_READY_TO_OPERATE, TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_POST_ATTACH_LIMB, COMSIG_CARBON_POST_REMOVE_LIMB))
 
-/datum/status_effect/surgery_prepped/get_examine_text()
+/datum/status_effect/surgery_prepped/get_examine_text(mob/examiner)
 	var/list/zones_readable = list()
 	// give the body zones a consistent order, the same order as GLOB.all_body_zones
 	for(var/zone in GLOB.all_body_zones & zones)

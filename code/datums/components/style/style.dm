@@ -339,7 +339,7 @@
 		return
 
 	var/mob/living/disrespected = attacked_atom
-	if(disrespected.stat || disrespected.faction_check_atom(punching_person) || !disrespected.has_faction(FACTION_MINING))
+	if(IS_UNCONSCIOUS_OR_CRIT(disrespected) || disrespected.faction_check_atom(punching_person) || !disrespected.has_faction(FACTION_MINING))
 		return
 
 	add_action(ACTION_DISRESPECT, 60 * (ismegafauna(disrespected) ? 2 : 1))
@@ -347,7 +347,7 @@
 /datum/component/style/proc/on_attack(mob/living/attacking_person, mob/living/attacked_mob)
 	SIGNAL_HANDLER
 
-	if(!istype(attacked_mob) || attacked_mob.stat)
+	if(!istype(attacked_mob) || IS_UNCONSCIOUS_OR_CRIT(attacked_mob))
 		return
 
 	var/mob/living/attacked = attacked_mob
@@ -383,7 +383,7 @@
 /datum/component/style/proc/on_resonator_burst(datum/source, mob/creator, mob/living/hit_living)
 	SIGNAL_HANDLER
 
-	if(creator.faction_check_atom(hit_living) || (hit_living.stat != CONSCIOUS) || !hit_living.has_faction(FACTION_MINING))
+	if(creator.faction_check_atom(hit_living) || (IS_UNCONSCIOUS_OR_CRIT(hit_living)) || !hit_living.has_faction(FACTION_MINING))
 		return
 
 	add_action(ACTION_TRAPPER, 70)
@@ -444,7 +444,7 @@
 	if(died == parent)
 		change_points(-500, use_multiplier = FALSE)
 		return
-	else if(mob_parent.faction_check_atom(died) || !died.has_faction(FACTION_MINING) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
+	else if(mob_parent.faction_check_atom(died) || !ismining(died) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
 		return
 
 	if(ismegafauna(died))

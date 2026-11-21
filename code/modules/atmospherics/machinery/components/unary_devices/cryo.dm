@@ -115,7 +115,7 @@
 
 	occupant_vis = new(mapload, src)
 	vis_contents += occupant_vis
-	internal_connector = new(loc, src, dir, CELL_VOLUME * 0.5)
+	internal_connector = new(src, CELL_VOLUME * 0.5)
 	soundloop = new(src)
 
 	register_context()
@@ -445,7 +445,7 @@
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
 
 	//check for workable conditions
-	if(!internal_connector.gas_connector.nodes[1] || !air1 || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
+	if(!internal_connector.gas_connector.nodes[1] || !air1 || !air1.moles.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		set_on(FALSE)
 		aas_config_announce(/datum/aas_config_entry/medical_cryo_announcements, list("EJECTING" = autoeject), src, list(broadcast_channel), "Insufficient Gas")
 		if(autoeject) // Eject if configured.
@@ -516,13 +516,12 @@
 			set_on(TRUE)
 
 /obj/machinery/cryo_cell/container_resist_act(mob/living/user)
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	user.visible_message(span_notice("You see [user] kicking against the glass of [src]!"), \
 		span_notice("You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(CRYO_BREAKOUT_TIME)].)"), \
 		span_hear("You hear a thump from [src]."))
-	if(do_after(user, CRYO_BREAKOUT_TIME, target = src, hidden = TRUE))
-		if(!user || user.stat != CONSCIOUS || user.loc != src )
+	if(do_after(user, CRYO_BREAKOUT_TIME, target = src, timed_action_flags = HIDE_INTERACTION))
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src )
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
 			span_notice("You successfully break out of [src]!"))
@@ -555,10 +554,10 @@
 		occupant_data["name"] = mob_occupant.name
 		if(mob_occupant.stat == DEAD)
 			occupant_data["stat"] = "Dead"
-		else if (HAS_TRAIT(mob_occupant, TRAIT_KNOCKEDOUT))
+		else if (IS_UNCONSCIOUS(mob_occupant))
 			occupant_data["stat"] = "Unconscious"
 		else
-			occupant_data["stat"] = "Conscious"
+			occupant_data["stat"] = "Stable"
 
 		occupant_data["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
 

@@ -20,6 +20,7 @@
 #define COMSIG_KB_ADMIN_DEADMIN_DOWN "keybinding_admin_deadmin_down"
 #define COMSIG_KB_ADMIN_READMIN_DOWN "keybinding_admin_readmin_down"
 #define COMSIG_KB_ADMIN_VIEWTAGS_DOWN "keybinding_admin_viewtags_down"
+#define COMSIG_KB_ADMIN_VERBPANEL_DOWN "keybinding_admin_verbpanel_down"
 
 //Carbon
 #define COMSIG_KB_CARBON_HOLDRUNMOVEINTENT_DOWN "keybinding_carbon_holdrunmoveintent_down"
@@ -63,6 +64,7 @@
 #define COMSIG_KB_LIVING_HOLDTHROWMODE_DOWN "keybinding_living_holdthrowmode_down"
 #define COMSIG_KB_LIVING_GIVEITEM_DOWN "keybinding_living_giveitem_down"
 #define COMSIG_KB_LIVING_VIEW_PET_COMMANDS "keybinding_living_view_pet_commands"
+#define COMSIG_KB_LIVING_STOP_INTERACTIONS_DOWN "keybinding_living_stop_interactions_down"
 
 //Mob
 #define COMSIG_KB_MOB_FACENORTH_DOWN "keybinding_mob_facenorth_down"
@@ -72,7 +74,9 @@
 #define COMSIG_KB_MOB_STOPPULLING_DOWN "keybinding_mob_stoppulling_down"
 #define COMSIG_KB_MOB_CYCLEINTENTRIGHT_DOWN "keybinding_mob_cycleintentright_down"
 #define COMSIG_KB_MOB_CYCLEINTENTLEFT_DOWN "keybinding_mob_cycleintentleft_down"
-#define COMSIG_KB_MOB_SWAPHANDS_DOWN "keybinding_mob_swaphands_down"
+#define COMSIG_KB_MOB_SWAPHANDSROW_DOWN "keybinding_mob_swaphandsrow_down"
+#define COMSIG_KB_MOB_SWAPHANDSCOLUMN_DOWN "keybinding_mob_swaphandscolumn_down"
+#define COMSIG_KB_MOB_SWAPHANDSCYCLE_DOWN "keybinding_mob_swaphandscycle_down"
 #define COMSIG_KB_MOB_SELECTRIGHTHAND_DOWN "keybinding_mob_selectrighthand_down"
 #define COMSIG_KB_MOB_SELECTLEFTHAND_DOWN "keybinding_mob_selectlefthand_down"
 #define COMSIG_KB_MOB_ACTIVATEINHAND_DOWN "keybinding_mob_activateinhand_down"

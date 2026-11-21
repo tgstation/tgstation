@@ -17,7 +17,7 @@
 
 /datum/action/item_action/chameleon/change/tablet/initialize_blacklist()
 	. = ..()
-	chameleon_blacklist |= typecacheof(list(/obj/item/modular_computer/pda/heads), only_root_path = TRUE)
+	chameleon_blacklist |= typecacheof(list(/obj/item/modular_computer/pda/crew/heads), only_root_path = TRUE)
 
 /datum/action/item_action/chameleon/change/tablet/update_item(obj/item/picked_item)
 	..()
@@ -68,6 +68,14 @@
 	. = ..()
 	add_chameleon_items(/obj/item/cigarette)
 	add_chameleon_items(/obj/item/vape)
+
+/datum/action/item_action/chameleon/change/mask/update_item(obj/item/picked_item)
+	..()
+	var/obj/item/clothing/mask/mask_picked = picked_item
+	var/obj/item/clothing/mask/mask_used = target
+	if(istype(mask_picked))
+		mask_used.voice_filter = initial(mask_picked.voice_filter)
+		mask_used.use_radio_beeps_tts = initial(mask_picked.use_radio_beeps_tts)
 
 /datum/action/item_action/chameleon/change/hat
 	chameleon_type = /obj/item/clothing/head
@@ -139,7 +147,7 @@
 /datum/action/item_action/chameleon/change/id/format_readable_name(datum/format_type)
 	if(ispath(format_type, /obj/item/card/id/advanced))
 		var/obj/item/card/id/advanced/format_card = format_type
-		var/list/basesplit_state = splittext(format_card::post_init_icon_state || format_card::icon_state, "_")
+		var/list/basesplit_state = splittext(INITIAL_ICON_STATE(format_card), "_")
 		if(basesplit_state[1] == "card") // kind of evil, but so is making icon state user visible
 			basesplit_state.Cut(1, 2)
 

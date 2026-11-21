@@ -8,6 +8,7 @@
 	worn_icon_state = "wig"
 	flags_inv = HIDEHAIR
 	color = COLOR_BLACK
+	item_flags = CAN_BE_OVERSLOT
 	var/hairstyle = "Very Long Hair"
 	var/adjustablecolor = TRUE //can color be changed manually?
 
@@ -32,7 +33,7 @@
 		icon_state = hair_style.icon_state
 	return ..()
 
-/obj/item/clothing/head/wig/worn_overlays(mutable_appearance/standing, isinhands = FALSE, file2use)
+/obj/item/clothing/head/wig/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(isinhands)
 		return

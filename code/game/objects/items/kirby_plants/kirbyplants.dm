@@ -11,8 +11,8 @@
 	throw_speed = 2
 	throw_range = 4
 	item_flags = NO_PIXEL_RANDOM_DROP
-	drop_sound = SFX_POTTED_PLANT_DROP
-	pickup_sound = SFX_POTTED_PLANT_PICKUP
+	drop_sound = /datum/sound_effect/potted_plant_drop
+	pickup_sound = /datum/sound_effect/potted_plant_pickup
 
 	/// Can this plant be trimmed by someone with TRAIT_BONSAI
 	var/trimmable = TRUE
@@ -50,19 +50,23 @@
 	. = ..()
 	icon_state = dead ? "plant-25" : base_icon_state
 
-/obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(!dead && trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
+/obj/item/kirbyplants/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!dead && trimmable && HAS_TRAIT(user, TRAIT_BONSAI) && isturf(loc) && tool.get_sharpness())
 		to_chat(user,span_notice("You start trimming [src]."))
-		if(do_after(user,3 SECONDS,target=src))
-			to_chat(user,span_notice("You finish trimming [src]."))
-			change_visual()
-	if(dead && istype(I, /obj/item/seeds))
+		if(!do_after(user, 3 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user,span_notice("You finish trimming [src]."))
+		change_visual()
+
+	if(dead && istype(tool, /obj/item/seeds))
 		to_chat(user,span_notice("You start planting a new seed into the pot."))
-		if(do_after(user,3 SECONDS,target=src))
-			qdel(I)
-			dead = FALSE
-			update_appearance()
+		if(!do_after(user, 3 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+		qdel(tool)
+		dead = FALSE
+		update_appearance()
+
+	return NONE
 
 /// Cycle basic plant visuals
 /obj/item/kirbyplants/proc/change_visual()

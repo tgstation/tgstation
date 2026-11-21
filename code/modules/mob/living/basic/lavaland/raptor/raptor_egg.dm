@@ -4,8 +4,8 @@
 	icon = 'icons/mob/simple/lavaland/raptor_baby.dmi'
 	icon_state = "raptor_egg"
 	resistance_flags = LAVA_PROOF|FIRE_PROOF
-	/// Color typepath of the child we spawn
-	var/datum/raptor_color/child_color = /datum/raptor_color
+	/// Color typepath of the child we spawn, null for a random one
+	var/datum/raptor_color/child_color = null
 	/// Inheritance data to pass onto the child
 	var/datum/raptor_inheritance/inherited_stats = null
 	/// Current growth progress
@@ -17,6 +17,7 @@
 
 /obj/item/food/egg/raptor_egg/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/floor_placeable)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/food/egg/raptor_egg/Destroy()
@@ -47,6 +48,6 @@
 		return
 
 	visible_message(span_notice("[src] hatches with a quiet cracking sound."))
-	new /mob/living/basic/raptor(loc, child_color, inherited_stats)
+	new /mob/living/basic/raptor/baby(loc, child_color, inherited_stats)
 	inherited_stats = null
 	qdel(src)

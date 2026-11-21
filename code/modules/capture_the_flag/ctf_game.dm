@@ -20,9 +20,7 @@
 
 /obj/machinery/ctf/Initialize(mapload)
 	. = ..()
-	ctf_game = GLOB.ctf_games[game_id]
-	if(isnull(ctf_game))
-		ctf_game = create_ctf_game(game_id)
+	ctf_game = create_ctf_game(game_id)
 
 ///A spawn point for CTF, ghosts can interact with this to vote for CTF or spawn in if a game is running.
 /obj/machinery/ctf/spawner
@@ -170,12 +168,17 @@
 	player_mob.add_traits(player_traits, CAPTURE_THE_FLAG_TRAIT)
 	return player_mob //used in medisim_game.dm
 
-/obj/machinery/ctf/spawner/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/ctf_flag))
-		var/obj/item/ctf_flag/flag = item
-		if(flag.team != team)
-			ctf_game.capture_flag(team, user, team_span, flag)
-			flag.reset_flag(capture = TRUE) //This might be buggy, confirm and fix if it is.
+/obj/machinery/ctf/spawner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/ctf_flag))
+		return NONE
+
+	var/obj/item/ctf_flag/flag = tool
+	if(flag.team == team)
+		return ITEM_INTERACT_BLOCKING
+
+	ctf_game.capture_flag(team, user, team_span, flag)
+	flag.reset_flag(capture = TRUE) //This might be buggy, confirm and fix if it is.
+	return ITEM_INTERACT_SUCCESS
 
 ///A flag used for the CTF minigame.
 /obj/item/ctf_flag
@@ -267,14 +270,17 @@
 	user.set_anchored(TRUE)
 	user.status_flags &= ~CANPUSH
 
-/obj/item/ctf_flag/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(item, /obj/item/ctf_flag))
-		return ..()
+/obj/item/ctf_flag/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/ctf_flag))
+		return NONE
 
-	var/obj/item/ctf_flag/flag = item
-	if(flag.team != team)
-		to_chat(user, span_userdanger("Take \the [initial(flag.name)] to your team's controller!"))
-		user.playsound_local(get_turf(user), 'sound/machines/buzz/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
+	var/obj/item/ctf_flag/flag = tool
+	if(flag.team == team)
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_userdanger("Take \the [initial(flag.name)] to your team's controller!"))
+	user.playsound_local(get_turf(user), 'sound/machines/buzz/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/ctf_flag/dropped(mob/user)
 	..()
@@ -366,8 +372,9 @@
 			scores += UNLINT("<span style='color: [ctf_team.team_color]'>[ctf_team.team_color] - [ctf_team.points]/[ctf_game.points_to_win]</span>\n")
 		balloon_alert_to_viewers(scores)
 
-/obj/machinery/ctf/control_point/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/ctf/control_point/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	capture(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ctf/control_point/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -447,10 +454,10 @@
 /obj/effect/ctf/dead_barricade/Initialize(mapload)
 	. = ..()
 	ctf_game = GLOB.ctf_games[game_id]
-	ctf_game.barricades += src
+	ctf_game?.barricades += src
 
 /obj/effect/ctf/dead_barricade/Destroy()
-	ctf_game.barricades -= src
+	ctf_game?.barricades -= src
 	return ..()
 
 /obj/effect/ctf/dead_barricade/proc/respawn()
@@ -473,10 +480,8 @@
 ///Proc that handles toggling and unloading CTF.
 /proc/toggle_id_ctf(user, activated_id, automated = FALSE, unload = FALSE, area/ctf_area = /area/centcom/ctf)
 	var/static/loading = CTF_LOADING_UNLOADED
-	var/datum/ctf_controller/ctf_controller = GLOB.ctf_games[activated_id]
-	if(isnull(ctf_controller))
-		ctf_controller = create_ctf_game(activated_id)
-	if(unload == TRUE)
+	var/datum/ctf_controller/ctf_controller = create_ctf_game(activated_id)
+	if(unload)
 		log_admin("[key_name_admin(user)] is attempting to unload CTF.")
 		message_admins("[key_name_admin(user)] is attempting to unload CTF.")
 		if(loading == CTF_LOADING_UNLOADED)

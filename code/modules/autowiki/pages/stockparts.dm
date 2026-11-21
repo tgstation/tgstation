@@ -46,17 +46,14 @@
 	return output
 
 /datum/autowiki/stock_parts/proc/find_design(obj/item/stock_parts/stock_part)
-	for(var/design_type in subtypesof(/datum/design))
-		var/datum/design/recipe = new design_type()
-
-		if(ispath(recipe.build_path, stock_part.type))
-			return recipe
+	for(var/datum/design/design_type as anything in valid_subtypesof(/datum/design))
+		if(ispath(design_type::build_path, stock_part.type))
+			return new design_type()
 
 /datum/autowiki/stock_parts/proc/find_research(datum/design/recipe)
-	for(var/node_type in subtypesof(/datum/techweb_node))
+	for(var/datum/techweb_node/node_type as anything in valid_subtypesof(/datum/techweb_node))
 		var/datum/techweb_node/node = new node_type()
-
-		if(node.design_ids.Find(recipe.id))
+		if(LAZYACCESS(node.unlocked_designs, recipe.type))
 			return node
 
 /datum/autowiki/stock_parts/proc/create_icon(obj/item/stock_parts/stock_part)
@@ -82,8 +79,7 @@
 /datum/autowiki/stock_parts/proc/generate_material_list(datum/design/recipe)
 	var/list/materials = list()
 
-	for(var/ingredient_type, amount in recipe.materials)
-		var/datum/material/ingredient = new ingredient_type()
+	for(var/datum/material/ingredient, amount in recipe.materials)
 		materials += "[amount] [ingredient.name]"
 
 	return materials.Join("<br>")

@@ -14,30 +14,22 @@
 		wizard_datum.perks += src
 	RegisterSignal(user, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	if (user.hud_used)
-		on_hud_created()
+		on_hud_created(user)
 	to_chat(user, span_notice("You got a new perk: [src.name]."))
 	log_purchase(user.key)
 	return TRUE
 
-/datum/spellbook_entry/perks/proc/on_hud_created(mob/living/carbon/human/user, datum/antagonist/wizard/wizard_datum)
+/datum/spellbook_entry/perks/proc/on_hud_created(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
 
-	var/datum/hud/user_hud = user.hud_used
+	var/datum/hud/user_hud = source.hud_used
+	var/datum/antagonist/wizard/wizard_datum = source.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(!user_hud.screen_objects[HUD_WIZARD_COMPACT_PERKS])
 		user_hud.add_screen_object(/atom/movable/screen/perk/more, HUD_WIZARD_COMPACT_PERKS, HUD_GROUP_INFO, ui_loc = ui_perk_position(0), update_screen = TRUE)
 
 	var/atom/movable/screen/perk/perk = user_hud.add_screen_object(/atom/movable/screen/perk, HUD_WIZARD_PERK(length(wizard_datum.perks)), HUD_GROUP_INFO, ui_loc = ui_perk_position(length(wizard_datum.perks)), update_screen = TRUE)
 	perk.name = name
 	perk.icon_state = hud_icon
-
-/datum/spellbook_entry/perks/fourhands
-	name = "Four Hands"
-	desc = "Gives you even more hands to perform magic"
-	hud_icon = "fourhands"
-
-/datum/spellbook_entry/perks/fourhands/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
-	. = ..()
-	user.change_number_of_hands(4)
 
 /datum/spellbook_entry/perks/wormborn
 	name = "Worm Born"
@@ -169,6 +161,8 @@
 
 /obj/effect/wizard_magnetism/orbit(atom/new_owner, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	. = ..()
+	if(QDELETED(src))
+		return null
 	if(!isliving(new_owner))
 		return
 	owner = WEAKREF(new_owner)

@@ -32,7 +32,7 @@
 	owner.current.grant_language(/datum/language/codespeak)
 
 /datum/antagonist/nukeop/support/get_spawnpoint()
-	return pick(GLOB.nukeop_overwatch_start)
+	return pick(GLOB.nukeop_base_overwatch_start)
 
 /datum/antagonist/nukeop/support/forge_objectives()
 	var/datum/objective/overwatch/objective = new

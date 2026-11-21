@@ -1,11 +1,12 @@
 /obj/item/mod/module/circuit
-	name = "MOD circuit adapter module"
+	name = "\improper MOD circuit adapter module"
 	desc = "A module shell that allows a circuit to be inserted into, and interface with, a MODsuit."
 	module_type = MODULE_USABLE
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	incompatible_modules = list(/obj/item/mod/module/circuit)
 	cooldown_time = 0.5 SECONDS
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 	/// A reference to the shell component, used to access the shell and its attached circuit
 	var/datum/component/shell/shell

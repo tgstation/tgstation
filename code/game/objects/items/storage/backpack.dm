@@ -31,6 +31,7 @@
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/attack_equip)
+	AddElement(/datum/element/strip_accessible_storage)
 
 /*
  * Backpack Types
@@ -48,6 +49,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/bag_of_holding_inert/Initialize(mapload)
 	. = ..()
@@ -65,6 +67,11 @@
 	storage_type = /datum/storage/bag_of_holding
 	pickup_sound = null
 	drop_sound = null
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 7.5, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 2.5)
+
+/obj/item/storage/backpack/holding/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_BLUESPACE_INTERFERENCE, INNATE_TRAIT)
 
 /datum/armor/backpack_holding
 	fire = 60
@@ -75,7 +82,7 @@
 	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(2 SECONDS)
-	playsound(src, SFX_RUSTLE, 50, TRUE, -5)
+	playsound(src, /datum/sound_effect/rustle, 50, TRUE, -5)
 	user.suicide_log()
 	qdel(user)
 

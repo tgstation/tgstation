@@ -9,6 +9,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("pokes")
 	attack_verb_simple = list("poke")
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	var/fail_message = "invalid user!"
 	/// Explode when user check is failed.
 	var/selfdestruct = FALSE
@@ -131,6 +132,7 @@
 	desc = "This Security firing pin authorizes the weapon for only mindshield-implanted users."
 	icon_state = "firing_pin_loyalty"
 	req_implant = /obj/item/implant/mindshield
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 2)
 
 /obj/item/firing_pin/implant/pindicate
 	name = "syndicate firing pin"
@@ -147,6 +149,7 @@
 	color = COLOR_YELLOW
 	fail_message = "honk!"
 	force_replace = TRUE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bananium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 
 /obj/item/firing_pin/clown/pin_auth(mob/living/user)
 	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
@@ -162,24 +165,19 @@
 	if(QDELETED(user))  //how the hell...?
 		stack_trace("/obj/item/firing_pin/clown/ultra/pin_auth called with a [isnull(user) ? "null" : "invalid"] user.")
 		return TRUE
-	if(HAS_TRAIT(user, TRAIT_CLUMSY)) //clumsy
+	if(HAS_MIND_TRAIT(user, TRAIT_CLUMSY)) // Clumsy, which clowns are usually (but not always)
 		return TRUE
-	if(user.mind)
-		if(is_clown_job(user.mind.assigned_role)) //traitor clowns can use this, even though they're technically not clumsy
-			return TRUE
-		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/clownop)) //clown ops aren't clumsy by default and technically don't have an assigned role of "Clown", but come on, they're basically clowns
-			return TRUE
-		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/leader/clownop)) //Wanna hear a funny joke?
-			return TRUE //The clown op leader antag datum isn't a subtype of the normal clown op antag datum.
+	if(HAS_MIND_TRAIT(user, TRAIT_NAIVE)) // Naive, which clowns are always
+		return TRUE
 	return FALSE
 
 /obj/item/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/gun/new_gun, starting = FALSE)
-	..()
+	. = ..()
 	new_gun.clumsy_check = FALSE
 
 /obj/item/firing_pin/clown/ultra/gun_remove(mob/living/user)
 	gun.clumsy_check = initial(gun.clumsy_check)
-	..()
+	return ..()
 
 // Now two times deadlier!
 /obj/item/firing_pin/clown/ultra/selfdestruct
@@ -344,6 +342,7 @@
 	desc = "A firing pin used by the Australian defense force, retrofit to prevent weapon discharge on the station."
 	icon_state = "firing_pin_explorer"
 	fail_message = "cannot fire while on station, mate!"
+	custom_materials = list(/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 // This checks that the user isn't on the station Z-level.
 /obj/item/firing_pin/explorer/pin_auth(mob/living/user)
@@ -380,7 +379,7 @@
 	fail_message = "not a monkey!"
 
 /obj/item/firing_pin/monkey/pin_auth(mob/living/user)
-	if(!is_simian(user))
-		playsound(src, SFX_SCREECH, 75, TRUE)
+	if(!HAS_TRAIT(user, TRAIT_SIMIAN))
+		playsound(src, /datum/sound_effect/screech, 75, TRUE)
 		return FALSE
 	return TRUE

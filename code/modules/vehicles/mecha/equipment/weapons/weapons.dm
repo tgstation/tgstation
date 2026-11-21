@@ -93,87 +93,93 @@
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/red
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser
-	equip_cooldown = 8
+	equip_cooldown = 0.8 SECONDS
 	name = "\improper CH-PS \"Immolator\" laser"
 	desc = "A weapon for combat exosuits. Shoots basic lasers."
 	icon_state = "mecha_laser"
-	energy_drain = 3 KILO JOULES
+	energy_drain = STANDARD_CELL_CHARGE * 0.3
 	projectile = /obj/projectile/beam/laser
 	fire_sound = 'sound/items/weapons/laser.ogg'
 	harmful = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/disabler
 	equip_cooldown = 1.5 SECONDS
 	name = "\improper CH-DS \"Peacemaker\" disabler"
 	desc = "A weapon for combat exosuits. Shoots a bunch of weak disabler beams."
 	icon_state = "mecha_disabler"
-	energy_drain = 10 KILO JOULES
+	energy_drain = STANDARD_CELL_CHARGE
 	projectile = /obj/projectile/beam/disabler/weak
 	variance = 25
 	projectiles_per_shot = 5
 	fire_sound = 'sound/items/weapons/taser2.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/laser/heavy
-	equip_cooldown = 15
+	equip_cooldown = 1.5 SECONDS
 	name = "\improper CH-LC \"Solaris\" laser cannon"
 	desc = "A weapon for combat exosuits. Shoots heavy lasers."
 	icon_state = "mecha_laser"
-	energy_drain = 6 KILO JOULES
+	energy_drain = STANDARD_CELL_CHARGE * 0.6
 	projectile = /obj/projectile/beam/laser/heavylaser
 	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/ion
-	equip_cooldown = 20
+	equip_cooldown = 2 SECONDS
 	name = "\improper MKIV ion heavy cannon"
 	desc = "A weapon for combat exosuits. Shoots technology-disabling ion beams. Don't catch yourself in the blast!"
 	icon_state = "mecha_ion"
-	energy_drain = 1.2 KILO JOULES
+	energy_drain = STANDARD_CELL_CHARGE * 0.12
 	projectile = /obj/projectile/ion
 	fire_sound = 'sound/items/weapons/laser.ogg'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 3, /datum/material/uranium = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/tesla
-	equip_cooldown = 35
+	equip_cooldown = 3.5 SECONDS
 	name = "\improper MKI Tesla Cannon"
 	desc = "A weapon for combat exosuits. Fires bolts of electricity similar to the experimental tesla engine."
 	icon_state = "mecha_ion"
-	energy_drain = 5 KILO JOULES
+	energy_drain = STANDARD_CELL_CHARGE * 0.5
 	projectile = /obj/projectile/energy/tesla/cannon
 	fire_sound = 'sound/effects/magic/lightningbolt.ogg'
 	harmful = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 4)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/pulse
-	equip_cooldown = 30
+	equip_cooldown = 3 SECONDS
 	name = "eZ-13 MK2 heavy pulse rifle"
 	desc = "A weapon for combat exosuits. Shoots powerful destructive blasts capable of demolishing obstacles."
 	icon_state = "mecha_pulse"
-	energy_drain = 1.2 KILO JOULES
-	projectile = /obj/projectile/beam/pulse/heavy
+	energy_drain = STANDARD_CELL_CHARGE * 0.12
+	projectile = /obj/projectile/beam/laser/pulse/heavy
 	fire_sound = 'sound/items/weapons/marauder.ogg'
 	harmful = TRUE
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma
-	equip_cooldown = 10
+	equip_cooldown = 1 SECONDS
 	name = "217-D Heavy Plasma Cutter"
 	desc = "A device that shoots resonant plasma bursts at extreme velocity. The blasts are capable of crushing rock and demolishing solid obstacles."
 	icon_state = "mecha_plasmacutter"
 	inhand_icon_state = "plasmacutter"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	energy_drain = 0.3 KILO JOULES
+	energy_drain = STANDARD_CELL_CHARGE * 0.03
 	projectile = /obj/projectile/plasma/adv/mech
 	fire_sound = 'sound/items/weapons/plasma_cutter.ogg'
 	harmful = TRUE
 	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/plasma = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 ///Exosuit thermal guns
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal
-	equip_cooldown = 20
+	equip_cooldown = 2 SECONDS
 	name = "\improper Prototype -I 'Thermal Cannon'"
 	desc = "A special prototype of a heavy thermal weapon designed for use on exosuits. This one is debug-chambered."
 	icon_state = "mecha_laser"
-	energy_drain = 5 KILO JOULES
+	energy_drain = STANDARD_CELL_CHARGE * 0.5
 	projectile = /obj/item/ammo_casing/energy/nanite
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
 	harmful = TRUE
@@ -201,8 +207,8 @@
 	if (has_molten)
 		for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
 			if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
-				thegun.equip_cooldown = 8
-		equip_cooldown = 8
+				thegun.equip_cooldown = 0.8 SECONDS
+		equip_cooldown = 0.8 SECONDS
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno/try_attach_part(mob/user, obj/vehicle/sealed/mecha/themech, attach_right)
@@ -216,13 +222,13 @@
 	if (has_cryo)
 		for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
 			if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
-				thegun.equip_cooldown = 8
-		equip_cooldown = 8
+				thegun.equip_cooldown = 0.8 SECONDS
+		equip_cooldown = 0.8 SECONDS
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/detach(atom/moveto)
 	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thermal_gun in chassis.flat_equipment)
-		thermal_gun.equip_cooldown = 20
+		thermal_gun.equip_cooldown = 2 SECONDS
 	. = ..()
 
 //Exosuit-mounted kinetic accelerator
@@ -230,19 +236,20 @@
 	name = "Exosuit Proto-kinetic Accelerator"
 	desc = "An exosuit-mounted mining tool that does increased damage in low pressure. Drawing from an onboard power source allows it to project further than the handheld version."
 	icon_state = "mecha_kineticgun"
-	energy_drain = 0.3 KILO JOULES
+	energy_drain = STANDARD_CELL_CHARGE * 0.03
 	projectile = /obj/projectile/kinetic/mech
 	equip_cooldown = 1.6 SECONDS
 	fire_sound = 'sound/items/weapons/kinetic_accel.ogg'
 	harmful = TRUE
 	mech_flags = EXOSUIT_MODULE_COMBAT | EXOSUIT_MODULE_WORKING
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/taser
 	name = "\improper PBT \"Pacifier\" mounted taser"
 	desc = "A weapon for combat exosuits. Shoots non-lethal stunning electrodes."
 	icon_state = "mecha_taser"
-	energy_drain = 2 KILO JOULES
-	equip_cooldown = 8
+	energy_drain = STANDARD_CELL_CHARGE * 0.2
+	equip_cooldown = 0.8 SECONDS
 	projectile = /obj/projectile/energy/electrode
 	fire_sound = 'sound/items/weapons/taser.ogg'
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect
@@ -252,12 +259,13 @@
 	name = "\improper HoNkER BlAsT 5000"
 	desc = "Equipment for clown exosuits. Spreads fun and joy to everyone around. Honk!"
 	icon_state = "mecha_honker"
-	energy_drain = 2 KILO JOULES
-	equip_cooldown = 150
+	energy_drain = STANDARD_CELL_CHARGE * 0.2
+	equip_cooldown = 15 SECONDS
 	projectiles_per_shot = 0
 	range = MECHA_MELEE|MECHA_RANGED
 	kickback = FALSE
 	mech_flags = EXOSUIT_MODULE_HONK
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bananium = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/honker/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
@@ -350,20 +358,21 @@
 	name = "\improper FNX-99 \"Hades\" Carbine"
 	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
 	icon_state = "mecha_carbine"
-	equip_cooldown = 10
+	equip_cooldown = 1 SECONDS
 	projectile = /obj/projectile/bullet/incendiary/fnx99
 	projectiles = 24
 	projectiles_cache = 24
 	projectiles_cache_max = 96
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_INCENDIARY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced
 	name = "\improper S.H.H. \"Quietus\" Carbine"
 	desc = "A weapon for combat exosuits. A mime invention, field tests have shown that targets cannot even scream before going down."
 	fire_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	icon_state = "mecha_mime"
-	equip_cooldown = 30
+	equip_cooldown = 3 SECONDS
 	projectile = /obj/projectile/bullet/mime
 	projectiles = 6
 	projectiles_cache = 999
@@ -374,7 +383,7 @@
 	name = "\improper LBX AC 10 \"Scattershot\""
 	desc = "A weapon for combat exosuits. Shoots a spread of pellets."
 	icon_state = "mecha_scatter"
-	equip_cooldown = 20
+	equip_cooldown = 2 SECONDS
 	projectile = /obj/projectile/bullet/scattershot
 	projectiles = 40
 	projectiles_cache = 40
@@ -383,12 +392,13 @@
 	variance = 25
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_BUCKSHOT
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	name = "\improper Ultra AC 2"
 	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
 	icon_state = "mecha_uac2"
-	equip_cooldown = 10
+	equip_cooldown = 1 SECONDS
 	projectile = /obj/projectile/bullet/lmg
 	projectiles = 300
 	projectiles_cache = 300
@@ -399,6 +409,7 @@
 	projectile_delay = 2
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_LMG
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 /// Missiles
 /// SRM-8 Missile Rack - Used by Nuclear Operatives - Explodes when it hits anything
@@ -412,9 +423,10 @@
 	projectiles_cache = 0
 	projectiles_cache_max = 0
 	disabledreload = TRUE
-	equip_cooldown = 60
+	equip_cooldown = 6 SECONDS
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_MISSILE_SRM
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 11, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 4, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 /// PEP-6 Missile Rack - Used by Robotics - Explodes only when it hits dense objects like walls, borgs and mechs
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
@@ -427,7 +439,7 @@
 	projectiles_cache = 0
 	projectiles_cache_max = 0
 	disabledreload = TRUE
-	equip_cooldown = 60
+	equip_cooldown = 6 SECONDS
 	harmful = TRUE
 	ammo_type = MECHA_AMMO_MISSILE_PEP
 
@@ -439,7 +451,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/action(mob/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
-	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), equip_cooldown)
+	TIMER_COOLDOWN_START(chassis, COOLDOWN_MECHA_EQUIPMENT(type), get_equip_cooldown(target))
 	chassis.use_energy(energy_drain)
 	var/newtonian_target = dir2angle(REVERSE_DIR(chassis.dir))
 	var/obj/O = new projectile(chassis.loc)
@@ -468,9 +480,10 @@
 	projectiles_cache = 6
 	projectiles_cache_max = 24
 	missile_speed = 1.5
-	equip_cooldown = 60
+	equip_cooldown = 6 SECONDS
 	ammo_type = MECHA_AMMO_FLASHBANG
-	var/det_time = 20
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 11, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 4, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
+	var/det_time = 2 SECONDS
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/flashbang/proj_init(obj/item/grenade/flashbang/F, mob/user)
 	var/turf/T = get_turf(src)
@@ -487,8 +500,9 @@
 	projectiles_cache_max = 0
 	disabledreload = TRUE
 	projectile = /obj/item/grenade/clusterbuster
-	equip_cooldown = 90
+	equip_cooldown = 9 SECONDS
 	ammo_type = MECHA_AMMO_CLUSTERBANG
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/banana_mortar
 	name = "banana mortar"
@@ -500,9 +514,10 @@
 	missile_speed = 1.5
 	projectiles_cache = 999
 	projectiles_cache_max = 999
-	equip_cooldown = 20
+	equip_cooldown = 2 SECONDS
 	mech_flags = EXOSUIT_MODULE_HONK
 	ammo_type = MECHA_AMMO_BANANA_PEEL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bananium = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar
 	name = "mousetrap mortar"
@@ -514,9 +529,10 @@
 	missile_speed = 1.5
 	projectiles_cache = 999
 	projectiles_cache_max = 999
-	equip_cooldown = 10
+	equip_cooldown = 1 SECONDS
 	mech_flags = EXOSUIT_MODULE_HONK
 	ammo_type = MECHA_AMMO_MOUSETRAP
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bananium = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/mousetrap_mortar/proj_init(obj/item/assembly/mousetrap/armed/M)
 	M.secured = TRUE
@@ -526,8 +542,8 @@
 	name = "\improper Oingo Boingo Punch-face"
 	desc = "Equipment for clown exosuits. Delivers fun right to your face!"
 	icon_state = "mecha_punching_glove"
-	energy_drain = 250
-	equip_cooldown = 20
+	energy_drain = STANDARD_CELL_CHARGE * 0.25
+	equip_cooldown = 2 SECONDS
 	range = MECHA_MELEE|MECHA_RANGED
 	missile_range = 5
 	projectile = /obj/item/punching_glove
@@ -541,6 +557,7 @@
 	var/punch_damage = 35
 	mech_flags = EXOSUIT_MODULE_HONK
 	ammo_type = MECHA_AMMO_PUNCHING_GLOVE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/bananium = SHEET_MATERIAL_AMOUNT * 3.75)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/launcher/punching_glove/get_snowflake_data()
 	. = ..()
@@ -607,7 +624,7 @@
 	projectiles = 6
 	missile_speed = 1.5
 	projectiles_cache = 999
-	equip_cooldown = 60
+	equip_cooldown = 6 SECONDS
 	det_time = 20
 	mech_flags = EXOSUIT_MODULE_HONK
 
@@ -616,13 +633,14 @@
 	name = "hydraulic claw"
 	desc = "A modified hydraulic clamp, for use exclusively with the Paddy exosuit. Non-lethally apprehends suspects."
 	icon_state = "paddy_claw"
-	equip_cooldown = 15
-	energy_drain = 10
+	equip_cooldown = 1.5 SECONDS
+	energy_drain = 0.01 * STANDARD_CELL_CHARGE
 	tool_behaviour = TOOL_RETRACTOR
 	range = MECHA_MELEE
 	toolspeed = 0.8
 	mech_flags = EXOSUIT_MODULE_PADDY
 	projectiles_per_shot = 0
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	///Chassis but typed for the cargo_hold var
 	var/obj/vehicle/sealed/mecha/ripley/secmech
 	///Audio for using the hydraulic clamp

@@ -52,6 +52,11 @@
 	slowdown = 0.5
 	floor_variance = 30
 
+// Uses the dug sprite without being excavated, unlike the permanently dug /basin.
+/turf/open/misc/asteroid/basalt/wasteland/depression
+	icon_state = "wasteland_dug"
+	floor_variance = 0
+
 /turf/open/misc/asteroid/basalt/wasteland/break_tile()
 	return
 
@@ -82,6 +87,9 @@
 		new /obj/effect/decal/remains/human(src, 1)
 	else
 		new /obj/item/stack/sheet/bone(src)
+
+/turf/open/misc/asteroid/basalt/wasteland/station
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 
 //***Oil well puddles.
 /obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
@@ -234,59 +242,62 @@
 	dug_closed = FALSE
 	return TRUE
 
-/obj/structure/closet/crate/grave/tool_interact(obj/item/weapon, mob/living/carbon/user)
+/obj/structure/closet/crate/grave/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	//anything that isn't a shovel does normal stuff to the grave[like putting stuff in]
-	if(weapon.tool_behaviour != TOOL_SHOVEL)
+	if(tool.tool_behaviour != TOOL_SHOVEL)
 		return ..()
 
-	//player is attempting to open/close the grave with a shovel
-	if(!user.combat_mode)
-		user.visible_message(
-			span_notice("[user] Is attempting to [opened ? "close" : "dig open"] [src]."),
-			span_notice("You start [opened ? "closing" : "digging open"] [src]."),
-		)
-		if(!weapon.use_tool(src, user, delay = 15, volume = 40))
-			return TRUE
-
-		var/is_chill_with_robbing = HAS_MIND_TRAIT(user, TRAIT_MORBID) || HAS_PERSONALITY(user, /datum/personality/callous) || HAS_PERSONALITY(user, /datum/personality/misanthropic)
-		if(opened)
-			dug_closed = TRUE
-			close(user)
-		else if(open(user, force = TRUE) && affect_mood)
-			user.add_mood_event("graverobbing", is_chill_with_robbing ? /datum/mood_event/morbid_graverobbing : /datum/mood_event/graverobbing)
-			if(lead_tomb && first_open)
-				if(is_chill_with_robbing)
-					to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
-				else
-					user.gain_trauma(/datum/brain_trauma/magic/stalker)
-					to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
-				first_open = FALSE
-
-		return TRUE
 
 	//player is attempting to destroy the open grave with a shovel
-	else
+	if(user.combat_mode)
 		if(!opened)
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 
 		user.visible_message(
 			span_notice("[user] Is attempting to remove [src]."),
 			span_notice("You start removing [src]."),
 		)
-		if(!weapon.use_tool(src, user, delay = 15, volume = 40) || !opened)
-			return TRUE
+		if(!tool.use_tool(src, user, delay = 1.5 SECONDS , volume = 40) || !opened)
+			return ITEM_INTERACT_BLOCKING
 
 		to_chat(user, span_notice("You remove \the [src] completely."))
 		user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 		deconstruct(TRUE)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
+
+	//player is attempting to open/close the grave with a shovel
+	user.visible_message(
+			span_notice("[user] Is attempting to [opened ? "close" : "dig open"] [src]."),
+			span_notice("You start [opened ? "closing" : "digging open"] [src]."),
+	)
+	if(!tool.use_tool(src, user, delay = 1.5 SECONDS, volume = 40))
+		return ITEM_INTERACT_BLOCKING
+
+	var/is_chill_with_robbing = HAS_MIND_TRAIT(user, TRAIT_MORBID) || HAS_PERSONALITY(user, /datum/personality/callous) || HAS_PERSONALITY(user, /datum/personality/misanthropic)
+	if(opened)
+		dug_closed = TRUE
+		close(user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(!open(user, force = TRUE) || !affect_mood)
+		return ITEM_INTERACT_SUCCESS
+
+	user.add_mood_event("graverobbing", is_chill_with_robbing ? /datum/mood_event/morbid_graverobbing : /datum/mood_event/graverobbing)
+	if(lead_tomb && first_open)
+		if(is_chill_with_robbing || !astype(user, /mob/living/carbon)?.gain_trauma(/datum/brain_trauma/magic/stalker))
+			to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
+		else
+			to_chat(user, span_boldwarning("Oh no, no no no, THEY'RE EVERYWHERE! EVERY ONE OF THEM IS EVERYWHERE!"))
+		first_open = FALSE
+
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/structure/closet/crate/grave/container_resist_act(mob/living/user, loc_required = TRUE)
 	if(opened)
 		return
 	// The player is trying to dig themselves out of an early grave
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	user.visible_message(
 		span_warning("[src]'s dirt begins to shift and rumble!"),
 		span_notice("You desperately begin to claw at the dirt around you, trying to force yourself upwards through the soil... (this will take about [DisplayTimeText(breakout_time)].)"),
@@ -324,14 +335,6 @@
 	..()
 	new /obj/effect/decal/cleanable/blood/gibs/old(src)
 	new /obj/item/book/granter/crafting_recipe/boneyard_notes(src)
-
-/obj/structure/closet/crate/grave/skeleton
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	affect_mood = TRUE
-
-/obj/structure/closet/crate/grave/skeleton/PopulateContents()
-	. = ..()
-	new /mob/living/carbon/human/species/skeleton(src)
 
 //***Fluff items for lore/intrigue
 /obj/item/paper/crumpled/muddy/fluff/elephant_graveyard

@@ -1,7 +1,7 @@
 //===============================HAND INTERACTION===================================
 /obj/machinery/vending/interact(mob/user)
 	if(seconds_electrified && !(machine_stat & NOPOWER))
-		if(shock(user, 100))
+		if(shock(user, 125))
 			return
 
 	if(tilted && !user.buckled)
@@ -82,10 +82,6 @@
 		if(inserted_item.type != product_datum.product_path)
 			continue
 
-		if(product_datum.amount == product_datum.max_amount)
-			to_chat(user, span_warning("[src] can't accept any more [inserted_item.name][inserted_item.p_s()]!"))
-			return FALSE
-
 		if(!user.transferItemToLoc(inserted_item, src))
 			to_chat(user, span_warning("[inserted_item] is stuck in your hand!"))
 			return FALSE
@@ -159,8 +155,9 @@
 	to_chat(user, span_notice("You loaded [restocked] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained] [MONEY_NAME]." : "."]"))
 	var/datum/bank_account/cargo_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	cargo_account.adjust_money(round(credits_contained * 0.5), "Vending: Restock")
-	var/obj/item/holochip/payday = new(src, credits_contained)
-	try_put_in_hand(payday, user)
+	if(credits_contained >= 1)
+		var/obj/item/holochip/payday = new(src, credits_contained)
+		try_put_in_hand(payday, user)
 	credits_contained = 0
 
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)

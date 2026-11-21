@@ -7,14 +7,14 @@
 	color = /datum/blood_type/xeno::color // For mapper sanity
 
 /obj/effect/decal/cleanable/blood/xeno/get_default_blood_type()
-	return get_blood_type(BLOOD_TYPE_XENO)
+	return get_blood_type(/datum/blood_type/xeno)
 
 /obj/effect/decal/cleanable/blood/splatter/xeno
 	name = "pool of acid"
 	color = /datum/blood_type/xeno::color // For mapper sanity
 
 /obj/effect/decal/cleanable/blood/splatter/xeno/get_default_blood_type()
-	return get_blood_type(BLOOD_TYPE_XENO)
+	return get_blood_type(/datum/blood_type/xeno)
 
 /obj/effect/decal/cleanable/blood/gibs/xeno
 	name = "xeno gibs"
@@ -24,7 +24,7 @@
 	color = /datum/blood_type/xeno::color // For mapper sanity
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/get_default_blood_type()
-	return get_blood_type(BLOOD_TYPE_XENO)
+	return get_blood_type(/datum/blood_type/xeno)
 
 /obj/effect/decal/cleanable/blood/gibs/xeno/up
 	icon_state = "xgibup1"
@@ -62,4 +62,4 @@
 	color = /datum/blood_type/xeno::color // For mapper sanity
 
 /obj/effect/decal/cleanable/blood/tracks/xeno/get_default_blood_type()
-	return get_blood_type(BLOOD_TYPE_XENO)
+	return get_blood_type(/datum/blood_type/xeno)

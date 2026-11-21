@@ -20,7 +20,7 @@
 
 /datum/element/atmos_sensitive/Detach(atom/source)
 	if(source.loc)
-		UnregisterSignal(source.loc, COMSIG_TURF_EXPOSE)
+		source.UnregisterSignal(source.loc, COMSIG_TURF_EXPOSE) // Attach registers this on the atom, not the element
 	UnregisterSignal(source, COMSIG_MOVABLE_MOVED)
 	if(source.flags_1 & ATMOS_IS_PROCESSING_1)
 		source.atmos_end()

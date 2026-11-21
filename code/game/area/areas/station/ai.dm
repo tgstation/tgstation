@@ -45,11 +45,16 @@
 	icon_state = "ai_chamber"
 	annoying_ambience = null
 
+/area/station/ai/satellite/chamber/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/block_area_power_fail)
+
 /area/station/ai/satellite/exterior
 	name = "\improper AI Satellite Exterior"
 	secure = FALSE
 
 /area/station/ai/satellite/maintenance
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "\improper AI Satellite Maintenance"
 	icon_state = "ai_maint"
 
@@ -70,6 +75,7 @@
 	icon_state = "ai_foyer"
 
 /area/station/ai/satellite/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper AI Satellite Hallway"
 
 /area/station/ai/satellite/uppernorth

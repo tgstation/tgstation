@@ -12,9 +12,9 @@
 	light_power = 0.8
 	light_color = "#99ccff"
 	pass_flags = PASSMOB | PASSFLAPS
-	status_flags = (CANPUSH | CANSTUN)
+	status_flags = CANSTUN
 	ai_controller = /datum/ai_controller/basic_controller/bot/medbot
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5)
 
 	req_one_access = list(ACCESS_ROBOTICS, ACCESS_MEDICAL)
 	radio_key = /obj/item/encryptionkey/headset_med
@@ -169,6 +169,13 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
+/mob/living/basic/bot/medbot/Destroy()
+	if(!ispath(health_analyzer))
+		QDEL_NULL(health_analyzer)
+	if(!ispath(medkit_type))
+		QDEL_NULL(medkit_type)
+	return ..()
+
 /mob/living/basic/bot/medbot/LateInitialize()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
@@ -272,7 +279,7 @@
 	balloon_alert(user, "reagent synthesis circuits shorted")
 	audible_message(span_danger("[src] buzzes oddly!"))
 	flick_overlay_view(mutable_appearance(icon, "[base_icon_state]_spark"), 1 SECONDS)
-	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
 /mob/living/basic/bot/medbot/examine()
@@ -468,6 +475,9 @@
 
 /mob/living/basic/bot/medbot/nukie/Initialize(mapload, new_skin)
 	. = ..()
+	var/datum/action/minimap/nuclear/tacmap_action = new
+	tacmap_action.Grant(src)
+	add_minimap_blip(src, MINIMAP_NUKEOP_BLIP, "mediborg")
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DISARMED, PROC_REF(nuke_disarm))
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(nuke_arm))
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_DETONATING, PROC_REF(nuke_detonate))

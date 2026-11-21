@@ -3,7 +3,7 @@
 	name = "Galactic Common"
 	desc = "The common galactic tongue."
 	key = "0"
-	flags = TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_UNDERSTOOD
+	flags = LANGUAGE_TONGUELESS_SPEECH | LANGUAGE_HIDE_ICON_IF_UNDERSTOOD
 	default_priority = 100
 	space_chance = 20
 	sentence_chance = 0

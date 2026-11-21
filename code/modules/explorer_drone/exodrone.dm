@@ -366,19 +366,24 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	if(fuel_canister)
 		. += span_notice("You can remove the [fuel_canister] with a <b>prying tool</b>.")
 
-/obj/machinery/exodrone_launcher/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/fuel_pellet))
+/obj/machinery/exodrone_launcher/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/fuel_pellet))
 		if(fuel_canister)
 			to_chat(user, span_warning("There's already fuel loaded inside [src]!"))
-			return TRUE
-		if(!user.transferItemToLoc(weapon, src))
-			return
-		fuel_canister = weapon
-		update_icon()
-		return TRUE
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(weapon, /obj/item/exodrone) && user.transferItemToLoc(weapon, drop_location()))
-		return TRUE
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		fuel_canister = tool
+		update_icon()
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/exodrone))
+		if(!user.transferItemToLoc(tool, drop_location()))
+			return ITEM_INTERACT_BLOCKING
+
+		return ITEM_INTERACT_SUCCESS
 
 	return ..()
 

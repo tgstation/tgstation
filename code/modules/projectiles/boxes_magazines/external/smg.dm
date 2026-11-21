@@ -8,6 +8,7 @@
 	ammo_type = /obj/item/ammo_casing/c46x30mm
 	caliber = CALIBER_46X30MM
 	max_ammo = 20
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/item/ammo_box/magazine/wt550m9/update_icon_state()
 	. = ..()
@@ -17,11 +18,13 @@
 	name = "\improper WT-550 magazine (4.6x30mm AP)"
 	MAGAZINE_TYPE_ARMORPIERCE
 	ammo_type = /obj/item/ammo_casing/c46x30mm/ap
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.6)
 
 /obj/item/ammo_box/magazine/wt550m9/wtic
 	name = "\improper WT-550 magazine (4.6x30mm incendiary)"
 	MAGAZINE_TYPE_INCENDIARY
 	ammo_type = /obj/item/ammo_casing/c46x30mm/inc
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 
 /obj/item/ammo_box/magazine/smartgun

@@ -206,7 +206,8 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/bleed/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/carbon/human/target in listeners)
 		var/obj/item/bodypart/chosen_part = pick(target.get_bodyparts())
-		chosen_part.adjustBleedStacks(5)
+		var/add_stacks = HAS_TRAIT(target, TRAIT_BLOOD_FOUNTAIN) ? 7 : 5
+		chosen_part.adjustBleedStacks(add_stacks)
 
 /// This command sets the listeners ablaze.
 /datum/voice_of_god_command/burn
@@ -353,8 +354,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/walk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		if(target.move_intent != MOVE_INTENT_WALK)
-			target.toggle_move_intent()
+		target.set_move_intent(MOVE_INTENT_WALK)
 
 /// This command forces the listeners to switch to run intent.
 /datum/voice_of_god_command/run
@@ -363,8 +363,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/walk/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	for(var/mob/living/target as anything in listeners)
-		if(target.move_intent != MOVE_INTENT_RUN)
-			target.toggle_move_intent()
+		target.set_move_intent(MOVE_INTENT_RUN)
 
 /// This command turns the listeners' throw mode on.
 /datum/voice_of_god_command/throw_catch

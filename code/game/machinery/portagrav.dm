@@ -88,7 +88,7 @@
 
 /obj/machinery/power/portagrav/update_icon_state()
 	. = ..()
-	icon_state = panel_open ? "[base_icon_state]-o" : base_icon_state
+	icon_state = panel_open ? "[base_icon_state]_o" : base_icon_state
 
 /obj/machinery/power/portagrav/screwdriver_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_screwdriver(user, tool)
@@ -155,7 +155,7 @@
 	if(user)
 		balloon_alert(user, "unsafe gravity unlocked")
 		user.log_message("emagged [src].", LOG_ATTACK)
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
 /obj/machinery/power/portagrav/proc/toggle_on(mob/user)

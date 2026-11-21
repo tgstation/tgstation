@@ -91,7 +91,12 @@
 
 /obj/machinery/launchpad/update_icon_state()
 	. = ..()
-	icon_state = panel_open ? "[base_icon_state]-open" : base_icon_state
+	if(machine_stat & (BROKEN|NOPOWER))
+		icon_state = "[base_icon_state]-off"
+	else if(state_open)
+		icon_state = "[base_icon_state]-open"
+	else
+		icon_state = "[base_icon_state]-idle"
 
 /obj/machinery/launchpad/attack_ghost(mob/dead/observer/ghost)
 	. = ..()
@@ -315,15 +320,16 @@
 			closed = TRUE
 			update_indicator()
 
-/obj/machinery/launchpad/briefcase/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/launchpad_remote))
-		var/obj/item/launchpad_remote/launch = item
-		if(IS_WEAKREF_OF(src, launch.pad)) //do not attempt to link when already linked
-			return ..()
-		launch.pad = WEAKREF(src)
-		to_chat(user, span_notice("You link [src] to [launch]."))
-	else
-		return ..()
+/obj/machinery/launchpad/briefcase/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/launchpad_remote))
+		return NONE
+	var/obj/item/launchpad_remote/remote = tool
+	if(IS_WEAKREF_OF(src, remote.pad)) //do not attempt to link when already linked
+		return ITEM_INTERACT_BLOCKING
+	remote.pad = WEAKREF(src)
+	to_chat(user, span_notice("You link [src] to [remote]."))
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/launchpad_remote
 	name = "folder"
@@ -399,11 +405,18 @@
 		if("move_pos")
 			var/plus_x = text2num(params["x"])
 			var/plus_y = text2num(params["y"])
-			// sanitizes our ranges for us
-			our_pad.set_offset(
-				x = our_pad.x_offset + plus_x,
-				y = our_pad.y_offset + plus_y
-			)
+			if(plus_x || plus_y)
+				// sanitizes our ranges for us
+				our_pad.set_offset(
+					x = our_pad.x_offset + plus_x,
+					y = our_pad.y_offset + plus_y,
+				)
+			else
+				// for resetting
+				our_pad.set_offset(
+					x = 0,
+					y = 0,
+				)
 			. = TRUE
 		if("rename")
 			. = TRUE

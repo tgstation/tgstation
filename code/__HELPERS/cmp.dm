@@ -141,8 +141,8 @@
 	else
 		return sorttext(b_name, a_name)
 
-/proc/cmp_job_display_asc(datum/job/A, datum/job/B)
-	return A.display_order - B.display_order
+/proc/cmp_job_display_with_departments_asc(datum/job/A, datum/job/B)
+	return A.display_order_with_department() - B.display_order_with_department()
 
 /proc/cmp_department_display_asc(datum/job_department/A, datum/job_department/B)
 	return A.display_order - B.display_order

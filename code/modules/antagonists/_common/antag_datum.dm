@@ -343,7 +343,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
 	if(owner.current)
 		SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAGONIST_REMOVED, src)
-	qdel(src)
 
 /**
  * Proc that sends fluff or instructional messages to the player when they are given this antag datum.
@@ -600,6 +599,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	custom_objective.owner = owner
 	custom_objective.explanation_text = custom_objective_text
 	custom_objective.completed = TRUE
+	hijack_speed = max(hijack_speed, 0.5)
 
 	if (retain_existing)
 		objectives.Insert(1, custom_objective)
@@ -628,3 +628,34 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Return TRUE to prevent the antag's job from handling the respawn
 /datum/antagonist/proc/on_respawn(mob/new_character)
 	return FALSE
+
+/// Dissassociates the antag datum from its owner, without deleting it - allowing one datum and its objectives to be reused for another mind
+/datum/antagonist/proc/store_datum()
+	if(isnull(owner))
+		stack_trace("Tried to store an antagonist datum that already has no owner.")
+		return FALSE
+
+	on_removal()
+	var/datum/team/antag_team = get_team()
+	antag_team?.remove_member(owner)
+	LAZYREMOVE(owner.antag_datums, src)
+	owner = null
+	log_game("[key_name(owner)] has lost antag datum [src] ([type]).")
+	QDEL_NULL(team_hud_ref)
+	return TRUE
+
+/// Reassociates the antag datum with a new mind - allowing one datum and its objectives to be reused for another mind
+/datum/antagonist/proc/restore_datum(datum/mind/new_owner)
+	if(!isnull(owner))
+		stack_trace("Tried to restore an antagonist datum that already has an owner.")
+		return FALSE
+	if(!can_be_owned(new_owner))
+		return FALSE
+
+	owner = new_owner
+	LAZYADD(owner.antag_datums, src)
+	var/datum/team/antag_team = get_team()
+	antag_team?.add_member(new_owner)
+	on_gain()
+	log_game("[key_name(new_owner)] has gained antag datum [src] ([type]).")
+	return TRUE

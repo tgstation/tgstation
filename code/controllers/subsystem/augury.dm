@@ -6,56 +6,57 @@ SUBSYSTEM_DEF(augury)
 	var/list/watchers = list()
 	var/list/doombringers = list()
 
+	/// Associative list of observers given action to a boolean
+	/// indicating whether or not they have been given action.
 	var/list/observers_given_action = list()
 
 /datum/controller/subsystem/augury/stat_entry(msg)
 	msg = "W:[watchers.len]|D:[length(doombringers)]"
 	return ..()
 
-/datum/controller/subsystem/augury/proc/register_doom(atom/A, severity)
-	doombringers[A] = severity
-	RegisterSignal(A, COMSIG_QDELETING, PROC_REF(unregister_doom))
+/datum/controller/subsystem/augury/proc/register_doom(atom/new_doom, severity)
+	doombringers[new_doom] = severity
+	RegisterSignal(new_doom, COMSIG_QDELETING, PROC_REF(unregister_doom))
 
-/datum/controller/subsystem/augury/proc/unregister_doom(atom/A)
+/datum/controller/subsystem/augury/proc/unregister_doom(atom/old_doom)
 	SIGNAL_HANDLER
-	UnregisterSignal(A, COMSIG_QDELETING)
-	doombringers -= A
+	UnregisterSignal(old_doom, COMSIG_QDELETING)
+	doombringers -= old_doom
 
 /datum/controller/subsystem/augury/fire()
 	var/biggest_doom = null
 	var/biggest_threat = null
 
-	for(var/db in doombringers)
-		var/datum/d = db
-		if(!d || QDELETED(d))
-			doombringers -= d
+	for(var/doombringer in doombringers)
+		var/datum/doom = doombringer
+		if(QDELETED(doom))
+			doombringers -= doom
 			continue
-		var/threat = doombringers[d]
-		if((biggest_threat == null) || (biggest_threat < threat))
-			biggest_doom = d
+		var/threat = doombringers[doom]
+		if(isnull(biggest_threat) || (biggest_threat < threat))
+			biggest_doom = doom
 			biggest_threat = threat
 
 	if(doombringers.len)
 		for(var/i in GLOB.player_list)
 			if(isobserver(i) && (!(observers_given_action[i])))
-				var/datum/action/innate/augury/A = new
-				A.Grant(i)
+				var/datum/action/innate/augury/augury_action = new
+				augury_action.Grant(i)
 				observers_given_action[i] = TRUE
 	else
-		for(var/i in observers_given_action)
-			if(observers_given_action[i] && isobserver(i))
-				var/mob/dead/observer/O = i
-				for(var/datum/action/innate/augury/A in O.actions)
-					qdel(A)
-			observers_given_action -= i
+		for(var/mob/dead/observer/key, value in observers_given_action)
+			if(value)
+				for(var/datum/action/innate/augury/augury_action in key.actions)
+					qdel(augury_action)
+			observers_given_action -= key
 
-	for(var/w in watchers)
-		if(!w)
-			watchers -= w
+	for(var/watcher in watchers)
+		if(!watcher)
+			watchers -= watcher
 			continue
-		var/mob/dead/observer/O = w
-		if(biggest_doom && (!O.orbiting || O.orbiting.parent != biggest_doom))
-			O.ManualFollow(biggest_doom)
+		var/mob/dead/observer/orbitter = watcher
+		if(biggest_doom && (!orbitter.orbiting || orbitter.orbiting.parent != biggest_doom))
+			orbitter.ManualFollow(biggest_doom)
 
 /datum/action/innate/augury
 	name = "Auto Follow Debris"

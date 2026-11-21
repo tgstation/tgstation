@@ -260,13 +260,13 @@
 				if (focused_window)
 					winset(user, focused_window, "focus=true")
 				else
-					winset(user, "mapwindow", "focus=true")
+					winset(user, SKIN_MAPWINDOW, "focus=true")
 				break
 	if (timeout)
 		addtimer(CALLBACK(src, PROC_REF(close)), timeout)
 
 /datum/browser/modal/proc/wait()
-	while (open_time && selected_button <= 0 && (!timeout || open_time + timeout > world.time))
+	while (open_time && selected_button <= 0 && !QDELETED(user) && (!timeout || open_time + timeout > world.time))
 		stoplag(1)
 
 /datum/browser/modal/list_picker
@@ -484,9 +484,7 @@
 /// called when a browser popup window is closed after registering with proc/onclose()
 /// if a valid atom reference is supplied, call the atom's Topic() with "close=1"
 /// otherwise, just reset the client mob's machine var.
-/client/verb/windowclose(atomref as text)
-	set hidden = TRUE // hide this verb from the user's panel
-	set name = ".windowclose" // no autocomplete on cmd line
+GAME_VERB_NATIVE(/client, windowclose, ".windowclose", null, atomref as text)
 
 	if(atomref == "null")
 		return

@@ -14,8 +14,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 	/// Cached data from ui_interact
 	var/list/last_scan_data
 	/// Weakref to the last thing we scanned
@@ -62,7 +62,7 @@
 
 /// When we use the analyzer in hand - try to show the results of the last scan
 /obj/item/plant_analyzer/interact(mob/user)
-	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
+	if(IS_UNCONSCIOUS_OR_CRIT(user) || !user.can_read(src) || user.is_blind())
 		return
 	if(last_scan_data)
 		return ..()
@@ -70,7 +70,7 @@
 /// When we attack something, try to scan something we hit with left click. Left-clicking uses scans for stats
 /obj/item/plant_analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isliving(interacting_with))
-		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		playsound(src, /datum/sound_effect/industrial_scan, 20, TRUE, -2, TRUE, FALSE)
 		var/mob/living/living_target = interacting_with
 		if(living_target.mob_biotypes & MOB_PLANT)
 			plant_biotype_health_scan(living_target, user)
@@ -116,7 +116,7 @@
 		span_notice("You analyze [scanned_mob]'s vitals.")
 		)
 
-	healthscan(user, scanned_mob, advanced = TRUE)
+	healthscan(user, scanned_mob, scanpower = SCANPOWER_ADVANCED)
 	add_fingerprint(user)
 
 /*
@@ -185,7 +185,7 @@
 	var/obj/machinery/hydroponics/tray
 
 	if(user)
-		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		playsound(src, /datum/sound_effect/industrial_scan, 20, TRUE, -2, TRUE, FALSE)
 
 	if (istype(target, /obj/machinery/hydroponics))
 		tray = target
@@ -219,6 +219,7 @@
 	)
 
 	if(tray)
+		var/turf/tray_turf = get_turf(tray)
 		last_scan_data["tray_data"] = list(
 			"plant_health" = tray.plant_health,
 			"plant_age" = tray.age,
@@ -233,7 +234,7 @@
 			"yield_mod" = tray.yieldmod,
 			"being_pollinated" = tray.being_pollinated,
 			"self_sustaining" = tray.self_sustaining,
-			"light_level" = tray.light_level,
+			"light_level" = tray_turf?.get_lumcount() || 0,
 			"weeds" = tray.weedlevel,
 			"weeds_max" = MAX_TRAY_WEEDS,
 			"pests" = tray.pestlevel,
@@ -303,6 +304,9 @@
 	)
 	seed_data["removable_traits"] = list()
 	seed_data["core_traits"] = list()
+	seed_data["distill_reagent"] = ""
+	seed_data["juice_name"] = ""
+	seed_data["grind_results"] = list()
 	for(var/datum/plant_gene/trait/trait in seed.genes)
 		if(trait.mutability_flags & PLANT_GENE_REMOVABLE)
 			seed_data["removable_traits"] += trait.type
@@ -317,7 +321,7 @@
 	var/datum/plant_gene/trait/maxchem/volume_trait = locate(/datum/plant_gene/trait/maxchem) in seed.genes
 	var/datum/plant_gene/trait/modified_volume/volume_unit_trait = locate(/datum/plant_gene/trait/modified_volume) in seed.genes
 	seed_data["volume_mod"] = volume_trait ? volume_trait.rate : 1
-	seed_data["volume_units"] = volume_unit_trait ? volume_unit_trait.new_capcity : PLANT_REAGENT_VOLUME
+	seed_data["volume_units"] = volume_unit_trait ? volume_unit_trait.new_capacity : PLANT_REAGENT_VOLUME
 	seed_data["mutatelist"] = list()
 	for(var/obj/item/seeds/mutant as anything in seed.mutatelist)
 		seed_data["mutatelist"] += initial(mutant.plantname)

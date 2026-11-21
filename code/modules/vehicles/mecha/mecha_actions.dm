@@ -107,7 +107,6 @@
 
 	chassis.toggle_strafe()
 
-
 /obj/vehicle/sealed/mecha/proc/toggle_strafe()
 	if(!(mecha_flags & CAN_STRAFE))
 		to_chat(occupants, "this mecha doesn't support strafing!")
@@ -124,7 +123,7 @@
 		var/datum/action/action = LAZYACCESSASSOC(occupant_actions, occupant, /datum/action/vehicle/sealed/mecha/strafe)
 		action?.build_all_button_icons()
 
-///swap seats, for two person mecha
+/// Swap seats, for two person mecha
 /datum/action/vehicle/sealed/mecha/swap_seat
 	name = "Switch Seats"
 	button_icon_state = "mech_seat_swap"

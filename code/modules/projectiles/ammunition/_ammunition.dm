@@ -37,12 +37,10 @@
 	/// How much force is applied when fired in zero-G
 	var/newtonian_force = 1
 
-	///If set to true or false, this ammunition can or cannot misfire, regardless the gun can_misfire setting
-	var/can_misfire = null
-	///This is how much misfire probability is added to the gun when it fires this casing.
-	var/misfire_increment = 0
-	///If set, this casing will damage any gun it's fired from by the specified amount
-	var/integrity_damage = 0
+	///Determines the pressure created by this casing. Most casings are AMMO_CASING_PRESSURE_MEDIUM. If the gun firing the casing has a lower pressure threshold, we start damaging the gun.
+	var/casing_pressure = AMMO_CASING_PRESSURE_MEDIUM
+	///This is how much misfire probability is added to the gun when it fires this casing if it is above the guns pressure threshold.
+	var/misfire_increment = 5
 
 	/// Set when this casing is fired. Only used for checking if it should burn a user's hand when caught from an ejection port.
 	var/shot_timestamp = 0
@@ -86,6 +84,15 @@
 	if(!ispath(exam_proj) || pellets == 0)
 		return
 
+	var/pressure_readout = "an indescribable"
+	switch(casing_pressure)
+		if(-INFINITY to AMMO_CASING_PRESSURE_LOW)
+			pressure_readout = "a low"
+		if(AMMO_CASING_PRESSURE_MEDIUM)
+			pressure_readout = "a standard"
+		if(AMMO_CASING_PRESSURE_EXTREME to INFINITY)
+			pressure_readout = "an extreme"
+
 	// are we in an ammo box?
 	if(isammobox(loc))
 		var/obj/item/ammo_box/our_box = loc
@@ -100,6 +107,7 @@
 		// grab the damage multiplier.
 		proj_damage_mult = our_gun.projectile_damage_multiplier
 	var/list/readout = list()
+	readout += "This round exerts [pressure_readout] amount of chamber pressure when fired."
 	if(proj_damage_mult <= 0 || (initial_damage <= 0 && initial_stamina <= 0))
 		return "Our legal team has determined the offensive nature of these [span_warning(caliber)] rounds to be esoteric."
 	// No dividing by 0
@@ -134,26 +142,32 @@
 	if(!loaded_projectile)
 		loaded_projectile = new projectile_type(src, src)
 
-/obj/item/ammo_casing/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/ammo_box))
-		var/obj/item/ammo_box/box = I
-		if(isturf(loc))
-			var/boolets = 0
-			for(var/obj/item/ammo_casing/bullet in loc)
-				if (box.stored_ammo.len >= box.max_ammo)
-					break
-				if (bullet.loaded_projectile)
-					if (box.give_round(bullet, 0))
-						boolets++
-				else
-					continue
-			if (boolets > 0)
-				box.update_appearance()
-				to_chat(user, span_notice("You collect [boolets] [box.casing_phrasing]\s. [box] now contains [box.stored_ammo.len] [box.casing_phrasing]\s."))
-			else
-				to_chat(user, span_warning("You fail to collect anything!"))
-	else
-		return ..()
+/obj/item/ammo_casing/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/ammo_box))
+		return NONE
+	if(!isturf(loc))
+		return ITEM_INTERACT_BLOCKING
+	if(!collect_into_box(user, tool))
+		return ITEM_INTERACT_BLOCKING
+	return ITEM_INTERACT_SUCCESS
+
+/// Collects the casing and its like on its tile into the passed box, TRUE if anything collected.
+/obj/item/ammo_casing/proc/collect_into_box(mob/living/user, obj/item/ammo_box/box)
+	var/boolets = 0
+	for(var/obj/item/ammo_casing/bullet in loc)
+		if (box.stored_ammo.len >= box.max_ammo)
+			break
+		if (!bullet.loaded_projectile)
+			continue
+		if (box.give_round(bullet, 0))
+			boolets++
+
+	if (!boolets)
+		to_chat(user, span_warning("You fail to collect anything!"))
+		return FALSE
+	box.update_appearance()
+	to_chat(user, span_notice("You collect [boolets] [box.casing_phrasing]\s. [box] now contains [box.stored_ammo.len] [box.casing_phrasing]\s."))
+	return TRUE
 
 /obj/item/ammo_casing/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	bounce_away(FALSE, NONE)

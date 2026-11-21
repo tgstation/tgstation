@@ -10,7 +10,7 @@
 	overclock_coeff = 1.25
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	lights_power = 7
-	step_energy_drain = 12 //slightly higher energy drain since you movin those wheels FAST
+	step_energy_drain = parent_type::step_energy_drain * 1.5 //slightly higher energy drain since you movin those wheels FAST
 	armor_type = /datum/armor/mecha_clarke
 	equip_by_category = list(
 		MECHA_L_ARM = null,
@@ -47,19 +47,13 @@
 	. = ..()
 	ore_box = new(src)
 
-/obj/vehicle/sealed/mecha/clarke/atom_destruction()
-	if(ore_box)
-		INVOKE_ASYNC(ore_box, TYPE_PROC_REF(/obj/structure/ore_box, dump_box_contents))
-	return ..()
-
 /obj/vehicle/sealed/mecha/clarke/generate_actions()
 	. = ..()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_search_ruins)
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/clarke_scoop_body)
 
-//Ore Box Controls
-
-///Special equipment for the Clarke mech, handles moving ore without giving the mech a hydraulic clamp and cargo compartment.
+// Ore Box Controls
+/// Special equipment for the Clarke mech, handles moving ore without giving the mech a hydraulic clamp and cargo compartment.
 /obj/item/mecha_parts/mecha_equipment/orebox_manager
 	name = "ore storage module"
 	desc = "An automated ore box management device, complete with a built-in boulder processor."

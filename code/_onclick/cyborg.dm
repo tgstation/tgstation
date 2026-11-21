@@ -14,7 +14,7 @@
 	if(check_click_intercept(params,A))
 		return
 
-	if(stat || (lockcharge) || IsParalyzed() || IsStun())
+	if(IS_UNCONSCIOUS_OR_CRIT(src) || (lockcharge) || IsParalyzed() || IsStun())
 		return
 
 	var/list/modifiers = params2list(params)
@@ -73,7 +73,7 @@
 			return
 
 		if(W == A)
-			W.attack_self(src)
+			W.attack_self(src, modifiers)
 			return
 
 		// cyborgs are prohibited from using storage items so we can I think safely remove (A.loc in contents)
@@ -157,6 +157,24 @@
 /obj/machinery/power/apc/attack_robot_secondary(mob/living/silicon/user, list/modifiers)
 	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
 		return attack_ai_secondary(user, modifiers)
+	else
+		..()
+
+/obj/machinery/airalarm/BorgCtrlClick(mob/living/silicon/robot/user) // cycles air alarm modes. Forwards to AI code
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
+		AICtrlClick(user)
+	else
+		..()
+
+/obj/machinery/airalarm/BorgShiftClick(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
+		AIShiftClick(user)
+	else
+		..()
+
+/obj/machinery/airalarm/borg_click_alt(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
+		ai_click_alt(user)
 	else
 		..()
 

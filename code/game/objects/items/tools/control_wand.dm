@@ -7,6 +7,7 @@
 /obj/item/door_remote
 	icon_state = "remote"
 	base_icon_state = "remote"
+	worn_icon = null
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
@@ -16,6 +17,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	drop_sound = 'sound/items/door_remote/door_remote_drop1.ogg'
 	pickup_sound = 'sound/items/door_remote/door_remote_pick_up1.ogg'
+	item_flags = NOBLUDGEON
 
 	var/department = "civilian"
 	var/mode = WAND_OPEN
@@ -36,9 +38,9 @@
 	)
 	COOLDOWN_DECLARE(shock_cooldown)
 	/// sound played when mode is switched
-	var/mode_switch_sound = SFX_REMOTE_MODE_SWITCH
+	var/mode_switch_sound = /datum/sound_effect/remote_mode_switch
 	/// sound played when an action is done
-	var/action_sound = SFX_REMOTE_ACTION
+	var/action_sound = /datum/sound_effect/remote_action
 
 /obj/item/door_remote/Initialize(mapload)
 	. = ..()

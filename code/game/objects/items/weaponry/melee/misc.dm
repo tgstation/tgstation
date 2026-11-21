@@ -109,6 +109,7 @@
 	force = 0
 	attack_verb_continuous = list("hits", "pokes")
 	attack_verb_simple = list("hit", "poke")
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 2.5)
 	/// The sausage attatched to our stick.
 	var/obj/item/food/sausage/held_sausage
 	/// Static list of things our roasting stick can interact with.
@@ -155,20 +156,25 @@
 	playsound(src, 'sound/items/weapons/batonextend.ogg', 50, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-/obj/item/melee/roastingstick/attackby(atom/target, mob/user)
-	..()
-	if (istype(target, /obj/item/food/sausage))
-		if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-			to_chat(user, span_warning("You must extend [src] to attach anything to it!"))
-			return
-		if (held_sausage)
-			to_chat(user, span_warning("[held_sausage] is already attached to [src]!"))
-			return
-		if (user.transferItemToLoc(target, src))
-			held_sausage = target
-		else
-			to_chat(user, span_warning("[target] doesn't seem to want to get on [src]!"))
+/obj/item/melee/roastingstick/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/food/sausage))
+		return NONE
+
+	if (!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		to_chat(user, span_warning("You must extend [src] to attach anything to it!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if (held_sausage)
+		to_chat(user, span_warning("[held_sausage] is already attached to [src]!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if (!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("[tool] doesn't seem to want to get on [src]!"))
+		return ITEM_INTERACT_BLOCKING
+
+	held_sausage = tool
 	update_appearance()
+	return ITEM_INTERACT_SKIP_TO_ATTACK
 
 /obj/item/melee/roastingstick/attack_hand(mob/user, list/modifiers)
 	..()
@@ -365,7 +371,7 @@
 	block_sound = 'sound/items/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/weapons/staff.dmi'
@@ -373,6 +379,7 @@
 	base_icon_state = "bambostaff"
 	inhand_icon_state = "bambostaff0"
 	worn_icon_state = "bambostaff0"
+	base_icon_state = "bambostaff"
 	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
@@ -385,11 +392,9 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
 		force_wielded = 14, \
+		update_icon_state = TRUE, \
 	)
-
-/obj/item/bambostaff/update_icon_state()
-	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
-	return ..()
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/bambostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
@@ -413,6 +418,10 @@
 	attack_verb_continuous = list("bludgeons", "whacks", "disciplines")
 	attack_verb_simple = list("bludgeon", "whack", "discipline")
 	resistance_flags = FLAMMABLE
+
+/obj/item/staff/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/walking_aid)
 
 /obj/item/staff/broom
 	name = "broom"
@@ -488,7 +497,18 @@
 			/obj/effect/decal/cleanable/ants,
 			/obj/item/queen_bee,
 		))
-	AddElement(/datum/element/bane, mob_biotypes = MOB_BUG,  target_type = /mob/living/basic, damage_multiplier = 0, added_damage = 24, requires_combat_mode = FALSE)
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_BUG, pre_bane_callback = CALLBACK(src, PROC_REF(bane_check)) )
+
+// Different type of bug mobs get different amounts of damage multipliers
+/obj/item/melee/flyswatter/proc/bane_check(mob/living/target, mob/living/attacker, list/attack_modifiers)
+	if(isanimal_or_basicmob(target))
+		MODIFY_ATTACK_FORCE(attack_modifiers, 24)
+	else if(isflyperson(target))
+		MODIFY_ATTACK_FORCE(attack_modifiers, 29)
+	else if(ismoth(target))
+		MODIFY_ATTACK_FORCE(attack_modifiers, 9)
+	else // ?? Whatever
+		MODIFY_ATTACK_FORCE(attack_modifiers, 14)
 
 /obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_typecache(target, splattable))
@@ -514,7 +534,7 @@
 	resistance_flags = FLAMMABLE
 	force = 5
 	throwforce = 5
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	attack_verb_continuous = list("whacks", "thwacks", "wallops", "socks")
 	attack_verb_simple = list("whack", "thwack", "wallop", "sock")
 	icon = 'icons/obj/weapons/club.dmi'

@@ -132,7 +132,7 @@ GLOBAL_ALIST_INIT(food_quality_description, alist(
 	FOOD_QUALITY_VERYGOOD = "very good",
 	FOOD_QUALITY_FANTASTIC = "fantastic",
 	FOOD_QUALITY_AMAZING = "amazing",
-	FOOD_QUALITY_TOP = "godlike",
+	FOOD_QUALITY_TOP = "divine",
 ))
 
 /// Weighted lists of crafted food buffs randomly given according to crafting_complexity unless the food has a specific buff
@@ -190,8 +190,7 @@ DEFINE_BITFIELD(food_flags, list(
 #define IS_EDIBLE(O) (O.GetComponent(/datum/component/edible))
 
 ///Food trash flags
-#define FOOD_TRASH_POPABLE (1<<0)
-#define FOOD_TRASH_OPENABLE (1<<1)
+#define FOOD_TRASH_OPENABLE (1<<0)
 
 ///Food preference enums
 #define FOOD_LIKED 1
@@ -209,22 +208,22 @@ DEFINE_BITFIELD(food_flags, list(
 #define FOOD_PRICE_TRASH 25
 ///In line with prices of cheap snacks and foods you find in vending machine, practically disposable.
 #define FOOD_PRICE_CHEAP 70
-///Half a crate of profit, selling 4 of these lets you buy a kitchen crate from cargo.
-#define FOOD_PRICE_NORMAL 150
+///A reasonable chunk of profit, made even greater if you source your own ingredients, but manageable if you order them all.
+#define FOOD_PRICE_NORMAL 220
 ///Making one of these should be worth the time investment, solid chunk of profit.
-#define FOOD_PRICE_EXOTIC 450
+#define FOOD_PRICE_EXOTIC 550
 ///Large windfall for making something from this list.
-#define FOOD_PRICE_LEGENDARY 1300
+#define FOOD_PRICE_LEGENDARY 1650
 
 ///***Drink price classes***
 ///Drinks that are only limited by a single click of the dispenser.
-#define DRINK_PRICE_STOCK 20
+#define DRINK_PRICE_STOCK 30
 ///Drinks that are made through very basic processing.
-#define DRINK_PRICE_EASY 35
+#define DRINK_PRICE_EASY 45
 ///Drinks that are made through more basic processing, or multiple steps.
-#define DRINK_PRICE_MEDIUM 80
+#define DRINK_PRICE_MEDIUM 90
 ///Drinks that are made through rare ingredients, or high levels of processing.
-#define DRINK_PRICE_HIGH 200
+#define DRINK_PRICE_HIGH 240
 
 /// Time spent deep frying an item after which it becomes fried.
 #define FRYING_TIME_FRIED (15 SECONDS)
@@ -280,3 +279,6 @@ DEFINE_BITFIELD(food_flags, list(
 #define MEATSLAB_PROCESSED_AMOUNT 3
 /// This should be 1/3 of the amount found in a slab (a portion will be lost when rounding but it's negligible)
 #define MEATDISH_MATERIAL_AMOUNT (MEATSLAB_MATERIAL_AMOUNT / MEATSLAB_PROCESSED_AMOUNT)
+
+/// The multiplier for nutrition when a golem eats this particular type of food.
+#define GOLEMFOOD_PREPARED_MEAL 1.3

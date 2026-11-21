@@ -33,17 +33,44 @@
 		if(damage_to_be > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+
+	var/penetrate = FALSE
 	if(istype(projectile, /obj/projectile/beam/emitter/hitscan))
 		var/obj/projectile/beam/emitter/hitscan/mahlaser = projectile
-		if(mahlaser?.integrity_heal)
-			damage = max(0, damage - mahlaser?.integrity_heal)
-		if(mahlaser?.energy_reduction)
-			internal_energy = max(0, internal_energy - mahlaser?.energy_reduction)
-		if(mahlaser?.psi_change)
-			psy_coeff = clamp(psy_coeff + mahlaser?.psi_change, 0, 1)
+		var/damage_change = mahlaser.integrity_heal
+		var/energy_change = mahlaser.energy_reduction
+		var/psi_change = mahlaser.psi_change
+
+		if(damage_change > 0)
+			if(healing_emitter_hits >= HEALING_EMITTER_SOFTCAP)
+				damage_change = round(damage_change * max(0, 1 - HEALING_EMITTER_DIMINISHING_FACTOR * (healing_emitter_hits - HEALING_EMITTER_SOFTCAP)), 0.01)
+				if(prob(4 * (healing_emitter_hits - HEALING_EMITTER_SOFTCAP)))
+					for(var/mob/living/nearby in viewers(src, 5)) // light scatter
+						nearby.flash_act(1, visual = TRUE, length = 1 SECONDS)
+
+				if(damage_change <= 0) // BEAM scatter
+					if(prob(33))
+						visible_message(span_smallnotice("[mahlaser] entirely refracts through [src], failing to be absorbed entirely!"))
+					var/refract_angle = dir2angle(mahlaser.dir)
+					mahlaser.set_angle_centered(loc, round(rand(refract_angle - 45, refract_angle + 45), 5))
+					penetrate = TRUE
+
+				else if(prob(33))
+					visible_message(span_smallnotice("Parts of [mahlaser] scatter through [src], rather than being fully absorbed!"))
+
+			healing_emitter_hits += 1
+			addtimer(VARSET_CALLBACK(src, healing_emitter_hits, 0), HEALING_EMITTER_COOLDOWN, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+		damage = max(0, damage - damage_change)
+		internal_energy = max(0, internal_energy - energy_change)
+		psy_coeff = clamp(psy_coeff + psi_change, 0, 1)
+
 	external_power_immediate += projectile.damage * bullet_energy + kiss_power
 	if(istype(projectile, /obj/projectile/beam/emitter/hitscan/magnetic))
 		absorption_ratio = clamp(absorption_ratio + 0.05, 0.15, 1)
+
+	if(penetrate)
+		return COMPONENT_BULLET_PIERCED
 
 	qdel(projectile)
 	return COMPONENT_BULLET_BLOCKED
@@ -75,54 +102,56 @@
 		qdel(rip_u)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/power/supermatter_crystal/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/scalpel/supermatter))
-		var/obj/item/scalpel/supermatter/scalpel = item
+/obj/machinery/power/supermatter_crystal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/scalpel/supermatter))
+		var/obj/item/scalpel/supermatter/scalpel = tool
 		to_chat(user, span_notice("You carefully begin to scrape \the [src] with \the [scalpel]..."))
 		if(!scalpel.use_tool(src, user, 60, volume=100))
-			return
-		if (scalpel.usesLeft)
-			to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
-			new /obj/item/nuke_core/supermatter_sliver(src.drop_location())
-			supermatter_sliver_removed = TRUE
-			external_power_trickle += 800
-			log_activation(who = user, how = scalpel)
-			scalpel.usesLeft--
-			if (!scalpel.usesLeft)
-				to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
-		else
+			return ITEM_INTERACT_BLOCKING
+		if (!scalpel.usesLeft)
 			to_chat(user, span_warning("You fail to extract a sliver from \the [src]! \The [scalpel] isn't sharp enough anymore."))
-		return
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
+		new /obj/item/nuke_core/supermatter_sliver(src.drop_location())
+		supermatter_sliver_removed = TRUE
+		external_power_trickle += 800
+		log_activation(who = user, how = scalpel)
+		scalpel.usesLeft--
+		if (!scalpel.usesLeft)
+			to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(item, /obj/item/hemostat/supermatter))
-		to_chat(user, span_warning("You poke [src] with [item]'s hyper-noblium tips. Nothing happens."))
-		return
+	if(istype(tool, /obj/item/hemostat/supermatter))
+		to_chat(user, span_warning("You poke [src] with [tool]'s hyper-noblium tips. Nothing happens."))
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(item, /obj/item/destabilizing_crystal))
-		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
+	if(istype(tool, /obj/item/destabilizing_crystal))
+		var/obj/item/destabilizing_crystal/destabilizing_crystal = tool
 
 		if(!is_main_engine)
 			to_chat(user, span_warning("You can't use \the [destabilizing_crystal] on \a [name]."))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		if(get_integrity_percent() < SUPERMATTER_CASCADE_PERCENT)
 			to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to \a [name] that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		to_chat(user, span_warning("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
-		if(do_after(user, 3 SECONDS, src))
-			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)].")
-			user.log_message("attached [destabilizing_crystal] to the supermatter", LOG_GAME)
-			user.investigate_log("attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
-			to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
-			set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
-			external_damage_immediate += 10
-			external_power_trickle += 500
-			log_activation(who = user, how = destabilizing_crystal)
-			qdel(destabilizing_crystal)
-		return
+		if(!do_after(user, 3 SECONDS, src))
+			return ITEM_INTERACT_BLOCKING
 
-	return ..()
+		message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)].")
+		user.log_message("attached [destabilizing_crystal] to the supermatter", LOG_GAME)
+		user.investigate_log("attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
+		to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
+		set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
+		external_damage_immediate += 10
+		external_power_trickle += 500
+		log_activation(who = user, how = destabilizing_crystal)
+		qdel(destabilizing_crystal)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 //Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)

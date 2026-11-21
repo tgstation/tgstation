@@ -120,7 +120,7 @@
 
 /datum/crafting_recipe/vim
 	name = "Vim"
-	result = /obj/vehicle/sealed/car/vim
+	result = /obj/vehicle/sealed/mecha/vim
 	reqs = list(
 		/obj/item/clothing/head/helmet/space/eva = 1,
 		/obj/item/bodypart/leg/left/robot = 1,
@@ -190,5 +190,19 @@
 		/obj/item/stack/rods = 2,
 		/obj/item/stack/sheet/glass = 1,
 		/obj/item/soulstone = 1,
+	)
+	category = CAT_ROBOT
+
+/datum/crafting_recipe/mod_core_candela
+	name = "MOD core (Candela)"
+	result = /obj/item/mod/core/candela
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/rods = 2,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/sheet/bluespace_crystal = 1,
+		/obj/item/stack/candela_beacon = 5,
 	)
 	category = CAT_ROBOT

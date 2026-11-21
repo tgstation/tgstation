@@ -142,13 +142,6 @@
 	restricted = TRUE
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
-/datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	. = ..()
-	var/obj/item/disk/computer/virus/frame/target = .
-	if(!target)
-		return
-	target.current_progression = uplink_handler.progression_points
-
 /datum/uplink_item/device_tools/failsafe
 	name = "Failsafe Uplink Code"
 	desc = "When entered the uplink will self-destruct immediately."
@@ -195,8 +188,10 @@
 
 /datum/uplink_item/device_tools/suspiciousphone
 	name = "Protocol CRAB-17 Phone"
-	desc = "The Protocol CRAB-17 Phone, a phone borrowed from an unknown third party, it can be used to crash the space market, funneling the losses of the crew to your bank account.\
-	The crew can move their funds to a new banking site though, unless they HODL, in which case they deserve it."
+	desc = "The Protocol CRAB-17 Phone, a phone borrowed from an unknown third party, it can be used to crash the space market, \
+	withdrawing cash from the accounts of the crew and printing it as bank notes. \
+	It's recommended that you hide the phone somewhere while it is printing cash. \
+	The crew can move their funds to a new banking site, unless they HODL, in which case they deserve it."
 	item = /obj/item/suspiciousphone
 	restricted = TRUE
 	cost = 7
@@ -237,9 +232,9 @@
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Law Upload Module"
 	desc = "When used with an upload console, this module allows you to upload priority laws to an artificial intelligence. \
+			This board bypasses all access restrictions on the console. \
 			Be careful with wording, as artificial intelligences may look for loopholes to exploit."
-	progression_minimum = 30 MINUTES
-	item = /obj/item/ai_module/syndicate
+	item = /obj/item/ai_module/law/syndicate
 	cost = 4
 
 /datum/uplink_item/device_tools/hypnotic_flash
@@ -260,7 +255,6 @@
 			active gravitational singularities or tesla balls towards it. This will not work when the engine is still \
 			in containment. Because of its size, it cannot be carried. Ordering this \
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/sbeacondrop
 	cost = 4
 	surplus = 0 // not while there isnt one on any station
@@ -271,7 +265,6 @@
 	desc = "When screwed to wiring attached to a power grid and activated, this large device lights up and places excessive \
 			load on the grid, causing a station-wide blackout. The sink is large and cannot be stored in most \
 			traditional bags and boxes. Caution: Will explode if the powernet contains sufficient amounts of energy."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/powersink
 	cost = 11
 	limited_stock = 1

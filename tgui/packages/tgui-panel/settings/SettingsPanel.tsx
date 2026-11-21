@@ -9,6 +9,7 @@ import { ChatPageSettings } from '../chat/ChatPageSettings';
 import { SETTINGS_TABS } from './constants';
 import { SettingsGeneral } from './SettingsGeneral';
 import { SettingsStatPanel } from './SettingsStatPanel';
+import { SettingsWebsocket } from './SettingsWebsocket';
 import { TextHighlightSettings } from './TextHighlight';
 import { useSettings } from './use-settings';
 
@@ -48,6 +49,7 @@ export function SettingsPanel(props) {
         {activeTab === 'chatPage' && <ChatPageSettings />}
         {activeTab === 'textHighlight' && <TextHighlightSettings />}
         {activeTab === 'statPanel' && <SettingsStatPanel />}
+        {activeTab === 'websocket' && <SettingsWebsocket />}
       </Stack.Item>
     </Stack>
   );

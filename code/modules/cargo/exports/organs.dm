@@ -8,7 +8,10 @@
 /datum/export/organ/get_base_cost(obj/exported_item)
 	// Multiply value for organs that started in a player
 	// Unaffected by price elasticity as there's a limited amount of these in play
-	return round(..() * HAS_TRAIT(exported_item, TRAIT_CLIENT_STARTING_ORGAN) ? CLIENT_ORGAN_MULT : 1)
+	var/multiplier = 1
+	if(HAS_TRAIT(exported_item, TRAIT_CLIENT_STARTING_ORGAN))
+		multiplier = CLIENT_ORGAN_MULT
+	return round(..() * multiplier)
 
 /datum/export/organ/heart
 	cost = CARGO_CRATE_VALUE * 0.2 //For the man who has everything and nothing.
@@ -60,5 +63,14 @@
 	unit_name = "cat ears"
 	export_types = list(/obj/item/organ/ears/cat)
 
+/datum/export/organ/fish_tail
+	cost = CARGO_CRATE_VALUE * 1.5
+	unit_name = "fish tail"
+	export_types = list(/obj/item/organ/tail/fish)
+
+/datum/export/organ/fish_tail/big
+	cost = CARGO_CRATE_VALUE * 2
+	unit_name = "huge fish tail"
+	export_types = list(/obj/item/organ/tail/fish/cerulean)
 
 #undef CLIENT_ORGAN_MULT

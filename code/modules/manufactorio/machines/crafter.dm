@@ -50,14 +50,12 @@
 	return MANUFACTURING_SUCCESS
 
 /obj/machinery/power/manufacturing/crafter/multitool_act(mob/living/user, obj/item/tool)
-	. = NONE
-	var/list/unavailable = list()
-	for(var/datum/crafting_recipe/potential_recipe as anything in cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes)
+	var/list/available = list()
+	for(var/datum/crafting_recipe/potential_recipe as anything in craftsman.get_visible_recipes(user))
 		var/obj/as_obj = potential_recipe.result
-		if(!(ispath(as_obj, /obj) && !ispath(as_obj, /obj/effect) && initial(as_obj.anchored)) && craftsman.is_recipe_available(potential_recipe, user))
-			continue
-		unavailable += potential_recipe
-	var/result = tgui_input_list(usr, "Recipe", "Select Recipe", (cooking ? GLOB.cooking_recipes : GLOB.crafting_recipes) - unavailable)
+		if(ispath(as_obj, /obj) && !ispath(as_obj, /obj/effect) && !initial(as_obj.anchored))
+			available += potential_recipe
+	var/result = tgui_input_list(user, "Recipe", "Select Recipe", available)
 	if(isnull(result) || result == recipe || !user.can_perform_action(src))
 		return ITEM_INTERACT_FAILURE
 	recipe = result

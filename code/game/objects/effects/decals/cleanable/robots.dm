@@ -8,7 +8,7 @@
 	color = null
 
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/get_default_blood_type()
-	return get_blood_type(BLOOD_TYPE_OIL)
+	return get_blood_type(/datum/blood_type/oil)
 
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/create_splatter()
 	if(prob(40))
@@ -45,7 +45,7 @@
 	color = /datum/blood_type/oil::color // For mapper sanity
 
 /obj/effect/decal/cleanable/blood/oil/get_default_blood_type()
-	return get_blood_type(BLOOD_TYPE_OIL)
+	return get_blood_type(/datum/blood_type/oil)
 
 /obj/effect/decal/cleanable/blood/oil/slippery/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna)
 	. = ..()
@@ -56,4 +56,4 @@
 	color = /datum/blood_type/oil::color
 
 /obj/effect/decal/cleanable/blood/splatter/oil/get_default_blood_type()
-	return get_blood_type(BLOOD_TYPE_OIL)
+	return get_blood_type(/datum/blood_type/oil)

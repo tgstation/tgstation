@@ -13,5 +13,5 @@
 
 	return /datum/brain_trauma/mild/phobia::name in preferences.all_quirks
 
-/datum/preference/choiced/phobia/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/phobia/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return

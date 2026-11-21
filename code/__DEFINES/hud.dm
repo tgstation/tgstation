@@ -69,13 +69,14 @@
 #define HUD_MOB_MOOD "mob_mood"
 #define HUD_MOB_HEALTHDOLL "mob_healthdoll"
 #define HUD_MOB_MEMORIES "mob_memories"
+#define HUD_MOB_SLIME_POWER "mob_slime_power"
 
 #define HUD_OOZE_NUTRITION_DISPLAY "ooze_nutrition_display"
 
 #define HUD_HUMAN_TOGGLE_INVENTORY "human_toggle_inventory"
 
 #define HUD_NEW_PLAYER_START_NOW "new_player_start_now"
-#define HUD_NEW_PLAYER_SIGN_UP "newp_layer_sign_up"
+#define HUD_NEW_PLAYER_LOBBY_BUTTON(type) "new_player_lobby_button:[type]"
 #define HUD_KEY_NEW_PLAYER(slot) "newplayer_hud:[slot]"
 
 #define HUD_SILICON_TAKE_IMAGE "silicon_camera"
@@ -86,7 +87,6 @@
 #define HUD_CYBORG_HANDS "cyborg_module"
 #define HUD_CYBORG_RADIO "cyborg_radio"
 #define HUD_CYBORG_DEATH "cyborg_death"
-#define HUD_KEY_CYBORG_MODULE(slot) "cyborg_module:[slot]"
 
 #define HUD_AI_FLOOR_INDICATOR "ai_floor_indicator"
 #define HUD_AI_GO_UP "ai_go_up"
@@ -159,6 +159,8 @@
 #define HUD_WIZARD_COMPACT_PERKS "wizard_compact_perks"
 #define HUD_WIZARD_PERK(slot) "wizard_perk:[slot]"
 
+#define HUD_MULEBOT_CHARGE "mulebot_charge"
+
 /// Converts item slots to hud keys
 #define HUD_KEY_ITEM_SLOT(slot) "item_slot:[slot]"
 /// Converts item slots to hud keys as a compiler constant
@@ -169,6 +171,19 @@
 #define HUD_MULTITOOL_ARROW "multitool_arrow"
 
 #define HUD_XENOBIO_CONSOLE "xenobio_console"
+
+#define HUD_TAC_MINIMAP "tac_minimap"
+#define HUD_TAC_MINIMAP_DIMMER "tac_minimap_dimmer"
+#define HUD_TAC_MINIMAP_Z_INDICATOR "tac_minimap_z_indicator"
+#define HUD_TAC_MINIMAP_Z_INDICATOR_UP "tac_minimap_z_up"
+#define HUD_TAC_MINIMAP_Z_INDICATOR_DOWN "tac_minimap_z_down"
+#define HUD_TAC_MINIMAP_TOOL_RED "tac_minimap_tool_red"
+#define HUD_TAC_MINIMAP_TOOL_YELLOW "tac_minimap_tool_yellow"
+#define HUD_TAC_MINIMAP_TOOL_PURPLE "tac_minimap_tool_purple"
+#define HUD_TAC_MINIMAP_TOOL_BLUE "tac_minimap_tool_blue"
+#define HUD_TAC_MINIMAP_TOOL_ERASE "tac_minimap_tool_erase"
+#define HUD_TAC_MINIMAP_TOOL_LABEL "tac_minimap_tool_label"
+#define HUD_TAC_MINIMAP_TOOL_CLEAR "tac_minimap_tool_clear"
 
 /*
 	These defines specificy screen locations.  For more information, see the byond documentation on the screen_loc var.
@@ -373,6 +388,10 @@
 
 //Blobbernauts
 #define ui_blobbernaut_overmind_health "EAST-1:28,CENTER+0:19"
+
+//Slimes
+#define ui_slime_hunger "EAST-1:30,CENTER:8"
+#define ui_slime_powerlevel "EAST-1:28,CENTER-2:18"
 
 // Defines relating to action button positions
 

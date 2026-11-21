@@ -230,19 +230,19 @@
 	min_damage = 30
 	max_damage = 35
 
-/obj/effect/goliath_tentacle/broodmother/patch/Initialize(mapload, new_spawner)
+/obj/effect/goliath_tentacle/broodmother/patch/Initialize(mapload, mob/living/goliath)
 	. = ..()
 	INVOKE_ASYNC(src, PROC_REF(createpatch))
 
 /obj/effect/goliath_tentacle/broodmother/patch/proc/createpatch()
 	var/tentacle_locs = spiral_range_turfs(1, get_turf(src))
 	for(var/T in tentacle_locs)
-		new /obj/effect/goliath_tentacle/broodmother(T)
+		new /obj/effect/goliath_tentacle/broodmother(T, owner)
 	var/list/directions = GLOB.cardinals.Copy()
 	for(var/i in directions)
 		var/turf/T = get_step(get_turf(src), i)
 		T = get_step(T, i)
-		new /obj/effect/goliath_tentacle/broodmother(T)
+		new /obj/effect/goliath_tentacle/broodmother(T, owner)
 
 #undef CALL_CHILDREN
 #undef RAGE

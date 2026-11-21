@@ -15,10 +15,14 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/item/storage/pill_bottle/mannitol/braintumor)
 	no_process_traits = list(TRAIT_TUMOR_SUPPRESSED)
+	/// Speed at which our brain will get damaged, per second
+	var/degradation_speed = 0.2
+	/// Type of item we get in our pocket to help with the quirk after joining
+	var/obj/item/medicine_to_get = /obj/item/storage/pill_bottle/mannitol/braintumor
 
 /datum/quirk/item_quirk/brainproblems/add_unique(client/client_source)
 	give_item_to_holder(
-		/obj/item/storage/pill_bottle/mannitol/braintumor,
+		medicine_to_get,
 		list(
 			LOCATION_LPOCKET,
 			LOCATION_RPOCKET,
@@ -35,4 +39,4 @@
 	return ..()
 
 /datum/quirk/item_quirk/brainproblems/process(seconds_per_tick)
-	quirk_holder.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.2 * seconds_per_tick)
+	quirk_holder.adjust_organ_loss(ORGAN_SLOT_BRAIN, degradation_speed * seconds_per_tick)

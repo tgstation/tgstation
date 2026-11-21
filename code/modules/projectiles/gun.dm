@@ -124,6 +124,7 @@
 
 	add_seclight_point()
 	add_bayonet_point()
+	add_deep_lore()
 	RegisterSignal(src, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, PROC_REF(on_mail_unwrap))
 
 /obj/item/gun/Destroy()
@@ -152,6 +153,10 @@
 
 /// Similarly to add_seclight_point(), handles [the bayonet attachment component][/datum/component/bayonet_attachable]
 /obj/item/gun/proc/add_bayonet_point()
+	return
+
+/// For when you want to add the lore element to a gun, this is the proc to use.
+/obj/item/gun/proc/add_deep_lore()
 	return
 
 /obj/item/gun/Exited(atom/movable/gone, direction)
@@ -194,7 +199,7 @@
 			if(pin.pin_removable)
 				. += span_info("[pin] looks like [pin.p_they()] could be removed with some <b>tools</b>.")
 			else
-				. += span_info("[pin] looks like [pin.p_theyre()] firmly locked in, [pin.p_they()] looks impossible to remove.")
+				. += span_info("[pin] looks like [pin.p_theyre()] firmly locked in, [pin.p_they()] look[pin.p_s()] impossible to remove.")
 		else
 			. += "It doesn't have a <b>firing pin</b> installed, and won't fire."
 
@@ -215,9 +220,16 @@
 /obj/item/gun/proc/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	return
 
-//check if there's enough ammo/energy/whatever to shoot one time
-//i.e if clicking would make it shoot
+/**
+ * Check if there's enough ammo/energy/whatever to shoot one time
+ * i.e if clicking would make it shoot
+ */
 /obj/item/gun/proc/can_shoot()
+	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_BE_PURE(TRUE)
+	if(SEND_SIGNAL(src, COMSIG_GUN_CAN_SHOOT) & COMPONENT_CANCEL_GUN_FIRE)
+		return FALSE
+
 	return TRUE
 
 /obj/item/gun/proc/tk_firing(mob/living/user)
@@ -289,16 +301,13 @@
 			ignored_mobs = user,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
-
-	if(chambered?.integrity_damage)
-		take_damage(chambered.integrity_damage, sound_effect = FALSE)
 	return TRUE
 
 /obj/item/gun/atom_destruction(damage_flag)
 	if(!isliving(loc))
 		return ..()
 	var/mob/living/holder = loc
-	if(holder.is_holding(src) && holder.stat < UNCONSCIOUS)
+	if(holder.is_holding(src) && !IS_UNCONSCIOUS(holder))
 		to_chat(holder, span_boldwarning("[src] breaks down!"))
 		holder.playsound_local(get_turf(src), 'sound/items/weapons/smash.ogg', 50, TRUE)
 	return ..()
@@ -379,6 +388,8 @@
 /obj/item/gun/proc/try_fire_gun(atom/target, mob/living/user, params)
 	return fire_gun(target, user, user.Adjacent(target), params)
 
+#define AKIMBO_PENALTY_SCALING 0.75
+
 /obj/item/gun/proc/fire_gun(atom/target, mob/living/user, flag, params)
 	if(QDELETED(target))
 		return NONE
@@ -408,7 +419,7 @@
 
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
-		return ITEM_INTERACT_BLOCKING
+		return user.combat_mode ? ITEM_INTERACT_SKIP_TO_ATTACK : ITEM_INTERACT_BLOCKING
 
 	if(check_botched(user, target))
 		return NONE
@@ -419,17 +430,27 @@
 		return ITEM_INTERACT_BLOCKING
 	//DUAL (or more!) WIELDING
 	var/bonus_spread = 0
-	var/loop_counter = 0
 	if(user.combat_mode && !HAS_TRAIT(user, TRAIT_NO_GUN_AKIMBO))
-		for(var/obj/item/gun/gun in user.held_items)
+		// We need to iterate once to get the total spread
+		// While we're at it let's cache the guns
+		var/list/obj/item/gun/valid_guns = list()
+		for(var/obj/item/gun/gun as anything in user.get_held_items_of_type(/obj/item/gun))
 			if(gun == src || gun.weapon_weight >= WEAPON_MEDIUM)
 				continue
 			else if(gun.can_trigger_gun(user, akimbo_usage = TRUE))
-				bonus_spread += dual_wield_spread
-				loop_counter++
-				addtimer(CALLBACK(gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), loop_counter)
+				valid_guns += gun
+				bonus_spread += gun.dual_wield_spread * (1 + AKIMBO_PENALTY_SCALING * (length(valid_guns) + 1))
+
+		var/gun_count = length(valid_guns)
+		if(gun_count)
+			bonus_spread += src.dual_wield_spread // no scaling since it's technically the first shot
+			for(var/i in 1 to gun_count)
+				var/obj/item/gun/gun = valid_guns[i]
+				addtimer(CALLBACK(gun, TYPE_PROC_REF(/obj/item/gun, process_fire), target, user, TRUE, params, null, bonus_spread), i)
 
 	return process_fire(target, user, TRUE, params, null, bonus_spread)
+
+#undef AKIMBO_PENALTY_SCALING
 
 /obj/item/gun/proc/check_botched(mob/living/user, atom/target)
 	if(clumsy_check)
@@ -476,33 +497,30 @@
 		if(iteration > 1 && !(user.is_holding(src))) //for burst firing
 			firing_burst = FALSE
 			return FALSE
-	if(chambered?.loaded_projectile)
-		if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
-			if(chambered.harmful) // Is the bullet chambered harmful?
-				to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
-				firing_burst = FALSE
-				return FALSE
-		var/sprd
-		if(randomspread)
-			sprd = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (random_spread))
-		else //Smart spread
-			sprd = round((((burst_spread_mult/burst_size) * iteration) - (0.5 + (burst_spread_mult * 0.25))) * (random_spread))
-		before_firing(target,user)
-		if(!chambered.fire_casing(target, user, params, 0, suppressed, zone_override, sprd, src))
-			shoot_with_empty_chamber(user)
-			firing_burst = FALSE
-			return FALSE
-		else
-			if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-				shoot_live_shot(user, TRUE, target, message)
-			else
-				shoot_live_shot(user, FALSE, target, message)
-			if (iteration >= burst_size)
-				firing_burst = FALSE
-	else
+	if(!chambered?.loaded_projectile)
 		shoot_with_empty_chamber(user)
 		firing_burst = FALSE
 		return FALSE
+
+	if(HAS_TRAIT(user, TRAIT_PACIFISM) && chambered.harmful) // Is the bullet chambered harmful?
+		to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
+		firing_burst = FALSE
+		return FALSE
+
+	var/sprd = 0
+	if(randomspread)
+		sprd = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * (random_spread))
+	else //Smart spread
+		sprd = round((((burst_spread_mult/burst_size) * iteration) - (0.5 + (burst_spread_mult * 0.25))) * (random_spread))
+	before_firing(target,user)
+	if(!chambered.fire_casing(target, user, params, 0, suppressed, zone_override, sprd, src))
+		shoot_with_empty_chamber(user)
+		firing_burst = FALSE
+		return FALSE
+	shoot_live_shot(user, get_dist(user, target) <= 1, target, message)
+	if (iteration >= burst_size)
+		firing_burst = FALSE
+
 	process_chamber()
 	update_appearance()
 	return TRUE
@@ -574,25 +592,21 @@
 		for(var/i = 1 to burst_size)
 			addtimer(CALLBACK(src, PROC_REF(process_burst), user, target, message, params, zone_override, total_random_spread, burst_spread_mult, i), modified_burst_delay * (i - 1))
 			addtimer(CALLBACK(src, PROC_REF(reset_fire_cd)), modified_fire_delay) // for the case of fire delay longer than burst
+
 	else
-		if(chambered)
-			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
-				if(chambered.harmful) // Is the bullet chambered harmful?
-					to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
-					return NONE
-			var/sprd = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * total_random_spread)
-			before_firing(target,user)
-			if(!chambered.fire_casing(target, user, params, 0, suppressed, zone_override, sprd, src))
-				shoot_with_empty_chamber(user)
-				return NONE
-			else
-				if(get_dist(user, target) <= 1) //Making sure whether the target is in vicinity for the pointblank shot
-					shoot_live_shot(user, TRUE, target, message)
-				else
-					shoot_live_shot(user, FALSE, target, message)
-		else
+		if(!chambered)
 			shoot_with_empty_chamber(user)
+			return user.combat_mode ? ITEM_INTERACT_SKIP_TO_ATTACK : NONE
+		if(HAS_TRAIT(user, TRAIT_PACIFISM) && chambered.harmful) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
+			to_chat(user, span_warning("[src] is lethally chambered! You don't want to risk harming anyone..."))
 			return NONE
+		var/sprd = round((rand(0, 1) - 0.5) * DUALWIELD_PENALTY_EXTRA_MULTIPLIER * total_random_spread)
+		before_firing(target,user)
+		if(!chambered.fire_casing(target, user, params, 0, suppressed, zone_override, sprd, src))
+			shoot_with_empty_chamber(user)
+			return user.combat_mode ? ITEM_INTERACT_SKIP_TO_ATTACK : NONE
+
+		shoot_live_shot(user, get_dist(user, target) <= 1, target, message)
 		// If gun gets destroyed as a result of firing
 		if (!QDELETED(src))
 			process_chamber()
@@ -600,10 +614,8 @@
 			fire_cd = TRUE
 			addtimer(CALLBACK(src, PROC_REF(reset_fire_cd)), modified_fire_delay)
 
-	if(user)
-		user.update_held_items()
+	user?.update_held_items()
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
-
 	return TRUE
 
 /obj/item/gun/proc/reset_fire_cd()
@@ -693,7 +705,7 @@
 	target.visible_message(span_warning("[user] pulls the trigger!"), span_userdanger("[(user == target) ? "You pull" : "[user] pulls"] the trigger!"))
 
 	if(!chambered?.loaded_projectile)
-		shoot_with_empty_chamber()
+		shoot_with_empty_chamber(user)
 		return ITEM_INTERACT_BLOCKING
 
 	chambered.loaded_projectile.damage *= 5

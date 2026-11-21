@@ -96,11 +96,22 @@
 	added_foodtypes = ALCOHOL
 	dish_category = DISH_MEAT
 
+/datum/crafting_recipe/food/polar_bear_steak
+	name = "Filet polar migrawr"
+	reqs = list(
+		/datum/reagent/consumable/ethanol/frosty_dorf = 3,
+		/datum/reagent/consumable/ethanol/blue_blazer = 3,
+		/obj/item/food/meat/steak/bear = 1,
+	)
+	result = /obj/item/food/polar_bear_steak
+	added_foodtypes = ALCOHOL
+	dish_category = DISH_MEAT
+
 /datum/crafting_recipe/food/stewedsoymeat
 	name = "Stewed soymeat"
 	reqs = list(
 		/obj/item/food/soydope = 2,
-		/obj/item/food/grown/carrot = 1,
+		/obj/item/food/grown/carrotlike/carrot = 1,
 		/obj/item/food/grown/tomato = 1
 	)
 	result = /obj/item/food/stewedsoymeat
@@ -194,6 +205,20 @@
 	added_foodtypes = SUGAR
 	dish_category = DISH_MEAT
 
+/datum/crafting_recipe/food/drake_ribs
+	name = "Drake Ribs"
+	reqs = list(
+		/datum/reagent/consumable/guidoferrun = 1,
+		/datum/reagent/consumable/frostoil = 4,
+		/datum/reagent/consumable/bbqsauce = 5,
+		/obj/item/food/meat/steak/bear = 2,
+		/obj/item/stack/sheet/animalhide/ashdrake = 1,
+		/obj/item/stack/rods = 2
+	)
+	result = /obj/item/food/drake_ribs
+	added_foodtypes = SUGAR
+	dish_category = DISH_MEAT
+
 /datum/crafting_recipe/food/meatclown
 	name = "Meat Clown"
 	reqs = list(
@@ -256,6 +281,7 @@
 	result = /obj/item/food/beef_stroganoff
 	added_foodtypes = DAIRY
 	dish_category = DISH_MEAT
+	unit_test_spawn_extras = list(/obj/item/food/grown/mushroom/chanterelle = 2) //generic mushrooms
 
 /datum/crafting_recipe/food/beef_wellington
 	name = "Beef Wellington"
@@ -272,6 +298,7 @@
 	result = /obj/item/food/beef_wellington
 	removed_foodtypes = BREAKFAST
 	dish_category = DISH_MEAT
+	unit_test_spawn_extras = list(/obj/item/food/grown/mushroom/chanterelle = 1) //generic mushrooms
 
 /datum/crafting_recipe/food/korta_wellington
 	name = "Korta Wellington"
@@ -288,6 +315,7 @@
 	result = /obj/item/food/korta_wellington
 	removed_foodtypes = BREAKFAST
 	dish_category = DISH_MEAT
+	unit_test_spawn_extras = list(/obj/item/food/grown/mushroom/chanterelle = 1) //generic mushrooms
 
 /datum/crafting_recipe/food/full_roast
 	name = "Roast Chicken Dinner"
@@ -360,6 +388,7 @@
 	)
 	result = /obj/item/food/full_english
 	dish_category = DISH_MEAT
+	unit_test_spawn_extras = list(/obj/item/food/grown/mushroom/chanterelle = 1) //generic mushrooms
 
 /datum/crafting_recipe/food/envirochow
 	name = "Envirochow"
@@ -404,3 +433,17 @@
 	result = /obj/item/food/kebab/pineapple_skewer
 	dish_category = DISH_MEAT
 	meal_category = MEAL_APPETIZER
+
+/datum/crafting_recipe/food/wendigo_feast
+	name = "Wendigo feast"
+	reqs = list(
+		/obj/item/food/drake_ribs = 1,
+		/obj/item/food/polar_bear_steak = 1,
+		/obj/item/wendigo_skull = 1,
+		/obj/item/stack/sheet/sinew/wolf = 2,
+		/obj/item/food/grown/ash_flora/vahrezjia = 1,
+		/obj/item/food/grown/ash_flora/podsneyzka = 1,
+	)
+	result = /obj/item/food/wendigo_feast
+	removed_foodtypes = ALCOHOL
+	dish_category = DISH_MEAT

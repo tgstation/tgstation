@@ -16,7 +16,7 @@
 	/// List of sources which prevent SIGHT_BYPASS from working
 	var/static/list/blocking_sources = list(
 		QUIRK_TRAIT, // Meant to be completely immutable
-		UNCONSCIOUS_TRAIT, // Duh
+		TRAIT_STATUS_EFFECT(/datum/status_effect/knocked_out::id), // Duh
 	)
 
 /datum/status_effect/grouped/blindness/on_apply()
@@ -27,46 +27,59 @@
 	return ..()
 
 /datum/status_effect/grouped/blindness/source_added(source, ...)
-	update_blindness(source)
+	update_blindness()
 
 /datum/status_effect/grouped/blindness/source_removed(source, removing)
 	if (!removing)
-		update_blindness(source)
+		update_blindness()
 
-/datum/status_effect/grouped/blindness/proc/update_blindness(changed_source)
+/datum/status_effect/grouped/blindness/proc/update_blindness()
 	if (!CAN_BE_BLIND(owner)) // future proofing
 		qdel(src)
 		return
 
 	if (!HAS_TRAIT(owner, TRAIT_SIGHT_BYPASS))
-		make_blind(changed_source)
+		make_blind()
 		return
 
 	for (var/blocker in blocking_sources)
 		if (owner.is_blind_from(blocker))
-			make_blind(changed_source)
+			make_blind()
 			return
 
 	make_unblind()
 
-/datum/status_effect/grouped/blindness/proc/make_blind(changed_source)
+/datum/status_effect/grouped/blindness/proc/make_blind()
+	if(!GET_CLIENT(owner))
+		RegisterSignal(owner, COMSIG_MOB_LOGIN, PROC_REF(make_blind_on_login), override = TRUE)
+		return
+
 	// have some extra logic to determine what overlay to use
 	// by default we use the noflicker overlay
 	// but if our one and only source is from "temp blindness", use flicker overlay
 	var/overlay_to_use = /atom/movable/screen/fullscreen/blind/noflicker
-	if(changed_source == /datum/status_effect/temporary_blindness::id && length(sources) == 1)
+	if(sources[1] == /datum/status_effect/temporary_blindness::id && length(sources) == 1)
 		overlay_to_use = /atom/movable/screen/fullscreen/blind
-	owner.overlay_fullscreen(id, overlay_to_use )
+
+	owner.overlay_fullscreen(id, overlay_to_use)
 	// You are blind - at most, able to make out shapes near you
-	owner.add_client_colour(/datum/client_colour/blindness, REF(src))
+	owner.add_client_colour(/datum/client_colour/blindness, id)
+
+/datum/status_effect/grouped/blindness/proc/make_blind_on_login(mob/living/source)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(owner, COMSIG_MOB_LOGIN)
+	make_blind()
 
 /datum/status_effect/grouped/blindness/proc/make_unblind()
+	UnregisterSignal(owner, COMSIG_MOB_LOGIN)
 	owner.clear_fullscreen(id)
-	owner.remove_client_colour(REF(src))
+	owner.remove_client_colour(id)
 
 /datum/status_effect/grouped/blindness/on_remove()
 	make_unblind()
 	UnregisterSignal(owner, update_signals)
+	UnregisterSignal(owner, COMSIG_MOB_LOGIN)
 	return ..()
 
 /atom/movable/screen/alert/status_effect/blind

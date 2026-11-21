@@ -320,9 +320,9 @@
 		output += "<div class='row'>"
 
 		for(var/datum/job_department/department as anything in SSjob.joinable_departments)
-			var/label_class = department.label_class
+			var/label_class = department.get_label_class()
 			var/department_name = department.department_name
-			output += "<div class='column'><label class='rolegroup [label_class]'><input type='checkbox' name='[label_class]' class='hidden' onClick='header_click_all_checkboxes(this)'> \
+			output += "<div class='column'><label class='rolegroup [label_class]' style='background-color: [department.ui_color];'><input type='checkbox' name='[label_class]' class='hidden' onClick='header_click_all_checkboxes(this)'> \
 			[department_name]</label><div class='content'>"
 			for(var/datum/job/job_datum as anything in department.get_jobban_jobs())
 				if(break_counter > 0 && (break_counter % 3 == 0))
@@ -391,6 +391,7 @@
 				ROLE_MALF,
 				ROLE_NINJA,
 				ROLE_OPERATIVE,
+				ROLE_CLOWN_OPERATIVE,
 				ROLE_OVERTHROW,
 				ROLE_PARADOX_CLONE,
 				ROLE_REV,

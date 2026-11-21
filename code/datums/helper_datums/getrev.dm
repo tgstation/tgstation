@@ -71,10 +71,7 @@
 		var/details = ": '" + html_encode(tm.title) + "' by " + html_encode(tm.author) + " at commit " + html_encode(copytext_char(cm, 1, 11))
 		. += "<a href=\"[CONFIG_GET(string/githuburl)]/pull/[tm.number]\">#[tm.number][details]</a><br>"
 
-/client/verb/showrevinfo()
-	set category = "OOC"
-	set name = "Show Server Revision"
-	set desc = "Check the current server code revision"
+GAME_VERB_DESC(/client, showrevinfo, "Show Server Revision", "Check the current server code revision", "OOC")
 
 	var/list/msg = list()
 	// Round ID

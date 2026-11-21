@@ -26,6 +26,8 @@
 	bite_consumption_mod = 3
 	foodtypes = FRUIT
 	distill_reagent = /datum/reagent/consumable/ethanol/bananahonk
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 
 /obj/item/food/grown/banana/juice_typepath()
 	return /datum/reagent/consumable/banana
@@ -196,13 +198,13 @@
 
 /obj/item/food/grown/banana/bunch/monkeybomb/examine(mob/user)
 	. = ..()
-	if(!is_simian(user))
+	if(!HAS_TRAIT(user, TRAIT_SIMIAN))
 		. += span_notice("There's a banana label on one of the 'nanas you can't quite make out the details of.")
 		return
 	. += span_notice("The banana label on this bunch indicates that monkeys can use this as a sonic grenade with a 3 second timer!")
 
 /obj/item/food/grown/banana/bunch/monkeybomb/attack_self(mob/user, modifiers)
-	if(!is_simian(user))
+	if(!HAS_TRAIT(user, TRAIT_SIMIAN))
 		return to_chat(user, span_notice("You don't really know what to do with this."))
 	else start_ripening()
 

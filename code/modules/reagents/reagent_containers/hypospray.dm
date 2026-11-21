@@ -158,7 +158,7 @@
 	var/label_examine = TRUE
 	var/label_text
 
-/obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/carbon/user)
+/obj/item/reagent_containers/hypospray/medipen/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to choke on \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS//ironic. he could save others from oxyloss, but not himself.
 
@@ -320,6 +320,19 @@
 	volume = 60
 	amount_per_transfer_from_this = 60
 	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/omnizine = 10 ,/datum/reagent/medicine/leporazine = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury/purple
+	name = "luxury purple medipen"
+	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard environments. This one is purple. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
+	icon_state = "slimepen"
+	base_icon_state = "slimepen"
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/regen_jelly/diluted = 5 ,/datum/reagent/toxin = 5 ,/datum/reagent/medicine/leporazine = 10)
+
+/obj/item/reagent_containers/hypospray/medipen/survival/luxury/purple/Initialize(mapload)
+	. = ..()
+	if(prob(0.1)) // idea by melbert
+		name = "luxury ourple medipen"
+		desc = replacetext(desc, "purple", "ourple") // i do not feel like copy-pasting the entire desc for a one-word change
 
 /obj/item/reagent_containers/hypospray/medipen/atropine
 	name = "atropine autoinjector"

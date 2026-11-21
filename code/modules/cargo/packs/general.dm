@@ -143,8 +143,8 @@
 	cost = CARGO_CRATE_VALUE * 1.6
 	access_view = ACCESS_CHAPEL_OFFICE
 	contains = list(/obj/item/clothing/under/misc/burial,
-					/obj/item/food/grown/harebell,
-					/obj/item/food/grown/poppy/geranium,
+					/obj/item/food/grown/flower/harebell,
+					/obj/item/food/grown/flower/poppy/geranium,
 				)
 	crate_name = "coffin"
 	crate_type = /obj/structure/closet/crate/coffin
@@ -269,3 +269,4 @@
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/structure/reagent_dispensers/water_cooler/jugless = 1, /obj/item/reagent_containers/cooler_jug/punch = 1)
 	crate_name = "punch cooler crate"
+

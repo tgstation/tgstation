@@ -106,7 +106,7 @@
 	if (blink?.current_charges)
 		. += "hierophant_ready"
 
-/obj/item/hierophant_club/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/hierophant_club/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if (blink?.current_charges)
 		. += "hierophant_ready"

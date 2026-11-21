@@ -49,7 +49,7 @@
 		hallucinator.playsound_local(wall_source, 'sound/effects/meteorimpact.ogg', 150, TRUE)
 
 	if(haunt_them)
-		to_chat(hallucinator, pick(hallucination_lines))
+		to_chat(hallucinator, span_colossus(pick(hallucination_lines)))
 
 	var/obj/effect/client_image_holder/hallucination/bubblegum/fake_bubbles = new(wall_source, hallucinator, src)
 	addtimer(CALLBACK(src, PROC_REF(charge_loop), fake_bubbles, target_landing_turf), 1 SECONDS)

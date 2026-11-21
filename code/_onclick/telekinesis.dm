@@ -15,7 +15,7 @@
  * * Returns `COMPONENT_CANCEL_ATTACK_CHAIN` when it performs any action, to further acts on the attack chain.
  */
 /atom/proc/attack_tk(mob/user)
-	if(user.stat || !tkMaxRangeCheck(user, src))
+	if(IS_UNCONSCIOUS_OR_CRIT(user) || !tkMaxRangeCheck(user, src))
 		return
 	new /obj/effect/temp_visual/telekinesis(get_turf(src))
 	add_hiddenprint(user)
@@ -24,7 +24,7 @@
 
 
 /obj/attack_tk(mob/user)
-	if(user.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(user))
 		return
 	if(anchored)
 		return ..()
@@ -32,7 +32,7 @@
 
 
 /obj/item/attack_tk(mob/user)
-	if(user.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(user))
 		return
 	return attack_tk_grab(user)
 

@@ -64,7 +64,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define PATH_TO_NEXT_MAP_JSON "data/next_map.json"
 
 /// List of directories we can load map .json files from
-#define MAP_DIRECTORY_MAPS "_maps"
+#define MAP_DIRECTORY_MAPS "_maps/map_jsons"
 #define MAP_DIRECTORY_DATA "data"
 #define MAP_DIRECTORY_WHITELIST list(MAP_DIRECTORY_MAPS,MAP_DIRECTORY_DATA)
 
@@ -135,7 +135,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 ///Z level traits for Deep Space
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
 ///Z level traits for
-#define ZTRAITS_WILDS list(\
+#define ZTRAITS_ICY_WILDS list(\
 	ZTRAIT_LINKAGE = GRIDLINKED, \
 	ZTRAIT_ICE_RUINS = TRUE, \
 	ZTRAIT_SNOWSTORM = FALSE, \

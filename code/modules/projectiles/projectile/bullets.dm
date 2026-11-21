@@ -1,10 +1,10 @@
 /obj/projectile/bullet
 	name = "bullet"
-	icon_state = "bullet"
+	icon_state = "bullet_tracer"
 	damage = 60
 	damage_type = BRUTE
 	armor_flag = BULLET
-	hitsound_wall = SFX_RICOCHET
+	hitsound_wall = /datum/sound_effect/ricochet
 	sharpness = SHARP_POINTY
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 	shrapnel_type = /obj/item/shrapnel/bullet

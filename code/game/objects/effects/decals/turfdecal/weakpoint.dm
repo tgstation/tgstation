@@ -4,6 +4,8 @@
 #define CRACK_DELAY_CHANCE 33
 #define CRACK_LENGTH_DEFAULT 8
 
+GLOBAL_LIST_EMPTY(weakpoints_spawned)
+
 /obj/effect/weakpoint
 	name = "weakpoint crack"
 	desc = "A suspicious crack runs along the ground."
@@ -12,7 +14,7 @@
 	base_icon_state = "weakpoint"
 	layer = ABOVE_NORMAL_TURF_LAYER
 	move_resist = INFINITY
-	alpha = 0
+	alpha = 255
 
 	/// The required strength of explosion for a weakpoint to propogate
 	var/required_strength = EXPLODE_LIGHT
@@ -34,6 +36,8 @@
 
 /obj/effect/weakpoint/Initialize(mapload)
 	. = ..()
+	GLOB.weakpoints_spawned += src
+	alpha = 0
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, INVISIBILITY_OBSERVER, use_anchor = TRUE)
 	RegisterSignal(src, COMSIG_TURF_CHANGE, PROC_REF(turf_changed))
 	register_context()
@@ -43,7 +47,7 @@
 	. = ..()
 	if(severity < required_strength)
 		balloon_alert_to_hearers("*crack*")
-		playsound(source = src, soundin = SFX_HULL_CREAKING, vol = 50, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
+		playsound(source = src, soundin = /datum/sound_effect/hull_creaking, vol = 50, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
 		return //return ominous sounds when we're under the threshold.
 
 	var/list/chain_turfs = get_crack_chain(get_turf(src), crack_length, TRUE, skip_turfs) // Get a nice chain of turfs
@@ -56,7 +60,7 @@
 	var/crack_delay = 0
 	for(var/turf/crack_turf in chain_turfs)
 		addtimer(CALLBACK(crack_turf, TYPE_PROC_REF(/atom, ex_act), severity, crack_turf), CRACK_PROPAGATION_DELAY * crack_delay)
-		playsound(source = crack_turf, soundin = SFX_HULL_CREAKING, vol = 35, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
+		playsound(source = crack_turf, soundin = /datum/sound_effect/hull_creaking, vol = 35, vary = TRUE, pressure_affected = FALSE, ignore_walls = TRUE)
 		if(prob(33))
 			crack_delay++
 
@@ -93,6 +97,10 @@
 	. = ..()
 	. += span_notice("\The [src] could be repaired with a welder.")
 	. += span_warning("A strong enough explosion will cause [src] to expand.")
+
+/obj/effect/weakpoint/Destroy(force)
+	GLOB.weakpoints_spawned -= src
+	return ..()
 
 /**
  * Generates a list of turfs from the start location meandering along a randomized set of turns.

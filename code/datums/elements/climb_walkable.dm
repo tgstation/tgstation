@@ -34,6 +34,8 @@
 
 /obj/structure/proc/on_climb_enter(datum/source, atom/movable/arrived)
 	SIGNAL_HANDLER
+	if(arrived == src) //You can't climb onto yourself
+		return
 	if(arrived.density)
 		ADD_TRAIT(arrived, TRAIT_ON_CLIMBABLE, ELEMENT_TRAIT(/datum/element/climb_walkable))
 

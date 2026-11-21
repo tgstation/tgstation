@@ -61,21 +61,26 @@
 		var/atom/movable/as_movable = parent
 		RegisterSignal(as_movable, COMSIG_ATOM_ENTERING, PROC_REF(on_source_entering))
 		RegisterSignal(as_movable, COMSIG_ATOM_EXITING, PROC_REF(on_source_exiting))
+		RegisterSignal(as_movable, COMSIG_MOVABLE_TURF_INITIALIZING, PROC_REF(on_turf_initializing))
 		target_turf = as_movable.loc
 
-	if (!isopenturf(target_turf))
+	register_turf(target_turf)
+
+/// Start listening to this turf without triggering effects on anything already on it.
+/datum/component/material_turf_tracking/proc/register_turf(atom/location)
+	if (!isopenturf(location))
 		return
 
 	if (!requires_elevation)
-		RegisterSignal(target_turf, SIGNAL_ADDTRAIT(TRAIT_ELEVATED_TURF), PROC_REF(on_turf_lost))
-		RegisterSignal(target_turf, SIGNAL_REMOVETRAIT(TRAIT_ELEVATED_TURF), PROC_REF(on_turf_gained))
-		if (HAS_TRAIT(target_turf, TRAIT_ELEVATED_TURF))
+		RegisterSignal(location, SIGNAL_ADDTRAIT(TRAIT_ELEVATED_TURF), PROC_REF(on_turf_lost))
+		RegisterSignal(location, SIGNAL_REMOVETRAIT(TRAIT_ELEVATED_TURF), PROC_REF(on_turf_gained))
+		if (HAS_TRAIT(location, TRAIT_ELEVATED_TURF))
 			return
 
 	// Not tracking initializations or existing objects as this would allow you to TP someone from plating by placing a tile underneath
-	RegisterSignal(target_turf, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
-	RegisterSignal(target_turf, COMSIG_TURF_MOVABLE_THROW_LANDED, PROC_REF(on_entered)) // Need this as shoves are 1 tile throws, and COMSIG_ATOM_ENTERED runs before the throw ends
-	RegisterSignal(target_turf, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
+	RegisterSignal(location, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	RegisterSignal(location, COMSIG_TURF_MOVABLE_THROW_LANDED, PROC_REF(on_entered)) // Need this as shoves are 1 tile throws, and COMSIG_ATOM_ENTERED runs before the throw ends
+	RegisterSignal(location, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
 
 /datum/component/material_turf_tracking/UnregisterFromParent()
 	. = ..()
@@ -84,8 +89,23 @@
 		return
 
 	var/atom/movable/as_movable = parent
-	UnregisterSignal(as_movable, list(COMSIG_ATOM_ENTERING, COMSIG_ATOM_EXITING))
+	UnregisterSignal(as_movable, list(COMSIG_ATOM_ENTERING, COMSIG_ATOM_EXITING, COMSIG_MOVABLE_TURF_INITIALIZING))
 	on_source_exiting(as_movable.loc)
+
+/datum/component/material_turf_tracking/proc/on_turf_initializing(atom/movable/source, turf/initializing_turf)
+	SIGNAL_HANDLER
+	UnregisterSignal(initializing_turf, list(
+		SIGNAL_ADDTRAIT(TRAIT_ELEVATED_TURF),
+		SIGNAL_REMOVETRAIT(TRAIT_ELEVATED_TURF),
+		COMSIG_ATOM_ENTERED,
+		COMSIG_TURF_MOVABLE_THROW_LANDED,
+		COMSIG_ATOM_EXITED,
+	))
+	// Things already here might still land or become elevated, so keep listening for that.
+	// Only clear those callbacks if the new turf means they can no longer touch the material turf.
+	if (!isopenturf(initializing_turf) || (!requires_elevation && HAS_TRAIT(initializing_turf, TRAIT_ELEVATED_TURF)))
+		on_turf_lost(initializing_turf)
+	register_turf(initializing_turf)
 
 /datum/component/material_turf_tracking/proc/on_source_entering(atom/movable/source, atom/entering, atom/old_loc)
 	SIGNAL_HANDLER

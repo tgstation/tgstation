@@ -51,6 +51,7 @@
 	inhand_icon_state = "armor"
 	blood_overlay_type = "armor"
 	dog_fashion = /datum/dog_fashion/back/armorvest
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/suit/armor/vest/alt
 	desc = "A Type I armored vest that provides decent protection against most types of damage."
@@ -65,7 +66,7 @@
 	desc = "A blue armor vest used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
 	icon_state = "armor_press"
 
-/obj/item/clothing/suit/armor/vest/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/armor/vest/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
@@ -148,7 +149,7 @@
 
 /obj/item/clothing/suit/armor/vest/cuirass/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+	AddComponent(/datum/component/item_equipped_movement_rustle, /datum/sound_effect/assoc/plate_armor_rustle, 8)
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -178,6 +179,7 @@
 	inhand_icon_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 8 SECONDS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/hos/trenchcoat/winter
 	name = "head of security's winter trenchcoat"
@@ -191,6 +193,7 @@
 	icon_state = "hosformal"
 	inhand_icon_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/hos/hos_formal/Initialize(mapload)
 	. = ..()
@@ -202,11 +205,13 @@
 	icon_state = "warden_alt"
 	inhand_icon_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
 	strip_delay = 7 SECONDS
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
+	item_flags = NONE
 
 /obj/item/clothing/suit/armor/vest/warden/alt
 	name = "warden's armored jacket"
@@ -224,8 +229,9 @@
 	heat_protection = CHEST|GROIN|ARMS|HANDS
 	resistance_flags = FLAMMABLE
 	dog_fashion = null
+	item_flags = NONE
 
-/obj/item/clothing/suit/armor/vest/secjacket/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/armor/vest/secjacket/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
@@ -259,6 +265,7 @@
 	armor_type = /datum/armor/vest_capcarapace
 	dog_fashion = null
 	resistance_flags = FIRE_PROOF
+	item_flags = NONE
 
 /datum/armor/vest_capcarapace
 	melee = 50
@@ -274,6 +281,7 @@
 	name = "syndicate captain's vest"
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
 	icon_state = "syndievest"
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
 	name = "captain's parade coat"
@@ -281,6 +289,7 @@
 	icon_state = "capformal"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal/Initialize(mapload)
 	. = ..()
@@ -298,10 +307,13 @@
 	strip_delay = 8 SECONDS
 	equip_delay_other = 6 SECONDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/space
 
 /obj/item/clothing/suit/armor/riot/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/adjust_fishing_difficulty, 5)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, texture_type)
 	init_rustle_component()
 
 /obj/item/clothing/suit/armor/riot/proc/init_rustle_component()
@@ -326,6 +338,7 @@
 	siemens_coefficient = 0
 	strip_delay = 7 SECONDS
 	equip_delay_other = 5 SECONDS
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 10.8)
 
 /datum/armor/balloon_vest
 	melee = 10
@@ -381,6 +394,7 @@
 	heat_protection = CHEST|GROIN|ARMS
 	armor_type = /datum/armor/armor_laserproof
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	item_flags = CAN_BE_OVERSLOT
 	var/hit_reflect_chance = 50
 
 /datum/armor/armor_laserproof
@@ -459,6 +473,12 @@
 	slowdown = 3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_type = /datum/armor/armor_heavy
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/black
+
+/obj/item/clothing/suit/armor/heavy/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, texture_type)
 
 /datum/armor/armor_heavy
 	melee = 80
@@ -525,15 +545,17 @@
 	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
 	icon_state = "knight_green"
 	inhand_icon_state = null
+	texture_type = /datum/bodypart_texture/mesh/biosuit_dark
 	allowed = list(
 		/obj/item/banner,
 		/obj/item/claymore,
 		/obj/item/nullrod,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
-		)
+	)
+
 /obj/item/clothing/suit/armor/riot/knight/init_rustle_component()
-	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+	AddComponent(/datum/component/item_equipped_movement_rustle, /datum/sound_effect/assoc/plate_armor_rustle, 8)
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"
@@ -597,6 +619,7 @@
 	inhand_icon_state = null
 	armor_type = /datum/armor/vest_russian
 	dog_fashion = null
+	item_flags = NONE
 
 /datum/armor/vest_russian
 	melee = 25
@@ -617,6 +640,7 @@
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	armor_type = /datum/armor/vest_russian_coat
 	dog_fashion = null
+	item_flags = NONE
 
 /datum/armor/vest_russian_coat
 	melee = 25
@@ -644,6 +668,7 @@
 	. = ..()
 	allowed += list(
 		/obj/item/fireaxe/metal_h2_axe,
+		/obj/item/gun/ballistic/rifle/rebarxbow,
 	)
 
 /datum/armor/armor_elder_atmosian
@@ -663,6 +688,7 @@
 	icon_state = "centcom_formal"
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	armor_type = /datum/armor/armor_centcom_formal
 
 /datum/armor/armor_centcom_formal
@@ -686,6 +712,7 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dog_fashion = null
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/militia
 	name = "station defender's coat"
@@ -708,7 +735,7 @@
 	wound = 30
 
 /obj/item/clothing/suit/armor/vest/military
-	name = "Crude chestplate"
+	name = "crude chestplate"
 	desc = "It may look rough, rusty and battered, but it's also made out of junk and uncomfortable to wear."
 	icon_state = "military"
 	inhand_icon_state = "armor"

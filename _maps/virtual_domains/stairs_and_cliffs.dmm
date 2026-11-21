@@ -146,7 +146,7 @@
 /area/virtual_domain/safehouse)
 "wZ" = (
 /obj/effect/baseturf_helper/virtual_domain,
-/turf/closed/indestructible/rock/snow/ice,
+/turf/closed/indestructible/ice,
 /area/icemoon/underground/explored/virtual_domain)
 "xB" = (
 /obj/structure/railing/corner{
@@ -281,7 +281,7 @@
 /turf/open/floor/wood,
 /area/icemoon/underground/explored/virtual_domain)
 "Qv" = (
-/turf/closed/indestructible/rock/snow/ice,
+/turf/closed/indestructible/ice,
 /area/icemoon/underground/explored/virtual_domain)
 "RD" = (
 /turf/closed/indestructible/binary,

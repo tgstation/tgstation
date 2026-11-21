@@ -6,12 +6,13 @@
 	failing_desc = "seems to be broken."
 	pupils_name = "apertures"
 	penlight_message = "are cybernetic, click-whirring as they refocus"
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/organ/eyes/robotic/emp_act(severity)
 	. = ..()
 	if((. & EMP_PROTECT_SELF) || !owner)
 		return
-	if(prob(10 * severity))
+	if(prob(100 / severity))
 		return
 	to_chat(owner, span_warning("Static obfuscates your vision!"))
 	owner.flash_act(visual = 1)
@@ -25,6 +26,7 @@
 	eye_color_right = "#2f3032"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	penlight_message = "are low grade cybernetics, poorly compensating for the light"
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/organ/eyes/robotic/basic/emp_act(severity)
 	. = ..()
@@ -43,10 +45,10 @@
 	iris_overlay = null
 	eye_color_left = "#3cb8a5"
 	eye_color_right = "#3cb8a5"
-	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	organ_traits = list(TRAIT_XRAY_VISION)
 	penlight_message = "are replaced by small radiation emitters and detectors"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/organ/eyes/robotic/thermals
 	name = "thermal eyes"
@@ -57,10 +59,11 @@
 	eye_color_right = "#ce2525"
 	// We're gonna downshift green and blue a bit so darkness looks yellow
 	color_cutoffs = list(25, 8, 5)
-	sight_flags = SEE_MOBS
+	organ_traits = list(TRAIT_THERMAL_VISION)
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	pupils_name = "slit aperatures"
 	penlight_message = "are cybernetic, with vertically slit metalic lenses."
+	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/organ/eyes/robotic/flashlight
 	name = "flashlight eyes"
@@ -108,6 +111,7 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	pupils_name = "flash shields"
 	penlight_message = "have polarized cybernetic lenses, blocking bright lights"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 
 /obj/item/organ/eyes/robotic/shield/Initialize(mapload)
 	. = ..()
@@ -127,6 +131,7 @@
 	eye_color_left = "#19191a"
 	eye_color_right = "#19191a"
 	actions_types = list(/datum/action/item_action/organ_action/use, /datum/action/item_action/organ_action/toggle)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/max_light_beam_distance = 5
 	var/obj/item/flashlight/eyelight/glow/eye
 	/// base icon state for eye overlays
@@ -295,7 +300,7 @@
 /obj/item/organ/eyes/robotic/glow/proc/set_beam_range(new_range)
 	var/old_light_range = eye.light_range
 	if(old_light_range == 0 && new_range > 0 && eye.light_on) // turn bring back the light overlay if we were previously at 0 (aka emissive eyes only)
-		eye.light_on = FALSE // this is stupid, but this has to be FALSE for set_light_on() to work.
+		eye.set_light_on(FALSE) // Toggle them off and on
 		eye.set_light_on(TRUE)
 	eye.set_light_range(clamp(new_range, 0, max_light_beam_distance))
 
@@ -399,6 +404,7 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	pupils_name = "aperture clusters"
 	penlight_message = "are metal hemispheres, resembling insect eyes"
+	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/organ/eyes/robotic/basic/moth
 	name = "basic robotic moth eyes"
@@ -502,7 +508,7 @@
 #define IFF_FACTION_EVERYONE "Non-Allies"
 
 /obj/item/organ/eyes/robotic/tacvisor
-	name = "tactical EFF visor"
+	name = "tactical IFF visor"
 	desc = "A failed attempt at integrating IFF systems directly into soldiers' prefrontal cortex, this complex sensor array has proved to be impractical as the additional load impared the user's ability to recognize people's appearances or voices. The screen is there just for intimidation."
 	icon_state = "eyes_tacvisor"
 	eye_icon_state = "eyes_tacvisor"
@@ -517,6 +523,7 @@
 	penlight_message = "are a wide reinforced faceplate with an inbuilt screen and a multitude of combat sensors"
 	light_reactive = FALSE
 	actions_types = list(/datum/action/item_action/organ_action/use)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT * 4, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 4)
 	/// Used to detect when unmasked mobs enter range
 	var/datum/proximity_monitor/tacvisor/proximity_monitor
 	/// List of mob refs -> their overlays
@@ -558,12 +565,12 @@
 		"Security Status" = JUDGE_RECORDCHECK,
 	)
 
-/obj/item/organ/eyes/robotic/tacvisor/generate_body_overlay(mob/living/carbon/human/parent, obj/item/bodypart/limb)
-	var/mutable_appearance/visor_overlay = mutable_appearance(eye_icon, eye_icon_state, -EYES_LAYER, parent || limb)
+/obj/item/organ/eyes/robotic/tacvisor/generate_body_overlay(obj/item/bodypart/limb)
+	var/mutable_appearance/visor_overlay = mutable_appearance(eye_icon, eye_icon_state, -EYES_LAYER)
 	var/list/eye_overlays = list(visor_overlay)
-
-	if (parent && parent.appears_alive() && !HAS_TRAIT(parent, TRAIT_KNOCKEDOUT))
-		var/mutable_appearance/display_overlay = mutable_appearance(eye_icon, "[eye_icon_state]_[LOWER_TEXT(visor_display)]", -EYES_LAYER, parent)
+	var/mob/living/carbon/human/parent = limb.owner
+	if (parent && !IS_DEAD_OR_FAKING(parent) && !IS_UNCONSCIOUS(parent))
+		var/mutable_appearance/display_overlay = mutable_appearance(eye_icon, "[eye_icon_state]_[LOWER_TEXT(visor_display)]", -EYES_LAYER)
 		eye_overlays += display_overlay
 		if(!(parent.obscured_slots & HIDEEYES))
 			eye_overlays += emissive_appearance(eye_icon, "[eye_icon_state]_[LOWER_TEXT(visor_display)]", parent, -EYES_LAYER)
@@ -612,6 +619,7 @@
 			COMSIG_QDELETING,
 			COMSIG_ATOM_UPDATE_APPEARANCE,
 			COMSIG_LIVING_POST_UPDATE_TRANSFORM,
+			COMSIG_LIVING_CHAT_INDICATOR_UPDATED,
 			COMSIG_MOB_EQUIPPED_ITEM,
 			COMSIG_MOB_UNEQUIPPED_ITEM,
 			COMSIG_LIVING_UPDATE_OFFSETS,
@@ -667,6 +675,7 @@
 		// Lying down/being pushed
 		RegisterSignal(source, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(refresh_overlay))
 		RegisterSignal(source, COMSIG_LIVING_UPDATE_OFFSETS, PROC_REF(refresh_overlay))
+		RegisterSignal(source, COMSIG_LIVING_CHAT_INDICATOR_UPDATED, PROC_REF(refresh_overlay))
 
 	mob_overlays[source] = make_overlay(source)
 	owner.client?.images |= mob_overlays[source]
@@ -941,10 +950,22 @@
 	), COLORSPACE_HSL)
 
 /obj/item/organ/eyes/robotic/tacvisor/deathsquad
+	name = "Deathsquad IFF Visor"
 	friendly_faction = IFF_FACTION_CENTCOM
 	hostile_faction = IFF_FACTION_EVERYONE
 	actions_types = null
 	user_controls = FALSE
+	organ_traits = list(TRAIT_THERMAL_VISION)
+
+/obj/item/organ/eyes/robotic/tacvisor/deathsquad/on_examine(mob/source, atom/target, list/examine_strings, list/examine_overrides)
+
+	if (target == owner || !iscarbon(target) && !(isliving(target) && (obj_flags & EMAGGED)))
+		return
+
+	if(get_iff_signature(target) == IFF_FRIENDLY)
+		examine_overrides[EXAMINE_OVERRIDE_PRIORITY_IFF] = span_notice("CentCom personnel. Do not attack.")
+	else
+		examine_overrides[EXAMINE_OVERRIDE_PRIORITY_IFF] = span_boldwarning("KILL KILL KILL KILL KILL KILL!!!")
 
 /obj/item/organ/eyes/robotic/tacvisor/deathsquad/ui_status(mob/user, datum/ui_state/state)
 	return UI_CLOSE

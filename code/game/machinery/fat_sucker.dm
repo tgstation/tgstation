@@ -75,13 +75,12 @@
 /obj/machinery/fat_sucker/container_resist_act(mob/living/user)
 	if(!free_exit || state_open)
 		to_chat(user, span_notice("The emergency release is not responding! You start pushing against the hull!"))
-		user.changeNext_move(CLICK_CD_BREAKOUT)
-		user.last_special = world.time + CLICK_CD_BREAKOUT
+		user.change_next_special_move(CLICK_CD_BREAKOUT)
 		user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
 			span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
 			span_hear("You hear a metallic creaking from [src]."))
-		if(do_after(user, breakout_time, target = src, hidden = TRUE))
-			if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
+		if(do_after(user, breakout_time, target = src, timed_action_flags = HIDE_INTERACTION))
+			if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src || state_open)
 				return
 			free_exit = TRUE
 			user.visible_message(span_warning("[user] successfully broke out of [src]!"), \

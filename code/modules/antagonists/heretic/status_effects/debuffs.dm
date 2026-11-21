@@ -312,7 +312,7 @@
 	tick_interval = 10 SECONDS
 
 /datum/status_effect/eldritch_painting/weeping/on_tick(seconds_between_ticks)
-	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
+	if(IS_UNCONSCIOUS(owner))
 		return
 
 	owner.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "Caused by The Weeping status effect")
@@ -347,7 +347,7 @@
 	// Causes them to need to eat at 10x the normal rate
 	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
 	if(SPT_PROB(10, seconds_between_ticks))
-		to_chat(owner, span_notice(pick("You can't stop thinking about raw meat...", "You **NEED** to eat someone.", "The hunger pangs are back...", "You hunger for flesh.", "You are starving!")))
+		to_chat(owner, span_notice(pick("You can't stop thinking about raw meat...", "You <b>NEED</b> to eat someone.", "The hunger pangs are back...", "You hunger for flesh.", "You are starving!")))
 	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
 
 /datum/status_effect/eldritch_painting/desire/on_remove()

@@ -21,7 +21,7 @@
 	mutanteyes = /obj/item/organ/eyes/jelly
 	mutantheart = null
 	meat = /obj/item/food/meat/slab/human/mutant/slime
-	exotic_bloodtype = BLOOD_TYPE_TOX
+	exotic_bloodtype = /datum/blood_type/slime
 	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -68,14 +68,14 @@
 
 	// Blood regen thresholds use your real amount of blood.
 	if(slime.get_blood_volume() <= 0)
-		slime.adjust_blood_volume(JELLY_REGEN_RATE_EMPTY * slime.physiology.blood_regen_mod * seconds_per_tick)
+		slime.adjust_blood_volume(JELLY_REGEN_RATE_EMPTY * GET_PHYSIOLOGY(slime, PHYS_COEFF_BLOOD_REGEN) * seconds_per_tick)
 		slime.adjust_brute_loss(2.5 * seconds_per_tick)
 		to_chat(slime, span_danger("You feel empty!"))
 
 	// Same logic applies here.
 	if(slime.get_blood_volume() < BLOOD_VOLUME_NORMAL)
 		if(slime.nutrition >= NUTRITION_LEVEL_STARVING)
-			slime.adjust_blood_volume(JELLY_REGEN_RATE * slime.physiology.blood_regen_mod * seconds_per_tick)
+			slime.adjust_blood_volume(JELLY_REGEN_RATE * GET_PHYSIOLOGY(slime, PHYS_COEFF_BLOOD_REGEN) * seconds_per_tick)
 			if(slime.get_blood_volume() <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
 				slime.adjust_nutrition(-1.25 * seconds_per_tick)
 
@@ -86,24 +86,41 @@
 
 	// Saline can prevent you from cannibalizing yourself.
 	if(slime.get_blood_volume(apply_modifiers = TRUE) < BLOOD_VOLUME_BAD)
-		Cannibalize_Body(slime)
+		cannibalize_body(slime)
 
 	regenerate_limbs?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	return HANDLE_BLOOD_NO_NUTRITION_DRAIN|HANDLE_BLOOD_NO_OXYLOSS
 
-/datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
-	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
-	var/obj/item/bodypart/consumed_limb
+/datum/species/jelly/proc/cannibalize_body(mob/living/carbon/human/target)
+	var/list/limbs_to_consume = list()
+
+	for(var/body_zone, untyped_limb in target.get_bodyparts_by_zones())
+		var/obj/item/bodypart/limb = untyped_limb
+		if(isnull(limb))
+			continue
+
+		var/limb_zone = limb.body_zone
+
+		if(IS_STUMP(limb) || limb_zone == BODY_ZONE_CHEST || limb_zone == BODY_ZONE_HEAD)
+			continue
+
+		if(limb.biological_state & BIO_JELLY) // can only cannibalize limbs that are comprised of jelly (this is a last gasp to keep going, let's assume we can't digest out non-jelly limbs)
+			limbs_to_consume += limb_zone
+
 	if(!length(limbs_to_consume))
-		H.losebreath++
+		target.losebreath++
 		return
-	if(H.num_legs) //Legs go before arms
+
+	if(target.num_legs > 0) //Legs go before arms
 		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
-	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
+
+	var/obj/item/bodypart/consumed_limb = target.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
-	to_chat(H, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
+
+	to_chat(target, span_userdanger("Your [consumed_limb.name] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
-	H.adjust_blood_volume(20 * H.physiology.blood_regen_mod)
+
+	target.adjust_blood_volume(20 * GET_PHYSIOLOGY(target, PHYS_COEFF_BLOOD_REGEN))
 
 /datum/species/jelly/get_species_description()
 	return "Jellypeople are a strange and alien species with three eyes, made entirely out of gel."
@@ -131,6 +148,19 @@
 		SPECIES_PERK_NAME = "Jelly Blood",
 		SPECIES_PERK_DESC = "[plural_form] don't have blood, but instead have toxic [initial(blood_type.reagent_type.name)]! \
 			Jelly is extremely important, as losing it will cause you to lose limbs. Having low jelly will make medical treatment very difficult.",
+	))
+
+	return to_add
+
+/datum/species/jelly/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = FA_ICON_PERSON_RUNNING,
+		SPECIES_PERK_NAME = "Jelly Body",
+		SPECIES_PERK_DESC = "[plural_form] have bodies of malleable Jelly. \
+			You can squeeze through small cracks like grilles, provided you're not wearing clothes.",
 	))
 
 	return to_add
@@ -215,7 +245,10 @@
 	// so if someone mindswapped into them, they'd still be shared.
 	bodies = null
 	C.set_blood_volume(C.get_blood_volume(), maximum = BLOOD_VOLUME_NORMAL)
-	UnregisterSignal(C, COMSIG_LIVING_DEATH)
+	UnregisterSignal(C, list(
+		COMSIG_LIVING_DEATH,
+		COMSIG_LIVING_LIFE,
+	))
 	..()
 
 /datum/species/jelly/slime/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load, regenerate_icons)
@@ -232,6 +265,7 @@
 			bodies |= C
 
 	RegisterSignal(C, COMSIG_LIVING_DEATH, PROC_REF(on_death_move_body))
+	RegisterSignal(C, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 /datum/species/jelly/slime/proc/on_death_move_body(mob/living/carbon/human/source, gibbed)
 	SIGNAL_HANDLER
@@ -255,16 +289,16 @@
 /datum/species/jelly/slime/copy_properties_from(datum/species/jelly/slime/old_species)
 	bodies = old_species.bodies
 
-/datum/species/jelly/slime/spec_life(mob/living/carbon/human/H, seconds_per_tick)
-	. = ..()
-	if(H.get_blood_volume() >= BLOOD_VOLUME_SLIME_SPLIT)
+/datum/species/jelly/slime/proc/on_life(mob/living/carbon/human/source, seconds_per_tick)
+	SIGNAL_HANDLER
+	if(source.get_blood_volume() >= BLOOD_VOLUME_SLIME_SPLIT)
 		if(SPT_PROB(2.5, seconds_per_tick))
-			to_chat(H, span_notice("You feel very bloated!"))
+			to_chat(source, span_notice("You feel very bloated!"))
 
-	else if(H.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		H.adjust_blood_volume(1.5 * seconds_per_tick)
-		if(H.get_blood_volume() <= BLOOD_VOLUME_LOSE_NUTRITION)
-			H.adjust_nutrition(-1.25 * seconds_per_tick)
+	else if(source.nutrition >= NUTRITION_LEVEL_WELL_FED)
+		source.adjust_blood_volume(1.5 * seconds_per_tick)
+		if(source.get_blood_volume() <= BLOOD_VOLUME_LOSE_NUTRITION)
+			source.adjust_nutrition(-1.25 * seconds_per_tick)
 
 /datum/action/innate/split_body
 	name = "Split Body"
@@ -384,10 +418,10 @@
 		L["area"] = get_area_name(body, TRUE)
 		var/stat = "error"
 		switch(body.stat)
-			if(CONSCIOUS)
-				stat = "Conscious"
-			if(SOFT_CRIT to HARD_CRIT) // Also includes UNCONSCIOUS
-				stat = "Unconscious"
+			if(STABLE)
+				stat = "Stable"
+			if(SOFT_CRIT, HARD_CRIT)
+				stat = "Critical"
 			if(DEAD)
 				stat = "Dead"
 		var/occupied
@@ -455,7 +489,7 @@
 	if(dupe.stat == DEAD) //Is it alive?
 		return FALSE
 
-	if(dupe.stat != CONSCIOUS) //Is it awake?
+	if(IS_UNCONSCIOUS_OR_CRIT(dupe)) //Is it awake?
 		return FALSE
 
 	if(dupe.mind && dupe.mind.active) //Is it unoccupied?
@@ -469,7 +503,7 @@
 /datum/action/innate/swap_body/proc/swap_to_dupe(datum/mind/M, mob/living/carbon/human/dupe)
 	if(!can_swap(dupe)) //sanity check
 		return
-	if(M.current.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(M.current))
 		M.current.visible_message(span_notice("[M.current] stops moving and starts staring vacantly into space."),
 			span_notice("You stop moving this body..."))
 	else

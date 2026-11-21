@@ -7,6 +7,7 @@
 	animate_movement = FORWARD_STEPS
 	anchored = TRUE
 	density = TRUE
+	flags_1 = NAV_IRRELEVANT_1 // Transit pods do not really need to do all that
 	var/moving = FALSE
 	var/datum/gas_mixture/air_contents = new()
 	var/occupied_icon_state = "pod_occupied"
@@ -26,17 +27,18 @@
 	icon_state = contents.len ? occupied_icon_state : initial(icon_state)
 	return ..()
 
-/obj/structure/transit_tube_pod/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(I.tool_behaviour == TOOL_CROWBAR)
-		if(!moving)
-			I.play_tool_sound(src)
-			if(contents.len)
-				user.visible_message(span_notice("[user] empties \the [src]."), span_notice("You empty \the [src]."))
-				empty_pod()
-			else
-				deconstruct(TRUE)
+/obj/structure/transit_tube_pod/crowbar_act(mob/living/user, obj/item/tool)
+	if(moving)		// can you even click on one of these while they're in a tube?
+		return NONE	// for that matter can you click them when they're outside of a tube?
+
+	tool.play_tool_sound(src)
+	if(contents.len)
+		user.visible_message(span_notice("[user] empties \the [src]."), \
+							span_notice("You empty \the [src]."))
+		empty_pod()
 	else
-		return ..()
+		deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/transit_tube_pod/atom_deconstruct(disassembled = TRUE)
 	var/atom/location = get_turf(src)
@@ -72,8 +74,7 @@
 		empty_pod()
 		return
 	if(!moving)
-		user.changeNext_move(CLICK_CD_BREAKOUT)
-		user.last_special = world.time + CLICK_CD_BREAKOUT
+		user.change_next_special_move(CLICK_CD_BREAKOUT)
 		to_chat(user, span_notice("You start trying to escape from the pod..."))
 		if(do_after(user, 1 MINUTES, target = src))
 			to_chat(user, span_notice("You manage to open the pod."))

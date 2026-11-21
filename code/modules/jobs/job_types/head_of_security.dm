@@ -40,24 +40,17 @@
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 
 	voice_of_god_power = 1.4 //Command staff has authority
+	tgui_icon = FA_ICON_USER_SHIELD
 
 /datum/job/head_of_security/get_captaincy_announcement(mob/living/captain)
 	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
 
 /datum/job/head_of_security/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
-	if(!ishuman(spawned) || !prob(PIG_COP_PROBABILITY))
+	if(!prob(PIG_COP_PROBABILITY))
 		return
-	var/mob/living/carbon/human/piggy = spawned
-	for (var/obj/item/bodypart/ham as anything in piggy.get_bodyparts())
-		// These are string lists
-		ham.butcher_drops = ham.butcher_drops.Copy()
-		for (var/meat_type in ham.butcher_drops)
-			if (!ispath(meat_type, /obj/item/food/meat/slab))
-				continue
-			ham.butcher_drops[/obj/item/food/meat/slab/pig] = ham.butcher_drops[meat_type]
-			ham.butcher_drops -= meat_type
-		ham.butcher_drops = string_list(ham.butcher_drops)
+	for (var/obj/item/bodypart/ham as anything in spawned.get_bodyparts())
+		ham.butcher_drops_override = list(/obj/item/food/meat/slab/pig = ham.base_meat_amount)
 
 /datum/outfit/job/hos
 	name = "Head of Security"
@@ -72,7 +65,7 @@
 		/obj/item/evidencebag = 1,
 		/obj/item/melee/baton/security/loaded/hos = 1,
 		)
-	belt = /obj/item/modular_computer/pda/heads/hos
+	belt = /obj/item/modular_computer/pda/crew/heads/hos
 	ears = /obj/item/radio/headset/heads/hos/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black/security
@@ -92,6 +85,8 @@
 		/obj/item/stamp/head/hos,
 		)
 	implants = list(/obj/item/implant/mindshield)
+
+	wintercoat = /obj/item/clothing/suit/armor/hos/trenchcoat/winter
 
 /datum/outfit/job/hos/mod
 	name = "Head of Security (MODsuit)"

@@ -1,6 +1,8 @@
 #define MAX_NAVIGATE_RANGE 125
 
 /mob/living
+	/// Are we currently pathfinding for the navigate verb?
+	var/navigating = FALSE
 	/// Cooldown of the navigate() verb.
 	COOLDOWN_DECLARE(navigate_cooldown)
 
@@ -8,15 +10,16 @@
 	/// Images of the path created by navigate().
 	var/list/navigation_images = list()
 
-/mob/living/verb/navigate()
-	set name = "Navigate"
-	set category = "IC"
+GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 
 	if(incapacitated)
 		return
 	if(length(client.navigation_images))
 		addtimer(CALLBACK(src, PROC_REF(cut_navigation)), world.tick_lag)
 		balloon_alert(src, "navigation path removed")
+		return
+	if(navigating)
+		balloon_alert(src, "busy navigating!")
 		return
 	if(!COOLDOWN_FINISHED(src, navigate_cooldown))
 		balloon_alert(src, "navigation on cooldown!")
@@ -26,11 +29,13 @@
 /mob/living/proc/create_navigation()
 	var/list/destination_list = list()
 	for(var/atom/destination as anything in GLOB.navigate_destinations)
-		if(get_dist(destination, src) > MAX_NAVIGATE_RANGE)
+		if(max(abs(destination.x - x), abs(destination.y - y)) > MAX_NAVIGATE_RANGE)
 			continue
 		var/destination_name = GLOB.navigate_destinations[destination]
-		if(destination.z != z && is_multi_z_level(z)) // up or down is just a good indicator "we're on the station", we don't need to check specifics
-			destination_name += ((get_dir_multiz(src, destination) & UP) ? " (Above)" : " (Below)")
+		var/list/source_layer = SSnavmap.z_to_nav_layer[z]
+		var/list/destination_layer = SSnavmap.z_to_nav_layer[destination.z]
+		if(source_layer && destination_layer && source_layer["group"] == destination_layer["group"] && source_layer["layer"] != destination_layer["layer"])
+			destination_name += (destination_layer["layer"] > source_layer["layer"] ? " (Above)" : " (Below)")
 
 		destination_list[destination_name] = destination
 
@@ -47,19 +52,18 @@
 
 	var/platform_code = tgui_input_list(src, "Select a location", "Navigate", sort_list(destination_list))
 	var/atom/navigate_target = destination_list[platform_code]
+	create_navigation_line(navigate_target)
 
+/mob/living/proc/create_navigation_line(atom/navigate_target)
 	if(isnull(navigate_target) || incapacitated)
 		return
 
+	cut_navigation()
 
-	var/finding_zchange = FALSE
-	COOLDOWN_START(src, navigate_cooldown, 15 SECONDS)
-	if(navigate_target == UP || navigate_target == DOWN || (isatom(navigate_target) && navigate_target.z != z))
-		// lowering the cooldown to 5 seconds if we're navigating to a ladder or staircase instead of a proper destination
-		// (so we can decide to move to another destination right off the bat, rather than needing to wait)
-		COOLDOWN_START(src, navigate_cooldown, 5 SECONDS)
-		var/direction_name = isatom(navigate_target) ? "there" : (navigate_target == UP ? "up" : "down")
-		var/nav_dir = isatom(navigate_target) ? (get_dir_multiz(src, navigate_target) & (UP|DOWN)) : navigate_target
+	COOLDOWN_START(src, navigate_cooldown, 2 SECONDS)
+	if(navigate_target == UP || navigate_target == DOWN)
+		var/direction_name = navigate_target == UP ? "up" : "down"
+		var/nav_dir = navigate_target
 		var/atom/new_target = find_nearest_stair_or_ladder(nav_dir)
 
 		if(!new_target)
@@ -67,17 +71,26 @@
 			return
 
 		navigate_target = new_target
-		finding_zchange = TRUE
 
 	if(!isatom(navigate_target))
-		stack_trace("Navigate target ([navigate_target]) is not an atom, somehow.")
-		return
+		CRASH("Navigate target ([navigate_target]) is not an atom, somehow.")
 
-	var/list/path = get_path_to(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), skip_first = FALSE)
+	navigating = TRUE
+	var/list/datum/callback/await = list(CALLBACK(src, PROC_REF(finish_navigation)))
+	if(!SSpathfinder.pathfind(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 0, access = get_access(), skip_first = FALSE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, on_finish = await, allow_multiz = TRUE, max_path_cost = MAX_NAVIGATE_RANGE * 10 * 5, allow_nav_links = TRUE, nav_cost_modifiers = alist(NAV_COST_MAINTENANCE = 5)))
+		// An unreachable multi-z search invokes the callback before returning FALSE.
+		// Avoid reporting two failures in that case.
+		if(navigating)
+			navigating = FALSE
+			balloon_alert(src, "failed to begin navigation!")
+
+/mob/living/proc/finish_navigation(list/path, list/actions)
+	navigating = FALSE
+	if(!client)
+		return
 	if(!length(path))
 		balloon_alert(src, "no valid path with current access!")
 		return
-	path |= get_turf(navigate_target)
 	for(var/i in 1 to length(path))
 		var/turf/current_turf = path[i]
 		var/image/path_image = image(icon = 'icons/effects/navigation.dmi', layer = HIGH_PIPE_LAYER, loc = current_turf)
@@ -96,14 +109,17 @@
 			if(dir_1 > dir_2)
 				dir_1 = dir_2
 				dir_2 = REVERSE_DIR(angle2dir(get_angle(path[i+1], current_turf)))
-		path_image.icon_state = "[dir_1]-[dir_2]"
+		var/action = actions?[i]
+		if(action == UP || action == DOWN || (action && action < 0))
+			path_image.icon_state = "0-0"
+			path_image.color = action == UP ? COLOR_GREEN : (action == DOWN ? COLOR_ORANGE : COLOR_YELLOW)
+		else
+			path_image.icon_state = "[dir_1]-[dir_2]"
 		client.images += path_image
 		client.navigation_images += path_image
 		animate(path_image, 0.5 SECONDS, alpha = 150)
 	addtimer(CALLBACK(src, PROC_REF(shine_navigation)), 0.5 SECONDS)
 	RegisterSignal(src, COMSIG_LIVING_DEATH, PROC_REF(cut_navigation))
-	if(finding_zchange)
-		RegisterSignal(src, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(cut_navigation))
 	balloon_alert(src, "navigation path created")
 
 /mob/living/proc/shine_navigation()
@@ -116,6 +132,9 @@
 
 /mob/living/proc/cut_navigation()
 	SIGNAL_HANDLER
+	if(!length(client.navigation_images))
+		return
+
 	for(var/image/navigation_path in client.navigation_images)
 		client.images -= navigation_path
 	client.navigation_images.Cut()
@@ -151,10 +170,10 @@
 	for(var/obj/structure/stairs/stairs_bro in GLOB.stairs)
 		if(direction == UP && stairs_bro.z != z) //if we're going up, we need to find stairs on our z level
 			continue
-		if(direction == DOWN && stairs_bro.z != z - 1) //if we're going down, we need to find stairs on the z level beneath us
+		if(direction == DOWN && get_step_multiz(stairs_bro, UP)?.z != z) //if we're going down, target the upper endpoint of stairs below us
 			continue
 		if(!target)
-			target = stairs_bro.z == z ? stairs_bro : get_step_multiz(stairs_bro, UP) //if the stairs aren't on our z level, get the turf above them (on our zlevel) to path to instead
+			target = stairs_bro.z == z ? stairs_bro : get_step_multiz(stairs_bro, UP)
 			continue
 		if(get_dist_euclidean(stairs_bro, src) > get_dist_euclidean(target, src))
 			continue

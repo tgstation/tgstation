@@ -1,6 +1,7 @@
 /obj/machinery/computer/camera_advanced
 	name = "advanced camera console"
 	desc = "Used to access the various cameras on the station."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/security")
 	icon_screen = "cameras"
 	icon_keyboard = "security_key"
 	light_color = COLOR_SOFT_RED
@@ -82,6 +83,7 @@
 		networks += "[port.shuttle_id]_[i]"
 
 /obj/machinery/computer/camera_advanced/syndie
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/camera_advanced/syndie")
 	icon_keyboard = "syndie_key"
 	circuit = /obj/item/circuitboard/computer/advanced_camera
 
@@ -146,7 +148,7 @@
 	return can_interact(user)
 
 /obj/machinery/computer/camera_advanced/abductor/can_use(mob/user)
-	if(!isabductor(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_KNOWLEDGE))
 		return FALSE
 	return ..()
 
@@ -237,7 +239,7 @@
 	if(isnull(camera))
 		return
 
-	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
+	playsound(src, /datum/sound_effect/terminal_type, 25, FALSE)
 
 	var/obj/machinery/camera/chosen_camera = cameras_by_tag[camera]
 	if(isnull(chosen_camera))

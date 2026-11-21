@@ -36,7 +36,7 @@
 		/datum/stock_part/servo/tier3 = 5,
 		/obj/item/stack/cable_coil = 2)
 
-/obj/item/circuitboard/machine/dna_vault/completion_requirements(obj/structure/frame/install_frame)
+/obj/item/circuitboard/machine/dna_vault/completion_requirements(obj/structure/frame/install_frame, mob/living/user)
 	var/turf/center = get_turf(install_frame)
 	var/blocked = FALSE
 	for(var/turf/potential_turf as anything in CORNER_BLOCK_OFFSET(center, 3, 3, -1, -2))
@@ -310,6 +310,16 @@
 	var/message = high_production_profile ? "high-power uranium mode" : "medium-power plasma mode"
 	to_chat(user, span_notice("You set the board for [message]"))
 
+/obj/item/circuitboard/machine/plankman
+	name = "PLANKMAN-type Generator"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/port_gen/pacman/wood
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/iron = 5
+	)
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/turbine_compressor
 	name = "Turbine - Inlet Compressor"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -516,7 +526,7 @@
 	build_path = /obj/machinery/rnd/production/circuit_imprinter/department
 
 /obj/item/circuitboard/machine/holopad
-	name = "AI Holopad"
+	name = "Holopad"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/holopad
 	req_components = list(/datum/stock_part/capacitor = 1)
@@ -1170,6 +1180,7 @@
 	build_path = /obj/machinery/recharger
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/machine/techfab/department/security
 	name = "\improper Departmental Techfab - Security"
@@ -1315,6 +1326,26 @@
 		/datum/stock_part/servo = 1,
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/hydroponics/proc/changeindicators(mob/living/user, obj/item/I)
+	if(build_path == /obj/machinery/hydroponics/constructable/oldstyle)
+		name = "Hydroponics Tray [name_extension]"
+		build_path = /obj/machinery/hydroponics/constructable
+		balloon_alert(user, "defaulting indicator location")
+	else
+		name = "Hydroponics Tray (Alt) [name_extension]"
+		build_path = /obj/machinery/hydroponics/constructable/oldstyle
+		balloon_alert(user, "moved indicators location")
+
+/obj/item/circuitboard/machine/hydroponics/item_interaction(mob/living/user, obj/item/I, list/modifiers)
+	if(istype(I, /obj/item/plant_analyzer))
+		changeindicators(user)
+		return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/obj/item/circuitboard/machine/hydroponics/screwdriver_act(mob/living/user, obj/item/tool)
+	changeindicators(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/circuitboard/machine/hydroponics/fullupgrade
 	build_path = /obj/machinery/hydroponics/constructable/fullupgrade
@@ -1694,6 +1725,7 @@
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/micro_laser = 1,
 	)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/machine/refinery
 	name = "Boulder Refinery"
@@ -1705,6 +1737,7 @@
 		/datum/stock_part/matter_bin = 2,
 		/obj/item/reagent_containers/cup/beaker = 1,
 	)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/machine/smelter
 	name = "Boulder Smelter"
@@ -1716,6 +1749,7 @@
 		/datum/stock_part/matter_bin = 2,
 		/obj/item/reagent_containers/cup/beaker = 1,
 	)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/circuitboard/machine/shieldwallgen
 	name = "Shield Wall Generator"
@@ -1745,6 +1779,26 @@
 	needs_anchored = FALSE
 	req_components = list(
 		/obj/item/pipe/directional/scrubber = 1,
+	)
+
+/obj/item/circuitboard/machine/bluespace_scrubber
+	name = "Portable Bluespace Scrubber"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/scrubber/bluespace
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/scrubber = 1,
+		/obj/item/stack/ore/bluespace_crystal = 1,
+	)
+
+/obj/item/circuitboard/machine/gas_receiver
+	name = "Gas Receiver"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/gas_receiver
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 2,
+		/obj/item/stack/ore/bluespace_crystal = 2,
 	)
 
 /obj/item/circuitboard/machine/pump
@@ -1871,6 +1925,28 @@
 	name = "Shuttle Engine Propulsion"
 	build_path = /obj/machinery/power/shuttle_engine/propulsion
 
+/obj/item/circuitboard/machine/ai_law_rack
+	name = "Standard Rack"
+	name_extension = "(Module Rack Board)"
+	build_path = /obj/machinery/ai_law_rack/base
+	req_components = list(
+		/datum/stock_part/amplifier = 1,
+		/datum/stock_part/transmitter = 1,
+		/obj/item/stack/cable_coil = 10,
+	)
+
+/obj/item/circuitboard/machine/ai_law_rack/small
+	name = "Portable Rack"
+	build_path = /obj/machinery/ai_law_rack/base/small
+
+/obj/item/circuitboard/machine/ai_law_rack/core
+	name = "Core Rack"
+	build_path = /obj/machinery/ai_law_rack/base/core
+
+/obj/item/circuitboard/machine/ai_law_rack/broadcaster
+	name = "Broadcaster Rack"
+	build_path = /obj/machinery/ai_law_rack/broadcaster
+
 /obj/item/circuitboard/machine/quantum_server
 	name = "Quantum Server"
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
@@ -1913,3 +1989,46 @@
 		/datum/stock_part/water_recycler = 1,
 		/datum/stock_part/servo = 1,
 	)
+
+/obj/item/circuitboard/machine/wall_healer
+	name = "DeForest First Aid Station"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/wall_healer
+	req_components = list(
+		/obj/item/healthanalyzer/simple = 1,
+		/obj/item/reagent_containers/syringe = 1,
+		/obj/item/hemostat = 1,
+		/obj/item/scalpel = 1,
+	)
+
+/obj/item/circuitboard/machine/wall_healer/examine(mob/user)
+	. = ..()
+	if(obj_flags & EMAGGED)
+		. += span_warning("The safety chip looks fried.")
+
+/obj/item/circuitboard/machine/wall_healer/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	visible_message(span_warning("Sparks fly out of [src]!"))
+	balloon_alert(user, "safeties disabled")
+	obj_flags |= EMAGGED
+	return TRUE
+
+// Someone please add generic support for constructing wall mounted objects thanks
+/obj/item/circuitboard/machine/wall_healer/completion_requirements(obj/structure/frame/install_frame, mob/living/user)
+	if(locate(/obj/machinery/wall_healer) in install_frame.loc) // for subtypes support
+		install_frame.balloon_alert(user, "identical machine present!")
+		return FALSE
+
+	var/turf/facing_wall = get_step(install_frame, user.dir)
+	if(!is_mountable_turf(facing_wall))
+		install_frame.balloon_alert(user, "no wall to install on!")
+		return FALSE
+
+	return TRUE
+
+/obj/item/circuitboard/machine/wall_healer/free
+	name = "DeForest Emergency First Aid Station"
+	build_path = /obj/machinery/wall_healer/free

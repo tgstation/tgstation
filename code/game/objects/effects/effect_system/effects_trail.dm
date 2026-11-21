@@ -101,3 +101,14 @@
 
 /datum/effect_system/trail_follow/ion/grav_allowed
 	nograv_required = FALSE
+
+
+/datum/effect_system/trail_follow/smoke
+	effect_type = /obj/effect/particle_effect/smoke_trail
+	fadetype = "smoke_trail"
+	qdel_in_time = 2.3 SECONDS
+
+/obj/effect/particle_effect/smoke_trail
+	name = "smoke trails"
+	icon_state = "smoke_trail"
+	anchored = TRUE

@@ -10,7 +10,6 @@
 	health = 1
 	maxHealth = 1
 	speed = 1.25
-	can_be_held = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 
@@ -50,6 +49,7 @@
 	. = ..()
 	AddElement(/datum/element/death_drops, /obj/effect/decal/cleanable/insectguts)
 	AddElement(/datum/element/swabable, cockroach_cell_line, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 7)
+	AddElement(/datum/element/can_be_held)
 	AddComponent( \
 		/datum/component/squashable, \
 		squash_chance = 50, \

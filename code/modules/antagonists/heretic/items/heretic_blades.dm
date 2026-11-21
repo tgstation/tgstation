@@ -50,6 +50,8 @@
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustParalyzed(5 SECONDS)
 		return TRUE
+	if(SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_PREATTACK, target, src) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
 
 	return .
 
@@ -61,7 +63,7 @@
 		user.balloon_alert(user, "can't escape!")
 		if(escape_attempts > 2)
 			to_chat(user, span_hypnophrase(span_big("Cowardly sheep will be slaughtered!")))
-			playsound(src, SFX_SHATTER, 70, TRUE)
+			playsound(src, /datum/sound_effect/shatter, 70, TRUE)
 			var/obj/item/bodypart/to_remove = user.get_active_hand()
 			to_remove.dismember()
 			deltimer(escape_timer)
@@ -89,7 +91,7 @@
 			to_chat(user, span_warning("You shatter [src], but your plea goes unanswered."))
 	else
 		to_chat(user,span_warning("You shatter [src]."))
-	playsound(src, SFX_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
+	playsound(src, /datum/sound_effect/shatter, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
 	qdel(src)
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
@@ -139,7 +141,7 @@
 
 	AddComponent(
 		/datum/component/bloody_spreader,\
-		blood_dna = list("Alien DNA" = get_blood_type(BLOOD_TYPE_XENO)),\
+		blood_dna = list("Alien DNA" = get_blood_type(/datum/blood_type/xeno)),\
 	)
 
 // Path of Void's blade
@@ -274,7 +276,7 @@
 	if(prob(15))
 		to_chat(user, span_cult_large(pick("\"An untouched mind? Amusing.\"", "\" I suppose it isn't worth the effort to stop you.\"", "\"Go ahead. I don't care.\"", "\"You'll be mine soon enough.\"")))
 		user.apply_damage(5, BURN, user.get_active_hand())
-		playsound(src, SFX_SEAR, 25, TRUE)
+		playsound(src, /datum/sound_effect/sear, 25, TRUE)
 		to_chat(user, span_danger("Your hand sizzles.")) // Nar nar might not care but their essence still doesn't like you
 	else if(prob(15))
 		to_chat(user, span_big(span_hypnophrase("LW'NAFH'NAHOR UH'ENAH'YMG EPGOKA AH NAFL MGEMPGAH'EHYE")))

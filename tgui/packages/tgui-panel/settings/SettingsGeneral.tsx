@@ -156,6 +156,20 @@ export function SettingsGeneral(props) {
             }
           />
         </LabeledList.Item>
+        <LabeledList.Item label="Command bar">
+          <Button.Checkbox
+            checked={settings.eagerCommandBarSuggestions}
+            color="transparent"
+            onClick={() =>
+              updateSettings({
+                eagerCommandBarSuggestions:
+                  !settings.eagerCommandBarSuggestions,
+              })
+            }
+          >
+            Show suggestions while typing
+          </Button.Checkbox>
+        </LabeledList.Item>
       </LabeledList>
       <Divider />
       <Stack fill>

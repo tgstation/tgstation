@@ -2,11 +2,13 @@
 	name = "quantum console"
 
 	circuit = /obj/item/circuitboard/computer/quantum_console
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/quantum_console")
 	icon_keyboard = "mining"
 	icon_screen = "bitrunning"
 	req_access = list(ACCESS_MINING)
 	/// The server this console is connected to.
 	var/datum/weakref/server_ref
+	keyboard_change_icon = FALSE
 
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/circuit)
 	. = ..()

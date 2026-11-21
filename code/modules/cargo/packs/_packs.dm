@@ -35,6 +35,17 @@
 /datum/supply_pack/New()
 	id = type
 
+/datum/supply_pack/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(.)
+		catalogue_changed()
+
+/// Marks the cargo catalogue for a rebuild if it lists this pack
+/datum/supply_pack/proc/catalogue_changed()
+	var/datum/asset/json/cargo_catalogue/catalogue = load_asset_datum(/datum/asset/json/cargo_catalogue)
+	if(!isnull(catalogue.pack_indices?[src]))
+		catalogue.needs_build = TRUE
+
 /// Returns data used for cargo purchasing UI
 /datum/supply_pack/proc/get_contents_ui_data()
 	var/list/data = list()
@@ -58,19 +69,20 @@
  */
 /datum/supply_pack/proc/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	var/obj/structure/closet/crate/C
-	if(paying_account)
-		C = new /obj/structure/closet/crate/secure/owned(A, paying_account)
-		C.name = "[crate_name] - Purchased by [paying_account.account_holder]"
-	else if(!crate_type && !crate_override)
-		CRASH("tried to generate a supply pack without a valid crate type")
-	else if(crate_override)
+
+	if(crate_override)
 		var/obj/unique_container = new crate_override(A)
 		fill(unique_container)
 		return unique_container
 
-	else
-		C = new crate_type(A)
-		C.name = crate_name
+	if(!crate_type)
+		CRASH("tried to generate a supply pack without a valid crate type")
+
+	C = new crate_type(A)
+	C.name = "[crate_name || C.name][paying_account ? " - Purchased by [paying_account.account_holder]" : ""]"
+	if(paying_account) // adds component for locking the crate so only the buyer (or their department) can open it
+		C.AddComponent(/datum/component/locked_to_account, paying_account)
+
 	if(access)
 		C.req_access = list(access)
 	if(access_any)
@@ -88,10 +100,8 @@
  * @ container: The container holding the contents of the supply pack. Most typically a obj/structure/closet/crate, but can technically be anything.
  */
 /datum/supply_pack/proc/fill(obj/container)
-	for(var/item in contains)
-		if(!contains[item])
-			contains[item] = 1
-		for(var/iteration = 1 to contains[item])
+	for(var/item, amount in contains)
+		for(var/iteration = 1 to (amount || 1))
 			var/atom/A = new item(container)
 			if(!(order_flags & ORDER_ADMIN_SPAWNED))
 				continue

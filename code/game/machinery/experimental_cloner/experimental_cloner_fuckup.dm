@@ -45,8 +45,14 @@
 	victim.set_facial_hairstyle("Shaved", update = FALSE)
 	victim.set_hairstyle("Bald", update = TRUE)
 
-/datum/experimental_cloner_fuckup/bald/is_valid(species_type)
-	return !is_path_in_list(/datum/species/human, /datum/species/ethereal)
+/datum/experimental_cloner_fuckup/bald/is_valid(datum/species/species_type)
+	if(!ispath(species_type))
+		return
+	var/datum/species/proto_species = GLOB.species_prototypes[species_type]
+	var/obj/item/bodypart/head/fucked_up_head = proto_species.bodypart_overrides[BODY_ZONE_HEAD]
+	var/head_flags = initial(fucked_up_head.head_flags)
+
+	return (head_flags & HEAD_HAIR || head_flags & HEAD_FACIAL_HAIR)
 
 /// Give a brain trauma or two
 /datum/experimental_cloner_fuckup/brain_trauma

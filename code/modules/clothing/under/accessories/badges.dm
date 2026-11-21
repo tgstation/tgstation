@@ -131,11 +131,9 @@
 	. += display
 
 // Examining the clothes will display the examine message of the dogtag
-/obj/item/clothing/accessory/dogtag/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+/obj/item/clothing/accessory/dogtag/attach(obj/item/clothing/under/attached_to)
 	. = ..()
-	if(!.)
-		return
-	RegisterSignal(attach_to, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(attached_to, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /obj/item/clothing/accessory/dogtag/detach(obj/item/clothing/under/detach_from)
 	. = ..()
@@ -184,34 +182,47 @@
 /datum/atom_skin/pride_pin/gay
 	preview_name = "Rainbow Pride"
 	new_icon_state = "pride"
+	new_name = "\improper Rainbow Pride pin"
 
 /datum/atom_skin/pride_pin/bi
 	preview_name = "Bisexual Pride"
 	new_icon_state = "pride_bi"
+	new_name = "\improper Bisexual Pride pin"
 
 /datum/atom_skin/pride_pin/pan
 	preview_name = "Pansexual Pride"
 	new_icon_state = "pride_pan"
+	new_name = "\improper Pansexual Pride pin"
 
 /datum/atom_skin/pride_pin/ace
 	preview_name = "Asexual Pride"
 	new_icon_state = "pride_ace"
+	new_name = "\improper Asexual Pride pin"
 
 /datum/atom_skin/pride_pin/enby
 	preview_name = "Non-binary Pride"
 	new_icon_state = "pride_enby"
+	new_name = "\improper Non-binary Pride pin"
 
 /datum/atom_skin/pride_pin/trans
 	preview_name = "Transgender Pride"
 	new_icon_state = "pride_trans"
+	new_name = "\improper Transgender Pride pin"
 
 /datum/atom_skin/pride_pin/intersex
 	preview_name = "Intersex Pride"
 	new_icon_state = "pride_intersex"
+	new_name = "\improper Intersex Pride pin"
 
 /datum/atom_skin/pride_pin/lesbian
 	preview_name = "Lesbian Pride"
 	new_icon_state = "pride_lesbian"
+	new_name = "\improper Lesbian Pride pin"
+
+/datum/atom_skin/pride_pin/mlm
+	preview_name = "Gay Pride"
+	new_icon_state = "pride_gay"
+	new_name = "\improper Gay Pride pin"
 
 /obj/item/clothing/accessory/pride
 	name = "pride pin"
@@ -238,12 +249,13 @@
 	name = "subversive pin"
 	desc = "A badge which loudly and proudly proclaims your hostility to the Nanotrasen Security Team, and authority in general."
 	icon_state = "anti_sec"
+	clothing_traits = list(TRAIT_ALWAYS_WANTED)
 
 /obj/item/clothing/accessory/anti_sec_pin/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/pinnable_accessory, silent = TRUE, pinning_time = 5 SECONDS)
 
-/obj/item/clothing/accessory/anti_sec_pin/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+/obj/item/clothing/accessory/anti_sec_pin/try_attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	. = ..()
 	if (!. || isnull(attacher))
 		return
@@ -254,14 +266,12 @@
 
 /obj/item/clothing/accessory/anti_sec_pin/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	. = ..()
-	ADD_TRAIT(user, TRAIT_ALWAYS_WANTED, "[CLOTHING_TRAIT]_[REF(src)]")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_wearer = user
 		human_wearer.sec_hud_set_security_status()
 
 /obj/item/clothing/accessory/anti_sec_pin/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_ALWAYS_WANTED, "[CLOTHING_TRAIT]_[REF(src)]")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_wearer = user
 		human_wearer.sec_hud_set_security_status()

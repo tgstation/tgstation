@@ -236,7 +236,7 @@
 			/obj/item/clothing/neck/heretic_focus,
 			/obj/item/codex_cicatrix,
 			/obj/item/eldritch_potion,
-			/obj/item/food/grown/poppy, // Used to regain a Living Heart.
+			/obj/item/food/grown/flower/poppy, // Used to regain a Living Heart.
 			/obj/item/melee/rune_carver,
 			/obj/item/melee/sickly_blade, // Normal sized, so you can only fit one.
 			/obj/item/organ, // Organs are also often used in rituals.

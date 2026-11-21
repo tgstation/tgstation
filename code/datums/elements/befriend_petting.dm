@@ -39,7 +39,7 @@
 		var/additional_text = HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "It looks like [owner.p_theyre()] sleeping." : "[owner.p_They()] seem[owner.p_s()] to be dead."
 		to_chat(user, span_warning("[owner] feels cold to the touch. [additional_text]"))
 		return
-	if (owner.stat != CONSCIOUS)
+	if (IS_UNCONSCIOUS(owner))
 		return
 	if (!prob(befriend_chance))
 		return

@@ -20,14 +20,21 @@ SUBSYSTEM_DEF(ambience)
 		var/client/client_iterator = cached_clients[cached_clients.len]
 		cached_clients.len--
 
-		//Check to see if the client exists and isn't held by a new player
-		var/mob/client_mob = client_iterator?.mob
-		if(isnull(client_iterator) || !client_mob || isnewplayer(client_mob))
+		//Check to see if the client exists
+		if(isnull(client_iterator))
 			ambience_listening_clients -= client_iterator
 			client_old_areas -= client_iterator
 			continue
 
+		// skip them this tick if they're on the lobby screen or somehow dont have a mob??
+		var/mob/client_mob = client_iterator?.mob
+		if(!client_mob || isnewplayer(client_mob))
+			continue
+
 		if(HAS_TRAIT(client_mob, TRAIT_DEAF)) //WHAT? I CAN'T HEAR YOU
+			continue
+
+		if(client_iterator.web_music_playing && client_iterator.prefs.read_preference(/datum/preference/toggle/sound_ambience_mute_during_music))
 			continue
 
 		//Check to see if the client-mob is in a valid area
@@ -131,8 +138,8 @@ SUBSYSTEM_DEF(ambience)
 		client.current_ambient_sound = null
 		return
 
-	//Station ambience is dependent on a functioning and charged APC with environment power enabled.
-	if(!is_mining_level(my_area.z) && ((!my_area.apc || !my_area.apc.operating || !my_area.apc.cell?.charge && my_area.requires_power || !my_area.power_environ)))
+	//Unless we're on lavaland or in an area that requires no power (centcom), station ambience is dependent on a functioning and charged APC with environment power enabled.
+	if(my_area.requires_power && !is_mining_level(my_area.z) && (!my_area.apc || !my_area.apc.operating || !my_area.apc.cell?.charge || !my_area.power_environ))
 		SEND_SOUND(src, sound(null, repeat = 0, wait = 0, channel = CHANNEL_BUZZ))
 		client.current_ambient_sound = null
 		return

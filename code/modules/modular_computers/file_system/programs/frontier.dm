@@ -68,9 +68,9 @@
 		singular_partner["path"] = partner.type
 		singular_partner["boostedNodes"] = list()
 		singular_partner["acceptedExperiments"] = list()
-		for (var/node_id in partner.boostable_nodes)
-			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
-			singular_partner["boostedNodes"] += list(list("name" = node.display_name, "discount" = partner.boostable_nodes[node_id], "id" = node_id))
+		for (var/node_path, discount in partner.boostable_nodes)
+			var/datum/techweb_node/node = SSresearch.techweb_nodes[node_path]
+			singular_partner["boostedNodes"] += list(list("name" = node.display_name, "discount" = discount, "id" = node_path))
 		for (var/datum/experiment/ordnance/ordnance_experiment as anything in partner.accepted_experiments)
 			singular_partner["acceptedExperiments"] += initial(ordnance_experiment.name)
 		parsed_partners += list(singular_partner)
@@ -217,7 +217,7 @@
 			return TRUE
 		if("purchase_boost")
 			var/datum/scientific_partner/partner = locate(text2path(params["boost_seller"])) in SSresearch.scientific_partners
-			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(params["purchased_boost"])
+			var/datum/techweb_node/node = SSresearch.techweb_nodes[text2path(params["purchased_boost"])]
 			if(partner && node)
 				var/possible_boost = partner.purchase_boost(linked_techweb, node)
 				if(possible_boost)

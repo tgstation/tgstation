@@ -3,6 +3,7 @@
 	real_name = "Shade"
 	desc = "A bound spirit."
 	gender = PLURAL
+	randomize_gender = FALSE
 	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	icon_state = "shade_cult"
 	icon_living = "shade_cult"
@@ -28,7 +29,7 @@
 	faction = list(FACTION_CULT)
 	basic_mob_flags = DEL_ON_DEATH
 	initial_language_holder = /datum/language_holder/construct
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 	/// Theme controls color. THEME_CULT is red THEME_WIZARD is purple and THEME_HOLY is blue
 	var/theme = THEME_CULT
 	/// The different flavors of goop shades can drop, depending on theme.
@@ -73,9 +74,10 @@
 		SSblackbox.record_feedback("tally", "cult_shade_suicided", 1)
 	..()
 
-/mob/living/basic/shade/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/soulstone))
-		var/obj/item/soulstone/stone = item
-		stone.capture_shade(src, user)
-	else
-		. = ..()
+/mob/living/basic/shade/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/soulstone))
+		return ..()
+
+	var/obj/item/soulstone/stone = tool
+	stone.capture_shade(src, user)
+	return ITEM_INTERACT_SUCCESS

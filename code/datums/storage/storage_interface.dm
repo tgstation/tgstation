@@ -2,6 +2,7 @@
 /datum/storage_interface
 	/// UI elements for this theme
 	var/atom/movable/screen/close/closer
+	var/atom/movable/screen/storage_up/upper
 	var/atom/movable/screen/storage/cell/cells
 	var/atom/movable/screen/storage/corner/corner_top_left
 	var/atom/movable/screen/storage/corner/top_right/corner_top_right
@@ -18,6 +19,7 @@
 	src.parent_storage = parent_storage
 	var/datum/hud/owner_hud = user.hud_used
 	closer = new(null, owner_hud, parent_storage)
+	upper = new(null, owner_hud, parent_storage)
 	cells = new(null, owner_hud, parent_storage)
 	corner_top_left = new(null, owner_hud, parent_storage)
 	corner_top_right = new(null, owner_hud, parent_storage)
@@ -30,10 +32,11 @@
 
 /// Returns all UI elements under this theme
 /datum/storage_interface/proc/list_ui_elements(initializing = FALSE)
-	return list(cells, corner_top_left, corner_top_right, corner_bottom_left, corner_bottom_right, rowjoin_left, rowjoin_right, closer)
+	return list(cells, corner_top_left, corner_top_right, corner_bottom_left, corner_bottom_right, rowjoin_left, rowjoin_right, upper, closer)
 
 /datum/storage_interface/Destroy(force)
 	QDEL_NULL(closer)
+	QDEL_NULL(upper)
 	QDEL_NULL(cells)
 	QDEL_NULL(corner_top_left)
 	QDEL_NULL(corner_top_right)
@@ -56,7 +59,7 @@
 	atom/real_location,
 	list/datum/numbered_display/numbered_contents,
 )
-	var/number_of_hands = user_looking.held_items.len
+	var/number_of_hands = user_looking.get_num_hand_slots()
 	while(number_of_hands > user_looking.default_hand_amount)
 		number_of_hands /= user_looking.default_hand_amount
 		screen_start_y++
@@ -80,6 +83,9 @@
 	var/row_right_loc = spanning_screen_loc(end_pixel_x, start_pixel_y + 27, end_pixel_x, start_pixel_y + 27 + max(0, rows - 2) * 32)
 	rowjoin_right.screen_loc = row_right_loc
 	rowjoin_right.alpha = (rows > 1) * 255
+
+	upper.screen_loc = "[screen_start_x + columns]:[screen_pixel_x + 8],[screen_start_y]:[screen_pixel_y]"
+	upper.invisibility = parent_storage.parent.loc?.atom_storage ? 0 : INVISIBILITY_MAXIMUM
 
 	closer.screen_loc = "[screen_start_x + columns]:[screen_pixel_x - 5],[screen_start_y]:[screen_pixel_y]"
 
@@ -112,7 +118,7 @@
 
 	for(var/obj/item as anything in storage_contents)
 		item.mouse_opacity = MOUSE_OPACITY_OPAQUE
-		item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
+		item.screen_loc = "[current_x]:[screen_pixel_x + item.base_pixel_x],[current_y]:[screen_pixel_y + item.base_pixel_y]"
 		if(parent_storage.numerical_stacking)
 			item.maptext = storage_contents[item]
 		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
@@ -150,28 +156,18 @@
 	var/current_y = screen_start_y
 	var/turf/our_turf = get_turf(real_location)
 
-	for(var/i in 1 to length(usable_modules))
-		var/atom/movable/item = usable_modules[i]
-		if(item in robot_model.robot.held_items)
-			current_x++
-			if(current_x - screen_start_x < columns)
-				continue
-			current_x = screen_start_x
-
-			current_y++
-			if(current_y - screen_start_y >= rows)
-				break
-			//Module is currently active
-			continue
-
-		item.mouse_opacity = MOUSE_OPACITY_OPAQUE
-		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
-		item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
+	for(var/obj/item/item in usable_modules)
+		//Only for non active modules
+		if(item.item_flags & IN_STORAGE)
+			item.mouse_opacity = MOUSE_OPACITY_OPAQUE
+			SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
+			item.screen_loc = "[current_x]:[screen_pixel_x + item.base_pixel_x],[current_y]:[screen_pixel_y + item.base_pixel_y]"
 
 		current_x++
 		if(current_x - screen_start_x < columns)
 			continue
 		current_x = screen_start_x
+
 		current_y++
 		if(current_y - screen_start_y >= rows)
 			break

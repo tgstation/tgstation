@@ -18,6 +18,7 @@
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.5
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	tacmap_color = TACMAP_WINDOW
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
 	var/heat_resistance = 800
@@ -27,7 +28,7 @@
 	var/glass_type = /obj/item/stack/sheet/glass
 	var/glass_amount = 1
 	var/real_explosion_block //ignore this, just use explosion_block
-	var/break_sound = SFX_SHATTER
+	var/break_sound = /datum/sound_effect/shatter
 	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glass/glassbash.ogg'
 	var/hit_sound = 'sound/effects/glass/glasshit.ogg'
@@ -96,7 +97,7 @@
 			. += span_notice("The window is <i>unscrewed</i> but <b>pried</b> into the frame.")
 		if(WINDOW_OUT_OF_FRAME)
 			if (anchored)
-				. += span_notice("The window is <b>screwed</b> to the floor.")
+				. += span_notice("The window is <b>screwed</b> to the floor. It can be <b>pried</b> into a more secure position.")
 			else
 				. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
 
@@ -112,7 +113,15 @@
 	return FALSE
 
 /obj/structure/window/narsie_act()
+	var/atom/place = loc
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
+	if(src.fulltile)
+		qdel(src)
+		new /obj/structure/window/cult/fulltile(place)
+	else
+		qdel(src)
+		new /obj/structure/window/cult(place)
+	return
 
 /obj/structure/window/singularity_pull(atom/singularity, current_size)
 	..()
@@ -505,6 +514,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 //2021 AND STILLLL GOING STRONG
 //2022 BABYYYYY ~lewc
 //2023 ONE YEAR TO GO! -LT3
+//2026 just a week away - kemble
 /datum/armor/window_reinforced
 	melee = 80
 	bomb = 25
@@ -516,79 +526,113 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 		return list("delay" = 3 SECONDS, "cost" = 15)
 	return FALSE
 
-/obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/window/reinforced/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	if(resistance_flags & INDESTRUCTIBLE)
 		balloon_alert(user, "too resilient!")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_BLOCKING
+
+	if(!tool.tool_behaviour)
+		return NONE
+	// to have gotten to this point, any tool must be innapropriate for its step
 	switch(state)
 		if(RWINDOW_SECURE)
-			if(tool.tool_behaviour == TOOL_WELDER)
-				if(tool.tool_start_check(user, heat_required = HIGH_TEMPERATURE_REQUIRED))
-					user.visible_message(span_notice("[user] holds \the [tool] to the security screws on \the [src]..."),
-						span_notice("You begin heating the security screws on \the [src]..."))
-					if(tool.use_tool(src, user, 15 SECONDS, volume = 100))
-						to_chat(user, span_notice("The security screws are glowing white hot and look ready to be removed."))
-						state = RWINDOW_BOLTS_HEATED
-						addtimer(CALLBACK(src, PROC_REF(cool_bolts)), 30 SECONDS)
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The security screws need to be heated first!"))
+			to_chat(user, span_warning("The security screws need to be heated first!"))
 
 		if(RWINDOW_BOLTS_HEATED)
-			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
-				user.visible_message(span_notice("[user] digs into the heated security screws and starts removing them..."),
-										span_notice("You dig into the heated screws hard and they start turning..."))
-				if(tool.use_tool(src, user, 50, volume = 50))
-					state = RWINDOW_BOLTS_OUT
-					to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the pane."))
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The security screws need to be removed first!"))
+			to_chat(user, span_warning("The security screws need to be removed first!"))
 
 		if(RWINDOW_BOLTS_OUT)
-			if(tool.tool_behaviour == TOOL_CROWBAR)
-				user.visible_message(span_notice("[user] wedges \the [tool] into the gap in the frame and starts prying..."),
-										span_notice("You wedge \the [tool] into the gap in the frame and start prying..."))
-				if(tool.use_tool(src, user, 40, volume = 50))
-					state = RWINDOW_POPPED
-					to_chat(user, span_notice("The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut."))
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The gap needs to be pried first!"))
+			to_chat(user, span_warning("The gap needs to be pried first!"))
 
 		if(RWINDOW_POPPED)
-			if(tool.tool_behaviour == TOOL_WIRECUTTER)
-				user.visible_message(span_notice("[user] starts cutting the exposed bars on \the [src]..."),
-										span_notice("You start cutting the exposed bars on \the [src]"))
-				if(tool.use_tool(src, user, 20, volume = 50))
-					state = RWINDOW_BARS_CUT
-					to_chat(user, span_notice("The panels falls out of the way exposing the frame bolts."))
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The bars need to be cut first!"))
+			to_chat(user, span_warning("The bars need to be cut first!"))
 
 		if(RWINDOW_BARS_CUT)
-			if(tool.tool_behaviour == TOOL_WRENCH)
-				user.visible_message(span_notice("[user] starts unfastening \the [src] from the frame..."),
-					span_notice("You start unfastening the bolts from the frame..."))
-				if(tool.use_tool(src, user, 40, volume = 50))
-					to_chat(user, span_notice("You unscrew the bolts from the frame and the window pops loose."))
-					state = WINDOW_OUT_OF_FRAME
-					set_anchored(FALSE)
-			else if (tool.tool_behaviour)
-				to_chat(user, span_warning("The bolts need to be loosened first!"))
+			to_chat(user, span_warning("The bolts need to be loosened first!"))
 
-
-	if (tool.tool_behaviour)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-	return ..()
+	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/window/reinforced/crowbar_act(mob/living/user, obj/item/tool)
 	if(!anchored)
-		return FALSE
+		return NONE
 	if(state != WINDOW_OUT_OF_FRAME)
-		return FALSE
+		return NONE
 	to_chat(user, span_notice("You begin to lever the window back into the frame..."))
-	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
-		state = RWINDOW_SECURE
-		to_chat(user, span_notice("You pry the window back into the frame."))
+	if(!tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
+		return ITEM_INTERACT_BLOCKING
+
+	state = RWINDOW_SECURE
+	to_chat(user, span_notice("You pry the window back into the frame."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/window/reinforced/welder_act_secondary(mob/living/user, obj/item/tool)
+	if(state != RWINDOW_SECURE)
+		return NONE // we got all that messaging for innapropriate tools, no skip to attack
+
+	if(!tool.tool_start_check(user, heat_required = HIGH_TEMPERATURE_REQUIRED))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user] holds \the [tool] to the security screws on \the [src]..."),
+						span_notice("You begin heating the security screws on \the [src]..."))
+	if(!tool.use_tool(src, user, 15 SECONDS, volume = 100))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("The security screws are glowing white hot and look ready to be removed."))
+	state = RWINDOW_BOLTS_HEATED
+	addtimer(CALLBACK(src, PROC_REF(cool_bolts)), 30 SECONDS)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/window/reinforced/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	if(state != RWINDOW_BOLTS_HEATED)
+		return NONE
+
+	user.visible_message(span_notice("[user] digs into the heated security screws and starts removing them..."),
+						span_notice("You dig into the heated screws hard and they start turning..."))
+	if(!tool.use_tool(src, user, 5 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	state = RWINDOW_BOLTS_OUT
+	to_chat(user, span_notice("The screws come out, and a gap forms around the edge of the pane."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/window/reinforced/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	if(state != RWINDOW_BOLTS_OUT)
+		return NONE
+
+	user.visible_message(span_notice("[user] wedges \the [tool] into the gap in the frame and starts prying..."),
+						span_notice("You wedge \the [tool] into the gap in the frame and start prying..."))
+	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	state = RWINDOW_POPPED
+	to_chat(user, span_notice("The panel pops out of the frame, exposing some thin metal bars that looks like they can be cut."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/window/reinforced/wirecutter_act_secondary(mob/living/user, obj/item/tool)
+	if(state != RWINDOW_POPPED)
+		return NONE
+
+	user.visible_message(span_notice("[user] starts cutting the exposed bars on \the [src]..."),
+						span_notice("You start cutting the exposed bars on \the [src]"))
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	state = RWINDOW_BARS_CUT
+	to_chat(user, span_notice("The panels falls out of the way exposing the frame bolts."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/window/reinforced/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(state != RWINDOW_BARS_CUT)
+		return NONE
+
+	user.visible_message(span_notice("[user] starts unfastening \the [src] from the frame..."),
+						span_notice("You start unfastening the bolts from the frame..."))
+	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You unscrew the bolts from the frame and the window pops loose."))
+	state = WINDOW_OUT_OF_FRAME
+	set_anchored(FALSE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/proc/cool_bolts()
@@ -856,6 +900,52 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_PRIMARY)
 	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR, TOOL_ACT_PRIMARY)
 
+/obj/structure/window/reinforced/titanium
+	name = "shuttle window"
+	desc = "A reinforced, air-locked pod window."
+	icon_state = "titanium_window"
+	armor_type = /datum/armor/reinforced_shuttle
+	receive_ricochet_chance_mod = 1.2
+	explosion_block = 3
+	glass_type = /obj/item/stack/sheet/titaniumglass
+	custom_materials = list(/datum/material/alloy/titaniumglass = SHEET_MATERIAL_AMOUNT * 1)
+
+/obj/structure/window/reinforced/titanium/unanchored
+	anchored = FALSE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/titanium/spawner, 0)
+
+/obj/structure/window/reinforced/titanium/unanchored
+	anchored = FALSE
+
+/obj/structure/window/reinforced/shuttle/survival_pod
+	name = "pod window"
+	icon = 'icons/obj/smooth_structures/pod_window.dmi'
+	icon_state = "pod_window-0"
+	base_icon_state = "pod_window"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	canSmoothWith = SMOOTH_GROUP_SURVIVAL_TITANIUM_POD
+	glass_type = /obj/item/stack/wall_filling/plastitaniumglass/pod
+	glass_amount = 1
+	glass_material_datum = /datum/material/alloy/plastitaniumglass
+
+/obj/structure/window/reinforced/shuttle/survival_pod/unanchored
+	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
+
+/obj/structure/window/reinforced/survival_pod
+	name = "pod window"
+	icon_state = "plastitanium_window"
+	glass_type = /obj/item/stack/sheet/plastitaniumglass
+	glass_material_datum = /datum/material/alloy/plastitaniumglass
+
+/obj/structure/window/reinforced/survival_pod/unanchored
+	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawner, 0)
+
 /obj/structure/window/reinforced/plasma/plastitanium
 	name = "plastitanium window"
 	desc = "A durable looking window made of an alloy of plasma and titanium."
@@ -878,6 +968,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	glass_amount = 2
 	rad_insulation = RAD_EXTREME_INSULATION
 	glass_material_datum = /datum/material/alloy/plastitaniumglass
+
+/obj/structure/window/reinforced/plasma/plastitanium/windowfill
+	glass_type = /obj/item/stack/wall_filling/plastitaniumglass/basic
+	glass_amount = 1
 
 /obj/structure/window/reinforced/plasma/plastitanium/indestructible
 	name = "plastitanium window"
@@ -936,7 +1030,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	can_atmos_pass = ATMOS_PASS_YES
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/none
-	knock_sound = SFX_PAGE_TURN
+	knock_sound = /datum/sound_effect/page_turn
 	bash_sound = 'sound/items/weapons/slashmiss.ogg'
 	break_sound = 'sound/items/poster/poster_ripped.ogg'
 	hit_sound = 'sound/items/weapons/slashmiss.ogg'
@@ -979,31 +1073,32 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	. = ..()
 	. += (atom_integrity < max_integrity) ? torn : paper
 
-/obj/structure/window/paperframe/attackby(obj/item/W, mob/living/user)
-	if(W.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		fire_act(W.get_temperature())
-		return
+/obj/structure/window/paperframe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		fire_act(tool.get_temperature())
+		return ITEM_INTERACT_SUCCESS
 
 	if(user.combat_mode)
-		return ..()
+		return NONE
 
-	if(istype(W, /obj/item/paper) && atom_integrity < max_integrity)
-		user.visible_message(span_notice("[user] starts to patch the holes in \the [src]."))
-		if(do_after(user, 2 SECONDS, target = src))
-			atom_integrity = min(atom_integrity+4,max_integrity)
-			qdel(W)
-			user.visible_message(span_notice("[user] patches some of the holes in \the [src]."))
-			if(atom_integrity == max_integrity)
-				update_appearance()
-			return
-	..()
-	update_appearance()
+	if(!istype(tool, /obj/item/paper) || atom_integrity == max_integrity)
+		return NONE
+
+	user.visible_message(span_notice("[user] starts to patch the holes in \the [src]."))
+	if(!do_after(user, 2 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+
+	atom_integrity = min(atom_integrity+4,max_integrity)
+	qdel(tool)
+	user.visible_message(span_notice("[user] patches some of the holes in \the [src]."))
+	if(atom_integrity == max_integrity)
+		update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/bronze
 	name = "brass window"
 	desc = "A paper-thin pane of translucent yet reinforced brass. Nevermind, this is just weak bronze!"
-	icon = 'icons/obj/smooth_structures/structure_variations.dmi'
-	icon_state = "clockwork_window-single"
+	icon_state = "clockworkwindow"
 	glass_type = /obj/item/stack/sheet/bronze
 	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 1)
 
@@ -1027,4 +1122,33 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/bronze/spawner, 0)
 	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/window/bronze/fulltile/unanchored
+	anchored = FALSE
+
+/obj/structure/window/cult
+	name = "runed window"
+	desc = "A frame of runed metal projecting an arcane blood-red force field, that looks sort of like a window. Peculiar."
+	icon_state = "runedwindow"
+	glass_type = /obj/item/stack/sheet/runed_metal
+	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT * 1)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/cult/spawner, 0)
+
+/obj/structure/window/cult/unanchored
+	anchored = FALSE
+
+/obj/structure/window/cult/fulltile
+	icon = 'icons/obj/smooth_structures/cult_window.dmi'
+	icon_state = "cult_window-0"
+	base_icon_state = "cult_window"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE_CULT + SMOOTH_GROUP_WINDOW_FULLTILE
+	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_CULT
+	fulltile = TRUE
+	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
+	max_integrity = 50
+	glass_amount = 2
+	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT * 2)
+
+/obj/structure/window/cult/fulltile/unanchored
 	anchored = FALSE

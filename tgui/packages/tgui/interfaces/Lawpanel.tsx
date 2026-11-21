@@ -19,29 +19,8 @@ import { Window } from '../layouts';
 const lawtype_to_color = {
   inherent: 'white',
   supplied: 'purple',
-  ion: 'green',
   hacked: 'orange',
   zeroth: 'red',
-} as const;
-
-const lawtype_to_tooltip = {
-  inherent: `Core laws.
-    Inherent laws are the "core" laws of the AI.
-    Resetting the AI will not remove these,
-    these are intrinsic to whatever lawset they are running.`,
-  supplied: `Supplied laws.
-    Supplied laws are, well, supplied in addition to the inherent laws.
-    These laws will go away when an AI is reset.`,
-  ion: `Ion laws.
-    Special, (usually) randomized laws which are above all over laws.
-    These laws will go away when an AI is reset.`,
-  hacked: `Hacked laws.
-    Syndicate uploaded laws which are above all other laws.
-    These laws will go away when an AI is reset.`,
-  zeroth: `Zeroth law.
-    A lawset can only have 1 zeroth law, it's the top dog.
-    Given out by malfunctioning AIs to allow them to do whatever.
-    Nothing will remove this, allegedly, unless it's admin forced.`,
 } as const;
 
 type Law = {
@@ -107,18 +86,6 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
             buttons={
               <Stack>
                 <Stack.Item>
-                  <Button
-                    icon="question"
-                    tooltip={
-                      lawtype_to_tooltip[law.lawtype] ||
-                      `This lawtype is unrecognized for some reason,
-                        that reason probably being "a bug".
-                        Make an issue report with this please.`
-                    }
-                    color={lawtype_to_color[law.lawtype] || 'pink'}
-                  />
-                </Stack.Item>
-                <Stack.Item>
                   <Button.Confirm
                     icon="trash"
                     confirmContent=""
@@ -135,9 +102,7 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                 </Stack.Item>
                 <Stack.Item>
                   <Button
-                    icon="pen-ruler"
                     color={'green'}
-                    tooltip={'Edit the text of the law.'}
                     onClick={() =>
                       act('edit_law_text', {
                         ref: cyborg_ref,
@@ -145,7 +110,9 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                         lawtype: law.lawtype,
                       })
                     }
-                  />
+                  >
+                    Edit
+                  </Button>
                 </Stack.Item>
                 {law.lawtype === 'inherent' && (
                   <>
@@ -182,21 +149,6 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                       />
                     </Stack.Item>
                   </>
-                )}
-                {law.lawtype === 'supplied' && (
-                  <Stack.Item>
-                    <Button
-                      icon="pen-to-square"
-                      color={'green'}
-                      tooltip={'Edit the priority of the law.'}
-                      onClick={() =>
-                        act('edit_law_prio', {
-                          ref: cyborg_ref,
-                          law: law.law,
-                        })
-                      }
-                    />
-                  </Stack.Item>
                 )}
               </Stack>
             }

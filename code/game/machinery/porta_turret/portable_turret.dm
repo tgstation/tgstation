@@ -472,7 +472,7 @@ DEFINE_BITFIELD(turret_flags, list(
 		if(turret_flags & TURRET_FLAG_SHOOT_ANOMALOUS)//if it's set to check for simple animals
 			if(isanimal_or_basicmob(A))
 				var/mob/living/animal = A
-				if(animal.stat || in_faction(animal)) //don't target if dead or in faction
+				if(IS_UNCONSCIOUS_OR_CRIT(animal) || in_faction(animal)) //don't target if dead or in faction
 					continue
 				targets += animal
 				continue
@@ -488,7 +488,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 			if(iscyborg(sillycone))
 				var/mob/living/silicon/robot/sillyconerobot = A
-				if(sillyconerobot.stat != CONSCIOUS)
+				if(IS_UNCONSCIOUS_OR_CRIT(sillyconerobot))
 					continue
 				if(in_faction(sillyconerobot)) // borgs in faction are friendly
 					continue
@@ -556,7 +556,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	raising = 1
 	if(cover)
 		flick("popup", cover)
-	sleep(POPUP_ANIM_TIME)
+	addtimer(CALLBACK(src, PROC_REF(finish_popup)), POPUP_ANIM_TIME, TIMER_STOPPABLE | TIMER_DELETE_ME)
+
+/obj/machinery/porta_turret/proc/finish_popup()
 	raising = 0
 	if(cover)
 		cover.icon_state = "openTurretCover"
@@ -572,7 +574,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	raising = 1
 	if(cover)
 		flick("popdown", cover)
-	sleep(POPDOWN_ANIM_TIME)
+	addtimer(CALLBACK(src, PROC_REF(finish_popdown)), POPDOWN_ANIM_TIME, TIMER_STOPPABLE | TIMER_DELETE_ME)
+
+/obj/machinery/porta_turret/proc/finish_popdown()
 	raising = 0
 	if(cover)
 		cover.icon_state = "turretCover"
@@ -782,6 +786,19 @@ DEFINE_BITFIELD(turret_flags, list(
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "turret", FALSE)
+	add_minimap_blip(src, MINIMAP_SYNDIE_TURRET_BLIP, "sentry_passive")
+
+/obj/machinery/porta_turret/syndicate/proc/update_turret_minimap_icon(new_icon_state)
+	var/atom/movable/screen/minimap_element/blip/blip = get_minimap_blip(MINIMAP_SYNDIE_TURRET_BLIP, src)
+	if(isnull(blip))
+		return
+	blip.icon_state = new_icon_state
+
+/obj/machinery/porta_turret/syndicate/shootAt(atom/movable/target)
+	. = ..()
+	if(raised && (obj_flags & EMAGGED || last_fired == world.time))
+		update_turret_minimap_icon("sentry_firing")
+		addtimer(CALLBACK(src, PROC_REF(update_turret_minimap_icon), "sentry_passive"), shot_delay + 1 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 /obj/machinery/porta_turret/syndicate/setup()
 	return

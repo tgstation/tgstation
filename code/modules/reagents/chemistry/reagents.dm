@@ -41,7 +41,7 @@
 	///affects how far it travels when sprayed
 	var/reagent_weight = 1
 	///is it currently metabolizing
-	var/metabolizing = FALSE
+	VAR_FINAL/metabolizing = FALSE
 	/// Are we from a material? We might wanna know that for special stuff. Like metalgen. Is replaced with a ref of the material on New()
 	var/datum/material/material
 	///The set of exposure methods this penetrates skin with.
@@ -75,9 +75,6 @@
 	/// The affected biotype, if the reagent damages/heals toxin damage of an affected mob.
 	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
 	var/affected_biotype = MOB_ORGANIC
-	/// The affected respiration type, if the reagent damages/heals oxygen damage of an affected mob.
-	/// See "Mob bio-types flags" in /code/_DEFINES/mobs.dm
-	var/affected_respiration_type = ALL
 	/// A list of traits to apply while the reagent is being metabolized.
 	var/list/metabolized_traits
 	/// A list of traits to apply while the reagent is in a mob.
@@ -161,16 +158,13 @@
 
 ///Called to begin metabolization and return the volume of reagent to metabolize
 /datum/reagent/proc/compute_metabolization(mob/living/carbon/affected_mob, seconds_per_tick)
+	SHOULD_BE_PURE(TRUE)
 	var/metabolizing_out = metabolization_rate * seconds_per_tick
 	if(!(chemical_flags & REAGENT_UNAFFECTED_BY_METABOLISM))
 		if(chemical_flags & REAGENT_REVERSE_METABOLISM)
 			metabolizing_out /= affected_mob.metabolism_efficiency
 		else
 			metabolizing_out *= affected_mob.metabolism_efficiency
-
-	if(!metabolizing)
-		metabolizing = TRUE
-		on_mob_metabolize(affected_mob)
 
 	return min(metabolizing_out, volume)
 
@@ -232,12 +226,12 @@
 /datum/reagent/proc/on_mob_metabolize(mob/living/affected_mob)
 	SHOULD_CALL_PARENT(TRUE)
 	if(metabolized_traits)
-		affected_mob.add_traits(metabolized_traits, "metabolize:[type]")
+		affected_mob.add_traits(metabolized_traits, METABOLIZATION_TRAIT(type))
 
 /// Called when this reagent stops being metabolized by a liver
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/affected_mob, metabolization_ratio)
 	SHOULD_CALL_PARENT(TRUE)
-	REMOVE_TRAITS_IN(affected_mob, "metabolize:[type]")
+	REMOVE_TRAITS_IN(affected_mob, METABOLIZATION_TRAIT(type))
 
 /**
  * Called when a reagent is inside of a mob when they are dead if the reagent has the REAGENT_DEAD_PROCESS flag

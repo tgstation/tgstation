@@ -54,11 +54,12 @@
 	else
 		..()
 
-/obj/item/minigunpack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
-		user.dropItemToGround(gun, TRUE)
-	else
-		..()
+/obj/item/minigunpack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool != gun) //Don't need armed check, because if you have the gun assume its armed.
+		return NONE
+	user.dropItemToGround(gun, TRUE)
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/item/minigunpack/dropped(mob/user)
 	. = ..()

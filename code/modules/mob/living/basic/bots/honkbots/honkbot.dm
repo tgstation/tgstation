@@ -3,8 +3,8 @@
 	desc = "A little robot. It looks happy with its bike horn."
 	icon_state = "honkbot"
 	base_icon_state = "honkbot"
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
-	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
+	physiology = list(TOX = 0, OXY = 0, STAMINA = 0)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.8, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	req_access = list(ACCESS_ROBOTICS, ACCESS_THEATRE, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	ai_controller = /datum/ai_controller/basic_controller/bot/honkbot
@@ -25,8 +25,6 @@
 	stun_sound = 'sound/items/airhorn/AirHorn.ogg'
 	baton_type = /obj/item/bikehorn/airhorn
 	cuff_type = /obj/item/restraints/handcuffs/cable/zipties/fake
-
-
 
 /mob/living/basic/bot/secbot/honkbot/Initialize(mapload)
 	. = ..()
@@ -57,7 +55,7 @@
 	return honkbot_sounds
 
 /mob/living/basic/bot/secbot/honkbot/proc/pre_slip()
-	return (prob(70) && ai_controller?.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+	return (prob(70) && ai_controller?.blackboard_key_exists(BB_CURRENT_TARGET))
 
 /mob/living/basic/bot/secbot/honkbot/proc/post_slip()
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/basic/bot, speak), HONKBOT_VOICED_HONK_SAD)
@@ -68,7 +66,7 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 
 /mob/living/basic/bot/secbot/honkbot/post_arrest(mob/living/carbon/current_target)
-	playsound(src, (bot_access_flags & BOT_COVER_EMAGGED ? SFX_HONKBOT_E : 'sound/items/bikehorn.ogg'), 50, FALSE)
+	playsound(src, (bot_access_flags & BOT_COVER_EMAGGED ? /datum/sound_effect/honkbot_e : 'sound/items/bikehorn.ogg'), 50, FALSE)
 	icon_state = bot_access_flags & BOT_COVER_EMAGGED ? "[base_icon_state]-e" : "[base_icon_state]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 
@@ -121,3 +119,6 @@
 	honkbot_assembly.created_name = name
 	new /obj/item/assembly/prox_sensor(drop_location)
 	drop_part(baton_type, drop_location)
+
+/mob/living/basic/bot/secbot/honkbot/nopatrol
+	bot_mode_flags = parent_type::bot_mode_flags & ~BOT_MODE_AUTOPATROL

@@ -1,8 +1,8 @@
 import {
   Box,
   Button,
+  DmIcon,
   Icon,
-  Image,
   NoticeBox,
   Section,
   Stack,
@@ -18,11 +18,12 @@ import type { Material } from './Fabrication/Types';
 type IconData = {
   id: string;
   icon: string;
+  icon_state: string;
 };
 
 type Alloy = {
   name: string;
-  id: string;
+  path: string;
 };
 
 type Data = {
@@ -90,7 +91,7 @@ const MaterialSelection = (props: any) => {
         <DisplayRow
           key={material.name}
           name={material.name}
-          icon={materialIcons.find((icon) => icon.id === material.ref)?.icon}
+          icon={materialIcons.find((icon) => icon.id === material.ref)}
           amount={Math.floor(material.amount / SHEET_MATERIAL_AMOUNT)}
           selected={selectedMaterial === material.name}
           onSelect={() => act('setMaterial', { value: material.ref })}
@@ -110,11 +111,11 @@ const AlloySelection = (props: any) => {
     <Table>
       {alloys.map((alloy) => (
         <DisplayRow
-          key={alloy.id}
+          key={alloy.path}
           name={alloy.name}
-          icon={alloyIcons.find((icon) => icon.id === alloy.id)?.icon}
-          selected={selectedAlloy === alloy.id}
-          onSelect={() => act('setAlloy', { value: alloy.id })}
+          icon={alloyIcons.find((icon) => icon.id === alloy.path)}
+          selected={selectedAlloy === alloy.path}
+          onSelect={() => act('setAlloy', { new_alloy: alloy.path })}
         />
       ))}
     </Table>
@@ -125,7 +126,7 @@ const AlloySelection = (props: any) => {
 
 type DisplayRowProps = {
   name: string;
-  icon?: string;
+  icon?: IconData;
   amount?: number;
   selected: boolean;
   onSelect: () => void;
@@ -138,12 +139,13 @@ const DisplayRow = (props: DisplayRowProps) => {
     <Table.Row className="candystripe">
       <Table.Cell collapsing pl={1}>
         {icon ? (
-          <Image
+          <DmIcon
             m={1}
             width="24px"
             height="24px"
             verticalAlign="middle"
-            src={`data:image/jpeg;base64,${icon}`}
+            icon={icon?.icon}
+            icon_state={icon?.icon_state}
           />
         ) : (
           <Icon name="circle-question" verticalAlign="middle" />

@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/closed/wall/mineral/titanium/survival/pod,
+/turf/closed/wall/mineral/plastitanium/survival/pod,
 /area/misc/survivalpod)
 "e" = (
 /obj/structure/sign/warning/biohazard,
-/turf/closed/wall/mineral/titanium/survival/pod,
+/turf/closed/wall/mineral/plastitanium/survival/pod,
 /area/misc/survivalpod)
 "C" = (
 /obj/machinery/door/airlock/survival_pod/glass,
@@ -12,7 +12,7 @@
 	id = "podtoilet";
 	name = "Privacy Shutters"
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/misc/survivalpod)
 "H" = (
 /obj/structure/toilet,
@@ -26,7 +26,7 @@
 	name = "Privacy Shutters";
 	pixel_y = 6
 	},
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/misc/survivalpod)
 
 (1,1,1) = {"

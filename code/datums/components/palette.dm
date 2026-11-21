@@ -111,7 +111,7 @@
 	color_picker_menu.change_choices(choices, tooltips = TRUE, keep_same_page = TRUE)
 
 /datum/component/palette/proc/choice_selected(mob/user, choice, params)
-	if(!choice || IS_DEAD_OR_INCAP(user)) // center button or incapacitated but still holding on the item.
+	if(!choice || user.incapacitated) // center button or incapacitated but still holding on the item.
 		close_radial_menu()
 		return
 	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)

@@ -1,0 +1,1 @@
+{"type":"/datum/bt_node/decorator/bb_key_set","children":[{"type":"/datum/bt_node/ai_behavior/announce_patient","target_key":"patient_in_crit"}],"observer_abort":3,"key":"patient_in_crit"}

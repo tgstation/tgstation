@@ -22,7 +22,7 @@
 	/// text string used to find typepaths used in door and wall (false and tram too) construction for door assemblies and girders respectively
 	var/construction_path_type = null
 	///If true, this is worth points in the gulag labour stacker
-	var/gulag_valid = FALSE
+	var/gulag_value = 0
 	///Set to true if this is vended from a material storage
 	var/manufactured = FALSE
 	/// whether this sheet can be sniffed by the material sniffer
@@ -42,7 +42,7 @@
 
 /obj/item/stack/sheet/examine(mob/user)
 	. = ..()
-	if (manufactured && gulag_valid)
+	if (manufactured && gulag_value)
 		. += span_notice("It has been embossed with a manufacturer's mark of guaranteed quality.")
 
 	var/datum/material/material = get_master_material()
@@ -101,7 +101,7 @@
 			stack_trace("A stack of sheet material was attempted to be shattered into shards while having less than 1 sheets remaining.")
 		return FALSE
 	user.do_attack_animation(target, ATTACK_EFFECT_BOOP)
-	playsound(target, SFX_SHATTER, 70, TRUE)
+	playsound(target, /datum/sound_effect/shatter, 70, TRUE)
 	var/list/shards_created = list()
 	for(var/shard_to_create in shards)
 		var/obj/item/new_shard = new shard_to_create(target)

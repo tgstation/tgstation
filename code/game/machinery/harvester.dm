@@ -76,7 +76,7 @@
 		return
 	var/mob/living/carbon/carbon_occupant = occupant
 	if(!allow_clothing)
-		for(var/obj/item/abiotic_item in carbon_occupant.held_items + carbon_occupant.get_equipped_items())
+		for(var/obj/item/abiotic_item as anything in carbon_occupant.get_all_gear())
 			if(!(HAS_TRAIT(abiotic_item, TRAIT_NODROP)))
 				say("Subject may not have abiotic items on.")
 				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
@@ -85,7 +85,7 @@
 		say("Subject is not organic.")
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
-	if(!allow_living && !(carbon_occupant.stat == DEAD || HAS_TRAIT(carbon_occupant, TRAIT_FAKEDEATH)))     //I mean, the machines scanners arent advanced enough to tell you're alive
+	if(!allow_living && !IS_DEAD_OR_FAKING(carbon_occupant))
 		say("Subject is still alive.")
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
@@ -97,7 +97,7 @@
 
 	var/mob/living/carbon/carbon_occupant = occupant
 
-	if(carbon_occupant.stat < UNCONSCIOUS)
+	if(carbon_occupant.client && carbon_occupant.stat <= HARD_CRIT)
 		notify_ghosts(
 			"[carbon_occupant.real_name] is about to be ground up by a malfunctioning organ harvester!",
 			source = src,

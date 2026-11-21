@@ -13,13 +13,12 @@
 
 /mob/living/carbon/get_bodypart(zone = BODY_ZONE_CHEST, include_stumps = FALSE)
 	RETURN_TYPE(/obj/item/bodypart)
+	if (!include_stumps)
+		return real_bodypart_cache[zone]
 
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
-		if(!include_stumps && IS_STUMP(bodypart))
-			continue
-		if(bodypart.body_zone != zone)
-			continue
-		return bodypart
+		if(bodypart.body_zone == zone)
+			return bodypart
 
 /**
  * Returns all bodyparts this mob has, optionally including stumps.
@@ -35,7 +34,14 @@
 		var/obj/item/bodypart/bodypart = get_bodypart(zone, include_stumps)
 		if(bodypart)
 			parts += bodypart
+	return parts
 
+/mob/living/carbon/get_bodyparts(include_stumps = FALSE)
+	if (include_stumps)
+		return bodyparts.Copy()
+	var/list/parts = list()
+	for (var/key, limb in real_bodypart_cache)
+		parts += limb
 	return parts
 
 /**
@@ -50,15 +56,6 @@
 	for(var/zone in get_all_limbs())
 		parts[zone] = get_bodypart(zone)
 	return parts
-
-///Returns TRUE/FALSE on whether the mob should have a limb in a given zone, used for species-restrictions.
-/mob/living/carbon/proc/should_have_limb(zone)
-	if(!zone || !dna)
-		return TRUE
-	var/datum/species/carbon_species = dna.species
-	if(zone in carbon_species.bodypart_overrides)
-		return TRUE
-	return FALSE
 
 /// Replaces a single limb and deletes the old one if there was one
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
@@ -97,7 +94,7 @@
 	regenerate_icons()
 
 /mob/living/carbon/has_hand_for_held_index(i)
-	if(!i)
+	if(!i || i > length(hand_bodyparts))
 		return FALSE
 	var/obj/item/bodypart/hand_instance = hand_bodyparts[i]
 	if(hand_instance && !hand_instance.bodypart_disabled)
@@ -106,8 +103,7 @@
 
 
 ///Get the bodypart for whatever hand we have active, Only relevant for carbons
-/mob/proc/get_active_hand()
-	RETURN_TYPE(/obj/item/bodypart)
+/mob/proc/get_active_hand() as /obj/item/bodypart
 	return FALSE
 
 /mob/living/carbon/get_active_hand()
@@ -172,7 +168,8 @@
 	. = dna?.species?.bodypart_overrides.Copy() || ..()
 	// includes any additional adminbussed hands
 	for(var/obj/item/bodypart/hand in hand_bodyparts)
-		. |= hand.body_zone
+		if(!isnull(hand.body_zone))
+			. |= hand.body_zone
 
 ///Returns a list of all missing limbs this mob should have on them, but don't.
 /mob/living/carbon/proc/get_missing_limbs() as /list
@@ -268,33 +265,26 @@
 
 /// Makes sure that the owner's bodytype flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodytypes()
-	var/all_limb_flags = NONE
+	var/all_overlay_flags = NONE
 	for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
 		for(var/obj/item/organ/organ in limb)
-			all_limb_flags |= organ.external_bodytypes
-		all_limb_flags |= limb.bodytype
+			all_overlay_flags |= organ.external_bodytypes
+		all_overlay_flags |= limb.bodytype
 
-	bodytype = all_limb_flags
+	bodytype = all_overlay_flags
 
 /// Makes sure that the owner's bodyshape flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodyshapes()
-	var/all_limb_flags = NONE
+	var/all_overlay_flags = NONE
 	for(var/obj/item/bodypart/limb as anything in get_bodyparts(include_stumps = TRUE))
 		for(var/obj/item/organ/organ in limb)
-			all_limb_flags |= organ.external_bodyshapes
-		all_limb_flags |= limb.bodyshape
+			all_overlay_flags |= organ.external_bodyshapes
+		all_overlay_flags |= limb.bodyshape
 
-	bodyshape = all_limb_flags
+	if(obscured_slots & HIDESNOUT)
+		all_overlay_flags &= ~BODYSHAPE_SNOUTED
 
-/// Get all bodyshapes but filter out bodyshapes that are currently being hidden
-/mob/living/carbon/proc/get_active_bodyshapes()
-	var/active_shapes = bodyshape
-	// future todo: both of these are state based, maybe we can just remove relevant bodyshapes directly. would remove the need for this proc
-	if((active_shapes & BODYSHAPE_DIGITIGRADE) && is_digitigrade_squished())
-		active_shapes &= ~BODYSHAPE_DIGITIGRADE
-	if((active_shapes & BODYSHAPE_SNOUTED) && (obscured_slots & HIDESNOUT))
-		active_shapes &= ~BODYSHAPE_SNOUTED
-	return active_shapes
+	bodyshape = all_overlay_flags
 
 /proc/skintone2hex(skin_tone)
 	. = 0

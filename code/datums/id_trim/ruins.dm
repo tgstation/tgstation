@@ -66,12 +66,12 @@
 /// Trim for various Centcom corpses.
 /datum/id_trim/centcom/corpse/bridge_officer
 	assignment = "Bridge Officer"
-	access = list(ACCESS_CENT_CAPTAIN)
+	access = list(ACCESS_CENT_OFFICER)
 
 /// Trim for various Centcom corpses.
 /datum/id_trim/centcom/corpse/commander
 	assignment = "Commander"
-	access = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE)
+	access = list(ACCESS_CENT_OFFICER, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE)
 	big_pointer = TRUE
 
 /// Trim for various Centcom corpses.
@@ -79,7 +79,7 @@
 	assignment = JOB_CENTCOM_PRIVATE_SECURITY
 	department_color = COLOR_CENTCOM_BLUE
 	subdepartment_color = COLOR_CENTCOM_BLUE
-	access = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE, ACCESS_SECURITY, ACCESS_MECH_SECURITY)
+	access = list(ACCESS_CENT_OFFICER, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE, ACCESS_SECURITY, ACCESS_MECH_SECURITY)
 
 /// Trim for various Centcom corpses.
 /datum/id_trim/centcom/corpse/private_security/tradepost_officer
@@ -89,7 +89,7 @@
 /// Trim for various Centcom corpses.
 /datum/id_trim/centcom/corpse/assault
 	assignment = "Nanotrasen Assault Force"
-	access = list(ACCESS_CENT_CAPTAIN, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE, ACCESS_SECURITY, ACCESS_MECH_SECURITY)
+	access = list(ACCESS_CENT_OFFICER, ACCESS_CENT_GENERAL, ACCESS_CENT_SPECOPS, ACCESS_CENT_MEDICAL, ACCESS_CENT_STORAGE, ACCESS_SECURITY, ACCESS_MECH_SECURITY)
 
 /// Trim for various various ruins.
 /datum/id_trim/engioutpost

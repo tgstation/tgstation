@@ -69,12 +69,6 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/recycler/can_be_unfasten_wrench(mob/user, silent)
-	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
-		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
-		return FAILED_UNFASTEN
-	return SUCCESSFUL_UNFASTEN
-
 /obj/machinery/recycler/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(user, tool)
 
@@ -88,7 +82,7 @@
 	if(safety_mode)
 		safety_mode = FALSE
 		update_appearance()
-	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 	balloon_alert(user, "safeties disabled")
 	return FALSE
 
@@ -121,7 +115,15 @@
 /obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/enterer, old_loc)
 	SIGNAL_HANDLER
 
+	if(can_butcher(enterer))
+		return
 	INVOKE_ASYNC(src, PROC_REF(eat), enterer)
+
+/// Dead mobs with something to butcher are left to the butchering component instead of being eaten.
+/obj/machinery/recycler/proc/can_butcher(mob/living/victim)
+	if(!isliving(victim) || safety_mode || (machine_stat & (BROKEN|NOPOWER)))
+		return FALSE
+	return victim.stat == DEAD && (victim.butcher_results || victim.guaranteed_butcher_results)
 
 /obj/machinery/recycler/proc/eat(atom/movable/morsel, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER) || safety_mode)
@@ -240,8 +242,8 @@
 	if(isbrain(target) || istype(target, /obj/item/dullahan_relay))
 		return TRUE
 
-	if(istype(target, /obj/item/mmi))
-		var/obj/item/mmi/mmi_thing = target
+	if(istype(target, /obj/item/brain_processor/organic))
+		var/obj/item/brain_processor/organic/mmi_thing = target
 		return !!(mmi_thing.brain)
 
 	return FALSE
@@ -280,7 +282,7 @@
 	else
 		playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 
-	if(iscarbon(living_mob) && living_mob.stat == CONSCIOUS)
+	if(iscarbon(living_mob) && !IS_UNCONSCIOUS_OR_CRIT(living_mob))
 		living_mob.say("ARRRRRRRRRRRGH!!!", forced= "recycler grinding")
 
 	if(!issilicon(living_mob))

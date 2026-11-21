@@ -65,7 +65,7 @@
 		return
 
 	if (user.ghost_hud_flags & GHOST_HEALTH)
-		healthscan(user, src, 1, TRUE)
+		healthscan(user, src, SCANNER_VERBOSE, SCANPOWER_SUPER)
 	if (user.ghost_hud_flags & GHOST_CHEM)
 		chemscan(user, src)
 

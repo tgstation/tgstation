@@ -32,25 +32,25 @@
 
 	switch(stage)
 		if(2)
-			if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS && affected_mob.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL))
+			if(SPT_PROB(1, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(affected_mob) && affected_mob.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL))
 				to_chat(affected_mob, span_warning("You want to wag your tail..."))
 				affected_mob.emote("wag")
 		if(3)
-			if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
+			if(SPT_PROB(1, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 				to_chat(affected_mob, span_warning("You suddenly feel like swimming in space..."))
-			else if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
+			else if(SPT_PROB(1, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 				affected_mob.visible_message("gnashes.", visible_message_flags = EMOTE_MESSAGE)
 		if(4)
-			if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
+			if(SPT_PROB(1, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 				gnash_someone()
-			else if(SPT_PROB(1, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
+			else if(SPT_PROB(1, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 				affected_mob.visible_message("gnashes.", visible_message_flags = EMOTE_MESSAGE)
 		if(5)
 			max_stage_reached = TRUE
 			grant_ability()
-			if(SPT_PROB(2, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
+			if(SPT_PROB(2, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 				gnash_someone()
-			else if(SPT_PROB(2, seconds_per_tick) && affected_mob.stat == CONSCIOUS)
+			else if(SPT_PROB(2, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 				affected_mob.visible_message("gnashes.", visible_message_flags = EMOTE_MESSAGE)
 
 /datum/disease/carpellosis/Destroy()
@@ -76,8 +76,8 @@
 
 /datum/disease/carpellosis/proc/find_nearby_human()
 	var/list/surroundings = orange(GNASHING_RANGE, affected_mob)
-	for(var/mob/human as anything in typecache_filter_list(surroundings, typecacheof(/mob/living/carbon/human)))
-		if(human.stat != DEAD && !(HAS_TRAIT(human, TRAIT_FAKEDEATH)))
+	for(var/mob/living/carbon/human/human as anything in typecache_filter_list(surroundings, typecacheof(/mob/living/carbon/human)))
+		if(!IS_DEAD_OR_FAKING(human))
 			return human
 
 /datum/disease/carpellosis/proc/gnash_someone()

@@ -32,7 +32,7 @@
 		if(WIRE_SAFETY)
 			SSU.safeties = !SSU.safeties
 		if(WIRE_ZAP)
-			SSU.shock(usr, 100)
+			SSU.shock(usr, 125)
 
 /datum/wires/suit_storage_unit/on_cut(wire, mend, source)
 	var/obj/machinery/suit_storage_unit/SSU = holder
@@ -42,4 +42,4 @@
 		if(WIRE_SAFETY)
 			SSU.safeties = mend
 		if(WIRE_ZAP)
-			SSU.shock(usr, 100)
+			SSU.shock(usr, 125)

@@ -105,11 +105,11 @@
 
 	if(is_portable)
 		interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
-		passtable_on(src, type)
+		pass_flags |= PASSTABLE
 		RemoveElement(/datum/element/noisy_movement)
 	else
 		interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
-		passtable_off(src, type)
+		pass_flags &= ~PASSTABLE
 		AddElement(/datum/element/noisy_movement)
 
 	update_appearance()

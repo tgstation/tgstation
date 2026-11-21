@@ -108,7 +108,7 @@
 		balloon_alert(user, "data added")
 		return TRUE
 
-	if(ishuman(target) && !ismonkey(target))
+	if(ishuman(target) && !HAS_TRAIT(target, TRAIT_LESSER_HUMANOID))
 		var/mob/living/carbon/human/human_target = target
 		if(our_vault.human_dna[human_target.dna.unique_identity])
 			balloon_alert(user, "data already in vault!")
@@ -124,7 +124,7 @@
 		balloon_alert(user, "data added")
 		return TRUE
 
-	if(!is_type_in_typecache(target, animal_typecache) && !ismonkey(target))
+	if(!is_type_in_typecache(target, animal_typecache) && !HAS_TRAIT(target, TRAIT_LESSER_HUMANOID))
 		return FALSE
 	if(our_vault.animal_dna[target.type])
 		balloon_alert(user, "data already in vault!")
@@ -146,9 +146,9 @@
 /obj/item/dna_probe/proc/valid_scan_target(atom/target)
 	if((allowed_scans & DNA_PROBE_SCAN_PLANTS) && istype(target, /obj/machinery/hydroponics))
 		return TRUE
-	if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && (ishuman(target) && !ismonkey(target)))
+	if((allowed_scans & DNA_PROBE_SCAN_HUMANS) && (ishuman(target) && !HAS_TRAIT(target, TRAIT_LESSER_HUMANOID)))
 		return TRUE
-	if((allowed_scans & DNA_PROBE_SCAN_ANIMALS) && (is_type_in_typecache(target, animal_typecache) || ismonkey(target)))
+	if((allowed_scans & DNA_PROBE_SCAN_ANIMALS) && (is_type_in_typecache(target, animal_typecache) || HAS_TRAIT(target, TRAIT_LESSER_HUMANOID)))
 		return TRUE
 	return FALSE
 

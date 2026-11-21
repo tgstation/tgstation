@@ -284,6 +284,7 @@
 		generate_hitscan_tracers()
 	STOP_PROCESSING(SSprojectiles, src)
 	firer = null
+	fired_from = null
 	original = null
 	QDEL_NULL(embed_data)
 	if (movement_vector)
@@ -423,11 +424,12 @@
 /obj/projectile/proc/firer_deleted(datum/source)
 	SIGNAL_HANDLER
 	// Shooting yourself point-blank
-	if (firer == original)
+	if (source == original)
 		original = null
-	if (firer == fired_from)
+	if (source == fired_from)
 		fired_from = null
-	firer = null
+	if (source == firer)
+		firer = null
 
 /obj/projectile/proc/original_deleted(datum/source)
 	SIGNAL_HANDLER
@@ -436,6 +438,16 @@
 /obj/projectile/proc/fired_from_deleted(datum/source)
 	SIGNAL_HANDLER
 	fired_from = null
+
+/// Changes who fired us after we've been fired, moving the qdel listener over to the new firer
+/obj/projectile/proc/set_firer(atom/movable/new_firer)
+	if (firer == new_firer)
+		return
+	if (firer && firer != fired_from && firer != original)
+		UnregisterSignal(firer, COMSIG_QDELETING)
+	firer = new_firer
+	if (firer)
+		RegisterSignal(firer, COMSIG_QDELETING, PROC_REF(firer_deleted), override = TRUE)
 
 /obj/projectile/proc/on_ricochet(atom/target)
 	ricochets++
@@ -644,7 +656,7 @@
 				return FALSE
 	if(LAZYLEN(faction) && ismob(target) && !direct_target)
 		var/mob/target_mob = target
-		if(FAST_FACTION_CHECK(faction, target_mob.get_faction(), allies, target_mob.allies, FALSE))
+		if(FACTION_CHECK(faction, target_mob.get_faction(), allies, target_mob.allies, FALSE))
 			return FALSE
 	if(target.density || cross_failed) //This thing blocks projectiles, hit it regardless of layer/mob stuns/etc.
 		return TRUE
@@ -1251,8 +1263,8 @@
 	free_hitscan_forceMove = TRUE
 	forceMove(source_loc)
 	starting = source_loc
-	pixel_x = source.pixel_x
-	pixel_y = source.pixel_y
+	pixel_x = source.pixel_x - source.base_pixel_x
+	pixel_y = source.pixel_y - source.base_pixel_y
 	original = target
 
 	// Trim off excess pixel_x/y by converting them into turf offset
@@ -1339,7 +1351,7 @@
 
 	var/ox = round(screenview[1] * 0.5) - user.client.pixel_x //"origin" x
 	var/oy = round(screenview[2] * 0.5) - user.client.pixel_y //"origin" y
-	angle = ATAN2(tx - oy, ty - ox)
+	angle = ATAN2(ty - oy, tx - ox)
 	return list(angle, p_x, p_y)
 
 /obj/projectile/experience_pressure_difference()
@@ -1377,7 +1389,7 @@
 	// redirect the projectile
 	original = locate(new_x, new_y, z)
 	starting = current_tile
-	firer = hit_atom
+	set_firer(hit_atom)
 	yo = new_y - current_tile.y
 	xo = new_x - current_tile.x
 	var/new_angle_s = angle + rand(120, 240)

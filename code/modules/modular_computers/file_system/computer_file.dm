@@ -87,8 +87,6 @@
  * * background - Whether the app is running in the background.
  */
 /datum/computer_file/program/proc/event_powerfailure()
-	if(program_flags & PROGRAM_RUNS_WITHOUT_POWER)
-		return
 	kill_program()
 
 /**

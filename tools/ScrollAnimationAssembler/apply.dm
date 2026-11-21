@@ -1,5 +1,5 @@
 /// Cut out a piece of the background at a specified frame, and paste it on top of the foreground
-/proc/Apply(var/icon/source, var/icon/mask, var/icon/target, frame)
+/proc/Apply(icon/source, icon/mask, icon/target, frame)
 
 	//Temporary copies of source, mask and target
 	var/icon/source_copy = new(source)

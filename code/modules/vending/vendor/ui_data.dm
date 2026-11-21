@@ -114,6 +114,7 @@
 		user_data = list()
 		user_data["name"] = card_used.registered_account.account_holder
 		user_data["cash"] = fetch_balance_to_use(card_used) + held_cash
+		user_data["is_captain_card"] = istype(card_used.trim, big_boss_trim)
 		if(card_used.registered_account.account_job)
 			user_data["job"] = card_used.registered_account.account_job.title
 			user_data["department"] = card_used.registered_account.account_job.paycheck_department

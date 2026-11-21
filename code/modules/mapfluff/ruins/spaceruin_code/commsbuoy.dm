@@ -129,6 +129,7 @@
 
 /obj/machinery/computer/terminal/nt_commsbuoy
 	name = "satellite dish operations terminal"
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/terminal/nt_commsbuoy")
 	icon_screen = "comm"
 	tguitheme = "ntos"
 	upperinfo = "SATELLITE DISH OPERATIONS READOUT"

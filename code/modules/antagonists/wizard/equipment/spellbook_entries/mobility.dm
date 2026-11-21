@@ -59,4 +59,13 @@
 	cost = 2 // Puts it at 3 cost if you go for safety instant summons, but teleporting anywhere on screen is pretty good.
 	category = SPELLBOOK_CATEGORY_MOBILITY
 
+/datum/spellbook_entry/ghostliness
+	name = "Forsake Body"
+	desc = "A necromantic spell which permanently severs your soul from your body, and partially anchors it to the material plane. \
+	In this state, you can enter a state of incorporeality, allowing you to pass through solid matter. This, however, includes \
+	most such matter on or inside of you."
+	spell_type = /datum/action/cooldown/spell/ghostliness
+	category = SPELLBOOK_CATEGORY_MOBILITY
+	no_coexistence_typecache = list(/datum/spellbook_entry/lichdom, /datum/spellbook_entry/splattercasting)
+
 #undef SPELLBOOK_CATEGORY_MOBILITY

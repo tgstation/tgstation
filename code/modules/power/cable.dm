@@ -269,7 +269,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		return NONE
 	add_fingerprint(user)
 	to_chat(user, get_power_info())
-	shock(user, 5, null, 0.2)
+	shock(user, 5, siemens_coeff = 0.2)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/cable/proc/get_power_info()
@@ -279,7 +279,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		return span_danger("The cable is not powered.")
 
 // shock the user with probability prb
-/obj/structure/cable/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+/obj/structure/cable/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
 	shock_source = powernet
 	return ..()
 
@@ -650,8 +650,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 /obj/item/stack/cable_coil/proc/try_heal_loop(atom/interacting_with, mob/living/user, repeating = FALSE)
 	var/mob/living/carbon/human/attacked_humanoid = interacting_with
-	var/obj/item/clothing/under/uniform = attacked_humanoid.w_uniform
-	if(uniform?.repair_sensors(user))
+
+	if(astype(attacked_humanoid.w_uniform, /obj/item/clothing/under)?.repair_sensors(user))
 		return ITEM_INTERACT_SUCCESS
 
 	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))

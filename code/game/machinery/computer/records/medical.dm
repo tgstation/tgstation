@@ -1,6 +1,7 @@
 /obj/machinery/computer/records/medical
 	name = "medical records console"
 	desc = "This can be used to check medical records."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/records/medical")
 	icon_screen = "medcomp"
 	icon_keyboard = "med_key"
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_DETECTIVE, ACCESS_GENETICS)
@@ -8,13 +9,14 @@
 	light_color = LIGHT_COLOR_BLUE
 
 /obj/machinery/computer/records/medical/syndie
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/records/medical/syndie")
 	icon_keyboard = "syndie_key"
 	req_one_access = list(ACCESS_SYNDICATE)
 
 /obj/machinery/computer/records/medical/laptop
 	name = "medical laptop"
 	desc = "A cheap Nanotrasen medical laptop, it functions as a medical records computer. It's bolted to the table."
-	icon_state = "laptop"
+	icon_state = MAP_SWITCH("laptop", "/obj/machinery/computer/records/medical/laptop")
 	icon_screen = "medlaptop"
 	icon_keyboard = "laptop_key"
 	pass_flags = PASSTABLE
@@ -52,7 +54,7 @@
 
 		records += list(list(
 			age = target.age,
-			blood_type = target.blood_type,
+			blood_type = initial(target.blood_type:name),
 			crew_ref = REF(target),
 			dna = target.dna_string,
 			gender = target.gender,
@@ -75,10 +77,15 @@
 
 /obj/machinery/computer/records/medical/ui_static_data(mob/user)
 	var/list/data = list()
+	var/list/blood_type_strings = list()
 	data["min_age"] = AGE_MIN
 	data["max_age"] = AGE_MAX
 	data["physical_statuses"] = PHYSICAL_STATUSES
 	data["mental_statuses"] = MENTAL_STATUSES
+	for(var/datum/blood_type/blood_path as anything in get_roundstart_blood_types())
+		blood_type_strings += initial(blood_path.name)
+	data["blood_types"] = blood_type_strings
+
 	return data
 
 /obj/machinery/computer/records/medical/ui_act(action, list/params, datum/tgui/ui)
@@ -145,6 +152,17 @@
 			target.cause_of_death = death_text
 			return TRUE
 
+		if("set_blood_type")
+			var/chosen_path
+			for(var/datum/blood_type/blood_path as anything in get_roundstart_blood_types())
+				if(initial(blood_path.name) == params["blood_type"])
+					chosen_path = blood_path
+					break
+			if(!chosen_path)
+				return FALSE
+			target.blood_type = chosen_path
+			return TRUE
+
 	return FALSE
 
 /// Deletes medical information from a record.
@@ -153,7 +171,7 @@
 		return FALSE
 
 	target.age = 18
-	target.blood_type = pick(list(BLOOD_TYPE_A_PLUS, BLOOD_TYPE_A_MINUS, BLOOD_TYPE_B_PLUS, BLOOD_TYPE_B_MINUS, BLOOD_TYPE_O_PLUS, BLOOD_TYPE_O_MINUS, BLOOD_TYPE_AB_PLUS, BLOOD_TYPE_AB_MINUS))
+	target.blood_type = random_human_blood_type()
 	target.dna_string = "Unknown"
 	target.gender = "Unknown"
 	target.major_disabilities = ""

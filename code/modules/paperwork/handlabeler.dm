@@ -48,11 +48,8 @@
 	return OXYLOSS
 
 /obj/item/hand_labeler/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-	if(!mode) //if it's off, give up.
-		return .
+	if(!mode)
+		return NONE
 	if(!apply_label(interacting_with, user, modifiers))
 		return ITEM_INTERACT_BLOCKING
 	return ITEM_INTERACT_SUCCESS
@@ -162,6 +159,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	item_flags = NOBLUDGEON
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.2)
 
 /// The label item applied when labelling something
 /obj/item/label

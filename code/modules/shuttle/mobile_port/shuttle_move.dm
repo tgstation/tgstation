@@ -168,7 +168,7 @@
 
 	// Parallax handling
 	// This needs to be done before the atom after move
-	var/new_parallax_dir = FALSE
+	var/new_parallax_dir = NONE
 	if(istype(new_dock, /obj/docking_port/stationary/transit))
 		new_parallax_dir = preferred_direction
 	for(var/i in 1 to areas_to_move.len)

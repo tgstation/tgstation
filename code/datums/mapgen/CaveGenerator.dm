@@ -41,6 +41,8 @@
 	/// of biome-related operations. Is populated through
 	/// `generate_terrain_with_biomes()`.
 	var/list/generated_turfs_per_biome = list()
+	/// Same as generated_turfs_per_biome, but additionally indexed by area
+	var/list/generated_turfs_per_area_biome = list()
 	/// 2D list of all biomes based on heat and humidity combos. Associative by
 	/// `BIOME_X_HEAT` and then by `BIOME_X_HUMIDITY` (i.e.
 	/// `possible_biomes[BIOME_LOW_HEAT][BIOME_LOWMEDIUM_HUMIDITY]`).
@@ -65,14 +67,16 @@
 	var/shared_seed = TRUE
 	/// Stamp size for DBP noise, aka frequency
 	var/biome_stamp_size = 75
+	/// Stored noise maps per z level if we use a shared seed
+	var/static_biome_maps = list()
 
-	///Base chance of spawning a mob
+	/// Base chance of spawning a mob
 	var/mob_spawn_chance = 6
-	///Base chance of spawning flora
+	/// Base chance of spawning flora
 	var/flora_spawn_chance = 2
-	///Base chance of spawning features
+	/// Base chance of spawning features
 	var/feature_spawn_chance = 0.25
-	///Unique ID for this spawner
+	/// Unique ID for this spawner
 	var/string_gen
 
 	/// Radius around features within which we avoid spawning other features
@@ -82,15 +86,31 @@
 	/// Radius around megafauna within which we avoid spawning tendrils
 	var/megafauna_exclusion_radius = 7
 
-	///Chance of cells starting closed
-	var/initial_closed_chance = 45
-	///Amount of smoothing iterations
-	var/smoothing_iterations = 20
-	///How much neighbours does a dead cell need to become alive
-	var/birth_limit = 4
-	///How little neighbours does a alive cell need to die
-	var/death_limit = 3
 
+	///Cave gen settings below!!
+
+	/// Minimum dimension of a BSP leaf in the generator. Raising this creates larger pockets but can end up making for big corridors
+	var/min_bsp_size = 25
+	/// Maximum aspect ratio for BSP splits for lavaland generator
+	var/max_ratio = 1.5
+	/// Room edge padding within BSP leaf for lavaland generator
+	var/padding = 1
+	/// How much of each BSP leaf is considered untouchable by the cellular automata. Raising this generally means bigger pockets
+	var/room_fill_percent = 30
+	/// Width of corridors between rooms for lavaland generator. Raising this just means corridors are AT LEAST this wide. but cellular automata can make them bigger
+	var/corridor_width = 1
+	/// Chance to add extra MST edges for loops for lavaland generator. This basically results in more corridors / mazier generation
+	var/loop_percent = 15
+	/// Initial random floor density for lavaland generator
+	var/noise_percent = 51
+	/// Cellular Automata smoothing iterations for lavaland generator
+	var/ca_steps = 8
+	/// Neighbors to create floor (>=) for lavaland generator
+	var/birth_limit = 6
+	/// Neighbors to survive as floor (>=) for lavaland generator
+	var/survival_limit = 4
+	///Whether out-of-boudns counts as being alive. Setting this to FALSE results in the edges of the generator generating more closed. Default behavior tends to open up tunnels outside.
+	var/edges_are_alive = TRUE
 
 /datum/map_generator/cave_generator/New()
 	. = ..()
@@ -134,10 +154,11 @@
 		return generate_terrain_with_biomes(turfs, generate_in)
 
 	var/start_time = REALTIMEOFDAY
-	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
+
+	string_gen = generate_cave(generate_in)
 
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
-		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
+		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "1"
 		var/turf/new_turf = pick(closed ? closed_turf_types : open_turf_types)
 
 		// The assumption is this will be faster then changeturf, and changeturf isn't required since by this point
@@ -186,7 +207,7 @@
 		heat_seed = rand(0, 50000)
 
 	var/start_time = REALTIMEOFDAY
-	string_gen = rustg_cnoise_generate("[initial_closed_chance]", "[smoothing_iterations]", "[birth_limit]", "[death_limit]", "[world.maxx]", "[world.maxy]") //Generate the raw CA data
+	string_gen = generate_cave(generate_in)
 
 	var/humidity_gen = list()
 	humidity_gen[BIOME_HIGH_HUMIDITY] = rustg_dbp_generate("[humidity_seed]", "60", "[biome_stamp_size]", "[world.maxx]", "[high_heat_threshold]", "1.1")
@@ -196,9 +217,17 @@
 	heat_gen[BIOME_HIGH_HEAT] = rustg_dbp_generate("[heat_seed]", "60", "[biome_stamp_size]", "[world.maxx]", "[high_heat_threshold]", "1.1")
 	heat_gen[BIOME_MEDIUM_HEAT] = rustg_dbp_generate("[heat_seed]", "60", "[biome_stamp_size]", "[world.maxx]", "[medium_heat_threshold]", "[high_heat_threshold]")
 
+	if (shared_seed)
+		static_biome_maps["[turfs[1].z]"] = list(
+			BIOME_HIGH_HUMIDITY = humidity_gen[BIOME_HIGH_HUMIDITY],
+			BIOME_MEDIUM_HUMIDITY = humidity_gen[BIOME_MEDIUM_HUMIDITY],
+			BIOME_HIGH_HEAT = heat_gen[BIOME_HIGH_HEAT],
+			BIOME_MEDIUM_HEAT = heat_gen[BIOME_MEDIUM_HEAT],
+		)
+
 	var/list/to_generate = list()
 	for(var/turf/gen_turf as anything in turfs) //Go through all the turfs and generate them
-		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "0"
+		var/closed = string_gen[world.maxx * (gen_turf.y - 1) + gen_turf.x] != "1"
 		var/datum/biome/selected_biome
 
 		// Here comes the meat of the biome code.
@@ -222,11 +251,39 @@
 	for(var/biome in to_generate)
 		var/datum/biome/generating_biome = SSmapping.biomes[biome]
 		var/list/turf/generated_turfs = generating_biome.generate_turfs_for_terrain(to_generate[biome])
-		generated_turfs_per_biome[biome] = generated_turfs
+		generated_turfs_per_biome[biome] = (generated_turfs_per_biome[biome] || list()) + generated_turfs
+		var/list/area_list = generated_turfs_per_area_biome[biome]
+		if (!area_list)
+			area_list = list()
+			generated_turfs_per_area_biome[biome] = area_list
+		area_list[generate_in] = generated_turfs
 
 	var/message = "[name] terrain generation finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"), MESSAGE_TYPE_DEBUG)
 	log_world(message)
+
+/// Returns a biome datum that the turf was initialized with, or would be if it is present on our Z level and we use a consistent shared seed
+/// Not consistent between calls by itself due to using RNG in perlin zoom, needs a static coordinate-based formula
+/datum/map_generator/cave_generator/proc/get_biome_for_turf(turf/target)
+	for (var/biome in generated_turfs_per_biome)
+		var/list/generated_turfs = generated_turfs_per_biome[biome]
+		if (generated_turfs[target])
+			return biome
+
+	var/list/biome_map = static_biome_maps["[target.z]"]
+	if (!shared_seed || !biome_map)
+		return null
+
+	var/drift_x = clamp((target.x + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)), 1, world.maxx)
+	var/drift_y = clamp((target.y + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)), 2, world.maxy)
+	var/coordinate = world.maxx * (drift_y - 1) + drift_x
+
+	var/humidity_level = text2num(biome_map[BIOME_HIGH_HUMIDITY][coordinate]) ? \
+		BIOME_HIGH_HUMIDITY : text2num(biome_map[BIOME_MEDIUM_HUMIDITY][coordinate]) ? BIOME_MEDIUM_HUMIDITY : BIOME_LOW_HUMIDITY
+	var/heat_level = text2num(biome_map[BIOME_HIGH_HEAT][coordinate]) ? \
+		BIOME_HIGH_HEAT : text2num(biome_map[BIOME_MEDIUM_HEAT][coordinate]) ? BIOME_MEDIUM_HEAT : BIOME_LOW_HEAT
+
+	return possible_biomes[heat_level][humidity_level]
 
 /datum/map_generator/cave_generator/populate_terrain(list/turfs, area/generate_in)
 	if (biome_population && length(possible_biomes))
@@ -285,7 +342,7 @@
 			is_megafauna = TRUE
 
 		var/can_spawn = TRUE
-		if(ispath(picked_mob, /obj/structure/spawner/lavaland))
+		if(ispath(picked_mob, /mob/living/basic/mining/tendril))
 			// Prevents tendrils spawning in each other's collapse range
 			for(var/turf/spawn_turf as anything in spawn_data[CAVE_SPAWN_TENDRIL])
 				if (get_dist(spawn_turf, target_turf) <= 2)
@@ -312,7 +369,7 @@
 		if (!can_spawn)
 			continue
 
-		if (ispath(picked_mob, /obj/structure/spawner/lavaland))
+		if (ispath(picked_mob, /mob/living/basic/mining/tendril))
 			spawn_data[CAVE_SPAWN_TENDRIL] += target_turf
 		else
 			if (is_megafauna)
@@ -354,15 +411,42 @@
 		log_world(message)
 		return
 
-	for(var/biome in generated_turfs_per_biome)
+	for(var/biome in generated_turfs_per_area_biome)
 		var/datum/biome/generating_biome = SSmapping.biomes[biome]
-		generating_biome.populate_turfs(generated_turfs_per_biome[biome], flora_allowed, features_allowed, fauna_allowed)
+		var/list/areas_list = generated_turfs_per_area_biome[biome]
+		generating_biome.populate_turfs(areas_list[generate_in], flora_allowed, features_allowed, fauna_allowed)
 
 		CHECK_TICK
 
 	var/message = "[name] terrain population finished in [(REALTIMEOFDAY - start_time)/10]s!"
 	to_chat(world, span_boldannounce("[message]"), MESSAGE_TYPE_DEBUG)
 	log_world(message)
+
+
+///Generates the cave shape using Rust-G
+/datum/map_generator/cave_generator/proc/generate_cave(area/generate_in)
+
+	///Loop through all the active ruins for this z-level and make a json format out of it so we can send it to the generator
+	var/list/active_ruins_list = list()
+
+	for(var/turf/bottom_left_turf in SSmapping.active_ruins)
+		var/datum/map_template/ruin/active_ruin = SSmapping.active_ruins[bottom_left_turf]
+		if(bottom_left_turf.z != generate_in.z)
+			continue
+		active_ruins_list += list(list(
+			"x" = max(1, bottom_left_turf.x - active_ruin.terrain_padding),
+			"y" = max(1, bottom_left_turf.y - active_ruin.terrain_padding),
+			"w" = active_ruin.width + active_ruin.terrain_padding * 2,
+			"h" = active_ruin.height + active_ruin.terrain_padding * 2,
+			"isEnclosed" = active_ruin.enclosed_for_terrain,
+		))
+
+	var/active_ruin_string = json_encode(active_ruins_list)
+
+	var/string_gen = rustg_cave_system_generator_generate("[world.maxx]", "[world.maxy]", active_ruin_string, "[min_bsp_size]","[max_ratio]", "[padding]", "[room_fill_percent]", "[corridor_width]","[loop_percent]", "[noise_percent]", "[ca_steps]", "[birth_limit]", "[survival_limit]", "[edges_are_alive]")
+
+	return string_gen
+
 
 /datum/map_generator/cave_generator/jungle
 	possible_biomes = list(

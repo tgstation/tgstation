@@ -57,6 +57,11 @@
 	. = ..()
 	if(movable.set_currently_z_moving(CURRENTLY_Z_FALLING))
 		zFall(movable, falling_from_move = TRUE)
+
+/turf/open/openspace/initialize_occupant(atom/movable/occupant)
+	. = ..()
+	zfall_if_on_turf(occupant)
+
 /**
  * Drops movables spawned on this turf after they are successfully initialized.
  * so that spawned movables that should fall to gravity, will fall.
@@ -114,18 +119,29 @@
 /turf/open/openspace/CanBuildHere()
 	return can_build_on
 
-/turf/open/openspace/attackby(obj/item/attacking_item, mob/user, list/modifiers)
-	..()
+/turf/open/openspace/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
+
 	if(!CanBuildHere())
-		return
-	if(istype(attacking_item, /obj/item/stack/rods))
-		build_with_rods(attacking_item, user)
-	else if(ismetaltile(attacking_item))
-		build_with_floor_tiles(attacking_item, user)
-	else if(istype(attacking_item, /obj/item/stack/thermoplastic))
-		build_with_transport_tiles(attacking_item, user)
-	else if(istype(attacking_item, /obj/item/stack/sheet/mineral/titanium))
-		build_with_titanium(attacking_item, user)
+		return .
+
+	if(istype(tool, /obj/item/stack/rods))
+		build_with_rods(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(ismetaltile(tool))
+		build_with_floor_tiles(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/thermoplastic))
+		build_with_transport_tiles(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/sheet/mineral/titanium))
+		build_with_titanium(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
 /turf/open/openspace/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles)
 	if(!CanCoverUp())
@@ -149,10 +165,40 @@
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
-	var/atom/movable/our_movable = pass_info.requester_ref.resolve()
+	if(pass_info?.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
+		return TRUE
+	var/atom/movable/our_movable = pass_info.requester_ref?.resolve()
 	if(our_movable && !our_movable.can_z_move(DOWN, src, null, ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
 		return TRUE
 	return FALSE
+
+/// Bakes the static part of openspace's ground passability.
+/turf/open/openspace/nav_bake_pathing_pass(dir, list/edge_blockers)
+	// Ground movers may path across openspace when its downward fall path is
+	// already blocked (for example by a lattice or catwalk). Flying movers can
+	// always use the horizontal edge.
+	var/turf/below = GET_TURF_BELOW(src)
+	if(zPassOut(DOWN) && below?.zPassIn(DOWN))
+		return NAV_FLIGHT(dir)
+	return NAV_GROUND(dir) | NAV_FLIGHT(dir)
+
+/turf/open/openspace/nav_dirty_vertical_dependents()
+	// Ground edges on our horizontal neighbours depend on whether our downward
+	// fall path is blocked, so a change below us invalidates those edges too.
+	if(!SSnavmap.initialized || SSnavmap.startup_finalization_pending)
+		for(var/horizontal_dir in GLOB.cardinals)
+			var/turf/edge_neighbor = get_step(src, horizontal_dir)
+			if(edge_neighbor)
+				SSnavmap.record_startup_dirty_coordinate(edge_neighbor)
+		return
+	for(var/horizontal_dir in GLOB.cardinals)
+		var/turf/edge_neighbor = get_step(src, horizontal_dir)
+		if(!edge_neighbor)
+			continue
+		edge_neighbor.nav_pass = null
+		edge_neighbor.nav_blockers = null
+		SSnavmap.queue_turf_bake(edge_neighbor)
+		navmap_pathfinder_update(edge_neighbor.x, edge_neighbor.y, edge_neighbor.z, 0, edge_neighbor.get_nav_cost_flags())
 
 /turf/open/openspace/replace_floor(turf/open/new_floor_path, flags)
 	if (!initial(new_floor_path.overfloor_placed))

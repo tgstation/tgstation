@@ -11,11 +11,11 @@
 	item_flags = CRUEL_IMPLEMENT
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 	custom_price = PAYCHECK_COMMAND
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 
 /obj/item/autopsy_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isliving(interacting_with))
@@ -25,7 +25,7 @@
 
 	var/mob/living/scanned = interacting_with
 
-	if(scanned.stat != DEAD && !HAS_TRAIT(scanned, TRAIT_FAKEDEATH)) // good job, you found a loophole
+	if(!IS_DEAD_OR_FAKING(scanned)) // good job, you found a loophole
 		to_chat(user, span_deadsay("[icon2html(src, user)] ERROR! CANNOT SCAN LIVE CADAVERS. PROCURE HEALTH ANALYZER OR TERMINATE PATIENT."))
 		return ITEM_INTERACT_BLOCKING
 
@@ -44,7 +44,7 @@
 	user.visible_message(span_notice("[user] scans [scanned]'s cadaver."))
 	to_chat(user, span_deadsay("[icon2html(src, user)] ANALYZING CADAVER."))
 
-	healthscan(user, scanned, advanced = TRUE)
+	healthscan(user, scanned, scanpower = SCANPOWER_ADVANCED)
 
 	add_fingerprint(user)
 
@@ -147,8 +147,8 @@
 						<td>-</td>\
 						<td><u>Missing</u></td></tr>"
 				continue
-			var/status = organ.get_status_text(advanced = TRUE, add_tooltips = FALSE, colored = FALSE)
-			var/appendix = organ.get_status_appendix(advanced = TRUE, add_tooltips = FALSE)
+			var/status = organ.get_status_text(scanpower = SCANPOWER_ADVANCED, add_tooltips = FALSE, colored = FALSE)
+			var/appendix = organ.get_status_appendix(scanpower = SCANPOWER_ADVANCED, add_tooltips = FALSE)
 			if(!status)
 				status ||= "OK" // otherwise flawless organs have no status reported by default
 			organreport += "<tr>\
@@ -179,7 +179,7 @@
 		if(humantarget.has_dna() && humantarget.dna.stability != initial(humantarget.dna.stability))
 			autopsy_information += "<b>Genetic Stability:</b> [humantarget.dna.stability]%.</br>"
 		var/datum/species/targetspecies = humantarget.dna.species
-		var/disguised = !ishumanbasic(humantarget) && istype(humantarget.head, /obj/item/clothing/head/hooded/human_head) && istype(humantarget.wear_suit, /obj/item/clothing/suit/hooded/bloated_human)
+		var/disguised = !ishumanbasic(humantarget) && HAS_TRAIT(humantarget, TRAIT_HUMAN_DISGUISE)
 		var/species_name = "[disguised ? "\"[/datum/species/human::name]\"" : targetspecies.name][mutant ? "-derived mutant" : ""]"
 		autopsy_information += "<b>Species:</b> [species_name]</br>"
 		autopsy_information += "<b>Core temperature:</b> [round(humantarget.coretemperature-T0C, 0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)</br>"
@@ -193,6 +193,8 @@
 			autopsy_information += "Desiccation, commonly caused by Changelings.</br>"
 		else if(HAS_TRAIT_FROM(scanned, TRAIT_HUSK, SKELETON_TRAIT))
 			autopsy_information += "Stripped flesh.</br>"
+		else if(HAS_TRAIT_FROM(scanned, TRAIT_HUSK, /datum/status_effect/zombie::id))
+			autopsy_information += "Zombification.</br>"
 		else if(!HAS_TRAIT_FROM(scanned, TRAIT_HUSK, BURN)) // prioritize showing unknown causes over burns
 			autopsy_information += "Unknown causes.</br>"
 		else

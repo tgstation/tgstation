@@ -13,6 +13,7 @@
 	armor_type = /datum/armor/item_modular_computer
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	interaction_flags_mouse_drop = NEED_HANDS | ALLOW_RESTING
+	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 	///The ID currently stored in the computer.
 	var/obj/item/card/id/stored_id
@@ -153,6 +154,12 @@
 	install_default_programs()
 	register_context()
 	update_appearance()
+	ADD_TRAIT(src, TRAIT_PASS_ID_ACCESS_IN_CONTENTS, INNATE_TRAIT)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/modular_computer/LateInitialize()
+	if(SStts.tts_enabled)
+		voice = SStts.computer_voice
 
 ///Initialize the shell for this item, or the physical machinery it belongs to.
 /obj/item/modular_computer/proc/add_shell_component(capacity = SHELL_CAPACITY_MEDIUM, shell_flags = NONE)
@@ -411,6 +418,17 @@
 		var/response = tgui_alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", list("Yes", "No"))
 		if(response == "Yes")
 			turn_on(user)
+
+/obj/item/modular_computer/emp_act(severity)
+	. = ..()
+	if (. & EMP_PROTECT_CONTENTS)
+		return
+
+	if(internal_cell)
+		internal_cell.emp_act(severity)
+		handle_power(1 SECONDS)
+
+	on_saboteur(src, (1 MINUTES / severity))
 
 /obj/item/modular_computer/emag_act(mob/user, obj/item/card/emag/emag_card, forced)
 	if(!enabled && !forced)
@@ -781,6 +799,7 @@
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 		physical.visible_message(span_notice("\The [src] shuts down."))
 	enabled = FALSE
 	update_appearance()
@@ -803,7 +822,7 @@
 
 /obj/item/modular_computer/ui_action_click(mob/user, actiontype)
 	if(!issilicon(user))
-		playsound(src, SFX_KEYBOARD_CLICKS, 10, TRUE, FALSE)
+		playsound(src, /datum/sound_effect/keyboard_clicks, 10, TRUE, FALSE)
 	if(istype(actiontype, /datum/action/item_action/toggle_computer_light))
 		toggle_flashlight(user)
 		return
@@ -820,8 +839,7 @@
 	if(!has_light || !internal_cell?.charge)
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, disabled_time))
-		if(user)
-			balloon_alert(user, "disrupted!")
+		user?.balloon_alert(user, "disrupted!")
 		return FALSE
 	set_light_on(!light_on)
 	update_appearance()

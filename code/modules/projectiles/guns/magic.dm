@@ -104,7 +104,7 @@
 	return ..()
 
 /obj/item/gun/magic/can_shoot()
-	return charges
+	return ..() && charges > 0
 
 /obj/item/gun/magic/recharge_newshot()
 	if (!charges || !chambered || chambered.loaded_projectile)
@@ -144,7 +144,7 @@
 		recharge_newshot()
 	return 1
 
-/obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
+/obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, span_warning("\The [src] whizzles quietly."))
 
 /obj/item/gun/magic/suicide_act(mob/living/user)

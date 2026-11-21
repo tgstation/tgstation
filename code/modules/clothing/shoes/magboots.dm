@@ -14,6 +14,7 @@
 	resistance_flags = FIRE_PROOF
 	clothing_flags = parent_type::clothing_flags | STOPSPRESSUREDAMAGE
 	slowdown = SHOES_SLOWDOWN
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75)
 	/// Whether the magpulse system is active
 	var/magpulse = FALSE
 	/// Slowdown applied wwhen magpulse is active. This is added onto existing slowdown
@@ -24,6 +25,14 @@
 	var/magpulse_fishing_modifier = 8
 	/// How much do these boots affect fishing when not active
 	var/fishing_modifier = 4
+	/// Footstep SFX when the magboots are off
+	var/list/inactive_step_sounds = list('sound/items/modsuit/rigstep_medium.ogg')
+	/// Footstep SFX when the magboots are on
+	var/list/active_step_sounds = list('sound/items/modsuit/rigstep_chonk.ogg')
+
+/obj/item/clothing/shoes/magboots/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/shoe_footstep, inactive_step_sounds, volume = 50)
 
 /obj/item/clothing/shoes/magboots/Initialize(mapload)
 	. = ..()
@@ -45,9 +54,7 @@
 			AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 	magpulse_fishing_modifier = fishing_modifier
 
-/obj/item/clothing/shoes/magboots/verb/toggle()
-	set name = "Toggle Magboots"
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/shoes/magboots, toggle, usr, "Toggle Magboots", null)
 
 	if(!can_use(usr))
 		return
@@ -62,6 +69,7 @@
 			AddElement(/datum/element/adjust_fishing_difficulty, magpulse_fishing_modifier)
 		else if(magpulse_fishing_modifier != fishing_modifier)
 			RemoveElement(/datum/element/adjust_fishing_difficulty)
+		AddComponent(/datum/component/shoe_footstep, active_step_sounds, volume = 50)
 	else
 		if(fishing_modifier)
 			AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
@@ -69,6 +77,7 @@
 			RemoveElement(/datum/element/adjust_fishing_difficulty)
 		detach_clothing_traits(active_traits)
 		slowdown -= slowdown_active
+		AddComponent(/datum/component/shoe_footstep, inactive_step_sounds, volume = 50)
 
 	update_appearance()
 	balloon_alert(user, "mag-pulse [magpulse ? "enabled" : "disabled"]")
@@ -92,6 +101,8 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	magpulse_fishing_modifier = 3
 	fishing_modifier = 0
+	inactive_step_sounds = list('sound/items/modsuit/rigstep.ogg')
+	active_step_sounds = list('sound/items/modsuit/rigstep_medium.ogg')
 
 /obj/item/clothing/shoes/magboots/syndie
 	name = "blood-red magboots"
@@ -100,3 +111,4 @@
 	base_icon_state = "syndiemag"
 	magpulse_fishing_modifier = 6
 	fishing_modifier = 3
+	active_step_sounds = list('sound/items/modsuit/rigstep_heavy.ogg')

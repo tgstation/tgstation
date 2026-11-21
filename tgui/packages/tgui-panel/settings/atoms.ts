@@ -4,6 +4,7 @@ import type { HighlightSetting, HighlightState, SettingsState } from './types';
 
 export const defaultSettings: SettingsState = {
   adminMusicVolume: 0.5,
+  eagerCommandBarSuggestions: true,
   fontFamily: FONTS[0],
   fontSize: 13,
   initialized: false,
@@ -17,6 +18,8 @@ export const defaultSettings: SettingsState = {
     visible: false,
     activeTab: SETTINGS_TABS[0].id,
   },
+  websocketEnabled: false,
+  websocketServer: '',
 };
 
 export const defaultHighlightSetting: HighlightSetting = {
@@ -27,6 +30,11 @@ export const defaultHighlightSetting: HighlightSetting = {
   matchWord: false,
   matchCase: false,
   enabled: true,
+  playSound: false,
+  soundFile: 'sound/misc/highlight_sounds/Beep.ogg',
+  soundVolume: 0.5,
+  jobFilter: '',
+  characterFilter: [],
 };
 
 export const defaultHighlights: HighlightState = {

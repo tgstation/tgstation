@@ -100,7 +100,7 @@
 	var/long_term_power = 10
 	///Automatically name the APC after the area is in
 	var/auto_name = FALSE
-	///Time to allow the APC to regain some power and to turn the channels back online
+	///Time to allow the APC to regain some power and to turn the channels back online in seconds
 	var/failure_timer = 0
 	///Forces an update on the power use to ensure that the apc has enough power
 	var/force_update = FALSE
@@ -124,8 +124,6 @@
 	var/datum/alarm_handler/alarm_manager
 	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
 	var/offset_old
-	/// Used for apc helper called cut_AI_wire to make apc's wore responsible for ai connectione mended.
-	var/cut_AI_wire = FALSE
 	/// Used for apc helper called unlocked to make apc unlocked.
 	var/unlocked = FALSE
 	/// Used for apc helper called syndicate_access to make apc's required access syndicate_access.
@@ -243,6 +241,7 @@
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 
 /obj/machinery/power/apc/Destroy()
+	SSmachines.processing_apcs -= src
 	if(malfai)
 		malfai.hacked_apcs -= src
 		malfai = null
@@ -263,17 +262,21 @@
 		if(NORTH)
 			offset_old = pixel_y
 			pixel_y = APC_PIXEL_OFFSET
+			pixel_x = 0
 		if(SOUTH)
 			offset_old = pixel_y
 			pixel_y = -APC_PIXEL_OFFSET
+			pixel_x = 0
 		if(EAST)
 			offset_old = pixel_x
 			pixel_x = APC_PIXEL_OFFSET
+			pixel_y = 0
 		if(WEST)
 			offset_old = pixel_x
 			pixel_x = -APC_PIXEL_OFFSET
+			pixel_y = 0
 
-	var/image/hud_image = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked")
+	var/image/hud_image = image(icon = DEFAULT_HUDS_DMI, icon_state = "apc_hacked")
 	hud_image.pixel_w = pixel_x
 	hud_image.pixel_z = pixel_y
 	hud_list = list(
@@ -282,8 +285,8 @@
 
 /obj/machinery/power/apc/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
-	disrupt_duration *= 0.1 // so, turns out, failure timer is in seconds, not deciseconds; without this, disruptions last 10 times as long as they probably should
-	energy_fail(disrupt_duration)
+	// failure timer is in seconds, not deciseconds, so we need to convert
+	energy_fail(disrupt_duration * 0.1)
 	return TRUE
 
 /obj/machinery/power/apc/on_set_is_operational(old_value)
@@ -575,6 +578,12 @@
 		total_static_energy_usage += APC_CHANNEL_IS_ON(environ) * area.energy_usage[AREA_USAGE_STATIC_ENVIRON]
 	area.clear_usage()
 
+	if(malfai && COOLDOWN_FINISHED(src, malf_ai_pt_generation) && !(machine_stat & (BROKEN|MAINT)) && !failure_timer && (total_static_energy_usage + 60 KILO JOULES) <= (terminal?.surplus() + cell.charge) && malfai.malf_picker.processing_time < MALF_MAX_PP)
+	//if we're hacked, we're off point cooldown, we're not broken or off temporarily, we can gather enough power, and our ai can take more points
+		total_static_energy_usage += 60 KILO JOULES
+		COOLDOWN_START(src, malf_ai_pt_generation, 30 SECONDS)
+		malfai.malf_picker.processing_time += 1
+
 	if(total_static_energy_usage) //Use power from static power users.
 		var/grid_used = min(terminal?.surplus(), total_static_energy_usage)
 		terminal?.add_load(grid_used)
@@ -589,7 +598,7 @@
 	if(!area?.requires_power)
 		return
 	if(failure_timer)
-		failure_timer--
+		failure_timer = max(0, failure_timer - seconds_per_tick)
 		force_update = TRUE
 		return
 
@@ -597,10 +606,6 @@
 		hacked_flicker_counter = hacked_flicker_counter - 1
 		if(hacked_flicker_counter <= 0)
 			flicker_hacked_icon()
-
-	if(malfai && COOLDOWN_FINISHED(src, malf_ai_pt_generation) && cell.use(60 KILO JOULES) > 0 && malfai.malf_picker.processing_time < MALF_MAX_PP) // Over time generation of malf points for the ai controlling it, costs a bit of power
-		COOLDOWN_START(src, malf_ai_pt_generation, 30 SECONDS)
-		malfai.malf_picker.processing_time += 1
 
 	//dont use any power from that channel if we shut that power channel off
 	if(operating)
@@ -660,11 +665,12 @@
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			//If nightlights are on, and we're recovering from low power/nightlight event, we'll remove it.
-			var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
-			if(nightshift_lights && (nightshift_disabled || low_power_nightshift_lights))
+			//At this point the APC is fully powered. If we've swapped to night lights because of low power then
+			//that gets undone here. The night lights are disabled depending on nightshift or security level.
+			if(nightshift_lights && low_power_nightshift_lights)
 				low_power_nightshift_lights = FALSE
-				if(nightshift_disabled)
+				var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
+				if(nightshift_disabled || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 					INVOKE_ASYNC(src, PROC_REF(set_nightshift), FALSE)
 			if(cell_percent > APC_CHANNEL_ALARM_TRESHOLD)
 				alarm_manager.clear_alarm(ALARM_POWER)
@@ -807,6 +813,7 @@
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 /// Returns the amount of time it will take the APC at its current trickle charge rate to reach a charge level. If the APC is functionally not charging, returns null.
 /obj/machinery/power/apc/proc/time_to_charge(joules)

@@ -8,6 +8,7 @@
 	if(isopenturf(loc) && !isProbablyWallMounted(src))
 		SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
 		layer = HIGH_TURF_LAYER
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/plaque/static_plaque/get_mountable_objects()
 	return list()
@@ -19,15 +20,17 @@
 /obj/structure/plaque/static_plaque/atmos
 	name = "\improper FEA Atmospherics Division plaque"
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
+	icon_state = "atmosplaque"
+	base_icon_state = "atmosplaque"
+	custom_sprite = TRUE
 
 /obj/structure/plaque/static_plaque/thunderdome
 	name = "\improper Thunderdome plaque"
-	desc = "This plaque commemorates those who have fallen in glorious combat.  For all the charred, dizzy, and beaten men who have died in its hands."
+	desc = "This plaque commemorates those who have fallen in glorious combat. For all the charred, dizzy, and beaten men who have died in its hands."
 
 /obj/structure/plaque/static_plaque/golden
 	name = "The Most Robust Men Award for Robustness"
 	desc = "To be Robust is not an action or a way of life, but a mental state. Only those with the force of Will strong enough to act during a crisis, saving friend from foe, are truly Robust. Stay Robust my friends."
-	icon_state = "goldenplaque"
 
 /obj/structure/plaque/static_plaque/golden/captain
 	name = "The Most Robust Captain Award for Robustness"
@@ -40,14 +43,11 @@
 /obj/structure/plaque/static_plaque/golden/commission
 	name = "commission plaque"
 	desc = "Spinward Sector Station SS-13\n'Runtime' Class Outpost\nCommissioned 03/11/2556\n'Dedicated to the Pioneers'"
-	icon_state = "commission_nt"
+	icon_state = "goldcommissionplaque"
+	base_icon_state = "goldcommissionplaque"
 	layer = BELOW_OPEN_DOOR_LAYER
 
 //Current stations
-
-// Catwalk: added Apr 10, 2025 (#90532)
-/obj/structure/plaque/static_plaque/golden/commission/catwalk
-	desc = "Spinward Sector Station SS-13\n'Catwalk' Class Outpost\nCommissioned 10/04/2565\n'The New Level'"
 
 // Deltastation: added Dec 17, 2016 (#22066)
 /obj/structure/plaque/static_plaque/golden/commission/delta
@@ -69,9 +69,9 @@
 /obj/structure/plaque/static_plaque/golden/commission/tram
 	desc = "Spinward Sector Station SS-13\n'Tram' Class Outpost\nCommissioned 11/03/2561\n'Making Moves'"
 
-// Wawastation: added Jun 4, 2024 (#82298)
-/obj/structure/plaque/static_plaque/golden/commission/wawa
-	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 04/06/2564\n'Forever Vertical'"
+// Kilostation: added Nov 13, 2019 (#46968), removed, readded Jul 7, 2026 (#96447)
+/obj/structure/plaque/static_plaque/golden/commission/kilo
+	desc = "Spinward Sector Station SS-13\n'Kilo' Class Outpost\nCommissioned 13/11/2559\nDecommissioned\nRecommissioned 7/7/2566'Forever Different'"
 
 //Removed stations
 
@@ -111,10 +111,6 @@
 /obj/structure/plaque/static_plaque/golden/commission/efficiency
 	desc = "Spinward Sector Station SS-07\n'Efficiency' Class Outpost\nCommissioned 28/01/2556\nDecommissioned 20/12/2556\n'Work Smarter, Not Harder'"
 
-// Kilostation: added Nov 13, 2019 (#46968), removed
-/obj/structure/plaque/static_plaque/golden/commission/kilo
-	desc = "Spinward Sector Station SS-13\n'Kilo' Class Outpost\nCommissioned 13/11/2559\nDecommissioned \n'Forever Different'"
-
 // Ministation: added Jan 29, 2014 (7a76e9456b782e6626bf81e27a912d8232c76b18), removed Dec 27, 2016 (#22453)- 2 years, 10 months, 28 days
 /obj/structure/plaque/static_plaque/golden/commission/mini
 	desc = "Spinward Sector Station SS-08\n'Mini' Class Outpost\nCommissioned 29/01/2554\nDecommissioned 27/12/2556\n'The Littlest Station'"
@@ -135,42 +131,60 @@
 /obj/structure/plaque/static_plaque/golden/commission/birdshot
 	desc = "Spinward Sector Station SS-13\n'Birdshot' Class Outpost\nCommissioned 29/04/2563\nDecommissioned 09/07/2565\n'Shooting for the Stars'"
 
+// Wawastation: added Jun 4, 2024 (#82298), removed Jul 7, 2026 (#96447) - 2 years, 1 month, 3 days
+/obj/structure/plaque/static_plaque/golden/commission/wawa
+	desc = "Spinward Sector Station SS-13\n'Wawa' Class Outpost\nCommissioned 04/06/2564\nDecomissioned 9/07/2565\n'Forever Vertical'"
+
+// Catwalk: added Apr 10, 2025 (#90532), removed late 2026 (#98342) - 1 year, 8 months, 20+ days
+/obj/structure/plaque/static_plaque/golden/commission/catwalk
+	desc = "Spinward Sector Station SS-13\n'Catwalk' Class Outpost\nCommissioned 10/04/2565\nDecommissioned late 2566\n'The New Level'"
+
 // Other Stations
 
 // Space Station 13, Developer Class Outpost, Station Commissioned 30.12.2322, For the Glory of the Workers of the Third Soviet Union
 // The date for this station is exactly 4 centuries after the initial foundation of the (1st) Soviet Union. I have very little interest in tracking down the actual date of addition of Originalstation.
 /obj/structure/plaque/static_plaque/golden/commission/ks13
 	desc = "космическая-станция-13\nфорпост класса разработчика\nстанция сдана 30.12.2322\nво славу тружеников третьего советского союза"
-	icon_state = "commission_commie"
+	icon_state = "commissionplaque"
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT)
 
-//These are plaques that aren't made of metal, so we'll just consider them signs. Those are made of plastic (default) or wood, not gold.
-//See: code>game>objects>structures>signs>_signs.dm
+/obj/structure/plaque/kiddie
+	name = "\improper kiddie plaque"
+	icon_state = "kiddieplaque"
+	base_icon_state = "kiddieplaque"
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
-/obj/structure/sign/plaques/kiddie
+/obj/structure/plaque/kiddie/developer
 	name = "\improper AI developers plaque"
 	desc = "Next to the extremely long list of names and job titles, there is a drawing of a little child. The child appears to be disabled. Beneath the image, someone has scratched the word \"PACKETS\"."
-	icon_state = "kiddieplaque"
+	engraved = TRUE
 
-/obj/structure/sign/plaques/kiddie/devils_tooth
+/obj/structure/plaque/kiddie/devils_tooth
 	name = "\improper Devil's Tooth Plaque"
 	desc = "A plaque commemorating the fallen souls who had to die tunneling out this segment of the frozen ice planet that surrounds it. It's named \"Devil's Tooth\" because those who laid down their life here surely thought they were in hell."
+	engraved = TRUE
 
-/obj/structure/sign/plaques/kiddie/badger
+/obj/structure/plaque/kiddie/badger
 	name = "\improper Remembrance Plaque"
 	desc = "A plaque commemorating the fallen, may they rest in peace, forever asleep amongst the stars. Someone has drawn a picture of a crying badger at the bottom."
+	engraved = TRUE
 
-/obj/structure/sign/plaques/kiddie/library
+/obj/structure/plaque/kiddie/library
 	name = "\improper Library Rules Sign"
 	desc = "A long list of rules to be followed when in the library, extolling the virtues of being quiet at all times and threatening those who would dare eat hot food inside."
+	engraved = TRUE
 
-/obj/structure/sign/plaques/kiddie/perfect_man
+/obj/structure/plaque/kiddie/perfect_man
 	name = "\improper 'Perfect Man' sign"
 	desc = "A guide to the exhibit, explaining how recent developments in mindshield implant and cloning technologies by Nanotrasen Corporation have led to the development and the effective immortality of the 'perfect man', the loyal Nanotrasen Employee."
+	engraved = TRUE
 
-/obj/structure/sign/plaques/kiddie/perfect_drone
+/obj/structure/plaque/kiddie/perfect_drone
 	name = "\improper 'Perfect Drone' sign"
 	desc = "A guide to the drone shell dispenser, detailing the constructive and destructive applications of modern repair drones, as well as the development of the incorruptible cyborg servants of tomorrow, available today."
+	engraved = TRUE
 
-/obj/structure/sign/plaques/kiddie/gameoflife
+/obj/structure/plaque/kiddie/gameoflife
 	name = "\improper Conway's The Game Of Life plaque"
 	desc = "A plaque detailing the historical significance of The Game Of Life in the field of computer science, and that the mural underfoot is a representation of the game in action."
+	engraved = TRUE

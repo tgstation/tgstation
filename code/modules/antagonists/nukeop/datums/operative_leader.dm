@@ -1,6 +1,8 @@
 /datum/antagonist/nukeop/leader
 	name = "Nuclear Operative Leader"
 	nukeop_outfit = /datum/outfit/syndicate/leader
+	/// Whether to spawn the infiltrator
+	var/spawn_ship = TRUE
 	/// Randomly chosen honorific, for distinction
 	var/title
 	/// The nuclear challenge remote we will spawn this player with.
@@ -63,7 +65,8 @@
 	return capitalize(newname)
 
 /datum/antagonist/nukeop/leader/create_team(datum/team/nuclear/new_team)
-	spawn_infiltrator()
+	if(spawn_ship)
+		spawn_infiltrator()
 	if(new_team)
 		return ..()
 	// Leaders always make new teams

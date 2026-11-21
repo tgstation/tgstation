@@ -97,7 +97,7 @@
 /datum/action/item_action/chameleon/change/proc/format_readable_name(datum/format_type)
 	if(ispath(format_type, /obj/item))
 		var/obj/item/format_item = format_type
-		return "[format_item::name] ([replacetext(format_item::post_init_icon_state || format_item::icon_state, "_", " ")])"
+		return "[format_item::name] ([replacetext(INITIAL_ICON_STATE(format_item), "_", " ")])"
 
 	return "[format_type]"
 
@@ -145,7 +145,7 @@
 	var/atom/atom_target = target
 	atom_target.name = picked_item::name
 	atom_target.desc = picked_item::desc
-	atom_target.icon_state = picked_item::post_init_icon_state || picked_item::icon_state
+	atom_target.icon_state = INITIAL_ICON_STATE(picked_item)
 
 	if(isitem(atom_target))
 		var/obj/item/item_target = target

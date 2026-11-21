@@ -11,10 +11,6 @@
 /datum/movespeed_modifier/monkey_temperature_speedmod
 	variable = TRUE
 
-/datum/movespeed_modifier/hunger
-	movetypes = GROUND|FLYING
-	variable = TRUE
-
 /datum/movespeed_modifier/golem_hunger
 	variable = TRUE
 
@@ -161,9 +157,6 @@
 
 /datum/movespeed_modifier/grown_killer_tomato
 	variable = TRUE
-
-/datum/movespeed_modifier/goliath_mount
-	multiplicative_slowdown = -27.5
 
 /datum/movespeed_modifier/goldgrub_mount
 	multiplicative_slowdown = -4.5

@@ -9,7 +9,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/bot/secbot/super_beepsky
 	baton_type = /obj/item/melee/energy/sword/saber
 	speed = 4 //he's a fast fucker
-	///chance we block bullets
+	///chance we block melee attacks
 	var/block_chance = 50
 	///is our sword currently active?
 	var/sword_active = FALSE
@@ -45,10 +45,10 @@
 /mob/living/basic/bot/secbot/grievous/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
 
-	if(stat != CONSCIOUS )
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return NONE
 
-	if(!sword_active || !prob(block_chance))
+	if(!sword_active)
 		return NONE
 
 	visible_message(span_warning("[source] deflects [hitting_projectile] with its energy swords!"))
@@ -57,7 +57,7 @@
 
 /mob/living/basic/bot/secbot/grievous/on_entered(datum/source, atom/movable/movable_target)
 	. = ..()
-	if(!ismob(movable_target) || !ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] == movable_target)
+	if(!ismob(movable_target) || !ai_controller.blackboard[BB_CURRENT_TARGET] == movable_target)
 		return
 	visible_message(span_warning("[src] flails his swords and cuts [movable_target]!"))
 	playsound(src, 'sound/mobs/non-humanoids/beepsky/beepskyspinsabre.ogg' , 100, TRUE, -1)
@@ -84,7 +84,7 @@
 /mob/living/basic/bot/secbot/grievous/explode()
 	var/atom/drop_location = drop_location()
 	//Parent is dropping the weapon, so let's drop 3 more to make up for it.
-	for(var/i in 0 to 3)
+	for(var/i in 1 to 3)
 		drop_part(baton_type, drop_location)
 
 	return ..()
@@ -97,3 +97,6 @@
 	maxHealth = 50
 	block_chance = 0
 	baton_type = /obj/item/toy/sword
+
+/mob/living/basic/bot/secbot/grievous/toy/block_bullets(datum/source, obj/projectile/hitting_projectile)
+	return NONE

@@ -43,6 +43,7 @@
 	job_flags = STATION_JOB_FLAGS
 
 	rpg_title = "Undertaker"
+	tgui_icon = FA_ICON_SKULL
 
 /datum/outfit/job/coroner
 	name = "Coroner"
@@ -56,7 +57,7 @@
 		/obj/item/storage/medkit/coroner = 1,
 	)
 
-	belt = /obj/item/modular_computer/pda/coroner
+	belt = /obj/item/modular_computer/pda/crew/coroner
 	ears = /obj/item/radio/headset/headset_srvmed
 	gloves = /obj/item/clothing/gloves/latex/coroner
 	head = /obj/item/clothing/head/utility/surgerycap/black
@@ -73,3 +74,5 @@
 	messenger = /obj/item/storage/backpack/messenger/coroner
 
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/medical/coroner

@@ -16,6 +16,8 @@
 	var/datum/lazy_template/virtual_domain/generated_domain
 	/// If the current domain was a random selection
 	var/domain_randomized = FALSE
+	/// Whether the domain is finished, so the bitrunners can leave despite glitches
+	var/domain_complete = FALSE
 	/// Prevents multiple user actions. Handled by loading domains and cooldowns
 	var/is_ready = TRUE
 	/// Chance multipled by threat to spawn a glitch

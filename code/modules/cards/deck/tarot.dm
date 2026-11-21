@@ -22,7 +22,7 @@
 	if(prob(50))
 		var/obj/item/toy/singlecard/card = .
 		if(!card)
-			return FALSE
+			return
 
 		var/matrix/M = matrix()
 		M.Turn(180)

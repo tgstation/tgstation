@@ -10,7 +10,7 @@
 	var/obj/item/template_item_type
 
 /datum/hallucination/fake_item/start()
-	if(hallucinator.stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(hallucinator))
 		return FALSE
 
 	var/list/slots_free = list()
@@ -91,7 +91,7 @@
 	if((equip_flags & ITEM_SLOT_HANDS) && prob(30))
 		// Yes this can break if someone changes baton icon stuff
 		hallucinated_item.icon_state = "[hallucinated_item.icon_state]_active"
-		hallucinator.playsound_local(get_turf(hallucinator), SFX_SPARKS, 75, TRUE, -1)
+		hallucinator.playsound_local(get_turf(hallucinator), /datum/sound_effect/sparks, 75, TRUE, -1)
 
 	return hallucinated_item
 

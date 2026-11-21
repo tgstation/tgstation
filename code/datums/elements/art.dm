@@ -30,7 +30,7 @@
 			msg = "[source.p_Theyre()] fair to middling, enough to be called an \"art object\"."
 		if (0 to BAD_ART)
 			user.add_mood_event("artbad", /datum/mood_event/artbad)
-			msg = "Wow, [source.p_they()] sucks."
+			msg = "Wow, [source.p_they()] suck[source.p_s()]."
 
 	user.visible_message(span_notice("[user] stops and looks intently at [source]."), \
 		span_notice("You appraise [source]... [msg]"))
@@ -60,7 +60,7 @@
 		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("subversive", "revolutionary", "unitizing", "egalitarian")]!"
 	else
 		user.add_mood_event("artbad", /datum/mood_event/artbad)
-		msg = "Wow, [source.p_they()] sucks."
+		msg = "Wow, [source.p_they()] suck[source.p_s()]."
 
 	user.visible_message(span_notice("[user] stops to inspect [source]."), \
 		span_notice("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))
@@ -84,7 +84,7 @@
 		msg = "What \a [pick("masterpiece", "chef-d'oeuvre")] [source.p_theyre()]. So [pick("relatable", "down to earth", "true", "real")]!"
 	else
 		user.add_mood_event("artbad", /datum/mood_event/artbad)
-		msg = "Wow, [source.p_they()] sucks."
+		msg = "Wow, [source.p_they()] suck[source.p_s()]."
 
 	user.visible_message(span_notice("[user] stops to inspect [source]."), \
 		span_notice("You appraise [source], inspecting the fine craftsmanship of the proletariat... [msg]"))

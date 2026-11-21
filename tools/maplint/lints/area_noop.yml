@@ -9,7 +9,7 @@
   skip_files:
     - _maps/map_files/tramstation/maintenance_modules
     - _maps/modular_generic
-    - _maps/shuttles/emergency_scrapheap
+    - _maps/shuttles/emergency/emergency_scrapheap
     - _maps/templates
     - _maps/minigame/deathmatch/OSHA_Violator.dmm
     - _maps/minigame/deathmatch/maint_mania.dmm

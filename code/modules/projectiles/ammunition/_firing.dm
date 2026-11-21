@@ -1,6 +1,8 @@
 /obj/item/ammo_casing/proc/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	distro += variance
-	var/targloc = get_turf(target)
+	var/turf/targloc = get_turf(target)
+	if(isnull(targloc) || isnull(get_turf(fired_from)))
+		return FALSE
 	ready_proj(target, user, quiet, zone_override, fired_from)
 	var/obj/projectile/thrown_proj
 	if(pellets == 1)

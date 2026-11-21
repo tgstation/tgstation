@@ -1,0 +1,2 @@
+/turf/closed/indestructible/rock/snow/ice : /turf/closed/indestructible/ice{@OLD}
+/turf/closed/indestructible/rock/snow/ice/ore : /turf/closed/indestructible/rock/snow/ore{@OLD}

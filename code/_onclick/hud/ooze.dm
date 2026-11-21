@@ -1,5 +1,5 @@
 ///Hud type with targeting dol and a nutrition bar
-/datum/hud/ooze/initialize_screen_objects()
+/datum/hud/living/ooze/initialize_screen_objects()
 	. = ..()
 	add_screen_object(/atom/movable/screen/zone_sel, HUD_MOB_ZONE_SELECTOR, HUD_GROUP_STATIC, ui_style)
 	add_screen_object(/atom/movable/screen/ooze_nutrition_display, HUD_OOZE_NUTRITION_DISPLAY)

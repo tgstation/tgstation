@@ -24,6 +24,12 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	var/next_page = FALSE
 	var/tooltips = FALSE
 	var/tooltip_theme
+	/// The info button we made for the current choice, if it has one
+	var/obj/effect/abstract/info/owned_info
+
+/atom/movable/screen/radial/slice/Destroy()
+	QDEL_NULL(owned_info)
+	return ..()
 
 /atom/movable/screen/radial/slice/set_parent(new_value)
 	. = ..()
@@ -51,6 +57,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		closeToolTip(usr)
 
 /atom/movable/screen/radial/slice/Click(location, control, params)
+	if(QDELETED(parent))
+		return
 	if(usr.client == parent.current_user)
 		if(next_page)
 			parent.next_page()
@@ -70,6 +78,8 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	icon_state = "radial_center"
 
 /atom/movable/screen/radial/center/Click(location, control, params)
+	if(QDELETED(parent))
+		return
 	if(usr.client == parent.current_user)
 		parent.finished = TRUE
 
@@ -119,16 +129,34 @@ GLOBAL_LIST_EMPTY(radial_menus)
 //If we swap to vis_contens inventory these will need a redo
 /datum/radial_menu/proc/check_screen_border(mob/user)
 	var/atom/movable/AM = anchor
-	if(!istype(AM) || !AM.screen_loc)
+	if(!istype(AM))
 		return
-	if(AM in user.client.screen)
-		if(hudfix_method)
-			anchor = user
-		else
-			py_shift = 32
-			restrict_to_dir(NORTH) //I was going to parse screen loc here but that's more effort than it's worth.
-	else if(hudfix_method && AM.loc)
-		anchor = get_atom_on_turf(anchor)
+
+	var/in_screen = AM.screen_loc && (AM in user.client.screen)
+	if (!in_screen)
+		var/list/check_locs = AM.vis_locs.Copy()
+		var/i = 1
+		while (i <= length(check_locs))
+			var/atom/movable/other_check = check_locs[i]
+			i += 1
+			if (!istype(other_check))
+				continue
+			if (other_check.screen_loc && (other_check in user.client.screen))
+				in_screen = TRUE
+				break
+			check_locs |= other_check.vis_locs
+
+		if(!in_screen)
+			if(hudfix_method && AM.loc)
+				anchor = get_atom_on_turf(anchor)
+			return
+
+	if(hudfix_method)
+		anchor = user
+		return
+
+	py_shift = 32
+	restrict_to_dir(NORTH) //I was going to parse screen loc here but that's more effort than it's worth.
 
 //Sets defaults
 //These assume 45 deg min_angle
@@ -207,17 +235,18 @@ GLOBAL_LIST_EMPTY(radial_menus)
 			else
 				element.click_on_hover = TRUE
 
-/datum/radial_menu/proc/HideElement(atom/movable/screen/radial/slice/E)
-	E.cut_overlays()
-	E.vis_contents.Cut()
-	E.alpha = 0
-	E.name = "None"
-	E.maptext = null
-	E.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	E.choice = null
-	E.next_page = FALSE
+/datum/radial_menu/proc/HideElement(atom/movable/screen/radial/slice/element)
+	QDEL_NULL(element.owned_info)
+	element.cut_overlays()
+	element.vis_contents.Cut()
+	element.alpha = 0
+	element.name = "None"
+	element.maptext = null
+	element.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	element.choice = null
+	element.next_page = FALSE
 
-/datum/radial_menu/proc/SetElement(atom/movable/screen/radial/slice/E, choice_id, angle, anim_flag, anim_order)
+/datum/radial_menu/proc/SetElement(atom/movable/screen/radial/slice/element, choice_id, angle, anim_flag, anim_order)
 	//Position
 	var/py = round(cos(angle) * radius) + py_shift
 	var/px = round(sin(angle) * radius)
@@ -225,52 +254,54 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		var/timing = anim_order * 0.5
 		var/matrix/starting = matrix()
 		starting.Scale(0.1,0.1)
-		E.transform = starting
+		element.transform = starting
 		var/matrix/TM = matrix()
-		animate(E,pixel_x = px,pixel_y = py, transform = TM, time = timing)
+		animate(element,pixel_x = px,pixel_y = py, transform = TM, time = timing)
 	else
-		E.pixel_y = py
-		E.pixel_x = px
+		element.pixel_y = py
+		element.pixel_x = px
 
 	if(anim_flag & BUTTON_FADE_IN)
-		animate(E, alpha = 255, time = 0.15 SECONDS, easing = CUBIC_EASING|EASE_OUT)
+		animate(element, alpha = 255, time = 0.15 SECONDS, easing = CUBIC_EASING|EASE_OUT)
 	else
-		E.alpha = 255
+		element.alpha = 255
 
-	E.mouse_opacity = MOUSE_OPACITY_ICON
-	E.cut_overlays()
-	E.vis_contents.Cut()
+	element.mouse_opacity = MOUSE_OPACITY_ICON
+	QDEL_NULL(element.owned_info)
+	element.cut_overlays()
+	element.vis_contents.Cut()
 	if(choice_id == NEXT_PAGE_ID)
-		E.name = "Next Page"
-		E.next_page = TRUE
-		E.icon_state = "radial_slice" // Resets the bg icon state to the default for next page buttons.
-		E.add_overlay("radial_next")
+		element.name = "Next Page"
+		element.next_page = TRUE
+		element.icon_state = "radial_slice" // Resets the bg icon state to the default for next page buttons.
+		element.add_overlay("radial_next")
 	else
 		//This isn't granted to exist, so use the ?. operator for conditionals that use it.
 		var/datum/radial_menu_choice/choice_datum = choice_datums[choice_id]
 		if(choice_datum?.name)
-			E.name = choice_datum.name
+			element.name = choice_datum.name
 		else if(istext(choices_values[choice_id]))
-			E.name = choices_values[choice_id]
+			element.name = choices_values[choice_id]
 		else if(ispath(choices_values[choice_id],/atom))
-			var/atom/A = choices_values[choice_id]
-			E.name = initial(A.name)
+			var/atom/choice_path = choices_values[choice_id]
+			element.name = initial(choice_path.name)
 		else
 			var/atom/movable/AM = choices_values[choice_id] //Movables only
-			E.name = AM.name
-		E.choice = choice_id
-		E.tooltip_theme = choice_datum?.tooltip_theme
-		E.maptext = null
-		E.next_page = FALSE
+			element.name = AM.name
+		element.choice = choice_id
+		element.tooltip_theme = choice_datum?.tooltip_theme
+		element.maptext = null
+		element.next_page = FALSE
 		if(choices_icons[choice_id])
-			E.add_overlay(choices_icons[choice_id])
+			element.add_overlay(choices_icons[choice_id])
 		if (choice_datum?.info)
-			var/obj/effect/abstract/info/info_button = new(E, choice_datum.info)
-			info_button.name = "Info: [E.name]"
+			var/obj/effect/abstract/info/info_button = new(element, choice_datum.info)
+			element.owned_info = info_button
+			info_button.name = "Info: [element.name]"
 			info_button.tooltip_theme = choice_datum.tooltip_theme
 			SET_PLANE_EXPLICIT(info_button, ABOVE_HUD_PLANE, anchor)
 			info_button.layer = RADIAL_CONTENT_LAYER
-			E.vis_contents += info_button
+			element.vis_contents += info_button
 
 /datum/radial_menu/New(display_close_button)
 	if(!display_close_button)
@@ -348,7 +379,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		current_user.images -= menu_holder
 
 /datum/radial_menu/proc/wait(atom/user, atom/anchor, require_near = FALSE)
-	while (current_user && !finished && !selected_choice)
+	while (current_user && !finished && !selected_choice && !QDELETED(user))
 		if(require_near && !in_range(anchor, user))
 			return
 		if(custom_check_callback && next_check < world.time)
@@ -369,6 +400,11 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /datum/radial_menu/Destroy()
 	Reset()
 	hide()
+	QDEL_LIST(elements)
+	QDEL_NULL(close_button)
+	menu_holder = null
+	current_user = null
+	anchor = null
 	custom_check_callback = null
 	. = ..()
 

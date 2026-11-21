@@ -78,7 +78,7 @@
 	SIGNAL_HANDLER
 
 	//death needs to be a flub, conscious means they haven't won
-	if(new_stat == CONSCIOUS || new_stat == DEAD)
+	if(new_stat == STABLE || new_stat == DEAD)
 		return
 	if(participant == chaplain)
 		end_match(opponent, chaplain)

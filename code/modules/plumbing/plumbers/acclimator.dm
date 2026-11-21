@@ -1,5 +1,5 @@
-///Same as a tier 1 chem heater
-#define HEATER_COFFICIENT 0.1
+///Same as a tier 3 chem heater
+#define HEATER_COFFICIENT 0.3
 ///Decimal point in rounding temperature
 #define TEMP_ROUNDING 0.01
 ///Minimal allowed difference temperature range
@@ -11,7 +11,7 @@
 	icon_state = "acclimator"
 	base_icon_state = "acclimator"
 	buffer = 200
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2.5
 
 	///towards wich temperature do we build?
 	var/target_temperature = 300

@@ -114,6 +114,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(try_link))
 	RegisterSignal(parent, COMSIG_SHUTTLE_TURF_SHOULD_MOVE_SPECIAL, PROC_REF(should_move_special))
 	RegisterSignal(parent, COMSIG_SHUTTLE_TURF_ON_MOVE_SPECIAL, PROC_REF(on_move_special))
+	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
 /datum/component/trapdoor/UnregisterFromParent()
 	. = ..()
@@ -126,6 +127,7 @@
 	UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
 	UnregisterSignal(parent, COMSIG_SHUTTLE_TURF_SHOULD_MOVE_SPECIAL)
 	UnregisterSignal(parent, COMSIG_SHUTTLE_TURF_ON_MOVE_SPECIAL)
+	UnregisterSignal(parent, COMSIG_ATOM_EMP_ACT)
 
 /datum/component/trapdoor/proc/try_unlink(turf/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
@@ -325,12 +327,22 @@
 	SIGNAL_HANDLER
 	new_turf.TakeComponent(src)
 
+/datum/component/trapdoor/proc/on_emp_act(datum/source, severity, protection)
+	SIGNAL_HANDLER
+
+	if(protection & EMP_PROTECT_SELF)
+		return
+
+	if(prob(75 / severity))
+		toggle_trapdoor()
+
 #undef IS_OPEN
 
 /obj/item/assembly/trapdoor
 	name = "trapdoor controller"
 	desc = "A sinister-looking controller for a trapdoor."
 	icon_state = "trapdoor"
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	///if the trapdoor isn't linked it will try to link on pulse, this shouldn't be spammable
 	COOLDOWN_DECLARE(search_cooldown)
 	///trapdoor link cooldown time here!
@@ -449,6 +461,16 @@
 	internals.pulsed(user)
 	return TRUE
 
+/obj/item/trapdoor_remote/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!(internals?.linked))
+		return
+
+	if(prob(75 / severity))
+		internals.pulsed()
+
 /obj/item/trapdoor_remote/item_ctrl_click(mob/user)
 	if (!user.is_holding(src))
 		return CLICK_ACTION_BLOCKING
@@ -464,6 +486,7 @@
 
 ///subtype with internals already included. If you're giving a department a roundstart trapdoor, this is what you want
 /obj/item/trapdoor_remote/preloaded
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.1)
 
 /obj/item/trapdoor_remote/preloaded/Initialize(mapload)
 	. = ..()
@@ -475,7 +498,7 @@
 	desc = "A kit containing all the parts needed to build a trapdoor. Can only be used on open space."
 	icon = 'icons/obj/weapons/improvised.dmi'
 	icon_state = "kitsuitcase"
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.2)
 	var/in_use = FALSE
 
 /obj/item/trapdoor_kit/Initialize(mapload)

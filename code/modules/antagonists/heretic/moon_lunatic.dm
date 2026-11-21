@@ -1,7 +1,6 @@
 // A type of antagonist created by the moon ascension
 /datum/antagonist/lunatic
 	name = "\improper Lunatic"
-	hijack_speed = 0
 	antagpanel_category = ANTAG_GROUP_HORRORS
 	show_in_antagpanel = FALSE
 	suicide_cry = "PRAISE THE RINGLEADER!!"
@@ -15,9 +14,14 @@
 	var/mob/living/carbon/human/ascended_body
 	// Our objective
 	var/datum/objective/lunatic/lunatic_obj
+	// Actions granted by this datum, tracked for proper cleanup on body transfer
+	var/datum/action/cooldown/lunatic_track/moon_track
+	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch
 
 /datum/antagonist/lunatic/on_gain()
+	owner.current.log_message("has become a Lunatic!", LOG_ATTACK, color="red")
 	// Masters gain an objective before so we dont want duplicates
+	. = ..()
 	for(var/objective in objectives)
 		if(!istype(objective, /datum/objective/lunatic))
 			continue
@@ -25,6 +29,18 @@
 	var/datum/objective/lunatic/loony = new()
 	objectives += loony
 	lunatic_obj = loony
+	moon_track = new(owner)
+	mad_touch = new(owner)
+	mad_touch.Grant(owner.current)
+	moon_track.Grant(owner.current)
+
+/datum/antagonist/lunatic/on_removal()
+	QDEL_NULL(moon_track)
+	QDEL_NULL(mad_touch)
+	return ..()
+
+/datum/antagonist/lunatic/on_removal()
+	owner?.current?.log_message("lost their Lunatic status!", LOG_ATTACK, color="red")
 	return ..()
 
 /// Runs when the moon heretic creates us, used to give the lunatic a master
@@ -44,15 +60,11 @@
 	add_team_hud(our_mob, /datum/antagonist/lunatic)
 	ADD_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
 
-	var/datum/action/cooldown/lunatic_track/moon_track = new /datum/action/cooldown/lunatic_track()
-	var/datum/action/cooldown/spell/touch/mansus_grasp/mad_touch = new /datum/action/cooldown/spell/touch/mansus_grasp()
-	mad_touch.Grant(our_mob)
-	moon_track.Grant(our_mob)
-
 /datum/antagonist/lunatic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	handle_clown_mutation(our_mob, removing = FALSE)
 	our_mob.remove_faction(FACTION_HERETIC)
+	REMOVE_TRAIT(our_mob, TRAIT_MADNESS_IMMUNE, REF(src))
 
 // Mood event given to moon acolytes
 /datum/mood_event/heretics/lunatic
@@ -87,3 +99,6 @@
 /datum/antagonist/lunatic/master/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
 	add_team_hud(our_mob, /datum/antagonist/lunatic)
+
+/datum/antagonist/lunatic/master/remove_innate_effects(mob/living/mob_override)
+	return

@@ -46,12 +46,14 @@
 	return ..()
 
 /obj/machinery/rnd/server/update_icon_state()
+	. = ..()
 	if(machine_stat & NOPOWER)
 		icon_state = "[base_icon_state]-off"
+	else if(panel_open)
+		icon_state = "[base_icon_state]-on" + "_t"
 	else
 		// "working" will cover EMP'd, disabled, or just broken
 		icon_state = "[base_icon_state]-[working ? "on" : "halt"]"
-	return ..()
 
 /obj/machinery/rnd/server/power_change()
 	refresh_working()

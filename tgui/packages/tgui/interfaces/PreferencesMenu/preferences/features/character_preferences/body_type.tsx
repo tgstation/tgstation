@@ -12,17 +12,20 @@ export const body_type: FeatureChoiced = {
 };
 
 function FeatureBodyTypeDropdownInput(props: DropdownInputProps) {
-  return FeatureDropdownInputCore(props, (serverData, setDropdownOptions) => {
-    let options = generateOptions(serverData);
-
-    const current_gender = props.character_preferences.misc.gender;
-    if (current_gender !== Gender.Male && current_gender !== Gender.Female) {
-      options = options.filter(
-        (option) =>
-          option.value === Gender.Male || option.value === Gender.Female,
-      );
-    }
-
-    setDropdownOptions(options);
-  });
+  const currentGender = props.character_preferences.misc.gender;
+  return (
+    <FeatureDropdownInputCore
+      {...props}
+      populateOptions={(serverData) => {
+        let options = generateOptions(serverData);
+        if (currentGender !== Gender.Male && currentGender !== Gender.Female) {
+          options = options.filter(
+            (option) =>
+              option.value === Gender.Male || option.value === Gender.Female,
+          );
+        }
+        return options;
+      }}
+    />
+  );
 }

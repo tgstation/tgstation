@@ -20,7 +20,7 @@
 	explosion_power = 12
 	layer = ABOVE_MOB_LAYER
 	moveable = TRUE
-
+	light_mask_icon = "sm_shard-emissive"
 
 /obj/machinery/power/supermatter_crystal/shard/Initialize(mapload)
 	. = ..()
@@ -62,6 +62,7 @@
 	moveable = TRUE
 	anchored = FALSE
 	custom_materials = list(/datum/material/adamantine = SHEET_MATERIAL_AMOUNT * 20, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
+	light_mask_icon = "sm_small-emissive"
 
 /obj/machinery/power/supermatter_crystal/small/Initialize(mapload)
 	. = ..()

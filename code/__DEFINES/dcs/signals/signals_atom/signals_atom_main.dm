@@ -84,6 +84,7 @@
 #define COMSIG_ATOM_PROCESSED "atom_processed"
 ///called when teleporting into a possibly protected turf: (channel, turf/origin, turf/destination)
 #define COMSIG_ATOM_INTERCEPT_TELEPORTING "intercept_teleporting"
+	#define COMPONENT_INTERCEPT_TELEPORT (1<<0)
 ///called when an atom is added to the hearers on get_hearers_in_view(): (list/processing_list, list/hearers)
 #define COMSIG_ATOM_HEARER_IN_VIEW "atom_hearer_in_view"
 ///called when an atom starts orbiting another atom: (atom)
@@ -164,3 +165,8 @@
 /// From /obj/item/organ/stomach/on_life() : (obj/item/organ/stomach/stomach, mob/living/carbon/owner, seconds_per_tick)
 #define COMSIG_ATOM_STOMACH_DIGESTED "atom_stomach_digested"
 	#define COMPONENT_CANCEL_DIGESTION (1<<0)
+
+/// From /datum/component/leanable (datum/source, mob/leaner)
+#define COMSIG_ATOM_LEANED_UPON "atom_leaned_upon"
+/// From /datum/component/leanable (datum/source, mob/leaner, list/mob/remaining_leaners)
+#define COMSIG_ATOM_NO_LONGER_LEANED_UPON "atom_no_longer_leaned_upon"

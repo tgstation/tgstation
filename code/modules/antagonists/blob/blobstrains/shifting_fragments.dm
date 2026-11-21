@@ -30,6 +30,7 @@
 /datum/reagent/blob/shifting_fragments
 	name = "Shifting Fragments"
 	color = "#C8963C"
+	taste_description = "egg yolk"
 
 /datum/reagent/blob/shifting_fragments/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/eye/blob/overmind)
 	. = ..()

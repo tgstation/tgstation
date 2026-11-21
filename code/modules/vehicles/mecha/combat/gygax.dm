@@ -20,7 +20,7 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 1,
 	)
-	step_energy_drain = 4
+	step_energy_drain = parent_type::step_energy_drain * 0.5
 	can_use_overclock = TRUE
 	overclock_safety_available = TRUE
 	overclock_safety = TRUE
@@ -72,6 +72,10 @@
 	bomb = 20
 	fire = 100
 	acid = 100
+
+/obj/vehicle/sealed/mecha/gygax/dark/Initialize(mapload)
+	. = ..()
+	add_minimap_blip(src, MINIMAP_SYNDICATE_MECH_BLIP, "syndiemech")
 
 /obj/vehicle/sealed/mecha/gygax/dark/loaded/Initialize(mapload)
 	. = ..()

@@ -1,7 +1,7 @@
 /datum/component/item_equipped_movement_rustle
 
 	///sound that plays, use an SFX define if there is multiple.
-	var/rustle_sounds = SFX_SUIT_STEP
+	var/rustle_sounds = /datum/sound_effect/suit_step
 
 	///what move are we on.
 	var/move_counter = 0

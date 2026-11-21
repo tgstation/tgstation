@@ -5,7 +5,7 @@
 	default_value = FALSE
 	should_update_preview = FALSE
 
-/datum/preference/toggle/rds_limit/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/toggle/rds_limit/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return
 
 /datum/preference/toggle/rds_limit/is_accessible(datum/preferences/preferences)

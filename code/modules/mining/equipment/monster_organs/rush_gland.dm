@@ -24,6 +24,7 @@
 /obj/item/organ/monster_core/rush_gland/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_GOLIATH_TENTACLED_GRABBED, PROC_REF(trigger_organ_action_on_sig))
+	RegisterSignal(organ_owner, COMSIG_TENDRIL_TENTACLED_GRABBED, PROC_REF(trigger_organ_action_on_sig))
 
 /obj/item/organ/monster_core/rush_gland/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
@@ -34,7 +35,9 @@
 
 /obj/item/organ/monster_core/rush_gland/proc/trigger_organ_action_on_sig(datum/source)
 	SIGNAL_HANDLER
+
 	INVOKE_ASYNC(src, PROC_REF(trigger_organ_action))
+	return COMPONENT_GOLIATH_CANCEL_TENTACLE_GRAB
 
 /**
  * Status effect: Makes you run faster and ignore damage speed penalties for a short duration.

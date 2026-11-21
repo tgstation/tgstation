@@ -29,6 +29,9 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 /datum/team/Destroy(force)
 	GLOB.antagonist_teams -= src
 	members = null
+	for(var/datum/objective/objective as anything in objectives)
+		if(objective.team == src)
+			objective.team = null
 	objectives = null
 	return ..()
 

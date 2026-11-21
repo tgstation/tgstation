@@ -122,7 +122,7 @@
 		tag_overlay.pixel_z = box_offset
 		. += tag_overlay
 
-/obj/item/pizzabox/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/pizzabox/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	var/current_offset = 2
 	if(!isinhands)
@@ -248,7 +248,7 @@
 		if(!user.can_perform_action(src))
 			return ITEM_INTERACT_FAILURE
 		balloon_alert(user, "writing box tag...")
-		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+		playsound(src, /datum/sound_effect/writing_pen, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 		boxtag_set = TRUE
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS

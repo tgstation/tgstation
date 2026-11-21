@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 
 /datum/hfr_fuel/hypernob_hydrogen_fuel
 	id = "hypernob_hydrogen_fuel"
-	name = "Hypernoblium + Hydrogen fuel"
+	name = "Hyper-Noblium + Hydrogen fuel"
 	negative_temperature_multiplier = 0.2
 	positive_temperature_multiplier = 2.2
 	energy_concentration_multiplier = 0.2
@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 
 /datum/hfr_fuel/hypernob_trit_fuel
 	id = "hypernob_trit_fuel"
-	name = "Hypernoblium + Tritium fuel"
+	name = "Hyper-Noblium + Tritium fuel"
 	negative_temperature_multiplier = 0.1
 	positive_temperature_multiplier = 2.5
 	energy_concentration_multiplier = 0.1
@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(hfr_fuels_list, hfr_fuels_create_list())
 
 /datum/hfr_fuel/hypernob_antinob_fuel
 	id = "hypernob_antinob_fuel"
-	name = "Hypernoblium + Antinoblium fuel"
+	name = "Hyper-Noblium + Anti-Noblium fuel"
 	negative_temperature_multiplier = 0.01
 	positive_temperature_multiplier = 3.5
 	energy_concentration_multiplier = 2

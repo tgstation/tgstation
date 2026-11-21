@@ -20,6 +20,9 @@
 	layer = MOB_LAYER
 	pressure_resistance = 2
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	// Could use a more specific sound since it's a lot of paper (ditto with `/paperwork`).
+	drop_sound = 'sound/items/handling/paper_drop.ogg'
+	pickup_sound = 'sound/items/handling/paper_pickup.ogg'
 
 ///Nanotrasen documents
 /obj/item/documents/nanotrasen
@@ -66,14 +69,17 @@
 			var/obj/item/documents/photocopy/C = copy
 			copy_type = C.copy_type
 
-/obj/item/documents/photocopy/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(O, /obj/item/toy/crayon/red) || istype(O, /obj/item/toy/crayon/blue))
-		if (forgedseal)
-			to_chat(user, span_warning("You have already forged a seal on [src]!"))
-		else
-			var/obj/item/toy/crayon/C = O
-			name = "[C.crayon_color] secret documents"
-			icon_state = "docs_[C.crayon_color]"
-			forgedseal = C.crayon_color
-			to_chat(user, span_notice("You forge the official seal with a [C.crayon_color] crayon. No one will notice... right?"))
-			update_appearance()
+/obj/item/documents/photocopy/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/toy/crayon/red) && !istype(tool, /obj/item/toy/crayon/blue))
+		return NONE
+	if (forgedseal)
+		to_chat(user, span_warning("You have already forged a seal on [src]!"))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/toy/crayon/C = tool
+	name = "[C.crayon_color] secret documents"
+	icon_state = "docs_[C.crayon_color]"
+	forgedseal = C.crayon_color
+	to_chat(user, span_notice("You forge the official seal with a [C.crayon_color] crayon. No one will notice... right?"))
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS

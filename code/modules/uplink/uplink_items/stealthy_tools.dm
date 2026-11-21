@@ -23,7 +23,7 @@
 			an artificial intelligence is watching you is useful for knowing when to maintain cover, and finding nearby \
 			blind spots can help you identify escape routes."
 	item = /obj/item/multitool/ai_detect
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_FIREBASE_OPS
 	cost = 1
 
 /datum/uplink_item/stealthy_tools/chameleon
@@ -116,11 +116,10 @@
 	desc = "When purchased, a virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."
 	item = ABSTRACT_UPLINK_ITEM
 	surplus = 0
-	progression_minimum = 15 MINUTES
 	limited_stock = 1
 	cost = 4
 	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //Can still be purchased by loneops to give them an edge.
+	purchasable_from = ~UPLINK_FIREBASE_OPS //Can still be purchased by loneops to give them an edge.
 
 /datum/uplink_item/stealthy_tools/telecomm_blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	force_event(/datum/round_event_control/communications_blackout, "a syndicate virus")
@@ -131,11 +130,10 @@
 	desc = "When purchased, a virus will be uploaded to the engineering processing servers to force a routine power grid check, forcing all APCs on the station to be temporarily disabled."
 	item = ABSTRACT_UPLINK_ITEM
 	surplus = 0
-	progression_minimum = 15 MINUTES
 	limited_stock = 1
 	cost = 6
 	restricted = TRUE
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //Can still be purchased by loneops to give them an edge.
+	purchasable_from = ~UPLINK_FIREBASE_OPS //Can still be purchased by loneops to give them an edge.
 
 /datum/uplink_item/stealthy_tools/blackout/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	force_event(/datum/round_event_control/grid_check, "a syndicate virus")

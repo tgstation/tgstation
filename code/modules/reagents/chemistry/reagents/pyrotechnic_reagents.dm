@@ -438,7 +438,7 @@
 	if(shock_timer >= rand(5, 30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
 		affected_mob.electrocute_act(rand(5, 20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
-		playsound(affected_mob, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(affected_mob, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /datum/reagent/teslium/used_on_fish(obj/item/fish/fish)
 	if(HAS_TRAIT_FROM(fish, TRAIT_FISH_ELECTROGENESIS, FISH_TRAIT_DATUM))
@@ -450,17 +450,11 @@
 
 /datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	if(!ishuman(affected_mob))
-		return
-	var/mob/living/carbon/human/affected_human = affected_mob
-	affected_human.physiology.siemens_coeff *= 2
+	MODIFY_PHYSIOLOGY(affected_mob, PHYS_COEFF_ELEC_CONDUCTIVITY, 2)
 
 /datum/reagent/teslium/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	if(!ishuman(affected_mob))
-		return
-	var/mob/living/carbon/human/affected_human = affected_mob
-	affected_human.physiology.siemens_coeff *= 0.5
+	MODIFY_PHYSIOLOGY(affected_mob, PHYS_COEFF_ELEC_CONDUCTIVITY, 0.5)
 
 /datum/reagent/teslium/on_spark_act(power_charge, spark_flags)
 	tesla_zap(source = holder.my_atom, zap_range = round(volume / 5, 1), power = volume * 20 + power_charge, cutoff = 1 KILO JOULES, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN)
@@ -476,7 +470,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
-	if(!isjellyperson(affected_mob)) //everyone but jellypeople get shocked as normal.
+	if(!(affected_mob.mob_biotypes & MOB_SLIME)) //everyone but jellypeople get shocked as normal.
 		return ..()
 	affected_mob.AdjustAllImmobility(-20  * metabolization_ratio * seconds_per_tick)
 	if(affected_mob.adjust_stamina_loss(-5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))

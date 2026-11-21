@@ -128,7 +128,7 @@
 	if(is_type_in_typecache(some_item.type, banned_typecache) || item_reactions["[some_item.type]"])
 		return
 
-	if(istype(some_item, /obj/item/relic))
+	if(istype(some_item, /obj/item/assembly/relic))
 		item_reactions["[some_item.type]"] = SCANTYPE_DISCOVER
 	else
 		item_reactions["[some_item.type]"] = pick(get_available_reactions())
@@ -179,7 +179,7 @@
 		var/is_discover = (scantype == SCANTYPE_DISCOVER)
 
 		if(loaded_item)
-			if(istype(loaded_item, /obj/item/relic))
+			if(istype(loaded_item, /obj/item/assembly/relic))
 				is_available = is_discover
 			else
 				is_available = !is_discover
@@ -198,16 +198,16 @@
 
 		item_data["name"] = loaded_item.name
 		item_data["icon"] = icon2base64(getFlatIcon(loaded_item, no_anim = TRUE))
-		item_data["isRelic"] = istype(loaded_item, /obj/item/relic)
+		item_data["isRelic"] = istype(loaded_item, /obj/item/assembly/relic)
 
 		item_data["associatedNodes"] = list()
-		var/list/unlockable_nodes = techweb_item_unlock_check(loaded_item)
-		for(var/node_id in unlockable_nodes)
-			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
+		var/list/unlockable_nodes = SSresearch.techweb_unlock_items[loaded_item.type]
+		for(var/node_path in unlockable_nodes)
+			var/datum/techweb_node/node = SSresearch.techweb_nodes[node_path]
 
 			item_data["associatedNodes"] += list(list(
 				"name" = node.display_name,
-				"isUnlocked" = !(node_id in stored_research.hidden_nodes),
+				"isUnlocked" = !stored_research.hidden_nodes[node_path],
 			))
 
 		data["loadedItem"] = item_data
@@ -258,14 +258,16 @@
 	if(!stored_research || !loaded_item || !COOLDOWN_FINISHED(src, run_experiment))
 		return FALSE
 
-	if(istype(loaded_item, /obj/item/relic))
+	if(istype(loaded_item, /obj/item/assembly/relic))
 		reaction = SCANTYPE_DISCOVER
 	else
 		reaction = match_reaction(loaded_item, reaction)
 
 	if(reaction != FAIL)
-		var/picked_node_id = pick(techweb_item_unlock_check(loaded_item))
-		stored_research.unhide_node(SSresearch.techweb_node_by_id(picked_node_id))
+		var/list/boostable_nodes = SSresearch.techweb_unlock_items[loaded_item.type]
+		if(length(boostable_nodes))
+			var/picked_node_path = pick(boostable_nodes)
+			stored_research.unhide_node(SSresearch.techweb_nodes[picked_node_path])
 
 	run_experiment(reaction)
 	use_energy(750 JOULES)

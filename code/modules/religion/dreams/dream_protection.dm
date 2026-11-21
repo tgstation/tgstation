@@ -59,7 +59,7 @@
 /datum/status_effect/dream_protection/proc/check_protection()
 	SIGNAL_HANDLER
 
-	if(owner.stat == UNCONSCIOUS || HAS_TRAIT(owner, TRAIT_DREAMING))
+	if(IS_UNCONSCIOUS_AND_ALIVE(owner) || HAS_TRAIT(owner, TRAIT_DREAMING))
 		if(!has_filter)
 			owner.add_filter(id, 2, list("type" = "outline", "color" = "#bde0dc", "alpha" = 0, "size" = 2))
 			var/filter = owner.get_filter(id)
@@ -77,13 +77,13 @@
 
 /datum/status_effect/dream_protection/proc/modify_damage(mob/living/source, list/damage_mods, ...)
 	SIGNAL_HANDLER
-	if(owner.stat == UNCONSCIOUS)
+	if(IS_UNCONSCIOUS_AND_ALIVE(owner))
 		damage_mods += damage_mod
 	if(HAS_TRAIT(owner, TRAIT_DREAMING))
 		damage_mods += damage_mod
 
-/datum/status_effect/dream_protection/get_examine_text()
-	if(owner.stat == UNCONSCIOUS || HAS_TRAIT(owner, TRAIT_DREAMING))
+/datum/status_effect/dream_protection/get_examine_text(mob/examiner)
+	if(IS_UNCONSCIOUS_AND_ALIVE(owner) || HAS_TRAIT(owner, TRAIT_DREAMING))
 		return "A soft cyan glow envelops [owner.p_them()], reflecting light."
 
 // Version that only lasts until they wake up (with a set duration backup)
@@ -93,7 +93,7 @@
 	damage_mod = 0.9
 
 /datum/status_effect/dream_protection/temporary/on_apply()
-	if(owner.stat != UNCONSCIOUS)
+	if(!IS_UNCONSCIOUS_AND_ALIVE(owner))
 		return FALSE
 	if(owner.has_status_effect(/datum/status_effect/dream_protection))
 		return FALSE

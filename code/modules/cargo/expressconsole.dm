@@ -6,6 +6,7 @@
 	desc = "This console allows the user to purchase a package \
 		with 1/40th of the delivery time: made possible by Nanotrasen's new \"1500mm Orbital Railgun\".\
 		All sales are near instantaneous - please choose carefully"
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/cargo/express")
 	icon_screen = "supply_express"
 	circuit = /obj/item/circuitboard/computer/cargo/express
 	blockade_warning = "Bluespace instability detected. Delivery impossible."
@@ -81,6 +82,7 @@
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.obj_flags |= EMAGGED
 	board.contraband = TRUE
+	update_static_data_for_all_viewers()
 	return TRUE
 
 /obj/machinery/computer/cargo/express/ui_data(mob/user)

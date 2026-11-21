@@ -172,7 +172,7 @@
 		return NONE
 	// if the machine already has a infusion target, or the target is not valid then no adding.
 	if(!is_valid_infusion(tool, user))
-		return ITEM_INTERACT_BLOCKING
+		return ..() //research scanning is so back
 	if(!user.transferItemToLoc(tool, src))
 		to_chat(user, span_warning("[tool] is stuck to your hand!"))
 		return ITEM_INTERACT_BLOCKING
@@ -180,7 +180,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/dna_infuser/relaymove(mob/living/user, direction)
-	if(user.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(user))
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			COOLDOWN_START(src, message_cooldown, 4 SECONDS)
 			to_chat(user, span_warning("[src]'s door won't budge!"))

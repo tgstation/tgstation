@@ -59,7 +59,8 @@
 
 			organ.Remove(src)
 			organ.forceMove(Tsec)
-			organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
+			if(!QDELETED(organ))
+				organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
 			continue
 
 		if((drop_bitflags & DROP_ORGANS) && !istype(organ, /obj/item/organ/brain))
@@ -68,12 +69,13 @@
 
 			organ.Remove(src)
 			organ.forceMove(Tsec)
-			organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
+			if(!QDELETED(organ))
+				organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
 			continue
 
 		qdel(organ)
 
-/mob/living/carbon/spread_bodyparts(drop_bitflags=NONE)
+/mob/living/carbon/spread_bodyparts(drop_bitflags = NONE, gibbed = FALSE)
 	for(var/obj/item/bodypart/part as anything in get_bodyparts())
 		if(part.body_zone == BODY_ZONE_CHEST)
 			continue // never drop this
@@ -84,12 +86,16 @@
 		for(var/obj/item/organ/leftover in part)
 			leftover_organs += leftover
 
-		part.drop_limb(TRUE)
+		part.drop_limb(special = gibbed, dismembered = !gibbed)
 		part.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
 		// any organs that weren't throw out already about need to follow the bodypart out
 		for(var/obj/item/organ/leftover as anything in leftover_organs)
-			leftover.Remove(src, TRUE)
-			leftover.bodypart_insert(part)
+			// depending on whether gibbed flag was set changes how the organs are removed,
+			// so just let's be... very careful here and double check everything
+			if(leftover.owner == src)
+				leftover.Remove(src, gibbed)
+			if(leftover.loc != part)
+				leftover.bodypart_insert(part)
 
 /mob/living/carbon/set_suicide(suicide_state) //you thought that box trick was pretty clever, didn't you? well now hardmode is on, boyo.
 	. = ..()

@@ -154,3 +154,13 @@
 /datum/action/cooldown/fishing_tip/Activate(atom/target_atom)
 	. = ..()
 	send_tip_of_the_round(owner, pick(GLOB.fishing_tips), source = "Ancient fishing wisdom")
+
+/obj/item/skillchip/disposals
+	name = "T4RG3T.bin skillchip"
+	desc = "Become a dauntless disposaler, target trash right where it belongs."
+	auto_traits = list(TRAIT_THROWINGARM)
+	skill_name = "Dauntless Disposaler"
+	skill_description = "You have an uncanny ability to perfectly land every toss into disposal units."
+	skill_icon = "trash-can"
+	activate_message = span_notice("You seem laser focused on the nearby disposal unit.")
+	deactivate_message = span_notice("The nearby disposal unit fades into the background of your vision.")

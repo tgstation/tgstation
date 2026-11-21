@@ -2,7 +2,7 @@
 	name = "\proper the arcade cabinet which shouldn't exist"
 	desc = "This arcade cabinet has no games installed, and in fact, should not exist. \
 		Report the location of this machine to your local diety."
-	icon_state = "arcade"
+	icon_state = MAP_SWITCH("arcade", "/obj/machinery/computer/arcade")
 	icon_keyboard = null
 	icon_screen = "invaders"
 	light_color = LIGHT_COLOR_GREEN

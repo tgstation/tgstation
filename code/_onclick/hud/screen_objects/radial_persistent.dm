@@ -7,6 +7,8 @@
 	icon_state = "radial_center"
 
 /atom/movable/screen/radial/persistent/center/Click(location, control, params)
+	if(QDELETED(parent))
+		return
 	if(usr.client == parent.current_user)
 		parent.element_chosen(null, usr, params)
 

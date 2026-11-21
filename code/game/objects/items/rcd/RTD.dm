@@ -11,10 +11,11 @@
  * Supports silo link upgrade and refill with glass, plasteel & iron
  */
 /obj/item/construction/rtd
-	name = "rapid-tiling-device (RTD)"
+	name = "rapid tiling device (RTD)"
 	desc = "Used for fast placement & destruction of floor tiles."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rtd"
+	inhand_icon_state = "rtd"
 	worn_icon_state = "RCD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -27,6 +28,7 @@
 	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
 	sound_vary = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 15, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25)
 
 	/// main category for tile design
 	var/root_category = "Conventional"
@@ -184,7 +186,7 @@
 	return data
 
 /obj/item/construction/rtd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+	playsound(src, /datum/sound_effect/tool_switch, 20, TRUE)
 
 	var/floor_designs = GLOB.floor_designs
 	switch(action)

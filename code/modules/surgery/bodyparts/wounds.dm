@@ -5,15 +5,13 @@
 	if(!owner || wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND || HAS_TRAIT(owner, TRAIT_GODMODE))
 		return
 
-	var/mangled_state = get_mangled_state()
 	var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
-	var/bio_status = get_bio_state_status()
+	var/has_exterior = (bio_status & ANATOMY_EXTERIOR)
+	var/has_interior = (bio_status & ANATOMY_INTERIOR)
 
-	var/has_exterior = ((bio_status & ANATOMY_EXTERIOR))
-	var/has_interior = ((bio_status & ANATOMY_INTERIOR))
-
-	var/exterior_ready_to_dismember = (!has_exterior || ((mangled_state & BODYPART_MANGLED_EXTERIOR)))
+	var/exterior_ready_to_dismember = (!has_exterior || (mangled_state & BODYPART_MANGLED_EXTERIOR))
+	var/interior_ready_to_dismember = (!has_interior || (mangled_state & BODYPART_MANGLED_INTERIOR))
 
 	// if we're bone only, all cutting attacks go straight to the bone
 	if(!has_exterior && has_interior)
@@ -32,7 +30,7 @@
 			if(wounding_type == WOUND_PIERCE && !easy_dismember)
 				wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 			wounding_type = WOUND_BLUNT
-		if ((dismemberable_by_wound() || dismemberable_by_total_damage()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus))
+		if (((exterior_ready_to_dismember && interior_ready_to_dismember) || dismemberable_by_total_damage(mangled_state)) && try_dismember(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus))
 			return
 	return check_wounding(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus, wound_clothing)
 
@@ -242,7 +240,7 @@
 	for(var/datum/wound/wound as anything in wounds)
 		injury_mod += wound.threshold_penalty
 
-	if(!get_mangled_state())
+	if(!mangled_state)
 		armor_ablation += wound_resistance
 
 	if(get_damage() >= max_damage)
@@ -284,6 +282,8 @@
  * update_wounds() is called whenever a wound is gained or lost on this bodypart, as well as if there's a change of some kind on a bone wound possibly changing disabled status
  *
  * Covers tabulating the damage multipliers we have from wounds (burn specifically), as well as deleting our gauze wrapping if we don't have any wounds that can use bandaging
+ *  Dismemberment for flesh and bone requires the victim to have the skin on their bodypart destroyed (either a critical cut or piercing wound), and at least a hairline fracture
+ * (severe bone), at which point we can start rolling for dismembering. The attack must also deal at least 10 damage, and must be a brute attack of some kind (sorry for now, cakehat, maybe later)
  *
  * Arguments:
  * * replaced- If true, this is being called from the remove_wound() of a wound that's being replaced, so the bandage that already existed is still relevant, but the new wound hasn't been added yet
@@ -291,19 +291,93 @@
 /obj/item/bodypart/proc/update_wounds(replaced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	var/dam_mul = 1
+	wound_damage_multiplier = 1
+	mangled_state = BODYPART_MANGLED_NONE
 
 	// we can (normally) only have one wound per type, but remember there's multiple types (smites like :B:loodless can generate multiple cuts on a limb)
 	for(var/datum/wound/iter_wound as anything in wounds)
-		dam_mul *= iter_wound.damage_multiplier_penalty
+		wound_damage_multiplier *= iter_wound.damage_multiplier_penalty
+		if((iter_wound.wound_flags & MANGLES_INTERIOR))
+			mangled_state |= BODYPART_MANGLED_INTERIOR
+		if((iter_wound.wound_flags & MANGLES_EXTERIOR))
+			mangled_state |= BODYPART_MANGLED_EXTERIOR
+
+	refresh_bleed_rate()
+
+/**
+ * Get how splinted this bodypart is based on applied items
+ *
+ * Multiplier applied to maluses, so lower = better
+ */
+/obj/item/bodypart/proc/get_splint_factor()
+	var/factor = 1
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
+	if(current_gauze)
+		factor *= current_gauze.splint_factor
+	return factor
+
+/// Returns TRUE if the limb is splinted with gauze or tape with an effective splint factor
+/obj/item/bodypart/proc/is_splinted()
+	return get_splint_factor() < 1
+
+/**
+ * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.
+ *
+ * The passed amount of seepage is deducted from the bandage's absorption capacity, and if we reach a negative absorption capacity, the bandages falls off and we're left with nothing.
+ *
+ * Arguments:
+ * * seep_amt - How much absorption capacity we're removing from our current bandages (think, how much blood or pus are we soaking up this tick?)
+ */
+/obj/item/bodypart/proc/seep_gauze(seep_amt = 0)
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
+	if(isnull(current_gauze))
+		return
+	current_gauze.absorption_capacity -= seep_amt
+	current_gauze.update_appearance(UPDATE_NAME)
+	if(current_gauze.absorption_capacity > 0)
+		return
+	owner.visible_message(
+		span_danger("[current_gauze] on [owner]'s [name] falls away in rags."),
+		span_warning("[current_gauze] on your [name] falls away in rags."),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
+	current_gauze.forceMove(drop_location())
+	owner.update_damage_overlays()
+
+/**
+ * Helper for someone helping to remove our gauze
+ */
+/obj/item/bodypart/proc/help_remove_gauze(mob/living/helper)
+	if(!istype(helper))
+		return
+	if(!helper.can_perform_action(owner, NEED_HANDS|FORBID_TELEKINESIS_REACH)) // telekinetic removal can be added later
+		return
 
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
-	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
-		if (owner)
-			owner.visible_message(span_notice("\The [current_gauze.name] on [owner]'s [name] falls away."), span_notice("\The [current_gauze] on your [plaintext_zone] falls away."))
-		else
-			visible_message(span_notice("\The [current_gauze.name] on [name] falls away."))
-		qdel(current_gauze)
+	ASSERT(!isnull(current_gauze))
 
-	wound_damage_multiplier = dam_mul
-	refresh_bleed_rate()
+	helper.visible_message(
+		span_notice("[helper] starts carefully removing [current_gauze] from [helper == owner ? helper.p_their() : "[owner]'s"] [plaintext_zone]."),
+		span_notice("You start carefully removing [current_gauze] from [helper == owner ? "your" : "[owner]'s"] [plaintext_zone]..."),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
+	helper.balloon_alert(helper, "removing gauze...")
+	if(helper != owner)
+		helper.balloon_alert(owner, "removing your gauze...")
+
+	if(!do_after(helper, 3 SECONDS, owner))
+		return
+	if(QDELETED(current_gauze) || current_gauze.loc != src)
+		return
+
+	helper.visible_message(
+		span_notice("[helper] finishes removing [current_gauze] from [helper == owner ? helper.p_their() : "[owner]'s"] [plaintext_zone]."),
+		span_notice("You finish removing [current_gauze] from [helper == owner ? "your" : "[owner]'s"] [plaintext_zone]."),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
+
+	helper.balloon_alert(helper, "gauze removed")
+	if(helper != owner)
+		helper.balloon_alert(owner, "gauze removed")
+
+	helper.put_in_hands(current_gauze)

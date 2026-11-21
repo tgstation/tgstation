@@ -3,6 +3,7 @@
 	icon_state = "science"
 	airlock_wires = /datum/wires/airlock/science
 	sound_environment = SOUND_AREA_STANDARD_STATION
+	tacmap_color = TACMAP_AREA_SCIENCE
 
 /area/station/science/lobby
 	name = "\improper Science Lobby"
@@ -25,6 +26,7 @@
 	icon_state = "xenobio"
 
 /area/station/science/xenobiology/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Xenobiology Hallway"
 	icon_state = "xenobio_hall"
 
@@ -131,6 +133,7 @@
 	name = "\improper Ordnance Bomb Site"
 	icon_state = "ord_boom"
 	area_flags = BLOBS_ALLOWED | CULT_PERMITTED | NO_GRAVITY
+	skip_minimap_rendering = TRUE
 
 /area/station/science/ordnance/bomb/planet
 	area_flags = /area/station/science/ordnance/bomb::area_flags & ~NO_GRAVITY

@@ -77,7 +77,7 @@
 	var/atom/at_least_atom = parent
 	if(isliving(at_least_atom))
 		var/mob/living/potentially_dead_horse = at_least_atom
-		if(potentially_dead_horse.stat != CONSCIOUS)
+		if(IS_UNCONSCIOUS_OR_CRIT(potentially_dead_horse))
 			return
 	if(!eggs_left || !SPT_PROB(1.5, seconds_per_tick))
 		return

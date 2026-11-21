@@ -387,11 +387,11 @@
 	animate(vehicle, pixel_z = 6, time = 0.3 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	animate(pixel_z = -6, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 	playsound(vehicle, 'sound/vehicles/skateboard_ollie.ogg', 50, TRUE)
-	passtable_on(rider, VEHICLE_TRAIT)
-	passtable_on(vehicle, VEHICLE_TRAIT)
+	ADD_TRAIT(rider, TRAIT_PASSTABLE, VEHICLE_TRAIT)
+	vehicle.pass_flags |= PASSTABLE
 	rider.Move(landing_turf, vehicle_target.dir)
-	passtable_off(rider, VEHICLE_TRAIT)
-	passtable_off(vehicle, VEHICLE_TRAIT)
+	REMOVE_TRAIT(rider, TRAIT_PASSTABLE, VEHICLE_TRAIT)
+	vehicle.pass_flags &= ~PASSTABLE
 
 /datum/action/vehicle/ridden/scooter/skateboard/kickflip
 	name = "Kickflip"
@@ -440,6 +440,8 @@
 	addtimer(CALLBACK(board, TYPE_PROC_REF(/obj/vehicle/ridden/scooter/skateboard, pick_up_board), rider, TRUE), 0.5 SECONDS)  // so the board can still handle "picking it up"
 
 
+///cooldown between uses of the sound maker
+#define VIM_SOUND_COOLDOWN (1 SECONDS)
 
 //VIM ACTION DATUMS
 
@@ -456,7 +458,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	var/obj/vehicle/sealed/car/vim/vim_mecha = vehicle_entered_target
+	var/obj/vehicle/sealed/mecha/vim/vim_mecha = vehicle_entered_target
 	if(!COOLDOWN_FINISHED(vim_mecha, sound_cooldown))
 		vim_mecha.balloon_alert(owner, "on cooldown!")
 		return FALSE
@@ -472,10 +474,6 @@
 	sound_path = 'sound/machines/chime.ogg'
 	sound_message = "chimes!"
 
-/datum/action/vehicle/sealed/noise/chime/Trigger(mob/clicker, trigger_flags)
-	if(..())
-		SEND_SIGNAL(vehicle_entered_target, COMSIG_VIM_CHIME_USED)
-
 /datum/action/vehicle/sealed/noise/buzz
 	name = "Buzz."
 	desc = "Negative!"
@@ -483,15 +481,4 @@
 	sound_path = 'sound/machines/buzz/buzz-sigh.ogg'
 	sound_message = "buzzes."
 
-/datum/action/vehicle/sealed/noise/buzz/Trigger(mob/clicker, trigger_flags)
-	if(..())
-		SEND_SIGNAL(vehicle_entered_target, COMSIG_VIM_BUZZ_USED)
-
-/datum/action/vehicle/sealed/headlights/vim
-	button_icon_state = "vim_headlights"
-
-/datum/action/vehicle/sealed/headlights/vim/Trigger(mob/clicker, trigger_flags)
-	. = ..()
-	if(!.)
-		return
-	SEND_SIGNAL(vehicle_entered_target, COMSIG_VIM_HEADLIGHTS_TOGGLED, vehicle_entered_target.headlights_toggle)
+#undef VIM_SOUND_COOLDOWN

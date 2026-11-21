@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(greyscale_previews)
 	)
 
 /datum/controller/subsystem/greyscale_previews/Initialize()
-#ifndef UNIT_TESTS // We want this to run during unit tests regardless of the config
+#ifndef FORCE_GENERATE_INIT_ASSETS
 	if(!CONFIG_GET(flag/generate_assets_in_init))
 		return SS_INIT_SUCCESS
 #endif
@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(greyscale_previews)
 		"clothing/under/_under" = /obj/item/clothing/under,
 		"clothing/_clothing" = /obj/item/clothing,
 		"items/encryptionkey" = /obj/item/encryptionkey,
-		"items/pda" = /obj/item/modular_computer/pda,
+		"items/pda" = /obj/item/modular_computer/pda/crew,
 		"items/_item" = /obj/item,
 		"objects" = /obj,
 )
@@ -204,12 +204,10 @@ SUBSYSTEM_DEF(greyscale_previews)
 	#endif
 
 	var/filepath = "icons/map_icons/[filename].dmi"
-#ifdef UNIT_TESTS
 	var/old_md5 = rustg_hash_file(RUSTG_HASH_MD5, filepath)
-#endif
-	fcopy(holder, filepath)
-#ifdef UNIT_TESTS
-	var/new_md5 = rustg_hash_file(RUSTG_HASH_MD5, filepath)
+	var/new_md5 = rustg_hash_file(RUSTG_HASH_MD5, holder)
 	if(old_md5 != new_md5)
+		fcopy(holder, filepath)
+#ifdef UNIT_TESTS
 		stack_trace("Generated map icons were different than what is currently saved. If you see this in a CI run it means you need to run the game once through initialization and commit the resulting files in 'icons/map_icons/'")
 #endif

@@ -553,8 +553,8 @@ world
 				)
 
 				flatX1 = addX1
-				flatX2 = addY1
-				flatY1 = addX2
+				flatX2 = addX2
+				flatY1 = addY1
 				flatY2 = addY2
 
 			// Blend the overlay into the flattened icon
@@ -628,6 +628,21 @@ world
 	mask_icon.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 255,255,255,-255, 1,1,1,1)
 	return mask_icon
 
+/**
+ * A simple helper proc to apply a mask to an icon
+ * Arguments:
+ * * base_icon - the icon which the proc will apply the mask on
+ * * mask_to_use - the mask to use from code\__DEFINES\icon_masks.dm
+ * * replacement - an icon to overlay after the masking
+ */
+/proc/apply_icon_mask(icon/base_icon, mask_to_use, icon/replacement)
+	if(isnull(mask_to_use))
+		return
+	var/icon/mask = icon('icons/mob/clothing/under/masking_helpers.dmi', mask_to_use)
+	base_icon.Blend(mask, ICON_SUBTRACT)
+	if(!isnull(replacement))
+		base_icon.Blend(replacement, ICON_OVERLAY)
+	return base_icon
 
 /mob/proc/AddCamoOverlay(atom/A)//A is the atom which we are using as the overlay.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)//Don't really care for overlays/underlays.
@@ -1235,7 +1250,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		return TRUE
 
 	var/static/list/screams = list()
-	if(!isnull(screams[file]))
+	if(isnull(screams[file]))
 		screams[file] = TRUE
 		stack_trace("State [state] in file [file] does not exist.")
 
@@ -1378,7 +1393,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	return copy
 
 /// Returns the (isolated) security HUD icon for the given job.
-/proc/get_job_hud_icon(datum/job/job) as /icon
+/proc/get_job_hud_icon(datum/job/job, scale = 1) as /icon
 	var/static/alist/icon_cache = alist()
 	if(isnull(job))
 		return
@@ -1392,10 +1407,12 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 			return null
 
 	//add it to the cache if it isn't already
-	var/job_type = job.type
+	var/job_type = "[job.type][scale]"
 	if(!icon_cache[job_type])
 		var/icon/sechud_icon = job.get_lobby_icon()
 		sechud_icon.Crop(1, 17, 8, 24)
+		if(scale != 1)
+			sechud_icon.Scale(sechud_icon.Width() * scale, sechud_icon.Height() * scale)
 		icon_cache[job_type] = sechud_icon
 
 	return icon(icon_cache[job_type])
@@ -1426,7 +1443,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 
 // Reorder the 2d pixel data of the passed in frames into a data string that can be passed to rustg_dmi_create_png
 /proc/reorder_pixels(icon_width, icon_height, grid_width, grid_height, list/frames)
-	var/file_height = icon_height * grid_height
+	var/file_width = icon_width * grid_width
 
 	// This little trick right here reduces the total iteration of repeat_string from the product of the arguments to their sum.
 	// Can't be applied to the general case without a complex partitioning algorithm,
@@ -1443,9 +1460,8 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 		var/column = (i-1)%grid_width
 		for(var/y in 1 to length(frame))
 			var/list/row = jointext(frame[y], "")
-			var/splice_start = (row_index+y-1)*file_height + column*icon_width + 1
+			var/splice_start = (row_index*icon_height+y-1)*file_width + column*icon_width + 1
 			linear_pixels = splicetext(linear_pixels, (splice_start-1)*9+1, (splice_start+icon_width-1)*9+1, row)
 	var/zero_alpha_regex = regex(@@#(?:(?!a0a0a0)([0-9]|[a-f]){6}00)@, "gi")
 	linear_pixels = replacetext(linear_pixels, zero_alpha_regex, COLOR_DMI_MASK)
 	return linear_pixels
-

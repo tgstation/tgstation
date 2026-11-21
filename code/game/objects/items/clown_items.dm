@@ -238,6 +238,7 @@
 	icon_state = "air_horn"
 	worn_icon_state = "horn_air"
 	sound_file = 'sound/items/airhorn/airhorn2.ogg'
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 /datum/crafting_recipe/airhorn
 	name = "Air Horn"
@@ -320,6 +321,7 @@
 	max_integrity = 20
 	armor_type = /datum/armor/item_banhammer
 	resistance_flags = FIRE_PROOF
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 10.8)
 
 /obj/item/balloon_mallet/examine(mob/user)
 	. = ..()

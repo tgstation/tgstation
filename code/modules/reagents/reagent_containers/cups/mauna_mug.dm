@@ -7,6 +7,7 @@
 	initial_reagent_flags = OPENCONTAINER
 	fill_icon_state = "maunafilling"
 	fill_icon_thresholds = list(25)
+	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.5)
 	var/obj/item/stock_parts/power_store/cell
 	var/open = FALSE
 	var/on = FALSE

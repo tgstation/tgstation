@@ -1,7 +1,7 @@
 name: "Discord PR Notification"
 on:
   pull_request_target:
-    types: [opened, closed]
+    types: [opened, closed, reopened]
 
 jobs:
   notify:
@@ -19,15 +19,11 @@ jobs:
         uses: tgstation/discord-notify@main
         if: >
           steps.secrets_set.outputs.SECRETS_ENABLED &&
-          (github.event.pull_request.merged == true || github.event.action == 'opened') &&
+          (github.event.pull_request.merged == true || github.event.action == 'opened' || github.event.action == 'reopened') &&
           github.event.pull_request.author_association != 'FIRST_TIMER' &&
           github.event.pull_request.author_association != 'FIRST_TIME_CONTRIBUTOR'
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-          title: ${{ github.event.pull_request.user.login }} - ${{ github.event.pull_request.title }}
-          message: GET_ACTION
           include_image: false
           show_author: false
           avatar_url: https://avatars.githubusercontent.com/u/1363778?s=200&v=4
-          username: GitHub
-          title_url: "${{ github.event.pull_request.html_url }}"

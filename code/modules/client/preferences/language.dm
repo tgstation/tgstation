@@ -42,7 +42,7 @@
 
 	return values
 
-/datum/preference/choiced/language/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/language/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return
 
 /datum/preference/toggle/language_speakable
@@ -59,7 +59,7 @@
 
 	return /datum/quirk/bilingual::name in preferences.all_quirks
 
-/datum/preference/toggle/language_speakable/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/toggle/language_speakable/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return
 
 /datum/preference/choiced/language_skill
@@ -83,7 +83,7 @@
 /datum/preference/choiced/language_skill/init_possible_values()
 	return list("100%", "75%", "50%", "33%", "25%", "10%")
 
-/datum/preference/choiced/language_skill/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/language_skill/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return
 
 /datum/preference/choiced/csl_strength
@@ -94,13 +94,13 @@
 	should_update_preview = FALSE
 
 /datum/preference/choiced/csl_strength/create_default_value()
-	return "90%"
+	return init_possible_values()[1]
 
 /datum/preference/choiced/csl_strength/is_accessible(datum/preferences/preferences)
 	return ..() && (/datum/quirk/csl::name in preferences.all_quirks)
 
 /datum/preference/choiced/csl_strength/init_possible_values()
-	return list("90%", "75%", "50%", "33%", "25%", "10%")
+	return list("75%", "50%", "25%")
 
-/datum/preference/choiced/csl_strength/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/csl_strength/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return

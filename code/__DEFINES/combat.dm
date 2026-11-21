@@ -72,7 +72,7 @@
 #define CANKNOCKDOWN (1<<1)
 /// If set, this mob can be knocked unconscious via status effect.
 /// NOTE, does not mean immune to sleep. Unconscious and sleep are two different things.
-/// NOTE, does not relate to the unconscious stat either. Only the status effect.
+/// NOTE, does not relate to the unconscious trait either. Only the status effect.
 #define CANUNCONSCIOUS (1<<2)
 /// If set, this mob can be grabbed or pushed when bumped into
 #define CANPUSH (1<<3)
@@ -227,8 +227,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 //Sawn off nerfs
 ///accuracy penalty of sawn off guns
 #define SAWN_OFF_ACC_PENALTY 25
-///added recoil of sawn off guns
-#define SAWN_OFF_RECOIL 1
 
 //ammo box sprite defines
 ///ammo box will always use provided icon state
@@ -412,6 +410,8 @@ GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_
 #define SILENCE_DEFAULT_MESSAGES "silence_default_messages"
 /// If set in modifiers, default hitsound is silenced
 #define SILENCE_HITSOUND "silence_hitsound"
+/// Set towards the end of an attack with how much actual damage was dealt
+#define DAMAGE_DONE "damage_done"
 
 /// Used in attack chain to set the force of the attack without changing the base force of the item.
 #define SET_ATTACK_FORCE(atk_mods, value) \
@@ -448,5 +448,5 @@ GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_
 /// A negative number is used here to people can easily check "attacks that failed or did 0 damage" with <= 0
 #define ATTACK_FAILED -1
 
-///Do we block carbon-level flash_act() from performing its default stamina damage/knockdown?
+///Do we block carbon-level flash_act() from performing its default stamina damage/knockdown/confusion?
 #define FLASH_COMPLETED "flash_completed"

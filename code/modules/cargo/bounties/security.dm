@@ -68,6 +68,7 @@
 	start_tracking(id_card)
 
 /datum/bounty/patrol/proc/start_tracking(obj/item/card/id/id_card)
+	contribution |= id_card.registered_account
 	tracker = AddComponent(/datum/component/connect_containers, id_card, list(COMSIG_MOVABLE_MOVED = PROC_REF(on_card_moved)))
 	RegisterSignal(id_card, COMSIG_MOVABLE_MOVED, PROC_REF(on_card_moved))
 
