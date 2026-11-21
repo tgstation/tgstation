@@ -2185,7 +2185,8 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/machinery/door/airlock/highsecurity/syndicate{
-	name = "Starfury Armory"
+	name = "Starfury Armory";
+	id_tag = "syndie_battlecruiser_armory"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
