@@ -376,10 +376,7 @@ rough example of the "cone" made by the 3 dirs checked
 	var/turf/user_turf = user.loc
 	if(!istype(user_turf))
 		return FALSE
-	var/obj/dummy = new(user_turf)
-	dummy.name = "friendly los checker"
-	dummy.invisibility = INVISIBILITY_OBSERVER // if this proc fucks up, observers can see it (to report the bug), but keep it out of regular gameplay
-	dummy.pass_flags |= pass_args //Grille/Glass so it can be used through common windows
+	var/obj/los_checker/dummy = new(user_turf, pass_args)
 	var/turf/previous_step = user_turf
 	var/first_step = TRUE
 	for(var/turf/next_step as anything in (get_line(user_turf, target) - user_turf))
@@ -405,6 +402,15 @@ rough example of the "cone" made by the 3 dirs checked
 		previous_step = next_step
 	qdel(dummy)
 	return TRUE
+
+/obj/los_checker
+	name = "friendly los checker"
+	desc = "my goal is to check line of sight. if you see me, i've failed my job. i'm sorry. please report it."
+	invisibility = INVISIBILITY_OBSERVER // if this object is seen, it should only be by observers for debugging purposes
+
+/obj/los_checker/Initialize(mapload, pass_args = NONE)
+	. = ..()
+	pass_flags |= pass_args
 
 ///Returns true if the src countain the atom target
 /atom/proc/contains(atom/target)
