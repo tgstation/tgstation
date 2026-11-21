@@ -313,6 +313,8 @@
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "esaw"
 	hitsound = 'sound/items/weapons/circsawhit.ogg'
+	usesound = 'sound/items/weapons/circsawhit.ogg'
+	operating_sound = 'sound/items/handling/surgery/saw.ogg'
 	force = 18
 	hitcost = 0.075 * STANDARD_CELL_CHARGE // Costs more than a standard cyborg esword.
 	w_class = WEIGHT_CLASS_NORMAL
