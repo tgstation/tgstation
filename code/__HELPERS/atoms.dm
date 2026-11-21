@@ -377,6 +377,8 @@ rough example of the "cone" made by the 3 dirs checked
 	if(!istype(user_turf))
 		return FALSE
 	var/obj/dummy = new(user_turf)
+	dummy.name = "friendly los checker"
+	dummy.invisibility = INVISIBILITY_OBSERVER // if this proc fucks up, observers can see it (to report the bug), but keep it out of regular gameplay
 	dummy.pass_flags |= pass_args //Grille/Glass so it can be used through common windows
 	var/turf/previous_step = user_turf
 	var/first_step = TRUE
@@ -387,6 +389,7 @@ rough example of the "cone" made by the 3 dirs checked
 					continue
 				if(blocker.CanPass(dummy, get_dir(user_turf, next_step)))
 					continue
+				qdel(dummy)
 				return FALSE // Could not leave the first turf.
 			first_step = FALSE
 		if(next_step.density)
