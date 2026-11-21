@@ -412,6 +412,10 @@ rough example of the "cone" made by the 3 dirs checked
 	. = ..()
 	pass_flags |= pass_args
 
+/obj/los_checker/examine(mob/user)
+	. = ..()
+	qdel(src)
+
 ///Returns true if the src countain the atom target
 /atom/proc/contains(atom/target)
 	if(!target)
