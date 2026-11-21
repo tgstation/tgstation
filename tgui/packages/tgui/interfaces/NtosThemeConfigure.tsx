@@ -1,10 +1,9 @@
 import { Button, Flex } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
+import { useNtos } from './NtosCore';
 import { NtosWindow } from '../layouts';
 
 type Data = {
-  PC_device_theme: string;
   themes: ThemeInfo[];
 };
 
@@ -14,8 +13,10 @@ type ThemeInfo = {
 };
 
 export const NtosThemeConfigure = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { PC_device_theme, themes } = data;
+  const { act, data, system } = useNtos<Data>();
+  const { themes } = data;
+  const { device_theme } = system;
+
   return (
     <NtosWindow width={400} height={600}>
       <NtosWindow.Content scrollable>
@@ -29,7 +30,7 @@ export const NtosThemeConfigure = (props) => {
           {themes.map((theme) => (
             <Flex.Item key={theme} width="100%" grow={1}>
               <Button.Checkbox
-                checked={theme.theme_ref === PC_device_theme}
+                checked={theme.theme_ref === device_theme}
                 width="75%"
                 lineHeight="50px"
                 content={theme.theme_name}

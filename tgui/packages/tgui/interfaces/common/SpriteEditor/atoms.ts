@@ -1,5 +1,4 @@
 import { atom } from 'jotai';
-import { sendAct as act } from 'tgui/events/act';
 import { colorToHexString } from './colorSpaces';
 import type { Tool } from './Types/Tool';
 import { Bucket } from './Types/Tools/Bucket';
@@ -20,9 +19,9 @@ export const currentColorInternalAtom = atom<EditorColor>({
   b: 255,
 });
 export const onSelectServerColorAtom = atom<string | undefined>(undefined);
-export const currentColorAtom = atom<EditorColor, [EditorColor], void>(
+export const currentColorAtom = atom<EditorColor, [[any, EditorColor]], void>(
   (get) => get(currentColorInternalAtom),
-  (get, set, color) => {
+  (get, set, [act, color]) => {
     if (!color) {
       return;
     }

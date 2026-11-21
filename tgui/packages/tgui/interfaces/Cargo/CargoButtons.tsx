@@ -1,12 +1,29 @@
 import { Box, Button } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
-
-import { useBackend } from '../../backend';
 import type { CargoData } from './types';
 
-export function CargoCartButtons(props) {
-  const { act, data } = useBackend<CargoData>();
-  const { cart = [], requestonly, can_send, can_approve_requests, displayed_currency_name } = data;
+type CargoCartButtonsProps = {
+  act: any;
+} & CargoCartButtonsData;
+
+type CargoCartButtonsData = Pick<
+  CargoData,
+  | 'cart'
+  | 'requestonly'
+  | 'can_send'
+  | 'can_approve_requests'
+  | 'displayed_currency_name'
+>;
+
+export function CargoCartButtons(props: CargoCartButtonsProps) {
+  const {
+    act,
+    cart = [],
+    requestonly,
+    can_send,
+    can_approve_requests,
+    displayed_currency_name,
+  } = props;
 
   let total = 0;
   let amount = 0;

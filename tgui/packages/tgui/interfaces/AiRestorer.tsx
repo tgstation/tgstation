@@ -11,7 +11,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-type Data = {
+export type AiRestorerData = {
   AI_present: BooleanLike;
   error: BooleanLike;
   name: string;
@@ -23,17 +23,19 @@ type Data = {
 };
 
 export const AiRestorer = () => {
+  const { act, data } = useBackend<AiRestorerData>();
+
   return (
     <Window width={370} height={360}>
       <Window.Content scrollable>
-        <AiRestorerContent />
+        <AiRestorerContent act={act} data={data} />
       </Window.Content>
     </Window>
   );
 };
 
 export const AiRestorerContent = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = props;
   const {
     AI_present,
     error,

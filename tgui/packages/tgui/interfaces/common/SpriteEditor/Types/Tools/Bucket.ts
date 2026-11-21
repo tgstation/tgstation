@@ -1,4 +1,3 @@
-import { sendAct as act } from 'tgui/events/act';
 import { colorToHexString } from '../../colorSpaces';
 import { constrainToIconGrid } from '../../helpers';
 import { Tool } from '../Tool';
@@ -16,7 +15,7 @@ export class Bucket extends Tool {
     isRightClick?: boolean,
   ) {
     if (isRightClick) return undefined;
-    const { selectedDir, selectedLayer, currentColor } = context;
+    const { act, selectedDir, selectedLayer, currentColor } = context;
     const { width, height } = data;
     const [px, py, inBounds] = constrainToIconGrid(x, y, width, height);
     if (!inBounds) return undefined;

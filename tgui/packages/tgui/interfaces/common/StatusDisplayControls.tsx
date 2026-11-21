@@ -1,15 +1,14 @@
 import { Button, Flex, Input, Section } from 'tgui-core/components';
+import { useSharedState } from '../../backend';
 
-import { useBackend, useSharedState } from '../../backend';
-
-type Data = {
+export type StatusDisplayControlsData = {
   upperText: string;
   lowerText: string;
   maxStatusLineLength: number;
 };
 
 export function StatusDisplayControls(props) {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = props;
   const {
     upperText: initialUpper,
     lowerText: initialLower,

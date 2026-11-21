@@ -11,8 +11,11 @@
 	var/uid
 	///Static ID to ensure all IDs are unique.
 	var/static/file_uid = 0
-	///The modular computer hosting the file.
+	///The modular computer hosting the file. TODO: MUST BE DELETED
 	var/obj/item/modular_computer/computer
+
+	var/datum/operating_system/default/os
+
 	///The computer disk hosting the file.
 	var/obj/item/disk/computer/disk_host
 
@@ -87,7 +90,7 @@
  * * background - Whether the app is running in the background.
  */
 /datum/computer_file/program/proc/event_powerfailure()
-	kill_program()
+	os.kill_program(src)
 
 /**
  * Called when a computer program is crashing due to any required connection being shut off.
@@ -95,7 +98,7 @@
  * * background - Whether the app is running in the background.
  */
 /datum/computer_file/program/proc/event_networkfailure(background)
-	kill_program()
+	os.kill_program(src)
 	if(background)
 		computer.visible_message(span_danger("\The [computer]'s screen displays a \"Process [filename].[filetype] (PID [rand(100,999)]) terminated - Network Error\" error"))
 	else

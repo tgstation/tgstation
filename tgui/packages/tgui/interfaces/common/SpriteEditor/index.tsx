@@ -1,6 +1,5 @@
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { useEffect, useState } from 'react';
-import { useBackend } from 'tgui/backend';
 import { Box, Button, Floating, Stack } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
@@ -59,13 +58,13 @@ type ToolbarProps = {
 type TransactionType = 'undo' | 'redo';
 
 type HistoryButtonProps = {
+  act: any;
   stack: string[];
   type: TransactionType;
 };
 
 const HistoryButton = (props: HistoryButtonProps) => {
-  const { stack, type } = props;
-  const { act } = useBackend();
+  const { act, stack, type } = props;
   const [historyOpen, setHistoryOpen] = useState(false);
   const stackEmpty = stack.length < 1;
   const action = (count = 1) =>
@@ -127,6 +126,7 @@ const HistoryButton = (props: HistoryButtonProps) => {
 };
 
 type ServerColorProps = {
+  act: any;
   serverPalette: string[];
   maxServerColors: number;
   onAddServerColor: string;
@@ -153,6 +153,7 @@ const hasServerColorProps = (
 };
 
 type CanvasProps = {
+  act: any;
   data: SpriteData;
   disabled?: BooleanLike;
 } & Omit<AdvancedCanvasPropsBase, 'data' | 'backdropColor'>;
@@ -179,13 +180,17 @@ export namespace SpriteEditor {
   };
 
   export const ColorPicker = (
-    props: Omit<BaseColorPickerProps, 'initialColor' | 'onSelectColor'>,
+    props: { act: any } & Omit<
+      BaseColorPickerProps,
+      'initialColor' | 'onSelectColor'
+    >,
   ) => {
+    const { act } = props;
     const [currentColor, setCurrentColor] = useAtom(currentColorAtom);
     return (
       <BaseColorPicker
         initialColor={currentColor ?? { v: 1 }}
-        onSelectColor={setCurrentColor}
+        onSelectColor={(color) => setCurrentColor([act, color])}
         {...props}
       />
     );
@@ -195,12 +200,12 @@ export namespace SpriteEditor {
     const [colors, setColors] = useAtom(colorsAtom);
     const [currentColor, setCurrentColor] = useAtom(currentColorAtom);
     const {
+      act,
       serverPalette,
       maxServerColors,
       onAddServerColor,
       onRemoveServerColor,
     } = hasServerColorProps(props) ? props : {};
-    const { act } = useBackend();
     const parsedServerColors = serverPalette?.map(parseHexColorString);
     useEffect(() => {
       if (!parsedServerColors) {
@@ -211,14 +216,14 @@ export namespace SpriteEditor {
           colorsAreEqual(serverColor, currentColor),
         )
       ) {
-        setCurrentColor(parsedServerColors[0]);
+        setCurrentColor([act, parsedServerColors[0]]);
       }
     }, [JSON.stringify(parsedServerColors)]);
     return (
       <BasePalette
         colors={parsedServerColors ?? colors}
         selectedColor={currentColor}
-        onClickColor={setCurrentColor}
+        onClickColor={(color) => setCurrentColor([act, color])}
         onClickAddColor={() => {
           if (onAddServerColor) {
             act(onAddServerColor, { color: colorToHexString(currentColor) });
@@ -239,14 +244,14 @@ export namespace SpriteEditor {
     );
   };
 
-  export const Undo = (props: Pick<HistoryButtonProps, 'stack'>) => {
-    const { stack } = props;
-    return <HistoryButton stack={stack} type="undo" />;
+  export const Undo = (props: Pick<HistoryButtonProps, 'stack' | 'act'>) => {
+    const { act, stack } = props;
+    return <HistoryButton act={act} stack={stack} type="undo" />;
   };
 
-  export const Redo = (props: Pick<HistoryButtonProps, 'stack'>) => {
-    const { stack } = props;
-    return <HistoryButton stack={stack} type="redo" />;
+  export const Redo = (props: Pick<HistoryButtonProps, 'stack' | 'act'>) => {
+    const { act, stack } = props;
+    return <HistoryButton act={act} stack={stack} type="redo" />;
   };
 
   export const Toolbar = (props: ToolbarProps) => {
@@ -289,7 +294,7 @@ export namespace SpriteEditor {
   };
 
   export const Canvas = (props: CanvasProps) => {
-    const { data, disabled, ...rest } = props;
+    const { act, data, disabled, ...rest } = props;
     const { width, height, backdrop } = data;
     const [currentColor, setCurrentColor] = useAtom(currentColorAtom);
     const currentTool = useAtomValue(currentToolAtom);
@@ -298,6 +303,7 @@ export namespace SpriteEditor {
     const [previewLayer, setPreviewLayer] = useAtom(previewLayerAtom);
     const [previewData, setPreviewData] = useAtom(previewDataAtom);
     const toolContext = {
+      act,
       currentColor,
       setCurrentColor,
       selectedDir,

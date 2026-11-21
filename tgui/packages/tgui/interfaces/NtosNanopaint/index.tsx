@@ -2,7 +2,6 @@ import { type ReactNode, useState } from 'react';
 import { Button, Stack } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 import type { BooleanLike } from 'tgui-core/react';
-import { useBackend } from '../../backend';
 import { NtosWindow } from '../../layouts';
 import { SpriteEditor } from '../common/SpriteEditor';
 import {
@@ -16,6 +15,7 @@ import { NanopaintNewDialog } from './dialogs/NanopaintNewDialog';
 import { NanopaintSelectDialog } from './dialogs/NanopaintSelectDialog';
 import { NanopaintMenuBar } from './NanopaintMenuBar';
 import type { NanopaintData } from './types';
+import { useNtos } from '../NtosCore';
 
 const isWorkspaceOpen = (
   workspaceOpen: BooleanLike,
@@ -23,7 +23,7 @@ const isWorkspaceOpen = (
 ): data is Required<ServerColorData> & SpriteEditorData => !!workspaceOpen;
 
 export const NtosNanopaint = (props) => {
-  const { data } = useBackend<NanopaintData>();
+  const { act, data } = useNtos<NanopaintData>();
   const {
     templateSizes,
     saveableTypes,
@@ -62,7 +62,7 @@ export const NtosNanopaint = (props) => {
   switch (dialog?.type) {
     case 'new': {
       dialogNode = (
-        <NanopaintNewDialog {...{ minSize, maxSize, templateSizes }} />
+        <NanopaintNewDialog {...{ act, minSize, maxSize, templateSizes }} />
       );
       break;
     }
@@ -71,6 +71,7 @@ export const NtosNanopaint = (props) => {
       dialogNode = (
         <NanopaintSelectDialog
           {...{
+            act,
             title,
             confirmText,
             action,
@@ -86,13 +87,13 @@ export const NtosNanopaint = (props) => {
     case 'confirm': {
       const { title, message, action, params } = dialog;
       dialogNode = (
-        <NanopaintConfirmDialog {...{ title, message, action, params }} />
+        <NanopaintConfirmDialog {...{ act, title, message, action, params }} />
       );
       break;
     }
     case 'error': {
       const { message } = dialog;
-      dialogNode = <NanopaintErrorDialog message={message} />;
+      dialogNode = <NanopaintErrorDialog act={act} message={message} />;
       break;
     }
   }
@@ -106,6 +107,7 @@ export const NtosNanopaint = (props) => {
         <Stack fill vertical>
           <Stack.Item>
             <NanopaintMenuBar
+              act={act}
               undoHistory={undoStack}
               redoHistory={redoStack}
               workspaceOpen={workspaceOpen}
@@ -122,10 +124,10 @@ export const NtosNanopaint = (props) => {
                   <SpriteEditor.Toolbar toolFlags={toolFlags} />
                 </Stack.Item>
                 <Stack.Item>
-                  <SpriteEditor.Undo stack={undoStack} />
+                  <SpriteEditor.Undo act={act} stack={undoStack} />
                 </Stack.Item>
                 <Stack.Item>
-                  <SpriteEditor.Redo stack={redoStack} />
+                  <SpriteEditor.Redo act={act} stack={redoStack} />
                 </Stack.Item>
                 <Stack.Item>
                   <Button.Checkbox
@@ -162,6 +164,7 @@ export const NtosNanopaint = (props) => {
                 <Stack vertical width="420px">
                   <Stack.Item>
                     <SpriteEditor.ColorPicker
+                      act={act}
                       colorMode={SpriteEditorColorMode.Rgba}
                       hslWidth="33%"
                     />
@@ -169,6 +172,7 @@ export const NtosNanopaint = (props) => {
                   <Stack.Item>
                     <SpriteEditor.Palette
                       {...{
+                        act,
                         onAddServerColor,
                         onRemoveServerColor,
                         serverPalette,
@@ -192,6 +196,7 @@ export const NtosNanopaint = (props) => {
                     overflow="scroll"
                   >
                     <SpriteEditor.Canvas
+                      act={act}
                       height={`${height * zoom}px`}
                       width={`${width * zoom}px`}
                       data={sprite!}
@@ -201,7 +206,11 @@ export const NtosNanopaint = (props) => {
                     />
                   </Stack.Item>
                   <Stack.Item height="100%">
-                    <SpriteEditor.LayerManager height="100%" data={sprite!} />
+                    <SpriteEditor.LayerManager
+                      height="100%"
+                      act={act}
+                      data={sprite!}
+                    />
                   </Stack.Item>
                 </>
               )}
