@@ -561,12 +561,12 @@ GAME_VERB_CONTEXT(/mob, examinate, "Examine", "", null, /atom)
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
-	var/turf/examine_turf = get_turf(examinify)
 	if(is_blind()) // blind people see things differently (through touch)
 		if(!blind_examine_check(examinify))
 			return
 
 	else // If you aren't blind, it's in darkness (that you can't see) and farther then next to you
+		var/turf/examine_turf = get_turf(examinify)
 		if(examine_turf && examine_turf.is_softly_lit() && get_dist(src, examine_turf) > 1 && !has_nightvision())
 			return
 
