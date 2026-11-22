@@ -261,8 +261,23 @@
   - rscadd: Shoving someone who is on fire into someone who is not spreads fire now.
   TheRyeGuyWhoWillNowDie:
   - balance: Doubled the potency of synthflesh
+  btcbuster:
+  - spellcheck: fixed a typo on an icebox plant
   moocowswag:
   - qol: Ai's will no longer be punished for having high apm
   - qol: Silicons can now rapidly cycle modes on air alarms
   - bugfix: Air alarm ai wires are no longer inverted
   - bugfix: Air alarm screwdriver context is no longer inverted
+2026-11-22:
+  Kurgis:
+  - bugfix: Exosuit drills no longer need to disabled and re-enabled again to properly
+      use their on_click functions... because now they just start disabled.
+  Melbert:
+  - bugfix: You can no longer examine things obscured by darkness (unless you have
+      night vision)
+  - bugfix: You no longer see messages of people obscured by darkness (unless you
+      have night vision)
+  PapaMichael:
+  - bugfix: AIs can now malfunction when piloting a shell
+  btcbuster:
+  - bugfix: Can't take pyrophobia and pyromania at once now.

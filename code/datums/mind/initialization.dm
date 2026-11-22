@@ -29,6 +29,9 @@
 //BORG
 /mob/living/silicon/robot/mind_initialize()
 	. = ..()
+	// AI shells should stay as "AI", so they can get malf AI rolls
+	if(deployed)
+		return
 	mind.set_assigned_role(SSjob.get_job_type(/datum/job/cyborg))
 
 
