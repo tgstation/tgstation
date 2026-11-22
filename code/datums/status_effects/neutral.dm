@@ -978,7 +978,7 @@
 /datum/status_effect/food_crave/proc/satisfy_craving(mob/living/food_eater, datum/eaten_food)
 	SIGNAL_HANDLER
 
-	if(food_list[trigger_food])
+	if(food_list[eaten_food])
 		food_eater.apply_status_effect(/datum/status_effect/craving_satisfied)
 		qdel(src)
 
