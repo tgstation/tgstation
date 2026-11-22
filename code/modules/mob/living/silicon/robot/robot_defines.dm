@@ -74,7 +74,7 @@
 
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
 
-	// Modules (tool slots)
+	/// If we're currently using our modules. Setting to FALSE will treat cyborgs as if they have empty hands.
 	VAR_PRIVATE/modules_activated = FALSE
 
 	///For checking which modules are disabled or not.
