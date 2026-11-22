@@ -384,7 +384,7 @@
 
 		if(prob(50))
 			user.visible_message(span_notice("[user] gives up on [has_lid ? "opening" : "closing"] [src]."),
-								span_notice("You've twisted [src] every which way, but there's seemingly no way to [has_lid ? "open" : "close"] [p_them()]. [p_They()] must be broken."))
+								span_notice("You've twisted [src] every which way, but there's seemingly no way to [has_lid ? "open" : "close"] [p_them()]. Maybe if you turned [p_them()] the OTHER way..."))
 			return CLICK_ACTION_BLOCKING
 
 		if(has_lid && reagents.total_volume && prob(50))
