@@ -12,7 +12,7 @@
 			break
 	TEST_ASSERT_NOTNULL(omnitool, "Could not find /obj/item/borg/cyborg_omnitool/engineering in borg inbuilt modules!")
 	borg.put_in_hand(omnitool, 1)
-	borg.select_module(1)
+	borg.swap_hand(1)
 
 	//these must match
 	TEST_ASSERT_EQUAL(borg.get_active_held_item(), omnitool, "Borg held tool is not the selected omnitool!")

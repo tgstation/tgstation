@@ -75,7 +75,7 @@
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
 
 	// Modules (tool slots)
-	var/obj/item/module_active = null
+	VAR_PRIVATE/modules_activated = FALSE
 
 	///For checking which modules are disabled or not.
 	var/disabled_modules

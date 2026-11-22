@@ -258,7 +258,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 	var/obj/item/I = get_active_held_item()
 	if(I)
-		uneq_active()
+		deactivate_module(I)
 		visible_message(span_danger("[user] disarmed [src]!"), \
 			span_userdanger("[user] has disabled [src]'s active module!"), null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "disarmed", "[I ? " removing \the [I]" : ""]")

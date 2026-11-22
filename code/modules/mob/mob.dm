@@ -910,7 +910,7 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 	var/step = ((cycle_dir & NORTHWEST) != 0) ? 1 : -1
 	var/by_row = cycle_dir & (NORTH|SOUTH)
 
-	var/hand_count = held_items.len
+	var/hand_count = get_num_hand_slots()
 	var/num_rows = floor(hand_count / 2)
 	var/row = floor((initial_index - 1) / 2)
 	var/column = (initial_index - 1) % 2
@@ -952,7 +952,7 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 /mob/proc/swap_hand(held_index, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
 
-	if(!held_items.len)
+	if(!get_num_hand_slots())
 		return FALSE
 
 	if(!isnum(held_index))

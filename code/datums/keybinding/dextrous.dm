@@ -108,8 +108,6 @@
 	. = ..()
 	if(.)
 		return
-	if(iscyborg(user.mob)) //cyborgs can't drop items
-		return FALSE
 	var/mob/user_mob = user.mob
 	var/obj/item/item_dropped = user_mob.get_active_held_item()
 	if(!item_dropped)
@@ -129,8 +127,6 @@
 	. = ..()
 	if(.)
 		return
-	if(iscyborg(user.mob)) //cyborgs can't drop items
-		return FALSE
 	var/mob/user_mob = user.mob
 	var/obj/item/item_dropped = user_mob.get_active_held_item()
 	if(!item_dropped)

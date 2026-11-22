@@ -20,8 +20,9 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if(robot_owner.module_active && !LAZYACCESS(modifiers, RIGHT_CLICK) && !.)
-		robot_owner.uneq_active()
+	var/obj/item/held_item = robot_owner.get_active_held_item()
+	if(held_item && !LAZYACCESS(modifiers, RIGHT_CLICK) && !.)
+		robot_owner.dropItemToGround(held_item)
 		return
 
 	// Observers can look at borg's inventories, so we ignore parent return value here, unlike everywhere else.
@@ -55,8 +56,8 @@
 /atom/movable/screen/robot/module_slot/Click()
 	if(..())
 		return
-	var/mob/living/silicon/robot/R = usr
-	R.toggle_module(slot_num)
+	var/mob/living/silicon/robot/borg = usr
+	borg.swap_hand(slot_num)
 
 /atom/movable/screen/robot/radio
 	name = "radio"

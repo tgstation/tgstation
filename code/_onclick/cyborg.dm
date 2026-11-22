@@ -49,7 +49,7 @@
 
 	//wireless interaction with an atom
 	if(!W && get_dist(src, A) <= interaction_range)
-		if(LAZYACCESS(modifiers, RIGHT_CLICK) && !module_active)
+		if(LAZYACCESS(modifiers, RIGHT_CLICK) && !modules_activated)
 			var/secondary_result = A.attack_robot_secondary(src, modifiers)
 			if(secondary_result == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || secondary_result == SECONDARY_ATTACK_CONTINUE_CHAIN)
 				return

@@ -129,7 +129,7 @@
 	if (!istype(cyborg))
 		return
 	var/list/held_modules = cyborg.get_held_items()
-	var/active_module = cyborg.module_active
+	var/active_module = cyborg.get_active_held_item()
 	//move everything out of the model's inventory
 	for(var/obj/item/module as anything in modules)
 		module.forceMove(robot)
@@ -144,7 +144,7 @@
 	for(var/obj/item/module as anything in held_modules & modules)
 		cyborg.put_in_hand(module, held_modules.Find(module))
 	if(active_module)
-		cyborg.select_module(held_modules.Find(active_module))
+		cyborg.swap_hand(held_modules.Find(active_module))
 	atom_storage.refresh_views()
 
 ///Restocks things that don't take mats, generally at a power cost. Returns True if anything was restocked/replaced, and False otherwise.
