@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - bugfix: "Ceruleans species-changed into humans no longer lose a third of their blood nor zoom around super fast"
