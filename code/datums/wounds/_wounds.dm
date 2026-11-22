@@ -489,7 +489,7 @@
 		if(WOUND_SEVERITY_LOSS)
 			amount = WOUND_DETERMINATION_LOSS
 
-	if(ishumanbasic(victim))
+	if(HAS_TRAIT(victim, TRAIT_MORE_ADRENALINE))
 		amount *= 1.5
 
 	if(amount > 0)

@@ -766,3 +766,9 @@
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
 	shade_color = "lime"
+
+// Identical to a normal brain otherwise
+/obj/item/organ/brain/human
+	variant_traits_added = list(
+		TRAIT_MORE_ADRENALINE,
+	)

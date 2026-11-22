@@ -707,6 +707,9 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_BRAINLESS_CARBON" = TRAIT_BRAINLESS_CARBON,
 		"TRAIT_COLD_BLOODED" = TRAIT_COLD_BLOODED,
 	),
+	/mob/living/carbon/human = list(
+		"TRAIT_MORE_ADRENALINE" = TRAIT_MORE_ADRENALINE,
+	),
 	/mob/dead/observer = list(
 		"TRAIT_NO_OBSERVE" = TRAIT_NO_OBSERVE,
 	),
