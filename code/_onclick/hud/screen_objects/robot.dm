@@ -22,7 +22,7 @@
 	var/list/modifiers = params2list(params)
 	var/obj/item/held_item = robot_owner.get_active_held_item()
 	if(held_item && !LAZYACCESS(modifiers, RIGHT_CLICK) && !.)
-		robot_owner.dropItemToGround(held_item)
+		robot_owner.deactivate_module(held_item)
 		return
 
 	// Observers can look at borg's inventories, so we ignore parent return value here, unlike everywhere else.
