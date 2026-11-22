@@ -368,13 +368,36 @@
 		update_appearance()
 		return CLICK_ACTION_SUCCESS
 
-	has_lid = !has_lid
-	update_appearance()
+	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)))
+		if(loc != user)
+			to_chat(user, span_notice("You're not sure how [src]'s lid works. You'd need to hold [p_them()] to figure it out."))
+			return CLICK_ACTION_BLOCKING
+
+		user.visible_message(span_notice("It looks like [user] is struggling with [src]'s lid..."),
+							span_notice("You try to force the lid of [src] [has_lid ? "off" : "on"]..."),
+							span_hear("You hear fumbling."))
+
+		if(!do_after(user, 5 SECONDS, src))
+			user.visible_message(span_notice("[user] gives up on [has_lid ? "opening" : "closing"] [src]."),
+								span_notice("This must not be the right lid. Maybe there's another way [has_lid ? "inside" : "to cover"] [p_them()]."))
+			return CLICK_ACTION_BLOCKING
+
+		if(prob(50))
+			user.visible_message(span_notice("[user] gives up on [has_lid ? "opening" : "closing"] [src]."),
+								span_notice("You've twisted [src] every which way, but there's seemingly no way to [has_lid ? "open" : "close"] [p_them()]. [p_They()] must be broken."))
+			return CLICK_ACTION_BLOCKING
+
+		if(has_lid && reagents.total_volume && prob(50))
+			user.visible_message(span_notice("[user] uses a bit too much force trying to open [src], and accidentally spills [p_their()] contents on [user.p_themselves()]!"),
+								span_danger("[src]'s lid comes flying off as you pry it free, but [p_their()] contents are soon to follow!"),
+								span_hear("You hear a loud POP, followed by a splash."))
+			toggle_lid()
+			splash_reagents(user)
+			return CLICK_ACTION_SUCCESS
+
+
+	toggle_lid()
 	balloon_alert(user, "lid [has_lid ? "sealed" : "unsealed"]")
-	if (has_lid)
-		add_container_flags(SEALED_CONTAINER)
-	else
-		reset_container_flags()
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/reagent_containers/cup/wirecutter_act(mob/living/user, obj/item/tool)
@@ -419,6 +442,15 @@
 		attached_cell = null
 		cell_wired = FALSE
 		update_appearance()
+
+///Toggles the container's lid, handling flag changes
+/obj/item/reagent_containers/cup/proc/toggle_lid()
+	has_lid = !has_lid
+	update_appearance()
+	if (has_lid)
+		add_container_flags(SEALED_CONTAINER)
+	else
+		reset_container_flags()
 
 /obj/item/reagent_containers/cup/proc/on_igniter_activate(datum/source, obj/item/assembly/igniter/igniter)
 	SIGNAL_HANDLER
