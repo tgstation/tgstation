@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "You can no longer examine things obscured by darkness (unless you have night vision)"
-  - bugfix: "You no longer see messages of people obscured by darkness (unless you have night vision)"
