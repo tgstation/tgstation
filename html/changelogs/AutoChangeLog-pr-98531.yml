@@ -1,0 +1,4 @@
+author: "btcbuster"
+delete-after: True
+changes:
+  - bugfix: "Can't take pyrophobia and pyromania at once now."

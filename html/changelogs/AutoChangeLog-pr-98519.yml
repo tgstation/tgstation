@@ -1,0 +1,4 @@
+author: "Kurgis"
+delete-after: True
+changes:
+  - bugfix: "Exosuit drills no longer need to disabled and re-enabled again to properly use their on_click functions... because now they just start disabled."

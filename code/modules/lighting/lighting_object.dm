@@ -102,7 +102,7 @@
 			00, 00, 00, 01
 		)
 
-	luminosity = set_luminosity
+	affected_turf.luminosity = set_luminosity
 
 // Variety of overrides so the overlays don't get affected by weird things.
 
