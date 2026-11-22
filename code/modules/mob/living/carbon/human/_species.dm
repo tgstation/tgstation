@@ -290,7 +290,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// if we have an extra organ that before changing that the species didnt have, remove it
 		else if(!new_organ)
 			if(existing_organ)
-				existing_organ.Remove(organ_holder)
+				existing_organ.Remove(organ_holder, special = TRUE)
 				qdel(existing_organ)
 			continue
 

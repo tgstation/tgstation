@@ -72,8 +72,7 @@
 	MODIFY_PHYSIOLOGY(owner, BURN, 1 / 1.15)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_HEAT, 1 / 1.15)
 	owner.damage_resistance -= 8
-	if(HAS_TRAIT(owner, TRAIT_IS_WET) && istype(owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL), /obj/item/organ/tail/fish))
-		remove_speed_buff()
+	remove_speed_buff()
 	owner.mind?.adjust_experience(/datum/skill/fishing, -SKILL_EXP_JOURNEYMAN, silent = TRUE)
 	owner.remove_language(/datum/language/carptongue, ALL, type)
 
