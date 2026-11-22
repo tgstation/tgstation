@@ -264,7 +264,7 @@
 	if(name_length < 3) // Too short
 		return
 
-	if(name_length > 3 * MAX_NAME_LEN) // Bad input
+	if(name_length > 3 * MAX_NAME_LEN || findtext(value, new /regex("\[<>\[\]|\\]"))) // Bad input
 		return
 
 	var/trimmed = trim(value, MAX_NAME_LEN)
