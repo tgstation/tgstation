@@ -64,7 +64,7 @@
 		return
 	if(!ismob(hit_projectile.firer))
 		return
-	relay_attacker(target, hit_projectile.firer, ATTACK_RANGED | hit_projectile.damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK, get_dir(target, hit_projectile))
+	relay_attacker(target, hit_projectile.firer, ATTACK_RANGED | (hit_projectile.damage_type == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK), get_dir(target, hit_projectile))
 
 /// Even if another component blocked this hit, someone still threw something
 /datum/element/relay_attackers/proc/on_hitby(atom/target, atom/movable/hit_atom, datum/thrownthing/throwingdatum)
@@ -77,7 +77,7 @@
 	var/atom/thrown_by = throwingdatum?.get_thrower()
 	if(!istype(thrown_by))
 		return
-	relay_attacker(target, thrown_by, ATTACK_RANGED | hit_item.damtype == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK, get_dir(target, hit_atom))
+	relay_attacker(target, thrown_by, ATTACK_RANGED | (hit_item.damtype == STAMINA ? ATTACKER_STAMINA_ATTACK : ATTACKER_DAMAGING_ATTACK), get_dir(target, hit_atom))
 
 /datum/element/relay_attackers/proc/on_attack_hulk(atom/target, mob/attacker)
 	SIGNAL_HANDLER
