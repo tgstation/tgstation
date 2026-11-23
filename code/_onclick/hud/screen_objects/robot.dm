@@ -33,25 +33,26 @@
 	return TRUE
 
 /atom/movable/screen/robot/module_slot
-	name = "module"
+	name = "Module"
+	examine_thats = "This is your"
+	desc = "Stun prod goes here."
 	icon_state = "inv1"
 	base_icon_state = "inv1"
 	/// Slot number of the module
-	var/slot_num = 1
+	VAR_FINAL/slot_num = 1
+	VAR_PRIVATE/static/list/possible_text_colors = list("#ff0000", "#ff9900", "#00cc00")
 
 /atom/movable/screen/robot/module_slot/proc/set_slot(slot_num)
 	src.slot_num = slot_num
-	name = "module[slot_num]"
-	base_icon_state = "inv[slot_num]"
+	var/slot_column = ((slot_num - 1) % 3) + 1
+
+	name = "Module [slot_num]"
+	base_icon_state = "inv[slot_column]"
 	icon_state = base_icon_state
 
-	switch(slot_num)
-		if(BORG_CHOOSE_MODULE_ONE)
-			screen_loc = ui_inv1
-		if(BORG_CHOOSE_MODULE_TWO)
-			screen_loc = ui_inv2
-		if(BORG_CHOOSE_MODULE_THREE)
-			screen_loc = ui_inv3
+	maptext = MAPTEXT_SPESSFONT("<span style='color: [possible_text_colors[slot_column]]; -dm-text-outline: 0'>[slot_num]</span>")
+	maptext_x = 6
+	maptext_y = 19
 
 /atom/movable/screen/robot/module_slot/Click()
 	if(..())

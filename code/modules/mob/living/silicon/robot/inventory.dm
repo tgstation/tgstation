@@ -75,24 +75,15 @@
 	// because robots mechanically support an arbitrary amount of module slots.
 	// This needs a nice refactoring.
 
-	var/atom/movable/screen/robot/module_slot/module1 = hud_used.screen_objects[HUD_KEY_HAND_SLOT(BORG_CHOOSE_MODULE_ONE)]
-	var/atom/movable/screen/robot/module_slot/module2 = hud_used.screen_objects[HUD_KEY_HAND_SLOT(BORG_CHOOSE_MODULE_TWO)]
-	var/atom/movable/screen/robot/module_slot/module3 = hud_used.screen_objects[HUD_KEY_HAND_SLOT(BORG_CHOOSE_MODULE_THREE)]
+	for(var/i in 1 to get_num_hand_slots())
+		var/atom/movable/screen/robot/module_slot/module = hud_used.screen_objects[HUD_KEY_HAND_SLOT(i)]
+		if(!module)
+			continue
 
-	if(last_working_module < BORG_CHOOSE_MODULE_ONE)
-		module1.icon_state = "[module1.base_icon_state] +b"
-	else
-		module1.icon_state = "[module1.base_icon_state][modules_activated && active_hand_index == 1 ? " +a" : null]"
-
-	if(last_working_module < BORG_CHOOSE_MODULE_TWO)
-		module2.icon_state = "[module2.base_icon_state] +b"
-	else
-		module2.icon_state = "[module2.base_icon_state][modules_activated && active_hand_index == 2 ? " +a" : null]"
-
-	if(last_working_module < BORG_CHOOSE_MODULE_THREE)
-		module3.icon_state = "[module3.base_icon_state] +b"
-	else
-		module3.icon_state = "[module3.base_icon_state][modules_activated && active_hand_index == 3 ? " +a" : null]"
+		if(last_working_module < i)
+			module.icon_state = "[module.base_icon_state] +b"
+		else
+			module.icon_state = "[module.base_icon_state][modules_activated && active_hand_index == i ? " +a" : null]"
 
 /**
  * parent proc - triggers when an item/module is unequipped from a cyborg.

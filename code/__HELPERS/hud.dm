@@ -8,6 +8,11 @@
 	var/y_off = round((M.get_num_hand_slots()-1) / 2)
 	return "CENTER[x_off]:16,SOUTH+[y_off+1]:5"
 
+/proc/ui_module_position(i) //values based on old module ui positions (CENTER-i:16,SOUTH:5)
+	var/x_off = (((i - 1) % 3) + 1) - 3
+	var/y_off = round((i-1) / 3)
+	return "CENTER[x_off || null]:16,SOUTH+[y_off]:5"
+
 /proc/ui_perk_position(perk_count)
 	var/y_off = perk_count < 1 ? 0 : perk_count/2
 	return "WEST+0.5:12,NORTH-2-[y_off]:20"
