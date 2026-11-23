@@ -159,7 +159,7 @@
  * * cap_at_start - capitalize the start of words. False is good for modular computer file names.
  */
 /proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE, cap_after_symbols = TRUE, cap_at_start = TRUE)
-	if(!is_text(t_in))
+	if(!istext(t_in))
 		return //Rejects the input if it isn't text to begin with
 
 	var/number_of_alphanumeric = 0
