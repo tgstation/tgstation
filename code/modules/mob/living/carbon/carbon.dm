@@ -1223,7 +1223,6 @@
 
 /mob/living/carbon/dropItemToGround(obj/item/to_drop, force = FALSE, silent = FALSE, invdrop = TRUE, turf/newloc = null)
 	if(to_drop && (organs.Find(to_drop) || bodyparts.Find(to_drop))) //let's not do this, aight?
-		stack_trace("Tried to drop a carbon's [istype(to_drop, /obj/item/organ) ? "organ" : "bodypart"], that's not how this proc works!")
 		return null
 	return ..()
 
