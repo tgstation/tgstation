@@ -470,14 +470,14 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	return toReturn
 
 /obj/item/tcg_precondeck
-	name = "\improper TGC Preconstructed Deck"
-	desc = "Face off with this awesome TGC pre-constructed deck, ready for play!"
+	name = "abstract pre constructed deck"
+	desc = "Unfortunately, this deck is not ready for play yet."
 	icon = 'icons/obj/toys/tcgprecons.dmi'
 	icon_state = "template"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW * 1.6 // Set this higher when packs increase in price
 	/// ID of the deck that it grabs from the precons json
-	var/precon_id = "coder"
+	var/precon_id
 
 /obj/item/tcg_precondeck/command
 	name = "\improper 'Command' TGC Preconstructed Deck"
@@ -497,9 +497,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 
 /obj/item/tcg_precondeck/attack_self(mob/user)
 	. = ..()
+	var/turf/drop_loc = drop_location()
 	if(!user.temporarilyRemoveItemFromInventory(src, TRUE))
 		return
-	var/turf/turf_loc = get_turf(user)
 
 	var/obj/item/tcgcard/deck = new(turf_loc)
 	var/list/precon_list = SStrading_card_game.precons[precon_id]["list"]
@@ -511,8 +511,9 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
 	user.visible_message(
-		span_notice("[user] opens \the [src] packaging."),
-		span_notice("You open \the [src] packaging.")
+		span_notice("[user] opens [src]'s' packaging."),
+		span_notice("You open [src]'s packaging."),
+		span_notice("You hear paper get ripped apart!")
 	)
 	qdel(src)
 
