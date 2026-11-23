@@ -71,10 +71,10 @@
 
 //Advanced Robotic Limbs
 
-/datum/design/advanced_l_arm
-	name = "Advanced Left Arm"
+/datum/design/combat_l_arm
+	name = "Combat Left Arm"
 	build_type = MECHFAB
-	build_path = /obj/item/bodypart/arm/left/robot/advanced
+	build_path = /obj/item/bodypart/arm/left/robot/combat
 	materials = list(
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
@@ -85,10 +85,10 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
 	)
 
-/datum/design/advanced_r_arm
-	name = "Advanced Right Arm"
+/datum/design/combat_r_arm
+	name = "Combat Right Arm"
 	build_type = MECHFAB
-	build_path = /obj/item/bodypart/arm/right/robot/advanced
+	build_path = /obj/item/bodypart/arm/right/robot/combat
 	materials = list(
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
@@ -99,10 +99,10 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
 	)
 
-/datum/design/advanced_l_leg
-	name = "Advanced Left Leg"
+/datum/design/combat_l_leg
+	name = "Combat Left Leg"
 	build_type = MECHFAB
-	build_path = /obj/item/bodypart/leg/left/robot/advanced
+	build_path = /obj/item/bodypart/leg/left/robot/combat
 	materials = list(
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
@@ -113,16 +113,44 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
 	)
 
-/datum/design/advanced_r_leg
-	name = "Advanced Right Leg"
+/datum/design/combat_r_leg
+	name = "Combat Right Leg"
 	build_type = MECHFAB
-	build_path = /obj/item/bodypart/leg/right/robot/advanced
+	build_path = /obj/item/bodypart/leg/right/robot/combat
 	materials = list(
 		/datum/material/iron=SHEET_MATERIAL_AMOUNT*10,
 		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*3,
 		/datum/material/gold=SHEET_MATERIAL_AMOUNT*3,
 	)
 	construction_time = 20 SECONDS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
+	)
+
+/datum/design/combat_chest
+	name = "Combat Torso"
+	build_type = MECHFAB
+	build_path = /obj/item/bodypart/chest/robot/combat
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*40,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*12,
+		/datum/material/gold=SHEET_MATERIAL_AMOUNT*12,
+	)
+	construction_time = 35 SECONDS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
+	)
+
+/datum/design/combat_head
+	name = "Combat Head"
+	build_type = MECHFAB
+	build_path = /obj/item/bodypart/head/robot/combat
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*1.5,
+		/datum/material/gold=SHEET_MATERIAL_AMOUNT*1.5,
+	)
+	construction_time = 35 SECONDS
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
 	)
