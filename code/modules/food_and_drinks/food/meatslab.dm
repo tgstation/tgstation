@@ -344,8 +344,7 @@
 
 /obj/item/food/meat/slab/goliath/Initialize(mapload)
 	. = ..()
-	var/static/list/raptor_food_chances
-	raptor_food_chances ||= list(/datum/raptor_color/red = 5)
+	var/static/list/raptor_food_chances = list(/datum/raptor_color/red = 5)
 	AddElement(/datum/element/raptor_food, attack_modifier = 0.5, speed_modifier = -0.05, color_chances = raptor_food_chances)
 
 /obj/item/food/meat/slab/goliath/burn()
@@ -601,8 +600,7 @@
 
 /obj/item/food/meat/steak/goliath/Initialize(mapload)
 	. = ..()
-	var/static/list/raptor_food_chances
-	raptor_food_chances ||= list(/datum/raptor_color/red = 7)
+	var/static/list/raptor_food_chances = list(/datum/raptor_color/red = 7)
 	AddElement(/datum/element/raptor_food, attack_modifier = 1, speed_modifier = -0.075, color_chances = raptor_food_chances)
 
 /obj/item/food/meat/steak/gondola
