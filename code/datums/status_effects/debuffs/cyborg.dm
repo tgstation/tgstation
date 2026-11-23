@@ -2,15 +2,16 @@
 /datum/status_effect/borg_slow
 	id = "borg_slowdown"
 	alert_type = null
-	duration = 3 SECONDS
+	duration = 5 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 	remove_on_fullheal = TRUE
 	heal_flag_necessary = HEAL_CC_STATUS
 	/// Amount of slowdown being applied
 	var/slowdown = 1
 
-/datum/status_effect/borg_slow/on_creation(mob/living/new_owner, slowdown = 1)
+/datum/status_effect/borg_slow/on_creation(mob/living/new_owner, slowdown = 1, duration = 5 SECONDS)
 	src.slowdown = slowdown
+	src.duration = duration
 	return ..()
 
 /datum/status_effect/borg_slow/on_apply()

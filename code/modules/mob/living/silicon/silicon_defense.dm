@@ -127,7 +127,7 @@
 		to_chat(user, span_danger("You [atk_verb] [src]!"))
 		playsound(src, 'sound/effects/bang.ogg', 10, TRUE)
 		apply_damage(damage, attacking_bodypart.attack_type, attack_direction = get_dir(user, src))
-		apply_status_effect(/datum/status_effect/borg_slow, damage/60)
+		apply_status_effect(/datum/status_effect/borg_slow, damage * CYBORG_SLOWDOWN_DAMAGE_SCALING)
 		log_combat(user, src, "punched")
 	else
 		visible_message(span_notice("[user] pets [src]."), span_notice("[user] pets you."), null, null, user)
@@ -186,22 +186,17 @@
 	if(affect_silicon)
 		return ..()
 
-/// If an item does this or more throwing damage it will slow a borg down on hit
-#define CYBORG_SLOWDOWN_THRESHOLD 10
-
 /mob/living/silicon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(. || AM.throwforce < CYBORG_SLOWDOWN_THRESHOLD) // can cyborgs even catch things?
 		return
-	apply_status_effect(/datum/status_effect/borg_slow, AM.throwforce / 20)
+	apply_status_effect(/datum/status_effect/borg_slow, AM.throwforce * CYBORG_SLOWDOWN_DAMAGE_SCALING * 2)
 
 /mob/living/silicon/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
 	. = ..()
 	if(damage_done < CYBORG_SLOWDOWN_THRESHOLD)
 		return
-	apply_status_effect(/datum/status_effect/borg_slow, damage_done / 60)
-
-#undef CYBORG_SLOWDOWN_THRESHOLD
+	apply_status_effect(/datum/status_effect/borg_slow, damage_done * CYBORG_SLOWDOWN_DAMAGE_SCALING)
 
 /mob/living/silicon/hypnosis_vulnerable()
 	return FALSE //It obeys its laws
