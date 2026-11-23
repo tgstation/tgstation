@@ -159,14 +159,17 @@
 				to_chat(src, span_userdanger("CRITICAL ERROR: ALL modules OFFLINE."))
 				if(builtInCamera)
 					builtInCamera.camera_enabled = FALSE
-					to_chat(src, span_userdanger("CRITICAL ERROR: Built in security camera OFFLINE."))
+					to_chat(src, span_userdanger("CRITICAL ERROR: [builtInCamera.name] OFFLINE."))
 			else
 				to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_index] OFFLINE."))
 		else
-			to_chat(src, span_notice("ERROR CLEARED: Module [module_index] back online."))
+			playsound(src, 'sound/machines/beep/twobeep.ogg', 40, TRUE)
+			audible_message(span_notice("[src] beeps confidently! \"ERROR CLEARED: Module [module_index] back online.\""),
+				"[src]'s posture looks stronger!",
+				audible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
 			if(module_index == 1 && builtInCamera)
 				builtInCamera.camera_enabled = TRUE
-				to_chat(src, span_notice("You hear your built in security camera focus adjust as it comes back online!"))
+				to_chat(src, span_notice("You hear your [builtInCamera.name]'s focus adjust as [builtInCamera.p_they()] comes back online!"))
 
 	last_working_module = new_module_index
 	update_held_items()

@@ -1,5 +1,6 @@
 ///Special type of camera installed into silicons (drones included) that gives an alert when someone is watching them through cameras.
 /obj/machinery/camera/silicon
+	name = "built-in security camera"
 	network = list(CAMERANET_NETWORK_SS13)
 	internal_light = FALSE
 	start_active = TRUE
