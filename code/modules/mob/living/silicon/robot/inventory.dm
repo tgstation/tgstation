@@ -79,17 +79,17 @@
 	var/atom/movable/screen/robot/module_slot/module2 = hud_used.screen_objects[HUD_KEY_HAND_SLOT(BORG_CHOOSE_MODULE_TWO)]
 	var/atom/movable/screen/robot/module_slot/module3 = hud_used.screen_objects[HUD_KEY_HAND_SLOT(BORG_CHOOSE_MODULE_THREE)]
 
-	if(last_broken_module <= BORG_CHOOSE_MODULE_ONE)
+	if(last_working_module < BORG_CHOOSE_MODULE_ONE)
 		module1.icon_state = "[module1.base_icon_state] +b"
 	else
 		module1.icon_state = "[module1.base_icon_state][modules_activated && active_hand_index == 1 ? " +a" : null]"
 
-	if(last_broken_module <= BORG_CHOOSE_MODULE_TWO)
+	if(last_working_module < BORG_CHOOSE_MODULE_TWO)
 		module2.icon_state = "[module2.base_icon_state] +b"
 	else
 		module2.icon_state = "[module2.base_icon_state][modules_activated && active_hand_index == 2 ? " +a" : null]"
 
-	if(last_broken_module <= BORG_CHOOSE_MODULE_THREE)
+	if(last_working_module < BORG_CHOOSE_MODULE_THREE)
 		module3.icon_state = "[module3.base_icon_state] +b"
 	else
 		module3.icon_state = "[module3.base_icon_state][modules_activated && active_hand_index == 3 ? " +a" : null]"
@@ -128,31 +128,37 @@
 /mob/living/silicon/robot/proc/deactivate_module(obj/item/item_module)
 	return transferItemToLoc(item_module, newloc = model)
 
-/mob/living/silicon/robot/proc/update_module_health(old_health)
+/mob/living/silicon/robot/proc/update_module_health()
 	PROTECTED_PROC(TRUE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(!model.breakable_modules)
-		last_broken_module = get_num_hand_slots()
+		last_working_module = get_num_hand_slots()
 		return
+
 	if(!get_num_hand_slots())
 		return
 
-	var/effective_max_health = maxHealth * 2
-	var/effective_health = health + maxHealth
-	var/effective_old_health = old_health + maxHealth
-	var/health_per_module = effective_max_health / (get_num_hand_slots() + 1)
+	var/health_per_module = (maxHealth * 2) / (get_num_hand_slots() + 1)
+	var/effective_health = (health + maxHealth) - 1 // so that it breaks at 50 and not 49
 
-	var/old_module_index = floor((effective_old_health - 1) / health_per_module) + 1
-	var/new_module_index = floor((effective_health - 1) / health_per_module) + 1
+	var/old_module_index = last_working_module
+	var/new_module_index = floor((effective_health) / health_per_module)
 
-	var/damaging = effective_health < effective_old_health
+	if(new_module_index == old_module_index)
+		return
+
+	var/damaging = new_module_index < old_module_index
+
+	// We add 1 to the indexes just so that they look normal when displayed in chat
+	var/starting_module_index = old_module_index + 1
+	var/ending_module_index = new_module_index + 1
 	if(damaging)
-		old_module_index--
+		starting_module_index--
 	else
-		new_module_index--
+		ending_module_index--
 
-	for(var/module_index in old_module_index to new_module_index step (damaging ? -1 : 1))
+	for(var/module_index in starting_module_index to ending_module_index step (damaging ? -1 : 1))
 		if(damaging)
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
 			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_index] OFFLINE.\""))
@@ -169,7 +175,7 @@
 				builtInCamera.camera_enabled = TRUE
 				to_chat(src, span_notice("You hear your built in security camera focus adjust as it comes back online!"))
 
-	last_broken_module = damaging ? new_module_index : old_module_index
+	last_working_module = new_module_index
 	update_held_items()
 
 /**
@@ -185,7 +191,7 @@
 	if(!module_num)
 		return TRUE
 
-	return module_num < 1 || module_num > last_broken_module
+	return module_num < 1 || module_num > last_working_module
 
 /**
  * ## Please do not use

@@ -27,7 +27,7 @@
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GOT_DAMPENED), PROC_REF(on_dampen))
 
-	previous_health = health
+	last_working_module = default_hand_amount
 
 	if(ispath(cell))
 		cell = new cell(src)
@@ -101,8 +101,6 @@
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_CLEARED, PROC_REF(alarm_cleared))
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
-
-	last_broken_module = get_num_hand_slots()
 
 /mob/living/silicon/robot/set_suicide(suicide_state)
 	. = ..()
@@ -654,8 +652,7 @@
 /mob/living/silicon/robot/updatehealth()
 	..()
 	update_damage_particles()
-	update_module_health(previous_health)
-	previous_health = health
+	update_module_health()
 
 /mob/living/silicon/robot/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
