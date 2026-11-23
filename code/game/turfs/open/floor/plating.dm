@@ -22,17 +22,6 @@
 	//Used for upgrading this into R-Plating
 	var/upgradable = TRUE
 
-/turf/open/floor/plating/Initialize(mapload)
-	. = ..()
-	register_context()
-
-/turf/open/floor/plating/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	. = ..()
-	if(istype(held_item, /obj/item/stack/tile))
-		context[SCREENTIP_CONTEXT_LMB] = "Place tile"
-		context[SCREENTIP_CONTEXT_RMB] = "Place tile (with decals)"
-		. = CONTEXTUAL_SCREENTIP_SET
-
 // Ordinary plating with the foam pattern, without metal foam's fragility.
 /turf/open/floor/plating/foam_pattern
 	icon_state = "foam_plating"

@@ -57,13 +57,13 @@
 	var/use_holiday_colors = FALSE
 	/// The pattern used when recoloring the decal. If null, it'll use the def of the station or holiday.
 	var/pattern
-
-#define DECAL_ARGS(icon, icon_state, dir, layer, alpha, color) (icon), (icon_state), (dir), null, (layer), (alpha), (color), null, FALSE, null
+	/// If TRUE the tile tracks this decal after init
+	var/persistent = FALSE
 
 // This is with the intent of optimizing mapload
 // See spawners for more details since we use the same pattern
 // Basically rather then creating and deleting ourselves, why not just do the bare minimum?
-/obj/effect/turf_decal/Initialize(mapload, new_dir = NONE)
+/obj/effect/turf_decal/Initialize(mapload, new_dir, new_alpha, new_color)
 	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -81,10 +81,15 @@
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
-	if(mapload)
-		var/list/decal_args = string_list(list(DECAL_ARGS(icon, icon_state, new_dir || dir, layer, alpha, color)))
-		T.base_decals = string_list((T.base_decals?.Copy() || list()) + list(decal_args), refs = TRUE)
-	T.AddElement(/datum/element/decal, DECAL_ARGS(icon, icon_state, new_dir || dir, layer, alpha, color))
+	if(new_dir)
+		src.dir = new_dir
+	if(new_alpha)
+		src.alpha = new_alpha
+	if(new_color)
+		src.color = new_color
+	if(mapload && persistent)
+		T.base_decals = string_list((T.base_decals?.Copy() || list()) + list2params(list(type, dir, alpha, color)))
+	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, layer, alpha, color, null, FALSE, null)
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/turf_decal/Destroy(force)
@@ -94,12 +99,10 @@
 // I hate it too bestie
 	if(GLOB.running_create_and_destroy)
 		var/turf/T = loc
-		T.RemoveElement(/datum/element/decal, DECAL_ARGS(icon, icon_state, dir, layer, alpha, color))
+		T.RemoveElement(/datum/element/decal, icon, icon_state, dir, null, layer, alpha, color, null, FALSE, null)
 #endif
 	// Intentionally used over moveToNullspace(), which calls doMove(), which fires
 	// off an enormous amount of procs, signals, etc, that this temporary effect object
 	// never needs or affects.
 	loc = null
 	return QDEL_HINT_QUEUE
-
-#undef DECAL_ARGS
