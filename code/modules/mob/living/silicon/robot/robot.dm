@@ -27,8 +27,6 @@
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GOT_DAMPENED), PROC_REF(on_dampen))
 
-	refresh_module_stats()
-
 	if(ispath(cell))
 		cell = new cell(src)
 
@@ -64,6 +62,7 @@
 			builtInCamera.camera_enabled = FALSE
 	. = ..()
 	update_icons()
+	refresh_module_stats()
 
 	LoadComponent(/datum/component/bloodysoles/bot)
 
