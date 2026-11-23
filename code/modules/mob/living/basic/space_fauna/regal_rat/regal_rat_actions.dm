@@ -140,17 +140,31 @@
 // Command you can give to a mouse to make it kill someone
 /datum/pet_command/attack/mouse
 	speech_commands = list("attack", "sic", "kill", "cheese em")
-	command_feedback = "squeak!" // Frogs and roaches can squeak too it's fine
-	pointed_reaction = "and squeaks aggressively"
-	refuse_reaction = "quivers"
+
+/datum/pet_command/attack/mouse/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	switch(feedback_type)
+		if(PET_COMMAND_FEEDBACK_ACTIVATED)
+			return "[parent] squeaks"
+		if(PET_COMMAND_FEEDBACK_REFUSED_TARGET)
+			return target ? "[parent] quivers at [target]" : "[parent] quivers"
+		if(PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+			return "[parent] squeaks at [target]"
+	return ..()
 
 // Command you can give to a glockroach to make it shoot someone
 /datum/pet_command/attack/glockroach
 	speech_commands = list("attack", "sic", "kill", "cheese em")
-	command_feedback = "squeak!"
-	pointed_reaction = "and cocks its gun"
-	refuse_reaction = "quivers"
 	attack_subtree = /datum/bt_node/subtree/pet_command/attack/ranged/glockroach
+
+/datum/pet_command/attack/glockroach/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	switch(feedback_type)
+		if(PET_COMMAND_FEEDBACK_ACTIVATED)
+			return "[parent] squeaks"
+		if(PET_COMMAND_FEEDBACK_REFUSED_TARGET)
+			return target ? "[parent] quivers at [target]" : "[parent] quivers"
+		if(PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+			return "[parent] cocks [parent.p_their()] gun at [target]"
+	return ..()
 
 /**
  *Spittle; harmless reagent that is added by rat king, and makes you disgusted.
