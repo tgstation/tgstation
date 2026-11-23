@@ -190,13 +190,13 @@
 	. = ..()
 	if(. || AM.throwforce < CYBORG_SLOWDOWN_THRESHOLD) // can cyborgs even catch things?
 		return
-	apply_status_effect(/datum/status_effect/borg_slow, AM.throwforce * CYBORG_SLOWDOWN_DAMAGE_SCALING * 2)
+	apply_status_effect(/datum/status_effect/borg_slow, min(2, AM.throwforce * CYBORG_SLOWDOWN_DAMAGE_SCALING * 2))
 
 /mob/living/silicon/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
 	. = ..()
 	if(damage_done < CYBORG_SLOWDOWN_THRESHOLD)
 		return
-	apply_status_effect(/datum/status_effect/borg_slow, damage_done * CYBORG_SLOWDOWN_DAMAGE_SCALING)
+	apply_status_effect(/datum/status_effect/borg_slow, min(1.25, damage_done * CYBORG_SLOWDOWN_DAMAGE_SCALING))
 
 /mob/living/silicon/hypnosis_vulnerable()
 	return FALSE //It obeys its laws
