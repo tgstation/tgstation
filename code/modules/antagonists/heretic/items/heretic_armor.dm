@@ -617,6 +617,9 @@
 	RegisterSignal(human_user, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(limb_damage))
 	signal_registered += COMSIG_CARBON_LIMB_DAMAGED
 
+	RegisterSignal(human_user, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(handle_blood_loss))
+	signal_registered += COMSIG_HUMAN_ON_HANDLE_BLOOD
+
 	var/obj/item/organ/brain/our_brain = human_user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
 		return
@@ -737,6 +740,17 @@
 	to_explode.dismember(dam_type = BRUTE, silent = TRUE)
 	to_explode.drop_organs()
 	qdel(to_explode)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/handle_blood_loss(mob/living/carbon/human/source, seconds_per_tick)
+	SIGNAL_HANDLER
+
+	var/obj/item/organ/brain/the_brain = source.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/blood_volume = source.get_blood_volume(apply_modifiers = TRUE)
+	var/target_brain_loss = max((1 - (blood_volume / BLOOD_VOLUME_NORMAL)) * (the_brain?.maxHealth || /obj/item/organ/brain::maxHealth), 0)
+	if(the_brain.damage < target_brain_loss)
+		handle_damage(source, ound(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume), 0.1) * seconds_per_tick)
+
+	return HANDLE_BLOOD_NO_OXYLOSS
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/process(seconds_per_tick)
 	var/mob/living/carbon/human/wearer = loc
