@@ -1200,6 +1200,9 @@
 	return istype(candidate.mind.assigned_role, /datum/job/ai)
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai/assign_role(datum/mind/candidate)
+	var/mob/living/silicon/robot/shell = candidate.current
+	if(istype(shell))
+		shell.undeploy()
 	candidate.add_antag_datum(/datum/antagonist/malf_ai)
 	if(!prob(33) || !isAI(candidate.current))
 		return

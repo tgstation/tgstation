@@ -1,0 +1,17 @@
+{
+	"dm_type": "/datum/bt_node/subtree/pet_command/wait_for_target",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"key": "BB_CURRENT_PET_TARGET",
+		"invert": true,
+		"observer_abort": "BT_ABORT_SELF"
+	},
+	"child": {
+		"type": "leaf",
+		"behavior": "/datum/bt_node/ai_behavior/wait",
+		"vars": {
+			"duration": 0
+		}
+	}
+}

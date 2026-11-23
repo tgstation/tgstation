@@ -244,6 +244,16 @@
 /// From /mob/living/unfriend() : (mob/living/old_friend)
 #define COMSIG_LIVING_UNFRIENDED "living_unfriended"
 
+/// From pet command activation: (datum/pet_command/command, mob/living/commander)
+#define COMSIG_LIVING_PET_COMMAND_STARTING "living_pet_command_starting"
+/// From pet command completion: (datum/pet_command/command)
+#define COMSIG_LIVING_PET_COMMAND_FINISHED "living_pet_command_finished"
+/// From pet radial menu selection: (mob/living/friend, datum/pet_command/command)
+#define COMSIG_LIVING_PET_COMMAND_RADIAL_SELECTED "living_pet_command_radial_selected"
+
+	/// Return from pet command signals when the component handled the event.
+	#define COMPONENT_PET_COMMAND_HANDLED (1<<0)
+
 /// From /obj/effect/temp_visual/resonance/burst() : (mob/creator, mob/living/hit_living)
 #define COMSIG_LIVING_RESONATOR_BURST "living_resonator_burst"
 
