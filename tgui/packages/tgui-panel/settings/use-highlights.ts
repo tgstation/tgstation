@@ -41,7 +41,6 @@ export function useHighlights() {
     // Reconstruct the overall highlight structure
     const newState: HighlightState = {
       ...highlights,
-      highlightSettings: Object.keys(draft),
       highlightSettingById: draft,
     };
 

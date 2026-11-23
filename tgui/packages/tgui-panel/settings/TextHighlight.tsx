@@ -189,7 +189,7 @@ function TextHighlightSetting(props) {
           <Button.Checkbox
             checked={matchWord}
             tooltipPosition="bottom-start"
-            tooltip="If this option is selected, only exact matches (no extra letters before or after) will trigger. Not compatible with punctuation. Overriden if regex is used."
+            tooltip="If this option is selected, only exact matches (no extra letters before or after) will trigger. Overriden if regex is used."
             disabled={!!highlightRegex}
             onClick={() =>
               updateHighlight({

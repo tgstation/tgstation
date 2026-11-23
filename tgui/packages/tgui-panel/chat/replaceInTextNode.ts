@@ -87,60 +87,18 @@ function regexParseNode(params: ReplaceInTextNodeParams): {
 
 /**
  * Replace text of a node with custom nodes if they match
- * a regex expression or are in a word list
+ * a regex expression
  */
 export const replaceInTextNode =
-  (regex: RegExp, words: string[] | null, createNode: NodeCreator) =>
-  (node: Node) => {
-    let nodes;
-    let result;
-    let n = 0;
-
-    if (regex) {
-      result = regexParseNode({
-        node: node,
-        regex: regex,
-        createNode: createNode,
-      });
-      nodes = result.nodes;
-      n += result.n;
+  (regex: RegExp, createNode: NodeCreator) => (node: Node) => {
+    if (!regex) {
+      return 0;
     }
-
-    if (words) {
-      let i = 0;
-      let wordRegexStr = '(';
-      for (const word of words) {
-        // Capture if the word is at the beginning, end, middle,
-        // or by itself in a message
-        wordRegexStr += `^${word}\\s\\W|\\s\\W${word}\\s\\W|\\s\\W${word}$|^${word}\\s\\W$`;
-        // Make sure the last character for the expression is NOT '|'
-        if (++i !== words.length) {
-          wordRegexStr += '|';
-        }
-      }
-      wordRegexStr += ')';
-      const wordRegex = new RegExp(wordRegexStr, 'gi');
-      if (regex && nodes) {
-        for (const a_node of nodes) {
-          result = regexParseNode({
-            node: a_node,
-            regex: wordRegex,
-            createNode: createNode,
-            captureAdjust: (str) => str.replace(/^\W|\W$/g, ''),
-          });
-          n += result.n;
-        }
-      } else {
-        result = regexParseNode({
-          node: node,
-          regex: wordRegex,
-          createNode: createNode,
-          captureAdjust: (str) => str.replace(/^\W|\W$/g, ''),
-        });
-        n += result.n;
-      }
-    }
-    return n;
+    return regexParseNode({
+      node: node,
+      regex: regex,
+      createNode: createNode,
+    }).n;
   };
 
 // Highlight
@@ -164,8 +122,6 @@ export function highlightNode(
   node: Node,
   /** Regular expression to highlight */
   regex: RegExp,
-  /** List of words to highlight */
-  words: string[],
   createNode: NodeCreator = createHighlightNode,
   filter: HighlightNodeFilter = () => true,
 ): number {
@@ -178,9 +134,9 @@ export function highlightNode(
     const node = childNodes[i];
     // Is a text node
     if (node.nodeType === 3 && filter(node as Text)) {
-      n += replaceInTextNode(regex, words, createNode)(node);
+      n += replaceInTextNode(regex, createNode)(node);
     } else {
-      n += highlightNode(node, regex, words, createNode, filter);
+      n += highlightNode(node, regex, createNode, filter);
     }
   }
   return n;
@@ -211,7 +167,7 @@ export function linkifyNode(node: Node): number {
   return n;
 }
 
-const linkifyTextNode = replaceInTextNode(URL_REGEX, null, (text) => {
+const linkifyTextNode = replaceInTextNode(URL_REGEX, (text) => {
   const node = document.createElement('a');
   node.href = text;
   node.textContent = text;
