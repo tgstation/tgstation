@@ -3,8 +3,15 @@ GLOBAL_LIST_EMPTY(string_lists)
 /**
  * Caches lists with non-numeric stringify-able values (text or typepath).
  */
-/proc/string_list(list/values)
-	var/string_id = values.Join("-")
+/proc/string_list(list/values, refs = FALSE)
+	var/string_id
+	if(refs)
+		var/list/values_refs = list()
+		for(var/value in values)
+			values_refs += REF(value)
+		string_id = values_refs.Join("-")
+	else
+		string_id = values.Join("-")
 
 	. = GLOB.string_lists[string_id]
 

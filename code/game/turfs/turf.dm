@@ -48,7 +48,15 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// Optimization, not for setting outside of initialize
 	var/init_air = TRUE
 
-	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
+	/// If this turf contained an RCD'able object (or IS one, for walls)
+	/// but is now destroyed, this will preserve the value.
+	/// See __DEFINES/construction.dm for RCD_MEMORY_*.
+	var/rcd_memory
+	/// This contains a list of images pertaining to what was on the turf at roundstart
+	/// Used for the blueprints to reconstruct the initial state of the turf at roundstart
+	var/list/image/blueprint_data
+	/// Assoc lazylist of typepaths of decals that was on the turf at roundstart to the dirs they were facing
+	var/list/base_decals
 
 	var/list/explosion_throw_details
 
@@ -87,10 +95,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///the holodeck can load onto this turf if TRUE
 	var/holodeck_compatible = FALSE
 
-	/// If this turf contained an RCD'able object (or IS one, for walls)
-	/// but is now destroyed, this will preserve the value.
-	/// See __DEFINES/construction.dm for RCD_MEMORY_*.
-	var/rcd_memory
 	///whether or not this turf forces movables on it to have no gravity (unless they themselves have forced gravity)
 	var/force_no_gravity = FALSE
 

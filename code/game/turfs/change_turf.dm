@@ -92,7 +92,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_lattice_underneath = lattice_underneath
 
 	var/old_bp = blueprint_data
+	var/old_decals = base_decals
 	blueprint_data = null
+	base_decals = null
 
 	var/list/old_baseturfs = baseturfs
 	var/old_type = type
@@ -134,6 +136,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 					above.stack_ontop_of_baseturf(/turf/open/space/openspace, /turf/open/floor/engine/hull/ceiling)
 
 	new_turf.blueprint_data = old_bp
+	new_turf.base_decals = old_decals
 	new_turf.rcd_memory = old_rcd_memory
 	new_turf.explosion_throw_details = old_explosion_throw_details
 	new_turf.explosive_resistance += old_explosive_resistance
