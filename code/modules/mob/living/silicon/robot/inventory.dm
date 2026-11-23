@@ -71,10 +71,6 @@
 	if(!hud_used)
 		return
 
-	// TODO: This is obviously not very good but it's even worse
-	// because robots mechanically support an arbitrary amount of module slots.
-	// This needs a nice refactoring.
-
 	for(var/i in 1 to get_num_hand_slots())
 		var/atom/movable/screen/robot/module_slot/module = hud_used.screen_objects[HUD_KEY_HAND_SLOT(i)]
 		if(!module)
