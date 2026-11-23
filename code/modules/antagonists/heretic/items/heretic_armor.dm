@@ -748,7 +748,7 @@
 	var/blood_volume = source.get_blood_volume(apply_modifiers = TRUE)
 	var/target_brain_loss = max((1 - (blood_volume / BLOOD_VOLUME_NORMAL)) * (the_brain?.maxHealth || /obj/item/organ/brain::maxHealth), 0)
 	if(the_brain.damage < target_brain_loss)
-		handle_damage(source, ound(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume), 0.1) * seconds_per_tick)
+		handle_damage(source, round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume), 0.1) * seconds_per_tick)
 
 	return HANDLE_BLOOD_NO_OXYLOSS
 
