@@ -130,8 +130,8 @@ function isRadioChannelName(node: Text): boolean {
   const match = RADIO_CHANNEL_LABEL.exec(text);
   return Boolean(
     node.parentElement?.classList.contains('name') &&
-    match &&
-    match[0].length === text.length,
+      match &&
+      match[0].length === text.length,
   );
 }
 
@@ -167,10 +167,12 @@ class ChatRenderer {
   scrollNode: HTMLElement | null;
   scrollTracking: boolean;
   lastScrollHeight: number;
+  lastOffsetHeight: number;
+  resizeObserver: ResizeObserver;
   highlightParsers: Array<any> | null;
   currentJob: string | null;
   currentCharacter: string | null;
-  handleScroll: (type: any) => void;
+  handleScroll: () => void;
 
   constructor() {
     this.loaded = false;
@@ -187,9 +189,25 @@ class ChatRenderer {
     this.currentCharacter = null;
     this.scrollTracking = true;
     this.lastScrollHeight = 0;
-    this.handleScroll = (evt) => {
+    this.lastOffsetHeight = 0;
+    this.resizeObserver = new ResizeObserver(() => {
       const node = this.scrollNode;
       if (!node) {
+        return;
+      }
+      this.lastOffsetHeight = node.offsetHeight;
+      if (this.scrollTracking) {
+        this.scrollToBottom();
+      }
+    });
+    this.handleScroll = () => {
+      const node = this.scrollNode;
+      if (!node) {
+        return;
+      }
+      // pane got resized (music player popping in, etc) and the observer hasn't re-pinned us yet,
+      // so we're "far from the bottom" for no reason and would turn tracking off
+      if (node.offsetHeight !== this.lastOffsetHeight) {
         return;
       }
       const height = node.scrollHeight;
@@ -223,6 +241,11 @@ class ChatRenderer {
     // Find scrollable parent
     this.scrollNode = document.getElementById('chat-pane');
     this.scrollNode?.addEventListener('scroll', this.handleScroll);
+    if (this.scrollNode) {
+      this.resizeObserver.observe(this.scrollNode);
+    }
+    // messages grow after landing (icons loading, xN badges)
+    this.resizeObserver.observe(this.rootNode!);
     setTimeout(() => {
       this.scrollToBottom();
     });
@@ -303,25 +326,12 @@ class ChatRenderer {
       const characters = (
         Array.isArray(setting.characterFilter) ? setting.characterFilter : []
       ).map((str) => String(str).trim().toLowerCase());
-      const allowedRegex = /^[a-zа-яё0-9_\-$/^[\s\]\\]+$/gi;
-      const regexEscapeCharacters = /[!#$%^&*)(+=.<>{}[\]:;'"|~`_\-\\/]/g;
+      const regexEscapeCharacters = /[.*+?^${}()|[\]\\/]/g;
       const lines = String(text)
         .split(',')
         .map((str) => str.trim())
-        .filter((str) => {
-          // Must be longer than one character
-          if (!str || str.length <= 1) return false;
-
-          // Must be alphanumeric (with some punctuation)
-          const isValidFormat =
-            allowedRegex.test(str) ||
-            (str.charAt(0) === '/' && str.charAt(str.length - 1) === '/');
-
-          // Reset lastIndex so it does not mess up the next word
-          allowedRegex.lastIndex = 0;
-
-          return isValidFormat;
-        });
+        // Must be longer than one character
+        .filter((str) => str.length > 1);
       let highlightWords;
       let highlightRegex;
       // Nothing to match, reset highlighting
@@ -357,12 +367,18 @@ class ChatRenderer {
       try {
         // setting regex overrides matchword
         if (regexStr) {
-          highlightRegex = new RegExp(`(${regexStr})`, flags);
+          const plainWords = highlightWords
+            ? `|${highlightWords.join('|')}`
+            : '';
+          highlightRegex = new RegExp(`(${regexStr}${plainWords})`, flags);
         } else {
-          const pattern = `${matchWord ? '\\b' : ''}(${highlightWords.join(
-            '|',
-          )})${matchWord ? '\\b' : ''}`;
-          highlightRegex = new RegExp(pattern, flags);
+          const words = `(${highlightWords.join('|')})`;
+          // not \b, it only knows ascii letters - "José" or a term ending in "?" would never count as a whole word
+          const wordCharacter = '[\\p{L}\\p{N}_]';
+          const pattern = matchWord
+            ? `(?<!${wordCharacter})${words}(?!${wordCharacter})`
+            : words;
+          highlightRegex = new RegExp(pattern, `${flags}u`);
         }
       } catch {
         // We just reset it if it's invalid.
@@ -374,7 +390,6 @@ class ChatRenderer {
       }
       this.highlightParsers.push({
         enabled,
-        highlightWords,
         highlightRegex,
         highlightColor,
         highlightWholeMessage,
@@ -415,8 +430,10 @@ class ChatRenderer {
     }
     if (node) {
       this.rootNode!.appendChild(fragment);
-      node.scrollIntoView();
     }
+    // empty pages fire no scroll event
+    this.scrollToBottom();
+    this.handleScroll();
   }
 
   getCombinableMessage(predicate) {
@@ -519,7 +536,7 @@ class ChatRenderer {
               working_value = true;
             } else if (working_value === '$false') {
               working_value = false;
-            } else if (!Number.isNaN(working_value)) {
+            } else if (!Number.isNaN(Number(working_value))) {
               const parsed_float = parseFloat(working_value);
               if (!Number.isNaN(parsed_float)) {
                 working_value = parsed_float;
@@ -569,7 +586,6 @@ class ChatRenderer {
               const highlighted = highlightNode(
                 node,
                 parser.highlightRegex,
-                parser.highlightWords,
                 (text) => createHighlightNode(text, parser.highlightColor),
                 (textNode) => !isRadioChannelName(textNode), // Exclude radio channel names from highlighting
               );
@@ -638,7 +654,8 @@ class ChatRenderer {
         this.rootNode!.appendChild(fragment);
       }
       if (this.scrollTracking) {
-        setTimeout(() => this.scrollToBottom());
+        // has to happen RIGHT NOW, don't use a timeout or it fucks up with big messages
+        this.scrollToBottom();
       }
     }
     // Notify listeners that we have processed the batch
@@ -735,6 +752,8 @@ class ChatRenderer {
     this.messages = this.messages.filter(
       (message) => message.node !== 'pruned',
     );
+    // no scroll event if we were already at the top
+    this.handleScroll();
     logger.log(`Cleared chat`);
   }
 

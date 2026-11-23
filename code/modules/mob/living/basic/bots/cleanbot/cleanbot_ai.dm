@@ -115,10 +115,6 @@
 	return ..()
 
 /datum/pet_command/clean/execute_action(datum/ai_controller/basic_controller/bot/controller)
-	var/atom/target = controller.blackboard[BB_CURRENT_PET_TARGET]
-	if(QDELETED(target))
-		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-		return
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/clean_pet_target)
 
 #undef BOT_CLEAN_PATH_LIMIT

@@ -1,0 +1,5 @@
+author: "CabinetOnFire"
+delete-after: True
+changes:
+  - bugfix: "Pets no longer get stuck in attack mode"
+  - qol: "Pet commands should be more clearly communicated now"
