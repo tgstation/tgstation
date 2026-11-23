@@ -1,9 +1,7 @@
 //These procs handle putting stuff in your hand. It's probably best to use these rather than setting stuff manually
 //as they handle all relevant stuff like adding it to the player's screen and such
 
-/**
- * Returns the thing in our active hand (whatever is in our active module-slot, in this case)
- */
+// We technically aren't *actively* holding anything if our modules aren't activated
 /mob/living/silicon/robot/get_active_held_item()
 	if(modules_activated)
 		return ..()
@@ -55,11 +53,12 @@
 		if(!silent)
 			to_chat(src, span_notice("You can't drop your [item_dropping.name] module."))
 		return FALSE
-
+	var/held_index = get_held_index_of_item(item_dropping)
 	. = ..()
 	if(!.)
 		return
-	modules_activated = FALSE
+	if(held_index == active_hand_index)
+		modules_activated = FALSE
 	item_dropping.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	//this is the cyborg equivalent of dropped(), though we call that too in doUnEquip.
 	item_dropping.cyborg_unequip(src)
@@ -154,6 +153,8 @@
 		if(damaging)
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
 			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_index] OFFLINE.\""))
+			deactivate_module(get_item_for_held_index(module_index))
+			modules_activated = FALSE // Disorient the robot a little bit
 			if(module_index == 1)
 				to_chat(src, span_userdanger("CRITICAL ERROR: ALL modules OFFLINE."))
 				if(builtInCamera)
