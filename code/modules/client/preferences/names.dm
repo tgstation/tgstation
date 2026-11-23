@@ -34,7 +34,7 @@
 
 
 /datum/preference/name/is_valid(value)
-	return istext(value) && !isnull(reject_bad_name(value, allow_numbers))
+	return !isnull(reject_bad_name(value, allow_numbers))
 
 
 /// A character's real name
