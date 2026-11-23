@@ -60,3 +60,6 @@
 
 ///from /turf/proc/afterShuttleMove() : (/turf/old_turf)
 #define COMSIG_TURF_AFTER_SHUTTLE_MOVE "turf_after_shuttle_move"
+
+#define COMSIG_OPEN_TURF_PAINTED "open_turf_painted"
+#define COMSIG_OPEN_TURF_CHANGE "open_turf_change"

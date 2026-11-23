@@ -4,7 +4,6 @@
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
 	use_holiday_colors = TRUE
-	persistent = TRUE
 
 /obj/effect/turf_decal/tile/neutral/tram
 	pattern = PATTERN_VERTICAL_STRIPE
@@ -143,7 +142,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark)
 	name = "ERROR tile decal"
 	color = COLOR_RED
 
-/obj/effect/turf_decal/tile/holiday/Initialize(mapload, new_dir, new_alpha, new_color)
+/obj/effect/turf_decal/tile/holiday/Initialize(mapload)
 	color = request_decoration_colors(src, pattern, skip_station_trait = TRUE)
 	alpha = DECAL_ALPHA
 	return ..()
@@ -171,7 +170,6 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday/random)
 	alpha = 110
 	icon_state = "trimline_box"
 	use_holiday_colors = TRUE
-	persistent = TRUE
 
 /// Automatically generates all trimlines for a decal with the given path.
 #define TRIMLINE_SUBTYPE_HELPER(path)\

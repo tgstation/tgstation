@@ -86,13 +86,8 @@
 	target_plating = target_plating.place_on_top(placed_turf_path, flags = CHANGETURF_INHERIT_AIR)
 	target_plating.setDir(turf_dir)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		for(var/decal_params in target_plating.base_decals)
-			var/list/decal_args = params2list(decal_params)
-			var/decal_type = text2path(decal_args[1])
-			var/decal_dir = text2num(decal_args[2])
-			var/decal_alpha = length(decal_args) >= 3 ? text2num(decal_args[3]) : null
-			var/decal_color = length(decal_args) >= 4 ? decal_args[4] : null
-			new decal_type(target_plating, decal_dir, decal_alpha, decal_color)
+		for(var/datum/element/decal/decal as anything in target_plating.base_decals)
+			target_plating.AddElement(/datum/element/decal, _icon_state = decal.base_icon_state, _dir = decal.directional, _pic = decal.pic)
 	playsound(target_plating, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	return target_plating
 

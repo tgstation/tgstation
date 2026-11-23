@@ -57,13 +57,11 @@
 	var/use_holiday_colors = FALSE
 	/// The pattern used when recoloring the decal. If null, it'll use the def of the station or holiday.
 	var/pattern
-	/// If TRUE the tile tracks this decal after init
-	var/persistent = FALSE
 
 // This is with the intent of optimizing mapload
 // See spawners for more details since we use the same pattern
 // Basically rather then creating and deleting ourselves, why not just do the bare minimum?
-/obj/effect/turf_decal/Initialize(mapload, new_dir, new_alpha, new_color)
+/obj/effect/turf_decal/Initialize(mapload)
 	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -81,14 +79,6 @@
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow
 		CRASH("Turf decal initialized in an object/nullspace")
-	if(new_dir)
-		src.dir = new_dir
-	if(new_alpha)
-		src.alpha = new_alpha
-	if(new_color)
-		src.color = new_color
-	if(mapload && persistent)
-		T.base_decals = string_list((T.base_decals?.Copy() || list()) + list2params(list(type, dir, alpha, color)))
 	T.AddElement(/datum/element/decal, icon, icon_state, dir, null, layer, alpha, color, null, FALSE, null)
 	return INITIALIZE_HINT_QDEL
 

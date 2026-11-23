@@ -213,6 +213,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	return new_turf
 
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags) //Resist the temptation to make this default to keeping air.
+	var/list/turf_decals = list()
+	SEND_SIGNAL(src, COMSIG_OPEN_TURF_CHANGE, turf_decals)
+	base_decals ||= string_list(turf_decals, TRUE)
+
 	if ((flags & CHANGETURF_INHERIT_AIR) && ispath(path, /turf/open))
 		var/datum/gas_mixture/stashed_air = new()
 		stashed_air.copy_from(air)

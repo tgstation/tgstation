@@ -1,5 +1,4 @@
 /obj/effect/turf_decal/stripes
-	persistent = TRUE
 
 /obj/effect/turf_decal/stripes/line
 	icon_state = "warningline"
@@ -63,7 +62,6 @@
 
 /obj/effect/turf_decal/delivery
 	icon_state = "delivery"
-	persistent = TRUE
 
 /obj/effect/turf_decal/delivery/white
 	icon_state = "delivery_white"
@@ -73,7 +71,6 @@
 
 /obj/effect/turf_decal/bot
 	icon_state = "bot"
-	persistent = TRUE
 
 /obj/effect/turf_decal/bot/right
 	icon_state = "bot_right"
@@ -101,7 +98,6 @@
 
 /obj/effect/turf_decal/loading_area
 	icon_state = "loadingarea"
-	persistent = TRUE
 
 /obj/effect/turf_decal/loading_area/white
 	icon_state = "loadingarea_white"
@@ -111,7 +107,6 @@
 
 /obj/effect/turf_decal/caution
 	icon_state = "caution"
-	persistent = TRUE
 
 /obj/effect/turf_decal/caution/white
 	icon_state = "caution_white"
@@ -130,7 +125,6 @@
 
 /obj/effect/turf_decal/arrows
 	icon_state = "arrows"
-	persistent = TRUE
 
 /obj/effect/turf_decal/arrows/white
 	icon_state = "arrows_white"
@@ -140,7 +134,6 @@
 
 /obj/effect/turf_decal/box
 	icon_state = "box"
-	persistent = TRUE
 
 /obj/effect/turf_decal/box/corners
 	icon_state = "box_corners"
@@ -239,7 +232,6 @@
 
 /obj/effect/turf_decal/siding
 	icon_state = "siding_plain"
-	persistent = TRUE
 
 /obj/effect/turf_decal/siding/corner
 	icon_state = "siding_plain_corner"
@@ -636,4 +628,3 @@
 
 /obj/effect/turf_decal/recharge
 	icon_state = "recharge"
-	persistent = TRUE
