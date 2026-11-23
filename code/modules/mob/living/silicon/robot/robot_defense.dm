@@ -246,25 +246,30 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 	for(var/module_index in starting_module_index to ending_module_index step (damaging ? -1 : 1))
 		if(damaging)
+			var/self_message = module_index > 1 ? span_userdanger("SYSTEM ERROR: module [module_index] OFFLINE.") : span_userdanger("CRITICAL ERROR: ALL modules OFFLINE.")
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
-			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_index] OFFLINE.\""))
+			audible_message(
+				span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_index] OFFLINE.\""),
+				span_warning("You see [src]'s posture weaken considerably!"),
+				self_message = self_message,
+				audible_message_flags = ALWAYS_SHOW_SELF_MESSAGE
+			)
 			deactivate_module(get_item_for_held_index(module_index))
 			modules_activated = FALSE // Disorient the robot a little bit
-			if(module_index == 1)
-				to_chat(src, span_userdanger("CRITICAL ERROR: ALL modules OFFLINE."))
-				if(builtInCamera)
-					builtInCamera.camera_enabled = FALSE
-					to_chat(src, span_userdanger("CRITICAL ERROR: [builtInCamera.name] OFFLINE."))
-			else
-				to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_index] OFFLINE."))
+			if(module_index == 1 && builtInCamera)
+				builtInCamera.camera_enabled = FALSE
+				to_chat(src, span_userdanger("CRITICAL ERROR: [builtInCamera.name] OFFLINE."))
 		else
 			playsound(src, 'sound/machines/beep/twobeep.ogg', 40, TRUE)
-			audible_message(span_notice("[src] beeps confidently! \"ERROR CLEARED: Module [module_index] back online.\""),
-				"[src]'s posture looks stronger!",
-				audible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
+			audible_message(
+				span_notice("[src] beeps confidently! \"ERROR CLEARED: module [module_index] ONLINE.\""),
+				span_notice("You see [src]'s posture get stronger!"),
+				self_message = span_big(span_boldnotice("ERROR CLEARED: module [module_index] ONLINE.")),
+				audible_message_flags = ALWAYS_SHOW_SELF_MESSAGE
+			)
 			if(module_index == 1 && builtInCamera)
 				builtInCamera.camera_enabled = TRUE
-				to_chat(src, span_notice("You hear your [builtInCamera.name]'s focus adjust as [builtInCamera.p_they()] come[builtInCamera.p_s()] back online!"))
+				to_chat(src, span_big(span_boldnotice("SYSTEM NOTICE: [builtInCamera.name] ONLINE.")))
 
 	last_working_module = new_module_index
 	update_held_items()

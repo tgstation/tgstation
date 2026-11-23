@@ -35,7 +35,6 @@
 /atom/movable/screen/robot/module_slot
 	name = "Module"
 	examine_thats = "This is your"
-	desc = "Stun prod goes here."
 	icon_state = "inv1"
 	base_icon_state = "inv1"
 	/// Slot number of the module
