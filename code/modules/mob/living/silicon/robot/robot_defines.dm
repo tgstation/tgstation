@@ -131,7 +131,11 @@
 	buckle_lying = FALSE
 
 	/// the last health before updating - to check net change in health
-	var/previous_health
+	VAR_FINAL/previous_health
+
+	/// The last module
+	VAR_FINAL/tmp/last_broken_module
+
 	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control
 

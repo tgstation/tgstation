@@ -102,6 +102,8 @@
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_DEATH, TYPE_PROC_REF(/datum/alarm_listener, prevent_alarm_changes))
 	alert_control.listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
 
+	last_broken_module = get_num_hand_slots()
+
 /mob/living/silicon/robot/set_suicide(suicide_state)
 	. = ..()
 	mmi?.set_suicide(suicide_state)
@@ -652,31 +654,7 @@
 /mob/living/silicon/robot/updatehealth()
 	..()
 	update_damage_particles()
-	if(!model.breakable_modules)
-		return
-
-	/// the current percent health of the robot (-1 to 1)
-	var/percent_hp = health/maxHealth
-	if(health <= previous_health) //if change in health is negative (we're losing hp)
-		if(percent_hp <= 0.5)
-			break_cyborg_slot(3)
-
-		if(percent_hp <= 0)
-			break_cyborg_slot(2)
-
-		if(percent_hp <= -0.5)
-			break_cyborg_slot(1)
-
-	else //if change in health is positive (we're gaining hp)
-		if(percent_hp >= 0.5)
-			repair_cyborg_slot(3)
-
-		if(percent_hp >= 0)
-			repair_cyborg_slot(2)
-
-		if(percent_hp >= -0.5)
-			repair_cyborg_slot(1)
-
+	update_module_health(previous_health)
 	previous_health = health
 
 /mob/living/silicon/robot/update_stat()

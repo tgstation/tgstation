@@ -71,23 +71,25 @@
 	if(!hud_used)
 		return
 
-	// I'm sure this isn't indicative of anything
-	var/atom/movable/screen/robot/module_slot/module1 = hud_used.screen_objects[HUD_KEY_HAND_SLOT(1)]
-	var/atom/movable/screen/robot/module_slot/module2 = hud_used.screen_objects[HUD_KEY_HAND_SLOT(2)]
-	var/atom/movable/screen/robot/module_slot/module3 = hud_used.screen_objects[HUD_KEY_HAND_SLOT(3)]
+	// TODO: This is obviously not very good but it's even worse
+	// because robots mechanically support an arbitrary amount of module slots.
+	// This needs a nice refactoring.
 
-	var/disabled_state = disabled_modules
-	if(disabled_state & BORG_MODULE_ALL_DISABLED)
+	var/atom/movable/screen/robot/module_slot/module1 = hud_used.screen_objects[HUD_KEY_HAND_SLOT(BORG_CHOOSE_MODULE_ONE)]
+	var/atom/movable/screen/robot/module_slot/module2 = hud_used.screen_objects[HUD_KEY_HAND_SLOT(BORG_CHOOSE_MODULE_TWO)]
+	var/atom/movable/screen/robot/module_slot/module3 = hud_used.screen_objects[HUD_KEY_HAND_SLOT(BORG_CHOOSE_MODULE_THREE)]
+
+	if(last_broken_module <= BORG_CHOOSE_MODULE_ONE)
 		module1.icon_state = "[module1.base_icon_state] +b"
 	else
 		module1.icon_state = "[module1.base_icon_state][modules_activated && active_hand_index == 1 ? " +a" : null]"
 
-	if(disabled_state & BORG_MODULE_TWO_DISABLED)
+	if(last_broken_module <= BORG_CHOOSE_MODULE_TWO)
 		module2.icon_state = "[module2.base_icon_state] +b"
 	else
 		module2.icon_state = "[module2.base_icon_state][modules_activated && active_hand_index == 2 ? " +a" : null]"
 
-	if(disabled_state & BORG_MODULE_THREE_DISABLED)
+	if(last_broken_module <= BORG_CHOOSE_MODULE_THREE)
 		module3.icon_state = "[module3.base_icon_state] +b"
 	else
 		module3.icon_state = "[module3.base_icon_state][modules_activated && active_hand_index == 3 ? " +a" : null]"
@@ -126,94 +128,49 @@
 /mob/living/silicon/robot/proc/deactivate_module(obj/item/item_module)
 	return transferItemToLoc(item_module, newloc = model)
 
-/**
- * Breaks the slot number, changing the icon.
- *
- * Arguments
- * * module_num - the slot number being repaired.
- */
-/mob/living/silicon/robot/proc/break_cyborg_slot(module_num)
-	if(is_invalid_module_number(module_num, TRUE))
-		return FALSE
+/mob/living/silicon/robot/proc/update_module_health(old_health)
+	PROTECTED_PROC(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-	var/obj/item/held_item = get_item_for_held_index(module_num)
-	if(held_item && !deactivate_module(held_item))
-		return FALSE
+	if(!model.breakable_modules)
+		last_broken_module = get_num_hand_slots()
+		return
+	if(!get_num_hand_slots())
+		return
 
-	switch(module_num)
-		if(BORG_CHOOSE_MODULE_ONE)
-			if(disabled_modules & BORG_MODULE_ALL_DISABLED)
-				return FALSE
+	var/effective_max_health = maxHealth * 2
+	var/effective_health = health + maxHealth
+	var/effective_old_health = old_health + maxHealth
+	var/health_per_module = effective_max_health / (get_num_hand_slots() + 1)
 
-			disabled_modules |= BORG_MODULE_ALL_DISABLED
+	var/old_module_index = floor((effective_old_health - 1) / health_per_module) + 1
+	var/new_module_index = floor((effective_health - 1) / health_per_module) + 1
 
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE, TRUE)
-			audible_message(span_warning("[src] sounds an alarm! \"CRITICAL ERROR: ALL modules OFFLINE.\""))
+	var/damaging = effective_health < effective_old_health
+	if(damaging)
+		old_module_index--
+	else
+		new_module_index--
 
-			if(builtInCamera)
-				builtInCamera.camera_enabled = FALSE
-				to_chat(src, span_userdanger("CRITICAL ERROR: Built in security camera OFFLINE."))
-
-			to_chat(src, span_userdanger("CRITICAL ERROR: ALL modules OFFLINE."))
-
-		if(BORG_CHOOSE_MODULE_TWO)
-			if(disabled_modules & BORG_MODULE_TWO_DISABLED)
-				return FALSE
-
-			disabled_modules |= BORG_MODULE_TWO_DISABLED
-
+	for(var/module_index in old_module_index to new_module_index step (damaging ? -1 : 1))
+		if(damaging)
 			playsound(src, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
-			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\""))
-			to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_num] OFFLINE."))
-
-		if(BORG_CHOOSE_MODULE_THREE)
-			if(disabled_modules & BORG_MODULE_THREE_DISABLED)
-				return FALSE
-
-			disabled_modules |= BORG_MODULE_THREE_DISABLED
-
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
-			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_num] OFFLINE.\""))
-			to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_num] OFFLINE."))
-
-	update_held_items()
-	return TRUE
-
-/**
- * Repairs the slot number, updating the icon.
- *
- * Arguments
- * * module_num - the module number being repaired.
- */
-/mob/living/silicon/robot/proc/repair_cyborg_slot(module_num)
-	if(is_invalid_module_number(module_num, TRUE))
-		return FALSE
-
-	switch(module_num)
-		if(BORG_CHOOSE_MODULE_ONE)
-			if(!(disabled_modules & BORG_MODULE_ALL_DISABLED))
-				return FALSE
-
-			disabled_modules &= ~BORG_MODULE_ALL_DISABLED
-			if(builtInCamera)
+			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_index] OFFLINE.\""))
+			if(module_index == 1)
+				to_chat(src, span_userdanger("CRITICAL ERROR: ALL modules OFFLINE."))
+				if(builtInCamera)
+					builtInCamera.camera_enabled = FALSE
+					to_chat(src, span_userdanger("CRITICAL ERROR: Built in security camera OFFLINE."))
+			else
+				to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_index] OFFLINE."))
+		else
+			to_chat(src, span_notice("ERROR CLEARED: Module [module_index] back online."))
+			if(module_index == 1 && builtInCamera)
 				builtInCamera.camera_enabled = TRUE
 				to_chat(src, span_notice("You hear your built in security camera focus adjust as it comes back online!"))
 
-		if(BORG_CHOOSE_MODULE_TWO)
-			if(!(disabled_modules & BORG_MODULE_TWO_DISABLED))
-				return FALSE
-
-			disabled_modules &= ~BORG_MODULE_TWO_DISABLED
-
-		if(BORG_CHOOSE_MODULE_THREE)
-			if(!(disabled_modules & BORG_MODULE_THREE_DISABLED))
-				return FALSE
-
-			disabled_modules &= ~BORG_MODULE_THREE_DISABLED
-
-	to_chat(src, span_notice("ERROR CLEARED: Module [module_num] back online."))
+	last_broken_module = damaging ? new_module_index : old_module_index
 	update_held_items()
-	return TRUE
 
 /**
  * Checks if the provided module number is a valid number.
@@ -228,17 +185,7 @@
 	if(!module_num)
 		return TRUE
 
-	/// The number of module slots we're checking
-	var/max_number = 3
-	if(!check_all_slots)
-		if(disabled_modules & BORG_MODULE_ALL_DISABLED)
-			max_number = 0
-		else if(disabled_modules & BORG_MODULE_TWO_DISABLED)
-			max_number = 1
-		else if(disabled_modules & BORG_MODULE_THREE_DISABLED)
-			max_number = 2
-
-	return module_num < 1 || module_num > max_number
+	return module_num < 1 || module_num > last_broken_module
 
 /**
  * ## Please do not use
