@@ -442,7 +442,8 @@
 /obj/item/food/grown/ash_flora/fireblossom/Initialize(mapload)
 	. = ..()
 	// Fire flowers make fireproof raptors
-	AddElement(/datum/element/raptor_food, color_chances = string_list(list(/datum/raptor_color/blue = 5)))
+	var/static/list/raptor_food_chances = list(/datum/raptor_color/blue = 5)
+	AddElement(/datum/element/raptor_food, color_chances = raptor_food_chances)
 
 /obj/item/food/grown/ash_flora/glowgrowth
 	name = "glowgrowth sheet"
@@ -497,7 +498,8 @@
 /obj/item/food/grown/ash_flora/plasma_flower/Initialize(mapload)
 	. = ..()
 	// Fire flowers make fireproof raptors
-	AddElement(/datum/element/raptor_food, color_chances = string_list(list(/datum/raptor_color/blue = 5)))
+	var/static/list/raptor_food_chances = list(/datum/raptor_color/blue = 5)
+	AddElement(/datum/element/raptor_food, color_chances = raptor_food_chances)
 
 // SEEDS
 
@@ -735,4 +737,3 @@
 	fill_icon_state = "fullbowl"
 	fill_icon = 'icons/obj/mining_zones/ash_flora.dmi'
 	custom_materials = null
-

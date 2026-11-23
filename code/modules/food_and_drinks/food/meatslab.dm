@@ -213,7 +213,8 @@
 
 /obj/item/food/meat/slab/bugmeat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/raptor_food, health_modifier = 2, color_chances = string_list(list(/datum/raptor_color/green = 2)))
+	var/static/list/raptor_food_chances = list(/datum/raptor_color/green = 2)
+	AddElement(/datum/element/raptor_food, health_modifier = 2, color_chances = raptor_food_chances)
 
 /obj/item/food/meat/slab/mouse
 	name = "mouse meat"
