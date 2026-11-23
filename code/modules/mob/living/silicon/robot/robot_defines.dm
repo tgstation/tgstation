@@ -133,6 +133,9 @@
 	/// The last module
 	VAR_FINAL/tmp/last_working_module
 
+	/// How much damage the cyborg needs to take for each module to break
+	VAR_FINAL/tmp/health_per_module
+
 	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control
 

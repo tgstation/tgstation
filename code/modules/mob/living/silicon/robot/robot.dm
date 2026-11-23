@@ -27,7 +27,7 @@
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GOT_DAMPENED), PROC_REF(on_dampen))
 
-	last_working_module = default_hand_amount
+	refresh_module_stats()
 
 	if(ispath(cell))
 		cell = new cell(src)

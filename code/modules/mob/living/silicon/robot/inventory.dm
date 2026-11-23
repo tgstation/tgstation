@@ -82,8 +82,7 @@
 
 /mob/living/silicon/robot/change_number_of_hands(amt)
 	. = ..()
-	last_working_module = get_num_hand_slots()
-	update_module_health()
+	refresh_module_stats()
 
 /**
  * parent proc - triggers when an item/module is unequipped from a cyborg.
@@ -118,61 +117,6 @@
 ///Helper for cyborgs unequipping things.
 /mob/living/silicon/robot/proc/deactivate_module(obj/item/item_module)
 	return transferItemToLoc(item_module, newloc = model)
-
-/mob/living/silicon/robot/proc/update_module_health()
-	PROTECTED_PROC(TRUE)
-	SHOULD_NOT_OVERRIDE(TRUE)
-
-	if(!model.breakable_modules)
-		last_working_module = get_num_hand_slots()
-		return
-
-	if(!get_num_hand_slots())
-		return
-
-	var/health_per_module = (maxHealth * 2) / (get_num_hand_slots() + 1)
-	var/effective_health = (health + maxHealth) - 1 // so that it breaks at 50 and not 49
-
-	var/old_module_index = last_working_module
-	var/new_module_index = floor((effective_health) / health_per_module)
-
-	if(new_module_index == old_module_index)
-		return
-
-	var/damaging = new_module_index < old_module_index
-
-	// We add 1 to the indexes just so that they look normal when displayed in chat
-	var/starting_module_index = old_module_index + 1
-	var/ending_module_index = new_module_index + 1
-	if(damaging)
-		starting_module_index--
-	else
-		ending_module_index--
-
-	for(var/module_index in starting_module_index to ending_module_index step (damaging ? -1 : 1))
-		if(damaging)
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
-			audible_message(span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_index] OFFLINE.\""))
-			deactivate_module(get_item_for_held_index(module_index))
-			modules_activated = FALSE // Disorient the robot a little bit
-			if(module_index == 1)
-				to_chat(src, span_userdanger("CRITICAL ERROR: ALL modules OFFLINE."))
-				if(builtInCamera)
-					builtInCamera.camera_enabled = FALSE
-					to_chat(src, span_userdanger("CRITICAL ERROR: [builtInCamera.name] OFFLINE."))
-			else
-				to_chat(src, span_userdanger("SYSTEM ERROR: Module [module_index] OFFLINE."))
-		else
-			playsound(src, 'sound/machines/beep/twobeep.ogg', 40, TRUE)
-			audible_message(span_notice("[src] beeps confidently! \"ERROR CLEARED: Module [module_index] back online.\""),
-				"[src]'s posture looks stronger!",
-				audible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
-			if(module_index == 1 && builtInCamera)
-				builtInCamera.camera_enabled = TRUE
-				to_chat(src, span_notice("You hear your [builtInCamera.name]'s focus adjust as [builtInCamera.p_they()] come[builtInCamera.p_s()] back online!"))
-
-	last_working_module = new_module_index
-	update_held_items()
 
 /**
  * Checks if the provided module number is a valid number.
