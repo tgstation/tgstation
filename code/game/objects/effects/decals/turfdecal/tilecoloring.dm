@@ -143,7 +143,7 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/dark)
 	name = "ERROR tile decal"
 	color = COLOR_RED
 
-/obj/effect/turf_decal/tile/holiday/Initialize(mapload, new_dir = NONE)
+/obj/effect/turf_decal/tile/holiday/Initialize(mapload, new_dir, new_alpha, new_color)
 	color = request_decoration_colors(src, pattern, skip_station_trait = TRUE)
 	alpha = DECAL_ALPHA
 	return ..()
