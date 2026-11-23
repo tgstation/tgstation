@@ -85,6 +85,11 @@
 		else
 			module.icon_state = "[module.base_icon_state][modules_activated && active_hand_index == i ? " +a" : null]"
 
+/mob/living/silicon/robot/change_number_of_hands(amt)
+	. = ..()
+	last_working_module = get_num_hand_slots()
+	update_module_health()
+
 /**
  * parent proc - triggers when an item/module is unequipped from a cyborg.
  */
@@ -182,7 +187,7 @@
 	if(!module_num)
 		return TRUE
 
-	return module_num < 1 || module_num > last_working_module
+	return module_num < 1 || module_num > (!check_all_slots ? last_working_module : get_num_hand_slots())
 
 /**
  * ## Please do not use
