@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Tweaked bluespace interference code slightly to make it less laggy, report any weird teleports you experience"

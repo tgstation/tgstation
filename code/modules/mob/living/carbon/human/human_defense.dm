@@ -140,6 +140,9 @@
 		span_userdanger("You're shoved into [name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, list(shover))
 	to_chat(shover, span_danger("You shove [target.name] into [name]!"))
 	log_combat(shover, target, "shoved", addition = "into [name][weapon ? " with [weapon]" : ""]")
+	if(on_fire && fire_stacks >= MOB_BIG_FIRE_STACK_THRESHOLD)
+		target.adjust_fire_stacks(fire_stacks / 2)
+		target.ignite_mob()
 	return COMSIG_LIVING_SHOVE_HANDLED
 
 /mob/living/carbon/human/attack_paw(mob/living/carbon/human/user, list/modifiers)
