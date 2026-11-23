@@ -169,7 +169,7 @@
 				audible_message_flags = ALWAYS_SHOW_SELF_MESSAGE)
 			if(module_index == 1 && builtInCamera)
 				builtInCamera.camera_enabled = TRUE
-				to_chat(src, span_notice("You hear your [builtInCamera.name]'s focus adjust as [builtInCamera.p_they()] comes back online!"))
+				to_chat(src, span_notice("You hear your [builtInCamera.name]'s focus adjust as [builtInCamera.p_they()] come[builtInCamera.p_s()] back online!"))
 
 	last_working_module = new_module_index
 	update_held_items()
