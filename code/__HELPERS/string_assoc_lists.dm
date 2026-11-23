@@ -5,8 +5,8 @@ GLOBAL_LIST_EMPTY(string_assoc_lists)
  */
 /proc/string_assoc_list(list/values)
 	var/list/string_id = list()
-	for(var/val in values)
-		string_id += "[val]_[values[val]]"
+	for(var/key, value in values)
+		string_id += "[key]_[value]"
 	string_id = string_id.Join("-")
 
 	if(!length(GLOB.string_assoc_lists)) // because we might be accessing this super early in some cases, it might not be set up yet!
