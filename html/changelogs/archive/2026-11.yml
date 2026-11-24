@@ -268,3 +268,71 @@
   - qol: Silicons can now rapidly cycle modes on air alarms
   - bugfix: Air alarm ai wires are no longer inverted
   - bugfix: Air alarm screwdriver context is no longer inverted
+2026-11-22:
+  Kurgis:
+  - bugfix: Exosuit drills no longer need to disabled and re-enabled again to properly
+      use their on_click functions... because now they just start disabled.
+  Melbert:
+  - bugfix: You can no longer examine things obscured by darkness (unless you have
+      night vision)
+  - bugfix: You no longer see messages of people obscured by darkness (unless you
+      have night vision)
+  PapaMichael:
+  - bugfix: AIs can now malfunction when piloting a shell
+  - bugfix: Ceruleans species-changed into humans no longer lose a third of their
+      blood nor zoom around super fast
+  SmArtKar:
+  - bugfix: Fixes hacker names not filtering out some invalid symbols
+  btcbuster:
+  - bugfix: Can't take pyrophobia and pyromania at once now.
+2026-11-23:
+  Absolucy:
+  - bugfix: chat no longer randomly stops autoscrolling when a big message (like an
+      examine) or a burst of messages comes in
+  - bugfix: Hopefully fixed most chat scrolling issues in general, tbh.
+  - bugfix: chat no longer stays blank for new players, or when chat settings are
+      slow to load
+  - bugfix: chat no longer breaks on every join if your saved chat data got corrupted
+  - qol: chat now tells you whenever something goes wrong with loading or saving your
+      chat data
+  - rscadd: You can now see which storage backend your chat settings use.
+  - bugfix: chat tooltips starting with a number no longer get cut down to just the
+      number
+  - bugfix: the music player no longer shows a garbage upload date when there isn't
+      one
+  - bugfix: new players with no saved chat settings can hear admin music again
+  - bugfix: chat highlights now work for terms with punctuation or accents
+  - bugfix: '"Exact" chat highlights now work with accented letters and terms ending
+      in punctuation'
+  - bugfix: chat highlights that mix /regex/ entries with plain words now match the
+      plain words too
+  - bugfix: the chat highlight list no longer reorders itself after you delete the
+      default highlight
+  CabinetOnFire:
+  - bugfix: Pets no longer get stuck in attack mode
+  - qol: Pet commands should be more clearly communicated now
+  Melbert:
+  - bugfix: Fix random loose "obj"s
+2026-11-24:
+  DeliciousPlushie:
+  - bugfix: Syndicate Battlecruiser Captain can unlock Starfury Armory airlocks normally
+      with pressing buttons.
+  Melbert:
+  - bugfix: Ethereals can't revive from changling husks
+  - bugfix: Some mechanics that differentiated being hit with a lethal vs non-lethal
+      ranged attack now properly differentiates again. For example, bots will spark
+      when shot now.
+  - code_imp: Updated code for heart attack and disease outbreak events, report anything
+      weird with it
+  - balance: Trace amounts of blood loss no longer causes infinite hyperdeath to moon
+      heretics
+  - bugfix: Fixes a niche issue where cooked goliath steak doesn't contribute to red
+      raptor breeding(?) more than raw goliath meat
+  - bugfix: Fix mystical snip cable X on Tramstation
+  san7890:
+  - server: The TOML Job Configuration system should now be a lot easier to edit.
+      You will have to regenerate the job configuration (downloading the file from
+      the server via the `Generate Job Configuration` verb of the `Server` tab of
+      the stat panel), download that file from FTP prompt you get from BYOND, and
+      then re-upload it to the server to take effect on later rounds, but it does
+      indeed feel a lot easier to edit. This measure is completely optional though.
