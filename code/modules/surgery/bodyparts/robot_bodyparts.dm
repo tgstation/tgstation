@@ -613,7 +613,7 @@
 	burn_modifier = 0.8
 	unarmed_damage_low = 13
 	unarmed_damage_high = 21
-	unarmed_effectiveness = 20
+	unarmed_effectiveness = 30
 	max_damage = LIMB_MAX_HP_DEFAULT
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
 	is_emissive = TRUE
@@ -628,7 +628,7 @@
 	burn_modifier = 0.8
 	unarmed_damage_low = 13
 	unarmed_damage_high = 21
-	unarmed_effectiveness = 20
+	unarmed_effectiveness = 30
 	max_damage = LIMB_MAX_HP_DEFAULT
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
 	is_emissive = TRUE
@@ -644,17 +644,6 @@
 	bodypart_traits = list(TRAIT_GRABRESISTANCE)
 	is_emissive = TRUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 40, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 12, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 12)
-
-/obj/item/bodypart/head/robot/combat
-	name = "combat robotic head"
-	desc = "An advanced cybernetic head, programmed to assist in aiming punches."
-	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
-	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	brute_modifier = 0.8
-	burn_modifier = 0.8
-	bodypart_traits = list(TRAIT_PERFECT_ATTACKER)
-	is_emissive = TRUE
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.5)
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG
