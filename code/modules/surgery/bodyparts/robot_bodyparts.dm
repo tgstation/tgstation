@@ -29,6 +29,7 @@
 	dmg_overlay_type = "robotic"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
+	wound_resistance = 5
 	brute_modifier = 0.75
 	burn_modifier = 0.75
 	max_damage = LIMB_MAX_HP_ROBOTIC
@@ -72,6 +73,7 @@
 	dmg_overlay_type = "robotic"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
+	wound_resistance = 5
 	brute_modifier = 0.75
 	burn_modifier = 0.75
 	max_damage = LIMB_MAX_HP_ROBOTIC
@@ -117,6 +119,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	footstep_type = FOOTSTEP_MOB_SYNTHETIC
 
+	wound_resistance = 5
 	brute_modifier = 0.75
 	burn_modifier = 0.75
 	max_damage = LIMB_MAX_HP_ROBOTIC
@@ -176,6 +179,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	footstep_type = FOOTSTEP_MOB_SYNTHETIC
 
+	wound_resistance = 5
 	brute_modifier = 0.75
 	burn_modifier = 0.75
 	max_damage = LIMB_MAX_HP_ROBOTIC
@@ -517,6 +521,7 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
+	wound_resistance = 0
 	burn_modifier = 1
 	brute_modifier = 1
 	unarmed_damage_low = 1
@@ -532,6 +537,7 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
+	wound_resistance = 0
 	burn_modifier = 1
 	brute_modifier = 1
 	unarmed_damage_low = 1
@@ -547,6 +553,7 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
+	wound_resistance = 0
 	brute_modifier = 1
 	burn_modifier = 1
 	unarmed_damage_low = 2
@@ -562,6 +569,7 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
+	wound_resistance = 0
 	brute_modifier = 1
 	burn_modifier = 1
 	unarmed_damage_low = 2
