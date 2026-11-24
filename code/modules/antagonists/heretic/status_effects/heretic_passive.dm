@@ -162,7 +162,7 @@
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
 	RegisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hit_someone))
 
-/datum/status_effect/heretic_passive/blade/proc/hit_someone(mob/living/source, mob/living/target, obj/item/used_weapon)
+/datum/status_effect/heretic_passive/blade/proc/hit_someone(mob/living/source, obj/item/used_weapon, mob/living/target)
 	SIGNAL_HANDLER
 
 	if(!isliving(target) || target == source)
@@ -311,7 +311,7 @@
 	. = ..()
 	UnregisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK)
 
-/datum/status_effect/heretic_passive/cosmic/proc/hit_someone(mob/living/source, mob/living/target, obj/item/used_weapon)
+/datum/status_effect/heretic_passive/cosmic/proc/hit_someone(mob/living/source, obj/item/used_weapon, mob/living/target)
 	SIGNAL_HANDLER
 
 	if(!isliving(target) || target == source || target.stat <= HARD_CRIT)
