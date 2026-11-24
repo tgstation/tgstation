@@ -372,6 +372,8 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	foodtypes = VEGETABLES
+	/// For edible ash flora, this corresponds to raptor breeding changes
+	var/static/list/raptor_food_chances = list(/datum/raptor_color/blue = 5)
 
 /obj/item/food/grown/ash_flora/Initialize(mapload)
 	. = ..()
@@ -442,7 +444,6 @@
 /obj/item/food/grown/ash_flora/fireblossom/Initialize(mapload)
 	. = ..()
 	// Fire flowers make fireproof raptors
-	var/static/list/raptor_food_chances = list(/datum/raptor_color/blue = 5)
 	AddElement(/datum/element/raptor_food, color_chances = raptor_food_chances)
 
 /obj/item/food/grown/ash_flora/glowgrowth
@@ -498,7 +499,6 @@
 /obj/item/food/grown/ash_flora/plasma_flower/Initialize(mapload)
 	. = ..()
 	// Fire flowers make fireproof raptors
-	var/static/list/raptor_food_chances = list(/datum/raptor_color/blue = 5)
 	AddElement(/datum/element/raptor_food, color_chances = raptor_food_chances)
 
 // SEEDS
