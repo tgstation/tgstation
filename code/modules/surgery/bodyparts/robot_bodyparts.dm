@@ -645,6 +645,17 @@
 	is_emissive = TRUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 40, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 12, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 12)
 
+/obj/item/bodypart/head/robot/combat
+	name = "combat robotic head"
+	desc = "An advanced cybernetic head, programmed to assist in aiming punches."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	brute_modifier = 0.8
+	burn_modifier = 0.8
+	bodypart_traits = list(TRAIT_PERFECT_ATTACKER)
+	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.5)
+
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG
 #undef ROBOTIC_HEAVY_BRUTE_MSG

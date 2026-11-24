@@ -141,6 +141,20 @@
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
 	)
 
+/datum/design/combat_head
+	name = "Combat Head"
+	build_type = MECHFAB
+	build_path = /obj/item/bodypart/head/robot/combat
+	materials = list(
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SHEET_MATERIAL_AMOUNT*1.5,
+		/datum/material/gold=SHEET_MATERIAL_AMOUNT*1.5,
+	)
+	construction_time = 35 SECONDS
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ADVANCED_LIMBS
+	)
+
 //Ripley
 /datum/design/ripley_chassis
 	name = "Exosuit Chassis (APLU \"Ripley\")"
