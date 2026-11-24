@@ -250,11 +250,20 @@
 	return ""
 
 /**
- * Checks if this mob is an antag
+ * Checks if this mob is an antag.
+ *
  * By default excludes antags like Valentines, which are "fake antags"
+ *
+ * * blacklisted_antag_flags: Antag flags to ignore when checking if this mob is an antag.
+ * * ignored_antag_types: List of specific antag types to ignore when checking if this mob is an antag.
+ *
+ * Returns TRUE if this mob is considered any valid antag
+ * Returns FALSE if the mob is otherwise normal
  */
-/mob/proc/is_antag(blacklisted_antag_flags = ANTAG_FAKE)
+/mob/proc/is_antag(blacklisted_antag_flags = ANTAG_FAKE, list/ignored_antag_types)
 	for(var/datum/antagonist/antag_datum as anything in mind?.antag_datums)
+		if(is_type_in_list(antag_datum, ignored_antag_types))
+			continue
 		if(!blacklisted_antag_flags || !(antag_datum.antag_flags & blacklisted_antag_flags))
 			return TRUE
 
@@ -429,10 +438,6 @@
 /mob/proc/can_see_reagents()
 	return stat == DEAD || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
 
-///Can this mob hold items
-/mob/proc/can_hold_items(obj/item/I)
-	return length(held_items)
-
 /// Returns this mob's default lighting alpha
 /mob/proc/default_lighting_cutoff()
 	if(client?.combo_hud_enabled && (client?.prefs?.toggles & COMBOHUD_LIGHTING))
@@ -495,7 +500,7 @@
 	if(iscyborg(mob) || islarva(mob))
 		divided_health = (mob.health + mob.maxHealth) / (mob.maxHealth * 2)
 	else if(iscarbon(mob) || isAI(mob) || isbrain(mob))
-		divided_health = abs(HEALTH_THRESHOLD_DEAD - mob.health) / abs(HEALTH_THRESHOLD_DEAD - mob.maxHealth)
+		divided_health = abs(mob.dead_threshold - mob.health) / abs(mob.dead_threshold - mob.maxHealth)
 	return divided_health * 100
 
 /**

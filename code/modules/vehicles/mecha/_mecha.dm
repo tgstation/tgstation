@@ -487,10 +487,7 @@
 			for(var/occupante in occupants)
 				. += span_notice("You can see [occupante] inside.")
 			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				for(var/held_item in H.held_items)
-					if(!isgun(held_item))
-						continue
+				for(var/obj/item/gun/held_item as anything in user.get_held_items_of_type(/obj/item/gun))
 					. += span_warning("It looks like you can hit the pilot directly if you target the center or above.")
 					break //in case user is holding two guns
 	. += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
@@ -541,9 +538,9 @@
 		if(45 to 65)
 			examine_text = "It's badly damaged."
 		if(25 to 45)
-			examine_text = "It's heavily damaged."
+			examine_text = span_warning("It's heavily damaged.")
 		else
-			examine_text = "It's falling apart."
+			examine_text = span_warning("It's falling apart!")
 
 	return examine_text
 
@@ -878,7 +875,7 @@
 	req_one_access = one_access ? accesses : list()
 
 /// Electrocute user from power celll
-/obj/vehicle/sealed/mecha/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff)
+/obj/vehicle/sealed/mecha/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
 	if(get_charge() < 1)
 		return FALSE
 	if(isnull(siemens_coeff))

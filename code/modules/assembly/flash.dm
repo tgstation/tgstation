@@ -180,14 +180,14 @@
 				to_chat(flashed, span_danger("[src] fails to blind you!"))
 		return FALSE
 
-	flashed.adjust_confusion_up_to(confusion_duration, confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
-
-	if(!targeted)
-		return TRUE
-
 	if(flash_result != FLASH_COMPLETED) //If the behavior was overwritten, we just skip the flashy stunny part and go with the override behavior instead
 		if(issilicon(flashed))
-			if(flashed.is_blind())
+
+			if(!targeted) //we only apply confusion to borgs if the effect was a non-targeted flash, as we are applying a slow instead for targeted flashes
+				flashed.adjust_confusion_up_to(confusion_duration, confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
+				return TRUE
+
+			else if(flashed.is_blind())
 				var/flash_duration = rand(8,12) SECONDS
 				flashed.Paralyze(flash_duration)
 				flashed.set_temp_blindness_if_lower(flash_duration)
@@ -197,11 +197,17 @@
 					to_chat(flashed, "[src] overloads your sensors and computing!")
 			else
 				flashed.set_temp_blindness_if_lower( (rand(5,15) SECONDS))
+				flashed.apply_status_effect(/datum/status_effect/borg_slow, 0.5)
 				if(user)
 					user.visible_message(span_warning("[user] blinds [flashed] with the flash!"), span_danger("You blind [flashed] with the flash!"))
 				else
 					to_chat(flashed, "You're blinded by [src]!")
 		else
+			flashed.adjust_confusion_up_to(confusion_duration, confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
+
+			if(!targeted)
+				return TRUE
+
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			flashed.adjust_stamina_loss(rand(80, 120) * (1 - (deviation * 0.5)))
 			flashed.Knockdown(rand(25, 50) * (1 - (deviation * 0.5)))
@@ -338,10 +344,26 @@
 /obj/item/assembly/flash/armimplant
 	name = "photon projector"
 	desc = "A high-powered photon projector implant normally used for lighting purposes, but also doubles as a flashbulb weapon. Self-repair protocols fix the flashbulb if it ever burns out."
+	light_range = 7
+	light_on = FALSE
 	var/flashcd = 20
 	var/overheat = 0
 	//Wearef to our arm
 	var/datum/weakref/arm
+
+/obj/item/assembly/flash/armimplant/Initialize(mapload)
+	. = ..()
+	if(!istype(loc, /obj/item/organ/cyberimp/arm/toolkit))
+		return INITIALIZE_HINT_QDEL
+	arm = WEAKREF(loc)
+
+/obj/item/assembly/flash/armimplant/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	set_light_on(TRUE)
+
+/obj/item/assembly/flash/armimplant/dropped(mob/user, silent)
+	. = ..()
+	set_light_on(FALSE)
 
 /obj/item/assembly/flash/armimplant/burn_out()
 	var/obj/item/organ/cyberimp/arm/toolkit/flash/real_arm = arm.resolve()

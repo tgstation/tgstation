@@ -26,15 +26,11 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 8, \
 		force_wielded = 12, \
-		icon_wielded = "[base_icon_state]1", \
+		update_icon_state = TRUE, \
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
 	AddComponent(/datum/component/walking_aid)
-
-/obj/item/pushbroom/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
 
 /**
  * Handles registering the sweep proc when the broom is wielded

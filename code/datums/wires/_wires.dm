@@ -287,7 +287,7 @@
 		if(user.is_holding_item_of_type(/obj/item/blueprints))
 			return TRUE
 		if(!isnull(user.mind))
-			for(var/obj/item/photo/photo in user.held_items)
+			for(var/obj/item/photo/photo as anything in user.get_held_items_of_type(/obj/item/photo))
 				if(LAZYACCESS(studied_photos, REF(user.mind)) == REF(photo))
 					return TRUE
 
@@ -318,7 +318,7 @@
 		return
 	if(LAZYACCESS(studied_photos, REF(user.mind)))
 		return
-	for(var/obj/item/photo/photo in user.held_items)
+	for(var/obj/item/photo/photo as anything in user.get_held_items_of_type(/obj/item/photo))
 		if(!photo.picture?.has_blueprints)
 			continue
 
@@ -329,7 +329,7 @@
 		else
 			to_chat(user, span_notice("<i>You glance at [photo], looking for wires in the pictured blueprints.</i>"))
 
-		if(do_after(user, study_length, holder, interaction_key = STUDY_INTERACTION_KEY, cog_icon = null))
+		if(do_after(user, study_length, holder, interaction_key = STUDY_INTERACTION_KEY, timed_action_flags = HIDE_INTERACTION))
 			LAZYSET(studied_photos, REF(user.mind), REF(photo))
 		return
 

@@ -113,17 +113,15 @@
 	/// Cyclelinking for airlocks that aren't on the same x or y coord as the target.
 	var/closeOtherId
 	var/obj/machinery/door/airlock/closeOther
-	var/list/obj/machinery/door/airlock/close_others = list()
+	var/list/obj/machinery/door/airlock/close_others
 	var/obj/item/electronics/airlock/electronics
 	COOLDOWN_DECLARE(shockCooldown)
 	/// Any papers pinned to the airlock
 	var/obj/item/note
 	/// The seal on the airlock
 	var/obj/item/seal
-	var/abandoned = FALSE
 	/// Controls if the door closes quickly or not. FALSE = the door autocloses in 1.5 seconds, TRUE = 8 seconds - see autoclose_in()
 	var/normalspeed = TRUE
-	var/cutAiWire = FALSE
 	var/autoname = FALSE
 	var/doorOpen = 'sound/machines/airlock/airlock.ogg'
 	var/doorClose = 'sound/machines/airlock/airlockclose.ogg'
@@ -155,7 +153,7 @@
 	/// How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
 
-	flags_1 = HTML_USE_INITAL_ICON_1
+	flags_1 = parent_type::flags_1 | HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 /obj/machinery/door/airlock/get_save_vars()
@@ -217,10 +215,8 @@
 /obj/machinery/door/airlock/proc/update_other_id()
 	for(var/obj/machinery/door/airlock/Airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 		if(Airlock.closeOtherId == closeOtherId && Airlock != src)
-			if(!(Airlock in close_others))
-				close_others += Airlock
-			if(!(src in Airlock.close_others))
-				Airlock.close_others += src
+			LAZYOR(close_others, Airlock)
+			LAZYOR(Airlock.close_others, src)
 
 /obj/machinery/door/airlock/proc/cyclelinkairlock()
 	if (cyclelinkedairlock)
@@ -310,8 +306,8 @@
 	if(close_others) //remove this airlock from the list of every linked airlock
 		closeOtherId = null
 		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
-			otherlock.close_others -= src
-		close_others.Cut()
+			LAZYREMOVE(otherlock.close_others, src)
+		LAZYNULL(close_others)
 	QDEL_NULL(note)
 	QDEL_NULL(seal)
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
@@ -334,7 +330,7 @@
 	if(issilicon(user) || !iscarbon(user))
 		return ..()
 
-	if(isElectrified() && shock(user, 100))
+	if(isElectrified() && shock(user, allow_modifiers = FALSE))
 		return
 
 	if(SEND_SIGNAL(user, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, src) & STOP_BUMP)
@@ -483,7 +479,7 @@
 /obj/machinery/door/airlock/proc/regainBackupPower()
 	set_backup_outage(0 SECONDS)
 
-/obj/machinery/door/airlock/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+/obj/machinery/door/airlock/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
 	if(!hasPower()) // unpowered, no shock
 		return FALSE
 	if(!isliving(shocking))
@@ -789,7 +785,7 @@
 
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
-			context[SCREENTIP_CONTEXT_RMB] = "Weld shut"
+			context[SCREENTIP_CONTEXT_RMB] = welded ? "Unweld" : "Weld shut"
 
 			if (panel_open)
 				switch (security_level)
@@ -877,7 +873,7 @@
 			attack_ai(user) //bring up airlock dialog
 
 /obj/machinery/door/airlock/attack_animal(mob/user, list/modifiers)
-	if(isElectrified() && shock(user, 100))
+	if(isElectrified() && shock(user, allow_modifiers = FALSE))
 		return
 	return ..()
 
@@ -889,7 +885,7 @@
 	if(.)
 		return
 	if(!HAS_SILICON_ACCESS(user))
-		if(isElectrified() && shock(user, 100))
+		if(isElectrified() && shock(user, allow_modifiers = FALSE))
 			return
 
 	if(ishuman(user) && prob(40) && density)
@@ -1089,7 +1085,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/airlock/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!HAS_SILICON_ACCESS(user) && isElectrified() && (attacking_item.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 75))
+	if(!HAS_SILICON_ACCESS(user) && isElectrified() && (attacking_item.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 75, allow_modifiers = FALSE))
 		return ATTACK_FAILED
 	return ..()
 
@@ -1285,7 +1281,7 @@
 			to_chat(user, span_warning("You need to be wielding [tool] to do that!"))
 			return
 
-		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS)
+		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS, user)
 		return
 
 	if(!forced)
@@ -1293,7 +1289,7 @@
 		return
 
 	var/check_electrified = isElectrified() //setting this so we can check if the mob got shocked during the do_after below
-	if(check_electrified && shock(user,100))
+	if(check_electrified && shock(user, allow_modifiers = FALSE))
 		return //it's like sticking a fork in a power socket
 
 	if(!density)//already open
@@ -1317,15 +1313,15 @@
 
 	prying_so_hard = FALSE
 
-	if(check_electrified && shock(user, 100))
+	if(check_electrified && shock(user, allow_modifiers = FALSE))
 		return
 
-	open(BYPASS_DOOR_CHECKS)
+	open(BYPASS_DOOR_CHECKS, user)
 	take_damage(AIRLOCK_PRY_DAMAGE, BRUTE, 0, 0) // Enough to sometimes spark
-	if(density && !open(BYPASS_DOOR_CHECKS))
+	if(density && !open(BYPASS_DOOR_CHECKS, user))
 		to_chat(user, span_warning("Despite your attempts, [src] refuses to open."))
 
-/obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	if(cycle_pump && !operating && !welded && !seal && locked && density)
 		cycle_pump.airlock_act(src)
 		return FALSE // The rest will be handled by the pump
@@ -1362,6 +1358,8 @@
 				addtimer(CALLBACK(cyclelinkedairlock, PROC_REF(close)), BYPASS_DOOR_CHECKS)
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
+	if (opener)
+		SEND_SIGNAL(opener, COMSIG_MOB_OPENED_AIRLOCK, forced)
 	set_airlock_state(AIRLOCK_OPENING, animated = TRUE, force_type = forced)
 	var/transparent_delay = animation_segment_delay(AIRLOCK_OPENING_TRANSPARENT)
 	sleep(transparent_delay)
@@ -1553,7 +1551,7 @@
 	loseBackupPower()
 
 /obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	if(isElectrified() && shock(user, 100)) //Mmm, fried xeno!
+	if(isElectrified() && shock(user, allow_modifiers = FALSE)) //Mmm, fried xeno!
 		add_fingerprint(user)
 		return
 	if(!density) //Already open
@@ -1879,7 +1877,7 @@
 	else if(!density)
 		close()
 	else
-		open()
+		open(opener = user)
 
 /**
  * Generates the airlock's wire layout based on the current area the airlock resides in.
@@ -2493,7 +2491,7 @@
 			new /obj/effect/temp_visual/cult/sac(loc)
 			var/atom/throwtarget
 			throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-			SEND_SOUND(L, sound(SFX_HALLUCINATION_TURN_AROUND,0,1,50))
+			SEND_SOUND(L, sound(/datum/sound_effect/hallucination_turn_around,0,1,50))
 			flash_color(L, flash_color=COLOR_CULT_RED, flash_time=20)
 			L.Paralyze(40)
 			L.throw_at(throwtarget, 5, 1)
@@ -2618,8 +2616,10 @@
 
 // set_density on both open and close procs has a check and return builtin.
 
-/obj/machinery/door/airlock/instant/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/airlock/instant/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
+	if (opener)
+		SEND_SIGNAL(opener, COMSIG_MOB_OPENED_AIRLOCK, forced)
 	operating = TRUE
 	set_density(FALSE)
 	set_airlock_state(AIRLOCK_OPEN, animated = FALSE)

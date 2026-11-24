@@ -1,7 +1,7 @@
 /obj/item/ammo_box/magazine/internal/cylinder
 	name = "revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/c357
-	caliber = CALIBER_357
+	caliber = CALIBER_357_38
 	max_ammo = 7
 
 ///Here, we have to maintain the list size, to emulate a cylinder with several chambers, empty or otherwise.

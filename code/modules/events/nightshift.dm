@@ -18,33 +18,46 @@
 	end_when = 700 //~22 Minutes
 	fakeable = FALSE
 
-	///Whether the nightshift is on or not, synced to the alert level (which decides whether we're active)
-	///TRUE means they are disabled by red alert.
-	var/nightshift_disabled = FALSE
-	///APCs to update through ticks to account for lag.
-	var/list/currentrun
+	/// Tracks if the station is currently in an emergency (disabling the effects of the event)
+	VAR_PRIVATE/emergency = FALSE
+	/// If we ever actually got the initial message
+	VAR_PRIVATE/ever_started = FALSE
+	/// APCs to update through ticks to account for lag.
+	VAR_PRIVATE/list/currentrun = list()
+	/// What state we want the APCs in currentrun to set to; null for no target state
+	VAR_PRIVATE/desired_apc_state = null
 
 /datum/round_event/nightshift/announce(fake)
-	update_nightshift(active = TRUE, announce = TRUE)
-
-/datum/round_event/nightshift/tick()
 	var/emergency = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
-	if(nightshift_disabled != emergency)
-		nightshift_disabled = emergency
-		if(emergency)
-			update_nightshift(active = FALSE, resume = TRUE)
-		else
-			update_nightshift(active = TRUE, resume = TRUE)
+	if(!emergency)
+		update_nightshift(active = TRUE, announce = TRUE)
+		ever_started = TRUE
 
-	update_machines()
+	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(on_security_level_changed))
+
+/datum/round_event/nightshift/proc/on_security_level_changed(datum/source, new_level)
+	SIGNAL_HANDLER
+
+	if(emergency)
+		if(new_level >= SEC_LEVEL_RED)
+			return
+	else
+		if(new_level < SEC_LEVEL_RED)
+			return
+
+	emergency = !emergency
+	update_nightshift(active = !emergency, resume = ever_started)
 
 /datum/round_event/nightshift/end()
-	update_nightshift(active = FALSE, announce = TRUE)
+	if(ever_started)
+		update_nightshift(active = FALSE, announce = !emergency)
+	UnregisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED)
+	if(currentrun.len > 0)
+		stack_trace("Nightshift event ended with unprocessed APCs in currentrun.")
+		currentrun.Cut() // we'll just leave them in whatever state
 
 ///Called several times, to start & stop nightlights including during red alert/de-red alerting.
-/datum/round_event/nightshift/proc/update_nightshift(active, resume = FALSE, announce = FALSE)
-	currentrun = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
-
+/datum/round_event/nightshift/proc/update_nightshift(active = FALSE, resume = FALSE, announce = FALSE)
 	if(announce)
 		if(active)
 			send_announcement("Good evening, crew. To reduce power consumption and stimulate the circadian rhythms of some species, all of the lights aboard the station have been dimmed for the night.")
@@ -57,16 +70,25 @@
 		else
 			send_announcement("Disabling night lighting: Station is in a state of emergency.")
 
-	update_machines()
+	currentrun = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/apc)
+	desired_apc_state = active
 
-///Called on process that will slowly update all APCs to be nightlight
-/datum/round_event/nightshift/proc/update_machines()
-	for(var/obj/machinery/power/apc/APC as anything in currentrun)
-		currentrun -= APC
-		if (APC.area && (APC.area.type in GLOB.the_station_areas))
-			APC.set_nightshift(!nightshift_disabled)
+/datum/round_event/nightshift/tick()
+	if(currentrun.len == 0)
+		desired_apc_state = null
+		return
+
+	while(currentrun.len)
+		var/obj/machinery/power/apc/APC = currentrun[currentrun.len]
+		currentrun.len--
+		if (!QDELETED(APC) && APC.area && (APC.area.type in GLOB.the_station_areas))
+			APC.set_nightshift(desired_apc_state)
 		if(TICK_CHECK)
-			return
+			break
+
+	// If we're expected to end next tick but we still have stuff to process, delay it until we're done
+	if(currentrun.len > 0 && activeFor + 1 == end_when)
+		end_when += 1
 
 ///Custom messages sent throughout the event that we'll do here, instead of using the `announce` proc that's only at the start.
 /datum/round_event/nightshift/proc/send_announcement(message)

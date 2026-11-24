@@ -168,7 +168,7 @@
 	offset_location = UPPER_BODY
 
 	/// Layer upon which we add the inner ears overlay
-	var/inner_layer = EXTERNAL_FRONT
+	var/inner_layer = list(EXTERNAL_FRONT)
 
 /datum/bodypart_overlay/mutant/cat_ears/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
@@ -178,7 +178,7 @@
 	base_ears.color = (dye_color || draw_color)
 
 	// Only add inner ears on the inner layer
-	if(layer_index != inner_layer)
+	if(!(layer_index in inner_layer))
 		return base_ears
 
 	// Construct image of inner ears, apply to base ears as an overlay
@@ -235,11 +235,12 @@
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic
 	color_source = null
 	dyable = FALSE
+	overlay_flags = NONE
 	/// Color of the inner ear
 	var/inner_color = "#F0004A"
 
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic/get_image(obj/item/bodypart/limb, layer_index, layer_real)
-	if (layer_index != inner_layer)
+	if(!(layer_index in inner_layer))
 		return ..()
 	var/mutable_appearance/ear_holder = ..()
 	var/mutable_appearance/inner = ear_holder.overlays[2]
@@ -247,12 +248,13 @@
 	return ear_holder
 
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
-	if (layer_index != inner_layer)
+	if(!(layer_index in inner_layer))
 		return ..()
 	var/list/all_images = ..()
 	var/mutable_appearance/ear_holder = all_images[1]
 	var/mutable_appearance/inner = ear_holder.overlays[2]
-	all_images += emissive_appearance(inner.icon, inner.icon_state, limb, layer = inner.layer, alpha = inner.alpha * 0.75)
+	var/mutable_appearance/emissive_overlay = emissive_appearance(inner.icon, inner.icon_state, limb, layer = inner.layer, alpha = inner.alpha * 0.75)
+	all_images[emissive_overlay] = LIMB_OVERLAY_META
 	return all_images
 
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic/green

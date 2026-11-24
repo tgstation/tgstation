@@ -113,7 +113,11 @@
 
 	// Inherit our creator's target and reinforcement requests
 	ai_controller.set_blackboard_key(BB_CURRENT_TARGET, creator.ai_controller.blackboard[BB_CURRENT_TARGET])
-	ai_controller.set_blackboard_key(BB_MINING_MOB_REINFORCEMENTS_REQUESTS, creator.ai_controller.blackboard[BB_MINING_MOB_REINFORCEMENTS_REQUESTS])
+	// Own and track each inherited target independently of our creator's controller
+	var/list/reinforcement_requests = creator.ai_controller.blackboard[BB_MINING_MOB_REINFORCEMENTS_REQUESTS]
+	for (var/target, requests_entry in reinforcement_requests)
+		var/list/request_times = requests_entry
+		ai_controller.set_blackboard_key_assoc_lazylist(BB_MINING_MOB_REINFORCEMENTS_REQUESTS, target, request_times.Copy())
 
 /// Reference handling
 /mob/living/basic/mining/legion_brood/proc/creator_destroyed()

@@ -26,8 +26,8 @@
 	var/bricked = FALSE
 	///Stamina recoil from hitting
 	var/stam_recoil = 5
-	drop_sound = SFX_CLOTH_DROP
-	pickup_sound = SFX_CLOTH_PICKUP
+	drop_sound = /datum/sound_effect/cloth_drop
+	pickup_sound = /datum/sound_effect/cloth_pickup
 
 /obj/item/pillow/Initialize(mapload)
 	. = ..()
@@ -254,7 +254,8 @@
 	force_unwielded = 12
 	force_wielded = 18
 	icon_state = "pillow_lance0"
-	icon_prefix = "pillow_lance"
+	inhand_icon_state = "pillow_lance0"
+	base_icon_state = "pillow_lance"
 	hitsound = 'sound/items/pillow/pillow_hit.ogg'
 	///The current direction of the jousting.
 	VAR_FINAL/current_direction = NONE
@@ -330,6 +331,7 @@
 	name = "mattress shield"
 	desc = "A typical twin mattress repurposed into a makeshift shield"
 	icon_state = "mattress_shield"
+	inhand_icon_state = "mattress_shield"
 	damtype = STAMINA
 	force = 10
 	actions_types = list(/datum/action/item_action/fortify)

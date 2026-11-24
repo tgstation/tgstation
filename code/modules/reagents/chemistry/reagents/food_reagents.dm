@@ -1068,7 +1068,7 @@
 
 	else if(SPT_PROB(10, seconds_per_tick)) //lmao at the newbs who eat energy bars
 		affected_mob.electrocute_act(rand(5, 10), "Liquid Electricity in their body", 1, SHOCK_NOGLOVES) //the shock is coming from inside the house
-		playsound(affected_mob, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(affected_mob, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /// Liquid Electricity in plants is unenriched unless the plant has the relevant gene
 /datum/reagent/consumable/liquidelectricity/proc/grown_in_plant(datum/source, obj/item/seeds/our_seeds, obj/item/our_plant)
@@ -1409,3 +1409,21 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	default_container = /obj/item/reagent_containers/condiment/pack/beef_flavour
+
+/datum/reagent/consumable/guidoferrun
+	name = "Guidoferrunitian Glycetamine"
+	description = "A thick, sitcky, metalic substance, somehow capable of thickening one's skin for a short period of time."
+	color = "#4e6b8f"
+	taste_description = "sticky metallic paste"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/consumable/guidoferrun/on_mob_metabolize(mob/living/carbon/human/affected_mob)
+	. = ..()
+	MODIFY_PHYSIOLOGY(affected_mob, BRUTE, 0.95)
+	MODIFY_PHYSIOLOGY(affected_mob, BURN, 0.95)
+
+/datum/reagent/consumable/guidoferrun/on_mob_end_metabolize(mob/living/carbon/human/affected_mob)
+	. = ..()
+	MODIFY_PHYSIOLOGY(affected_mob, BRUTE, (100/95))
+	MODIFY_PHYSIOLOGY(affected_mob, BURN, (100/95))

@@ -9,7 +9,7 @@
 	icon_state = "bottle"
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
-	reagent_container_liquid_sound = SFX_DEFAULT_LIQUID_SLOSH
+	reagent_container_liquid_sound = /datum/sound_effect/default_liquid_slosh
 
 	/// Like Edible's food type, what kind of drink is this?
 	var/drink_type = NONE
@@ -602,15 +602,14 @@
 	slot_flags = ITEM_SLOT_HEAD
 	resistance_flags = NONE
 	armor_type = /datum/armor/cup_bucket
-	slot_equipment_priority = list( \
-		ITEM_SLOT_BACK, ITEM_SLOT_ID,\
-		ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,\
-		ITEM_SLOT_MASK, ITEM_SLOT_HEAD, ITEM_SLOT_NECK,\
-		ITEM_SLOT_FEET, ITEM_SLOT_GLOVES,\
-		ITEM_SLOT_EARS, ITEM_SLOT_EYES,\
-		ITEM_SLOT_BELT, ITEM_SLOT_SUITSTORE,\
-		ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,\
-		ITEM_SLOT_DEX_STORAGE
+	slot_equipment_priority = list(
+		ITEM_SLOT_BACK, ITEM_SLOT_ID,
+		ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,
+		ITEM_SLOT_MASK, ITEM_SLOT_HEAD, ITEM_SLOT_NECK,
+		ITEM_SLOT_FEET, ITEM_SLOT_GLOVES,
+		ITEM_SLOT_EARS, ITEM_SLOT_EYES,
+		ITEM_SLOT_BELT, ITEM_SLOT_SUITSTORE,
+		ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,
 	)
 
 /obj/item/reagent_containers/cup/bucket/Initialize(mapload)

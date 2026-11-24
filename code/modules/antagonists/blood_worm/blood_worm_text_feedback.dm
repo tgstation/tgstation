@@ -41,11 +41,14 @@
 	if (HAS_TRAIT(bloodbag, TRAIT_BLOOD_WORM_HOST))
 		growth_string = ", but consuming it is impossible, as they are a host"
 	else if (total_blood_now < cocoon_action?.total_blood_required)
-		var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
-		if (rounded_growth > 0)
-			growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
+		if(cocoon_action.total_blood_required > 0)
+			var/rounded_growth = CEILING(potential_gain / cocoon_action.total_blood_required * 100, 1)
+			if (rounded_growth > 0)
+				growth_string = ", consuming it would contribute <b>[rounded_growth]%</b> to your growth"
+			else
+				growth_string = ", but consuming it wouldn't contribute to your growth"
 		else
-			growth_string = ", but consuming it wouldn't contribute to your growth"
+			growth_string = ", but you do not need to consume to grow"
 	else
 		if (!istype(src, /mob/living/basic/blood_worm/adult))
 			growth_string = ". You are already ready to mature"

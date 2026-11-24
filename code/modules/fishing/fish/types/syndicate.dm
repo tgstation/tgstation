@@ -184,7 +184,7 @@
 
 	if(status == FISH_DEAD)
 		force -= 8 + w_class
-		hitsound = SFX_SWING_HIT
+		hitsound = /datum/sound_effect/swing_hit
 		block_chance -= 25
 		demolition_mod -= 0.3
 		armour_penetration -= 15

@@ -10,6 +10,8 @@
 	var/category_index = NONE
 	///How much this item costs to order.
 	var/cost_per_order = 10
+	/// Max amount of this item that can be ordered at once.
+	var/max_per_order = null
 
 /datum/orderable_item/New()
 	. = ..()
@@ -21,6 +23,8 @@
 		name = initial(purchase_path.name)
 	if(!desc)
 		desc = initial(purchase_path.desc)
+	if(!max_per_order)
+		max_per_order = (cost_per_order <= 10 ? 50 : (cost_per_order <= 25 ? 20 : 10))
 
 /datum/orderable_item/proc/get_purchased_item(mob/living/user, obj/item/card/id/card)
 	return purchase_path

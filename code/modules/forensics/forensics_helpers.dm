@@ -211,7 +211,7 @@
 			dirty_feet = FALSE
 
 	if(slots_to_bloody & ITEM_SLOT_HANDS)
-		for(var/obj/item/thing in held_items)
+		for(var/obj/item/thing as anything in get_held_items())
 			thing.add_blood_DNA(blood_DNA_to_add)
 
 	cached_blood_color = null

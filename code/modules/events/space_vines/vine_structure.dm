@@ -65,22 +65,22 @@
 	return ..()
 
 /obj/structure/spacevine/proc/on_chem_effect(datum/reagent/chem)
-	var/override = FALSE
+	var/chem_flags
 	for(var/datum/spacevine_mutation/mutation in mutations)
-		override += mutation.on_chem(src, chem)
-	if(!override && prob(75) && istype(chem, /datum/reagent/toxin/plantbgone))
-		qdel(src)
+		chem_flags |= mutation.on_chem(src, chem)
 
 /obj/structure/spacevine/proc/eat(mob/eater)
-	var/override = FALSE
+	var/eat_flags
 	for(var/datum/spacevine_mutation/mutation in mutations)
-		override += mutation.on_eat(src, eater)
-	if(!override)
-		qdel(src)
+		eat_flags |= mutation.on_eat(src, eater)
+
+	if(eat_flags & BLOCK_EAT_ATTEMPT)
+		return
+
+	qdel(src)
 
 /obj/structure/spacevine/attacked_by(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	LAZYSET(attack_modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)
-	LAZYSET(attack_modifiers, FORCE_MULTIPLIER, 1)
 	if(item.damtype == BURN)
 		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 4)
 	if(item.get_sharpness())
@@ -104,10 +104,14 @@
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.on_cross(src, movable)
 
+/obj/structure/spacevine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	for(var/datum/spacevine_mutation/mutation in mutations)
+		mutation.on_hit(src, attacking_item, user, modifiers, attack_modifiers)
+
+	return ..()
+
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/spacevine/attack_hand(mob/user, list/modifiers)
-	for(var/datum/spacevine_mutation/mutation in mutations)
-		mutation.on_hit(src, user)
 	user_unbuckle_mob(user, user)
 	return ..()
 
@@ -201,11 +205,11 @@
 /obj/structure/spacevine/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.additional_atmos_processes(src, air)
-	if(!can_spread && (exposed_temperature >= VINE_FREEZING_POINT || (trait_flags & SPACEVINE_COLD_RESISTANT)))
+	if(!can_spread && (exposed_temperature >= VINE_FREEZING_POINT || (resistance_flags & FREEZE_PROOF)))
 		can_spread = TRUE // not returning here just in case its now a plasmafire and the kudzu should be deleted
-	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD && !(trait_flags & SPACEVINE_HEAT_RESISTANT))
+	if(exposed_temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD && !(resistance_flags & FIRE_PROOF))
 		qdel(src)
-	else if (exposed_temperature < VINE_FREEZING_POINT && !(trait_flags & SPACEVINE_COLD_RESISTANT))
+	else if (exposed_temperature < VINE_FREEZING_POINT && !(resistance_flags & FREEZE_PROOF))
 		can_spread = FALSE
 
 /obj/structure/spacevine/CanAllowThrough(atom/movable/mover, border_dir)

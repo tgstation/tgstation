@@ -14,6 +14,7 @@
 	creator_icon = "ranged"
 	see_invisible = SEE_INVISIBLE_LIVING
 	toggle_button_type = /datum/action/cooldown/guardian/toggle_mode
+	var/current_sight_mode = LIGHTING_CUTOFF_VISIBLE
 
 /mob/living/basic/guardian/ranged/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()
@@ -38,16 +39,18 @@
 
 /mob/living/basic/guardian/ranged/toggle_light()
 	var/msg
-	switch(lighting_cutoff)
+	switch(current_sight_mode)
 		if (LIGHTING_CUTOFF_VISIBLE)
 			lighting_cutoff_red = 10
 			lighting_cutoff_green = 10
 			lighting_cutoff_blue = 15
+			current_sight_mode = LIGHTING_CUTOFF_MEDIUM
 			msg = "You activate your night vision."
 		if (LIGHTING_CUTOFF_MEDIUM)
 			lighting_cutoff_red = 25
 			lighting_cutoff_green = 25
 			lighting_cutoff_blue = 35
+			current_sight_mode = LIGHTING_CUTOFF_HIGH
 			msg = "You increase your night vision."
 		if (LIGHTING_CUTOFF_HIGH)
 			lighting_cutoff_red = 35
@@ -58,8 +61,9 @@
 			lighting_cutoff_red = 0
 			lighting_cutoff_green = 0
 			lighting_cutoff_blue = 0
+			current_sight_mode = LIGHTING_CUTOFF_VISIBLE
 			msg = "You deactivate your night vision."
-	sync_lighting_plane_cutoff()
+	update_sight()
 	to_chat(src, span_notice(msg))
 
 /// Become an incorporeal scout

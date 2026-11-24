@@ -348,7 +348,7 @@
 			var/atom/current_parent = parent
 			item_stack = target_item
 			var/requested_amount = tgui_input_number(user, "How much do you want to insert?", "Inserting [item_stack.singular_name]s", item_stack.amount, item_stack.amount)
-			if(!requested_amount || QDELETED(target_item) || QDELETED(user) || QDELETED(src))
+			if(!requested_amount || isnan(requested_amount) || QDELETED(target_item) || QDELETED(user) || QDELETED(src))
 				continue
 			if(parent != current_parent || user.get_active_held_item() != active_held)
 				continue
@@ -600,7 +600,7 @@
  * - amount: how much material do we need
  */
 /datum/material_container/proc/has_enough_of_material(datum/material/req_mat, amount = 1)
-	return get_material_amount(req_mat) >= OPTIMAL_COST(amount)
+	return (IS_FINITE(amount) && OPTIMAL_COST(amount) <= get_material_amount(req_mat))
 
 
 /**

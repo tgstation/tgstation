@@ -52,6 +52,11 @@
 	slowdown = 0.5
 	floor_variance = 30
 
+// Uses the dug sprite without being excavated, unlike the permanently dug /basin.
+/turf/open/misc/asteroid/basalt/wasteland/depression
+	icon_state = "wasteland_dug"
+	floor_variance = 0
+
 /turf/open/misc/asteroid/basalt/wasteland/break_tile()
 	return
 
@@ -292,8 +297,7 @@
 	if(opened)
 		return
 	// The player is trying to dig themselves out of an early grave
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	user.visible_message(
 		span_warning("[src]'s dirt begins to shift and rumble!"),
 		span_notice("You desperately begin to claw at the dirt around you, trying to force yourself upwards through the soil... (this will take about [DisplayTimeText(breakout_time)].)"),

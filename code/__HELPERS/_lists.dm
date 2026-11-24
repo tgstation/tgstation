@@ -510,6 +510,10 @@
 	for(var/item in list_to_pick)
 		if(!list_to_pick[item])
 			list_to_pick[item] = 0
+		TEST_ONLY_ASSERT( \
+			IS_FINITE(list_to_pick[item]) && list_to_pick[item] >= 0 && list_to_pick[item] == round(list_to_pick[item]), \
+			"pick_weight received invalid weight [list_to_pick[item]] for [item]; expected a non-negative integer." \
+		)
 		total += list_to_pick[item]
 
 	total = rand(1, total)
@@ -992,8 +996,8 @@
 	if(!islist(key_list))
 		return null
 	. = list()
-	for(var/key in key_list)
-		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
+	for(var/key, value in key_list)
+		. |= LIST_VALUE_WRAP_LISTS(value)
 
 ///compare two lists, returns TRUE if they are the same
 /proc/compare_list(list/l,list/d)

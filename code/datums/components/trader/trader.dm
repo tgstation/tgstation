@@ -241,7 +241,7 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 	if(!can_trade(customer))
 		return
 	var/sold_item = FALSE
-	for(var/obj/item/an_item in customer.held_items)
+	for(var/obj/item/an_item as anything in customer.get_held_items())
 		if(sell_item(customer, an_item))
 			sold_item = TRUE
 			break

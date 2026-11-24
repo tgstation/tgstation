@@ -583,13 +583,27 @@
 
 /// A simple proc that iterates through each material that the object is made of and spawns some stacks based on their amount and associated sheet/ore type.
 /atom/proc/drop_custom_materials(multiplier = 1)
+	var/atom/droploc = drop_location()
 	for(var/datum/material/material as anything in custom_materials)
 		var/stack_type = material.sheet_type || material.ore_type
 		if(!stack_type)
 			continue
-		var/amount_to_spawn = FLOOR(custom_materials[material] / SHEET_MATERIAL_AMOUNT * multiplier, 1)
+		var/amount_to_spawn = floor(custom_materials[material] / SHEET_MATERIAL_AMOUNT * multiplier)
 		if(amount_to_spawn > 0)
-			new stack_type(loc, amount_to_spawn)
+			new stack_type(droploc, amount_to_spawn)
+
+/// Similar to drop_custom_materials, but spawns shards instead of full sheets.
+/atom/proc/drop_material_shards()
+	var/atom/droploc = drop_location()
+	for(var/datum/material/material as anything in custom_materials)
+		if(!material.shard_type)
+			continue
+
+		// we could probably integrate this into the shatter element, but that has wider implications
+		for(var/i in 1 to floor(custom_materials[material] / SHEET_MATERIAL_AMOUNT))
+			var/obj/item/shard/shard = new material.shard_type(droploc)
+			shard.pixel_x += rand(-4, 4)
+			shard.pixel_y += rand(-4, 4)
 
 /**
  * A bit of leeway when comparing the amount of material of two items.

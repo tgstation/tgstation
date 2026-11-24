@@ -75,7 +75,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_GET_EAR_PROTECTION, sig_protection)
 	var/protection = sig_protection[EAR_PROTECTION_ARG]
 	var/turf/current_turf = get_turf(src)
-	var/datum/gas_mixture/environment = current_turf.return_air()
+	var/datum/gas_mixture/environment = current_turf?.return_air()
 	var/pressure = environment?.return_pressure()
 	if(pressure < SOUND_MINIMUM_PRESSURE) //space is empty
 		protection += EAR_PROTECTION_VACUUM
@@ -127,6 +127,14 @@
 /// Returns the atom covering the mob's ears, or null if their ears are uncovered.
 /mob/living/proc/is_ears_covered()
 	return null
+
+/**
+ * Checks if our mob has their eyes visible.
+ * More verbose then directly checking HIDEEYES and lets you search for tint, flash protection, or covering clothing.
+ * Retuns TRUE or FALSE
+ */
+/mob/living/proc/is_eyes_visible(max_tint, max_flash_protection, requires_eyes = FALSE, covered_check_flags = NONE)
+	return TRUE
 
 /**
  * Check if the passed body zone is covered by some clothes
@@ -344,8 +352,13 @@
 /mob/living/proc/can_catch_item(skip_throw_mode_check = FALSE, try_offhand = FALSE)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return FALSE
-	if(get_active_held_item() && (!try_offhand || get_inactive_held_item() || !swap_hand()))
-		return FALSE
+
+	if(get_active_held_item())
+		if(!try_offhand)
+			return FALSE
+		var/empty_held_indexes = get_empty_held_indexes()
+		if(!length(empty_held_indexes) || !swap_hand(pick(empty_held_indexes)))
+			return FALSE
 	return TRUE
 
 /mob/living/fire_act()

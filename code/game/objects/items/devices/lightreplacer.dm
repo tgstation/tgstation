@@ -172,7 +172,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	playsound(loc, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, /datum/sound_effect/sparks, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_appearance()
 	to_chat(user, span_warning("[src]'s lights are now filled with plasma! Be careful to only install them in disabled light fixtures, lest they explode!"))
 	return FALSE

@@ -172,23 +172,23 @@
 
 /datum/reagent/rat_spit/overdose_start(mob/living/affected_mob, metabolization_ratio)
 	. = ..()
-	var/mob/living/carbon/victim = affected_mob
-	if (istype(victim) && !victim.has_faction(FACTION_RAT))
-		to_chat(victim, span_userdanger("With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!"))
-		victim.add_faction(FACTION_RAT)
-		victim.vomit(VOMIT_CATEGORY_DEFAULT)
+	if (!affected_mob.has_faction(FACTION_RAT))
+		to_chat(affected_mob, span_userdanger("With this last sip, you feel your body convulsing horribly from the contents you've ingested. As you contemplate your actions, you sense an awakened kinship with rat-kind and their newly risen leader!"))
+		astype(affected_mob, /mob/living/carbon)?.vomit(VOMIT_CATEGORY_DEFAULT)
+		affected_mob.add_faction(FACTION_RAT)
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 
-/datum/reagent/rat_spit/on_mob_life(mob/living/carbon/affected_mob, metabolization_ratio)
+/datum/reagent/rat_spit/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(prob(15))
-		to_chat(affected_mob, span_notice("You feel queasy!"))
-		affected_mob.adjust_disgust(3)
-	else if(prob(10))
+	if(affected_mob.disgust < DISGUST_LEVEL_VERYDISGUSTED && SPT_PROB(50, seconds_per_tick))
+		affected_mob.adjust_disgust(2.5)
+		affected_mob.adjust_jitter_up_to(2 SECONDS, 12 SECONDS)
+	if(affected_mob.disgust < DISGUST_LEVEL_GROSS && SPT_PROB(8, seconds_per_tick))
+		to_chat(affected_mob, span_warning("You feel queasy!"))
+		affected_mob.set_disgust(max(DISGUST_LEVEL_GROSS + 5, affected_mob.disgust))
+	if(affected_mob.disgust < DISGUST_LEVEL_VERYGROSS && SPT_PROB(4, seconds_per_tick))
 		to_chat(affected_mob, span_warning("That food does not sit up well!"))
-		affected_mob.adjust_disgust(5)
-	else if(prob(5))
-		affected_mob.vomit(VOMIT_CATEGORY_DEFAULT)
+		affected_mob.set_disgust(max(DISGUST_LEVEL_VERYGROSS + 10, affected_mob.disgust))
 
 /datum/pet_command/protect_owner/glockroach
 	protect_owner_subtree = /datum/bt_node/subtree/pet_command/protect_owner/ranged/glockroach

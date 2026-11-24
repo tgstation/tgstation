@@ -318,7 +318,7 @@
 	SIGNAL_HANDLER
 
 	remove_shared_particles(/particles/smoke/ash)
-
+	UnregisterSignal(src, COMSIG_VENT_WAVE_CONCLUDED)
 	//happens in COMSIG_QDELETING
 	if(QDELETED(node) || node.stat == DEAD)
 		initiate_wave_loss(loss_message = "\the [src] creaks and groans as the mining attempt fails, and the vent closes back up.")
@@ -328,7 +328,7 @@
 	if(get_turf(node) != get_turf(src))
 		initiate_wave_loss(loss_message = "The [node] detaches from the [src], and the vent closes back up!")
 		return //Start over!
-
+	
 	initiate_wave_win()
 
 /**
@@ -693,11 +693,12 @@
 
 /obj/structure/ore_vent/random/Initialize(mapload)
 	. = ..()
-	if(!unique_vent && !mapload)
-		generate_mineral_breakdown(map_loading = mapload) //Default to random mineral breakdowns, unless this is a unique vent or we're still setting up default vent distribution.
+	if(mapload && !SSore_generation.vent_distribution_complete)
+		return
+	if(!unique_vent)
+		generate_mineral_breakdown(map_loading = FALSE)
 		generate_description()
-	if(!mapload)
-		vent_size_setup(random = TRUE) // We only do this here specific to random distribution ore vents, and within mapload we handle this manually within SSore_generation.
+	vent_size_setup(random = TRUE)
 
 /obj/structure/ore_vent/random/LateInitialize()
 	. = ..()

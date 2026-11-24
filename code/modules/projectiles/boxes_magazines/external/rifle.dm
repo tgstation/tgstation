@@ -22,7 +22,7 @@
 	base_icon_state = "38mag"
 	w_class = WEIGHT_CLASS_NORMAL
 	ammo_type = /obj/item/ammo_casing/c38
-	caliber = CALIBER_38
+	caliber = CALIBER_357_38
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2)
 	max_ammo = 15
 	ammo_band_icon = "+38mag_ammo_band"

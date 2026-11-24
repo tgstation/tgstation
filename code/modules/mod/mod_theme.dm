@@ -1,24 +1,28 @@
 /// Global proc that sets up all MOD themes as singletons in a list and returns it.
 /proc/setup_mod_themes()
 	. = list()
-	for(var/path in typesof(/datum/mod_theme))
+	for(var/path in valid_subtypesof(/datum/mod_theme))
 		var/datum/mod_theme/new_theme = new path()
 		.[path] = new_theme
 
+/// Simple proc to search through mod_themes global to return a theme
+/proc/find_mod_theme(haystack)
+	for(var/entry in GLOB.mod_themes)
+		var/datum/mod_theme/theme_singleton = GLOB.mod_themes[entry]
+		if(findtext(haystack, theme_singleton.default_skin))
+			return theme_singleton
+
 /// MODsuit theme, instanced once and then used by MODsuits to grab various statistics.
 /datum/mod_theme
+	abstract_type = /datum/mod_theme
 	/// Theme name for the MOD.
-	var/name = "standard"
+	var/name = "debug"
 	/// Description added to the MOD.
-	var/desc = "A civilian class suit by Nakamura Engineering, doesn't offer much other than slightly quicker movement."
+	var/desc = "An abstract MOD theme."
 	/// Extended description on examine_more
-	var/extended_desc = "A third-generation, modular civilian class suit by Nakamura Engineering, \
-		this suit is a staple across the galaxy for civilian applications. These suits are oxygenated, \
-		spaceworthy, resistant to fire and chemical threats, and are immunized against everything between \
-		a sneeze and a bioweapon. However, their combat applications are incredibly minimal due to the amount of \
-		armor plating being installed by default, and their actuators only lead to slightly greater speed than industrial suits."
+	var/extended_desc = "An abstract MOD description."
 	/// Default skin of the MOD.
-	var/default_skin = "standard"
+	var/default_skin = "debug"
 	/// The slot this mod theme fits on
 	var/slot_flags = ITEM_SLOT_BACK
 	/// Armor shared across the MOD parts.
@@ -51,7 +55,7 @@
 	var/list/allowed_suit_storage = list()
 	/// List of variants and items created by them, with the flags we set.
 	var/list/variants = list(
-		"standard" = list(
+		"debug" = list(
 			/obj/item/clothing/head/mod = list(
 				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
@@ -71,19 +75,21 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	///	associated list with parts to assemble a sprite from code. Check CERULEAN_MODSUIT_GEN_FILE for existing parts to pick from. Sprites at the top of the list load first.
+	var/list/cerulean_tail_palette
+	/// the color given for the flippers which female physique Ceruleans have, when the modsuit is sealed. FLIPPERS autogenerates
+	var/cerulean_flipper_palette = FLIPPERS
 
 #ifdef UNIT_TESTS
 /datum/mod_theme/New()
@@ -147,7 +153,6 @@
 		part_datum.sealed_layer = category[SEALED_LAYER]
 		part_datum.unsealed_message = category[UNSEALED_MESSAGE] || "No unseal message set! Tell a coder!"
 		part_datum.sealed_message = category[SEALED_MESSAGE] || "No seal message set! Tell a coder!"
-		part_datum.can_overslot = category[CAN_OVERSLOT] || FALSE
 		part.clothing_flags = category[UNSEALED_CLOTHING] || NONE
 		part.visor_flags = category[SEALED_CLOTHING] || NONE
 		part.flags_inv = category[UNSEALED_INVISIBILITY] || NONE
@@ -164,9 +169,7 @@
 			part.alternate_worn_layer = part_datum.sealed_layer
 		else
 			part.alternate_worn_layer = part_datum.unsealed_layer
-		if(!part_datum.can_overslot && part_datum.overslotting)
-			var/obj/item/overslot = part_datum.overslotting
-			overslot.forceMove(mod.drop_location())
+		part_datum.overslotting?.forceMove(mod.drop_location())
 	for(var/obj/item/part as anything in parts + mod)
 		part.icon = used_skin[MOD_ICON_OVERRIDE] || 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 		part.worn_icon = used_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'
@@ -183,6 +186,52 @@
 	fire = 25
 	acid = 25
 	wound = 5
+
+/datum/mod_theme/standard
+	name = "standard"
+	desc = "A civilian class suit by Nakamura Engineering, doesn't offer much other than slightly quicker movement."
+	extended_desc = "A third-generation, modular civilian class suit by Nakamura Engineering, \
+		this suit is a staple across the galaxy for civilian applications. These suits are oxygenated, \
+		spaceworthy, resistant to fire and chemical threats, and are immunized against everything between \
+		a sneeze and a bioweapon. However, their combat applications are incredibly minimal due to the amount of \
+		armor plating being installed by default, and their actuators only lead to slightly greater speed than industrial suits."
+	default_skin = "standard"
+	variants = list(
+		"standard" = list(
+			/obj/item/clothing/head/mod = list(
+				UNSEALED_LAYER = NECK_LAYER,
+				UNSEALED_CLOTHING = SNUG_FIT,
+				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|HEADINTERNALS,
+				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
+				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = HELMET_SEAL_MESSAGE,
+			),
+			/obj/item/clothing/suit/mod = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				SEALED_INVISIBILITY = HIDEJUMPSUIT,
+				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
+			),
+			/obj/item/clothing/gloves/mod = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
+			),
+			/obj/item/clothing/shoes/mod = list(
+				UNSEALED_CLOTHING = THICKMATERIAL,
+				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
+				CAN_OVERSLOT = TRUE,
+				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
+				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
+			),
+		),
+	)
+	cerulean_tail_palette = list("security" = list("#292929", "#414146", "#585858"))
+	cerulean_flipper_palette = "#414146"
 
 /datum/mod_theme/civilian
 	name = "civilian"
@@ -214,13 +263,11 @@
 			),
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -263,7 +310,6 @@
 				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -315,14 +361,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -384,14 +428,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -456,14 +498,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -530,14 +570,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -562,19 +600,19 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#363740", "#31313d", "#4f4f52"))
+	cerulean_flipper_palette = "#40404e"
 
 /datum/mod_theme/mining/New()
 	.=..()
@@ -634,18 +672,18 @@
 			),
 			/obj/item/clothing/gloves/mod = list(
 				SEALED_CLOTHING = THICKMATERIAL,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				SEALED_CLOTHING = THICKMATERIAL,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette = list(/* sorry nothing */)
+	cerulean_flipper_palette = NO_FLIPPERS
 
 /datum/armor/mod_theme_loader
 	melee = 15
@@ -710,14 +748,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -743,14 +779,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -824,14 +858,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -896,19 +928,19 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette =  list("medical" = list("#1e1e32", "#343442", "#7a0bb7"))
+	cerulean_flipper_palette = "#7a0bb7"
 
 /datum/armor/mod_theme_research
 	melee = 20
@@ -963,14 +995,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -1030,14 +1060,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -1103,14 +1131,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -1170,19 +1196,18 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette = list("medical" = list("#7e1c29", "#adad95", "#d9d7c7"))
 
 /datum/armor/mod_theme_cosmohonk
 	melee = 5
@@ -1245,14 +1270,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -1278,14 +1301,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -1351,19 +1372,19 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#1d1d1f", "#34333a", "#545350"))
+	cerulean_flipper_palette = "#34333a"
 
 /datum/armor/mod_theme_elite
 	melee = 60
@@ -1412,31 +1433,29 @@
 				UNSEALED_INVISIBILITY = HIDEEARS|HIDEHAIR,
 				SEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEYES|HIDEFACE|HIDESNOUT|HIDEANTENNAE,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = HELMET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/suit/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_INVISIBILITY = HIDEJUMPSUIT|HIDEMUTWINGS,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/gloves/mod = list(
 				SEALED_CLOTHING = THICKMATERIAL,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				SEALED_CLOTHING = THICKMATERIAL,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette = list("medical" = list("#1e1e32", "#820a16", "#b22c20"))
+	cerulean_flipper_palette = "#1e1e32"
 
 /datum/armor/mod_theme_infiltrator
 	melee = 40
@@ -1511,19 +1530,19 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette = list("medical" = list("#222222", "#c2c1c9", "#b22c20"))
+	cerulean_flipper_palette = "#3d667a"
 
 /datum/armor/mod_theme_interdyne
 	melee = 30
@@ -1584,19 +1603,19 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#8637af", "#490869", "#994dc5"))
+	cerulean_flipper_palette = "#47bfff"
 
 /datum/armor/mod_theme_enchanted
 	melee = 40
@@ -1653,19 +1672,19 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#212022", "#2f2e31", "#2f2e31"))
+	cerulean_flipper_palette = "#21a52e"
 
 /datum/armor/mod_theme_ninja
 	melee = 40
@@ -1723,19 +1742,19 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#72452a", "#55322e", "#9f6f3d"))
+	cerulean_flipper_palette = "#573431"
 
 /datum/armor/mod_theme_prototype
 	melee = 20
@@ -1791,14 +1810,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -1859,14 +1876,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -1890,14 +1905,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -1973,14 +1986,12 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
@@ -2042,19 +2053,19 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#29722e", "#ffce5b", "#488c40"))
+	cerulean_flipper_palette = "#2b2c38"
 
 /datum/armor/mod_theme_corporate
 	melee = 65
@@ -2106,19 +2117,19 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette = list("medical" = list("#39393f", "#eeeeee", "#eeeeee"))
+	cerulean_flipper_palette = "#7ed2ff"
 
 /datum/armor/mod_theme_chrono
 	melee = 60
@@ -2172,19 +2183,19 @@
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#00289f", "#343442", "#0050d5"))
+	cerulean_flipper_palette = "#001775"
 
 /datum/armor/mod_theme_debug
 	melee = 50
@@ -2235,13 +2246,11 @@
 			),
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = GAUNTLET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = GAUNTLET_SEAL_MESSAGE,
 			),
 			/obj/item/clothing/shoes/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE,
-				CAN_OVERSLOT = TRUE,
 				UNSEALED_MESSAGE = BOOT_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = BOOT_SEAL_MESSAGE,
 			),

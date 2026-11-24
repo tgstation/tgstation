@@ -202,8 +202,8 @@
 	desc = "A neon-blue pair of headphones. They look neo-futuristic."
 	icon_state = "decker_hat"
 	inhand_icon_state = null
-	equip_sound = SFX_HEADSET_EQUIP
-	pickup_sound = SFX_HEADSET_PICKUP
+	equip_sound = /datum/sound_effect/headset_equip
+	pickup_sound = /datum/sound_effect/headset_pickup
 	drop_sound = 'sound/items/handling/headset/headset_drop1.ogg'
 
 /obj/item/clothing/head/costume/yuri

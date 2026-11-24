@@ -18,21 +18,26 @@ jobs:
           unset SECRET_EXISTS
           if [ -n "$ENABLER_SECRET" ]; then SECRET_EXISTS=true ; fi
           echo "SECRETS_ENABLED=$SECRET_EXISTS" >> $GITHUB_OUTPUT
+
       - name: Checkout
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         uses: actions/checkout@v7
-      - name: Install BYOND
+
+      - name: Restore or install BYOND
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         uses: ./.github/actions/restore_or_install_byond
+
       - name: Install rust-g
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         run: |
           bash tools/ci/install_rust_g.sh
+
       - name: Compile and generate Autowiki files
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build.sh --ci autowiki
+
       - name: Run Autowiki
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         env:

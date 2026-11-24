@@ -2,28 +2,43 @@
 
 //this singleton datum is used by the events controller to dictate how it selects events
 /datum/round_event_control
-	var/name //The human-readable name of the event
-	var/category //The category of the event
-	var/description //The description of the event
-	var/typepath //The typepath of the event datum /datum/round_event
+	///The human-readable name of the event
+	var/name
+	///The category of the event
+	var/category
+	///The description of the event
+	var/description
+	///The typepath of the event datum /datum/round_event
+	var/typepath
 
-	var/weight = 10 //The weight this event has in the random-selection process.
-									//Higher weights are more likely to be picked.
-									//10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
-									//0 here does NOT disable the event, it just makes it extremely unlikely
+	/**
+	 * The weight this event has in the random-selection process.
+	 * Higher weights are more likely to be picked.
+	 * 10 is the default weight. 20 is twice more likely; 5 is half as likely as this default.
+	 * 0 here does NOT disable the event, it just makes it extremely unlikely.
+	 */
+	var/weight = 10
 
-	var/earliest_start = 20 MINUTES //The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
-	var/min_players = 0 //The minimum amount of alive, non-AFK human players on server required to start the event.
+	/// The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
+	var/earliest_start = 20 MINUTES
+	/// The minimum amount of alive, non-AFK human players on server required to start the event.
+	var/min_players = 0
 
-	var/occurrences = 0 //How many times this event has occurred
-	var/max_occurrences = 20 //The maximum number of times this event can occur (naturally), it can still be forced.
-									//By setting this to 0 you can effectively disable an event.
+	/// How many times this event has occurred
+	/// This is incremented even if the event if forced
+	VAR_FINAL/occurrences = 0
+	/// The maximum number of times this event can occur (naturally), it can still be forced.
+	/// Setting this to 0 effectively disables the event.
+	var/max_occurrences = 20
 
-	var/holidayID = "" //string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
-									//anything with a (non-null) holidayID which does not match holiday, cannot run.
+	/// String which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
+	/// Anything with a (non-null) holidayID which does not match holiday, cannot run.
+	var/holidayID = ""
+
+	/// Whether it's a "summon events" wizard event
 	var/wizardevent = FALSE
-	var/alert_observers = TRUE //should we let the ghosts know this event is firing
-									//should be disabled on events that fire a lot
+	/// Should we let the ghosts know this event is firing?
+	var/alert_observers = TRUE
 
 	/// Minimum wizard rituals at which to trigger this event, inclusive
 	var/min_wizard_trigger_potency = NEVER_TRIGGERED_BY_WIZARDS
@@ -37,6 +52,9 @@
 	var/list/datum/event_admin_setup/admin_setup = list()
 	/// Flags dictating whether this event should be run on certain kinds of map
 	var/map_flags = NONE
+
+	/// If TRUE, the event won't run naturally/randomly. Toggled by admins.
+	VAR_FINAL/admin_disabled = FALSE
 
 /datum/round_event_control/New()
 	if(!length(admin_setup))
@@ -79,6 +97,8 @@
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED)
 		return FALSE
 	if(ispath(typepath, /datum/round_event/ghost_role) && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT))
+		return FALSE
+	if(admin_disabled)
 		return FALSE
 
 	return TRUE

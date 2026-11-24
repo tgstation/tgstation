@@ -210,12 +210,14 @@
 	aggressor.stop_pulling()
 
 	var/atom/movable/choking_on = choking_on_ref?.resolve()
-	owner.visible_message(span_green("[victim] vomits up \the[choking_on]. [victim.p_theyre()] gonna make it!"), \
+	owner.visible_message(span_green("[victim] vomits up \the [choking_on]. [victim.p_Theyre()] gonna make it!"), \
 			span_green("You vomit up that accursed blockage. YOU CAN BREATHE! The broken chest is a hell of a price to pay."))
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
 		var/obj/item/bodypart/chest = carbon_victim.get_bodypart(BODY_ZONE_CHEST)
 		carbon_victim.cause_wound_of_type_and_severity(WOUND_BLUNT, chest, WOUND_SEVERITY_SEVERE, wound_source = "human force to the chest")
+
+	aggressor.client?.give_award(/datum/award/achievement/misc/samaritan, aggressor)
 
 	playsound(owner, 'sound/mobs/humanoids/human/gag_vomit/crack_vomit.ogg', 120, extrarange = 5, falloff_exponent = 4)
 	vomit_up()
@@ -228,8 +230,8 @@
 	if(iscarbon(aggressor))
 		var/free_hands = 0
 		// Listen bud, you need at least 2 free hands for this
-		for(var/hand_i in 1 to length(aggressor.held_items))
-			if(!aggressor.has_hand_for_held_index(hand_i) || aggressor.held_items[hand_i])
+		for(var/hand_index in aggressor.get_empty_held_indexes())
+			if(!aggressor.has_hand_for_held_index(hand_index))
 				continue
 			free_hands += 1
 		if(free_hands < 2)

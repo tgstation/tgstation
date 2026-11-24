@@ -356,7 +356,7 @@
 		return
 	if(!COOLDOWN_FINISHED(src, steal_cd))
 		return
-	if(!owner.has_active_hand() || !owner.get_empty_held_indexes())
+	if(!owner.has_active_hand() || !length(owner.get_empty_held_indexes()))
 		return
 
 	// If our main hand is full, that means our offhand is empty, so try stealing with that

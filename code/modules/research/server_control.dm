@@ -1,5 +1,5 @@
 /obj/machinery/computer/rdservercontrol
-	name = "R&D Server Controller"
+	name = "\improper R&D server control console"
 	desc = "Manages access to research databases and consoles."
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
@@ -24,7 +24,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	balloon_alert(user, "console emagged")
 	return TRUE
 

@@ -30,7 +30,7 @@
 									"observer_abort": "BT_ABORT_LOWER_PRIORITY",
 									"invert": false,
 									"key": "BB_BASIC_MOB_EXECUTION_TARGET",
-									"min_stat": "UNCONSCIOUS"
+									"min_stat": "SOFT_CRIT"
 								},
 								"child": {
 									"type": "leaf",

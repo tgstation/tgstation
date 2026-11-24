@@ -398,7 +398,7 @@
 	returnable_list += span_bold("You are invincible and invisible to everyone but other ghosts. Most abilities will reveal you, rendering you vulnerable.")
 	returnable_list += span_bold("To function, you are to drain the life essence from humans. This essence is a resource, as well as your health, and will power all of your abilities.")
 	returnable_list += span_bold("<i>You do not remember anything of your past lives, nor will you remember anything about this one after your death.</i>")
-	returnable_list += span_bold("Be sure to read <a href=\"https://tgstation13.org/wiki/Revenant\">the wiki page</a> to learn more.")
+	returnable_list += span_bold("Be sure to read <a href=\"[CONFIG_GET(string/wikiurl)]/Revenant\">the wiki page</a> to learn more.")
 	return returnable_list
 
 /mob/living/basic/revenant/generate_random_mob_name()

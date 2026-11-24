@@ -30,7 +30,7 @@
 				to_chat(affected_mob, span_danger("Your thoughts are interrupted by a loud <b>HONK!</b>"))
 		if(4)
 			if(SPT_PROB(2.5, seconds_per_tick))
-				affected_mob.say( pick( list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...") ) , forced = "pierrot's throat")
+				INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), pick(list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...")), forced = "pierrot's throat")
 
 
 /datum/disease/pierrot_throat/after_add()

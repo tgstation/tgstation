@@ -23,7 +23,7 @@
 
 /obj/effect/mob_spawn/corpse/human/engineer
 	name = JOB_STATION_ENGINEER
-	outfit = /datum/outfit/job/engineer/gloved
+	outfit = /datum/outfit/job/engineer
 	icon_state = "corpseengineer"
 
 /obj/effect/mob_spawn/corpse/human/engineer/mod

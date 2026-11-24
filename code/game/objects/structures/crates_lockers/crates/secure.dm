@@ -5,19 +5,19 @@
 	base_icon_state = "securecrate"
 	secure = TRUE
 	locked = TRUE
-	max_integrity = 500
+	max_integrity = 300
 	armor_type = /datum/armor/crate_secure
-	damage_deflection = 25
+	damage_deflection = 10
 
 	var/tamperproof = 0
 
 /datum/armor/crate_secure
-	melee = 30
-	bullet = 50
-	laser = 50
-	energy = 100
-	fire = 80
-	acid = 80
+	melee = 15
+	bullet = 25
+	laser = 25
+	energy = 50
+	fire = 40
+	acid = 40
 
 /obj/structure/closet/crate/secure/Initialize(mapload)
 	. = ..()

@@ -29,7 +29,7 @@
 		var/mob/viewer = our_hud.mymob
 		our_hud.hide_action(src)
 		viewer?.client?.screen -= src
-		linked_action.viewers -= our_hud
+		LAZYREMOVE(linked_action.viewers, our_hud)
 		viewer.update_action_buttons()
 		our_hud.screen_objects -= hud_key
 		our_hud.screen_groups?[hud_group_key] -= src
@@ -47,7 +47,7 @@
 			return FALSE
 
 	if(linked_action)
-		if(linked_action.viewers[user.hud_used])
+		if(LAZYACCESS(linked_action.viewers, user.hud_used))
 			return TRUE
 		return FALSE
 
@@ -104,6 +104,11 @@
 /atom/movable/screen/movable/action_button/MouseExited(location, control, params)
 	closeToolTip(usr)
 	return ..()
+
+/atom/movable/screen/movable/action_button/proc/update_tooltip(mob/user)
+	if(user?.client?.tooltips?.last_target != src)
+		return
+	updateToolTip(user, title = name, content = desc)
 
 /atom/movable/screen/movable/action_button/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
 	last_hovored_ref = null
@@ -217,10 +222,9 @@
 		return
 
 	for(var/datum/action/action as anything in actions)
-		var/atom/movable/screen/movable/action_button/button = action.viewers[hud_used]
 		action.build_all_button_icons()
 		if(reload_screen)
-			client.screen += button
+			client.screen += LAZYACCESS(action.viewers, hud_used)
 
 	if(reload_screen)
 		hud_used.update_our_owner()

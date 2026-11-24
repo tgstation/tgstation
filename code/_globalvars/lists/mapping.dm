@@ -12,6 +12,10 @@ GLOBAL_LIST_INIT(cardinals_multiz, list(
 	UP,
 	DOWN,
 ))
+GLOBAL_LIST_INIT(verticals, list(
+	UP,
+	DOWN,
+))
 GLOBAL_LIST_INIT(diagonals, list(
 	NORTHEAST,
 	NORTHWEST,
@@ -141,7 +145,6 @@ GLOBAL_LIST_EMPTY(secequipment) //sec equipment lockers that scale with the numb
 GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(ruin_landmarks)
-GLOBAL_LIST_EMPTY(bar_areas)
 GLOBAL_LIST_EMPTY(river_waypoint_list) // Assoc list of river waypoint markers by z-level
 GLOBAL_LIST_EMPTY(mining_center) // For determining vent size ranked lists, epicenters for comparison goes here.
 GLOBAL_LIST_EMPTY(map_generators_by_z) // Assoc list of shared generators by z by type

@@ -81,12 +81,13 @@ SUBSYSTEM_DEF(movement)
 			break
 	//This is technically possible, if our bucket is smashed inside the loop's process
 	//Let's be nice, the cost of doing it is cheap
-	if(index > sorted_length || !buckets["[bucket_time]"])
+	var/bucket_key = MOVEMENT_BUCKET_KEY(bucket_time)
+	if(index > sorted_length || !buckets[bucket_key])
 		return
 
 	sorted_buckets.Cut(index, index + 1) //Removes just this list
 	//Removes the assoc lookup too
-	buckets -= "[bucket_time]"
+	buckets -= bucket_key
 
 /datum/controller/subsystem/movement/proc/queue_loop(datum/move_loop/loop)
 	if(loop.status & MOVELOOP_STATUS_QUEUED)
@@ -94,11 +95,12 @@ SUBSYSTEM_DEF(movement)
 		return
 	loop.queued_time = loop.timer
 	loop.status |= MOVELOOP_STATUS_QUEUED
-	var/list/our_bucket = buckets["[loop.queued_time]"]
+	var/bucket_key = MOVEMENT_BUCKET_KEY(loop.queued_time)
+	var/list/our_bucket = buckets[bucket_key]
 	// If there's no bucket for this, lets set them up
 	if(!our_bucket)
-		buckets["[loop.queued_time]"] = list()
-		our_bucket = buckets["[loop.queued_time]"]
+		buckets[bucket_key] = list()
+		our_bucket = buckets[bucket_key]
 		// This makes assoc buckets and sorted buckets point to the same place, allowing for quicker inserts
 		var/list/new_bucket = list(list(loop.queued_time, our_bucket))
 		var/list/compare_item = list(loop.queued_time)
@@ -113,7 +115,7 @@ SUBSYSTEM_DEF(movement)
 	if(isnull(loop.queued_time)) // This happens if a moveloop is dequeued while handling process()
 		loop.status &= ~MOVELOOP_STATUS_QUEUED
 		return
-	var/list/our_entries = buckets["[loop.queued_time]"]
+	var/list/our_entries = buckets[MOVEMENT_BUCKET_KEY(loop.queued_time)]
 	our_entries -= loop
 	if(!length(our_entries))
 		smash_bucket(bucket_time = loop.queued_time) // We can't pass an index in for context because we don't know our position

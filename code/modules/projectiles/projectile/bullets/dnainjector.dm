@@ -3,7 +3,7 @@
 	icon_state = "syringeproj"
 	var/obj/item/dnainjector/injector
 	damage = 5
-	hitsound_wall = SFX_SHATTER
+	hitsound_wall = /datum/sound_effect/shatter
 	embed_type = null
 	shrapnel_type = null
 

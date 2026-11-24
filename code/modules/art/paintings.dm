@@ -20,14 +20,19 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	resistance_flags = FLAMMABLE
 	max_integrity = 60
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
+	/// The canvas put up on the easel, which moves along with it. Set with set_painting().
 	var/obj/item/canvas/painting = null
+
+/obj/structure/easel/Destroy(force)
+	set_painting(null)
+	return ..()
 
 //Adding canvases
 /obj/structure/easel/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/canvas))
 		var/obj/item/canvas/canvas = tool
 		user.transfer_item_to_turf(canvas, get_turf(src), silent = FALSE)
-		painting = canvas
+		set_painting(canvas)
 		canvas.layer = layer+0.1
 		user.visible_message(span_notice("[user] puts \the [canvas] on \the [src]."),span_notice("You place \the [canvas] on \the [src]."))
 		return ITEM_INTERACT_SUCCESS
@@ -40,7 +45,22 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	if(painting && painting.loc == T) //Only move if it's near us.
 		painting.forceMove(get_turf(src))
 	else
-		painting = null
+		set_painting(null)
+
+/// Puts a canvas up on the easel, or takes it down with null passed as an arg
+/obj/structure/easel/proc/set_painting(obj/item/canvas/new_painting)
+	if(painting == new_painting)
+		return
+	if(painting)
+		UnregisterSignal(painting, COMSIG_QDELETING)
+	painting = new_painting
+	if(painting)
+		RegisterSignal(painting, COMSIG_QDELETING, PROC_REF(on_painting_deleted))
+
+/// The canvas we hold is being deleted, wherever it is now
+/obj/structure/easel/proc/on_painting_deleted(datum/source)
+	SIGNAL_HANDLER
+	set_painting(null)
 
 /obj/item/canvas
 	name = "canvas"
@@ -918,6 +938,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	desc = "paintbrush included"
 	icon = 'icons/obj/art/artstuff.dmi'
 	icon_state = "palette"
+	inhand_icon_state = "palette"
 	lefthand_file = 'icons/mob/inhands/equipment/palette_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/palette_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY

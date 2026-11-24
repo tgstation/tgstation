@@ -22,10 +22,19 @@
 	var/datum/design/being_built
 	/// Our internal techweb for limbgrower designs.
 	var/datum/techweb/autounlocking/stored_research
-	/// All the categories of organs we can print.
-	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_LIMBS_DIGITIGRADE)
-	///Designs imported from technology disks that we can print.
+	/// Designs imported from technology disks that we can print.
 	var/list/imported_designs
+	/// All the categories of organs we can print.
+	var/list/categories = list(
+		SPECIES_HUMAN,
+		SPECIES_LIZARD,
+		SPECIES_MOTH,
+		SPECIES_PLASMAMAN,
+		SPECIES_ETHEREAL,
+		SPECIES_CERULEAN,
+		RND_CATEGORY_LIMBS_OTHER,
+		RND_CATEGORY_LIMBS_DIGITIGRADE,
+	)
 
 /obj/machinery/limbgrower/Initialize(mapload)
 	create_reagents(100, OPENCONTAINER)
@@ -221,7 +230,7 @@
 
 			for(var/required_reagent, required_amount in consumed_reagents_list)
 				consumed_reagents_list[required_reagent] *= production_coefficient
-				if(!reagents.has_reagent(required_reagent, required_amount))
+				if(!reagents.has_reagent(required_reagent, consumed_reagents_list[required_reagent]))
 					audible_message(span_notice("[src] buzzes."))
 					playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 					return

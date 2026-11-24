@@ -106,10 +106,15 @@
 // /obj access signals
 #define COMSIG_AIRLOCK_SHELL_ALLOWED "airlock_shell_try_allowed"
 
+//from /obj/machinery/door/open(): (forced)
+#define COMSIG_MOB_OPENED_DOOR "mob_opened_door"
+
 // /obj/machinery/door/airlock signals
 
 //from /obj/machinery/door/airlock/open(): (forced)
 #define COMSIG_AIRLOCK_OPEN "airlock_open"
+//from /obj/machinery/door/airlock/open(): (forced)
+#define COMSIG_MOB_OPENED_AIRLOCK "mob_opened_airlock"
 //from /obj/machinery/door/airlock/close(): (forced)
 #define COMSIG_AIRLOCK_CLOSE "airlock_close"
 ///from /obj/machinery/door/airlock/set_bolt():
@@ -377,9 +382,16 @@
 
 ///called in /obj/item/gun/try_fire_gun (user, src, target, flag, params)
 #define COMSIG_MOB_TRYING_TO_FIRE_GUN "mob_trying_to_fire_gun"
+	#define COMPONENT_CANCEL_GUN_FIRE (1<<0)
 ///called in /obj/item/gun/fire_gun (user, target, flag, params)
 #define COMSIG_GUN_TRY_FIRE "gun_try_fire"
-	#define COMPONENT_CANCEL_GUN_FIRE (1<<0) /// Also returned to cancel COMSIG_MOB_TRYING_TO_FIRE_GUN
+	// COMPONENT_CANCEL_GUN_FIRE
+///called in /obj/item/gun/on_autofire_start (user)
+#define COMSIG_GUN_TRY_AUTO_FIRE "gun_try_auto_fire"
+	// COMPONENT_CANCEL_GUN_FIRE
+///called in /obj/item/gun/can_shoot() to determine if the gun is able to fire: ()
+#define COMSIG_GUN_CAN_SHOOT "gun_can_shoot"
+	// COMPONENT_CANCEL_GUN_FIRE
 ///called in /obj/item/gun/process_fire (src, target, params, zone_override, bonus_spread_values)
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"
 	#define MIN_BONUS_SPREAD_INDEX 1
@@ -445,13 +457,13 @@
 ///from the base of /obj/projectile/proc/fire(): ()
 #define COMSIG_PROJECTILE_FIRE "projectile_fire"
 ///sent to targets during the process_hit proc of projectiles
-#define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
+#define COMSIG_PROJECTILE_PREHIT "projectile_prehit"
 	#define PROJECTILE_INTERRUPT_HIT (1<<0)
 	#define PROJECTILE_INTERRUPT_HIT_PHASE (1<<1)
 ///from /obj/projectile/process_movement(): ()
 #define COMSIG_PROJECTILE_MOVE_PROCESS_STEP "projectile_move_process_step"
 ///sent to self during the process_hit proc of projectiles
-#define COMSIG_PROJECTILE_SELF_PREHIT "com_proj_prehit"
+#define COMSIG_PROJECTILE_SELF_PREHIT "projectile_self_prehit"
 ///from the base of /obj/projectile/reduce_range(): ()
 #define COMSIG_PROJECTILE_RANGE "projectile_range"
 ///from the base of /obj/projectile/on_range(): ()
@@ -461,7 +473,7 @@
 ///sent to firer at the end of /mob/living/apply_projectile_effects(): (mob/living/target, hit_limb, blocked)
 #define COMSIG_PROJECTILE_POST_HIT_LIVING "projectile_post_hit_living"
 ///sent to projectile at the end of /mob/living/apply_projectile_effects(): (mob/living/target, hit_limb, blocked)
-#define COMSIG_PROJECTILE_SELF_POST_HIT_LIVING "projectile_post_hit_living"
+#define COMSIG_PROJECTILE_SELF_POST_HIT_LIVING "projectile_self_post_hit_living"
 // FROM [/obj/item/proc/set_embed] sent when an item's embedding properties are changed : ()
 #define COMSIG_ITEM_EMBEDDING_UPDATE "item_embedding_update"
 
@@ -536,7 +548,7 @@
 ///from base of datum/embedding/proc/remove_embedding(): (mob/living/carbon/victim, obj/item/bodypart/limb)
 #define COMSIG_ITEM_UNEMBEDDED "item_unembedded"
 ///from base of datum/embedding/proc/failed_embed(): (mob/living/carbon/victim, hit_zone)
-#define COMSIG_ITEM_FAILED_EMBED "item_unembedded"
+#define COMSIG_ITEM_FAILED_EMBED "item_failed_embed"
 
 /// from base of datum/element/disarm_attack/secondary_attack(), used to prevent shoving: (victim, user, send_message)
 #define COMSIG_ITEM_CAN_DISARM_ATTACK "item_pre_disarm_attack"
@@ -548,7 +560,7 @@
 ///from /datum/computer_file/program/nt_pay/_pay(), sent to every physical card of a bank account: (computer, money_received)
 #define COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED "id_card_ntpay_money_received"
 
-///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)
+///from base of /obj/item/brain_processor/set_brainmob(): (mob/living/brain/new_brainmob)
 #define COMSIG_MMI_SET_BRAINMOB "mmi_set_brainmob"
 
 /// from base of /obj/item/slimepotion/speed/interact_with_atom(): (obj/target, /obj/src, mob/user)

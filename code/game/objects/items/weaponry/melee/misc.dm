@@ -371,7 +371,7 @@
 	block_sound = 'sound/items/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/weapons/staff.dmi'
@@ -379,6 +379,7 @@
 	base_icon_state = "bambostaff"
 	inhand_icon_state = "bambostaff0"
 	worn_icon_state = "bambostaff0"
+	base_icon_state = "bambostaff"
 	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
@@ -391,12 +392,9 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
 		force_wielded = 14, \
+		update_icon_state = TRUE, \
 	)
 	AddComponent(/datum/component/walking_aid)
-
-/obj/item/bambostaff/update_icon_state()
-	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
-	return ..()
 
 /obj/item/bambostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
@@ -536,7 +534,7 @@
 	resistance_flags = FLAMMABLE
 	force = 5
 	throwforce = 5
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	attack_verb_continuous = list("whacks", "thwacks", "wallops", "socks")
 	attack_verb_simple = list("whack", "thwack", "wallop", "sock")
 	icon = 'icons/obj/weapons/club.dmi'

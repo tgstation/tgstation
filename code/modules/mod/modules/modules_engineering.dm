@@ -295,11 +295,11 @@
 
 	if(HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(src)))
 		balloon_alert(user, "already tethered!")
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if (parent_module && HAS_TRAIT_FROM(user, TRAIT_TETHER_ATTACHED, REF(parent_module)))
 		balloon_alert(user, "already tethered!")
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	balloon_alert(user, "attached tether")
 	user.AddComponent(/datum/component/tether, src, 7, "tether", tether_trait_source = REF(src))

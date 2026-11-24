@@ -7,7 +7,7 @@
 
 	var/list/already_warned_icons = list()
 
-	for(var/obj/item/item_path as anything in (subtypesof(/obj/item) - typesof(/obj/item/mod)))
+	for(var/obj/item/item_path as anything in (valid_subtypesof(/obj/item) - typesof(/obj/item/mod)))
 		var/cached_slot_flags = initial(item_path.slot_flags)
 		if(!cached_slot_flags || (cached_slot_flags & ITEM_SLOT_LPOCKET) || (cached_slot_flags & ITEM_SLOT_RPOCKET) || initial(item_path.item_flags) & ABSTRACT)
 			continue

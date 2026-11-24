@@ -62,8 +62,8 @@
 		builtInCamera.c_tag = real_name
 		if(wires.is_cut(WIRE_CAMERA))
 			builtInCamera.camera_enabled = FALSE
-	update_icons()
 	. = ..()
+	update_icons()
 
 	LoadComponent(/datum/component/bloodysoles/bot)
 
@@ -76,16 +76,7 @@
 	else
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
-			mmi = new (src)
-			mmi.brain = new /obj/item/organ/brain(mmi)
-			mmi.brain.organ_flags |= ORGAN_FROZEN
-			mmi.brain.name = "[real_name]'s brain"
-			mmi.name = "[initial(mmi.name)]: [real_name]"
-			mmi.set_brainmob(new /mob/living/brain(mmi))
-			mmi.brainmob.name = src.real_name
-			mmi.brainmob.real_name = src.real_name
-			mmi.brainmob.container = mmi
-			mmi.update_appearance()
+			mmi = new /obj/item/brain_processor/organic(src, new /obj/item/organ/brain())
 		setup_default_name()
 
 		if(mmi.brainmob)
@@ -113,11 +104,7 @@
 
 /mob/living/silicon/robot/set_suicide(suicide_state)
 	. = ..()
-	if(mmi)
-		if(mmi.brain)
-			mmi.brain.suicided = suicide_state
-		if(suicide_state && mmi.brainmob)
-			ADD_TRAIT(mmi.brainmob, TRAIT_SUICIDED, REF(src))
+	mmi?.set_suicide(suicide_state)
 
 /**
  * Sets the tablet theme and icon
@@ -324,20 +311,24 @@
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = model.cyborg_base_icon
-	if(!IS_UNCONSCIOUS(src) && !IsStun() && !IsParalyzed() && !low_power_mode) //Not dead, not stunned.
+
+	if(eye_lights_enabled && !IS_UNCONSCIOUS(src) && !IsStun() && !IsParalyzed() && !low_power_mode && !is_empty_shell()) //Eyes lights enabled, Not dead, not stunned, not an unpiloted AI shell.
+
 		if(!eye_lights)
 			eye_lights = new()
+
 		if(lamp_enabled || lamp_doom)
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]" : "[model.cyborg_base_icon]"]_l"
-			set_light_range(max(MINIMUM_USEFUL_LIGHT_RANGE, lamp_intensity))
-			set_light_color(lamp_doom ? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
-			SET_PLANE_EXPLICIT(eye_lights, ABOVE_LIGHTING_PLANE, src) //glowy eyes
+			eye_lights.color = null
+			SET_PLANE_EXPLICIT(eye_lights, ABOVE_LIGHTING_PLANE, src)  //glowy eyes
 		else
 			eye_lights.icon_state = "[model.special_light_key ? "[model.special_light_key]":"[model.cyborg_base_icon]"]_e"
 			eye_lights.color = COLOR_WHITE
 			SET_PLANE_EXPLICIT(eye_lights, ABOVE_GAME_PLANE, src)
+
 		eye_lights.icon = icon
 		add_overlay(eye_lights)
+		add_overlay(emissive_appearance(eye_lights.icon, eye_lights.icon_state, src, alpha = eye_lights.alpha))
 
 	var/obj/item/shield_module/shield_module = locate(/obj/item/shield_module) in src
 	if(shield_module && shield_module.active)
@@ -360,6 +351,38 @@
 		QDEL_NULL(hat_overlay)
 
 	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/silicon/robot/proc/toggle_eye_lights(forced_state)
+	if(isnull(forced_state))
+		forced_state = !eye_lights_enabled
+
+	if(forced_state == eye_lights_enabled)
+		return eye_lights_enabled
+
+	if(!forced_state)
+		if(lamp_doom) // Doomsday borgs can't turn off their eyes
+			to_chat(src, span_warning("Eye lights are blocked by the administrator mode."))
+			return eye_lights_enabled
+
+		if(lamp_enabled)
+			if(!COOLDOWN_FINISHED(src, disabled_time))
+				to_chat(src, span_warning("Eye lights controls disrupted!"))
+				return eye_lights_enabled
+
+			eye_lights_enabled = FALSE
+			toggle_headlamp(TRUE)
+			to_chat(src, span_notice("Eye lights disabled. Lighting disabled."))
+			return eye_lights_enabled
+
+		eye_lights_enabled = FALSE
+		update_icons()
+		to_chat(src, span_notice("Eye lights disabled."))
+		return eye_lights_enabled
+
+	eye_lights_enabled = TRUE
+	update_icons()
+	to_chat(src, span_notice("Eye lights enabled."))
+	return eye_lights_enabled
 
 /mob/living/silicon/robot/proc/update_worn_icons()
 	if(!hat_overlay)
@@ -384,12 +407,9 @@
 	if(same_z_layer || QDELING(src))
 		return ..()
 
-	if(eye_lights)
-		cut_overlay(eye_lights)
-		SET_PLANE_EXPLICIT(eye_lights, PLANE_TO_TRUE(eye_lights.plane), src)
-		add_overlay(eye_lights)
-
-	return ..()
+	. = ..()
+	update_icons()
+	return .
 
 /mob/living/silicon/robot/proc/self_destruct(mob/user)
 	var/turf/groundzero = get_turf(src)
@@ -530,7 +550,7 @@
 		balloon_alert(src, "disrupted!")
 		return FALSE
 
-	if(!(update_color && lamp_enabled) && (turn_off || lamp_enabled || update_color || !lamp_functional || IS_UNCONSCIOUS_OR_CRIT(src) || low_power_mode))
+	if(!(update_color && lamp_enabled) && (turn_off || lamp_enabled || update_color || !lamp_functional || IS_UNCONSCIOUS_OR_CRIT(src) || low_power_mode || is_empty_shell()))
 		set_light_on(lamp_functional && stat != DEAD && lamp_doom) //If the lamp isn't broken and borg isn't dead, doomsday borgs cannot disable their light fully.
 		set_light_color(COLOR_RED) //This should only matter for doomsday borgs, as any other time the lamp will be off and the color not seen
 		set_light_range(1) //Again, like above, this only takes effect when the light is forced on by doomsday mode.
@@ -543,6 +563,7 @@
 	set_light_color(lamp_doom ? COLOR_RED : lamp_color) //Red for doomsday killborgs, borg's choice otherwise
 	set_light_on(TRUE)
 	lamp_enabled = TRUE
+	eye_lights_enabled = TRUE
 	hud_used?.screen_objects[HUD_CYBORG_LAMP]?.update_appearance()
 	update_icons()
 
@@ -587,7 +608,7 @@
 	if(isnull(mmi))
 		return
 
-	var/obj/item/mmi/removing = mmi
+	var/obj/item/brain_processor/removing = mmi
 	mmi.forceMove(at_location) // Nulls it out via exited
 
 	if(isnull(mind)) // no one to transfer, just leave the MMI.
@@ -658,52 +679,6 @@
 
 	previous_health = health
 
-/mob/living/silicon/robot/update_sight()
-	if(!client)
-		return
-	if(stat == DEAD)
-		if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-			set_sight(null)
-		else if(is_secret_level(z))
-			set_sight(initial(sight))
-		else
-			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		set_invis_see(SEE_INVISIBLE_OBSERVER)
-		return
-
-	set_invis_see(initial(see_invisible))
-	var/new_sight = initial(sight)
-	lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
-	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
-
-	if(client.eye != src)
-		var/atom/A = client.eye
-		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
-			return
-
-	if(sight_mode & BORGMESON)
-		new_sight |= SEE_TURFS
-		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(5, 15, 5))
-
-	if(sight_mode & BORGMATERIAL)
-		new_sight |= SEE_OBJS
-		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(20, 25, 40))
-
-	if(sight_mode & BORGXRAY)
-		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-		set_invis_see(SEE_INVISIBLE_LIVING)
-
-	if(sight_mode & BORGTHERM)
-		new_sight |= SEE_MOBS
-		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(25, 8, 5))
-		set_invis_see(min(see_invisible, SEE_INVISIBLE_LIVING))
-
-	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		new_sight = null
-
-	set_sight(new_sight)
-	return ..()
-
 /mob/living/silicon/robot/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
@@ -716,7 +691,6 @@
 	diag_hud_set_aishell()
 	update_health_hud()
 	update_icons() //Updates eye_light overlay
-
 
 /mob/living/silicon/robot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
@@ -746,6 +720,7 @@
 		builtInCamera.c_tag = real_name
 		modularInterface.imprint_id(name = real_name)
 	custom_name = newname
+	mmi?.set_name(newname)
 
 
 /mob/living/silicon/robot/proc/ResetModel()
@@ -877,6 +852,13 @@
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name //update the camera name too
 	diag_hud_set_aishell()
+	if(lamp_enabled)
+		toggle_headlamp(TRUE)
+	update_icons()
+
+/// Is this an AI shell with no AI currently piloting it?
+/mob/living/silicon/robot/proc/is_empty_shell()
+	return shell && !deployed
 
 /**
  * revert_shell: Reverts AI shell back into a normal cyborg unit
@@ -895,6 +877,7 @@
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
 	diag_hud_set_aishell()
+	update_icons()
 
 /**
  * deploy_init: Deploys AI unit into AI shell
@@ -912,7 +895,6 @@
 	if(AI.client)
 		set_gender(AI.client)
 	set_connected_ai(mainframe)
-	mainframe.connected_robots |= src
 	lawupdate = TRUE
 	lawsync()
 	if(radio && AI.radio) //AI keeps all channels, including Syndie if it is a Traitor
@@ -925,6 +907,7 @@
 			LAZYSET(radio.secure_radio_connections, chan, add_radio(radio, GLOB.default_radio_channels[chan]))
 
 	diag_hud_set_aishell()
+	update_icons()
 	undeployment_action.Grant(src)
 
 /datum/action/innate/undeployment
@@ -952,6 +935,9 @@
 	deployed = FALSE
 	mainframe.deployed_shell = null
 	undeployment_action.Remove(src)
+	if(lamp_enabled)
+		toggle_headlamp(TRUE)
+	update_icons()
 	REMOVE_TRAIT(src, TRAIT_LOUD_BINARY, REF(mainframe))
 	if(radio) //Return radio to normal
 		radio.recalculateChannels()
@@ -1015,6 +1001,9 @@
 		if(isnull(connect_to))
 			return FALSE
 
+	if(QDELETED(connect_to))
+		return FALSE
+
 	set_connected_ai(connect_to)
 	if(connected_ai)
 		sync_to_ai()
@@ -1036,7 +1025,9 @@
 		heal_bodypart_damage(repairs, repairs)
 	charge_cell.Invoke(cell, seconds_per_tick)
 
-/mob/living/silicon/robot/proc/set_connected_ai(new_ai)
+/mob/living/silicon/robot/proc/set_connected_ai(mob/living/silicon/ai/new_ai)
+	if(!isnull(new_ai) && QDELING(new_ai))
+		return
 	if(connected_ai == new_ai)
 		return
 	var/mob/living/silicon/ai/old_ai = connected_ai

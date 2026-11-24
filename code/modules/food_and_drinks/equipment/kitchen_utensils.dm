@@ -24,6 +24,7 @@
 	name = "fork"
 	desc = "Pointy."
 	icon_state = "fork"
+	inhand_icon_state = "fork"
 	icon_angle = -90
 	force = 4
 	w_class = WEIGHT_CLASS_TINY
@@ -40,8 +41,8 @@
 	var/datum/reagent/forkload //used to eat omelette
 	custom_price = PAYCHECK_LOWER
 	sound_vary = TRUE
-	pickup_sound = SFX_CUTLERY_PICKUP
-	drop_sound = SFX_CUTLERY_DROP
+	pickup_sound = /datum/sound_effect/cutlery_pickup
+	drop_sound = /datum/sound_effect/cutlery_drop
 
 /datum/armor/kitchen_fork
 	fire = 50
@@ -91,6 +92,7 @@
 /obj/item/knife/kitchen
 	name = "kitchen knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
+	embed_type = /datum/embedding/combat_knife/weak
 
 /obj/item/knife/plastic
 	name = "plastic knife"
@@ -100,6 +102,7 @@
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
+	embed_type = null
 	throw_range = 5
 	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
@@ -121,6 +124,7 @@
 	desc = "A breakthrough in synthetic engineering, this tool is a knife programmed to dull when not used for cooking purposes, and can exchange the blade for a rolling pin"
 	force = 0
 	throwforce = 0
+	embed_type = null
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
@@ -142,7 +146,7 @@
 		icon_state = "sili_rolling_pin"
 		force = 8
 		sharpness = NONE
-		hitsound = SFX_SWING_HIT
+		hitsound = /datum/sound_effect/swing_hit
 		attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 		attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 
@@ -176,8 +180,8 @@
 	custom_price = PAYCHECK_CREW * 1.5
 	tool_behaviour = TOOL_ROLLINGPIN
 	sound_vary = TRUE
-	pickup_sound = SFX_ROLLING_PIN_PICKUP
-	drop_sound = SFX_ROLLING_PIN_DROP
+	pickup_sound = /datum/sound_effect/rolling_pin_pickup
+	drop_sound = /datum/sound_effect/rolling_pin_drop
 
 /obj/item/kitchen/rollingpin/illegal
 	name = "metal rolling pin"
@@ -199,6 +203,7 @@
 	name = "spoon"
 	desc = "Just be careful your food doesn't melt the spoon first."
 	icon_state = "spoon"
+	inhand_icon_state = "spoon"
 	base_icon_state = "spoon"
 	icon_angle = -90
 	w_class = WEIGHT_CLASS_TINY
@@ -214,8 +219,8 @@
 	tool_behaviour = TOOL_MINING
 	toolspeed = 25 // Literally 25 times worse than the base pickaxe
 	sound_vary = TRUE
-	pickup_sound = SFX_CUTLERY_PICKUP
-	drop_sound = SFX_CUTLERY_DROP
+	pickup_sound = /datum/sound_effect/cutlery_pickup
+	drop_sound = /datum/sound_effect/cutlery_drop
 
 	var/spoon_sip_size = 5
 
@@ -326,6 +331,7 @@
 /obj/item/kitchen/spoon/plastic
 	name = "plastic spoon"
 	icon_state = "plastic_spoon"
+	inhand_icon_state = "plastic_spoon"
 	force = 0
 	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 1.2)
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...

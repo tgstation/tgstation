@@ -32,6 +32,7 @@
 	)
 	armor_type = /datum/armor/toggle_labcoat
 	species_exception = list(/datum/species/golem)
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/suit/toggle/labcoat/cmo
 	name = "chief medical officer's labcoat"

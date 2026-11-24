@@ -33,7 +33,7 @@
 	alternate_worn_layer = HANDS_LAYER+0.1 //we want it to go above generally everything, but not hands
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	/// The MOD's theme, decides on some stuff like armor and statistics.
-	var/datum/mod_theme/theme = /datum/mod_theme
+	var/datum/mod_theme/theme = /datum/mod_theme/standard
 	/// Looks of the MOD.
 	var/skin = "standard"
 	/// Theme of the MOD TGUI
@@ -235,7 +235,7 @@
 	return ..()
 
 /obj/item/mod/control/wrench_act(mob/living/user, obj/item/wrench)
-	if(seconds_electrified && get_charge() && shock(user, 100))
+	if(seconds_electrified && get_charge() && shock(user, 125))
 		return ITEM_INTERACT_BLOCKING
 	if(open)
 		if(!core)
@@ -609,7 +609,7 @@
 		return
 	picked_module.on_select(user)
 
-/obj/item/mod/control/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+/obj/item/mod/control/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
 	if(get_charge() < 1)
 		return FALSE
 	if(isnull(siemens_coeff))
@@ -747,6 +747,9 @@
 		part.slowdown = total_slowdown / length(mod_parts)
 		if (!part_datum.sealed)
 			part.slowdown = max(part.slowdown, 0)
+		if(istype(part, /obj/item/clothing/shoes/mod))
+			var/obj/item/clothing/shoes/mod/shoe_part = part
+			shoe_part.update_footstep_sounds()
 	wearer?.update_equipment_speed_mods()
 
 /obj/item/mod/control/proc/power_off()

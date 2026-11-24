@@ -112,6 +112,8 @@
  * * message_mods - All mods from whatever message triggered this (if applicable)
  */
 /datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, datum/language/language, list/extra_classes, lifespan, list/message_mods)
+	usr = null // do not hold a ref to usr here please,,,,
+
 	/// Cached icons to show what language the user is speaking
 	var/static/list/language_icons
 
@@ -190,7 +192,7 @@
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
 
 	// Approximate text height
-	var/complete_text = "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[owner.apply_message_emphasis(text)]</span></span>"
+	var/complete_text = "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[apply_message_emphasis(text)]</span></span>"
 
 	var/mheight
 	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight)
@@ -336,7 +338,8 @@
 	var/atom/movable/original_speaker = speaker
 	if (!(runechat_flags & EMOTE_MESSAGE) && istype(speaker, /atom/movable/virtualspeaker))
 		var/atom/movable/virtualspeaker/virtual_speaker = speaker
-		speaker = virtual_speaker.source
+		var/atom/movable/runechat_anchor = LAZYACCESS(virtual_speaker.runechat_anchors, src) // radio runechat
+		speaker = runechat_anchor || virtual_speaker.source
 		classes |= "virtual-speaker"
 
 	// Ignore virtual speaker (most often radio messages) from ourselves

@@ -349,6 +349,7 @@
 			// melbert todo : check block audit
 			if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
 				send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
+			LAZYSET(attack_modifiers, DAMAGE_DONE, 0)
 			return ATTACK_FAILED
 
 	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
@@ -356,6 +357,7 @@
 	if(final_force <= 0)
 		if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
 			send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
+		LAZYSET(attack_modifiers, DAMAGE_DONE, 0)
 		return 0
 
 	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
@@ -378,6 +380,7 @@
 	)
 
 	living_flags &= ~BLOCK_WOUND_MESSAGES
+	LAZYSET(attack_modifiers, DAMAGE_DONE, damage_done)
 	attack_effects(damage_done, targeting, armor_block, attacking_item, user)
 
 	var/list/new_wounds = (astype(src, /mob/living/carbon)?.all_wounds?.Copy() || list()) - pre_attack_wounds

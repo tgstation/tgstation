@@ -61,6 +61,9 @@
 #define COMSIG_CLIENT_SET_EYE "client_set_eye"
 /// from base of /datum/view_data/proc/afterViewChange() : (view)
 #define COMSIG_VIEWDATA_UPDATE "viewdata_update"
+/// From mob/living/carbon/human/reset_perspective() : potential_perspective_list (should be only 1), atom/new_eye, force_reset (bool)
+#define COMSIG_HUMAN_FORCED_PERSPECTIVE_MANAGEMENT "human_forced_perspective_management"
+	#define COMSIG_UPDATE_NEW_PERSPECTIVE (1<<0)
 
 /// Sent from /proc/do_after if someone starts a do_after action bar.
 #define COMSIG_DO_AFTER_BEGAN "mob_do_after_began"
@@ -131,6 +134,8 @@
 	#define COMSIG_BLOCK_EYECONTACT (1<<0)
 ///from base of /mob/update_sight(): ()
 #define COMSIG_MOB_UPDATE_SIGHT "mob_update_sight"
+///from base of /mob/living/restore_initial_sight(): ()
+#define COMSIG_LIVING_RESTORE_INITIAL_SIGHT "mob_restore_init_sight"
 ////from /mob/living/say(): ()
 #define COMSIG_MOB_SAY "mob_say"
 	#define COMPONENT_UPPERCASE_SPEECH (1<<0)
@@ -166,6 +171,15 @@
 	#define EMOTE_SOUND_TONGUE 1
 	#define EMOTE_SOUND_MASK 2
 	#define EMOTE_SOUND_STATUS_EFFECT 3
+/// from base of mob/cycle_hand(): (cycle_dir, climb, silent)<br>
+/// Ran before hand cycling behaviour is started<br>
+#define COMSIG_MOB_CYCLE_HAND "mob_cycle_hand"
+	#define COMPONENT_BLOCK_CYCLE (1<<0) //! Do not continue cycling hands
+/// from base of mob/cycle_hand(): (cycle_dir, climb, silent)<br>
+/// Ran while hands are being cycled, firing once a hand_index has been selected<br>
+/// hand_index: the hand index we want to react to
+#define COMSIG_MOB_CYCLE_HAND_INDEX(hand_index) "mob_cycle_hand_index_[hand_index]"
+	#define COMPONENT_CONTINUE_CYCLE (1<<1) //! This index was invalid, but don't give up yet
 ///from base of mob/swap_hand(): (obj/item/currently_held_item)
 #define COMSIG_MOB_SWAPPING_HANDS "mob_swapping_hands"
 	#define COMPONENT_BLOCK_SWAP (1<<0)
@@ -189,7 +203,7 @@
 //from base of client/MouseUp(): (/client, object, location, control, params)
 #define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"
 ///Called on the mob being stripped, accepts COMPONENT_CANT_STRIP (mob/user, obj/item/unequipping)
-#define COMSIG_BEING_STRIPPED "try_strip"
+#define COMSIG_BEING_STRIPPED "being_stripped"
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
@@ -305,3 +319,6 @@
 
 ///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
 #define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"
+
+///from /client/proc/update_special_keybinds()
+#define COMSIG_MOB_HOTKEYS_UPDATED "mob_hotkeys_updated"

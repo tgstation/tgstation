@@ -3,7 +3,7 @@
 #define RWD_MAX_CABLES 210
 
 /obj/item/rwd
-	name = "rapid wiring device"
+	name = "rapid wiring device (RWD)"
 	desc = "A device used to rapidly lay cable & pick up stray cable pieces laying around."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcl-0"

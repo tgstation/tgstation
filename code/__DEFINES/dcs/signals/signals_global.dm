@@ -60,6 +60,8 @@
 #define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
 #define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
 #define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
+/// A new weather particle holder has been created
+#define COMSIG_WEATHER_NEW_PARTICLE_HOLDER "!weather_new_particle_holder"
 /// An alarm of some form was sent (datum/alarm_handler/source, alarm_type, area/source_area)
 #define COMSIG_GLOB_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
 /// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)
@@ -81,6 +83,11 @@
 /// Global signal called after the station changes its name.
 /// (new_name, old_name)
 #define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"
+
+/// Sent when a station trait with a lobby button is created
+#define COMSIG_GLOB_LOBBY_TRAIT_ADDED "!lobby_trait_added"
+/// Sent when a station trait with a lobby button is destroyed
+#define COMSIG_GLOB_LOBBY_TRAIT_REMOVED "!lobby_trait_removed"
 
 /// Global signal sent before we decide what job everyone has
 #define COMSIG_GLOB_PRE_JOBS_ASSIGNED "!pre_roles_assigned"

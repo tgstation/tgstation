@@ -415,7 +415,7 @@
 	created = design.create_result(target, materials_needed, amount = number_to_make)
 	if (length(slots_chosen))
 		created.set_material_slots(slots_chosen)
-	if(design.inherit_materials != DESIGN_DONT_INHERIT_MATS)
+	if(!is_stack && design.inherit_materials != DESIGN_DONT_INHERIT_MATS)
 		design.transfer_materials(materials_needed, material_cost_coefficient, created)
 
 	if(isitem(created))
@@ -544,7 +544,7 @@
 			if(!wires.is_cut(wire))
 				disabled = FALSE
 
-/obj/machinery/autolathe/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+/obj/machinery/autolathe/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
 	if(machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
 		return FALSE
 	if(isnull(siemens_coeff))

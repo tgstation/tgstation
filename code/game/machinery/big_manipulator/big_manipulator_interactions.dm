@@ -168,16 +168,16 @@
 		if(adjacent_turf && !isclosedturf(adjacent_turf))
 			monkey_resolve.forceMove(adjacent_turf)
 
-	monkey_resolve.put_in_active_hand(held_item)
-	if(held_item.GetComponent(/datum/component/two_handed))
-		held_item.attack_self(monkey_resolve)
+	if(monkey_resolve.put_in_active_hand(held_item))
+		if(held_item.GetComponent(/datum/component/two_handed))
+			held_item.attack_self(monkey_resolve)
 
-	var/old_combat_mode = monkey_resolve.combat_mode
-	monkey_resolve.combat_mode = destination_task.worker_combat_mode
-	held_item.melee_attack_chain(monkey_resolve, type_to_use, list(RIGHT_CLICK = destination_task.worker_use_rmb ? TRUE : FALSE))
-	monkey_resolve.combat_mode = old_combat_mode
-	do_attack_animation(destination_turf)
-	manipulator_arm.do_attack_animation(destination_turf)
+		var/old_combat_mode = monkey_resolve.combat_mode
+		monkey_resolve.combat_mode = destination_task.worker_combat_mode
+		held_item.melee_attack_chain(monkey_resolve, type_to_use, list(RIGHT_CLICK = destination_task.worker_use_rmb ? TRUE : FALSE))
+		monkey_resolve.combat_mode = old_combat_mode
+		do_attack_animation(destination_turf)
+		manipulator_arm.do_attack_animation(destination_turf)
 
 	restore_monkey_tracking(monkey_resolve)
 

@@ -58,6 +58,14 @@
 
 		// Set into sanitize list using converted path key
 		var/list/data = passed_list[path]
-		LAZYSET(sanitized_list, real_path, LAZYLISTDUPLICATE(data))
+		data = LAZYLISTDUPLICATE(data)
+		// GAGS can't render malformed colors, so fall back to the item's defaults
+		var/saved_colors = data?[INFO_GREYSCALE]
+		if(saved_colors && (!istext(saved_colors) || !findtext(saved_colors, GLOB.is_greyscale_colors)))
+			data -= INFO_GREYSCALE
+			if(optional_loadout_owner)
+				to_chat(optional_loadout_owner, span_boldnotice("The saved colors for [loadout_item.name] \
+					in your character loadout were invalid and have been reset."))
+		LAZYSET(sanitized_list, real_path, data)
 
 	return sanitized_list

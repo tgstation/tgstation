@@ -407,7 +407,7 @@
 	data["maxAdvInjectors"] = max_injector_selections
 
 	data["heldScannerBuffer"] = null
-	for(var/obj/item/sequence_scanner/scanner in user.held_items) //We got one or more scanners in our hands, lets get the data from them.
+	for(var/obj/item/sequence_scanner/scanner as anything in user.get_held_items_of_type(/obj/item/sequence_scanner)) //We got one or more scanners in our hands, lets get the data from them.
 		if(!LAZYLEN(scanner.buffer))
 			continue
 		var/list/scanner_data = list()

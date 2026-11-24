@@ -12,8 +12,9 @@
 	desc = "Designed to quickly reload seven-chamber .357 revolvers."
 	icon_state = "357"
 	ammo_type = /obj/item/ammo_casing/c357
+	refused_type = /obj/item/ammo_casing/c38
 	max_ammo = 7
-	caliber = CALIBER_357
+	caliber = CALIBER_357_38
 	item_flags = NO_MAT_REDEMPTION
 	ammo_band_icon = "+357_ammo_band"
 	ammo_band_color = null
@@ -44,8 +45,9 @@
 	icon_state = "38"
 	base_icon_state = "38"
 	ammo_type = /obj/item/ammo_casing/c38
+	refused_type = /obj/item/ammo_casing/c357
 	max_ammo = 6
-	caliber = CALIBER_38
+	caliber = CALIBER_357_38
 	ammo_band_icon = "+38_ammo_band"
 	ammo_band_color = null
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3)

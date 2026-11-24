@@ -12,14 +12,14 @@ SUBSYSTEM_DEF(icon_smooth)
 	var/list/smooth_queue = list()
 	var/list/deferred = list()
 	var/list/deferred_by_source = list()
+	/// atoms from loads that finished while another load was still going, they wait here until nothing is loading
+	var/list/held_pools
 
 /datum/controller/subsystem/icon_smooth/fire()
-	// We do not want to smooth icons of atoms whose neighbors are not initialized yet,
-	// this causes runtimes.
-	// Icon smoothing SS runs after atoms, so this only happens for something like shuttles.
-	// This kind of map loading shouldn't take too long, so the delay is not a problem.
-	if (SSatoms.initializing_something())
-		return
+	// nothing's loading anymore, so everything next to the held atoms is initialized
+	if(held_pools && !SSatoms.initializing_something() && !Master.map_loading)
+		smooth_queue += held_pools
+		held_pools = null
 
 	var/list/smooth_queue_cache = smooth_queue
 	while(length(smooth_queue_cache))
@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(icon_smooth)
 		if (deferred.len)
 			smooth_queue = deferred
 			deferred = smooth_queue_cache
-		else
+		else if (!held_pools)
 			can_fire = FALSE
 
 /datum/controller/subsystem/icon_smooth/Initialize()
@@ -64,12 +64,18 @@ SUBSYSTEM_DEF(icon_smooth)
 
 	return SS_INIT_SUCCESS
 
-/// Releases a pool of delayed smooth attempts from a particular source
+/// Releases a pool of delayed smooth attempts from a particular source, or holds it while anything else is loading
 /datum/controller/subsystem/icon_smooth/proc/free_deferred(source_to_free)
-	smooth_queue += deferred_by_source[source_to_free]
+	var/list/pool = deferred_by_source[source_to_free]
 	deferred_by_source -= source_to_free
-	if(!can_fire)
-		can_fire = TRUE
+	if(!pool)
+		return
+	// a map that loads inside another one can finish first, while the outer map around it still isn't initialized
+	if(SSatoms.initializing_something() || Master.map_loading)
+		LAZYADD(held_pools, pool)
+	else
+		smooth_queue += pool
+	can_fire = TRUE
 
 /datum/controller/subsystem/icon_smooth/proc/add_to_queue(atom/thing)
 	if(thing.smoothing_flags & SMOOTH_QUEUED)
@@ -93,3 +99,4 @@ SUBSYSTEM_DEF(icon_smooth)
 	if(blueprint_queue)
 		blueprint_queue -= thing
 	deferred -= thing
+	LAZYREMOVE(held_pools, thing)

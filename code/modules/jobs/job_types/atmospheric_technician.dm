@@ -57,6 +57,7 @@
 
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
+	skillchips = list(/obj/item/skillchip/job/engineer/atmos)
 
 	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
 

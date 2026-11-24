@@ -368,7 +368,7 @@
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
 	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
-		do_smoke(smoke_amt, owner, get_turf(owner))
+		do_smoke(smoke_amt, owner, get_turf(owner), null, smoke_type)
 
 	// Send signals last in case they delete the spell
 	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)
@@ -396,15 +396,15 @@
 	switch(used_invocation_type)
 		if(INVOCATION_SHOUT)
 			if(prob(used_invocation_garble_prob))
-				invoker.say(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
+				INVOKE_ASYNC(invoker, TYPE_PROC_REF(/atom/movable, say), replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
-				invoker.say(used_invocation_message, forced = "spell ([src])")
+				INVOKE_ASYNC(invoker, TYPE_PROC_REF(/atom/movable, say), used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_WHISPER)
 			if(prob(used_invocation_garble_prob))
-				invoker.whisper(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
+				INVOKE_ASYNC(invoker, TYPE_PROC_REF(/mob, whisper), replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
-				invoker.whisper(used_invocation_message, forced = "spell ([src])")
+				INVOKE_ASYNC(invoker, TYPE_PROC_REF(/mob, whisper), used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_EMOTE)
 			invoker.visible_message(

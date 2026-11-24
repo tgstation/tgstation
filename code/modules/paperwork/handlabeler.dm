@@ -48,11 +48,8 @@
 	return OXYLOSS
 
 /obj/item/hand_labeler/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
-	if(. & ITEM_INTERACT_ANY_BLOCKER)
-		return .
-	if(!mode) //if it's off, give up.
-		return .
+	if(!mode)
+		return NONE
 	if(!apply_label(interacting_with, user, modifiers))
 		return ITEM_INTERACT_BLOCKING
 	return ITEM_INTERACT_SUCCESS

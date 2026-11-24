@@ -70,7 +70,7 @@
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_pocket = /obj/item/laser_pointer/blue
 	r_pocket = /obj/item/pinpointer/crew
-	l_hand = /obj/item/storage/medkit/surgery
+	l_hand = /obj/item/storage/medkit/surgery/cmo
 
 	backpack = /obj/item/storage/backpack/chief_medic
 	satchel = /obj/item/storage/backpack/satchel/chief_medic

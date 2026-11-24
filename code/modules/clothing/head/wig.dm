@@ -8,6 +8,7 @@
 	worn_icon_state = "wig"
 	flags_inv = HIDEHAIR
 	color = COLOR_BLACK
+	item_flags = CAN_BE_OVERSLOT
 	var/hairstyle = "Very Long Hair"
 	var/adjustablecolor = TRUE //can color be changed manually?
 

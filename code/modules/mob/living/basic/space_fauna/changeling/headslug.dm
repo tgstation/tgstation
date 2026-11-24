@@ -36,6 +36,7 @@
 /mob/living/basic/headslug/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddComponent(/datum/component/slide_under_doors, slide_in_delay = 3 SECONDS)
 	RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(check_and_implant))
 
 /mob/living/basic/headslug/Destroy()

@@ -10,8 +10,8 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	abstract_type = /obj/item/stock_parts
 	w_class = WEIGHT_CLASS_SMALL
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 	var/rating = 1
 	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any servo and not just a micro-servo.
 	var/base_name

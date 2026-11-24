@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 				break
 	if(parent)
 		vine.mutations |= parent.mutations
-		vine.trait_flags |= parent.trait_flags
+
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
 		vine.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
 		if(prob(mutativeness))
@@ -162,6 +162,6 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 /proc/isvineimmune(atom/target)
 	if(isliving(target))
 		var/mob/living/victim = target
-		if(victim.has_faction(FACTION_VINES, FACTION_PLANTS))
+		if(victim.has_faction(list(FACTION_VINES, FACTION_PLANTS)))
 			return TRUE
 	return FALSE

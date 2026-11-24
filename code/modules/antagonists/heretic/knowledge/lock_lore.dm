@@ -104,6 +104,10 @@
 		var/obj/machinery/computer/computer = target
 		computer.authenticated = TRUE
 		computer.balloon_alert(source, "unlocked")
+	else if(istype(target, /obj/machinery/turretid))
+		var/obj/machinery/turretid/turretcontrol = target
+		turretcontrol.locked = FALSE
+		turretcontrol.balloon_alert(source, "unlocked")
 
 	var/turf/target_turf = get_turf(target)
 	SEND_SIGNAL(target_turf, COMSIG_ATOM_MAGICALLY_UNLOCKED, src, source)

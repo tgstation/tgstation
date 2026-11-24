@@ -314,7 +314,7 @@
 	// We will make it increasingly less likely to get a reward if you've already got it
 	for(var/possible_reward in heretic_datum.unlocked_heretic_items)
 		var/amount_already_awarded = heretic_datum.unlocked_heretic_items[possible_reward]
-		rewards[possible_reward] = min(5 - (amount_already_awarded * 2), 1)
+		rewards[possible_reward] = max(5 - (amount_already_awarded * 2), 1)
 
 	var/atom/reward = pick_weight(rewards)
 	reward = new reward(loc)
@@ -322,14 +322,14 @@
 	if(isliving(reward))
 		if(summon_ritual_mob(user, loc, reward) == FALSE)
 			qdel(reward)
-			deposit_reward(user, loc, loop++, rune) // If no ghosts, try again until limit is hit
-		return
+			return deposit_reward(user, loc, loop + 1, rune) // If no ghosts, try again until limit is hit
 
 	else if(isitem(reward))
 		var/obj/item/item_reward = reward
 		item_reward.gender_reveal(outline_color = null, ray_color = COLOR_CULT_RED)
 
 	ASSERT(reward)
+	heretic_datum.unlocked_heretic_items[reward.type]++
 
 	return reward
 

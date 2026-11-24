@@ -130,7 +130,7 @@
 	l = clamp(l * lum_shift, 0, 1)
 
 	// convert to rgb
-	var/h_int = round(h/60) // mapping each section of H to 60 degree sections
+	var/h_int = min(round(h/60), 5) // mapping each section of H to 60 degree sections
 	var/c = (1 - abs(2 * l - 1)) * s
 	var/x = c * (1 - abs((h / 60) % 2 - 1))
 	var/m = l - c * 0.5

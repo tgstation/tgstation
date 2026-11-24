@@ -1,0 +1,82 @@
+{
+	"security": [
+		{
+			"type": "icon_state",
+			"icon_state": "security_basic",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "security_trim",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "security_highlight",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	],
+	"security-sealed": [
+		{
+			"type": "icon_state",
+			"icon_state": "security_basic-sealed",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "security_trim-sealed",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "security_highlight-sealed",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	],
+	"medical": [
+		{
+			"type": "icon_state",
+			"icon_state": "medical_trim",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "medical_basic",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "medical_stripe",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	],
+	"medical-sealed": [
+		{
+			"type": "icon_state",
+			"icon_state": "medical_trim-sealed",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "medical_basic-sealed",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "medical_stripe-sealed",
+			"blend_mode": "overlay",
+			"color_ids": [3]
+		}
+	]
+}

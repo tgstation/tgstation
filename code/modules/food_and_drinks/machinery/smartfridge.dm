@@ -263,7 +263,7 @@
 			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/smartfridge/atom_break(damage_flag)
-	playsound(src, SFX_SHATTER, 50, TRUE)
+	playsound(src, /datum/sound_effect/shatter, 50, TRUE)
 	return ..()
 
 /obj/machinery/smartfridge/proc/can_load_item(obj/item/loadable)

@@ -114,19 +114,20 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	name = "swap hand"
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
-/atom/movable/screen/swap_hand/Click()
+/atom/movable/screen/swap_hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
+	. = TRUE // but we're definitely handling this click
 
-	if(usr.incapacitated)
-		return 1
+	if(!ismob(usr))
+		return
 
-	if(ismob(usr))
-		var/mob/M = usr
-		M.swap_hand()
-	return 1
+	if(world.time <= usr.next_move || usr.incapacitated)
+		return
+
+	var/list/modifiers = params2list(params)
+	var/cycle_dir = modifiers[SHIFT_CLICK] ? NORTH : WEST
+	usr.cycle_hand(cycle_dir, FALSE)
 
 /atom/movable/screen/navigate
 	name = "navigate"
@@ -263,6 +264,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/inventory/hand
 	var/mutable_appearance/handcuff_overlay
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "blocked")
+	var/static/mutable_appearance/shield_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "shielding")
 	var/held_index = 0
 	interaction_flags_atom = NONE //so dragging objects into hands icon don't skip adjacency & other checks
 
@@ -276,17 +278,25 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	if(!hud?.mymob)
 		return
 
+	if(!held_index)
+		return // ?
+
+	if(held_index == hud.mymob.active_hand_index || held_index == hud.mymob.get_inactive_hand_index())
+		if(held_index == hud.mymob.active_hand_index)
+			. += IS_LEFT_INDEX(held_index) ? "lhandactive" : "rhandactive"
+
+		// Display that this item is blocking attacks
+		var/obj/item/held_item = hud.mymob.get_item_for_held_index(held_index)
+		if(!isclothing(held_item) && held_item?.block_chance)
+			. += shield_overlay
+
 	if(iscarbon(hud.mymob))
 		var/mob/living/carbon/C = hud.mymob
 		if(C.handcuffed)
 			. += handcuff_overlay
 
-		if(held_index)
-			if(!C.has_hand_for_held_index(held_index))
-				. += blocked_overlay
-
-	if(held_index == hud.mymob.active_hand_index)
-		. += IS_LEFT_INDEX(held_index) ? "lhandactive" : "rhandactive"
+		if(!C.has_hand_for_held_index(held_index))
+			. += blocked_overlay
 
 /atom/movable/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
@@ -326,6 +336,28 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	if(!storage)
 		return
 	storage.hide_contents(usr)
+	return TRUE
+
+/atom/movable/screen/storage_up
+	name = "go up a storage level"
+	plane = ABOVE_HUD_PLANE
+	icon = 'icons/hud/screen_midnight.dmi'
+	icon_state = "storage_up"
+	mouse_over_pointer = MOUSE_HAND_POINTER
+	hud_group_key = HUD_GROUP_STORAGE
+
+/atom/movable/screen/storage_up/Initialize(mapload, datum/hud/hud_owner, new_master)
+	. = ..()
+	master_ref = WEAKREF(new_master)
+
+/atom/movable/screen/storage_up/Click()
+	var/datum/storage/storage = master_ref?.resolve()
+	if(!storage)
+		return
+	var/datum/storage/up_storage = storage.parent.loc?.atom_storage
+	if(!up_storage)
+		return
+	up_storage.open_storage(usr)
 	return TRUE
 
 /atom/movable/screen/drop
@@ -972,6 +1004,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 		return
 
 	var/list/current_animated = LAZYLISTDUPLICATE(animated_zones)
+	var/datum/status_effect/grouped/screwy_hud/fake_healthy/fake_healthy = owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy)
 
 	for(var/part_zone, body_part_untyped in owner.get_bodyparts_by_zones())
 		// I hate that we "allow" support for more than 2 hands in the codebase
@@ -988,7 +1021,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 			icon_key = "DEAD"
 		else if(SEND_SIGNAL(body_part, COMSIG_BODYPART_UPDATING_HEALTH_HUD, owner, overridable_key) & OVERRIDE_BODYPART_HEALTH_HUD)
 			icon_key = overridable_key[1] // thanks i hate it
-		else if(!owner.has_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy))
+		else if(!fake_healthy)
 			var/damage = body_part.get_damage() / body_part.max_damage
 			// calculate what icon state (1-5, or 0 if undamaged) to use based on damage
 			icon_key = clamp(ceil(damage * 5), 0, 5)
@@ -1151,8 +1184,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	if(!istype(hungry))
 		return
 
-	if(!ishuman(hungry) || CONFIG_GET(flag/disable_human_mood))
-		screen_loc = ui_mood // Slot in where mood normally is if mood is disabled
+	if(isnull(hungry.mob_mood))
+		screen_loc = ui_mood // Slot in where mood normally is if mood is not here (we arent a human)
 
 	// Burger next to the bar
 	food_image = image(icon = food_icon, icon_state = food_icon_state, pixel_x = -5)

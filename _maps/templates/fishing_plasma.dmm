@@ -1,13 +1,78 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/lava/plasma,
+/turf/open/lava/plasma/station,
+/area/template_noop)
+"i" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/lava/plasma/station,
+/area/template_noop)
+"o" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/lava/plasma/station,
+/area/template_noop)
+"D" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/lava/plasma/station,
+/area/template_noop)
+"E" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/item/toy/hazard_warning/plasma{
+	pixel_x = 9;
+	pixel_y = 13
+	},
+/turf/open/lava/plasma/station,
+/area/template_noop)
+"K" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/lava/plasma/station,
+/area/template_noop)
+"W" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/lava/plasma/station,
+/area/template_noop)
+"X" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/lava/plasma/station,
+/area/template_noop)
+"Z" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/lava/plasma/station,
 /area/template_noop)
 
 (1,1,1) = {"
-a
-a
+Z
+W
+D
 "}
 (2,1,1) = {"
+E
 a
-a
+K
+"}
+(3,1,1) = {"
+X
+o
+i
 "}

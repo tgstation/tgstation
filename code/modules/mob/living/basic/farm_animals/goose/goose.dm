@@ -128,7 +128,7 @@
 
 	. = ..()
 	if (. == COMSIG_MOB_TERMINATE_EAT)
-		return NONE// It's plastic, if it's not plastic we already filtered it for edible
+		return // It's plastic, which we already swallowed whole. If it's not plastic we already filtered it for edible
 
 	// This also increases my vomit chance, but we atomised this field to the inside of a component and I need to read it
 	var/datum/component/edible/edible = food.GetComponent(/datum/component/edible)

@@ -49,7 +49,7 @@
 	var/do_rustle = TRUE
 	var/rustle_vary = TRUE
 	/// Path for the item's rustle sound.
-	var/rustle_sound = SFX_RUSTLE
+	var/rustle_sound = /datum/sound_effect/rustle
 	/// Path for the item's rustle sound when removing items.
 	var/remove_rustle_sound = null
 	/// The sound to play when we open/access the storage
@@ -1003,7 +1003,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		animate_parent()
 
 	if(do_rustle && !silent)
-		playsound(parent, (open_sound ? open_sound : SFX_RUSTLE), 50, open_sound_vary, -5)
+		playsound(parent, (open_sound ? open_sound : /datum/sound_effect/rustle), 50, open_sound_vary, -5)
 
 	return TRUE
 
@@ -1031,6 +1031,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/close_all()
 	for(var/mob/user as anything in is_using)
 		hide_contents(user)
+
+/// Close the storage UI for everyone viewing us except if a viewer is holding us directly (and obsevers)
+/datum/storage/proc/close_all_non_wearers()
+	for(var/mob/user as anything in is_using)
+		if(parent.loc != user && !isobserver(user))
+			hide_contents(user)
 
 /// Closes the storage UIs of this and everything inside the parent for everyone viewing them.
 /datum/storage/proc/close_all_recursive()

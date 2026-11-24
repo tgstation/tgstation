@@ -2,6 +2,8 @@
 #define IS_ORGANIC_ORGAN(organ) (organ.organ_flags & ORGAN_ORGANIC)
 /// Helper to figure out if an organ is robotic
 #define IS_ROBOTIC_ORGAN(organ) (organ.organ_flags & ORGAN_ROBOTIC)
+/// Helper to figure out if an organ is mineral
+#define IS_MINERAL_ORGAN(organ) (organ.organ_flags & ORGAN_MINERAL)
 
 /// List of organ flags that can not be bioscrambled
 #define ORGAN_BIOSCRAMBLE_INCOMPATIBLE (ORGAN_ROBOTIC | ORGAN_MINERAL)
@@ -77,6 +79,8 @@
 #define BODYPART_VIRGIN (1<<4)
 /// Not a full bodypart, but in fact is part of a missing limb
 #define BODYPART_STUMP (1<<5)
+/// Bodypart is considered abstract and doesn't need to do certain things (like be visible)
+#define BODYPART_ABSTRACT (1<<6)
 
 // Bodypart change blocking flags
 ///Bodypart does not get replaced during set_species()

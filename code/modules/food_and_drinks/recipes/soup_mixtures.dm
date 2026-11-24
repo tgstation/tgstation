@@ -66,6 +66,8 @@
 	//number of ingredients who's requested amounts has been satisfied
 	var/completed_ingredients = 0
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
+		if(!snowflake_ingredient_check(ingredient)) //Check for recipe-unique reaction blockers.
+			return FALSE
 		var/datum/ingredient_type = ingredient.type
 		do
 		{
@@ -296,6 +298,13 @@
 /// Return a list of strings, each string will be a new line in the results list
 /datum/chemical_reaction/food/soup/proc/describe_result()
 	return
+
+/**
+ * A snowflake check for if an ingredient is prepared properly.
+ * Override as needed for specific ingredients that need specific handling.
+ */
+/datum/chemical_reaction/food/soup/proc/snowflake_ingredient_check(atom/ingredient)
+	return TRUE
 
 #ifdef TESTING
 
@@ -1081,6 +1090,30 @@
 	)
 	percentage_of_nutriment_converted = 0.1
 
+// Red beet soup
+/datum/reagent/consumable/nutriment/soup/drake_beet
+	name = "Drake Beet Soup"
+	description = "A soup made out of drake beets and sinew clinging to drake hide."
+	data = list("drake beet" = 4, "spice" = 1)
+	color = "#851127"
+
+/datum/glass_style/has_foodtype/soup/drake_beet
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/drake_beet
+	icon_state = "drakebeetsoup"
+	drink_type = VEGETABLES | MEAT
+
+/datum/chemical_reaction/food/soup/drake_beet
+	required_reagents = list(/datum/reagent/water = 50)
+	required_ingredients = list(
+		/obj/item/food/grown/drake_beet = 2,
+		/obj/item/stack/sheet/animalhide/ashdrake = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/drake_beet = 30,
+		/datum/reagent/water = 10,
+	)
+	percentage_of_nutriment_converted = 0.2
+
 // French Onion soup
 /datum/reagent/consumable/nutriment/soup/french_onion
 	name = "French Onion Soup"
@@ -1131,6 +1164,32 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 		/datum/reagent/water = 5,
+	)
+
+// Iceberg soup
+/datum/reagent/consumable/nutriment/soup/iceberg
+	name = "Iceberg Soup"
+	description = "A slight upgrade upon the wish soup, this one has some nutrient content."
+	data = list("cold" = 4, "tundra wilds" = 1)
+	color = "#26AEB9"
+
+/datum/glass_style/has_foodtype/soup/iceberg
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/iceberg
+	icon_state = "icebergbowl"
+	drink_type = VEGETABLES
+
+/datum/chemical_reaction/food/soup/iceberg
+	required_reagents = list(
+		/datum/reagent/water = 40,
+		/datum/reagent/consumable/frostoil = 10,
+	)
+	required_ingredients = list(
+		/obj/item/food/grown/ash_flora/fonarstolbe = 1,
+		/obj/item/food/grown/ash_flora/podsneyzka = 1,
+		/obj/item/food/grown/peas = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/iceberg = 40,
 	)
 
 // Bungo Tree Curry
@@ -1270,6 +1329,38 @@
 		/datum/reagent/consumable/nutriment/vitamin = 8,
 	)
 	percentage_of_nutriment_converted = 0 // Oats have barely any nutrients
+
+// Wolf Goulash
+/datum/reagent/consumable/nutriment/soup/goulash
+	name = "Wolf Goulash"
+	description = "A thick soup with heavy focus on the meat. In this rendition, the meat from wolf sinew."
+	data = list("meat" = 4, "vegetables" = 1, "spice" = 1)
+	color = "#CA3518"
+
+/datum/glass_style/has_foodtype/soup/goulash
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/goulash
+	icon_state = "goulash"
+	drink_type = VEGETABLES | MEAT
+
+/datum/chemical_reaction/food/soup/goulash
+	required_reagents = list(
+		/datum/reagent/water = 40,
+		/datum/reagent/consumable/flour = 10,
+	)
+	required_ingredients = list(
+		/obj/item/stack/sheet/sinew/wolf = 1,
+		/obj/item/food/grown/drake_beet = 1,
+		/obj/item/food/grown/bell_pepper = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/goulash = 30,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	ingredient_reagent_multiplier = 0.5
+	percentage_of_nutriment_converted = 0.1
 
 // Zurek, a Polish soup
 /datum/reagent/consumable/nutriment/soup/zurek
@@ -2306,3 +2397,91 @@
 	resulting_food_path = /obj/item/food/volt_fish
 	ingredient_reagent_multiplier = 0
 	mix_message = "The air fills with a hellish mix of fish and artificial flavouring."
+
+//Rubywise Ruin
+//actual reagent defined in alcohol_reagents
+/datum/chemical_reaction/food/soup/rubywise_ruin
+	required_reagents = list(
+		/datum/reagent/consumable/ethanol/sangria = 30,
+		/datum/reagent/blood = 10,
+		/datum/reagent/consumable/ethanol/aperitivo = 10
+	)
+	required_ingredients = list(
+		/obj/item/food/drug/opium = 1,
+		/obj/item/food/grown/flower = 1
+	)
+	results=list(
+		/datum/reagent/consumable/ethanol/rubywise_ruin = 50
+	)
+	mix_message = "The flower becomes dissolute in the bloody mixture as a carnal pefume wafts from the pot."
+	mix_sound = 'sound/effects/changeling_absorb/changeling_absorb5.ogg'
+
+/datum/glass_style/has_foodtype/soup/rubywise_ruin
+	required_drink_type = /datum/reagent/consumable/ethanol/rubywise_ruin
+	name = "Rubywise Ruin"
+	desc = "A stimulant of appetites; Those oldest, deepest, reddest, most regretable appetites."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi' //Drinking a cocktail out a bowl...?
+	icon_state = "rubywise_ruin"
+
+/datum/reagent/consumable/nutriment/soup/rich_stock
+	name = "Rich Cargo Stock"
+	data = list("profit" = 1, "hard work" = 1, "spread sheets" = 1, "big profits" = 1, "payday" = 1)
+	color = "#d814be"
+
+/datum/glass_style/has_foodtype/soup/rich_stock
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/rich_stock
+	name = "rich cargo stock"
+	desc = "It tastes like a million credits. Or, ironically, like losing a million credits."
+	icon_state = "rich_stock"
+	drink_type = MEAT | DAIRY
+
+/datum/chemical_reaction/food/soup/rich_stock
+	required_reagents = list(
+		/datum/reagent/water = 50,
+		/datum/reagent/consumable/milk = 10,
+		/datum/reagent/water/salt = 5,
+		/datum/reagent/consumable/blackpepper = 5,
+	)
+	required_ingredients = list(
+		/obj/item/stock_block = 1,
+		/obj/item/food/meat/steak = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/rich_stock = 30,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+
+/datum/chemical_reaction/food/soup/rich_stock/snowflake_ingredient_check(ingredient)
+	if(!istype(ingredient, /obj/item/stock_block))
+		return TRUE
+	var/obj/item/stock_block/block = ingredient
+	if(!block.fluid)
+		return FALSE
+	return TRUE
+
+/datum/chemical_reaction/food/soup/rich_stock/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
+	. = ..()
+	var/list/ingredients = reaction.data["ingredients"]
+	if(!ingredients)
+		return
+	var/obj/item/stock_block/food_block
+	for(var/datum/weakref/ingreident_ref as anything in ingredients)
+		var/obj/real_ingred = ingreident_ref.resolve()
+		if(istype(real_ingred, /obj/item/stock_block))
+			food_block = real_ingred
+			break
+	if(!food_block)
+		return FALSE
+	var/stock_boost = 2
+	switch(food_block.export_value)
+		if(0 to 100)
+			stock_boost = 2
+		if(101 to 1000)
+			stock_boost = 4
+		if(1001 to 5000)
+			stock_boost = 7.5
+		if(5001 to INFINITY)
+			stock_boost = 12.5
+
+	holder.add_reagent(/datum/reagent/consumable/nutriment/vitamin, stock_boost)
+	holder.add_reagent(/datum/reagent/consumable/nutriment/soup/rich_stock, stock_boost)

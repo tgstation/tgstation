@@ -45,6 +45,7 @@
 		/datum/action/cooldown/alien/larva_evolve,
 	)
 	grant_actions_by_list(innate_actions)
+	AddComponent(/datum/component/slide_under_doors, slide_in_delay = 3 SECONDS)
 	return ..()
 
 /mob/living/carbon/alien/larva/Login()

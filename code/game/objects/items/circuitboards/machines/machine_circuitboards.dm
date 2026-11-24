@@ -310,6 +310,16 @@
 	var/message = high_production_profile ? "high-power uranium mode" : "medium-power plasma mode"
 	to_chat(user, span_notice("You set the board for [message]"))
 
+/obj/item/circuitboard/machine/plankman
+	name = "PLANKMAN-type Generator"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/power/port_gen/pacman/wood
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/iron = 5
+	)
+	needs_anchored = FALSE
+
 /obj/item/circuitboard/machine/turbine_compressor
 	name = "Turbine - Inlet Compressor"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -516,7 +526,7 @@
 	build_path = /obj/machinery/rnd/production/circuit_imprinter/department
 
 /obj/item/circuitboard/machine/holopad
-	name = "AI Holopad"
+	name = "Holopad"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/holopad
 	req_components = list(/datum/stock_part/capacitor = 1)
@@ -1771,6 +1781,26 @@
 		/obj/item/pipe/directional/scrubber = 1,
 	)
 
+/obj/item/circuitboard/machine/bluespace_scrubber
+	name = "Portable Bluespace Scrubber"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/scrubber/bluespace
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/scrubber = 1,
+		/obj/item/stack/ore/bluespace_crystal = 1,
+	)
+
+/obj/item/circuitboard/machine/gas_receiver
+	name = "Gas Receiver"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/gas_receiver
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 2,
+		/obj/item/stack/ore/bluespace_crystal = 2,
+	)
+
 /obj/item/circuitboard/machine/pump
 	name = "Portable Air Pump"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -1980,7 +2010,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message(span_warning("Sparks fly out of [src]!"))
 	balloon_alert(user, "safeties disabled")
 	obj_flags |= EMAGGED

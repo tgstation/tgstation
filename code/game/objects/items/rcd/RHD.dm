@@ -56,6 +56,7 @@
 	update_appearance()
 
 /obj/item/construction/Destroy()
+	QDEL_NULL(spark_system)
 	QDEL_NULL(silo_mats)
 	return ..()
 
@@ -91,11 +92,6 @@
 		var/iron = get_silo_iron()
 		if(iron)
 			. += "Remote connection has iron in equivalent to [iron] RCD unit\s." //1 matter for 1 floor tile, as 4 tiles are produced from 1 iron
-
-/obj/item/construction/Destroy()
-	QDEL_NULL(spark_system)
-	silo_mats = null
-	return ..()
 
 /obj/item/construction/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	SHOULD_CALL_PARENT(TRUE)

@@ -196,7 +196,7 @@ GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 /obj/machinery/disposal/mouse_drop_receive(atom/target, mob/living/user, params)
 	if(isliving(target))
 		stuff_mob_in(target, user)
-	if(istype(target, /obj/structure/closet/body_bag) && (user.mobility_flags & (MOBILITY_PICKUP|MOBILITY_STAND) == (MOBILITY_PICKUP|MOBILITY_STAND)))
+	if(istype(target, /obj/structure/closet/body_bag) && ((user.mobility_flags & (MOBILITY_PICKUP|MOBILITY_STAND)) == (MOBILITY_PICKUP|MOBILITY_STAND)))
 		stuff_bodybag_in(target, user)
 
 /// Handles stuffing a grabbed mob into the disposal

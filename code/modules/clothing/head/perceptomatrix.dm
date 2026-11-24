@@ -77,11 +77,9 @@
 	. = ..()
 	if(slot & ITEM_SLOT_HEAD)
 		RegisterSignal(user, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(pre_cast_core_check))
-		user.update_sight()
 
 /obj/item/clothing/head/helmet/perceptomatrix/dropped(mob/living/user, silent)
 	UnregisterSignal(user, COMSIG_MOB_BEFORE_SPELL_CAST)
-	user.update_sight()
 	..()
 
 // Prevent casting the spell w/o the core.

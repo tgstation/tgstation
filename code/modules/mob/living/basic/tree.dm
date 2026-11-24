@@ -87,10 +87,8 @@
 	var/mob/living/victim = target
 	var/boost = 0
 	if(iscarbon(victim))
-		for(var/item_path in infuriating_objects)
-			if(locate(item_path) in victim.held_items)
-				boost = anger_boost
-				break
+		if(victim.is_holding_item_of_types(infuriating_objects))
+			boost = anger_boost
 
 	if(prob(paralyze_prob + boost))
 		victim.Paralyze(paralyze_value + boost)

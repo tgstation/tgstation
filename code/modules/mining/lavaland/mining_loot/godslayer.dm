@@ -34,7 +34,7 @@
 /obj/item/clothing/suit/hooded/cloak/godslayer/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.mining_suit_allowed
-	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+	AddComponent(/datum/component/item_equipped_movement_rustle, /datum/sound_effect/assoc/plate_armor_rustle, 8)
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/examine(mob/user)
 	. = ..()

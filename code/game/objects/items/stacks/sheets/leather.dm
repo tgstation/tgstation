@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	amount = 5
 
 GLOBAL_LIST_INIT(lizard_recipes, list( \
-	new/datum/stack_recipe("lizard scale carpet", /obj/item/stack/tile/carpet/moth, 1, 4, 20, category = CAT_TILES), \
+	new/datum/stack_recipe("lizard scale carpet", /obj/item/stack/tile/carpet/lizard, 1, 4, 20, category = CAT_TILES), \
 	))
 
 /obj/item/stack/sheet/animalhide/carbon/lizard/get_main_recipes()
@@ -211,6 +211,11 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	icon_state = "sheet-carp"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/carp
+
+/obj/item/stack/sheet/animalhide/carp/fish
+	name = "fish scales"
+	desc = "The scales of a fish, or fish person. It reminds you about the importance of sharing."
+	singular_name = "fish scale"
 
 GLOBAL_LIST_INIT(carp_recipes, list ( \
 	new/datum/stack_recipe("carp scale carpet", /obj/item/stack/tile/carpet/carp, 1, 4, 20, category = CAT_TILES), \

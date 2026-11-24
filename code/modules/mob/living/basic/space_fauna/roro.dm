@@ -47,7 +47,7 @@
 	message = "warbles happily!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	vary = TRUE
-	sound = SFX_RORO_WARBLE
+	sound = /datum/sound_effect/roro_warble
 
 /mob/living/basic/roro/Initialize(mapload)
 	. = ..()

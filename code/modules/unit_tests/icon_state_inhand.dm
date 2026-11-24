@@ -7,7 +7,13 @@
 /datum/unit_test/missing_icons/inhand_icon_state/Run()
 	compile_icon_state_locations()
 
-	for(var/obj/item/item_path as anything in subtypesof(/obj/item))
+	///Assoc list item type -> a signature of the notice it would print, for condensing notices into one
+	var/list/inhand_notice_signatures = list()
+	///Assoc list item type -> the suggestion text itself, for condensing notices into one
+	var/list/inhand_notice_suggestions = list()
+
+	// MODsuits and their modules can be skipped here
+	for(var/obj/item/item_path as anything in (valid_subtypesof(/obj/item) - typesof(/obj/item/mod)))
 		if(initial(item_path.item_flags) & ABSTRACT)
 			continue
 
@@ -30,7 +36,8 @@
 				if(base_icon_state in possible_icon_states)
 					for(var/file_place in possible_icon_states[base_icon_state])
 						missing_var_message += (missing_var_message ? " & '[file_place]'" : " - Possible matching sprites for \"[base_icon_state]\" found in: '[file_place]'")
-					unset_inhand_var_message += "\n\t[item_path] does not have an inhand_icon_state value[missing_var_message]"
+					inhand_notice_signatures[item_path] = "[base_icon_state]|[lefthand_file]|[righthand_file]|[missing_var_message]"
+					inhand_notice_suggestions[item_path] = missing_var_message
 			continue
 
 		var/match_message
@@ -71,6 +78,22 @@
 			TEST_FAIL("Missing left inhand sprite for [item_path] in '[lefthand_file]'[left_fallback ? ", using fallback icon" : null].\n\tinhand_icon_state = \"[held_icon_state]\"[match_message]")
 		else if(missing_right)
 			TEST_FAIL("Missing right inhand sprite for [item_path] in '[righthand_file]'[right_fallback ? ", using fallback icon" : null].\n\tinhand_icon_state = \"[held_icon_state]\"[match_message]")
+
+	// a parent and its subtypes usually produce the same notice, spamming the same thing multiple times
+	// if the notice is identical then let's combine them into one notice.
+	for(var/path, signature in inhand_notice_signatures)
+		var/obj/item/item_path = path
+		var/combined_notice = FALSE
+		var/obj/item/ancestor = item_path::parent_type
+		while(ispath(ancestor, /obj/item))
+			var/ancestor_signature = inhand_notice_signatures[ancestor]
+			if(!isnull(ancestor_signature))
+				combined_notice = (ancestor_signature == signature)
+				break
+			ancestor = ancestor::parent_type
+		if(combined_notice)
+			continue
+		unset_inhand_var_message += "\n\t[item_path] does not have an inhand_icon_state value[inhand_notice_suggestions[item_path]]"
 
 	if(fallback_log_message)
 		TEST_FAIL("Invalid inhand_icon_state values should be set to null if there isn't a valid icon.[fallback_log_message]")

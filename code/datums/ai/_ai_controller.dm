@@ -21,6 +21,8 @@ multiple modular subtrees with behaviors
 	var/ai_traits = DEFAULT_AI_FLAGS
 	///Current status of AI (OFF/ON)
 	var/ai_status
+	///The z level we're listed under in SSai_controllers.ai_controllers_by_zlevel
+	var/registered_z
 	///Set by force_ai_off() when an outside system deliberately disables this AI. While TRUE, get_expected_ai_status() always returns AI_STATUS_OFF, so status recalculations (stat changes, z changes, client login/logout) cannot re-enable us. Cleared via clear_forced_off().
 	var/forced_off = FALSE
 	///Tracks recent pathing attempts, if we fail too many in a row we fail our current plans.
@@ -34,8 +36,10 @@ multiple modular subtrees with behaviors
 	var/behavior_tree_json = null
 	///The root of our tree, which will contain
 	var/list/behavior_nodes
-	/// Execution index of the leaf node currently returning BT_RUNNING. 0 = nothing active.
+	/// Execution index of the last leaf node to return BT_RUNNING. This is a between-ticks hint, not the node currently on the tick call stack.
 	var/active_execution_index = 0
+	/// Execution index of the AI behavior leaf whose tick() is currently being called. Restored after the leaf returns.
+	var/ticking_execution_index = 0
 	/// Set to TRUE by cancel_current_plan() when it fires mid-tick. Checked by composites to abort the current tick loop early, preventing running_child_index from being re-established after a reset. Cleared at the start of SelectBehaviors().
 	var/cancelled_during_tick = FALSE
 	/// Draining log of all leaf execution indices that fired since the last bt_viewer poll. Null when no viewer is attached.
@@ -323,7 +327,8 @@ multiple modular subtrees with behaviors
 
 	var/turf/pawn_turf = get_turf(pawn)
 	if(pawn_turf)
-		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] += src
+		registered_z = pawn_turf.z
+		SSai_controllers.ai_controllers_by_zlevel[registered_z] += src
 
 	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_POSSESSED_PAWN)
 	SEND_SIGNAL(pawn, COMSIG_PAWN_POSSESSED_BY_AI_CONTROLLER, src)
@@ -495,15 +500,17 @@ multiple modular subtrees with behaviors
 ///Called when the AI controller pawn changes z levels, we check if there's any clients on the new one and wake up the AI if there is.
 /datum/ai_controller/proc/on_changed_z_level(atom/source, turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	SIGNAL_HANDLER
+	if(registered_z)
+		SSai_controllers.ai_controllers_by_zlevel[registered_z] -= src
+	registered_z = new_turf?.z
+	if(registered_z)
+		SSai_controllers.ai_controllers_by_zlevel[registered_z] += src
 	if (ismob(pawn))
 		var/mob/mob_pawn = pawn
 		if((mob_pawn?.client && !continue_processing_when_client))
 			return
-	if(old_turf)
-		SSai_controllers.ai_controllers_by_zlevel[old_turf.z] -= src
 	if(isnull(new_turf))
 		return
-	SSai_controllers.ai_controllers_by_zlevel[new_turf.z] += src
 	reset_ai_status()
 
 ///Abstract proc for initializing the pawn to the new controller
@@ -523,9 +530,9 @@ multiple modular subtrees with behaviors
 	clear_able_to_run()
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
-	var/turf/pawn_turf = get_turf(pawn)
-	if(pawn_turf)
-		SSai_controllers.ai_controllers_by_zlevel[pawn_turf.z] -= src
+	if(registered_z)
+		SSai_controllers.ai_controllers_by_zlevel[registered_z] -= src
+		registered_z = null
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)

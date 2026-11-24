@@ -39,10 +39,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
 #define STATION_TRAIT_PREMIUM_INTERNALS "station_trait_premium_internals"
 #define STATION_TRAIT_PUN_PUN_GYM_DAY "station_trait_pun_pun_gym_day"
+#define STATION_TRAIT_QUICK_SHUTTLE "station_trait_quick_shuttle"
 #define STATION_TRAIT_RADIOACTIVE_NEBULA "station_trait_radioactive_nebula"
 #define STATION_TRAIT_RANDOM_ARRIVALS "station_trait_random_arrivals"
 #define STATION_TRAIT_REVOLUTIONARY_TRASHING "station_trait_revolutionary_trashing"
 #define STATION_TRAIT_SHUTTLE_SALE "station_trait_shuttle_sale"
+#define STATION_TRAIT_SLOW_SHUTTLE "station_trait_slow_shuttle"
 #define STATION_TRAIT_SMALLER_PODS "station_trait_smaller_pods"
 #define STATION_TRAIT_SPIDER_INFESTATION "station_trait_spider_infestation"
 #define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
@@ -118,8 +120,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BRAINLESS_CARBON "brainless_carbon"
 #define TRAIT_BADDNA "baddna"
 #define TRAIT_CLUMSY "clumsy"
-/// Trait that means you are capable of holding items in some form
-#define TRAIT_CAN_HOLD_ITEMS "can_hold_items"
 /// Trait that means you're capable of throwing things
 #define TRAIT_CAN_THROW_ITEMS "can_throw_items"
 /// Trait which lets you clamber over a barrier
@@ -258,6 +258,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
 /// The mob is not harmed by tetrodotoxin. Instead, it heals them like omnizine
 #define TRAIT_TETRODOTOXIN_HEALING "tetrodotoxin_healing"
+/// Do not allow legs to be attached to a mob with this trait
+#define TRAIT_BLOCK_ATTACHING_LEGS "block_attaching_legs"
 #define TRAIT_EASYDISMEMBER "easy_dismember"
 #define TRAIT_LIMBATTACHMENT "limb_attach"
 #define TRAIT_NOLIMBDISABLE "no_limb_disable"
@@ -409,6 +411,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MESON_VISION "meson_vision"
 /// Gives us Night vision
 #define TRAIT_TRUE_NIGHT_VISION "true_night_vision"
+/// Gives us the ability to see objects thru walls and slight night vision
+#define TRAIT_MATERIAL_VISON "objects_vision"
 /// Negates our gravity, letting us move normally on floors in 0-g
 #define TRAIT_NEGATES_GRAVITY "negates_gravity"
 /// We are ignoring gravity
@@ -737,6 +741,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that makes you only SOMETIMES bite when attacking with an unarmed strike.
 #define TRAIT_REFINED_BITER "refined biter"
 
+/// Trait that ignores whether or not a human's head can be decapitated, and permits it instead.
+#define TRAIT_ALWAYS_ALLOW_DECAPITATION "always_allow_decapitation"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
@@ -779,6 +786,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
 #define TRAIT_KNOW_ROBO_WIRES "know_robo_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
+#define TRAIT_KNOW_ATMOS_WIRES "know_atmos_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
 #define TRAIT_SABRAGE_PRO "sabrage_pro"
 /// this skillchip trait lets you wash brains in washing machines to heal them
@@ -878,6 +886,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WADDLING "trait_waddling"
 /// Mobs with trait will still waddle even when lying on the floor and make a different footstep sound when doing so.
 #define TRAIT_FLOPPING "trait_flopping"
+/// To be used combined with TRAIT_FLOPPING, to make a mob flop exclusively when laying on the floor.
+#define TRAIT_FLOOR_FLOPPING "trait_floor_flopping"
 /// Required by the on_hit_effect element, which is in turn added by other elements.
 #define TRAIT_ON_HIT_EFFECT "trait_on_hit_effect"
 
@@ -1007,8 +1017,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BORG_GIVE "give_borg_item"
 
 //---- Heretic Traits
-/// Hides the heretic overlay that outs them as the heretic
-#define TRAIT_HERETIC_AURA_HIDDEN "heretic_aura_hidden"
 /// This rod was infused by a heretic, making it awesome and improving influence gain
 #define TRAIT_ROD_MANSUS_INFUSED "rod_infused"
 /// Designates a heart as a living heart for a heretic.
@@ -1237,8 +1245,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dreaming carbon when they are currently doing dreaming stuff
 #define TRAIT_DREAMING "currently_dreaming"
 
+/// Trait for if you've recently had drink that helps you sleep
+#define TRAIT_HAD_SLEEPY_DRINK "had_sleepy_drink"
+
 /// Trait for if you've recently had a Last Word cocktail
 #define TRAIT_HAD_LAST_WORD "had_last_word"
+
+/// Trait for if you've recently had a Footsoldier's Razor cocktail
+#define TRAIT_HAD_FOOTSOLDIERS_RAZOR "had_footsoldiers_razor"
+
+/// Trait for if you've completed the farstar amarita's communion
+#define TRAIT_FARSTAR_SHARED "farstar_shared"
 
 /// Whether bots will salute this mob.
 #define TRAIT_COMMISSIONED "commissioned"
@@ -1294,6 +1311,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
 /// ID cards with this trait have special appraisal text.
 #define TRAIT_TASTEFULLY_THICK_ID_CARD "impressive_very_nice"
+
+/// When applied to objects, ID cards placed in the object's contents will act as if they are worn or held, granting the mob the card's access.
+/// This is not applied recursively, i.e. an ID card in an item with this trait in another item with this trait does not work.
+#define TRAIT_PASS_ID_ACCESS_IN_CONTENTS "pass_id_access_in_contents"
 
 ///The entity has Silicon 'access', so is either a silicon, has an access wand, or is an admin ghost AI.
 ///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.
@@ -1432,6 +1453,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait used by the /obj/item/wallframe/painting/eldritch/desire status effect to change their preferences of what they eat
 #define TRAIT_FLESH_DESIRE "flesh_desire"
+
+///Softer version of the above trait which just adds the same preferences as flesh desire without also making everything else toxic
+#define TRAIT_FLESH_PECKISH "flesh_peckish"
 
 ///Trait granted by janitor skillchip, allows communication with cleanbots
 #define TRAIT_CLEANBOT_WHISPERER "cleanbot_whisperer"
@@ -1741,5 +1765,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Objects with this trait may become a new prison for a revenant, in the event of its ectoplasm dispersing
 #define TRAIT_COZY_REVENANT_HOME "cozy_revenant_home"
+
+/// Objects that do not let overlay light holders shine through themselves
+#define TRAIT_BLOCKS_OVERLAY_LIGHT "blocks_overlay_light"
+
+/// Mobs with this trait will appear as human to medical scanners even if they are not human
+#define TRAIT_HUMAN_DISGUISE "human_disguise"
 
 // END TRAIT DEFINES

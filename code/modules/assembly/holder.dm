@@ -102,13 +102,24 @@
 	for(var/i in 1 to LAZYLEN(assemblies))
 		if(IS_LEFT_INDEX(i))
 			var/obj/item/assembly/assembly = assemblies[i]
-			. += mutable_appearance(assembly.icon, "[assembly.icon_state]_left")
+			var/mutable_appearance/left
+			if(assembly.use_base_icon_for_holder)
+				left = mutable_appearance(assembly.icon, assembly.icon_state)
+				left.transform = matrix(1, 0, -0.1, 0, 1, 0.1)
+			else
+				left = mutable_appearance(assembly.icon, "[assembly.icon_state]_left")
+			. += left
 			for(var/left_overlay in assembly.attached_overlays)
 				. += "[left_overlay]_l"
 		if(IS_RIGHT_INDEX(i))
 			var/obj/item/assembly/assembly = assemblies[i]
-			var/mutable_appearance/right = mutable_appearance(assembly.icon, "[assembly.icon_state]_left")
-			right.transform = matrix(-1, 0, 0, 0, 1, 0)
+			var/mutable_appearance/right
+			if(assembly.use_base_icon_for_holder)
+				right = mutable_appearance(assembly.icon, assembly.icon_state)
+				right.transform = matrix(-1, 0, 0.1, 0, 1, 0.1)
+			else
+				right = mutable_appearance(assembly.icon, "[assembly.icon_state]_left")
+				right.transform = matrix(-1, 0, 0, 0, 1, 0)
 			for(var/right_overlay in assembly.attached_overlays)
 				right.add_overlay("[right_overlay]_l")
 			. += right

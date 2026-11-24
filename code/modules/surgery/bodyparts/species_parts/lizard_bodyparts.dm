@@ -22,6 +22,8 @@
 /obj/item/bodypart/arm/left/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
+	unarmed_damage_high = 12
+	unarmed_effectiveness = 15
 	unarmed_attack_verbs = list("slash", "scratch", "claw")
 	unarmed_attack_verbs = list("slashed", "scratched", "clawed")
 	grappled_attack_verb = "lacerate"
@@ -34,6 +36,8 @@
 /obj/item/bodypart/arm/right/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
+	unarmed_damage_high = 12
+	unarmed_effectiveness = 15
 	unarmed_attack_verbs = list("slash", "scratch", "claw")
 	unarmed_attack_verbs = list("slashed", "scratched", "clawed")
 	grappled_attack_verb = "lacerate"
@@ -51,11 +55,15 @@
 
 /obj/item/bodypart/leg/left/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
+	unarmed_damage_high = 17
+	unarmed_effectiveness = 15
 	limb_id = SPECIES_LIZARD
 	zombie_color = LIZARD_ZOMBIE_COLOR
 
 /obj/item/bodypart/leg/right/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
+	unarmed_damage_high = 17
+	unarmed_effectiveness = 15
 	limb_id = SPECIES_LIZARD
 	zombie_color = LIZARD_ZOMBIE_COLOR
 

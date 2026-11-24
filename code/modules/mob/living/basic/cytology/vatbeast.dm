@@ -32,7 +32,7 @@
 	var/static/list/enjoyed_food = list(
 		/obj/item/food/carrotfries,
 		/obj/item/food/cheesyfries,
-		/obj/item/food/cornchips,
+		/obj/item/food/chips/corn,
 		/obj/item/food/fries,
 	)
 

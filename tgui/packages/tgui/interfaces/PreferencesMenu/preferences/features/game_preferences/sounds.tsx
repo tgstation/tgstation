@@ -14,6 +14,13 @@ export const sound_ambience_volume: Feature<number> = {
   component: FeatureSliderInput,
 };
 
+export const sound_ambience_mute_during_music: FeatureToggle = {
+  name: 'Mute ambience during admin music',
+  category: 'SOUND',
+  description: 'When enabled, ambience stops while admin music is playing.',
+  component: CheckboxInput,
+};
+
 export const sound_breathing: FeatureToggle = {
   name: 'Enable breathing sounds',
   category: 'SOUND',

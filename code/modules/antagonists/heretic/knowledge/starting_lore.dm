@@ -218,6 +218,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	. = TRUE
 
 	heretic_datum.feast_of_owls = TRUE
+	heretic_datum.unlimited_blades = FALSE
 	heretic_datum.update_heretic_aura()
 	user.set_temp_blindness(reward * 1 SECONDS)
 	user.AdjustParalyzed(reward * 1 SECONDS)

@@ -112,3 +112,6 @@
 #define CAT_TOOLS "Tools"
 #define CAT_CULT "Blood Cult"
 #define CAT_CONSTRUCTION "Construction"
+
+/// Atom ID in the crafting list corresponds to the index of the atom type in its corresponding component list.
+#define CRAFTING_COMPONENT_ID(component_list, atom_type) "[component_list.Find(atom_type)]"

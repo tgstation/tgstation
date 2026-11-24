@@ -13,9 +13,9 @@
 	name = "random heretic keycard spawn"
 	desc = "Spawns a random keycard, but definitely just trash."
 	loot = list(
-		/obj/item/keycard/cbrn_area = 0.5,
-		/obj/item/keycard/biological_anomalies = 5,
-		/obj/item/keycard/misc_anomalies = 5,
-		/obj/item/keycard/weapon_anomalies = 4,
-		/obj/effect/spawner/random/trash/deluxe_garbage = 85.5
+		/obj/item/keycard/cbrn_area = 1,
+		/obj/item/keycard/biological_anomalies = 10,
+		/obj/item/keycard/misc_anomalies = 10,
+		/obj/item/keycard/weapon_anomalies = 8,
+		/obj/effect/spawner/random/trash/deluxe_garbage = 171
 	)

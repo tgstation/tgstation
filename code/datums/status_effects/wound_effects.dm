@@ -15,11 +15,41 @@
 	. = ..()
 	to_chat(owner, span_grey("<b>Your senses sharpen as your body tenses up from the wounds you've sustained!</b>"))
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, WOUND_DETERMINATION_BLEED_MOD)
+	RegisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_strike))
 
 /datum/status_effect/determined/on_remove()
 	to_chat(owner, span_grey("Your adrenaline rush dies off, and the pain from your wounds come aching back in..."))
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, 1/WOUND_DETERMINATION_BLEED_MOD)
+	UnregisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK)
 	return ..()
+
+/datum/status_effect/determined/proc/unarmed_strike(mob/living/source, atom/attack_target, proximity, modifiers)
+	SIGNAL_HANDLER
+
+	if(!proximity || !isliving(attack_target))
+		return NONE
+
+	var/obj/item/bodypart/arm = source.get_active_hand()
+	var/datum/wound/bruised/arm_bruises = arm.get_wound_type(/datum/wound/bruised)
+	if(!isnull(arm_bruises))
+		arm_bruises.bruise_ticks = initial(arm_bruises.bruise_ticks)
+		return
+	arm_bruises = new /datum/wound/bruised()
+
+	var/wound_source
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		wound_source = "defensive injuries from attempting to ward off"
+	else
+		wound_source = "offensive injuries from attempting to fight"
+
+	if(ishuman(attack_target))
+		wound_source += " a humanoid"
+	else if(issilicon(attack_target))
+		wound_source += " something mechanical"
+	else
+		wound_source += " an animal"
+	arm_bruises.apply_wound(arm, TRUE, wound_source = wound_source)
 
 /datum/status_effect/limp
 	id = "limp"
@@ -250,3 +280,17 @@
 	id = "thirddeg"
 /datum/status_effect/wound/burn/flesh/critical
 	id = "fourthdeg"
+
+/datum/status_effect/wound/blunt/robotic/moderate
+	id = "loose"
+/datum/status_effect/wound/blunt/robotic/severe
+	id = "unfastening"
+/datum/status_effect/wound/blunt/robotic/critical
+	id = "collapse"
+
+/datum/status_effect/wound/burn/robotic/moderate
+	id = "overheating_moderate"
+/datum/status_effect/wound/burn/robotic/severe
+	id = "overheating_severe"
+/datum/status_effect/wound/burn/robotic/critical
+	id = "overheating_critical"

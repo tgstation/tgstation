@@ -29,6 +29,8 @@
 	var/area_flags = VALID_TERRITORY | BLOBS_ALLOWED | CULT_PERMITTED
 	/// Flag for mapping related area properties (such as cavegen)
 	var/area_flags_mapping = UNIQUE_AREA
+	/// Terrain navigation cost groups applied to every turf in this area.
+	var/nav_cost_flags = NONE
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE
@@ -183,6 +185,16 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	energy_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
 	alarm_manager = new(src) // just in case
 	return ..()
+
+/// Changes this area's navigation cost groups and republishes affected turf costs.
+/area/proc/set_nav_cost_flags(new_flags)
+	if(nav_cost_flags == new_flags)
+		return
+	var/old_flags = nav_cost_flags
+	nav_cost_flags = new_flags
+	for(var/turf/area_turf as anything in contents)
+		if((area_turf.nav_cost_flags | old_flags) != (area_turf.nav_cost_flags | new_flags))
+			area_turf.nav_cost_dirty()
 
 /*
  * Initialize this area
@@ -405,6 +417,17 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		GLOB.areas -= src
 	if(!isnull(GLOB.custom_areas))
 		GLOB.custom_areas -= src
+	// reg_in_areas_in_z() lists an area under the z it had at each call, with no duplicate check
+	var/list/areas_in_z = SSmapping.areas_in_z
+	for(var/z_key, z_list in areas_in_z)
+		var/list/z_areas = z_list
+		if(z_areas.RemoveAll(src) && !length(z_areas))
+			areas_in_z -= z_key
+	// teleportlocs keys an area by its name at map load, which barsigns and blueprints can change
+	for(var/loc_name, loc_area in GLOB.teleportlocs)
+		if(loc_area == src)
+			GLOB.teleportlocs -= loc_name
+			break
 	//machinery cleanup
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
@@ -583,6 +606,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, arrived, old_area)
 
 	if(!arrived.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
+		return
+	if(get_area(arrived) != src)
 		return
 	for(var/atom/movable/recipient as anything in arrived.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)

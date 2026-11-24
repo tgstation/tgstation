@@ -47,9 +47,7 @@
 /obj/structure/bodycontainer/morgue{
 	dir = 2
 	},
-/turf/open/indestructible/white{
-	icon_state = "showroomfloor"
-	},
+/turf/open/indestructible/white/showroom,
 /area/ruin/space/has_grav/powered/biooutpost)
 "aF" = (
 /obj/machinery/light/small/dim/directional/north,
@@ -95,9 +93,7 @@
 /turf/open/indestructible/meat,
 /area/ruin/space/has_grav/powered/biooutpost)
 "ch" = (
-/turf/open/indestructible/white{
-	icon_state = "showroomfloor"
-	},
+/turf/open/indestructible/white/showroom,
 /area/ruin/space/has_grav/powered/biooutpost)
 "cp" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners,
@@ -179,9 +175,7 @@
 /obj/effect/mapping_helpers/airlock_note_placer{
 	note_info = "Reminder for medbay staff to not stick failed and active experiments in the morgue."
 	},
-/turf/open/indestructible/white{
-	icon_state = "showroomfloor"
-	},
+/turf/open/indestructible/white/showroom,
 /area/ruin/space/has_grav/powered/biooutpost)
 "eA" = (
 /obj/machinery/door/airlock/security/glass,
@@ -249,9 +243,7 @@
 /area/ruin/space/has_grav/powered/biooutpost)
 "fB" = (
 /obj/machinery/computer/operating,
-/turf/open/indestructible/white{
-	icon_state = "showroomfloor"
-	},
+/turf/open/indestructible/white/showroom,
 /area/ruin/space/has_grav/powered/biooutpost)
 "fH" = (
 /turf/closed/indestructible/meat,
@@ -781,9 +773,7 @@
 /area/ruin/space/has_grav/powered/biooutpost)
 "pk" = (
 /obj/effect/decal/cleanable/blood/old,
-/turf/open/indestructible/white{
-	icon_state = "showroomfloor"
-	},
+/turf/open/indestructible/white/showroom,
 /area/ruin/space/has_grav/powered/biooutpost)
 "pl" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -855,9 +845,7 @@
 	},
 /obj/effect/mob_spawn/corpse/human/damaged,
 /obj/machinery/light/cold/dim/directional/north,
-/turf/open/indestructible/white{
-	icon_state = "showroomfloor"
-	},
+/turf/open/indestructible/white/showroom,
 /area/ruin/space/has_grav/powered/biooutpost)
 "qs" = (
 /obj/effect/decal/cleanable/blood/tracks{
@@ -1027,9 +1015,7 @@
 "tv" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /mob/living/basic/zombie,
-/turf/open/indestructible/white{
-	icon_state = "showroomfloor"
-	},
+/turf/open/indestructible/white/showroom,
 /area/ruin/space/has_grav/powered/biooutpost)
 "tF" = (
 /obj/structure/broken_flooring/plating/directional/east,
@@ -1118,8 +1104,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 8
 	},
-/turf/open/indestructible{
-	icon_state = "whitehall";
+/turf/open/indestructible/whitehall{
 	dir = 8
 	},
 /area/ruin/space/has_grav/powered/biooutpost)
@@ -1191,9 +1176,7 @@
 	dir = 2
 	},
 /obj/item/knife/combat/survival,
-/turf/open/indestructible/white{
-	icon_state = "showroomfloor"
-	},
+/turf/open/indestructible/white/showroom,
 /area/ruin/space/has_grav/powered/biooutpost)
 "wy" = (
 /obj/effect/decal/cleanable/glass,
@@ -1557,9 +1540,7 @@
 "Dg" = (
 /obj/structure/mecha_wreckage/ripley,
 /obj/structure/window/spawner/directional/east,
-/turf/open/indestructible{
-	icon_state = "recharge_floor"
-	},
+/turf/open/indestructible/recharge_floor,
 /area/ruin/space/has_grav/powered/biooutpost)
 "Dh" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -1631,9 +1612,7 @@
 /area/ruin/space/has_grav/powered/biooutpost)
 "Ex" = (
 /obj/structure/table/optable,
-/turf/open/indestructible/white{
-	icon_state = "showroomfloor"
-	},
+/turf/open/indestructible/white/showroom,
 /area/ruin/space/has_grav/powered/biooutpost)
 "EC" = (
 /turf/closed/indestructible/reinforced,
@@ -2034,9 +2013,7 @@
 /area/ruin/space/has_grav/powered/biooutpost)
 "Nz" = (
 /obj/structure/mecha_wreckage/ripley,
-/turf/open/indestructible{
-	icon_state = "recharge_floor"
-	},
+/turf/open/indestructible/recharge_floor,
 /area/ruin/space/has_grav/powered/biooutpost)
 "NE" = (
 /obj/structure/sign/warning/biohazard/directional/west,
@@ -2614,9 +2591,7 @@
 /area/ruin/space/has_grav/powered/biooutpost)
 "YY" = (
 /obj/structure/filingcabinet/chestdrawer,
-/turf/open/indestructible/white{
-	icon_state = "showroomfloor"
-	},
+/turf/open/indestructible/white/showroom,
 /area/ruin/space/has_grav/powered/biooutpost)
 "Zd" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{

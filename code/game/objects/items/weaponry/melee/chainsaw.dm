@@ -5,6 +5,7 @@
 	desc = "A versatile power tool. Useful for limbing trees and delimbing humans."
 	icon = 'icons/obj/weapons/chainsaw.dmi'
 	icon_state = "chainsaw"
+	inhand_icon_state = "chainsaw"
 	base_icon_state = "chainsaw"
 	icon_angle = 180
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
@@ -19,7 +20,7 @@
 	custom_materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 6.5)
 	attack_verb_continuous = list("saws", "tears", "lacerates", "cuts", "chops", "dices")
 	attack_verb_simple = list("saw", "tear", "lacerate", "cut", "chop", "dice")
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/startchainsaw)
 	tool_behaviour = TOOL_SAW
@@ -157,7 +158,7 @@
 /obj/item/chainsaw/doomslayer/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
 		owner.visible_message(span_danger("Ranged attacks just make [owner] angrier!"))
-		playsound(src, SFX_BULLET_MISS, 75, TRUE)
+		playsound(src, /datum/sound_effect/bullet_miss, 75, TRUE)
 		return TRUE
 	return FALSE
 
@@ -165,6 +166,7 @@
 	name = "double-ended chainsaw spear"
 	desc = "A dangerous, crazy contraption that could fall apart from a slight breeze. WHAT WERE THEY THINKING?!"
 	icon_state = "chainsawdual"
+	inhand_icon_state = "chainsawdual"
 	base_icon_state = "chainsawdual"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'

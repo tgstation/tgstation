@@ -65,6 +65,11 @@ FLOOR SAFES
 		AddElement(/datum/element/climbable)
 		AddElement(/datum/element/elevation, pixel_shift = 22)
 
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 	if(open && !locked)
 		return
 
@@ -86,6 +91,13 @@ FLOOR SAFES
 	//uses the same icon as the captain's spare safe (therefore lockable storage) so keep it in line with that
 	icon_state = "[initial(icon_state)][open ? null : "_locked"]"
 	return ..()
+
+/obj/structure/safe/proc/on_magic_unlock(obj/source, datum/spell, mob/caster)
+	SIGNAL_HANDLER
+
+	locked = FALSE
+	open = TRUE
+	update_appearance()
 
 /obj/structure/safe/wrench_act(mob/living/user, obj/item/tool)
 	if(!open)
@@ -222,7 +234,10 @@ FLOOR SAFES
 				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
 				return
 			var/ticks = text2num(params["num"])
-			for(var/iterate in 1 to ticks)
+			if(!IS_FINITE(ticks) || ((ticks != 1) && (ticks != 10) && (ticks != 50)))
+				message_admins("[ADMIN_LOOKUPFLW(user)] tried to turn the dial on a safe by [sanitize(num2text(ticks))] ticks when normal operation only allows 1, 10, 50 ticks. Likely a malicious HREF attack.")
+				return
+			for(var/iterate in 1 to min(50, ticks))
 				dial = WRAP(dial - 1, 0, 100)
 
 				var/invalid_turn = current_tumbler_index % 2 == 0 || current_tumbler_index > number_of_tumblers
@@ -243,7 +258,10 @@ FLOOR SAFES
 				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
 				return
 			var/ticks = text2num(params["num"])
-			for(var/iterate in 1 to ticks)
+			if(!IS_FINITE(ticks) || ((ticks != 1) && (ticks != 10) && (ticks != 50)))
+				message_admins("[ADMIN_LOOKUPFLW(user)] tried to turn the dial on a safe by [sanitize(num2text(ticks))] ticks when normal operation only allows 1, 10, 50 ticks. Likely a malicious HREF attack.")
+				return
+			for(var/iterate in 1 to min(50, ticks))
 				dial = WRAP(dial + 1, 0, 100)
 
 				var/invalid_turn = current_tumbler_index % 2 != 0 || current_tumbler_index > number_of_tumblers

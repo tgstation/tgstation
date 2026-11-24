@@ -8,6 +8,17 @@
 	if(thing.can_vv_get(var_name))
 		return thing.vars[var_name]
 
+/proc/wrap_lua_new(type, arguments)
+	SHOULD_NOT_SLEEP(TRUE)
+	if(!usr)
+		usr = GLOB.lua_usr
+	var/ret
+	if(usr)
+		ret = WrapAdminProcCall(GLOBAL_PROC, "_new", list(type, arguments))
+	else
+		ret = HandleUserlessProcCall(GLOBAL_PROC, "_new", list(type, arguments))
+	return ret
+
 /proc/wrap_lua_set_var(datum/thing_to_set, var_name, value)
 	SHOULD_NOT_SLEEP(TRUE)
 	thing_to_set.vv_edit_var(var_name, value)

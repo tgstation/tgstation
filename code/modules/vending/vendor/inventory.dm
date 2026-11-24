@@ -119,7 +119,7 @@
 
 		for(var/datum/data/vending_product/record as anything in record_list)
 			var/diff = min(record.max_amount - record.amount, canister_list[record.product_path] || 0)
-			if (diff)
+			if (diff > 0)
 				canister_list[record.product_path] -= diff
 				if(!canister_list[record.product_path])
 					canister_list -= record.product_path

@@ -160,7 +160,7 @@
 
 ///Handle the atom being slipped over
 /atom/proc/handle_slip(mob/living/carbon/slipped_carbon, knockdown_amount, obj/slipping_object, lube, paralyze, daze, force_drop)
-	return
+	return FALSE
 
 ///Used for making a sound when a mob involuntarily falls into the ground.
 /atom/proc/handle_fall(mob/faller)

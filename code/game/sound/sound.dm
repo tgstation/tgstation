@@ -215,9 +215,9 @@
 
 ///Used to convert a SFX define into a .ogg so we can add some variance to sounds. If soundin is already a .ogg, we simply return it
 /proc/get_sfx(soundin)
-	if(!istext(soundin))
+	if(!ispath(soundin, /datum/sound_effect))
 		return soundin
-	var/datum/sound_effect/sfx = GLOB.sfx_datum_by_key[soundin]
+	var/datum/sound_effect/sfx = GLOB.sfx_datums_by_paths[soundin]
 	return sfx?.return_sfx() || soundin
 
 

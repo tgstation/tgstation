@@ -303,7 +303,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(QDELETED(mychild) || mychild.stat == DEAD)
 		onEliteLoss()
 		return
-	if(QDELETED(activator) || activator.stat == DEAD || (activator.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(activator, TRAIT_NODEATH)))
+	if(QDELETED(activator) || activator.stat == DEAD || (activator.health <= activator.dead_threshold && HAS_TRAIT(activator, TRAIT_NODEATH)))
 		if(!QDELETED(activator) && HAS_TRAIT(activator, TRAIT_NODEATH)) // dust the unkillable activator
 			activator.dust(drop_items = TRUE)
 		onEliteWon()

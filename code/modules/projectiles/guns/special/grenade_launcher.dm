@@ -40,7 +40,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gun/grenadelauncher/can_shoot()
-	return grenades.len
+	return ..() && grenades.len > 0
 
 /obj/item/gun/grenadelauncher/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	user.visible_message(span_danger("[user] fired a grenade!"), \

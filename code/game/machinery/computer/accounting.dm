@@ -56,7 +56,7 @@
 	if(.)
 		return
 
-	playsound(src, SFX_TERMINAL_TYPE, 50, FALSE)
+	playsound(src, /datum/sound_effect/terminal_type, 50, FALSE)
 	var/datum/bank_account/bank_account = SSeconomy.bank_accounts_by_id[params["account_id"]]
 	if(isnull(bank_account) || !(bank_account.account_job?.job_flags & JOB_CREW_MANIFEST))
 		return
