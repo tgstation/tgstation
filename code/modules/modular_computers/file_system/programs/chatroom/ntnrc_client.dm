@@ -65,7 +65,7 @@
 				return
 			if(src in channel.muted_clients) // Make sure we aren't muted
 				return
-			var/message = sanitize(params["message"], MESSAGE_SIZE)
+			var/message = trim(sanitize(params["message"]), MESSAGE_SIZE)
 			if(!message)
 				return
 			if(channel.password && (!(src in channel.active_clients) && !(src in channel.offline_clients)))
