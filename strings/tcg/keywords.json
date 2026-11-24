@@ -14,5 +14,5 @@
 	"On Equip": "This effect is activated once its item cost is paid and it enters the battlefield, equipping itself to a chosen card on your side of the field (Unless otherwise stated)",
 	"On Summon": "This effect is activated once its creature cost is paid and it enters the battlefield",
 	"Squad Tactics": "This effect is activated when a card is added to your hand.",
-	"Taunt": "All opposing creature's attacks must be directed towards creatures with Taunt."
+	"Taunt": "All opposing creature's attacks must be directed towards creatures with Taunt on the field."
 }
