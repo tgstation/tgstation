@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - server: "The TOML Job Configuration system should now be a lot easier to edit. You will have to regenerate the job configuration (downloading the file from the server via the `Generate Job Configuration` verb of the `Server` tab of the stat panel), download that file from FTP prompt you get from BYOND, and then re-upload it to the server to take effect on later rounds, but it does indeed feel a lot easier to edit. This measure is completely optional though."
