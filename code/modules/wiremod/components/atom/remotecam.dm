@@ -180,6 +180,7 @@
 		//Set camera network string
 		if(new_net_name)
 			shell_camera.network = list("[new_net_name]")
+			shell_camera.custom_network = TRUE
 		else
 			shell_camera.network = list("ss13")
 

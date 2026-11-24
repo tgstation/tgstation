@@ -43,6 +43,7 @@
 			camera_construction_state = CAMERA_STATE_FINISHED
 			toggle_cam(user, displaymessage = FALSE)
 			network = tempnetwork
+			custom_network = TRUE
 			return ITEM_INTERACT_SUCCESS
 		if(CAMERA_STATE_FINISHED)
 			toggle_panel_open()

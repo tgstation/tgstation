@@ -1,5 +1,27 @@
 #define DEFAULT_MAP_SIZE 15
 
+/// Networks that are generally considered valid for station camera consoles.
+GLOBAL_LIST_INIT(public_camera_networks, list(
+	CAMERANET_NETWORK_SS13,
+	CAMERANET_NETWORK_MINE,
+	CAMERANET_NETWORK_RD,
+	CAMERANET_NETWORK_LABOR,
+	CAMERANET_NETWORK_ORDNANCE,
+	CAMERANET_NETWORK_AUXBASE,
+	CAMERANET_NETWORK_MINISAT,
+	CAMERANET_NETWORK_XENOBIOLOGY,
+	CAMERANET_NETWORK_TEST_CHAMBER,
+	CAMERANET_NETWORK_PRISON,
+	CAMERANET_NETWORK_ISOLATION,
+	CAMERANET_NETWORK_MEDBAY,
+	CAMERANET_NETWORK_ENGINE,
+	CAMERANET_NETWORK_WASTE,
+	CAMERANET_NETWORK_TELECOMMS,
+	CAMERANET_NETWORK_TURBINE,
+	CAMERANET_NETWORK_BAR,
+	CAMERA_NETWORK_CARGO,
+))
+
 /obj/machinery/computer/security
 	name = "security camera console"
 	desc = "Used to access the various cameras on the station."
@@ -11,6 +33,8 @@
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_SIGHT
 
 	var/list/network = list(CAMERANET_NETWORK_SS13)
+	/// List of custom networks that a player has created
+	var/list/custom_networks
 	var/obj/machinery/camera/active_camera
 	/// The turf where the camera was last updated.
 	var/turf/last_camera_turf
@@ -41,6 +65,27 @@
 	for(var/i in network)
 		network -= i
 		network += "[port.shuttle_id]_[i]"
+
+/obj/machinery/computer/security/on_construction(mob/user)
+	. = ..()
+	circuit?.configure_machine(src)
+
+/// Applies the passed in networks, sorting them if they're a player-made network or a public one
+/obj/machinery/computer/security/proc/set_networks(list/requested)
+	var/list/new_network = list()
+	var/list/new_custom = list()
+	for(var/network_name in requested)
+		if(network_name in GLOB.public_camera_networks)
+			new_network |= network_name
+		else
+			new_custom |= network_name
+	network = new_network
+	custom_networks = new_custom
+
+/obj/machinery/computer/security/proc/can_view_camera(obj/machinery/camera/camera)
+	if(length(camera.network & network))
+		return TRUE
+	return camera.custom_network && length(custom_networks) && length(camera.network & custom_networks)
 
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -90,7 +135,7 @@
 	var/list/data = list()
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
-	data["cameras"] = SScameras.get_available_cameras_data(network)
+	data["cameras"] = SScameras.get_available_cameras_data(network, custom_networks_available = custom_networks)
 	return data
 
 /obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -101,6 +146,8 @@
 	if(action == "switch_camera")
 		active_camera?.on_stop_watching(src)
 		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
+		if(selected_camera && !can_view_camera(selected_camera))
+			selected_camera = null
 		active_camera = selected_camera
 		cam_screen.set_display(active_camera)
 
