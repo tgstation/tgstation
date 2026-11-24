@@ -606,7 +606,7 @@
 	. += span_notice("Camera networks: [length(networks) ? jointext(networks, ", ") : "default"]. They can be changed with a <b>multitool</b>.")
 
 /obj/item/circuitboard/computer/security/multitool_act(mob/living/user, obj/item/tool)
-	var/input = tgui_input_text(user, "Which networks should the console show? Separate networks with a comma. Set empty to use the default", "Set Networks", length(networks) ? jointext(networks, ",") : "", max_length = MAX_MESSAGE_LEN)
+	var/input = tgui_input_text(user, "Which networks should be visible to the console? Separate networks with a coma.", "Set Networks", length(networks) ? jointext(networks, ",") : "", max_length = MAX_MESSAGE_LEN)
 	if(isnull(input) || !user.can_perform_action(src))
 		return ITEM_INTERACT_BLOCKING
 	var/list/new_networks = list()
