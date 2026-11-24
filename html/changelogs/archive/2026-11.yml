@@ -311,3 +311,11 @@
   CabinetOnFire:
   - bugfix: Pets no longer get stuck in attack mode
   - qol: Pet commands should be more clearly communicated now
+  Melbert:
+  - bugfix: Fix random loose "obj"s
+2026-11-24:
+  Melbert:
+  - bugfix: Ethereals can't revive from changling husks
+  - bugfix: Some mechanics that differentiated being hit with a lethal vs non-lethal
+      ranged attack now properly differentiates again. For example, bots will spark
+      when shot now.
