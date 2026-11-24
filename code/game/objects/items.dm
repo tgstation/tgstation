@@ -624,9 +624,13 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 		return TRUE
 
 	if(prob(final_block_chance))
-		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
-		var/owner_turf = get_turf(owner)
-		new block_effect(owner_turf, COLOR_YELLOW)
+		owner.visible_message(
+			span_attackblocked("[owner] blocks [attack_text] with [src]!"),
+			span_attackblocked("You block [attack_text] with [src]!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+		new block_effect(get_turf(owner), COLOR_YELLOW)
 		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)
 		return TRUE
 
@@ -1484,7 +1488,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 		return TRUE
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
-		
+
 	return FALSE
 
 /**

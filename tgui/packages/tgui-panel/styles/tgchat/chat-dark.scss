@@ -436,6 +436,20 @@ em {
   font-size: 85%;
 }
 
+.attackblocked {
+  color: hsl(30, 100%, 40%);
+}
+
+.attackother {
+  color: hsl(0, 73.6%, 44.5%);
+}
+
+.attackself {
+  color: hsl(0, 73.6%, 44.5%);
+  font-weight: bold;
+  font-size: 125%;
+}
+
 .smalldanger {
   color: hsl(0, 73.6%, 44.5%);
   font-size: 90%;

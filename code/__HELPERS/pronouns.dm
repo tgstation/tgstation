@@ -75,6 +75,23 @@
 				else
 					return "s"
 
+/proc/add_ed(past_tense)
+	switch(copytext_char(past_tense, -1))
+		if("e")
+			return past_tense + "d"
+		else
+			return past_tense + "ed"
+
+/proc/present_tense(word)
+	return word + plural_s(word)
+
+/proc/past_tense(past_tense)
+	switch(copytext_char(past_tense, -1))
+		if("e")
+			return past_tense + "d"
+		else
+			return past_tense + "ed"
+
 /// A proc to replace pronouns in a string with the appropriate pronouns for a target atom.
 /// Uses associative list access from a __DEFINE list, since associative access is slightly
 /// faster

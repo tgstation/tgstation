@@ -233,10 +233,18 @@
 
 ///Callback when the shield breaks, since cult robes are stupid and have different effects.
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/proc/shield_damaged(mob/living/wearer, attack_text, new_current_charges)
-	wearer.visible_message(span_danger("[wearer]'s robes neutralize [attack_text] in a burst of blood-red sparks!"))
+	wearer.visible_message(
+		span_attackblocked("[wearer]'s robes neutralize [attack_text] in a burst of blood-red sparks!"),
+		span_attackblocked("Your robes neutralize [attack_text] in a burst of blood-red sparks!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	new /obj/effect/temp_visual/cult/sparks(get_turf(wearer))
 	if(new_current_charges == 0)
-		wearer.visible_message(span_danger("The runed shield around [wearer] suddenly disappears!"))
+		wearer.visible_message(
+			span_attackblocked("The runed shield around [wearer] suddenly disappears!"),
+			span_attackblocked("Your runed shield suddenly disappears!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+		)
 
 /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
 	name = "empowered cultist helmet"

@@ -106,7 +106,7 @@
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
-	wound_clothing = TRUE,
+	damage_flags = NONE,
 )
 	. = ..()
 	if (. <= 0)

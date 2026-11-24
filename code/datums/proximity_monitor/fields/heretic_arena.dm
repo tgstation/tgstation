@@ -256,7 +256,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	sharpness,
 	attack_direction,
 	attacking_item,
-	wound_clothing,
+	damage_flags,
 )
 	SIGNAL_HANDLER
 	if(isnull(attacking_item))

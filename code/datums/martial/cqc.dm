@@ -66,14 +66,18 @@
 	var/mob/living/attacker = GET_ASSAILANT(hitby)
 	if(istype(attacker) && cqc_user.Adjacent(attacker))
 		cqc_user.visible_message(
-			span_danger("[cqc_user] [blocking_text_s] [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
-			span_userdanger("You [blocking_text] [attack_text]!"),
+			span_attackblocked("[cqc_user] [blocking_text_s] [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
+			span_attackblocked("You [blocking_text] [attack_text]!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 		attacker.Stun(4 SECONDS)
 	else
 		cqc_user.visible_message(
-			span_danger("[cqc_user] [blocking_text_s] [attack_text]!"),
-			span_userdanger("You [blocking_text] [attack_text]!"),
+			span_attackblocked("[cqc_user] [blocking_text_s] [attack_text]!"),
+			span_attackblocked("You [blocking_text] [attack_text]!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 	return SUCCESSFUL_BLOCK
 

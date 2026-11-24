@@ -463,6 +463,20 @@ h2.alert {
   font-size: 90%;
 }
 
+.attackblocked {
+  color: hsl(30, 100%, 45%);
+}
+
+.attackother {
+  color: hsl(0, 100%, 50%);
+}
+
+.attackself {
+  color: hsl(0, 100%, 50%);
+  font-weight: bold;
+  font-size: 125%;
+}
+
 .warning {
   color: hsl(0, 100%, 50%);
   font-style: italic;

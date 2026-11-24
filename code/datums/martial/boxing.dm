@@ -229,15 +229,16 @@
 
 	playsound(defender, attack_sound, 25, TRUE, -1)
 
-	defender.visible_message(
-		span_danger("[attacker] [current_atk_verb] [defender]!"),
-		span_userdanger("You're [current_atk_verbed] by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		COMBAT_MESSAGE_RANGE,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You [current_atk_verbed] [defender]!",
+		to_defender = "You're [current_atk_verbed] by [attacker]!",
+		to_blind_attacker = "You [current_atk_verbed] someone!",
+		to_blind_defender = "You're [current_atk_verbed] by someone!",
+		to_viewers = "[attacker] [current_atk_verb] [defender]!",
+		to_blind_viewers = "You hear the sickening sound of flesh hitting flesh!",
 	)
-
-	to_chat(attacker, span_danger("You [current_atk_verbed] [defender]!"))
 
 	// Determines the total amount of experience earned per punch
 	var/experience_earned = round(damage/4, 1)
@@ -277,27 +278,33 @@
 /// Our crit effect. For normal boxing, this applies a stagger, then applies a knockout if they're staggered. Other types of boxing apply different kinds of effects.
 /datum/martial_art/boxing/proc/crit_effect(mob/living/attacker, mob/living/defender, armor_block = 0, damage_type = STAMINA, damage = 0)
 	if(defender.get_timed_status_effect_duration(/datum/status_effect/staggered))
-		defender.visible_message(
-			span_danger("[attacker] knocks [defender] out with a haymaker!"),
-			span_userdanger("You're knocked unconscious by [attacker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
-			COMBAT_MESSAGE_RANGE,
-			attacker,
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You knock [defender] out with a haymaker!",
+			to_defender = "You're knocked unconscious by [attacker]!",
+			to_blind_attacker = "You knock someone out with a haymaker!",
+			to_blind_defender = "You're knocked unconscious by someone!",
+			to_viewers = "[attacker] knocks [defender] out with a haymaker!",
+			to_blind_viewers = "You hear the sickening sound of flesh hitting flesh!",
+			dangerous = TRUE,
 		)
-		to_chat(attacker, span_danger("You knock [defender] out with a haymaker!"))
 		defender.apply_effect(20 SECONDS, EFFECT_KNOCKDOWN, armor_block)
 		defender.SetSleeping(10 SECONDS)
 		log_combat(attacker, defender, "knocked out (boxing) ")
 	else
-		defender.visible_message(
-			span_danger("[attacker] staggers [defender] with a haymaker!"),
-			span_userdanger("You're nearly knocked off your feet by [attacker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
-			COMBAT_MESSAGE_RANGE,
-			attacker,
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You stagger [defender] with a haymaker!",
+			to_defender = "You're staggered by [attacker]!",
+			to_blind_attacker = "You stagger someone with a haymaker!",
+			to_blind_defender = "You're staggered by someone!",
+			to_viewers = "[attacker] staggers [defender] with a haymaker!",
+			to_blind_viewers = "You hear the sickening sound of flesh hitting flesh!",
+			dangerous = TRUE,
 		)
 		defender.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
-		to_chat(attacker, span_danger("You stagger [defender] with a haymaker!"))
 		log_combat(attacker, defender, "staggered (boxing) ")
 
 	if(attacker.pulling == defender && attacker.grab_state >= GRAB_AGGRESSIVE) // dubious a normal boxer will be in a state where this happens, buuuut.
@@ -366,8 +373,10 @@
 		perform_extra_effect(boxer, attacker)
 
 	boxer.visible_message(
-		span_danger("[boxer] [block_text]s [attack_text]!"),
-		span_userdanger("You [block_text] [attack_text]!"),
+		span_attackblocked("[boxer] [block_text]s [attack_text]!"),
+		span_attackblocked("You [block_text] [attack_text]!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 	if(block_text == "evade")
 		playsound(boxer.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
@@ -476,15 +485,17 @@
 
 	var/first_word_pick = pick(first_word_strike)
 	var/second_word_pick = pick(second_word_strike)
-
-	defender.visible_message(
-		span_danger("[attacker] knocks the absolute bajeezus out of [defender] utilizing the terrifying [first_word_pick][second_word_pick]!!!"),
-		span_userdanger("You have the absolute bajeezus knocked out of you by [attacker]!!!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		COMBAT_MESSAGE_RANGE,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You knock the absolute bajeezus out of [defender] out with the terrifying [first_word_pick][second_word_pick]!!!",
+		to_defender = "You're knocked out by [attacker] with the terrifying [first_word_pick][second_word_pick]!!!",
+		to_blind_attacker = "You knock the absolute bajeezus out of someone with the terrifying [first_word_pick][second_word_pick]!!!",
+		to_blind_defender = "You're knocked out by someone with the terrifying [first_word_pick][second_word_pick]!!!",
+		to_viewers = "[attacker] knocks the absolute bajeezus out of [defender] with the terrifying [first_word_pick][second_word_pick]!!!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+		dangerous = TRUE,
 	)
-	to_chat(attacker, span_danger("You knock the absolute bajeezus out of [defender] out with the terrifying [first_word_pick][second_word_pick]!!!"))
 	if(ishuman(attacker))
 		var/mob/living/carbon/human/human_attacker = attacker
 		human_attacker.force_say()

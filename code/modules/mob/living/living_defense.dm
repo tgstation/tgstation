@@ -167,12 +167,12 @@
 
 	switch (proj.suppressed)
 		if (SUPPRESSED_QUIET)
-			to_chat(src, span_userdanger("You're shot by \a [proj][organ_hit_text]!"))
+			to_chat(src, span_attackself("You're shot by \a [proj][organ_hit_text]!"))
 		if (SUPPRESSED_NONE)
-			visible_message(span_danger("[src] is hit by \a [proj][organ_hit_text]!"), \
-					span_userdanger("You're hit by \a [proj][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
+			visible_message(span_attackother("[src] is hit by \a [proj][organ_hit_text]!"), \
+					span_attackself("You're hit by \a [proj][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
 			if(is_blind())
-				to_chat(src, span_userdanger("You feel something hit you[organ_hit_text]!"))
+				to_chat(src, span_attackself("You feel something hit you[organ_hit_text]!"))
 
 	if(proj.is_hostile_projectile())
 		apply_projectile_effects(proj, def_zone, blocked)
@@ -280,8 +280,8 @@
 		else
 			playsound(loc, 'sound/items/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
 			if(!isvendor(AM) && !iscarbon(AM)) //Vendors have special interactions, while carbon mobs already generate visible messages!
-				visible_message(span_danger("[src] is hit by [AM]!"), \
-							span_userdanger("You're hit by [AM]!"))
+				visible_message(span_attackother("[src] is hit by [AM]!"), \
+							span_attackself("You're hit by [AM]!"))
 		log_combat(AM, src, "hit ")
 		return ..()
 
@@ -305,8 +305,10 @@
 		log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
 		return ..()
 
-	visible_message(span_danger("[src] is hit by [thrown_item]!"),
-		span_userdanger("You're hit by [thrown_item]!"))
+	visible_message(
+		span_attackother("[src] is hit by [thrown_item]!"),
+		span_attackself("You're hit by [thrown_item]!"),
+	)
 	if(!thrown_item.throwforce)
 		log_hit_combat(throwingdatum?.get_thrower(), thrown_item)
 		return
@@ -344,8 +346,10 @@
 		return FALSE
 	INVOKE_ASYNC(item, TYPE_PROC_REF(/obj/item, attempt_pickup), src, TRUE)
 	if(get_active_held_item() == item) //if our attack_hand() picks up the item...
-		visible_message(span_warning("[src] catches [item]!"), \
-						span_userdanger("You catch [item] in mid-air!"))
+		visible_message(
+			span_notice("[src] catches [item]!"),
+			span_notice("You catch [item] in mid-air!"),
+		)
 		return TRUE
 
 ///Checks the requites for catching a throw item.
@@ -915,9 +919,16 @@
 
 ///Send the chat feedback message for shoving
 /mob/living/proc/get_shoving_message(mob/living/shover, obj/item/weapon, shove_flags)
-	visible_message(span_danger("[shover] shoves [name][weapon ? " with [weapon]" : ""]!"),
-		span_userdanger("You're shoved by [shover][weapon ? " with [weapon]" : ""]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, shover)
-	to_chat(shover, span_danger("You shove [name][weapon ? " with [weapon]" : ""]!"))
+	combat_message(
+		attacker = shover,
+		defender = src,
+		to_attacker = "You shove [src][weapon ? " with your [weapon.name]" : ""]!",
+		to_defender = "[shover] shoves you[weapon ? " with [shover.p_their()] [weapon.name]" : ""]!",
+		to_blind_attacker = "You shove someone[weapon ? " with your [weapon.name]" : ""]!",
+		to_blind_defender = "Someone shoves you[weapon ? " with their [weapon.name]" : ""]!",
+		to_viewers = "[shover] shoves [src][weapon ? " with [shover.p_their()] [weapon.name]" : ""]!",
+		to_blind_viewers = "You hear aggressive shuffling!",
+	)
 
 /mob/living/proc/check_block(atom/hit_by, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0, damage_type = BRUTE)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_CHECK_BLOCK, hit_by, damage, attack_text, attack_type, armour_penetration, damage_type) & SUCCESSFUL_BLOCK)

@@ -403,6 +403,19 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 	if(self_runechat && (audible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, audible_message_flags))
 		create_chat_message(src, raw_message = raw_self_message, runechat_flags = audible_message_flags)
 
+/proc/combat_message(atom/attacker, atom/defender, to_attacker, to_defender, to_blind_attacker, to_blind_defender, to_viewers, to_blind_viewers, dangerous = FALSE)
+	attacker.visible_message(
+		span_attackother(to_viewers),
+		span_attackother("[astype(attacker, /mob)?.is_blind() && to_blind_attacker || to_attacker]"),
+		span_hear(to_blind_viewers),
+		COMBAT_MESSAGE_RANGE,
+		list(defender),
+		ALWAYS_SHOW_SELF_MESSAGE,
+	)
+	if(attacker != defender)
+		var/span = dangerous ? "userdanger" : "attackself"
+		to_chat(defender, "<span class='[span]'>[astype(defender, /mob)?.is_blind() && to_blind_defender || to_defender]</span>")
+
 /// Gets a linked mob, letting atoms act as proxies for actions that rely on hearing sensitivity.
 /// For example, AIs hearing around their holopads, and dullahans hearing around their heads.
 /// Normal say messages are handled by Hear(), this is for other visible/audible messages

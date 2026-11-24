@@ -1,5 +1,5 @@
 /// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds
-/obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus, sharpness=NONE, wound_clothing)
+/obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus, sharpness = NONE, damage_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!owner || wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND || HAS_TRAIT(owner, TRAIT_GODMODE))
@@ -32,7 +32,7 @@
 			wounding_type = WOUND_BLUNT
 		if (((exterior_ready_to_dismember && interior_ready_to_dismember) || dismemberable_by_total_damage(mangled_state)) && try_dismember(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus))
 			return
-	return check_wounding(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus, wound_clothing)
+	return check_wounding(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus, damage_flags = damage_flags)
 
 /**
  * check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria
@@ -45,9 +45,9 @@
  * * damage- How much damage is tied to this attack, since wounding potential scales with damage in an attack (see: WOUND_DAMAGE_EXPONENT)
  * * wound_bonus- The wound_bonus of an attack
  * * exposed_wound_bonus- The exposed_wound_bonus of an attack
- * * wound_clothing- If this should damage clothing.
+ * * damage_flags - additional flags pertaining to the damage instance (more things should be combined into this later)
  */
-/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, exposed_wound_bonus, attack_direction, damage_source, wound_clothing)
+/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, exposed_wound_bonus, attack_direction, damage_source, damage_flags)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/datum/wound)
 
@@ -79,7 +79,7 @@
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
-	injury_roll = check_woundings_mods(woundtype, injury_roll, damage, wound_bonus, exposed_wound_bonus, wound_clothing)
+	injury_roll = check_woundings_mods(woundtype, injury_roll, damage, wound_bonus, exposed_wound_bonus, damage_flags)
 	var/list/series_wounding_mods = check_series_wounding_mods()
 
 	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100) && can_dismember())
@@ -126,9 +126,9 @@
 
 	var/datum/wound/new_wound = new possible_wound
 	if(replaced_wound)
-		new_wound = replaced_wound.replace_wound(new_wound, attack_direction = attack_direction)
+		new_wound = replaced_wound.replace_wound(new_wound, attack_direction = attack_direction, damage_flags = damage_flags)
 	else
-		new_wound.apply_wound(src, attack_direction = attack_direction, wound_source = damage_source)
+		new_wound.apply_wound(src, attack_direction = attack_direction, wound_source = damage_source, damage_flags = damage_flags)
 	log_wound(owner, new_wound, damage, wound_bonus, exposed_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
 	return new_wound
 
@@ -216,7 +216,7 @@
  * Arguments:
  * * It's the same ones on [/obj/item/bodypart/proc/receive_damage] except injury_roll, which is fed to this proc.
  */
-/obj/item/bodypart/proc/check_woundings_mods(wounding_type, injury_roll, damage, wound_bonus, exposed_wound_bonus, wound_clothing)
+/obj/item/bodypart/proc/check_woundings_mods(wounding_type, injury_roll, damage, wound_bonus, exposed_wound_bonus, damage_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/armor_ablation = 0
@@ -229,7 +229,7 @@
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			armor_ablation += clothes.get_armor_rating(WOUND)
 			// Should attack also cause damage to the clothes?
-			if (wound_clothing)
+			if (!(damage_flags & DAMAGE_SKIP_CLOTHING_DAMAGE))
 				if(wounding_type == WOUND_SLASH)
 					clothes.take_damage_zone(body_zone, damage, BRUTE)
 				else if(wounding_type == WOUND_BURN)
@@ -337,8 +337,8 @@
 	if(current_gauze.absorption_capacity > 0)
 		return
 	owner.visible_message(
-		span_danger("[current_gauze] on [owner]'s [name] falls away in rags."),
-		span_warning("[current_gauze] on your [name] falls away in rags."),
+		span_grey("[current_gauze] on [owner]'s [name] falls away in rags."),
+		span_grey("[current_gauze] on your [name] falls away in rags."),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	current_gauze.forceMove(drop_location())

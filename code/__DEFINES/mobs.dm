@@ -1126,3 +1126,6 @@ GLOBAL_LIST_INIT(regal_rat_minion_commands, list(
 #define IS_UNCONSCIOUS_AND_ALIVE(mob) (IS_UNCONSCIOUS(mob) && mob.stat != DEAD)
 /// Checks if the mob is dead or faking death (via [TRAIT_FAKEDEATH])
 #define IS_DEAD_OR_FAKING(mob) (mob.stat == DEAD || HAS_TRAIT(mob, TRAIT_FAKEDEATH))
+
+#define DAMAGE_SKIP_WOUND_MESSAGE (1<<0)
+#define DAMAGE_SKIP_CLOTHING_DAMAGE (1<<1)

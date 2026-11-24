@@ -16,7 +16,7 @@
  * * sharpness - Sharpness of the weapon.
  * * attack_direction - Direction of the attack from the attacker to [src].
  * * attacking_item - Item that is attacking [src].
- * * wound_clothing - If this should cause damage to clothing.
+ * * damage_flags - additional flags pertaining to the damage instance (more things should be combined into this later)
  *
  * Returns the amount of damage dealt.
  */
@@ -32,7 +32,7 @@
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
-	wound_clothing = TRUE,
+	damage_flags = NONE,
 )
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -44,7 +44,7 @@
 	if(damage_amount <= 0)
 		return 0
 
-	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage_amount, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage_amount, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, damage_flags)
 
 	var/damage_dealt = 0
 	switch(damagetype)
@@ -61,7 +61,7 @@
 					sharpness = sharpness,
 					attack_direction = attack_direction,
 					damage_source = attacking_item,
-					wound_clothing = wound_clothing,
+					damage_flags = damage_flags,
 				))
 					update_damage_overlays()
 				damage_dealt = actual_hit.get_damage() - delta // Unfortunately bodypart receive_damage doesn't return damage dealt so we do it manually
@@ -80,7 +80,7 @@
 					sharpness = sharpness,
 					attack_direction = attack_direction,
 					damage_source = attacking_item,
-					wound_clothing = wound_clothing,
+					damage_flags = damage_flags,
 				))
 					update_damage_overlays()
 				damage_dealt = actual_hit.get_damage() - delta // See above
@@ -95,7 +95,7 @@
 		if(BRAIN)
 			damage_dealt = -1 * adjust_organ_loss(ORGAN_SLOT_BRAIN, damage_amount)
 
-	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage_dealt, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
+	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage_dealt, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, damage_flags)
 	return damage_dealt
 
 /**
