@@ -314,11 +314,21 @@
   Melbert:
   - bugfix: Fix random loose "obj"s
 2026-11-24:
+  DeliciousPlushie:
+  - bugfix: Syndicate Battlecruiser Captain can unlock Starfury Armory airlocks normally
+      with pressing buttons.
   Melbert:
   - bugfix: Ethereals can't revive from changling husks
   - bugfix: Some mechanics that differentiated being hit with a lethal vs non-lethal
       ranged attack now properly differentiates again. For example, bots will spark
       when shot now.
+  - code_imp: Updated code for heart attack and disease outbreak events, report anything
+      weird with it
+  - balance: Trace amounts of blood loss no longer causes infinite hyperdeath to moon
+      heretics
+  - bugfix: Fixes a niche issue where cooked goliath steak doesn't contribute to red
+      raptor breeding(?) more than raw goliath meat
+  - bugfix: Fix mystical snip cable X on Tramstation
   san7890:
   - server: The TOML Job Configuration system should now be a lot easier to edit.
       You will have to regenerate the job configuration (downloading the file from

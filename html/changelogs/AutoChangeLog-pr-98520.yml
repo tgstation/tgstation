@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Updated code for heart attack and disease outbreak events, report anything weird with it"
