@@ -64,24 +64,25 @@
 				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
 			return MARTIAL_ATTACK_SUCCESS
 
-	var/atk_verb = pick("chomp", "gnaw", "chew")
-	if(defender.check_block(attacker, 0, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
-		return MARTIAL_ATTACK_FAIL
+		else
+			var/atk_verb = pick("chomp", "gnaw", "chew")
+			if(defender.check_block(attacker, 0, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
+				return MARTIAL_ATTACK_FAIL
 
-	log_combat(attacker, defender, "strong bite (Jungle Arts)")
-	attacker.do_attack_animation(defender, ATTACK_EFFECT_BITE)
-	combat_message(
-		attacker = attacker,
-		defender = defender,
-		to_attacker = "You [atk_verb] [defender] with vicious force!",
-		to_defender = "[attacker] [PRESENT_TENSE(atk_verb)] you with vicious force!",
-		to_blind_attacker = "You [atk_verb] someone with vicious force!",
-		to_blind_defender = "Something [PRESENT_TENSE(atk_verb)] you with vicious force!",
-		to_viewers = "[attacker] [PRESENT_TENSE(atk_verb)] [defender] with vicious force!",
-		to_blind_viewers = "You hear a violent gnawing sound!",
-	)
-	defender.apply_damage(rand(10, 20), damagetype = BRUTE, sharpness = SHARP_POINTY, wound_bonus = 50)
-	playsound(attacker, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
-	if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
-		attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
-	return MARTIAL_ATTACK_SUCCESS
+			log_combat(attacker, defender, "strong bite (Jungle Arts)")
+			attacker.do_attack_animation(defender, ATTACK_EFFECT_BITE)
+			combat_message(
+				attacker = attacker,
+				defender = defender,
+				to_attacker = "You [atk_verb] [defender] with vicious force!",
+				to_defender = "[attacker] [PRESENT_TENSE(atk_verb)] you with vicious force!",
+				to_blind_attacker = "You [atk_verb] someone with vicious force!",
+				to_blind_defender = "Something [PRESENT_TENSE(atk_verb)] you with vicious force!",
+				to_viewers = "[attacker] [PRESENT_TENSE(atk_verb)] [defender] with vicious force!",
+				to_blind_viewers = "You hear a violent gnawing sound!",
+			)
+			defender.apply_damage(rand(10, 20), damagetype = BRUTE, sharpness = SHARP_POINTY, wound_bonus = 50)
+			playsound(attacker, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
+			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
+				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
+			return MARTIAL_ATTACK_SUCCESS
