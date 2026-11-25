@@ -888,11 +888,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	combat_message(
 		attacker = user,
 		defender = target,
-		to_attacker = "You [atk_verb] [target]!",
+		to_attacker = "You [atk_verb] [target == user ? "yourself" : target]!",
 		to_defender = "[user] [atk_verb_continuous] you!",
-		to_blind_attacker = "You [atk_verb] someone!",
+		to_blind_attacker = "You [atk_verb] [target == user ? "yourself" : "someone"]!",
 		to_blind_defender = "Someone [atk_verb_continuous] you!",
-		to_viewers = "[user] [atk_verb_continuous] [target]!",
+		to_viewers = "[user] [atk_verb_continuous] [target == user ? "[target.p_themselves()]" : target]!",
 		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
 	)
 

@@ -540,9 +540,9 @@
 			defender = src,
 			to_attacker = "You [message_verb_simple] [src == user ? "yourself" : src][message_hit_area] with [weapon][extra_wound_details]!",
 			to_defender = "[user] [message_verb_continuous] you[message_hit_area] with [weapon][extra_wound_details]!",
-			to_blind_attacker = "You [message_verb_simple] someone with [weapon][extra_wound_details]!",
+			to_blind_attacker = "You [message_verb_simple] [src == user ? "yourself" : "someone"] with [weapon][extra_wound_details]!",
 			to_blind_defender = "Someone [message_verb_continuous] you[message_hit_area] with something[extra_wound_details]!",
-			to_viewers = "[user] [message_verb_continuous] [src][message_hit_area] with [weapon][extra_wound_details]!",
+			to_viewers = "[user] [message_verb_continuous] [src == user ? p_themselves() : src][message_hit_area] with [weapon][extra_wound_details]!",
 			to_blind_viewers = "You hear a [message_verb_simple].",
 		)
 	// Telekinesis
