@@ -203,8 +203,10 @@
 			var/held_item = owner.get_active_held_item()
 			if (owner.dropItemToGround(held_item))
 				owner.visible_message(
-					span_danger("[owner.name] drops \the [held_item]!"),
-					span_warning("You drop \the [held_item]!"), null, COMBAT_MESSAGE_RANGE)
+					span_grey("[owner.name] drops \the [held_item]!"),
+					span_grey("You drop \the [held_item]!"),
+					vision_distance = COMBAT_MESSAGE_RANGE,
+				)
 
 		if (3)
 			to_chat(owner, span_warning("You lose your balance!"))

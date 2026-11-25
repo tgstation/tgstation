@@ -56,7 +56,11 @@
 			I = victim.get_inactive_held_item()
 
 		if(I && victim.dropItemToGround(I))
-			victim.visible_message(span_danger("[victim] drops [I] in shock!"), span_warning("<b>The force on your [limb.plaintext_zone] causes you to drop [I]!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message(
+				span_grey("[victim] drops [I] in shock!"),
+				span_grey("<b>The force on your [limb.plaintext_zone] causes you to drop [I]!</b>"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
 
 	update_inefficiencies()
 	return ..()
@@ -105,7 +109,7 @@
 		victim.take_bodypart_damage(rand(1, severity * 2), wound_bonus=CANT_WOUND)
 		victim.adjust_stamina_loss(rand(2, severity * 2.5))
 		if(prob(33))
-			to_chat(victim, span_danger("You feel a sharp pain in your body as your bones are reforming!"))
+			to_chat(victim, span_grey("You feel a sharp pain in your body as your bones are reforming!"))
 
 	if(regen_ticks_current > regen_ticks_needed)
 		if(!victim || !limb)
@@ -126,11 +130,14 @@
 		// And you have a 70% or 50% chance to actually land the blow, respectively
 		if(HAS_TRAIT(victim, TRAIT_ANALGESIA) || prob(70 - 20 * (severity - 1)))
 			if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
-				to_chat(victim, span_danger("The fracture in your [limb.plaintext_zone] shoots with pain as you strike [target]!"))
+				to_chat(victim, span_grey("The fracture in your [limb.plaintext_zone] shoots with pain as you strike [target]!"))
 			victim.apply_damage(rand(1, 5), BRUTE, limb, wound_bonus = CANT_WOUND, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 		else
-			victim.visible_message(span_danger("[victim] weakly strikes [target] with [victim.p_their()] broken [limb.plaintext_zone], recoiling from pain!"), \
-			span_userdanger("You fail to strike [target] as the fracture in your [limb.plaintext_zone] lights up in unbearable pain!"), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message(
+				span_grey("[victim] weakly strikes [target] with [victim.p_their()] broken [limb.plaintext_zone], recoiling from pain!"),
+				span_grey("<b>You fail to strike [target] as the fracture in your [limb.plaintext_zone] lights up in unbearable pain!</b>"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
 			INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
 			victim.Stun(0.5 SECONDS)
 			victim.apply_damage(rand(3, 7), BRUTE, limb, wound_bonus = CANT_WOUND, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
@@ -161,7 +168,7 @@
 
 	if(gun.calculate_recoil(victim, gun.recoil) > 1 && severity >= WOUND_SEVERITY_SEVERE && prob(25 * (severity - 1)))
 		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
-			to_chat(victim, span_danger("The fracture in your [limb.plaintext_zone] explodes with pain as [gun] kicks back!"))
+			to_chat(victim, span_grey("The fracture in your [limb.plaintext_zone] explodes with pain as [gun] kicks back!"))
 		victim.apply_damage(rand(1, 3) * (severity - 1) * gun.weapon_weight, BRUTE, limb, wound_bonus = CANT_WOUND, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 
 	if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
@@ -178,15 +185,15 @@
 				victim.bleed(blood_bled, TRUE)
 			if(7 to 13)
 				victim.visible_message(
-					span_grey("A thin stream of blood drips from [victim]'s mouth from the blow to [victim.p_their()] chest."),
-					span_grey("You cough up a bit of blood from the blow to your chest."),
+					span_grey_small("A thin stream of blood drips from [victim]'s mouth from the blow to [victim.p_their()] chest."),
+					span_grey_small("You cough up a bit of blood from the blow to your chest."),
 					vision_distance = COMBAT_MESSAGE_RANGE,
 				)
 				victim.bleed(blood_bled, TRUE)
 			if(14 to 19)
 				victim.visible_message(
-					span_grey("<b>Blood spews out of [victim]'s mouth from the blow to [victim.p_their()] chest!</b>"),
-					span_grey("<b>You spit out a string of blood from the blow to your chest!</b>"),
+					span_grey("Blood spews out of [victim]'s mouth from the blow to [victim.p_their()] chest!"),
+					span_grey("You spit out a string of blood from the blow to your chest!"),
 					vision_distance = COMBAT_MESSAGE_RANGE,
 				)
 				victim.create_splatter(victim.dir)

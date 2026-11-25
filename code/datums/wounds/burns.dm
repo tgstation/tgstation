@@ -54,7 +54,11 @@
 	if(strikes_to_lose_limb <= 0) // we've already hit sepsis, nothing more to do
 		victim.adjust_tox_loss(0.25 * seconds_per_tick)
 		if(SPT_PROB(0.5, seconds_per_tick))
-			victim.visible_message(span_danger("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"), span_warning("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"), vision_distance = COMBAT_MESSAGE_RANGE)
+			victim.visible_message(
+				span_grey("The infection on the remnants of [victim]'s [limb.plaintext_zone] shift and bubble nauseatingly!"),
+				span_grey("You can feel the infection on the remnants of your [limb.plaintext_zone] coursing through your veins!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
 		return
 
 	for(var/datum/reagent/reagent as anything in victim.reagents.reagent_list)
@@ -104,16 +108,16 @@
 			if(SPT_PROB(15, seconds_per_tick))
 				victim.adjust_tox_loss(0.2)
 				if(prob(6))
-					to_chat(victim, span_warning("The blisters on your [limb.plaintext_zone] ooze a strange pus..."))
+					to_chat(victim, span_grey("The blisters on your [limb.plaintext_zone] ooze a strange pus..."))
 
 		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
 			if(!disabling)
 				if(SPT_PROB(1, seconds_per_tick))
-					to_chat(victim, span_warning("<b>Your [limb.plaintext_zone] completely locks up, as you struggle for control against the infection!</b>"))
+					to_chat(victim, span_grey("<b>Your [limb.plaintext_zone] completely locks up, as you struggle for control against the infection!</b>"))
 					set_disabling(TRUE)
 					return
 			else if(SPT_PROB(4, seconds_per_tick))
-				to_chat(victim, span_notice("You regain sensation in your [limb.plaintext_zone], but it's still in terrible shape!"))
+				to_chat(victim, span_grey("You regain sensation in your [limb.plaintext_zone], but it's still in terrible shape!"))
 				set_disabling(FALSE)
 				return
 
@@ -123,17 +127,17 @@
 		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
 			if(!disabling)
 				if(SPT_PROB(1.5, seconds_per_tick))
-					to_chat(victim, span_warning("<b>You suddenly lose all sensation of the festering infection in your [limb.plaintext_zone]!</b>"))
+					to_chat(victim, span_grey("<b>You suddenly lose all sensation of the festering infection in your [limb.plaintext_zone]!</b>"))
 					set_disabling(TRUE)
 					return
 			else if(SPT_PROB(1.5, seconds_per_tick))
-				to_chat(victim, span_notice("You can barely feel your [limb.plaintext_zone] again, and you have to strain to retain motor control!"))
+				to_chat(victim, span_grey("You can barely feel your [limb.plaintext_zone] again, and you have to strain to retain motor control!"))
 				set_disabling(FALSE)
 				return
 
 			if(SPT_PROB(2.48, seconds_per_tick))
 				if(prob(20))
-					to_chat(victim, span_warning("You contemplate life without your [limb.plaintext_zone]..."))
+					to_chat(victim, span_grey("You contemplate life without your [limb.plaintext_zone]..."))
 					victim.adjust_tox_loss(0.75)
 				else
 					victim.adjust_tox_loss(1)
@@ -143,11 +147,11 @@
 				strikes_to_lose_limb--
 				switch(strikes_to_lose_limb)
 					if(2 to INFINITY)
-						to_chat(victim, span_deadsay("<b>The infection in your [limb.plaintext_zone] is literally dripping off, you feel horrible!</b>"))
+						to_chat(victim, span_grey("<b>The infection in your [limb.plaintext_zone] is literally dripping off, you feel horrible!</b>"))
 					if(1)
-						to_chat(victim, span_deadsay("<b>Infection has just about completely claimed your [limb.plaintext_zone]!</b>"))
+						to_chat(victim, span_grey("<b>Infection has just about completely claimed your [limb.plaintext_zone]!</b>"))
 					if(0)
-						to_chat(victim, span_deadsay("<b>The last of the nerve endings in your [limb.plaintext_zone] wither away, as the infection completely paralyzes your joint connector.</b>"))
+						to_chat(victim, span_grey("<b>The last of the nerve endings in your [limb.plaintext_zone] wither away, as the infection completely paralyzes your joint connector.</b>"))
 						threshold_penalty *= 2 // piss easy to destroy
 						set_disabling(TRUE)
 
@@ -257,7 +261,11 @@
 		to_chat(user, span_notice("There's no infection to treat on [victim]'s [limb.plaintext_zone]!"))
 		return
 
-	user.visible_message(span_notice("[user] flashes the burns on [victim]'s [limb] with [I]."), span_notice("You flash the burns on [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]."), vision_distance=COMBAT_MESSAGE_RANGE)
+	user.visible_message(
+		span_notice("[user] flashes the burns on [victim]'s [limb] with [I]."),
+		span_notice("You flash the burns on [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone] with [I]."),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	sanitization += I.uv_power
 	COOLDOWN_START(I, uv_cooldown, I.uv_cooldown_length)
 

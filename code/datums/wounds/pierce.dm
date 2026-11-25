@@ -66,22 +66,22 @@
 	switch(blood_bled)
 		if(8 to 12)
 			victim.visible_message(
-				span_smalldanger("Blood droplets fly from the hole in [victim]'s [limb.plaintext_zone]."),
-				span_danger("You cough up a bit of blood from the blow to your [limb.plaintext_zone]."),
+				span_grey_small("Blood droplets fly from the hole in [victim]'s [limb.plaintext_zone]."),
+				span_grey_small("You cough up a bit of blood from the blow to your [limb.plaintext_zone]."),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 		if(12 to 18)
 			victim.visible_message(
-				span_smalldanger("A small stream of blood spurts from the hole in [victim]'s [limb.plaintext_zone]!"),
-				span_danger("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"),
+				span_grey("A small stream of blood spurts from the hole in [victim]'s [limb.plaintext_zone]!"),
+				span_grey("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 		if(18 to INFINITY)
 			victim.visible_message(
-				span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"),
-				span_bolddanger("You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!"),
+				span_grey("<b>A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!</b>"),
+				span_grey("<b>You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!</b>"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
@@ -112,7 +112,7 @@
 			if(QDELETED(src))
 				return
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(victim, span_notice("You feel the [LOWER_TEXT(undiagnosed_name || name)] in your [limb.plaintext_zone] firming up from the cold!"))
+				to_chat(victim, span_grey("You feel the [LOWER_TEXT(undiagnosed_name || name)] in your [limb.plaintext_zone] firming up from the cold!"))
 
 		if(HAS_TRAIT(victim, TRAIT_BLOOD_FOUNTAIN))
 			adjust_blood_flow(0.25 * seconds_per_tick) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first

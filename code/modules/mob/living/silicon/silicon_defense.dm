@@ -53,9 +53,17 @@
 		return
 	adjust_brute_loss(rand(10, 15))
 	playsound(loc, /datum/sound_effect/punch, 25, TRUE, -1)
-	visible_message(span_danger("[user] punches [src]!"), \
-					span_userdanger("[user] punches you!"), null, COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, span_danger("You punch [src]!"))
+	combat_message(
+		attacker = user,
+		defender = src,
+		to_attacker = "You punch [src]!",
+		to_defender = "[user] punches you!",
+		to_blind_attacker = "You punch someone!",
+		to_blind_defender = "Someone punches you!",
+		to_viewers = "[user] punches [src]!",
+		to_blind_viewers = "You hear a loud thud!",
+		dangerous = TRUE,
+	)
 
 /mob/living/silicon/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
@@ -122,9 +130,17 @@
 			playsound(src, 'sound/effects/bang.ogg', 10, TRUE)
 			return
 
-		visible_message(span_danger("[user] [atk_verb_continuous] [src]!"), \
-					span_userdanger("[user] [atk_verb_continuous] you!"), span_hear("You hear something impacting metal!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You [atk_verb] [src]!"))
+		combat_message(
+			attacker = user,
+			defender = src,
+			to_attacker = "You [atk_verb] [src]!",
+			to_defender = "[user] [atk_verb_continuous] you!",
+			to_blind_attacker = "You [atk_verb] someone!",
+			to_blind_defender = "Someone [atk_verb_continuous] you!",
+			to_viewers = "[user] [atk_verb_continuous] [src]!",
+			to_blind_viewers = "You hear something impacting metal!",
+			dangerous = TRUE,
+		)
 		playsound(src, 'sound/effects/bang.ogg', 10, TRUE)
 		apply_damage(damage, attacking_bodypart.attack_type, attack_direction = get_dir(user, src))
 		apply_status_effect(/datum/status_effect/borg_slow, damage/60)

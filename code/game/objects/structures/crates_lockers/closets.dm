@@ -1285,10 +1285,18 @@ GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", nu
 		target.forceMove(src)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-	update_icon()
-	target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
-		span_userdanger("You're shoved into [src] by [shover.name]!"),
-		span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+	update_appearance()
+	combat_message(
+		attacker = shover,
+		defender = target,
+		to_attacker = "You shove [target] into [src]!",
+		to_defender = "[shover] shoves you into [src]!",
+		to_blind_attacker = "You shove something into [src]!",
+		to_blind_defender = "Someone shoves into [src]!",
+		to_viewers = "[shover] shoves [target] into [src]!",
+		to_blind_viewers = "You hear aggressive shuffling followed by a loud thud!",
+		dangerous = TRUE,
+	)
 	to_chat(src, span_danger("You shove [target.name] into [src]!"))
 	log_combat(shover, target, "shoved", "into [src] (locker/crate)[weapon ? " with [weapon]" : ""]")
 	return COMSIG_LIVING_SHOVE_HANDLED

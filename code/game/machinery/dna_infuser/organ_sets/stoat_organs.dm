@@ -47,8 +47,8 @@
 
 	INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob, emote), "spin")
 	owner.visible_message(
-		span_warning("[owner] instinctively dodges [the_attack] from [hit_by]!"),
-		span_warning("You instinctively dodge out of the way of [the_attack] from [hit_by]!"),
+		span_attack_blocked("[owner] instinctively dodges [the_attack] from [hit_by]!"),
+		span_attack_blocked("You instinctively dodge out of the way of [the_attack] from [hit_by]!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/stoat_dodge)

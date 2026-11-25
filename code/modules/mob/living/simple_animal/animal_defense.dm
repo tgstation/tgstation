@@ -33,24 +33,33 @@
 	if(weapon) // no "gently pushing aside" if you're pressing a shield at them.
 		return ..()
 	var/moved = !(shove_flags & SHOVE_BLOCKED)
-	shover.visible_message(
-		span_danger("[shover.name] [response_disarm_continuous] [src][moved ? ", pushing [p_them()]" : ""]!"),
-		span_danger("You [response_disarm_simple] [src][moved ? ", pushing [p_them()]" : ""]!"),
-		span_hear("You hear aggressive shuffling!"),
-		COMBAT_MESSAGE_RANGE,
-		list(src),
+	combat_message(
+		attacker = shover,
+		defender = src,
+		to_attacker = "You [response_disarm_simple] [src][moved ? ", pushing [p_them()] back" : ""]!",
+		to_defender = "[shover] [response_disarm_continuous] you[moved ? ", pushing you back" : ""]!",
+		to_blind_attacker = "You [response_disarm_simple] something[moved ? ", pushing it back" : ""]!",
+		to_blind_defender = "Something [response_disarm_continuous] you[moved ? ", pushing you back" : ""]!",
+		to_viewers = "[shover.name] [response_disarm_continuous] [src][moved ? ", pushing [p_them()] back" : ""]!",
+		to_blind_viewers = "You hear aggressive shuffling!",
 	)
-	to_chat(src, span_userdanger("You're [moved ? "pushed" : "shoved"] by [shover.name]!"))
 
 /mob/living/simple_animal/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
 	if(!.)
 		return
 	playsound(loc, /datum/sound_effect/punch, 25, TRUE, -1)
-	visible_message(span_danger("[user] punches [src]!"), \
-					span_userdanger("You're punched by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, span_danger("You punch [src]!"))
-	adjust_brute_loss(15)
+	combat_message(
+		attacker = user,
+		defender = src,
+		to_attacker = "You punch [src]!",
+		to_defender = "[user] punches you!",
+		to_blind_attacker = "You punch something!",
+		to_blind_defender = "Something punches you!",
+		to_viewers = "[user] punches [src]!",
+		to_blind_viewers = "You hear a punch!",
+	)
+	apply_damage(15, BRUTE)
 
 /mob/living/simple_animal/attack_paw(mob/living/carbon/human/user, list/modifiers)
 	if(..()) //successful monkey bite.
@@ -71,12 +80,29 @@
 			visible_message(span_danger("[user] [response_disarm_continuous] [name]!"), \
 							span_userdanger("[user] [response_disarm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_danger("You [response_disarm_simple] [name]!"))
+			combat_message(
+				attacker = user,
+				defender = src,
+				to_attacker = "You [response_disarm_simple] [src]!",
+				to_defender = "[user] [response_disarm_continuous] you!",
+				to_blind_attacker = "You [response_disarm_continuous] something!",
+				to_blind_defender = "Something [response_disarm_continuous] you!",
+				to_viewers = "[user] [response_disarm_continuous] [src]!",
+				to_blind_viewers = "You hear aggressive shuffling!",
+			)
 			log_combat(user, src, "disarmed")
 		else
 			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-			visible_message(span_danger("[user] slashes at [src]!"), \
-							span_userdanger("You're slashed at by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_danger("You slash at [src]!"))
+			combat_message(
+				attacker = user,
+				defender = src,
+				to_attacker = "You slash [name]!",
+				to_defender = "[user] slashes you!",
+				to_blind_attacker = "You slash at someone!",
+				to_blind_defender = "Someone slashes at you!",
+				to_viewers = "[user] slashes [name]!",
+				to_blind_viewers = "You hear a slicing sound!",
+			)
 			playsound(loc, 'sound/items/weapons/slice.ogg', 25, TRUE, -1)
 			apply_damage(damage)
 			log_combat(user, src, "attacked")

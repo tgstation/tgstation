@@ -152,7 +152,7 @@
 	if(owner.move_intent == MOVE_INTENT_RUN)
 		fall_chance += 2
 	if(SPT_PROB(0.5 * fall_chance, seconds_per_tick) && owner.body_position == STANDING_UP)
-		to_chat(owner, span_warning("Your leg gives out!"))
+		to_chat(owner, span_grey("Your leg gives out!"))
 		owner.Paralyze(35)
 
 	else if(owner.get_active_held_item())
@@ -160,10 +160,10 @@
 		var/obj/item/I = owner.get_active_held_item()
 		drop_chance += I.w_class
 		if(SPT_PROB(0.5 * drop_chance, seconds_per_tick) && owner.dropItemToGround(I))
-			to_chat(owner, span_warning("You drop [I]!"))
+			to_chat(owner, span_grey("You drop [I]!"))
 
 	else if(SPT_PROB(1.5, seconds_per_tick))
-		to_chat(owner, span_warning("You feel a sudden weakness in your muscles!"))
+		to_chat(owner, span_grey("You feel a sudden weakness in your muscles!"))
 		owner.adjust_stamina_loss(50)
 	..()
 

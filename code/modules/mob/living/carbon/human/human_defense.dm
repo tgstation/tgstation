@@ -136,9 +136,17 @@
 		target.Knockdown(SHOVE_KNOCKDOWN_HUMAN, daze_amount = 3 SECONDS)
 	if(!HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED))
 		Knockdown(SHOVE_KNOCKDOWN_COLLATERAL, daze_amount = 3 SECONDS)
-	target.visible_message(span_danger("[shover] shoves [target.name] into [name]!"),
-		span_userdanger("You're shoved into [name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, list(shover))
-	to_chat(shover, span_danger("You shove [target.name] into [name]!"))
+	combat_message(
+		attacker = shover,
+		defender = target,
+		to_attacker = "You shove [target] into [src]!",
+		to_defender = "[shover] shoves you into [src]!",
+		to_blind_attacker = "You shove someone into someone else!",
+		to_blind_defender = "You are shoved into someone!",
+		to_viewers = "[shover] shoves [target] into [src]!",
+		to_blind_viewers = "You hear aggressive shuffling followed by a loud thud!",
+		dangerous = TRUE,
+	)
 	log_combat(shover, target, "shoved", addition = "into [name][weapon ? " with [weapon]" : ""]")
 	if(on_fire && fire_stacks >= MOB_BIG_FIRE_STACK_THRESHOLD)
 		target.adjust_fire_stacks(fire_stacks / 2)

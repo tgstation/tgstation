@@ -77,6 +77,8 @@
 #define span_greenteamradio(str) ("<span class='greenteamradio'>" + str + "</span>")
 #define span_greentext(str) ("<span class='greentext'>" + str + "</span>")
 #define span_grey(str) ("<span class='grey'>" + str + "</span>")
+#define span_grey_small(str) ("<span class='grey_small'>" + str + "</span>")
+#define span_grey_tiny(str) ("<span class='grey_tiny'>" + str + "</span>")
 #define span_header(str) ("<span class='header'>" + str + "</span>")
 #define span_hear(str) ("<span class='hear'>" + str + "</span>")
 #define span_hidden(str) ("<span class='hidden'>" + str + "</span>")

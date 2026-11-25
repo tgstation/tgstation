@@ -155,8 +155,16 @@
 			soften_text = "Your armor has softened a hit to your [zone_readable]!",
 		))
 
-	visible_message(span_danger("[mecha_attacker.name] [mecha_attacker.attack_verbs[1]] [src]!"), \
-		span_userdanger("[mecha_attacker.name] [mecha_attacker.attack_verbs[2]] you!"), span_hear("You hear a sickening sound of flesh [mecha_attacker.attack_verbs[3]] flesh!"), COMBAT_MESSAGE_RANGE, list(mecha_attacker))
-	to_chat(mecha_attacker, span_danger("You [mecha_attacker.attack_verbs[1]] [src]!"))
+	combat_message(
+		attacker = mecha_attacker,
+		defender = src,
+		to_attacker = "You [mecha_attacker.attack_verbs[1]] [src]!",
+		to_defender = "[mecha_attacker] [mecha_attacker.attack_verbs[2]] you!",
+		to_blind_attacker = "You [mecha_attacker.attack_verbs[1]] something!",
+		to_blind_defender = "Something [mecha_attacker.attack_verbs[2]] you!",
+		to_viewers = "[mecha_attacker] [mecha_attacker.attack_verbs[1]] [src]!",
+		to_blind_viewers = "You hear a sickening sound of flesh [mecha_attacker.attack_verbs[3]] flesh!",
+		dangerous = TRUE,
+	)
 	..()
 	return damage

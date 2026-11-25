@@ -439,11 +439,7 @@
 				if(prob(damage_done))
 					adjust_organ_loss(ORGAN_SLOT_BRAIN, 20)
 					if(!IS_UNCONSCIOUS_OR_CRIT(src))
-						visible_message(
-							span_grey("[src] is knocked senseless!"),
-							span_userdanger("You're knocked senseless!"),
-							vision_distance = COMBAT_MESSAGE_RANGE,
-						)
+						to_chat(src, span_userdanger("You're knocked senseless!"))
 						set_confusion_if_lower(20 SECONDS)
 						adjust_eye_blur(20 SECONDS)
 					if(prob(10))
@@ -464,8 +460,11 @@
 			if(!IS_UNCONSCIOUS_OR_CRIT(src) && !attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && attacking_item.damtype == BRUTE)
 				if(prob(damage_done))
 					visible_message(
-						span_danger("[src] is knocked down!"),
-						span_userdanger("You're knocked down!"),
+						span_attack_other("[src] is knocked down!"),
+						span_attack_self_major("You're knocked down!"),
+						span_hear("You hear a thud!"),
+						COMBAT_MESSAGE_RANGE,
+						ALWAYS_SHOW_SELF_MESSAGE,
 					)
 					apply_effect(6 SECONDS, EFFECT_KNOCKDOWN, armor_block)
 

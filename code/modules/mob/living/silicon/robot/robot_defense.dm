@@ -259,14 +259,32 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	var/obj/item/I = get_active_held_item()
 	if(I)
 		uneq_active()
-		visible_message(span_danger("[user] disarmed [src]!"), \
-			span_userdanger("[user] has disabled [src]'s active module!"), null, COMBAT_MESSAGE_RANGE)
+		combat_message(
+			attacker = user,
+			defender = src,
+			to_attacker = "You disarm [src]!",
+			to_defender = "[user] disables your active module!",
+			to_blind_attacker = "You disarm something!",
+			to_blind_defender = "Something disables your active module!",
+			to_viewers = "[user] disarms [src]!",
+			to_blind_viewers = "You hear something being disarmed!",
+			dangerous = TRUE,
+		)
 		log_combat(user, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 	else
 		Stun(40)
 		step(src,get_dir(user,src))
-		visible_message(span_danger("[user] forces back [src]!"), \
-			span_userdanger("[user] forces you back!"), null, COMBAT_MESSAGE_RANGE)
+		combat_message(
+			attacker = user,
+			defender = src,
+			to_attacker = "You force back [src]!",
+			to_defender = "[user] forces you back!",
+			to_blind_attacker = "You force Something back!",
+			to_blind_defender = "Something forces you back!",
+			to_viewers = "[user] forces back [src]!",
+			to_blind_viewers = "You hear aggressive shuffling!",
+			dangerous = TRUE,
+		)
 		log_combat(user, src, "pushed")
 	playsound(loc, 'sound/items/weapons/pierce.ogg', 50, TRUE, -1)
 

@@ -45,14 +45,6 @@
 	if(weapon) // no "gently pushing aside" if you're pressing a shield at them.
 		return ..()
 	var/moved = !(shove_flags & SHOVE_BLOCKED)
-	shover.visible_message(
-		span_danger("[shover.name] [response_disarm_continuous] [src][moved ? ", pushing [p_them()]" : ""]!"),
-		span_danger("You [response_disarm_simple] [src][moved ? ", pushing [p_them()]" : ""]!"),
-		span_hear("You hear aggressive shuffling!"),
-		COMBAT_MESSAGE_RANGE,
-		list(src),
-	)
-	to_chat(src, span_userdanger("You're [moved ? "pushed" : "shoved"] by [shover.name]!"))
 	combat_message(
 		attacker = shover,
 		defender = src,

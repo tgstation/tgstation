@@ -169,10 +169,13 @@
 		if (SUPPRESSED_QUIET)
 			to_chat(src, span_attack_self("You're shot by \a [proj][organ_hit_text]!"))
 		if (SUPPRESSED_NONE)
-			visible_message(span_attack_other("[src] is hit by \a [proj][organ_hit_text]!"), \
-					span_attack_self("You're hit by \a [proj][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
+			visible_message(
+				span_attack_other("[src] is hit by \a [proj][organ_hit_text]!"),
+				span_attack_self("You're hit by \a [proj][organ_hit_text]!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
 			if(is_blind())
-				to_chat(src, span_attack_self("You feel something hit you[organ_hit_text]!"))
+				to_chat(src, span_attack_self("You feel something fast hit you[organ_hit_text]!"))
 
 	if(proj.is_hostile_projectile())
 		apply_projectile_effects(proj, def_zone, blocked)
@@ -553,14 +556,28 @@
 	if (HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || prob(75))
 		log_combat(user, src, "attacked")
 		playsound(loc, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
-		visible_message(span_danger("[user.name] bites [src]!"), \
-						span_userdanger("[user.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You bite [src]!"))
+		combat_message(
+			attacker = user,
+			defender = src,
+			to_attacker = "You bite [src]!",
+			to_defender = "[user] bites you!",
+			to_blind_attacker = "You bite someone!",
+			to_blind_defender = "Someone bites you!",
+			to_viewers = "[user] bites [src]!",
+			to_blind_viewers = "You hear a chomp!",
+		)
 		return TRUE
 	else
-		visible_message(span_danger("[user.name]'s bite misses [src]!"), \
-						span_danger("You avoid [user.name]'s bite!"), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your bite misses [src]!"))
+		combat_message(
+			attacker = user,
+			defender = src,
+			to_attacker = "Your bite misses [src]!",
+			to_defender = "You avoid [user]'s bite!",
+			to_blind_attacker = "Your jaws clamp down on nothing!",
+			to_blind_defender = "You hear the sound of jaws snapping shut!",
+			to_viewers = "[user]'s bite misses [src]!",
+			to_blind_viewers = "You hear the sound of jaws snapping shut!",
+		)
 
 	return FALSE
 
@@ -576,15 +593,29 @@
 		L.do_attack_animation(src)
 		if(prob(90))
 			log_combat(L, src, "attacked")
-			visible_message(span_danger("[L.name] bites [src]!"), \
-							span_userdanger("[L.name] bites you!"), span_hear("You hear a chomp!"), COMBAT_MESSAGE_RANGE, L)
-			to_chat(L, span_danger("You bite [src]!"))
+			combat_message(
+				attacker = L,
+				defender = src,
+				to_attacker = "You bite [src]!",
+				to_defender = "[L] bites you!",
+				to_blind_attacker = "You bite someone!",
+				to_blind_defender = "Someone bites you!",
+				to_viewers = "[L] bites [src]!",
+				to_blind_viewers = "You hear a chomp!",
+			)
 			playsound(loc, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
 			return TRUE
 		else
-			visible_message(span_danger("[L.name]'s bite misses [src]!"), \
-							span_danger("You avoid [L.name]'s bite!"), span_hear("You hear the sound of jaws snapping shut!"), COMBAT_MESSAGE_RANGE, L)
-			to_chat(L, span_warning("Your bite misses [src]!"))
+			combat_message(
+				attacker = L,
+				defender = src,
+				to_attacker = "Your bite misses [src]!",
+				to_defender = "You avoid [L]'s bite!",
+				to_blind_attacker = "Your jaws clamp down on nothing!",
+				to_blind_defender = "You hear the sound of jaws snapping shut!",
+				to_viewers = "[L]'s bite misses [src]!",
+				to_blind_viewers = "You hear the sound of jaws snapping shut!",
+			)
 			return FALSE
 
 	visible_message(span_notice("[L.name] rubs its head against [src]."), \
@@ -866,9 +897,16 @@
 			return
 		if((shove_flags & SHOVE_BLOCKED) && !(shove_flags & (SHOVE_KNOCKDOWN_BLOCKED|SHOVE_CAN_KICK_SIDE)))
 			var/knocked_down = target.Knockdown(SHOVE_KNOCKDOWN_SOLID, daze_amount = 3 SECONDS)
-			target.visible_message(span_danger("[name] shoves [target.name][knocked_down ? ", knocking [target.p_them()] down" : ""]!"),
-				span_userdanger("You[knocked_down ? "'re knocked down" : " resist falling down"] from a shove by [name]!"), span_hear("You hear aggressive shuffling [knocked_down ? "followed by a loud thud!" : ""]"), COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, span_danger("You shove [target.name][knocked_down ? ", knocking [target.p_them()] down" : ""]!"))
+			combat_message(
+				attacker = src,
+				defender = target,
+				to_attacker = "You shove [target][knocked_down ? ", knocking [target.p_them()] down" : ""]!",
+				to_defender = "[target] shoves you[knocked_down ? ", knocking you down" : ""]!",
+				to_blind_attacker = "You shove someone[knocked_down ? ", knocking them down" : ""]!",
+				to_blind_defender = "Someone shoves you[knocked_down ? ", knocking you down" : ""]!",
+				to_viewers = "[name] shoves [target][knocked_down ? ", knocking [target.p_them()] down" : ""]!",
+				to_blind_viewers = "You hear aggressive shuffling[knocked_down ? " followed by a loud thud!" : ""]!",
+			)
 			log_combat(src, target, "shoved", "[knocked_down ? "knocking them down[weapon ? " with [weapon]" : ""]" : ""]")
 			if(ishuman(target))
 				var/mob/living/carbon/human/human_target = target
@@ -878,9 +916,16 @@
 	if(shove_flags & SHOVE_CAN_KICK_SIDE) //KICK HIM IN THE NUTS
 		if(target.Paralyze(SHOVE_CHAIN_PARALYZE))
 			target.apply_status_effect(/datum/status_effect/no_side_kick)
-			target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
-							span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
+			combat_message(
+				attacker = src,
+				defender = target,
+				to_attacker = "You kick [target] onto [target.p_their()] side!",
+				to_defender = "[name] kicks you onto your side!",
+				to_blind_attacker = "You kick someone onto their side!",
+				to_blind_defender = "Someone kicks you onto your side!",
+				to_viewers = "[name] kicks [target] onto [target.p_their()] side!",
+				to_blind_viewers = "You hear aggressive shuffling followed by a loud thud!",
+			)
 			addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
 			log_combat(src, target, "kicks", "onto their side (paralyzing)")
 			return
@@ -890,12 +935,17 @@
 	//Take their lunch money
 	var/target_held_item = target.get_active_held_item()
 	var/append_message = weapon ? " with [weapon]" : ""
-	// If it's in our typecache, they're staggered and it exists, disarm. If they're knocked down, disarm too.
-	if(target_held_item && target.get_timed_status_effect_duration(/datum/status_effect/staggered) && is_type_in_typecache(target_held_item, GLOB.shove_disarming_types) || target_held_item && target.body_position == LYING_DOWN)
-		target.dropItemToGround(target_held_item)
+	// You can disarm certain items when stagged
+	var/special_disarmable = is_type_in_typecache(target_held_item, GLOB.shove_disarming_types) && !!target.has_status_effect(/datum/status_effect/staggered)
+	// You can disarm any item if they're lying on the ground
+	var/generic_disarmable = target.body_position == LYING_DOWN
+	if(!isnull(target_held_item) && (special_disarmable || generic_disarmable) && target.dropItemToGround(target_held_item))
 		append_message = "causing [target.p_them()] to drop [target_held_item]"
-		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
-			span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)
+		target.visible_message(
+			span_grey("[target.name] drops [target_held_item]!"),
+			span_grey("You drop [target_held_item]!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+		)
 
 	if(shove_flags & SHOVE_CAN_STAGGER)
 		target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
