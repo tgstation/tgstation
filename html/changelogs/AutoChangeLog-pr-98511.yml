@@ -1,4 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - admin: "Admins can set the next round's station traits in the postround"
