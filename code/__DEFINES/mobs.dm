@@ -1127,5 +1127,8 @@ GLOBAL_LIST_INIT(regal_rat_minion_commands, list(
 /// Checks if the mob is dead or faking death (via [TRAIT_FAKEDEATH])
 #define IS_DEAD_OR_FAKING(mob) (mob.stat == DEAD || HAS_TRAIT(mob, TRAIT_FAKEDEATH))
 
+// apply_damage flags
+/// If the damage afflicts a wound, don't show a chat message
 #define DAMAGE_SKIP_WOUND_MESSAGE (1<<0)
+/// Don't damage clothing
 #define DAMAGE_SKIP_CLOTHING_DAMAGE (1<<1)

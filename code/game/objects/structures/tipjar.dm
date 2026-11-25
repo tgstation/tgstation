@@ -89,7 +89,7 @@
 
 	var/list/all_things_text = list()
 	for(var/thing_name, thing_count in all_things)
-		all_things_text += thing_count > 1 ? "[thing_count] [thing_name][plural_s(thing_name)]" : "\a [thing_name]"
+		all_things_text += thing_count > 1 ? "[thing_count] [PLURALIZE(thing_name)]" : "\a [thing_name]"
 
 	. += span_info("Inside, you can see: [english_list(all_things_text)].")
 

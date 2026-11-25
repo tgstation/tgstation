@@ -488,10 +488,10 @@
 			attacker = user,
 			defender = H,
 			to_attacker = "You [picked_fluff_message] [H] with [src]!",
-			to_defender = "[user] [present_tense(picked_fluff_message)] you with [src]!",
+			to_defender = "[user] [PRESENT_TENSE(picked_fluff_message)] you with [src]!",
 			to_blind_attacker = "You [picked_fluff_message] someone with [src]!",
-			to_blind_defender = "Someone [present_tense(picked_fluff_message)] you with [src]!",
-			to_viewers = "[user] [present_tense(picked_fluff_message)] [H] with [src]!",
+			to_blind_defender = "Someone [PRESENT_TENSE(picked_fluff_message)] you with [src]!",
+			to_viewers = "[user] [PRESENT_TENSE(picked_fluff_message)] [H] with [src]!",
 			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
 		)
 		playsound(user, 'sound/effects/woodhit.ogg', 75, TRUE, -1)

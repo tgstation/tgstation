@@ -60,37 +60,23 @@
 /datum/proc/p_themselves(temp_gender)
 	return "itself"
 
+/// Returns what kind of s to append to a word to make it plural or present tense
 /proc/plural_s(pluralize)
 	switch(copytext_char(pluralize, -2))
-		if ("ss")
+		if ("ss", "sh", "ch")
 			return "es"
-		if ("sh")
+
+	switch(copytext_char(pluralize, -1))
+		if("s", "x", "z")
 			return "es"
-		if ("ch")
-			return "es"
-		else
-			switch(copytext_char(pluralize, -1))
-				if("s", "x", "z")
-					return "es"
-				else
-					return "s"
 
-/proc/add_ed(past_tense)
-	switch(copytext_char(past_tense, -1))
-		if("e")
-			return past_tense + "d"
-		else
-			return past_tense + "ed"
+	return "s"
 
-/proc/present_tense(word)
-	return word + plural_s(word)
-
-/proc/past_tense(past_tense)
-	switch(copytext_char(past_tense, -1))
-		if("e")
-			return past_tense + "d"
-		else
-			return past_tense + "ed"
+/// Makes a verb present tense e.g "die" -> "dies", "punch" -> "punches".
+/// Does not work with more complex words e.g "fly" -> "flies".
+#define PRESENT_TENSE(word) "[word][plural_s(word)]"
+/// Makes a noun plural e.g "door" -> "doors", "latch" -> "latches"
+#define PLURALIZE(word) "[word][plural_s(word)]"
 
 /// A proc to replace pronouns in a string with the appropriate pronouns for a target atom.
 /// Uses associative list access from a __DEFINE list, since associative access is slightly

@@ -32,7 +32,6 @@
 	attack_type,
 	armour_penetration,
 	damage_type,
-	list/block_text,
 )
 	SIGNAL_HANDLER
 
