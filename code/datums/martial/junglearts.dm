@@ -16,11 +16,11 @@
 
 	switch(rand(1,6))
 		if(1)
-			var/atk_verb = "dragging"
 			var/obj/item/organ/tail/tail = attacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 			if(isnull(tail) && IS_UNCONSCIOUS_OR_CRIT(defender) || defender.IsParalyzed())
 				return MARTIAL_ATTACK_INVALID
 
+			log_combat(attacker, defender, "tail grab (Jungle Arts)")
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
 			attacker.emote("spin")
 			combat_message(
@@ -38,6 +38,7 @@
 			defender.Knockdown(2 SECONDS)
 			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
 				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
+			return MARTIAL_ATTACK_SUCCESS
 
 		if(6)
 			var/obj/item/organ/tail/tail = attacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
@@ -45,6 +46,7 @@
 				return MARTIAL_ATTACK_INVALID
 
 			var/atk_verb = pick("whip", "flog", "lash")
+			log_combat(attacker, defender, "tail whip (Jungle Arts)")
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
 			combat_message(
 				attacker = attacker,
@@ -61,12 +63,14 @@
 			defender.drop_all_held_items()
 			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
 				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
+			return MARTIAL_ATTACK_SUCCESS
 
 		else
 			if(defender.check_block(attacker, 0, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
 				return MARTIAL_ATTACK_FAIL
 
 			var/atk_verb = pick("chomp", "gnaw", "chew")
+			log_combat(attacker, defender, "strong bite (Jungle Arts)")
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_BITE)
 			combat_message(
 				attacker = attacker,
@@ -82,9 +86,6 @@
 			playsound(attacker, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
 			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
 				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
-
-	if(atk_verb)
-		log_combat(attacker, defender, "[atk_verb] (Jungle Arts)")
-		return MARTIAL_ATTACK_SUCCESS
+			return MARTIAL_ATTACK_SUCCESS
 
 	return MARTIAL_ATTACK_FAIL

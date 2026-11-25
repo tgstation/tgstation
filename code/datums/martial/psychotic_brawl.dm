@@ -20,10 +20,12 @@
 				var/mob/living/carbon/carbon_defender = defender
 				carbon_defender.help_shake_act(attacker)
 			atk_verb = "helped"
+
 		if(2)
 			attacker.emote("cry")
 			attacker.Stun(2 SECONDS)
 			atk_verb = "cried looking at"
+
 		if(3)
 			if(defender.check_block(attacker, 0, "[attacker]'s grab", UNARMED_ATTACK))
 				return MARTIAL_ATTACK_FAIL
@@ -54,21 +56,23 @@
 					else
 						log_combat(attacker, defender, "grabbed", addition="passively")
 						attacker.setGrabState(GRAB_PASSIVE)
+
 		if(4)
 			var/defender_damage = rand(5, 10)
 			if(defender.check_block(attacker, defender_damage, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
 				return MARTIAL_ATTACK_FAIL
 
+			atk_verb = "headbutt"
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 			attacker.emote("flip")
 			combat_message(
 				attacker = attacker,
 				defender = defender,
-				to_attacker = "You headbutt [defender]!",
-				to_defender = "[attacker] headbutts you!",
-				to_blind_attacker = "You headbutt someone!",
-				to_blind_defender = "Something headbutts you!",
-				to_viewers = "[attacker] headbutts [defender]!",
+				to_attacker = "You [atk_verb] [defender]!",
+				to_defender = "[attacker] [PRESENT_TENSE(atk_verb)] you!",
+				to_blind_attacker = "You [atk_verb] someone!",
+				to_blind_defender = "Something [PRESENT_TENSE(atk_verb)] you!",
+				to_viewers = "[attacker] [PRESENT_TENSE(atk_verb)] [defender]!",
 				to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
 				dangerous = TRUE,
 			)
@@ -83,11 +87,12 @@
 			defender.Stun(rand(0.5 SECONDS, 3 SECONDS))
 			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
 				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
-		if(5,6)
+
+		if(5, 6)
 			if(defender.check_block(attacker, 0, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
 				return MARTIAL_ATTACK_FAIL
 
-			var/atk_verb = pick("kick", "hit", "slam")
+			atk_verb = pick("kick", "hit", "slam")
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 			combat_message(
 				attacker = attacker,
@@ -107,7 +112,8 @@
 			defender.Paralyze(6 SECONDS)
 			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
 				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
-		if(7,8)
+
+		if(7, 8)
 			return MARTIAL_ATTACK_INVALID //Resume default behaviour
 
 	if(atk_verb)

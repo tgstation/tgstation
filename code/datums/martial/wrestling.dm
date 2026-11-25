@@ -315,10 +315,10 @@ If you make a derivative work from this code, you must include this notification
 			attacker = attacker,
 			defender = defender,
 			to_attacker = "You [fluff] [defender]!",
-			to_defender = "[attacker] [PRESENT_TENCE(fluff)] you!",
+			to_defender = "[attacker] [PRESENT_TENSE(fluff)] you!",
 			to_blind_attacker = "You [fluff] someone!",
-			to_blind_defender = "Someone [PRESENT_TENCE(fluff)] you!",
-			to_viewers = "[attacker] [PRESENT_TENCE(fluff)] [defender]!",
+			to_blind_defender = "Someone [PRESENT_TENSE(fluff)] you!",
+			to_viewers = "[attacker] [PRESENT_TENSE(fluff)] [defender]!",
 			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
 			dangerous = TRUE,
 		)
