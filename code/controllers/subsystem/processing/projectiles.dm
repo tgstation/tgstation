@@ -3,6 +3,7 @@ PROCESSING_SUBSYSTEM_DEF(projectiles)
 	wait = 1
 	stat_tag = "PP"
 	ss_flags = SS_NO_INIT|SS_TICKER
+	priority = FIRE_PRIORITY_PROJECTILES
 	/*
 	 * Maximum amount of pixels a projectile can pass per tick *unless* its a hitscan projectile.
 	 * This prevents projectiles from turning into essentially hitscans if SSprojectiles starts chugging

@@ -36,6 +36,10 @@ SUBSYSTEM_DEF(atoms)
 
 /datum/controller/subsystem/atoms/Initialize()
 	init_start_time = world.time
+	#ifdef NAVMAP_BAKE_GENERATION
+	initialized = INITIALIZATION_INNEW_REGULAR
+	return SS_INIT_SUCCESS
+	#endif
 	setupGenetics() //to set the mutations' sequence
 
 	initialized = INITIALIZATION_INNEW_MAPLOAD

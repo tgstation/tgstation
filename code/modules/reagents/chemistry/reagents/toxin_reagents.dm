@@ -748,6 +748,8 @@
 	. = ..()
 	if(affected_mob.adjust_stamina_loss(0.5 * data * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
+	// Keeps the mob from recharging stamina as long as it's present, otherwise stam_damage will hit a limit and mob stamina will recharge to full before slowly decreasing again
+	affected_mob.timed_stamina_reset()
 	data = max(data - 1, 3)
 
 /datum/reagent/toxin/polonium
@@ -1425,7 +1427,7 @@
 		var/selected_part = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //God help you if the same limb gets picked twice quickly.
 		var/obj/item/bodypart/BP = affected_mob.get_bodypart(selected_part)
 		if(BP)
-			playsound(affected_mob, SFX_DESECRATION, 50, TRUE, -1)
+			playsound(affected_mob, /datum/sound_effect/desecration, 50, TRUE, -1)
 			affected_mob.visible_message(span_warning("[affected_mob]'s bones hurt too much!!"), span_danger("Your bones hurt too much!!"))
 			affected_mob.say("OOF!!", forced = type)
 			affected_mob.apply_damage(20, BRUTE, BP, wound_bonus = rand(30, 130))

@@ -18,7 +18,6 @@
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter, /obj/item/flashlight/lantern/heretic)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	armor_type = /datum/armor/eldritch_armor
-	clothing_traits = list(TRAIT_HERETIC_AURA_HIDDEN)
 	/// Whether the hood is flipped up
 	var/hood_up = FALSE
 	/// Type of texture applied by this
@@ -493,10 +492,12 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/on_robes_gained(mob/living/user)
 	user.AddElement(/datum/element/digitalcamo)
 	user.add_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN_APPEARANCE, TRAIT_UNKNOWN_VOICE), REF(src))
+	user.update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
 	user.RemoveElement(/datum/element/digitalcamo)
 	user.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN_APPEARANCE, TRAIT_UNKNOWN_VOICE), REF(src))
+	user.update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/robes_side_effect(mob/living/user)
 	if(!iscarbon(user))
@@ -539,7 +540,6 @@
 	armor_type = /datum/armor/eldritch_armor/moon
 	flags_inv = HIDESHOES | HIDEJUMPSUIT | HIDEMUTWINGS
 	clothing_traits = list(
-		TRAIT_HERETIC_AURA_HIDDEN,
 		TRAIT_BATON_RESISTANCE,
 		TRAIT_STUNIMMUNE,
 		TRAIT_NEVER_WOUNDED,
@@ -616,6 +616,9 @@
 
 	RegisterSignal(human_user, COMSIG_CARBON_LIMB_DAMAGED, PROC_REF(limb_damage))
 	signal_registered += COMSIG_CARBON_LIMB_DAMAGED
+
+	RegisterSignal(human_user, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(handle_blood_loss))
+	signal_registered += COMSIG_HUMAN_ON_HANDLE_BLOOD
 
 	var/obj/item/organ/brain/our_brain = human_user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
@@ -737,6 +740,17 @@
 	to_explode.dismember(dam_type = BRUTE, silent = TRUE)
 	to_explode.drop_organs()
 	qdel(to_explode)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/handle_blood_loss(mob/living/carbon/human/source, seconds_per_tick)
+	SIGNAL_HANDLER
+
+	var/obj/item/organ/brain/the_brain = source.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/blood_volume = source.get_blood_volume(apply_modifiers = TRUE)
+	var/target_brain_loss = max((1 - (blood_volume / BLOOD_VOLUME_NORMAL)) * (the_brain?.maxHealth || /obj/item/organ/brain::maxHealth), 0)
+	if(the_brain.damage < target_brain_loss)
+		handle_damage(source, round(0.01 * (BLOOD_VOLUME_NORMAL - blood_volume), 0.1) * seconds_per_tick)
+
+	return HANDLE_BLOOD_NO_OXYLOSS
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/process(seconds_per_tick)
 	var/mob/living/carbon/human/wearer = loc

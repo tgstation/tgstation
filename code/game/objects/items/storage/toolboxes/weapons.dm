@@ -280,7 +280,7 @@
 		playsound(src, 'sound/items/click.ogg', 25, TRUE)
 		return TRUE
 	to_chat(user, span_warning("You put your hand on the hand scanner, and it rejects it with an angry chimpanzee screech!"))
-	playsound(src, SFX_SCREECH, 75, TRUE)
+	playsound(src, /datum/sound_effect/screech, 75, TRUE)
 	return FALSE
 
 /obj/item/storage/toolbox/guncase/monkeycase/PopulateContents()

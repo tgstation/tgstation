@@ -379,7 +379,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		current_user.images -= menu_holder
 
 /datum/radial_menu/proc/wait(atom/user, atom/anchor, require_near = FALSE)
-	while (current_user && !finished && !selected_choice)
+	while (current_user && !finished && !selected_choice && !QDELETED(user))
 		if(require_near && !in_range(anchor, user))
 			return
 		if(custom_check_callback && next_check < world.time)

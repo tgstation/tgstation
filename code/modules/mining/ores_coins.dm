@@ -11,8 +11,8 @@
 	singular_name = "ore chunk"
 	material_flags = MATERIAL_EFFECTS
 	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
-	drop_sound = SFX_STONE_DROP
-	pickup_sound = SFX_STONE_PICKUP
+	drop_sound = /datum/sound_effect/stone_drop
+	pickup_sound = /datum/sound_effect/stone_pickup
 	sound_vary = TRUE
 	/// How many points this ore gets you from the ore redemption machine
 	var/points = 0
@@ -81,12 +81,7 @@
 	. = ..()
 	if(isnull(refined_type))
 		return
-
-	var/probability = rand(0, 100) / 100
-	var/burn_value = probability * amount
-	var/amount_refined = floor(burn_value * values_sum(mats_per_unit) / SHEET_MATERIAL_AMOUNT)
-	if(amount_refined > 1)
-		new refined_type(drop_location(), amount_refined)
+	new refined_type(drop_location(), amount)
 	qdel(src)
 
 /obj/item/stack/ore/uranium
@@ -287,7 +282,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/diamond/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/raptor_food, speed_modifier = 0.05, health_modifier = -1, color_chances = string_list(list(/datum/raptor_color/yellow = 3)))
+	var/static/list/raptor_food_chances = list(/datum/raptor_color/yellow = 3)
+	AddElement(/datum/element/raptor_food, speed_modifier = 0.05, health_modifier = -1, color_chances = raptor_food_chances)
 
 /obj/item/stack/ore/diamond/five
 	amount = 5

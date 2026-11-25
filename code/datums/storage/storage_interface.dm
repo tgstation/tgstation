@@ -36,6 +36,7 @@
 
 /datum/storage_interface/Destroy(force)
 	QDEL_NULL(closer)
+	QDEL_NULL(upper)
 	QDEL_NULL(cells)
 	QDEL_NULL(corner_top_left)
 	QDEL_NULL(corner_top_right)

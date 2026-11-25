@@ -4,6 +4,8 @@
 	icon_state = "watermelon"
 	inhand_icon_state = "watermelon"
 	abstract_type = /obj/item/food/grown/melonlike
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 	/// chestplate made by hollowing out the melon
 	var/chestplate_type = null
 	/// fire-resistant version of above
@@ -18,7 +20,7 @@
 	var/slice_type = null
 
 /obj/item/food/grown/melonlike/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 5, 20, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, slice_type, 5, 20, screentip_verb = "Slice", sound_to_play = /datum/sound_effect/knife_slice)
 
 /obj/item/food/grown/melonlike/make_dryable()
 	return //No drying

@@ -266,7 +266,7 @@
 		addtimer(CALLBACK(src, PROC_REF(close)), timeout)
 
 /datum/browser/modal/proc/wait()
-	while (open_time && selected_button <= 0 && (!timeout || open_time + timeout > world.time))
+	while (open_time && selected_button <= 0 && !QDELETED(user) && (!timeout || open_time + timeout > world.time))
 		stoplag(1)
 
 /datum/browser/modal/list_picker

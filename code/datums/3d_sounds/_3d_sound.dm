@@ -37,6 +37,7 @@
 	src.sound_range = sound_range
 	src.sound_length = sound_length
 	our_channel = channel
+	our_sound.channel = channel
 	src.preference_volume = preference_volume
 	src.preference_signal = preference_signal
 	src.falloff_distance = falloff_distance

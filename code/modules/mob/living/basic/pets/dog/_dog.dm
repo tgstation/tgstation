@@ -11,7 +11,7 @@
 /datum/pet_command/attack/dog
 	attack_subtree = /datum/bt_node/subtree/pet_command/attack/dog
 
-/datum/pet_command/attack/dog/set_command_active(mob/living/parent, mob/living/commander)
+/datum/pet_command/attack/dog/set_command_active(mob/living/parent, mob/living/commander, radial_command = FALSE, datum/weakref/command_point, has_command_point = FALSE, explicit_command = TRUE, atom/initial_target)
 	. = ..()
 	parent.ai_controller.set_blackboard_key(BB_DOG_HARASS_HARM, TRUE)
 

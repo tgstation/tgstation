@@ -17,7 +17,7 @@
 	embed_type = /datum/embedding/chrystarfish
 	attack_verb_continuous = list("stabs", "jabs")
 	attack_verb_simple = list("stab", "jab")
-	hitsound = SFX_SHATTER
+	hitsound = /datum/sound_effect/shatter
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 
@@ -65,7 +65,7 @@
 	if(new_status == FISH_DEAD)
 		if(fillet_type)
 			new fillet_type(get_turf(src))
-		playsound(src, SFX_SHATTER, 50)
+		playsound(src, /datum/sound_effect/shatter, 50)
 		qdel(src)
 
 /obj/item/fish/starfish/chrystarfish/add_emissive()
@@ -124,7 +124,7 @@
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	block_sound = 'sound/items/weapons/parry.ogg'
 	drop_sound = 'sound/mobs/non-humanoids/fish/fish_drop1.ogg'
-	pickup_sound = SFX_FISH_PICKUP
+	pickup_sound = /datum/sound_effect/fish_pickup
 	sound_vary = TRUE
 
 	base_pixel_w = -16
@@ -360,7 +360,7 @@
 	righthand_file = 'icons/mob/inhands/fish_righthand.dmi'
 	attack_verb_continuous = list("stabs", "jabs")
 	attack_verb_simple = list("stab", "jab")
-	hitsound = SFX_DEFAULT_FISH_SLAP
+	hitsound = /datum/sound_effect/default_fish_slap
 	pickup_sound = 'sound/items/handling/materials/glass_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/glass_drop.ogg'
 	sprite_width = 7
@@ -426,7 +426,7 @@
 	sharpness = SHARP_POINTY
 	throwforce = 9
 	throw_range = 7
-	hitsound = SFX_ALT_FISH_SLAP
+	hitsound = /datum/sound_effect/alt_fish_slap
 
 	sprite_width = 12
 	sprite_height = 13
@@ -516,7 +516,7 @@
 	damtype = BRAIN
 	attack_verb_continuous = list("screeches", "shrieks")
 	attack_verb_simple = list("screech", "shriek")
-	hitsound = SFX_DEFAULT_FISH_SLAP // todo shriek
+	hitsound = /datum/sound_effect/default_fish_slap // todo shriek
 	sound_vary = TRUE
 
 	sprite_width = 11

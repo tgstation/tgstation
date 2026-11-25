@@ -415,7 +415,7 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	var/static/list/food_types = list(
 		/obj/item/food/cheesiehonkers,
-		/obj/item/food/cornchips,
+		/obj/item/food/chips/corn,
 	)
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 30, bonus_tame_chance = 0)
 	AddElement(/datum/element/damage_threshold, 10) //lots of fat to cushion blows.

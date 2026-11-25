@@ -120,8 +120,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BRAINLESS_CARBON "brainless_carbon"
 #define TRAIT_BADDNA "baddna"
 #define TRAIT_CLUMSY "clumsy"
-/// Trait that means you are capable of holding items in some form
-#define TRAIT_CAN_HOLD_ITEMS "can_hold_items"
 /// Trait that means you're capable of throwing things
 #define TRAIT_CAN_THROW_ITEMS "can_throw_items"
 /// Trait which lets you clamber over a barrier
@@ -788,6 +786,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
 #define TRAIT_KNOW_ROBO_WIRES "know_robo_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
+#define TRAIT_KNOW_ATMOS_WIRES "know_atmos_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
 #define TRAIT_SABRAGE_PRO "sabrage_pro"
 /// this skillchip trait lets you wash brains in washing machines to heal them
@@ -1018,8 +1017,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BORG_GIVE "give_borg_item"
 
 //---- Heretic Traits
-/// Hides the heretic overlay that outs them as the heretic
-#define TRAIT_HERETIC_AURA_HIDDEN "heretic_aura_hidden"
 /// This rod was infused by a heretic, making it awesome and improving influence gain
 #define TRAIT_ROD_MANSUS_INFUSED "rod_infused"
 /// Designates a heart as a living heart for a heretic.
@@ -1314,6 +1311,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MAGNETIC_ID_CARD "magnetic_id_card"
 /// ID cards with this trait have special appraisal text.
 #define TRAIT_TASTEFULLY_THICK_ID_CARD "impressive_very_nice"
+
+/// When applied to objects, ID cards placed in the object's contents will act as if they are worn or held, granting the mob the card's access.
+/// This is not applied recursively, i.e. an ID card in an item with this trait in another item with this trait does not work.
+#define TRAIT_PASS_ID_ACCESS_IN_CONTENTS "pass_id_access_in_contents"
 
 ///The entity has Silicon 'access', so is either a silicon, has an access wand, or is an admin ghost AI.
 ///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.

@@ -1,3 +1,4 @@
+import { flushSync } from 'react-dom';
 import { focusMap } from '../../focus';
 import { logger } from '../../logging';
 import { suspendRenderer } from '../../renderer';
@@ -16,17 +17,22 @@ let suspendInterval: NodeJS.Timeout | null = null;
 /** Resets all state and refocuses byond window */
 export function suspend(): void {
   suspendRenderer();
-  resetStore();
 
   if (suspendInterval) clearInterval(suspendInterval);
 
-  store.set(configAtom, (prev) => ({
-    ...prev,
-    title: '',
-    status: 1,
-  }));
-  store.set(suspendingAtom, false);
-  store.set(suspendedAtom, Date.now());
+  /* Render the suspended state now. If DM reuses this window for the next UI before */
+  /* React renders on its own, the same interface stays mounted with */
+  /* its old state, and the window stays hidden when the size is unchanged. */
+  flushSync(() => {
+    resetStore();
+    store.set(configAtom, (prev) => ({
+      ...prev,
+      title: '',
+      status: 1,
+    }));
+    store.set(suspendingAtom, false);
+    store.set(suspendedAtom, Date.now());
+  });
 
   Byond.winset(Byond.windowId, {
     'is-visible': false,

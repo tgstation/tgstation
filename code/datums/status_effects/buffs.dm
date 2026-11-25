@@ -119,7 +119,7 @@
 	MODIFY_PHYSIOLOGY(owner, BURN, 10)
 	MODIFY_PHYSIOLOGY(owner, TOX, 10)
 	MODIFY_PHYSIOLOGY(owner, OXY, 10)
-	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_PRESSURE, 10)
+	MODIFY_PHYSIOLOGY(owner, STAMINA, 10)
 	owner.remove_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
 	owner.remove_stun_absorption(id)
 

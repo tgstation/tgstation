@@ -30,6 +30,13 @@
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
 
+/// called when a typing or thinking bubble appears or goes away
+#define COMSIG_LIVING_CHAT_INDICATOR_UPDATED "living_chat_indicator_updated"
+/// called when the typing bubble appears or goes away
+#define COMSIG_LIVING_TYPING_INDICATOR_UPDATED "living_typing_indicator_updated"
+/// called when the thinking bubble appears or goes away
+#define COMSIG_LIVING_THINKING_INDICATOR_UPDATED "living_thinking_indicator_updated"
+
 /// from /datum/status_effect/incapacitating/stamcrit/on_apply()
 #define COMSIG_LIVING_ENTER_STAMCRIT "living_enter_stamcrit"
 ///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)
@@ -237,6 +244,16 @@
 /// From /mob/living/unfriend() : (mob/living/old_friend)
 #define COMSIG_LIVING_UNFRIENDED "living_unfriended"
 
+/// From pet command activation: (datum/pet_command/command, mob/living/commander)
+#define COMSIG_LIVING_PET_COMMAND_STARTING "living_pet_command_starting"
+/// From pet command completion: (datum/pet_command/command)
+#define COMSIG_LIVING_PET_COMMAND_FINISHED "living_pet_command_finished"
+/// From pet radial menu selection: (mob/living/friend, datum/pet_command/command)
+#define COMSIG_LIVING_PET_COMMAND_RADIAL_SELECTED "living_pet_command_radial_selected"
+
+	/// Return from pet command signals when the component handled the event.
+	#define COMPONENT_PET_COMMAND_HANDLED (1<<0)
+
 /// From /obj/effect/temp_visual/resonance/burst() : (mob/creator, mob/living/hit_living)
 #define COMSIG_LIVING_RESONATOR_BURST "living_resonator_burst"
 
@@ -401,3 +418,6 @@
 
 /// From /mob/living/proc/cause_hallucination(): (datum/hallucination)
 #define COMSIG_LIVING_HALLUCINATING "living_hallucinating"
+
+/// From /mob/living/proc/timed_stamina_reset() : ()
+#define COMSIG_LIVING_STAMINA_REGEN_RESET "living_stamina_reset"

@@ -2,9 +2,9 @@
 	icon = 'icons/obj/clothing/head/utility.dmi'
 	worn_icon = 'icons/mob/clothing/head/utility.dmi'
 	sound_vary = TRUE
-	pickup_sound = SFX_HARD_HAT_PICKUP
-	drop_sound = SFX_HARD_HAT_DROP
-	equip_sound = SFX_HARD_HAT_EQUIP
+	pickup_sound = /datum/sound_effect/hard_hat_pickup
+	drop_sound = /datum/sound_effect/hard_hat_drop
+	equip_sound = /datum/sound_effect/hard_hat_equip
 
 /obj/item/clothing/head/utility/hardhat
 	name = "hard hat"
@@ -162,7 +162,7 @@
 /obj/item/clothing/head/utility/hardhat/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		playsound(src, up ? SFX_VISOR_UP : SFX_VISOR_DOWN, 50, TRUE)
+		playsound(src, up ? /datum/sound_effect/visor_up : /datum/sound_effect/visor_down, 50, TRUE)
 
 /obj/item/clothing/head/utility/hardhat/welding/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()

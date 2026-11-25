@@ -1393,7 +1393,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	return copy
 
 /// Returns the (isolated) security HUD icon for the given job.
-/proc/get_job_hud_icon(datum/job/job) as /icon
+/proc/get_job_hud_icon(datum/job/job, scale = 1) as /icon
 	var/static/alist/icon_cache = alist()
 	if(isnull(job))
 		return
@@ -1407,10 +1407,12 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 			return null
 
 	//add it to the cache if it isn't already
-	var/job_type = job.type
+	var/job_type = "[job.type][scale]"
 	if(!icon_cache[job_type])
 		var/icon/sechud_icon = job.get_lobby_icon()
 		sechud_icon.Crop(1, 17, 8, 24)
+		if(scale != 1)
+			sechud_icon.Scale(sechud_icon.Width() * scale, sechud_icon.Height() * scale)
 		icon_cache[job_type] = sechud_icon
 
 	return icon(icon_cache[job_type])
@@ -1463,4 +1465,3 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/zero_alpha_regex = regex(@@#(?:(?!a0a0a0)([0-9]|[a-f]){6}00)@, "gi")
 	linear_pixels = replacetext(linear_pixels, zero_alpha_regex, COLOR_DMI_MASK)
 	return linear_pixels
-

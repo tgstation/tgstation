@@ -54,8 +54,7 @@
 	passive_level = HERETIC_LEVEL_UPGRADE
 	heretic_datum.passive_level = HERETIC_LEVEL_UPGRADE
 	heretic_datum.update_data_for_all_viewers()
-	if(!heretic_datum.unlimited_blades)
-		heretic_datum.disable_blade_breaking()
+	heretic_datum.disable_blade_breaking()
 
 /// Gives our final upgrade
 /datum/status_effect/heretic_passive/proc/heretic_level_final()
@@ -163,7 +162,7 @@
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
 	RegisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hit_someone))
 
-/datum/status_effect/heretic_passive/blade/proc/hit_someone(mob/living/source, mob/living/target, obj/item/used_weapon)
+/datum/status_effect/heretic_passive/blade/proc/hit_someone(mob/living/source, obj/item/used_weapon, mob/living/target)
 	SIGNAL_HANDLER
 
 	if(!isliving(target) || target == source)
@@ -312,7 +311,7 @@
 	. = ..()
 	UnregisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK)
 
-/datum/status_effect/heretic_passive/cosmic/proc/hit_someone(mob/living/source, mob/living/target, obj/item/used_weapon)
+/datum/status_effect/heretic_passive/cosmic/proc/hit_someone(mob/living/source, obj/item/used_weapon, mob/living/target)
 	SIGNAL_HANDLER
 
 	if(!isliving(target) || target == source || target.stat <= HARD_CRIT)

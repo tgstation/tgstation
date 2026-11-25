@@ -8,6 +8,7 @@
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	/// A weak reference to our heirloom.
 	var/datum/weakref/heirloom
+	mail_weight = 2
 	mail_goodies = list(/obj/item/storage/briefcase/secure)
 
 /datum/quirk/item_quirk/family_heirloom/add_unique(client/client_source)

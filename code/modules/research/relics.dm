@@ -125,7 +125,7 @@
 
 /// Throws a corgi somewhere
 /obj/item/assembly/relic/proc/corgi_cannon(mob/user)
-	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/mob/living/basic/pet/dog/corgi/sad_corgi = relic_mob_spawn(/mob/living/basic/pet/dog/corgi)
 	if(sad_corgi)
 		sad_corgi.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, PROC_REF(throw_smoke), sad_corgi))
@@ -135,7 +135,7 @@
 
 /// Spawns cleaning foam
 /obj/item/assembly/relic/proc/cleaning_foam(mob/user)
-	playsound(src, SFX_SPARKS, rand(25, 50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, rand(25, 50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/chem_grenade/cleaner/spawned_foamer = new(get_turf(src))
 	spawned_foamer.detonate()
 	qdel(spawned_foamer)
@@ -143,7 +143,7 @@
 
 /// Similar to cleaning foam but spawns the acid variant
 /obj/item/assembly/relic/proc/cleaning_foam_acid(mob/user)
-	playsound(src, SFX_SPARKS, rand(25, 50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, rand(25, 50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/chem_grenade/ez_clean/spawned_foamer = new(get_turf(src))
 	spawned_foamer.detonate()
 	qdel(spawned_foamer)
@@ -154,7 +154,7 @@
 
 /// Flashbangs anyone nearby
 /obj/item/assembly/relic/proc/flashbanger(mob/user)
-	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/obj/item/grenade/flashbang/spawned_flashbang = new(get_turf(src))
 	spawned_flashbang.detonate()
 	warn_admins(user, "Flash")
@@ -316,7 +316,7 @@
 // Creates a glass and fills it up with a drink.
 /obj/item/assembly/relic/proc/drink_dispenser(mob/user)
 	var/obj/item/reagent_containers/cup/glass/drinkingglass/freebie = new(get_step_rand(src))
-	playsound(freebie, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(freebie, /datum/sound_effect/sparks, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	do_sparks(5, TRUE, src, src)
 	addtimer(CALLBACK(src, PROC_REF(dispense_drink), freebie), 0.5 SECONDS)
 
@@ -336,7 +336,7 @@
 	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50, vary = TRUE)
 	for(var/mob/living/carbon/nearby in range(2, get_turf(src))) //needs get_turf() to work
 		nearby.bioscramble(name)
-		playsound(nearby, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(nearby, /datum/sound_effect/sparks, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		throw_smoke(get_turf(nearby))
 		to_chat(nearby, span_notice("You feel weird."))
 	if(prob(33))
@@ -345,7 +345,7 @@
 
 /// Charges an item or two in your inventory. Also yourself.
 /obj/item/assembly/relic/proc/charger(mob/living/user)
-	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/mob/living/mob_to_charge = get(src, /mob/living)
 	if(!mob_to_charge)
 		return
@@ -415,7 +415,7 @@
 		ADD_TRAIT(to_disguise, TRAIT_NO_JUMPSUIT, REF(src)) // prevent dropping pockets & belt
 
 	// magic trick!
-	playsound(to_disguise, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(to_disguise, /datum/sound_effect/sparks, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	throw_smoke(to_disguise)
 
 	if(!ishuman(to_disguise))

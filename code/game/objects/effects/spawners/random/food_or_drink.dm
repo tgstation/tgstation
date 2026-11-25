@@ -260,7 +260,7 @@
 		/obj/item/food/cnds = 5,
 		/obj/item/food/energybar = 5,
 		/obj/item/reagent_containers/cup/glass/dry_ramen = 5,
-		/obj/item/food/cornchips/random = 5,
+		/obj/item/food/chips/corn/random = 5,
 		/obj/item/food/semki = 5,
 		/obj/item/food/peanuts/random = 3,
 		/obj/item/food/cnds/random = 3,

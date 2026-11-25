@@ -1061,6 +1061,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 					else
 						winset(src, "default-[REF(key)]", "parent=default;name=[key];command=")
 	calculate_move_dir()
+	SEND_SIGNAL(mob, COMSIG_MOB_HOTKEYS_UPDATED)
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))

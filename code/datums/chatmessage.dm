@@ -112,6 +112,8 @@
  * * message_mods - All mods from whatever message triggered this (if applicable)
  */
 /datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, datum/language/language, list/extra_classes, lifespan, list/message_mods)
+	usr = null // do not hold a ref to usr here please,,,,
+
 	/// Cached icons to show what language the user is speaking
 	var/static/list/language_icons
 

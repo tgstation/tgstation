@@ -29,7 +29,7 @@ Difficulty: Medium
 	default_blood_volume = BLOOD_VOLUME_NORMAL
 	gps_name = "Resonant Signal"
 	death_message = "falls to the ground, decaying into glowing particles."
-	death_sound = SFX_BODYFALL
+	death_sound = /datum/sound_effect/bodyfall
 	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
 
 	ai_controller = /datum/ai_controller/blood_drunk_miner

@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
+/// How long a new window gets to load and send ready before we close it
+#define TGUI_WINDOW_STARTUP_TIMEOUT (60 SECONDS)
+
 /**
  * tgui datum (represents a UI).
  */
@@ -25,8 +28,8 @@
 	var/autoupdate = TRUE
 	/// If the UI has been initialized yet.
 	var/initialized = FALSE
-	/// Time of opening the window.
-	var/opened_at
+	/// The world.time this UI has to finish its first handshake by, set once in open()
+	var/initialization_deadline
 	/// Stops further updates when close() was called.
 	var/closing = FALSE
 	/// The status/visibility of the UI.
@@ -93,15 +96,16 @@
 	window = SStgui.request_pooled_window(user)
 	if(!window)
 		return FALSE
-	opened_at = world.time
 	window.acquire_lock(src)
 	if(!window.is_ready())
+		initialization_deadline = world.time + TGUI_WINDOW_STARTUP_TIMEOUT
 		window.initialize(
 			strict_mode = TRUE,
 			assets = list(
 				get_asset_datum(/datum/asset/simple/tgui),
 			))
 	else
+		initialization_deadline = world.time + TGUI_PING_TIMEOUT
 		window.send_message("ping")
 	send_assets()
 	window.send_message("update", get_payload(
@@ -312,7 +316,7 @@
 		close(can_be_suspended = FALSE)
 		return
 	// Validate ping
-	if(!initialized && world.time - opened_at > TGUI_PING_TIMEOUT)
+	if(!initialized && world.time > initialization_deadline)
 		log_tgui(user, "Error: Zombie window detected, closing.",
 			window = window,
 			src_object = src_object)
@@ -395,3 +399,5 @@
 		return
 	if(src_object.ui_act(act_type, payload, src, state))
 		SStgui.update_uis(src_object)
+
+#undef TGUI_WINDOW_STARTUP_TIMEOUT

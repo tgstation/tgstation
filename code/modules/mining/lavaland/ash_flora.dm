@@ -240,7 +240,7 @@
 
 /obj/structure/flora/ash/fonarstolbe
 	name = "fonarstolbe fruit"
-	desc = "A chemotrophic, insignificantly bioluminescent plant dubbed fonarstolbe by spinward scientists. They can survive for weeks in environments and presures lethal to most other plants, as long as they are well rooted.."
+	desc = "A chemotrophic, insignificantly bioluminescent plant dubbed fonarstolbe by spinward scientists. They can survive for weeks in environments and pressures lethal to most other plants, as long as they are well rooted.."
 	icon_state = "lamppostfruit1"
 	base_icon_state = "lamppostfruit"
 	light_range = 1.5
@@ -372,6 +372,8 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	foodtypes = VEGETABLES
+	/// For edible ash flora, this corresponds to raptor breeding changes
+	var/static/list/raptor_food_chances = list(/datum/raptor_color/blue = 5)
 
 /obj/item/food/grown/ash_flora/Initialize(mapload)
 	. = ..()
@@ -442,7 +444,7 @@
 /obj/item/food/grown/ash_flora/fireblossom/Initialize(mapload)
 	. = ..()
 	// Fire flowers make fireproof raptors
-	AddElement(/datum/element/raptor_food, color_chances = string_list(list(/datum/raptor_color/blue = 5)))
+	AddElement(/datum/element/raptor_food, color_chances = raptor_food_chances)
 
 /obj/item/food/grown/ash_flora/glowgrowth
 	name = "glowgrowth sheet"
@@ -497,7 +499,7 @@
 /obj/item/food/grown/ash_flora/plasma_flower/Initialize(mapload)
 	. = ..()
 	// Fire flowers make fireproof raptors
-	AddElement(/datum/element/raptor_food, color_chances = string_list(list(/datum/raptor_color/blue = 5)))
+	AddElement(/datum/element/raptor_food, color_chances = raptor_food_chances)
 
 // SEEDS
 
@@ -735,4 +737,3 @@
 	fill_icon_state = "fullbowl"
 	fill_icon = 'icons/obj/mining_zones/ash_flora.dmi'
 	custom_materials = null
-

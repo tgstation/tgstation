@@ -93,7 +93,7 @@
 		set_density(FALSE)
 		broken = TRUE
 		new /obj/item/shard(drop_location())
-		playsound(src, SFX_SHATTER, 70, TRUE)
+		playsound(src, /datum/sound_effect/shatter, 70, TRUE)
 		update_appearance()
 		trigger_alarm()
 

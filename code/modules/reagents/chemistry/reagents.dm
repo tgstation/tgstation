@@ -41,7 +41,7 @@
 	///affects how far it travels when sprayed
 	var/reagent_weight = 1
 	///is it currently metabolizing
-	var/metabolizing = FALSE
+	VAR_FINAL/metabolizing = FALSE
 	/// Are we from a material? We might wanna know that for special stuff. Like metalgen. Is replaced with a ref of the material on New()
 	var/datum/material/material
 	///The set of exposure methods this penetrates skin with.
@@ -158,16 +158,13 @@
 
 ///Called to begin metabolization and return the volume of reagent to metabolize
 /datum/reagent/proc/compute_metabolization(mob/living/carbon/affected_mob, seconds_per_tick)
+	SHOULD_BE_PURE(TRUE)
 	var/metabolizing_out = metabolization_rate * seconds_per_tick
 	if(!(chemical_flags & REAGENT_UNAFFECTED_BY_METABOLISM))
 		if(chemical_flags & REAGENT_REVERSE_METABOLISM)
 			metabolizing_out /= affected_mob.metabolism_efficiency
 		else
 			metabolizing_out *= affected_mob.metabolism_efficiency
-
-	if(!metabolizing)
-		metabolizing = TRUE
-		on_mob_metabolize(affected_mob)
 
 	return min(metabolizing_out, volume)
 

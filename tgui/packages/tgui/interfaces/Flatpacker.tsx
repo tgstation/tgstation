@@ -2,8 +2,8 @@ import {
   Box,
   Button,
   Dimmer,
+  DmIcon,
   Icon,
-  Image,
   NoticeBox,
   Section,
   Stack,
@@ -28,6 +28,7 @@ type Data = {
 type Design = {
   name: string;
   icon: string;
+  icon_state: string;
   requiredMaterials: Material[];
   disableReason?: string;
 };
@@ -128,10 +129,11 @@ const BoardPreview = (props: BoardPreviewProps) => {
         <Stack.Item>
           <Stack vertical align="center">
             <Stack.Item>
-              <Image
+              <DmIcon
                 width="128px"
                 height="128px"
-                src={`data:image/jpeg;base64,${design.icon}`}
+                icon={design.icon}
+                icon_state={design.icon_state}
               />
             </Stack.Item>
           </Stack>

@@ -75,11 +75,18 @@
 	icon_state = "short"
 	spine_key = NONE
 
+/datum/sprite_accessory/tails/felinid
+	icon = 'icons/mob/human/cat_features.dmi'
+	spine_key = SPINE_KEY_CAT
+
 /datum/sprite_accessory/tails/felinid/cat
 	name = "Cat"
-	icon = 'icons/mob/human/cat_features.dmi'
 	icon_state = "default"
 	color_src = HAIR_COLOR
+
+/datum/sprite_accessory/tails/felinid/fox
+	name = "Fox"
+	icon_state = "fox"
 
 /datum/sprite_accessory/tails/monkey
 
@@ -93,6 +100,15 @@
 	icon = 'icons/mob/human/species/monkey/monkey_tail.dmi'
 	icon_state = "default"
 	color_src = FALSE
+
+/datum/sprite_accessory/tails/mouse
+	icon_state = "mouse"
+	color_src = NONE
+	locked = TRUE
+
+/datum/sprite_accessory/tails/mouse/default
+	name = "Mouse"
+	icon = 'icons/mob/human/mouse_features.dmi'
 
 /datum/sprite_accessory/tails/xeno
 	icon_state = "default"

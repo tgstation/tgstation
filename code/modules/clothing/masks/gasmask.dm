@@ -20,9 +20,9 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	resistance_flags = NONE
 	voice_filter = "lowpass=f=750,volume=2"
 	sound_vary = TRUE
-	pickup_sound = SFX_GAS_MASK_PICKUP
-	drop_sound = SFX_GAS_MASK_DROP
-	equip_sound = SFX_GAS_MASK_EQUIP
+	pickup_sound = /datum/sound_effect/gas_mask_pickup
+	drop_sound = /datum/sound_effect/gas_mask_drop
+	equip_sound = /datum/sound_effect/gas_mask_equip
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter
@@ -248,7 +248,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		playsound(src, up ? SFX_VISOR_UP : SFX_VISOR_DOWN, 50, TRUE)
+		playsound(src, up ? /datum/sound_effect/visor_up : /datum/sound_effect/visor_down, 50, TRUE)
 	if(!fishing_modifier)
 		return
 	if(up)
@@ -434,7 +434,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	resistance_flags = FLAMMABLE
 	fishing_modifier = 0
 	emote_sounds = list(
-		/datum/emote/living/scream::key = SFX_SCREECH,
+		/datum/emote/living/scream::key = /datum/sound_effect/screech,
 	)
 
 /obj/item/clothing/mask/gas/sexymime

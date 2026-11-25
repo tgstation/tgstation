@@ -88,8 +88,8 @@
 	armor_type = /datum/armor/item_hand_tele
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 	///List of portal pairs created by this hand tele
 	var/list/active_portal_pairs = list()
 	///Maximum concurrent active portal pairs allowed
@@ -423,9 +423,9 @@
 			new /obj/effect/temp_visual/circle_wave/syndi_teleporter/bloody(destination)
 		else
 			new /obj/effect/temp_visual/circle_wave/syndi_teleporter(destination)
-		playsound(current_location, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(current_location, /datum/sound_effect/portal_enter, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-		playsound(destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(destination, /datum/sound_effect/portal_enter, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/syndicate_teleporter/proc/malfunctioning(mob/guy_teleporting, turf/current_location)
 	if(!current_location)
@@ -461,9 +461,9 @@
 			new /obj/effect/temp_visual/circle_wave/syndi_teleporter/bloody(destination)
 		else
 			new /obj/effect/temp_visual/circle_wave/syndi_teleporter(destination)
-		playsound(mobloc, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(mobloc, /datum/sound_effect/portal_enter, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(emergency_destination, 'sound/effects/phasein.ogg', 25, 1, SHORT_RANGE_SOUND_EXTRARANGE)
-		playsound(emergency_destination, SFX_PORTAL_ENTER, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(emergency_destination, /datum/sound_effect/portal_enter, 50, 1, SHORT_RANGE_SOUND_EXTRARANGE)
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 25, TRUE)
 	else //We tried to save. We failed. Death time.
 		get_fragged(user, destination)
@@ -474,8 +474,8 @@
 	victim.forceMove(destination)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(mobloc)
 	new /obj/effect/temp_visual/teleport_abductor/syndi_teleporter(destination)
-	playsound(mobloc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(mobloc, /datum/sound_effect/portal_enter, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, /datum/sound_effect/portal_enter, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(destination, 'sound/effects/magic/disintegrate.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(!not_holding_tele)
 		to_chat(victim, span_userdanger("You teleport into [destination], [src] tries to save you, but..."))

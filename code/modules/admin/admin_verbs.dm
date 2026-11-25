@@ -781,15 +781,24 @@ ADMIN_VERB(view_behavior_tree, R_DEBUG, "View Behavior Tree", "Inspect the AI be
 
 ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an item to the black market for purchase.", ADMIN_CATEGORY_EVENTS)
 	VERB_ARG(object, VERB_ARG_TYPE_TYPEPATH, VERB_ARG_SOURCE_INPUT)
-	if(!object)
-		to_chat(user, span_boldwarning("Failed! Provide a full or partial typepath!"))
-		return
+	var/obj/chosen
+	if(isobj(user.holder?.marked_datum))
+		var/choice = tgui_alert(user, "Would you like to sell your marked object?", "Sale Selection", list("Marked Object", "New Typepath", "Cancel"))
+		switch(choice)
+			if("Cancel")
+				return
+			if("Marked Object")
+				if(!isobj(user.holder.marked_datum))
+					to_chat(user, span_boldwarning("Failed! Marked datum is not an object!"))
+					return
+				chosen = user.holder.marked_datum
 	//first: have admins select a typepath for the item they want to offer.
-	var/obj/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/obj)))
+	if(!chosen)
+		chosen = pick_closest_path(object, make_types_fancy(subtypesof(/obj)))
 	// second: poll admins for the name, description, price, and quantity.
-	if(isnull(chosen))
+	if(!chosen) //Since we can still return null
 		return
-	var/name = tgui_input_text(user, "Name of the item to sell?", "Item listing name", "Arcane Object", max_length = MAX_NAME_LEN)
+	var/name = tgui_input_text(user, "Name of the item to sell?", "Item listing name", "[chosen::name]", max_length = MAX_NAME_LEN)
 	if(isnull(name))
 		return
 	var/description = tgui_input_text(user, "Custom description of the item to sell?", "Item listing description", "[chosen::desc]", max_length = 200)
@@ -798,9 +807,13 @@ ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an it
 	var/price = tgui_input_number(user, "Price for the item listing?", "Item listing price", max_value = INFINITY, min_value = 1, round_value = TRUE)
 	if(isnull(price))
 		return
-	var/quantity = tgui_input_number(user, "Quantity of the item to sell?", "Item listing quantity", default = 1, max_value = 100, min_value = 1, round_value = TRUE)
+
+	var/quantity = 1
+	if(ispath(chosen))
+		quantity = tgui_input_number(user, "Quantity of the item to sell?", "Item listing quantity", default = 1, max_value = 100, min_value = 1, round_value = TRUE)
 	if(isnull(quantity))
 		return
+
 	//lastly: pick a category for the item to go under
 	var/category = tgui_input_list(user, "Category to list the item under?", "Item listing category", BLACKMARKET_CATEGORIES)
 	if(isnull(category))

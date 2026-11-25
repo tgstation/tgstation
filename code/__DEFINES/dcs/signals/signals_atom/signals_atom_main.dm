@@ -165,3 +165,8 @@
 /// From /obj/item/organ/stomach/on_life() : (obj/item/organ/stomach/stomach, mob/living/carbon/owner, seconds_per_tick)
 #define COMSIG_ATOM_STOMACH_DIGESTED "atom_stomach_digested"
 	#define COMPONENT_CANCEL_DIGESTION (1<<0)
+
+/// From /datum/component/leanable (datum/source, mob/leaner)
+#define COMSIG_ATOM_LEANED_UPON "atom_leaned_upon"
+/// From /datum/component/leanable (datum/source, mob/leaner, list/mob/remaining_leaners)
+#define COMSIG_ATOM_NO_LONGER_LEANED_UPON "atom_no_longer_leaned_upon"

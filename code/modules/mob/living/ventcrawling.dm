@@ -92,6 +92,8 @@
 		if(vent_parent && (vent_parent.members.len || vent_parent.other_atmos_machines))
 			ventcrawl_target.flick_overlay_static(image('icons/effects/vent_indicator.dmi', "arrow", ABOVE_MOB_LAYER, dir = get_dir(src.loc, ventcrawl_target.loc)), 2 SECONDS)
 			visible_message(span_notice("[src] begins climbing into the ventilation system...") ,span_notice("You begin climbing into the ventilation system..."))
+			if((ventcrawl_target.airs[1].temperature < BODYTEMP_COLD_WARNING_1) || (BODYTEMP_HEAT_WARNING_1 < ventcrawl_target.airs[1].temperature))
+				balloon_alert(src, "feels [ventcrawl_target.airs[1].temperature < BODYTEMP_COLD_WARNING_1 ? "cold!" : "hot!"]")
 			if(!do_after(src, 2.5 SECONDS, target = ventcrawl_target, extra_checks = CALLBACK(src, PROC_REF(can_enter_vent), ventcrawl_target)))
 				return
 			if(has_client && isnull(client))
@@ -139,7 +141,7 @@
 	if(isnull(client) || !HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) || !istype(loc, /obj/machinery/atmospherics) || !(movement_type & VENTCRAWLING))
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
-		pipes_shown.len = 0
+		LAZYNULL(pipes_shown)
 		pipetracker = null
 		for(var/atom/movable/screen/plane_master/lighting as anything in hud_used.get_true_plane_masters(LIGHTING_PLANE))
 			lighting.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, "#4d4d4d")
@@ -162,10 +164,11 @@
 	if(full_refresh)
 		for(var/image/current_image in pipes_shown)
 			client.images -= current_image
-		pipes_shown.len = 0
+		LAZYCLEARLIST(pipes_shown)
 		pipetracker = null
 
 	if(!pipetracker)
+		LAZYINITLIST(pipes_shown)
 		pipetracker = new()
 
 	var/turf/our_turf = get_turf(src)

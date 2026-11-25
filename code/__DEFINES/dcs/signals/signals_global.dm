@@ -60,6 +60,8 @@
 #define COMSIG_WEATHER_START(event_type) "!weather_start [event_type]"
 #define COMSIG_WEATHER_WINDDOWN(event_type) "!weather_winddown [event_type]"
 #define COMSIG_WEATHER_END(event_type) "!weather_end [event_type]"
+/// A new weather particle holder has been created
+#define COMSIG_WEATHER_NEW_PARTICLE_HOLDER "!weather_new_particle_holder"
 /// An alarm of some form was sent (datum/alarm_handler/source, alarm_type, area/source_area)
 #define COMSIG_GLOB_ALARM_FIRE(alarm_type) "!alarm_fire [alarm_type]"
 /// An alarm of some form was cleared (datum/alarm_handler/source, alarm_type, area/source_area)

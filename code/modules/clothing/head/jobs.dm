@@ -659,8 +659,8 @@
 	desc = "A blue medical surgery cap to prevent the surgeon's hair from entering the insides of the patient!"
 	flags_inv = HIDEHAIR //Cover your head doctor!
 	w_class = WEIGHT_CLASS_SMALL //surgery cap can be easily crumpled
-	pickup_sound = SFX_CLOTH_PICKUP
-	drop_sound = SFX_CLOTH_DROP
+	pickup_sound = /datum/sound_effect/cloth_pickup
+	drop_sound = /datum/sound_effect/cloth_drop
 	equip_sound = null
 	item_flags = CAN_BE_OVERSLOT
 

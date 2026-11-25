@@ -556,14 +556,11 @@ GAME_VERB_SRC(/obj/item/clothing/under, jumpsuit_adjust, usr, "Adjust Jumpsuit S
 /obj/item/clothing/under/proc/adjust_to_normal()
 	adjusted = NORMAL_STYLE
 	female_sprite_flags = initial(female_sprite_flags)
-	if(!alt_covers_chest)
-		body_parts_covered |= CHEST
-		body_parts_covered |= ARMS
-	if(LAZYLEN(damage_by_parts))
+	if(alt_covers_chest && LAZYLEN(damage_by_parts))
 		// ugly check to make sure we don't reenable protection on a disabled part
 		for(var/zone in list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-			if(damage_by_parts[zone] > limb_integrity)
-				body_parts_covered &= body_zone2cover_flags(zone)
+			if(LAZYACCESS(damage_by_parts, zone) <= limb_integrity)
+				add_bodypart_coverage(body_zone2cover_flags(zone))
 
 /// Helper to adjust to alt jumpsuit state
 /obj/item/clothing/under/proc/adjust_to_alt()
@@ -571,8 +568,7 @@ GAME_VERB_SRC(/obj/item/clothing/under, jumpsuit_adjust, usr, "Adjust Jumpsuit S
 	if(!(female_sprite_flags & FEMALE_UNIFORM_TOP_ONLY))
 		female_sprite_flags = NO_FEMALE_UNIFORM
 	if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted (and also the arms, realistically)
-		body_parts_covered &= ~CHEST
-		body_parts_covered &= ~ARMS
+		remove_bodypart_coverage(CHEST | ARMS)
 
 /obj/item/clothing/under/can_use(mob/user)
 	if(ismob(user) && !user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING))

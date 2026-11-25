@@ -133,6 +133,7 @@
 			rank = target.rank,
 			species = target.species,
 			trim = target.trim,
+			job_icon = SSjob.get_job(target.trim)?.tgui_icon,
 			wanted_status = target.wanted_status,
 		))
 

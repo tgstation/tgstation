@@ -473,6 +473,6 @@
 
 /obj/effect/meteor/pumpkin/Initialize(mapload)
 	. = ..()
-	meteorsound = SFX_HALLUCINATION_I_M_HERE
+	meteorsound = /datum/sound_effect/hallucination_i_m_here
 
 #undef DEFAULT_METEOR_LIFETIME

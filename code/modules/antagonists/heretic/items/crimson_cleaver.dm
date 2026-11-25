@@ -292,7 +292,7 @@
 			to_chat(owner, span_mansus("The cleaver was made to spill blood and cleave flesh. You grip it with all your life, compelled to fulfill its purpose."))
 			owner.add_mood_event(id, /datum/mood_event/crimson_curse/severe)
 			for(var/obj/item/knife/butcher/heretic/cleaver in owner)
-				ADD_TRAIT(src, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
+				ADD_TRAIT(cleaver, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 			owner.add_traits(list(
 				TRAIT_BATON_RESISTANCE,
@@ -332,7 +332,7 @@
 			to_chat(owner, span_mansus("The cleaver's compulsions fade. Your fingers unclench from the hilt."))
 			owner.clear_mood_event(id)
 			for(var/obj/item/knife/butcher/heretic/cleaver in owner)
-				REMOVE_TRAIT(src, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
+				REMOVE_TRAIT(cleaver, TRAIT_NODROP, TRAIT_STATUS_EFFECT(id))
 
 			owner.remove_status_effect(/datum/status_effect/eldritch_painting/desire)
 			owner.remove_traits(list(

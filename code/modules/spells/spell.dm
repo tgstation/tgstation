@@ -368,7 +368,7 @@
 	if(sparks_amt)
 		do_sparks(sparks_amt, FALSE, get_turf(owner))
 	if(ispath(smoke_type, /datum/effect_system/fluid_spread/smoke))
-		do_smoke(smoke_amt, owner, get_turf(owner))
+		do_smoke(smoke_amt, owner, get_turf(owner), null, smoke_type)
 
 	// Send signals last in case they delete the spell
 	SEND_SIGNAL(owner, COMSIG_MOB_AFTER_SPELL_CAST, src, cast_on)

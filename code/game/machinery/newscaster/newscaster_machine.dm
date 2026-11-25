@@ -620,7 +620,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		return TRUE
 	SSblackbox.record_feedback("amount", "newspapers_printed", 1)
 	var/obj/item/newspaper/new_newspaper = new(loc)
-	playsound(loc, SFX_PAGE_TURN, 50, TRUE)
+	playsound(loc, /datum/sound_effect/page_turn, 50, TRUE)
 	try_put_in_hand(new_newspaper, user)
 	paper_remaining--
 

@@ -22,7 +22,6 @@
 	antag_moodlet = /datum/mood_event/heretics
 	pref_flag = ROLE_HERETIC
 	antag_hud_name = "heretic"
-	hijack_speed = 0.5
 	suicide_cry = "THE MANSUS SMILES UPON ME!!"
 	preview_outfit = /datum/outfit/heretic
 	can_assign_self_objectives = TRUE
@@ -66,8 +65,6 @@
 	var/drawing_rune = FALSE
 	/// The path our heretic has chosen.
 	var/datum/heretic_knowledge_tree_column/heretic_path
-	/// Reference to the overlay heretics get when they get strong enough
-	var/static/mutable_appearance/eldritch_overlay = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura")
 	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to research.
 	var/knowledge_points = 1
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
@@ -365,16 +362,17 @@
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
-	if(owner.current)
+	if(!isnull(owner.current))
 		for(var/knowledge_path in researched_knowledge)
 			var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
 			knowledge.on_lose(owner.current, src)
 			QDEL_NULL(researched_knowledge[knowledge_path][HKT_INSTANCE])
 
+		owner.current.RemoveElement(/datum/element/rust_healing, FALSE, 1.5, 5)
+		owner.current.update_appearance(UPDATE_OVERLAYS)
+
 	REMOVE_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
-	owner.current.RemoveElement(/datum/element/rust_healing, FALSE, 1.5, 5)
 	QDEL_NULL(heretic_path)
-	owner.current.cut_overlay(eldritch_overlay)
 	return ..()
 
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
@@ -392,11 +390,6 @@
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
 	RegisterSignal(our_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_heretic_examine))
 
-	RegisterSignals(
-		our_mob,
-		list(SIGNAL_ADDTRAIT(TRAIT_HERETIC_AURA_HIDDEN), SIGNAL_REMOVETRAIT(TRAIT_HERETIC_AURA_HIDDEN)),
-		PROC_REF(update_heretic_aura)
-	)
 	RegisterSignal(our_mob, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_aura_overlay))
 	our_mob.update_appearance(UPDATE_OVERLAYS)
 
@@ -418,30 +411,36 @@
 			COMSIG_LIVING_CULT_SACRIFICED,
 			COMSIG_ATOM_EXAMINE,
 			COMSIG_ATOM_UPDATE_OVERLAYS,
-			SIGNAL_ADDTRAIT(TRAIT_HERETIC_AURA_HIDDEN),
-			SIGNAL_REMOVETRAIT(TRAIT_HERETIC_AURA_HIDDEN),
 		)
 	)
 	our_mob.update_appearance(UPDATE_OVERLAYS)
 
 /// Removes the ability to blade break, removes cloak of shadows and removes the cap on how many blades you can craft
 /datum/antagonist/heretic/proc/disable_blade_breaking()
-	if(unlimited_blades)
+	if(unlimited_blades || feast_of_owls)
 		return
 	var/mob/heretic_mob = owner.current
 	unlimited_blades = TRUE
 	to_chat(heretic_mob, span_boldwarning("You have gained a lot of power, the mansus will no longer allow you to break your blades, but you can now make as many as you wish."))
 	heretic_mob.balloon_alert(heretic_mob, "blade breaking disabled!")
 	update_heretic_aura()
-	var/datum/action/cooldown/spell/shadow_cloak/cloak_spell = locate() in heretic_mob.actions
-	cloak_spell.Remove(heretic_mob)
 
 /datum/antagonist/heretic/proc/add_aura_overlay(mob/living/source, list/overlays)
 	SIGNAL_HANDLER
-	if(!should_show_aura())
+	if(!should_show_aura(source))
 		return
-	overlays += eldritch_overlay
-	overlays += emissive_appearance(eldritch_overlay.icon, eldritch_overlay.icon_state, source)
+	overlays += mutable_appearance(
+		icon = 'icons/mob/effects/heretic_aura.dmi',
+		icon_state = "heretic_aura",
+		alpha = 255 * (istype(source.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/hooded/cultrobes/eldritch) ? 0.66 : 1),
+	)
+	overlays += emissive_appearance(
+		icon = 'icons/mob/effects/heretic_aura.dmi',
+		icon_state = "heretic_aura",
+		offset_spokesman = source,
+		alpha = 200 * (heretic_path?.route == PATH_LOCK ? 0.25 : 1),
+		effect_type = (heretic_path?.route == PATH_LOCK ? EMISSIVE_SPECULAR : EMISSIVE_BLOOM),
+	)
 
 /// Adds an overlay to the heretic
 /datum/antagonist/heretic/proc/update_heretic_aura()
@@ -449,26 +448,26 @@
 	if(!QDELETED(owner?.current))
 		owner.current.update_appearance(UPDATE_OVERLAYS)
 
-/datum/antagonist/heretic/proc/should_show_aura()
+/datum/antagonist/heretic/proc/should_show_aura(mob/living/source)
 	if(!can_assign_self_objectives)
 		return FALSE // We spurned the offer of the Mansus :(
-	if(!unlimited_blades || HAS_TRAIT(owner.current, TRAIT_HERETIC_AURA_HIDDEN))
-		return FALSE // No aura if we have the trait or is too early still
+	if(!unlimited_blades)
+		return FALSE // Not at the aura stage
 	if(feast_of_owls)
 		return FALSE // No use in giving the aura to a heretic that can't ascend
-	if(heretic_path?.route == PATH_LOCK)
-		return FALSE // Lock heretics never get this aura
+	if(heretic_path?.route == PATH_LOCK && !istype(source.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/hooded/cultrobes/eldritch))
+		return FALSE // Lock heretics don't get aura unless they're wearing the guise
 	return TRUE
 
-/datum/antagonist/heretic/proc/on_heretic_examine(datum/source, mob/user, text)
+/datum/antagonist/heretic/proc/on_heretic_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	if(!should_show_aura())
-		return
 	var/mob/heretic_mob = owner.current
+	if(!should_show_aura(heretic_mob))
+		return
 	var/potential_string = "[heretic_mob.p_They()] [heretic_mob.p_are()] crackling with a swirling green vortex of energy."
 	if(can_ascend() == HERETIC_CAN_ASCEND)
 		potential_string += " [heretic_mob.p_They()] [heretic_mob.p_are()] shedding [heretic_mob.p_their()] mortal shell!"
-	text += span_green(potential_string)
+	examine_list += span_green(potential_string)
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
@@ -546,7 +545,7 @@
 	else
 		drawing_effect = new(target_turf, rune_colour)
 
-	if(!do_after(user, drawing_time, target_turf, extra_checks = additional_checks, cog_icon = null))
+	if(!do_after(user, drawing_time, target_turf, extra_checks = additional_checks, timed_action_flags = HIDE_INTERACTION))
 		target_turf.balloon_alert(user, "interrupted!")
 		new /obj/effect/temp_visual/drawing_heretic_rune/fail(target_turf, rune_colour)
 		qdel(drawing_effect)
@@ -766,7 +765,7 @@
 /datum/antagonist/heretic/proc/adjust_knowledge_points(amount, update = TRUE)
 	knowledge_points = max(0, knowledge_points + amount) // Don't allow negative knowledge points
 	knowledge_gained += max(0, amount)
-	if(knowledge_gained > points_to_aura && !unlimited_blades)
+	if(knowledge_gained > points_to_aura)
 		disable_blade_breaking()
 	if(update)
 		update_data_for_all_viewers()

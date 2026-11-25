@@ -126,7 +126,7 @@
 	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
 
 /obj/item/ammo_casing/energy/laser/pulse
-	projectile_type = /obj/projectile/beam/pulse
+	projectile_type = /obj/projectile/beam/laser/pulse
 	e_cost = LASER_SHOTS(200, STANDARD_CELL_CHARGE * 40)
 	select_name = "DESTROY"
 	fire_sound = 'sound/items/weapons/pulse.ogg'
@@ -150,7 +150,7 @@
 	projectile_type = /obj/projectile/beam/lasertag/redtag/hitscan
 
 /obj/item/ammo_casing/energy/xray
-	projectile_type = /obj/projectile/beam/xray
+	projectile_type = /obj/projectile/beam/laser/xray
 	e_cost = LASER_SHOTS(20, STANDARD_CELL_CHARGE)
 	fire_sound = 'sound/items/weapons/laser3.ogg'
 
