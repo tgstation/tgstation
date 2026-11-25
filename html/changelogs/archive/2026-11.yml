@@ -339,3 +339,4 @@
 2026-11-25:
   Melbert:
   - bugfix: Blade and Cosmic heretic can recharge their spells properly
+  - qol: Revamps handheld gene scanner output
