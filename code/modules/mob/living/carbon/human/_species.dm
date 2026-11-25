@@ -1238,7 +1238,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			INVOKE_ASYNC(humi, TYPE_PROC_REF(/mob, emote), "scream")
 
 		// Apply the damage to all body parts
-		humi.apply_damage(burn_damage, BURN, spread_damage = TRUE, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE )
+		humi.apply_damage(burn_damage, BURN, spread_damage = TRUE, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 
 	// For cold damage, we cap at the threshold if you're dead
 	if(humi.get_fire_loss() >= abs(humi.dead_threshold) && humi.stat == DEAD)
@@ -1254,11 +1254,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/damage_mod = GET_PHYSIOLOGY(humi, PHYS_COEFF_COLD)
 		// Can't be a switch due to http://www.byond.com/forum/post/2750423
 		if(humi.coretemperature in 201 to cold_damage_limit)
-			humi.apply_damage(COLD_DAMAGE_LEVEL_1 * damage_mod * seconds_per_tick, damage_type, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE )
+			humi.apply_damage(COLD_DAMAGE_LEVEL_1 * damage_mod * seconds_per_tick, damage_type, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 		else if(humi.coretemperature in 120 to 200)
-			humi.apply_damage(COLD_DAMAGE_LEVEL_2 * damage_mod * seconds_per_tick, damage_type, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE )
+			humi.apply_damage(COLD_DAMAGE_LEVEL_2 * damage_mod * seconds_per_tick, damage_type, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 		else
-			humi.apply_damage(COLD_DAMAGE_LEVEL_3 * damage_mod * seconds_per_tick, damage_type, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE )
+			humi.apply_damage(COLD_DAMAGE_LEVEL_3 * damage_mod * seconds_per_tick, damage_type, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 
 /**
  * Used to apply burn wounds on random limbs
@@ -1307,7 +1307,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 2800)
 		burn_damage = HEAT_DAMAGE_LEVEL_3
 
-	humi.apply_damage(burn_damage * seconds_per_tick, BURN, bodypart, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE )
+	humi.apply_damage(burn_damage * seconds_per_tick, BURN, bodypart, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 
 /// Handle the air pressure of the environment
 /datum/species/proc/handle_environment_pressure(mob/living/carbon/human/human, datum/gas_mixture/environment, seconds_per_tick)

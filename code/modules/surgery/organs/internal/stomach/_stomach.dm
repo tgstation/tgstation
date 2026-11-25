@@ -252,7 +252,7 @@
 		else if (isliving(nugget))
 			var/mob/living/as_living = nugget
 			damage = as_living.mob_size * 5
-		owner.apply_damage(damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE )
+		owner.apply_damage(damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 	return emptied
 
 /obj/item/organ/stomach/on_life(seconds_per_tick)
@@ -270,7 +270,7 @@
 		if (SPT_PROB(chest.get_damage(), seconds_per_tick * 3))
 			var/emptied = empty_contents()
 			if (emptied > 0)
-				owner.apply_damage(emptied * 5, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE )
+				owner.apply_damage(emptied * 5, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 				playsound(get_turf(src), 'sound/effects/splat.ogg', 50)
 				owner.visible_message(span_danger("Contents of [owner]'s intestines spill out from a huge cut in [owner.p_their()] [chest]!"),
 					span_userdanger("Contents of your intestines spill out from a huge cut in your [chest]!"))
@@ -298,7 +298,7 @@
 				continue
 
 			owner.apply_damage(as_item.w_class * (as_item.sharpness ? 2 : 1), BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND,
-				sharpness = as_item.sharpness, attacking_item = as_item, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE )
+				sharpness = as_item.sharpness, attacking_item = as_item, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 
 		if (!as_item.sharpness)
 			continue

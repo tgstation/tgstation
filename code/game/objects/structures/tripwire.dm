@@ -298,7 +298,7 @@
 		ignored_mobs = drivers)
 
 	for(var/mob/living/driver as anything in drivers) // can any mechs have two drivers? No. Could they? yes.
-		var/damage = driver.apply_damage(damage_value / 3, BRUTE, BODY_ZONE_HEAD, driver.run_armor_check(BODY_ZONE_HEAD, MELEE), wound_bonus = 30, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE )
+		var/damage = driver.apply_damage(damage_value / 3, BRUTE, BODY_ZONE_HEAD, driver.run_armor_check(BODY_ZONE_HEAD, MELEE), wound_bonus = 30, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 		var/falling_string
 		switch(damage)
 			if(0)

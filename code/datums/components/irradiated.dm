@@ -140,7 +140,7 @@
 	if(human_parent.is_blind())
 		to_chat(human_parent, span_boldwarning("Your [affected_limb.plaintext_zone] feels like it's bubbling, then burns like hell!"))
 
-	human_parent.apply_damage(RADIATION_BURN_SPLOTCH_DAMAGE, BURN, affected_limb, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE )
+	human_parent.apply_damage(RADIATION_BURN_SPLOTCH_DAMAGE, BURN, affected_limb, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 	playsound(
 		human_parent,
 		/datum/sound_effect/sizzle,
