@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "Refactored digitigrade legs code a bit. Report any outstanding issue that wasn't previously there."
