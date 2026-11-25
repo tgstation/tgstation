@@ -70,10 +70,6 @@ ADMIN_VERB(station_traits_panel, R_FUN, "Modify Station Traits", "Modify the sta
 
 			return TRUE
 		if ("setup_future_traits")
-			if (too_late_for_future_traits())
-				to_chat(usr, span_warning("It's too late to add future station traits, the round is already over!"))
-				return TRUE
-
 			var/list/new_future_traits = list()
 			var/list/station_trait_names = list()
 
@@ -112,9 +108,6 @@ ADMIN_VERB(station_traits_panel, R_FUN, "Modify Station Traits", "Modify the sta
 			future_traits = null
 
 			return TRUE
-
-/datum/station_traits_panel/proc/too_late_for_future_traits()
-	return SSticker.current_state >= GAME_STATE_FINISHED
 
 /datum/station_traits_panel/proc/too_late_to_revert()
 	return SSticker.current_state >= GAME_STATE_PLAYING
