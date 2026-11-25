@@ -501,7 +501,7 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	if(!user.temporarilyRemoveItemFromInventory(src, TRUE))
 		return
 
-	var/obj/item/tcgcard/deck = new(turf_loc)
+	var/obj/item/tcgcard_deck/deck = new(drop_loc)
 	var/list/precon_list = SStrading_card_game.precons[precon_id]["list"]
 	for(var/card_path in precon_list)
 		var/list/split = splittext(card_path, "/")
