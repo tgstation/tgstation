@@ -403,10 +403,11 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 	if(self_runechat && (audible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, audible_message_flags))
 		create_chat_message(src, raw_message = raw_self_message, runechat_flags = audible_message_flags)
 
-/proc/combat_message(atom/attacker, atom/defender, to_attacker, to_defender, to_blind_attacker, to_blind_defender, to_viewers, to_blind_viewers, dangerous = FALSE)
+/proc/combat_message(atom/attacker, atom/defender, to_attacker, to_defender, to_blind_attacker, to_blind_defender, to_viewers, to_blind_viewers, dangerous = FALSE, blocked = FALSE)
+	var/gen_span = blocked ? "attackblocked" : "attackother"
 	attacker.visible_message(
-		span_attackother(to_viewers),
-		span_attackother("[astype(attacker, /mob)?.is_blind() && to_blind_attacker || to_attacker]"),
+		"<span class='[gen_span]'>[to_viewers]</span>",
+		"<span class='[gen_span]'>[astype(attacker, /mob)?.is_blind() && to_blind_attacker || to_attacker]</span>",
 		span_hear(to_blind_viewers),
 		COMBAT_MESSAGE_RANGE,
 		list(defender),

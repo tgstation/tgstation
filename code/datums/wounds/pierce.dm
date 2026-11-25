@@ -339,7 +339,7 @@
 	attack_trigger_message = "sending a violent spray of blood flying from the eye"
 	var/right_side = FALSE
 
-/datum/wound/pierce/bleed/severe/eye/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing, right_side)
+/datum/wound/pierce/bleed/severe/eye/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing, right_side, damage_flags)
 	var/obj/item/organ/eyes/eyes = locate() in limb
 	if (!istype(eyes))
 		return FALSE
@@ -388,7 +388,7 @@
 	viable_zones = list(BODY_ZONE_HEAD)
 	can_be_randomly_generated = FALSE
 
-/datum/wound/pierce/bleed/severe/magicalearpain/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing)
+/datum/wound/pierce/bleed/severe/magicalearpain/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing, damage_flags)
 	var/obj/item/organ/ears/ears = locate() in limb
 	if (!istype(ears))
 		return FALSE
