@@ -999,7 +999,7 @@
 		owner.heal_damage_type(heal_amount, damagetype = pick(healing_types))
 
 	owner.adjust_nutrition(3)
-	drained.apply_damage(heal_amount * DRAIN_DAMAGE_MULTIPLIER, damagetype = BRUTE, spread_damage = TRUE)
+	drained.apply_damage(heal_amount * DRAIN_DAMAGE_MULTIPLIER, damagetype = BRUTE, damage_flags = DAMAGE_SPREAD)
 	return ..()
 
 #undef DRAIN_DAMAGE_MULTIPLIER

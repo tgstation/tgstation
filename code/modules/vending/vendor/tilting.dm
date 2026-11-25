@@ -72,7 +72,7 @@
 				if (iscarbon(living_target))
 					var/mob/living/carbon/carbon_target = living_target
 					if(prob(30))
-						carbon_target.apply_damage(max(0, adjusted_damage), damage_type, blocked = blocked, spread_damage = TRUE, attack_direction = crush_dir) // the 30% chance to spread the damage means you escape breaking any bones
+						carbon_target.apply_damage(max(0, adjusted_damage), damage_type, blocked = blocked, damage_flags = DAMAGE_SPREAD, attack_direction = crush_dir) // the 30% chance to spread the damage means you escape breaking any bones
 					else
 						var/brute = (damage_type == BRUTE ? damage : 0) * 0.5
 						var/burn = (damage_type == BURN ? damage : 0) * 0.5

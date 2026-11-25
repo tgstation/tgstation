@@ -75,7 +75,7 @@
 /datum/unit_test/mob_damage/proc/test_apply_damage(mob/living/testing_mob, amount, expected = -amount, amount_after, included_types, biotypes, bodytypes, forced)
 	if(isnull(amount_after))
 		amount_after = testing_mob.get_stamina_loss() - expected // stamina loss applies to both carbon and basic mobs the same way, so that's why we're using it here
-	if(!apply_damage(testing_mob, amount, expected, included_types, biotypes, bodytypes, forced))
+	if(!apply_damage(testing_mob, amount, expected, included_types, biotypes, bodytypes, damage_flags = forced ? (DAMAGE_FORCED|DAMAGE_NO_MULTIPLIERS) : NONE))
 		return FALSE
 	if(!verify_damage(testing_mob, amount_after, included_types))
 		return FALSE

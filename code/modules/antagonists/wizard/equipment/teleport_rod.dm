@@ -163,8 +163,7 @@
 	owner.apply_damage(
 		damage = tp_damage,
 		damagetype = tp_damage_type,
-		spread_damage = TRUE,
-		forced = TRUE,
+		damage_flags = DAMAGE_SPREAD|DAMAGE_NO_MULTIPLIERS|DAMAGE_FORCED,
 	)
 	log_combat(owner, owner, "teleported too soon")
 

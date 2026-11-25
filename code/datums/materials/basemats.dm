@@ -64,7 +64,7 @@
 /datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	. = ..()
 	if(!HAS_TRAIT(victim, TRAIT_ROCK_EATER))
-		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = TRUE) //cronch
+		victim.apply_damage(10, BRUTE, BODY_ZONE_HEAD, wound_bonus = 5, sharpness = SHARP_EDGED) //cronch
 		return TRUE
 
 /datum/material/glass/on_main_applied(atom/source, mat_amount, multiplier)

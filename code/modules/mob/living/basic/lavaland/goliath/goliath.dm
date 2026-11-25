@@ -94,13 +94,11 @@
 		. += span_info("Someone appears to have attached a saddle to this one.")
 
 // Goliaths can summon tentacles more frequently as they take damage, scary.
-/mob/living/basic/mining/goliath/apply_damage/apply_damage(
+/mob/living/basic/mining/goliath/apply_damage(
 	damage = 0,
 	damagetype = BRUTE,
 	def_zone = null,
 	blocked = 0,
-	forced = FALSE,
-	spread_damage = FALSE,
 	wound_bonus = 0,
 	exposed_wound_bonus = 0,
 	sharpness = NONE,

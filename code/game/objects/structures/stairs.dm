@@ -386,7 +386,7 @@
 	falling.adjust_staggered(2 SECONDS)
 	falling.AdjustKnockdown(5 SECONDS)
 	falling.spin(1 SECONDS, 0.25 SECONDS)
-	falling.apply_damage(rand(4, 8), BRUTE, spread_damage = TRUE)
+	falling.apply_damage(rand(4, 8), BRUTE, damage_flags = DAMAGE_SPREAD)
 	GLOB.move_manager.move_towards(falling, get_ranged_target_turf(src, REVERSE_DIR(dir), 2), delay = 0.4 SECONDS, timeout = 1 SECONDS)
 
 /obj/structure/stairs/proc/isTerminator() //If this is the last stair in a chain and should move mobs up

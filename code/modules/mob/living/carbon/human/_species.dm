@@ -1265,7 +1265,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			INVOKE_ASYNC(humi, TYPE_PROC_REF(/mob, emote), "scream")
 
 		// Apply the damage to all body parts
-		humi.apply_damage(burn_damage, BURN, spread_damage = TRUE, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
+		humi.apply_damage(burn_damage, BURN, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE|DAMAGE_SPREAD)
 
 	// For cold damage, we cap at the threshold if you're dead
 	if(humi.get_fire_loss() >= abs(humi.dead_threshold) && humi.stat == DEAD)

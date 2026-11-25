@@ -178,7 +178,7 @@
 		if(source_spell.convert_damage)
 			var/damage_to_apply = owner.maxHealth * (caster_mob.get_total_damage() / caster_mob.maxHealth)
 
-			owner.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
+			owner.apply_damage(damage_to_apply, source_spell.convert_damage_type, damage_flags = DAMAGE_SPREAD|DAMAGE_FORCED|DAMAGE_NO_MULTIPLIERS, wound_bonus = CANT_WOUND)
 			// Only transfer blood if both mobs are supposed to have a blood volume
 			if (CAN_HAVE_BLOOD(owner) && CAN_HAVE_BLOOD(caster_mob))
 				owner.set_blood_volume(caster_mob.get_blood_volume())
@@ -218,7 +218,7 @@
 
 	caster_mob.fully_heal(HEAL_DAMAGE) // Remove all of our damage before setting our health to a proportion of the former transformed mob's health
 	var/damage_to_apply = caster_mob.maxHealth * (owner.get_total_damage() / owner.maxHealth)
-	caster_mob.apply_damage(damage_to_apply, source_spell.convert_damage_type, forced = TRUE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
+	caster_mob.apply_damage(damage_to_apply, source_spell.convert_damage_type, damage_flags = DAMAGE_SPREAD|DAMAGE_FORCED|DAMAGE_NO_MULTIPLIERS, wound_bonus = CANT_WOUND)
 	// Only transfer blood if both mobs are supposed to have a blood volume
 	if (CAN_HAVE_BLOOD(owner) && CAN_HAVE_BLOOD(caster_mob))
 		caster_mob.set_blood_volume(owner.get_blood_volume())

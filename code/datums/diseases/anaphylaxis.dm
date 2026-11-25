@@ -44,7 +44,7 @@
 
 		// warning symptoms: violent shakes, dizziness, blurred vision, difficulty breathing
 		if(2)
-			affected_mob.apply_damage(0.33 * seconds_per_tick, TOX, spread_damage = TRUE)
+			affected_mob.apply_damage(0.33 * seconds_per_tick, TOX, damage_flags = DAMAGE_SPREAD)
 
 			if(affected_mob.num_hands >= 1 && SPT_PROB(5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("You feel your hand[affected_mob.num_hands == 1 ? "":"s"] shake violently."))
@@ -78,6 +78,6 @@
 
 		// "you are too late" symptoms: death.
 		if(3)
-			affected_mob.apply_damage(3 * seconds_per_tick, TOX, spread_damage = TRUE)
-			affected_mob.apply_damage(1 * seconds_per_tick, OXY)
+			affected_mob.apply_damage(3 * seconds_per_tick, TOX, damage_flags = DAMAGE_SPREAD)
+			affected_mob.apply_damage(1 * seconds_per_tick, OXY, damage_flags = DAMAGE_SPREAD)
 			affected_mob.Unconscious(3 SECONDS * seconds_per_tick)

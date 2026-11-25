@@ -8,8 +8,8 @@
 	var/burn_damage_max = 100
 
 /datum/corpse_damage/cause_of_death/plasmafire/apply_to_body(mob/living/carbon/human/body, severity, list/storage, list/datum/callback/on_revive_and_player_occupancy)
-	body.apply_damage(burn_damage_base + burn_damage_max * severity, BURN, wound_bonus = 100 * severity, spread_damage = TRUE)
-	body.apply_damage(tox_damage_max * severity, TOX)
+	body.apply_damage(burn_damage_base + burn_damage_max * severity, BURN, wound_bonus = 100 * severity, damage_flags = DAMAGE_SPREAD)
+	body.apply_damage(tox_damage_max * severity, TOX, damage_flags = DAMAGE_SPREAD)
 
 /datum/corpse_damage/cause_of_death/explosion
 	cause_of_death = "when I noticed a bomb!"
@@ -31,6 +31,6 @@
 	var/damage_max = 100
 
 /datum/corpse_damage/cause_of_death/spaced/apply_to_body(mob/living/carbon/human/body, severity, list/storage, list/datum/callback/on_revive_and_player_occupancy)
-	body.apply_damage(base_damage + damage_max * (severity * rand(80, 120) * 0.01), BURN, spread_damage = TRUE)
-	body.apply_damage(base_damage + damage_max * (severity * rand(80, 120) * 0.01), BRUTE, spread_damage = TRUE)
+	body.apply_damage(base_damage + damage_max * (severity * rand(80, 120) * 0.01), BURN, damage_flags = DAMAGE_SPREAD)
+	body.apply_damage(base_damage + damage_max * (severity * rand(80, 120) * 0.01), BRUTE, damage_flags = DAMAGE_SPREAD)
 	body.set_coretemperature(TCMB)

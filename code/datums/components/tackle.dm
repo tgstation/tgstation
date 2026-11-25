@@ -565,7 +565,7 @@
 
 		if(93 to 96)
 			user.visible_message(span_danger("[user] slams face-first into [hit] with a concerning squish, immediately going limp!"), span_userdanger("You slam face-first into [hit], and immediately lose consciousness!"))
-			user.apply_damage(30, BRUTE, spread_damage = TRUE)
+			user.apply_damage(30, BRUTE, damage_flags = DAMAGE_SPREAD)
 			user.apply_damage(30, STAMINA)
 			user.Unconscious(10 SECONDS)
 			user.gain_trauma_type(BRAIN_TRAUMA_MILD)
@@ -575,7 +575,7 @@
 
 		if(86 to 92)
 			user.visible_message(span_danger("[user] slams head-first into [hit], suffering major cranial trauma!"), span_userdanger("You slam head-first into [hit], and the world explodes around you!"))
-			user.apply_damage(30, BRUTE, spread_damage = TRUE)
+			user.apply_damage(30, BRUTE, damage_flags = DAMAGE_SPREAD)
 			user.apply_damage(30, STAMINA)
 			user.adjust_confusion(15 SECONDS)
 			if(prob(80))
@@ -587,7 +587,7 @@
 
 		if(68 to 85)
 			user.visible_message(span_danger("[user] slams hard into [hit], knocking [user.p_them()] senseless!"), span_userdanger("You slam hard into [hit], knocking yourself senseless!"))
-			user.apply_damage(10, BRUTE, spread_damage = TRUE)
+			user.apply_damage(10, BRUTE, damage_flags = DAMAGE_SPREAD)
 			user.apply_damage(30, STAMINA)
 			user.adjust_confusion(10 SECONDS)
 			user.Knockdown(3 SECONDS)
@@ -595,7 +595,7 @@
 
 		if(1 to 67)
 			user.visible_message(span_danger("[user] slams into [hit]!"), span_userdanger("You slam into [hit]!"))
-			user.apply_damage(10, BRUTE, spread_damage = TRUE)
+			user.apply_damage(10, BRUTE, damage_flags = DAMAGE_SPREAD)
 			user.apply_damage(20, STAMINA)
 			user.Knockdown(2 SECONDS)
 			shake_camera(user, 2, 2)

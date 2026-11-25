@@ -214,7 +214,7 @@
 				transform = transform.Scale(1.005, 1.005)
 				name = "[initial(name)] of sentient slaying +[num_sentient_mobs_hit]"
 
-	smeared_mob.apply_damage(100, BRUTE, spread_damage = TRUE)
+	smeared_mob.apply_damage(100, BRUTE, damage_flags = DAMAGE_SPREAD)
 	smeared_mob.apply_damage(60, BRUTE, BODY_ZONE_CHEST, wound_bonus = 20, sharpness = SHARP_POINTY)
 
 	if(smeared_mob.density || prob(10))

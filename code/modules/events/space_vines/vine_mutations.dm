@@ -379,7 +379,7 @@
 		return
 	if(prob(THORN_MUTATION_CUT_PROB))
 		var/mob/living/victim = crosser
-		if(victim.apply_damage(15, BRUTE, blocked = victim.run_armor_check(attack_flag = MELEE, silent = TRUE), spread_damage = TRUE))
+		if(victim.apply_damage(15, BRUTE, blocked = victim.run_armor_check(attack_flag = MELEE, silent = TRUE), damage_flags = DAMAGE_SPREAD))
 			to_chat(victim, span_danger("You cut yourself on the thorny vines."))
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/vine, obj/item/item,  mob/living/hitter, list/modifiers, list/attack_modifiers)
@@ -394,7 +394,7 @@
 
 	if(prob(THORN_MUTATION_CUT_PROB))
 		var/mob/living/victim = hitter
-		if(victim.apply_damage(15, BRUTE, blocked = victim.run_armor_check(attack_flag = MELEE, silent = TRUE), spread_damage = TRUE))
+		if(victim.apply_damage(15, BRUTE, blocked = victim.run_armor_check(attack_flag = MELEE, silent = TRUE), damage_flags = DAMAGE_SPREAD))
 			to_chat(victim, span_danger("You cut yourself on the thorny vines."))
 
 /datum/spacevine_mutation/thorns/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)

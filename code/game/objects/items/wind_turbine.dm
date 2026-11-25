@@ -136,7 +136,7 @@
 	user.visible_message(span_suicide("[user] moves [user.p_their()] head in the way of [src]'s blades! \
 		It looks like [user.p_theyre()] trying to commit suicide!"))
 	user.set_suicide(TRUE)
-	user.apply_damage(75, BRUTE, BODY_ZONE_HEAD, wound_bonus = 100, forced = TRUE, sharpness = SHARP_EDGED, attacking_item = src)
+	user.apply_damage(75, BRUTE, BODY_ZONE_HEAD, wound_bonus = 100, damage_flags = DAMAGE_FORCED|DAMAGE_NO_MULTIPLIERS, sharpness = SHARP_EDGED, attacking_item = src)
 	if(head.dismember())
 		user.death() // anti-ling check
 		return MANUAL_SUICIDE

@@ -138,7 +138,7 @@
 		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG)
 		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG)
 	else
-		apply_damage(incoming_damage, BRUTE, spread_damage = TRUE)
+		apply_damage(incoming_damage, BRUTE, damage_flags = DAMAGE_SPREAD)
 
 	if(!skip_knockdown)
 		Knockdown(levels * 5 SECONDS)

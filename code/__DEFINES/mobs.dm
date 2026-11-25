@@ -1132,3 +1132,9 @@ GLOBAL_LIST_INIT(regal_rat_minion_commands, list(
 #define DAMAGE_SKIP_WOUND_MESSAGE (1<<0)
 /// Don't damage clothing
 #define DAMAGE_SKIP_CLOTHING_DAMAGE (1<<1)
+/// Damage applied is forced, bypassing godmode or biotype incompatibilities
+#define DAMAGE_FORCED (1<<2)
+/// No forms of multiplier (such as physiology) is applied to the damage
+#define DAMAGE_NO_MULTIPLIERS (1<<3)
+/// Spreads the damage across all bodyparts for carbons, does nothing special for other types of mobs
+#define DAMAGE_SPREAD (1<<4)

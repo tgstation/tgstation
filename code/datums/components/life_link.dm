@@ -65,7 +65,7 @@
 	if (forced)
 		return
 	amount *= our_mob.get_incoming_damage_modifier(amount, type)
-	host.apply_damage(amount, type, spread_damage = TRUE)
+	host.apply_damage(amount, type, damage_flags = DAMAGE_SPREAD)
 
 	on_passed_damage?.Invoke(our_mob, host, amount)
 	return COMPONENT_IGNORE_CHANGE

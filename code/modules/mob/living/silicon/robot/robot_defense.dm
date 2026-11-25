@@ -525,13 +525,11 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		. = TRUE
 	return ..() || .
 
-/mob/living/silicon/robot/apply_damage/apply_damage(
+/mob/living/silicon/robot/apply_damage(
 	damage = 0,
 	damagetype = BRUTE,
 	def_zone = null,
 	blocked = 0,
-	forced = FALSE,
-	spread_damage = FALSE,
 	wound_bonus = 0,
 	exposed_wound_bonus = 0,
 	sharpness = NONE,
