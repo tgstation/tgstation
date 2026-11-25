@@ -1,4 +1,4 @@
-#define EXPERIMENT_CONFIG_attack_self "experiment_config_attack_self"
+#define EXPERIMENT_CONFIG_ATTACKSELF "experiment_config_attackself"
 #define EXPERIMENT_CONFIG_ALTCLICK "experiment_config_altclick"
 #define EXPERIMENT_CONFIG_CLICK "experiment_config_click"
 #define EXPERIMENT_CONFIG_UI "experiment_config_ui"
