@@ -13,8 +13,7 @@
 	return jungle_attack(attacker, defender)
 
 /datum/martial_art/jungle_arts/proc/jungle_attack(mob/living/attacker, mob/living/defender, grab_attack)
-
-	switch(rand(1,6))
+	switch(rand(1, 6))
 		if(1)
 			var/obj/item/organ/tail/tail = attacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 			if(isnull(tail) && IS_UNCONSCIOUS_OR_CRIT(defender) || defender.IsParalyzed())
@@ -40,7 +39,7 @@
 				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
 			return MARTIAL_ATTACK_SUCCESS
 
-		if(6)
+		if(2)
 			var/obj/item/organ/tail/tail = attacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 			if(isnull(tail))
 				return MARTIAL_ATTACK_INVALID
@@ -65,27 +64,24 @@
 				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
 			return MARTIAL_ATTACK_SUCCESS
 
-		else
-			if(defender.check_block(attacker, 0, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
-				return MARTIAL_ATTACK_FAIL
+	var/atk_verb = pick("chomp", "gnaw", "chew")
+	if(defender.check_block(attacker, 0, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
 
-			var/atk_verb = pick("chomp", "gnaw", "chew")
-			log_combat(attacker, defender, "strong bite (Jungle Arts)")
-			attacker.do_attack_animation(defender, ATTACK_EFFECT_BITE)
-			combat_message(
-				attacker = attacker,
-				defender = defender,
-				to_attacker = "You [atk_verb] [defender] with vicious force!",
-				to_defender = "[attacker] [PRESENT_TENSE(atk_verb)] you with vicious force!",
-				to_blind_attacker = "You [atk_verb] someone with vicious force!",
-				to_blind_defender = "Something [PRESENT_TENSE(atk_verb)] you with vicious force!",
-				to_viewers = "[attacker] [PRESENT_TENSE(atk_verb)] [defender] with vicious force!",
-				to_blind_viewers = "You hear a violent gnawing sound!",
-			)
-			defender.apply_damage(rand(10, 20), damagetype = BRUTE, sharpness = SHARP_POINTY, wound_bonus = 50)
-			playsound(attacker, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
-			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
-				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
-			return MARTIAL_ATTACK_SUCCESS
-
-	return MARTIAL_ATTACK_FAIL
+	log_combat(attacker, defender, "strong bite (Jungle Arts)")
+	attacker.do_attack_animation(defender, ATTACK_EFFECT_BITE)
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You [atk_verb] [defender] with vicious force!",
+		to_defender = "[attacker] [PRESENT_TENSE(atk_verb)] you with vicious force!",
+		to_blind_attacker = "You [atk_verb] someone with vicious force!",
+		to_blind_defender = "Something [PRESENT_TENSE(atk_verb)] you with vicious force!",
+		to_viewers = "[attacker] [PRESENT_TENSE(atk_verb)] [defender] with vicious force!",
+		to_blind_viewers = "You hear a violent gnawing sound!",
+	)
+	defender.apply_damage(rand(10, 20), damagetype = BRUTE, sharpness = SHARP_POINTY, wound_bonus = 50)
+	playsound(attacker, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
+	if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
+		attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
+	return MARTIAL_ATTACK_SUCCESS
