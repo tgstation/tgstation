@@ -13,24 +13,26 @@
 	return jungle_attack(attacker, defender)
 
 /datum/martial_art/jungle_arts/proc/jungle_attack(mob/living/attacker, mob/living/defender, grab_attack)
-	var/atk_verb
+
 	switch(rand(1,6))
 		if(1)
-			atk_verb = "dragged"
+			var/atk_verb = "dragging"
 			var/obj/item/organ/tail/tail = attacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 			if(isnull(tail) && IS_UNCONSCIOUS_OR_CRIT(defender) || defender.IsParalyzed())
 				return MARTIAL_ATTACK_INVALID
 
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
 			attacker.emote("spin")
-			defender.visible_message(
-				span_danger("[attacker]'s tail [atk_verb] [defender] down to the ground!"),
-				span_userdanger("Your body twists as you're [atk_verb] to the ground by [attacker]'s tail!"),
-				span_hear("You hear a snap, followed by a thud!"),
-				null,
-				attacker,
+			combat_message(
+				attacker = attacker,
+				defender = defender,
+				to_attacker = "You twist your tail around [defender], dragging [defender.p_them()] to the ground!",
+				to_defender = "[attacker] twists [attacker.p_their()] tail around you, dragging you to the ground!",
+				to_blind_attacker = "You twist your tail around someone, dragging them to the ground!",
+				to_blind_defender = "Something twists its tail around you, dragging you to the ground!",
+				to_viewers = "[attacker] twists [attacker.p_their()] tail around [defender], dragging [defender.p_them()] to the ground!",
+				to_blind_viewers = "You hear a snap, followed by a thud!",
 			)
-			to_chat(attacker, span_danger("You latch your tail to [defender], [atk_verb] them to the ground!"))
 			defender.apply_damage(rand(5, 10), attacker.get_attack_type())
 			playsound(attacker, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
 			defender.Knockdown(2 SECONDS)
@@ -42,16 +44,18 @@
 			if(isnull(tail))
 				return MARTIAL_ATTACK_INVALID
 
-			atk_verb = pick("whipped", "flogged", "lashed")
+			var/atk_verb = pick("whip", "flog", "lash")
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)
-			defender.visible_message(
-				span_danger("[attacker]'s tail [atk_verb] [defender] in one quick motion!"),
-				span_userdanger("You feel a sharp sting as you're [atk_verb] by [attacker]!"),
-				span_hear("You hear a sharp whipping noise!"),
-				null,
-				attacker,
+			combat_message(
+				attacker = attacker,
+				defender = defender,
+				to_attacker = "In one swift motion, you [atk_verb] [defender] with your tail!",
+				to_defender = "[attacker] [PRESENT_TENSE(atk_verb)] you with [attacker.p_their()] tail!",
+				to_blind_attacker = "In one swift motion, you [atk_verb] someone with your tail!",
+				to_blind_defender = "Something [PRESENT_TENSE(atk_verb)] you with its tail!",
+				to_viewers = "[attacker] [PRESENT_TENSE(atk_verb)] [defender] with [attacker.p_their()] tail!",
+				to_blind_viewers = "You hear a sharp whipping noise!",
 			)
-			to_chat(attacker, span_danger("In one motion, you [atk_verb] [defender] quickly!"))
 			defender.apply_damage(rand(10, 15), attacker.get_attack_type())
 			playsound(attacker, 'sound/items/weapons/whip.ogg', 50, TRUE, -1)
 			defender.drop_all_held_items()
@@ -59,19 +63,21 @@
 				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
 
 		else
-			atk_verb = pick("chomp", "gnaw", "chew")
 			if(defender.check_block(attacker, 0, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
 				return MARTIAL_ATTACK_FAIL
 
+			var/atk_verb = pick("chomp", "gnaw", "chew")
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_BITE)
-			defender.visible_message(
-				span_danger("[attacker] [atk_verb]s [defender] violently!"),
-				span_userdanger("You're viciously [atk_verb]ed by [attacker]!"),
-				span_hear("You hear a violent gnawing sound!"),
-				null,
-				attacker,
+			combat_message(
+				attacker = attacker,
+				defender = defender,
+				to_attacker = "You [atk_verb] [defender] with vicious force!",
+				to_defender = "[attacker] [PRESENT_TENSE(atk_verb)] you with vicious force!",
+				to_blind_attacker = "You [atk_verb] someone with vicious force!",
+				to_blind_defender = "Something [PRESENT_TENSE(atk_verb)] you with vicious force!",
+				to_viewers = "[attacker] [PRESENT_TENSE(atk_verb)] [defender] with vicious force!",
+				to_blind_viewers = "You hear a violent gnawing sound!",
 			)
-			to_chat(attacker, span_danger("You [atk_verb] [defender] with vicious force!"))
 			defender.apply_damage(rand(10, 20), damagetype = BRUTE, sharpness = SHARP_POINTY, wound_bonus = 50)
 			playsound(attacker, 'sound/items/weapons/bite.ogg', 50, TRUE, -1)
 			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))

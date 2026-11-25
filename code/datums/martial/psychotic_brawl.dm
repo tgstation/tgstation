@@ -39,34 +39,39 @@
 					defender.stop_pulling()
 					if(grab_attack)
 						log_combat(attacker, defender, "grabbed", addition="aggressively")
-						defender.visible_message(
-							span_warning("[attacker] violently grabs [defender]!"),
-							span_userdanger("You're violently grabbed by [attacker]!"),
-							span_hear("You hear sounds of aggressive fondling!"),
-							null,
-							attacker,
+						combat_message(
+							attacker = attacker,
+							defender = defender,
+							to_attacker = "You violently grab [defender]!",
+							to_defender = "[attacker] violently grabs you!",
+							to_blind_attacker = "You violently grab someone!",
+							to_blind_defender = "Something violently grabs you!",
+							to_viewers = "[attacker] violently grabs [defender]!",
+							to_blind_viewers = "You hear sounds of aggressive fondling!",
+							dangerous = TRUE,
 						)
-						to_chat(attacker, span_danger("You violently grab [defender]!"))
 						attacker.setGrabState(GRAB_AGGRESSIVE) //Instant aggressive grab
 					else
 						log_combat(attacker, defender, "grabbed", addition="passively")
 						attacker.setGrabState(GRAB_PASSIVE)
 		if(4)
-			atk_verb = "headbutt"
 			var/defender_damage = rand(5, 10)
 			if(defender.check_block(attacker, defender_damage, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
 				return MARTIAL_ATTACK_FAIL
 
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 			attacker.emote("flip")
-			defender.visible_message(
-				span_danger("[attacker] [atk_verb]s [defender]!"),
-				span_userdanger("You're [atk_verb]ed by [attacker]!"),
-				span_hear("You hear a sickening sound of flesh hitting flesh!"),
-				null,
-				attacker,
+			combat_message(
+				attacker = attacker,
+				defender = defender,
+				to_attacker = "You headbutt [defender]!",
+				to_defender = "[attacker] headbutts you!",
+				to_blind_attacker = "You headbutt someone!",
+				to_blind_defender = "Something headbutts you!",
+				to_viewers = "[attacker] headbutts [defender]!",
+				to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+				dangerous = TRUE,
 			)
-			to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
 			playsound(defender, 'sound/items/weapons/punch1.ogg', 40, TRUE, -1)
 			defender.apply_damage(defender_damage, attacker.get_attack_type(), BODY_ZONE_HEAD)
 			attacker.apply_damage(rand(5, 10), attacker.get_attack_type(), BODY_ZONE_HEAD)
@@ -79,19 +84,22 @@
 			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
 				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
 		if(5,6)
-			atk_verb = pick("kick", "hit", "slam")
 			if(defender.check_block(attacker, 0, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
 				return MARTIAL_ATTACK_FAIL
 
+			var/atk_verb = pick("kick", "hit", "slam")
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-			defender.visible_message(
-				span_danger("[attacker] [atk_verb]s [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"),
-				span_userdanger("You're [atk_verb]ed by [attacker] with such inhuman strength that it sends you flying backwards!"),
-				span_hear("You hear a sickening sound of flesh hitting flesh!"),
-				null,
-				attacker,
+			combat_message(
+				attacker = attacker,
+				defender = defender,
+				to_attacker = "You [atk_verb] [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!",
+				to_defender = "[attacker] [atk_verb]s you with such inhuman strength that it sends you flying backwards!",
+				to_blind_attacker = "You [atk_verb] someone with such inhuman strength that it sends them flying backwards!",
+				to_blind_defender = "Something [atk_verb]s you with such inhuman strength that it sends you flying backwards!",
+				to_viewers = "[attacker] [atk_verb]s [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!",
+				to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+				dangerous = TRUE,
 			)
-			to_chat(attacker, span_danger("You [atk_verb] [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"))
 			defender.apply_damage(rand(15, 30), attacker.get_attack_type())
 			playsound(defender, 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 			var/throwtarget = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))

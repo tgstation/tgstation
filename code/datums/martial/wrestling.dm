@@ -320,6 +320,7 @@ If you make a derivative work from this code, you must include this notification
 			to_blind_defender = "Someone [PRESENT_TENCE(fluff)] you!",
 			to_viewers = "[attacker] [PRESENT_TENCE(fluff)] [defender]!",
 			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+			dangerous = TRUE,
 		)
 		playsound(attacker.loc, /datum/sound_effect/swing_hit, 50, TRUE)
 		if (!IS_UNCONSCIOUS_OR_CRIT(defender))
@@ -372,6 +373,7 @@ If you make a derivative work from this code, you must include this notification
 			to_blind_defender = "Someone headbutts you!",
 			to_viewers = "[attacker] headbutts [defender]!",
 			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+			dangerous = TRUE,
 		)
 		defender.adjust_brute_loss(rand(10,20))
 		playsound(attacker.loc, /datum/sound_effect/swing_hit, 50, TRUE)
@@ -394,6 +396,7 @@ If you make a derivative work from this code, you must include this notification
 		to_blind_defender = "Someone roundhouse-kicks you!",
 		to_viewers = "[attacker] roundhouse-kicks [defender]!",
 		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+		dangerous = TRUE,
 	)
 	playsound(attacker.loc, /datum/sound_effect/swing_hit, 50, TRUE)
 	defender.adjust_brute_loss(rand(10,20))
@@ -502,6 +505,7 @@ If you make a derivative work from this code, you must include this notification
 		to_blind_defender = "Someone gets you in a cinch!",
 		to_viewers = "[attacker] gets [defender] in a cinch!",
 		to_blind_viewers = "You hear aggressive shuffling!",
+		dangerous = TRUE,
 	)
 	defender.Stun(rand(6 SECONDS, 10 SECONDS))
 	log_combat(attacker, defender, "cinched")

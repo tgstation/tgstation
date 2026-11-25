@@ -47,14 +47,18 @@
 	return TRUE
 
 /datum/martial_art/plasma_fist/proc/Throwback(mob/living/attacker, mob/living/defender)
-	defender.visible_message(
-		span_danger("[attacker] hits [defender] with Plasma Punch!"),
-		span_userdanger("You're hit with a Plasma Punch by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		null,
-		attacker,
-	)
 	to_chat(attacker, span_danger("You hit [defender] with Plasma Punch!"))
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You hit [defender] with Plasma Punch!",
+		to_defender = "[attacker] hits you with Plasma Punch!",
+		to_blind_attacker = "You hit someone with Plasma Punch!",
+		to_blind_defender = "Something hits you with Plasma Punch!",
+		to_viewers = "[attacker] hits [defender] with Plasma Punch!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+		dangerous = TRUE,
+	)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(defender, get_dir(defender, get_step_away(defender, attacker)))
 	defender.throw_at(throw_target, 200, 4,attacker)
@@ -68,14 +72,17 @@
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
 	INVOKE_ASYNC(attacker, TYPE_PROC_REF(/atom/movable, say), "PLASMA FIST!", forced = "plasma fist")
-	defender.visible_message(
-		span_danger("[attacker] hits [defender] with THE PLASMA FIST TECHNIQUE!"),
-		span_userdanger("You're suddenly hit with THE PLASMA FIST TECHNIQUE by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		null,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You hit [defender] with THE PLASMA FIST TECHNIQUE!",
+		to_defender = "[attacker] hits you with THE PLASMA FIST TECHNIQUE!",
+		to_blind_attacker = "You hit someone with THE PLASMA FIST TECHNIQUE!",
+		to_blind_defender = "Something hits you with THE PLASMA FIST TECHNIQUE!",
+		to_viewers = "[attacker] hits [defender] with THE PLASMA FIST TECHNIQUE!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+		dangerous = TRUE,
 	)
-	to_chat(attacker, span_danger("You hit [defender] with THE PLASMA FIST TECHNIQUE!"))
 	log_combat(attacker, defender, "gibbed (Plasma Fist)")
 	var/turf/Dturf = get_turf(defender)
 	defender.investigate_log("has been gibbed by plasma fist.", INVESTIGATE_DEATHS)
