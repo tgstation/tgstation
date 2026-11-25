@@ -12,6 +12,7 @@
 /datum/martial_art/jungle_arts/harm_act(mob/living/attacker, mob/living/defender)
 	return jungle_attack(attacker, defender)
 
+//These moves deliberately do not use the limb values of our attacker, as monkeys tend to have absolutely rubbish limbs.
 /datum/martial_art/jungle_arts/proc/jungle_attack(mob/living/attacker, mob/living/defender, grab_attack)
 	var/atk_verb
 	switch(rand(1,6))

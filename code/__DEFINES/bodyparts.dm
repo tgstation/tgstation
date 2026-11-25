@@ -25,6 +25,24 @@
 #define LIMB_BODY_DAMAGE_COEFFICIENT_TOTAL 1 //Used by heads and torsos
 #define LIMB_BODY_DAMAGE_COEFFICIENT_PROSTHESIS 2.5 //Used by surplus prosthesis limbs
 
+/// Limb Default Unarmed Values
+/// Default unarmed values on limbs for easy access.
+
+#define LIMB_DEFAULT_UNARMED_DAMAGE_MINIMUM 1
+#define LIMB_DEFAULT_UNARMED_DAMAGE_LOWER_PUNCH 5
+#define LIMB_DEFAULT_UNARMED_DAMAGE_UPPER_PUNCH 10
+#define LIMB_DEFAULT_UNARMED_DAMAGE_LOWER_KICK 5
+#define LIMB_DEFAULT_UNARMED_DAMAGE_UPPER_KICK 15
+
+//Limb default accuracy stat, and also influences things like armor pen and crits
+#define LIMB_DEFAULT_UNARMED_EFFECTIVENESS_USELESS_LIMB 0
+#define LIMB_DEFAULT_UNARMED_EFFECTIVENESS 10
+#define LIMB_DEFAULT_UNARMED_EFFECTIVENESS_KICK 15
+
+//Limb default pummeling values. When grappling a target, we add more damage based on this.
+#define LIMB_DEFAULT_UNARMED_PUMMELING_MULTIPLIER 1.5
+#define LIMB_DEFAULT_UNARMED_PUMMELING_MULTIPLIER_NO_INCREASE 1
+
 // EMP
 // Note most of these values are doubled on heavy EMP
 

@@ -124,6 +124,11 @@
 	if(IS_UNCONSCIOUS_OR_CRIT(defender))
 		return FALSE
 
+	var/attack_damage = determine_limb_damage(attacker, defender, MARTIAL_ART_MOVE_REQUIRES_LEG)
+	if(!attack_damage)
+		attacker.balloon_alert(attacker, "no leg!")
+		return FALSE
+
 	attacker.do_attack_animation(defender)
 	if(defender.body_position == LYING_DOWN && !IS_UNCONSCIOUS(defender) && defender.get_stamina_loss() >= 100)
 		log_combat(attacker, defender, "knocked out (Head kick)(CQC)")
@@ -154,7 +159,7 @@
 		playsound(attacker, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 		var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 		defender.throw_at(throw_target, 1, 14, attacker)
-		defender.apply_damage(10, attacker.get_attack_type())
+		defender.apply_damage(attack_damage, attacker.get_attack_type())
 		if(defender.body_position == LYING_DOWN && !IS_UNCONSCIOUS(defender))
 			defender.adjust_stamina_loss(45)
 		log_combat(attacker, defender, "kicked (CQC)")
@@ -162,6 +167,11 @@
 	return TRUE
 
 /datum/martial_art/cqc/proc/Pressure(mob/living/attacker, mob/living/defender)
+	var/attack_damage = determine_limb_damage(attacker, defender)
+	if(!attack_damage)
+		attacker.balloon_alert(attacker, "no arm!")
+		return FALSE
+
 	attacker.do_attack_animation(defender)
 	log_combat(attacker, defender, "pressured (CQC)")
 	defender.visible_message(
@@ -172,11 +182,16 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You punch [defender]'s neck!"))
-	defender.adjust_stamina_loss(60)
+	defender.apply_damage(attack_damage*6, STAMINA)
 	playsound(attacker, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 	return TRUE
 
 /datum/martial_art/cqc/proc/Restrain(mob/living/attacker, mob/living/defender)
+	var/attack_damage = determine_limb_damage(attacker, defender)
+	if(!attack_damage)
+		attacker.balloon_alert(attacker, "no arm!")
+		return FALSE
+
 	if(restraining_mob?.resolve())
 		return FALSE
 	if(IS_UNCONSCIOUS_OR_CRIT(defender))
@@ -191,13 +206,18 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You lock [defender] into a restraining position!"))
-	defender.adjust_stamina_loss(20)
+	defender.apply_damage(attack_damage, STAMINA)
 	defender.Stun(10 SECONDS)
 	restraining_mob = WEAKREF(defender)
 	addtimer(VARSET_CALLBACK(src, restraining_mob, null), 5 SECONDS, TIMER_UNIQUE)
 	return TRUE
 
 /datum/martial_art/cqc/proc/Consecutive(mob/living/attacker, mob/living/defender)
+	var/attack_damage = determine_limb_damage(attacker, defender)
+	if(!attack_damage)
+		attacker.balloon_alert(attacker, "no arm!")
+		return FALSE
+
 	if(IS_UNCONSCIOUS_OR_CRIT(defender))
 		return FALSE
 
@@ -215,7 +235,7 @@
 	var/obj/item/held_item = defender.get_active_held_item()
 	if(held_item && defender.temporarilyRemoveItemFromInventory(held_item))
 		attacker.put_in_hands(held_item)
-	defender.adjust_stamina_loss(50)
+	defender.apply_damage(attack_damage*3, STAMINA)
 	defender.apply_damage(25, attacker.get_attack_type())
 	return TRUE
 
@@ -360,7 +380,11 @@
 		to_chat(attacker, span_danger("You strike [defender]'s jaw,[disarmed_item ? " disarming [defender.p_them()] of [disarmed_item] and" : ""] leaving [defender.p_them()] disoriented!"))
 		playsound(defender, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 		defender.set_jitter_if_lower(4 SECONDS)
-		defender.apply_damage(5, attacker.get_attack_type())
+
+		var/attack_damage = determine_limb_damage(attacker, defender)
+		if(!attack_damage) //False safe, since determine_limb_damage() can return a null value.
+			attack_damage = 10
+		defender.apply_damage(attack_damage * 0.5, attacker.get_attack_type())
 		log_combat(attacker, defender, "disarmed (CQC)", addition = disarmed_item ? "(disarmed of [disarmed_item])" : null)
 		return MARTIAL_ATTACK_SUCCESS
 

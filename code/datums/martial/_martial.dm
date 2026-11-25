@@ -273,6 +273,85 @@
 	return null
 
 /**
+ * Returns a value for damage based on the passed limb. Uses various unarmed modifiers to augment this value depending on circumstances.
+ *
+ * We can also use this to ensure that a limb is present for moves that need it, such as a kick move requiring legs.
+ *
+ * Arguments
+ * * mob/living/martial_artist - The mob using the martial art
+ * * mob/living/target - The target of the attack
+ * * martial_art_requirement - What body part this martial art move needs to accomplish the attack
+ *
+ * Returns
+ * * A damage value.
+ */
+/datum/martial_art/proc/determine_limb_damage(mob/living/martial_artist, mob/living/target, martial_art_requirement = MARTIAL_ART_MOVE_REQUIRES_ARM)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	// We need to determine our active hand before we proceed.
+	var/obj/item/bodypart/arm/active_hand = martial_artist.get_active_hand()
+	// The bodypart we will be actively using in our unarmed attack.
+	var/obj/item/bodypart/active_bodypart
+	// Ceruleans don't HAVE legs, so that can mean they can't do a significant amount of our martial arts. So we will allow them to use their fishy tail for kicks.
+	var/obj/item/organ/tail/fish/cerulean/cool_tail = martial_artist.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+
+	// Damage vars, our limbs will change these!
+	// Upper damage, augmented by the presence of the strength trait.
+	var/upper_unarmed_damage
+	// Lower damage, augmented by our athletics skill.
+	var/lower_unarmed_damage
+	// Pummel bonus, if our target is grappled.
+	var/pummel_bonus
+
+	// Now, we check what limb we need, then check if we have that limb.
+	switch(martial_art_requirement)
+		if(MARTIAL_ART_MOVE_REQUIRES_ARM)
+			active_bodypart = active_hand
+		if(MARTIAL_ART_MOVE_REQUIRES_LEG)
+			active_bodypart = martial_artist.get_bodypart(IS_LEFT_INDEX(active_hand.held_index) ? BODY_ZONE_L_LEG : BODY_ZONE_R_LEG)
+		if(MARTIAL_ART_MOVE_REQUIRES_HEAD)
+			active_bodypart = martial_artist.get_bodypart(BODY_ZONE_HEAD)
+
+	// Our cerulean fallback just uses default stats for kicks.
+	if(istype(cool_tail, /obj/item/organ/tail/fish/cerulean) && martial_art_requirement == MARTIAL_ART_MOVE_REQUIRES_LEG && !active_bodypart)
+		upper_unarmed_damage = LIMB_DEFAULT_UNARMED_DAMAGE_UPPER_KICK
+		lower_unarmed_damage = LIMB_DEFAULT_UNARMED_DAMAGE_LOWER_KICK
+		pummel_bonus = LIMB_DEFAULT_UNARMED_PUMMELING_MULTIPLIER_NO_INCREASE
+
+	else if(active_bodypart)
+		upper_unarmed_damage = active_bodypart.unarmed_damage_high
+		lower_unarmed_damage = active_bodypart.unarmed_damage_low
+		pummel_bonus = active_bodypart.unarmed_pummeling_bonus
+
+	else //Absolutely nothing? Return null.
+		return null
+
+	// We then determine some modifiers to our damage.
+
+	// Strength adds to our upper damage potential
+	upper_unarmed_damage += HAS_TRAIT(martial_artist, TRAIT_STRENGTH) ? 2 : 0
+
+	// Our athletics skill increases the floor of our damage.
+	lower_unarmed_damage = min(lower_unarmed_damage + (martial_artist.mind?.get_skill_level(/datum/skill/athletics) || 0), upper_unarmed_damage)
+
+	// The actual damage roll. May still be augmented by further factors.
+	var/damage = rand(lower_unarmed_damage, upper_unarmed_damage)
+
+	// Nowe we can check for our pummel bonus.
+	var/grappled = (target.pulledby && target.pulledby.grab_state >= GRAB_AGGRESSIVE)
+	if(grappled)
+		damage = floor(damage * pummel_bonus)
+
+	// Our combatant could be a drunken brawler, granting them exceptional power determined by how intoxicated they are.
+	var/martial_artist_drunkenness = martial_artist.get_drunk_amount()
+
+	// If they are drunk, this increases a drunken brawler's damage based on how severely wounded they are. By just drinking, they get a 30% increase.
+	if(martial_artist_drunkenness && HAS_TRAIT(martial_artist, TRAIT_DRUNKEN_BRAWLER))
+		damage += damage * clamp((martial_artist.get_fire_loss() + martial_artist.get_brute_loss()) / 100, 0.3, 2)
+
+	return damage
+
+/**
  * Adds the passed element to the current streak, resetting it if the target is not the same as the last target.
  *
  * Arguments

@@ -187,13 +187,13 @@
 	var/sound/unarmed_attack_sound = 'sound/items/weapons/punch1.ogg'
 	var/sound/unarmed_miss_sound = 'sound/items/weapons/punchmiss.ogg'
 	/// Lowest possible punch damage this bodypart can give. If this is set to 0, unarmed attacks will always miss.
-	var/unarmed_damage_low = 1
-	/// Highest possible punch damage this bodypart can ive.
-	var/unarmed_damage_high = 1
+	var/unarmed_damage_low = LIMB_DEFAULT_UNARMED_DAMAGE_MINIMUM
+	/// Highest possible punch damage this bodypart can give.
+	var/unarmed_damage_high = LIMB_DEFAULT_UNARMED_DAMAGE_MINIMUM
 	/// Determines the accuracy bonus, armor penetration and knockdown probability.
-	var/unarmed_effectiveness = 10
+	var/unarmed_effectiveness = LIMB_DEFAULT_UNARMED_EFFECTIVENESS
 	/// Multiplier applied to effectiveness and damage when attacking a grabbed target.
-	var/unarmed_pummeling_bonus = 1
+	var/unarmed_pummeling_bonus = LIMB_DEFAULT_UNARMED_PUMMELING_MULTIPLIER_NO_INCREASE
 	/// If this limb is used to grab (which is only arms right now), how much more effective is the limb? Every integer above or below 0 is one effective grab level. Higher is a bonus, lower is a malus.
 	/// This is more powerful than adjusting grab escape chance. If the arm has both an increased grab level and a chance reduction, it is very hard to escape a grab.
 	var/unarmed_grab_state_bonus = 0

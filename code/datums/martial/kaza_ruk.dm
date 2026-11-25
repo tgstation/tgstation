@@ -125,7 +125,7 @@
 	if(IS_UNCONSCIOUS_OR_CRIT(defender) || defender.IsParalyzed())
 		return MARTIAL_ATTACK_INVALID
 	if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
-		return MARTIAL_ATTACK_INVALID // Does 5 damage, so we can't let pacifists leg sweep.
+		return MARTIAL_ATTACK_INVALID // Does damage, so we can't let pacifists leg sweep.
 
 	var/tail_sweeping = FALSE
 	var/sweeping_language = "leg"
@@ -135,6 +135,13 @@
 		if(possible_lizard_tail)
 			tail_sweeping = TRUE
 			sweeping_language = "tail"
+
+	var/attack_damage = determine_limb_damage(attacker, defender, MARTIAL_ART_MOVE_REQUIRES_LEG)
+	if(!attack_damage && tail_sweeping) //no legs, but we are tailsweeping instead? We'll make up some numbers.
+		attack_damage = 10
+	else if(!attack_damage && !tail_sweeping) //If we got nothing, don't worry about it
+		attacker.balloon_alert(attacker, "no leg or tail!")
+		return MARTIAL_ATTACK_FAIL
 
 	defender.visible_message(
 		span_warning("[attacker] [sweeping_language] sweeps [defender]!"),
@@ -149,12 +156,17 @@
 	if(tail_sweeping)
 		attacker.emote("spin")
 
-	defender.apply_damage(5, BRUTE, BODY_ZONE_CHEST)
+	defender.apply_damage(attack_damage*0.5, BRUTE, BODY_ZONE_CHEST)
 	defender.Knockdown(6 SECONDS)
 	log_combat(attacker, defender, "leg sweeped")
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/kaza_ruk/proc/quick_choke(mob/living/attacker, mob/living/defender)//is actually lung punch
+	var/attack_damage = determine_limb_damage(attacker, defender)
+	if(!attack_damage)
+		attacker.balloon_alert(attacker, "no arm!")
+		return MARTIAL_ATTACK_FAIL
+
 	attacker.do_attack_animation(defender)
 	defender.visible_message(
 		span_warning("[attacker] pounds [defender] on the chest!"),
@@ -167,13 +179,19 @@
 	playsound(attacker, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	if(defender.losebreath <= 10)
 		defender.losebreath = clamp(defender.losebreath + 5, 0, 10)
-	defender.adjust_oxy_loss(10)
+	defender.apply_damage(attack_damage, OXY)
 	log_combat(attacker, defender, "quickchoked")
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/kaza_ruk/proc/neck_chop(mob/living/attacker, mob/living/defender)
+	var/attack_damage = determine_limb_damage(attacker, defender)
+	if(!attack_damage)
+		attacker.balloon_alert(attacker, "no arm!")
+		return MARTIAL_ATTACK_FAIL
+
 	if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
-		return MARTIAL_ATTACK_INVALID // Does 10 damage, so we can't let pacifists neck chop.
+		return MARTIAL_ATTACK_INVALID // Does damage, so we can't let pacifists neck chop.
+
 	attacker.do_attack_animation(defender)
 	defender.visible_message(
 		span_warning("[attacker] karate chops [defender]'s neck!"),
@@ -184,7 +202,7 @@
 	)
 	to_chat(attacker, span_danger("You karate chop [defender]'s neck, rendering [defender.p_them()] unable to speak!"))
 	playsound(attacker, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-	defender.apply_damage(10, attacker.get_attack_type(), BODY_ZONE_HEAD)
+	defender.apply_damage(attack_damage, attacker.get_attack_type(), BODY_ZONE_HEAD)
 	defender.adjust_silence_up_to(20 SECONDS, 20 SECONDS)
 	log_combat(attacker, defender, "neck chopped")
 	return MARTIAL_ATTACK_SUCCESS
