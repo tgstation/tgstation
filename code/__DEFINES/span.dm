@@ -38,6 +38,8 @@
 #define span_blue(str) ("<span class='blue'>" + str + "</span>")
 #define span_blueteamradio(str) ("<span class='blueteamradio'>" + str + "</span>")
 #define span_bold(str) ("<span class='bold'>" + str + "</span>")
+/// This span outputs to OOC, it's meant for OOC announcements
+/// Use span_bolddanger for IC danger messages, it's identical to this
 #define span_boldannounce(str) ("<span class='boldannounce'>" + str + "</span>")
 #define span_boldbig(str) ("<span class='big bold'>" + str + "</span>")
 #define span_bolddanger(str) ("<span class='bolddanger'>" + str + "</span>")
@@ -168,8 +170,7 @@
 #define span_warning(str) ("<span class='warning'>" + str + "</span>")
 #define span_yell(str) ("<span class='yell'>" + str + "</span>")
 #define span_yellowteamradio(str) ("<span class='yellowteamradio'>" + str + "</span>")
-/// This span outputs to OOC, it's meant for OOC announcements
-/// Use span_bolddanger for IC danger messages, it's identical to this
+
 // Spans that use embedded tgui components:
 // Sorted alphabetically
 #define span_tooltip(tip, main_text) ("<span data-component=\"Tooltip\" data-content=\"" + tip + "\" class=\"tooltip\">" + main_text + "</span>")
