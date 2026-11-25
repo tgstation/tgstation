@@ -534,7 +534,7 @@
 		else if(has_exterior && ((has_interior && interior_ready_to_dismember) && weapon.get_sharpness()))
 			extra_wound_details += (extra_wound_details ? " and" : ",") + " [weapon.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining [hit_bodypart.get_external_description()]"
 
-	if(user.is_holding(weapon))
+	if(get(weapon, /mob/living) == user)
 		combat_message(
 			attacker = user,
 			defender = src,
@@ -554,9 +554,9 @@
 			ignored_mobs = list(src, user),
 		)
 		if(is_blind())
-			to_chat(src, span_attack_self("You're [message_verb_continuous][message_hit_area] with something[extra_wound_details]!"))
+			to_chat(src, span_attack_self("You're [message_verb_simple][message_hit_area] with something[extra_wound_details]!"))
 		else
-			to_chat(src, span_attack_self("You're [message_verb_continuous][message_hit_area] with [weapon][extra_wound_details]!"))
+			to_chat(src, span_attack_self("You're [message_verb_simple][message_hit_area] with [weapon][extra_wound_details]!"))
 	return TRUE
 
 /// Overridable proc so subtypes can have unique targetted strike zone messages, return a string.
