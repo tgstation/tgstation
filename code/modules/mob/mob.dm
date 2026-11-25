@@ -927,15 +927,15 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 		if(by_row) // vertically
 			row += step
 			if(row < 0 || row >= num_rows)
-				row = ((row % num_rows) + num_rows) % num_rows
+				row = WRAP0(row, num_rows)
 				if(climb)
-					column = abs(column + step) % num_columns
+					column = WRAP0(column + step, num_columns)
 		else // horizontally
 			column += step
 			if(column < 0 || column >= num_columns)
-				column = abs(column) % num_columns
+				column = WRAP0(column, num_columns)
 				if(climb)
-					row = (((row + step) % num_rows) + num_rows) % num_rows
+					row = WRAP0(row + step, num_rows)
 
 		var/desired_index = (row * num_columns + column) + 1
 

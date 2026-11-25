@@ -68,6 +68,12 @@
 	if(.)
 		return
 
+	// They don't really fit under this system but we can just make them select cycle left/right
+	if(iscyborg(user.mob))
+		var/mob/living/silicon/robot/user_robot = user.mob
+		user_robot.cycle_hand(hand_index == RIGHT_HANDS ? EAST : WEST, climb = FALSE)
+		return TRUE
+
 	var/mob/user_mob = user.mob
 	if(user_mob.active_hand_index % RIGHT_HANDS == hand_index % RIGHT_HANDS) // we're just cycling rows
 		user_mob.cycle_hand(NORTH, climb = FALSE)
