@@ -203,13 +203,13 @@
 /datum/component/shielded/proc/default_run_hit_callback(mob/living/owner, attack_text, current_charges)
 	do_sparks(2, TRUE, owner)
 	owner.visible_message(
-		span_attackblocked("[owner]'s shields deflect [attack_text] in a shower of sparks!"),
-		span_attackblocked("Your shield deflects [attack_text] in a shower of sparks!"),
+		span_attack_blocked("[owner]'s shields deflect [attack_text] in a shower of sparks!"),
+		span_attack_blocked("Your shield deflects [attack_text] in a shower of sparks!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	if(current_charges <= 0)
 		owner.visible_message(
-			span_attackblocked("[owner]'s shield overloads!"),
-			span_attackblocked("Your shield overloads!"),
+			span_attack_blocked("[owner]'s shield overloads!"),
+			span_attack_blocked("Your shield overloads!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 		)

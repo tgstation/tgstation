@@ -290,8 +290,8 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 /obj/item/nullrod/vibro/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(prob(final_block_chance * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)) && attack_type == OVERWHELMING_ATTACK)
 		owner.visible_message(
-			span_attackblocked("[owner] parries [attack_text] with [src]!"),
-			span_attackblocked("You parry [attack_text] with [src]!"),
+			span_attack_blocked("[owner] parries [attack_text] with [src]!"),
+			span_attack_blocked("You parry [attack_text] with [src]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)

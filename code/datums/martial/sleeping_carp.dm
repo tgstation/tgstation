@@ -335,8 +335,8 @@
 		return NONE
 
 	carp_user.visible_message(
-		span_attackblocked("[carp_user] cleanly avoids [attack_text] with incredible speed!"),
-		span_attackblocked("You dodge [attack_text]!"),
+		span_attack_blocked("[carp_user] cleanly avoids [attack_text] with incredible speed!"),
+		span_attack_blocked("You dodge [attack_text]!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	playsound(carp_user.loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
@@ -498,7 +498,7 @@
 		H.adjust_stamina_loss(rand(13,20))
 		if(prob(10))
 			H.visible_message(
-				span_attackother("[H] collapses!"),
+				span_attack_other("[H] collapses!"),
 				span_userdanger("Your legs give out!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 			)

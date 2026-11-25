@@ -167,12 +167,12 @@
 
 	switch (proj.suppressed)
 		if (SUPPRESSED_QUIET)
-			to_chat(src, span_attackself("You're shot by \a [proj][organ_hit_text]!"))
+			to_chat(src, span_attack_self("You're shot by \a [proj][organ_hit_text]!"))
 		if (SUPPRESSED_NONE)
-			visible_message(span_attackother("[src] is hit by \a [proj][organ_hit_text]!"), \
-					span_attackself("You're hit by \a [proj][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
+			visible_message(span_attack_other("[src] is hit by \a [proj][organ_hit_text]!"), \
+					span_attack_self("You're hit by \a [proj][organ_hit_text]!"), null, COMBAT_MESSAGE_RANGE)
 			if(is_blind())
-				to_chat(src, span_attackself("You feel something hit you[organ_hit_text]!"))
+				to_chat(src, span_attack_self("You feel something hit you[organ_hit_text]!"))
 
 	if(proj.is_hostile_projectile())
 		apply_projectile_effects(proj, def_zone, blocked)
@@ -280,8 +280,8 @@
 		else
 			playsound(loc, 'sound/items/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
 			if(!isvendor(AM) && !iscarbon(AM)) //Vendors have special interactions, while carbon mobs already generate visible messages!
-				visible_message(span_attackother("[src] is hit by [AM]!"), \
-							span_attackself("You're hit by [AM]!"))
+				visible_message(span_attack_other("[src] is hit by [AM]!"), \
+							span_attack_self("You're hit by [AM]!"))
 		log_combat(AM, src, "hit ")
 		return ..()
 
@@ -306,8 +306,8 @@
 		return ..()
 
 	visible_message(
-		span_attackother("[src] is hit by [thrown_item]!"),
-		span_attackself("You're hit by [thrown_item]!"),
+		span_attack_other("[src] is hit by [thrown_item]!"),
+		span_attack_self("You're hit by [thrown_item]!"),
 	)
 	if(!thrown_item.throwforce)
 		log_hit_combat(throwingdatum?.get_thrower(), thrown_item)

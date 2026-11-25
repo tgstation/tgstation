@@ -463,18 +463,30 @@ h2.alert {
   font-size: 90%;
 }
 
-.attackblocked {
+.attack_blocked {
   color: hsl(30, 100%, 45%);
 }
 
-.attackother {
+.attack_blocked_major {
+  color: hsl(30, 100%, 45%);
+  font-weight: bold;
+  font-size: 125%;
+}
+
+.attack_other {
   color: hsl(0, 100%, 50%);
 }
 
-.attackself {
+.attack_self {
   color: hsl(0, 100%, 50%);
   font-weight: bold;
   font-size: 125%;
+}
+
+.attack_self_major {
+  color: hsl(0, 100%, 50%);
+  font-weight: bold;
+  font-size: 150%;
 }
 
 .warning {

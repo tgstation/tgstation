@@ -61,8 +61,8 @@
 		/datum/brain_trauma/severe/monophobia
 	)
 	wearer.visible_message(
-		span_attackblocked("[wearer]'s veil makes [attack_text] miss, but the force behind the blow causes it to disperse!"),
-		span_attackblocked("The veil around you deflects [attack_text], but the force behind causes it to disperse!"),
+		span_attack_blocked("[wearer]'s veil makes [attack_text] miss, but the force behind the blow causes it to disperse!"),
+		span_attack_blocked("The veil around you deflects [attack_text], but the force behind causes it to disperse!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	if(IS_HERETIC(wearer))

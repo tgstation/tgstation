@@ -34,7 +34,7 @@
  */
 /datum/component/experiment_handler/Initialize(allowed_experiments = list(),
 	blacklisted_experiments = list(),
-	config_mode = EXPERIMENT_CONFIG_ATTACKSELF,
+	config_mode = EXPERIMENT_CONFIG_attack_self,
 	disallowed_traits = null,
 	config_flags = null,
 	datum/callback/start_experiment_callback = null,
@@ -55,7 +55,7 @@
 
 	// Determine UI display mode
 	switch(config_mode)
-		if(EXPERIMENT_CONFIG_ATTACKSELF)
+		if(EXPERIMENT_CONFIG_attack_self)
 			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(configure_experiment))
 		if(EXPERIMENT_CONFIG_ALTCLICK)
 			RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(configure_experiment))

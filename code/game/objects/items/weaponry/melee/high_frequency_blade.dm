@@ -47,8 +47,8 @@
 	if(attack_type == PROJECTILE_ATTACK)
 		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
 			owner.visible_message(
-				span_attackblocked("[owner] deflects [attack_text] with [src]!"),
-				span_attackblocked("You deflect [attack_text] with [src]!"),
+				span_attack_blocked("[owner] deflects [attack_text] with [src]!"),
+				span_attack_blocked("You deflect [attack_text] with [src]!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
@@ -58,8 +58,8 @@
 	var/stop_that_blade = (final_block_chance + (attack_type == OVERWHELMING_ATTACK ? 25 : 0)) * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)
 	if(prob(stop_that_blade))
 		owner.visible_message(
-			span_attackblocked("[owner] parries [attack_text] with [src]!"),
-			span_attackblocked("You parry [attack_text] with [src]!"),
+			span_attack_blocked("[owner] parries [attack_text] with [src]!"),
+			span_attack_blocked("You parry [attack_text] with [src]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)

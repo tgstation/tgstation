@@ -534,15 +534,15 @@
 	playsound(comp_parent, 'sound/items/weapons/marauder.ogg', 20, TRUE, frequency = 1.25)
 	if(owner.is_holding(comp_parent))
 		owner.visible_message(
-			span_attackblocked("[owner] holds [comp_parent] up, blocking [attack_text] with a projected shield!"),
-			span_attackblocked("You hold [comp_parent] up, blocking [attack_text] with a projected shield!"),
+			span_attack_blocked("[owner] holds [comp_parent] up, blocking [attack_text] with a projected shield!"),
+			span_attack_blocked("You hold [comp_parent] up, blocking [attack_text] with a projected shield!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 	else
 		owner.visible_message(
-			span_attackblocked("[owner]'s [comp_parent.name] blocks [attack_text] with a projected shield!"),
-			span_attackblocked("Your [comp_parent.name] blocks [attack_text] with a projected shield!"),
+			span_attack_blocked("[owner]'s [comp_parent.name] blocks [attack_text] with a projected shield!"),
+			span_attack_blocked("Your [comp_parent.name] blocks [attack_text] with a projected shield!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 		)
 	if(current_charges <= 0)

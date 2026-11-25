@@ -112,8 +112,8 @@
 
 /obj/item/clothing/suit/armor/reactive/psykerboost/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(
-		span_attackblocked("[src] blocks [attack_text], psykerboosting [owner]'s mental powers!"),
-		span_attackblocked("You block [attack_text], psykerboosting your mental powers!"),
+		span_attack_blocked("[src] blocks [attack_text], psykerboosting [owner]'s mental powers!"),
+		span_attack_blocked("You block [attack_text], psykerboosting your mental powers!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	for(var/datum/action/cooldown/spell/psychic_ability in owner.actions)
@@ -124,8 +124,8 @@
 
 /obj/item/clothing/suit/armor/reactive/psykerboost/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	owner.visible_message(
-		span_attackblocked("[src] blocks [attack_text], draining [owner]'s mental powers!"),
-		span_attackblocked("You block [attack_text], draining your mental powers!"),
+		span_attack_blocked("[src] blocks [attack_text], draining [owner]'s mental powers!"),
+		span_attack_blocked("You block [attack_text], draining your mental powers!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	for(var/datum/action/cooldown/spell/psychic_ability in owner.actions)

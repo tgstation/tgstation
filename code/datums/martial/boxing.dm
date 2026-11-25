@@ -373,8 +373,8 @@
 		perform_extra_effect(boxer, attacker)
 
 	boxer.visible_message(
-		span_attackblocked("[boxer] [block_text]s [attack_text]!"),
-		span_attackblocked("You [block_text] [attack_text]!"),
+		span_attack_blocked("[boxer] [block_text]s [attack_text]!"),
+		span_attack_blocked("You [block_text] [attack_text]!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)

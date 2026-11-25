@@ -55,8 +55,8 @@ Striking a noncultist, however, will tear their flesh."}
 	if(IS_CULTIST(owner) && prob(final_block_chance) && (attack_type != PROJECTILE_ATTACK || attack_type != OVERWHELMING_ATTACK))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(
-			span_attackblocked("[owner] parries [attack_text] with [src][owner.get_active_held_item() == src ? "" : " in their offhand"]!"),
-			span_attackblocked("You parry [attack_text] with [src][owner.get_active_held_item() == src ? "" : " in your offhand"]!"),
+			span_attack_blocked("[owner] parries [attack_text] with [src][owner.get_active_held_item() == src ? "" : " in their offhand"]!"),
+			span_attack_blocked("You parry [attack_text] with [src][owner.get_active_held_item() == src ? "" : " in your offhand"]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
@@ -131,8 +131,8 @@ Striking a noncultist, however, will tear their flesh."}
 	if(IS_CULTIST(owner) && prob(final_block_chance))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		owner.visible_message(
-			span_attackblocked("[owner] parries [attack_text] with [src]!"),
-			span_attackblocked("You parry [attack_text] with [src]!"),
+			span_attack_blocked("[owner] parries [attack_text] with [src]!"),
+			span_attack_blocked("You parry [attack_text] with [src]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
@@ -880,8 +880,8 @@ Striking a noncultist, however, will tear their flesh."}
 		final_block_chance *= 2
 	if(IS_CULTIST(owner) && prob(final_block_chance))
 		owner.visible_message(
-			span_attackblocked("[owner] parries [attack_text] with [src]!"),
-			span_attackblocked("You parry [attack_text] with [src]!"),
+			span_attack_blocked("[owner] parries [attack_text] with [src]!"),
+			span_attack_blocked("You parry [attack_text] with [src]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)

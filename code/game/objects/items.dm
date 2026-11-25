@@ -625,8 +625,8 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 
 	if(prob(final_block_chance))
 		owner.visible_message(
-			span_attackblocked("[owner] blocks [attack_text] with [src]!"),
-			span_attackblocked("You block [attack_text] with [src]!"),
+			span_attack_blocked("[owner] blocks [attack_text] with [src]!"),
+			span_attack_blocked("You block [attack_text] with [src]!"),
 			vision_distance = COMBAT_MESSAGE_RANGE,
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
