@@ -145,9 +145,16 @@
 	// Similar to a normal punch, should we have a value of 0 for our lower force, we simply miss outright.
 	if(!lower_force)
 		playsound(defender.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
-		defender.visible_message(span_warning("[attacker]'s punch misses [defender]!"), \
-			span_danger("You avoid [attacker]'s punch!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, attacker)
-		to_chat(attacker, span_warning("Your punch misses [defender]!"))
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "Your punch misses [defender]!",
+			to_defender = "[attacker]'s punch misses you!",
+			to_blind_attacker = "You miss someone with your punch!",
+			to_blind_defender = "Someone misses you with a punch!",
+			to_viewers = "[attacker] misses [defender] with a punch!",
+			to_blind_viewers = "You hear a swoosh!",
+		)
 		log_combat(attacker, defender, "attempted to hit", "punch (boxing) ")
 		return FALSE
 

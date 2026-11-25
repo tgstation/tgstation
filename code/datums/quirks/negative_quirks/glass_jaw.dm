@@ -48,8 +48,10 @@
 		//don't display the message if little mac is already KO'd
 		if(!IS_UNCONSCIOUS(source))
 			source.visible_message(
-				span_warning("[source] gets knocked out!"),
-				span_userdanger("You get knocked out!"),
-				vision_distance = COMBAT_MESSAGE_RANGE,
+				span_attack_other("[src] is knocked out!"),
+				span_attack_self_major("You're knocked out!"),
+				span_hear("You hear a thud!"),
+				COMBAT_MESSAGE_RANGE,
+				ALWAYS_SHOW_SELF_MESSAGE,
 			)
 		source.Unconscious(3 SECONDS)

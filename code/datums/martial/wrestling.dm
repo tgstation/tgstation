@@ -311,9 +311,16 @@ If you make a derivative work from this code, you must include this notification
 			if (3)
 				fluff = "atomic [fluff]"
 
-		defender.visible_message(span_danger("[attacker] [fluff] [defender]!"), \
-						span_userdanger("You're [fluff]ed by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
-		to_chat(attacker, span_danger("You [fluff] [defender]!"))
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You [fluff] [defender]!",
+			to_defender = "[attacker] [PRESENT_TENCE(fluff)] you!",
+			to_blind_attacker = "You [fluff] someone!",
+			to_blind_defender = "Someone [PRESENT_TENCE(fluff)] you!",
+			to_viewers = "[attacker] [PRESENT_TENCE(fluff)] [defender]!",
+			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+		)
 		playsound(attacker.loc, /datum/sound_effect/swing_hit, 50, TRUE)
 		if (!IS_UNCONSCIOUS_OR_CRIT(defender))
 			defender.emote("scream")
@@ -356,9 +363,16 @@ If you make a derivative work from this code, you must include this notification
 		attacker.forceMove(defender.loc)
 		addtimer(CALLBACK(src, PROC_REF(CheckStrikeTurf), attacker, T), 0.4 SECONDS)
 
-		defender.visible_message(span_danger("[attacker] headbutts [defender]!"), \
-						span_userdanger("You're headbutted by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
-		to_chat(attacker, span_danger("You headbutt [defender]!"))
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You headbutt [defender]!",
+			to_defender = "[attacker] headbutts you!",
+			to_blind_attacker = "You headbutt someone!",
+			to_blind_defender = "Someone headbutts you!",
+			to_viewers = "[attacker] headbutts [defender]!",
+			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+		)
 		defender.adjust_brute_loss(rand(10,20))
 		playsound(attacker.loc, /datum/sound_effect/swing_hit, 50, TRUE)
 		defender.Unconscious(2 SECONDS)
@@ -371,9 +385,16 @@ If you make a derivative work from this code, you must include this notification
 	attacker.emote("flip")
 	attacker.setDir(turn(attacker.dir, 90))
 
-	defender.visible_message(span_danger("[attacker] roundhouse-kicks [defender]!"), \
-					span_userdanger("You're roundhouse-kicked by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
-	to_chat(attacker, span_danger("You roundhouse-kick [defender]!"))
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You roundhouse-kick [defender]!",
+		to_defender = "[attacker] roundhouse-kicks you!",
+		to_blind_attacker = "You roundhouse-kick someone!",
+		to_blind_defender = "Someone roundhouse-kicks you!",
+		to_viewers = "[attacker] roundhouse-kicks [defender]!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+	)
 	playsound(attacker.loc, /datum/sound_effect/swing_hit, 50, TRUE)
 	defender.adjust_brute_loss(rand(10,20))
 
@@ -472,14 +493,16 @@ If you make a derivative work from this code, you must include this notification
 	if(attacker.pulling == defender)
 		return MARTIAL_ATTACK_FAIL
 	attacker.start_pulling(defender)
-	defender.visible_message(
-		span_danger("[attacker] gets [defender] in a cinch!"),
-		span_userdanger("You're put into a cinch by [attacker]!"),
-		span_hear("You hear aggressive shuffling!"),
-		COMBAT_MESSAGE_RANGE,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You get [defender] in a cinch!",
+		to_defender = "[attacker] gets you in a cinch!",
+		to_blind_attacker = "You get someone in a cinch!",
+		to_blind_defender = "Someone gets you in a cinch!",
+		to_viewers = "[attacker] gets [defender] in a cinch!",
+		to_blind_viewers = "You hear aggressive shuffling!",
 	)
-	to_chat(attacker, span_danger("You get [defender] in a cinch!"))
 	defender.Stun(rand(6 SECONDS, 10 SECONDS))
 	log_combat(attacker, defender, "cinched")
 	return MARTIAL_ATTACK_SUCCESS

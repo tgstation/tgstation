@@ -293,11 +293,9 @@
 	if(!prob(determine_avoidance))
 		return NONE
 
-
-
 	carp_user.visible_message(
-		span_danger("[carp_user] effortlessly swats [hitting_projectile] aside! [carp_user.p_They()] can block bullets with [carp_user.p_their()] bare hands!"),
-		span_userdanger("You deflect [hitting_projectile]!"),
+		span_attack_blocked("[carp_user] effortlessly swats [hitting_projectile] aside! [carp_user.p_They()] can block bullets with [carp_user.p_their()] bare hands!"),
+		span_attack_blocked("You deflect [hitting_projectile]!"),
 	)
 	playsound(carp_user, /datum/sound_effect/bullet_miss, 75, TRUE)
 	hitting_projectile.set_firer(carp_user)
@@ -314,8 +312,8 @@
 		return
 	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
 	carp_user.visible_message(
-		span_danger("[carp_user] carefully dodges [attacker]'s [touch_weapon]!"),
-		span_userdanger("You take great care to remain untouched by [attacker]'s [touch_weapon]!"),
+		span_attack_blocked("[carp_user] carefully dodges [attacker]'s [touch_weapon]!"),
+		span_attack_blocked("You take great care to remain untouched by [attacker]'s [touch_weapon]!"),
 	)
 	return COMPONENT_NO_AFTERATTACK
 
