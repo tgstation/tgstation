@@ -34,7 +34,7 @@ GLOBAL_LIST_INIT(summoned_guns, list(
 	/obj/item/gun/ballistic/automatic/tommygun,
 	/obj/item/gun/ballistic/automatic/wt550,
 	/obj/item/gun/ballistic/revolver,
-	/obj/item/gun/ballistic/revolver/badass,
+	/obj/item/gun/ballistic/revolver/syndicate/badass,
 	/obj/item/gun/ballistic/revolver/c38,
 	/obj/item/gun/ballistic/revolver/nagant,
 	/obj/item/gun/ballistic/rifle/boltaction,

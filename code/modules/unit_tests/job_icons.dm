@@ -6,4 +6,4 @@
 		if(!(job::job_flags & JOB_CREW_MANIFEST))
 			continue
 		if(isnull(job::tgui_icon))
-			TEST_FAIL("[job::title] does not have a valid job icon.")
+			TEST_FAIL("[job::type] ([job::title]) does not have a valid job icon.")

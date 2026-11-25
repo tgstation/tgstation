@@ -95,7 +95,7 @@
 	if(obj_flags & EMAGGED)
 		return FALSE
 	obj_flags |= EMAGGED
-	playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 	balloon_alert(user, "safety sensor BIOS disabled")
 	return TRUE
 

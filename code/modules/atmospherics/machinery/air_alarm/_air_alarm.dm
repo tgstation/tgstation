@@ -8,11 +8,13 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	power_channel = AREA_USAGE_ENVIRON
-	req_access = list(ACCESS_ENGINEERING)
+	req_access = list(ACCESS_ATMOS_EQUIP)
 	max_integrity = 250
 	integrity_failure = 0.33
 	armor_type = /datum/armor/machinery_airalarm
 	resistance_flags = FIRE_PROOF
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
+	interaction_flags_click = ALLOW_SILICON_REACH
 
 	/// Current alert level of our air alarm.
 	/// [AIR_ALARM_ALERT_NONE], [AIR_ALARM_ALERT_MINOR], [AIR_ALARM_ALERT_SEVERE]
@@ -485,7 +487,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 			var/threshold_type = params["threshold_type"]
 			var/value = params["value"]
 			tlv.set_value(threshold_type, value)
-			investigate_log("threshold value for [threshold]:[threshold_type] was set to [value] by [key_name(user)]", INVESTIGATE_ATMOS)
+			investigate_log("threshold value for [threshold]:[threshold_type] was set to [html_encode(value)] by [key_name(user)]", INVESTIGATE_ATMOS)
 
 			check_enviroment()
 

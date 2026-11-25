@@ -257,7 +257,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	var/frame_path = null
 	var/cost = 2 // Default girder cost
 	var/time = 4 SECONDS //Default girder build time
-	var/obj/item/circuitboard/held_board = locate() in user.held_items
+	var/obj/item/circuitboard/held_board = user.is_holding_item_of_type(__IMPLIED_TYPE__)
 	if(!isnull(held_board))
 		if(istype(held_board, /obj/item/circuitboard/machine))
 			frame_path = /obj/structure/frame/machine
@@ -369,6 +369,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("cabinet", /obj/structure/closet/cabinet, 2, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_CONTAINERS), \
 	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 1 SECONDS, crafting_flags = NONE, category = CAT_ENTERTAINMENT),\
 	new/datum/stack_recipe("painting frame", /obj/item/wallframe/painting, 1, time = 1 SECONDS, crafting_flags = NONE, category = CAT_ENTERTAINMENT),\
+	new/datum/stack_recipe("large painting frame", /obj/item/wallframe/painting/large, 2, time = 3 SECONDS, crafting_flags = NONE, category = CAT_ENTERTAINMENT),\
 	new/datum/stack_recipe("display case chassis", /obj/structure/displaycase_chassis, 5, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("wooden buckler", /obj/item/shield/buckler, 20, time = 4 SECONDS, crafting_flags = NONE, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("apiary", /obj/structure/beebox, 40, time = 5 SECONDS, crafting_flags = NONE, category = CAT_TOOLS),\
@@ -553,8 +554,8 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cloth
 	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
-	pickup_sound = SFX_CLOTH_PICKUP
-	drop_sound = SFX_CLOTH_DROP
+	pickup_sound = /datum/sound_effect/cloth_pickup
+	drop_sound = /datum/sound_effect/cloth_drop
 
 /obj/item/stack/sheet/cloth/grind_results()
 	return list(/datum/reagent/cellulose = 20)

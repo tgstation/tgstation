@@ -33,9 +33,6 @@
 	var/datum/gas_mixture/external = location.return_air()
 	var/datum/gas_mixture/internal = airs[1]
 
-	if(!internal.volume || !external.volume)
-		return
-
 	if(internal.equalize(external))
 		air_update_turf(FALSE, FALSE)
 		update_parents()

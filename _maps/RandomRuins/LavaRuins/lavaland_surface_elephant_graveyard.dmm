@@ -274,9 +274,7 @@
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "tf" = (
-/turf/open/misc/asteroid/basalt/wasteland{
-	icon_state = "wasteland_dug"
-	},
+/turf/open/misc/asteroid/basalt/wasteland/depression,
 /area/ruin/unpowered/elephant_graveyard)
 "uj" = (
 /obj/structure/bed,
@@ -607,9 +605,7 @@
 "XK" = (
 /obj/item/food/deadmouse,
 /obj/item/assembly/mousetrap,
-/turf/open/misc/asteroid/basalt/wasteland{
-	icon_state = "wasteland_dug"
-	},
+/turf/open/misc/asteroid/basalt/wasteland/depression,
 /area/ruin/unpowered/elephant_graveyard)
 "XY" = (
 /obj/structure/table,
@@ -630,9 +626,7 @@
 /area/ruin/powered/graveyard_shuttle)
 "ZH" = (
 /obj/structure/stone_tile/surrounding_tile,
-/turf/open/misc/asteroid/basalt/wasteland{
-	icon_state = "wasteland_dug"
-	},
+/turf/open/misc/asteroid/basalt/wasteland/depression,
 /area/ruin/unpowered/elephant_graveyard)
 
 (1,1,1) = {"

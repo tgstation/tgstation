@@ -9,8 +9,8 @@
 	description = "Applications of lighting and vision technology not originally thought to be commercially viable."
 	unlocked_designs = list(
 		/datum/design/bright_helmet,
+		/datum/design/cargo_weapon/photon_cannon,
 		/datum/design/rld_mini,
-		/datum/design/photon_cannon,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_COMMON)

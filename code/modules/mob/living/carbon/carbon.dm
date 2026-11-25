@@ -7,8 +7,7 @@
 	register_context()
 
 	GLOB.carbon_list += src
-	ADD_TRAIT(src, TRAIT_CAN_HOLD_ITEMS, INNATE_TRAIT) // Carbons are assumed to be innately capable of having arms, we check their arms count instead
-	ADD_TRAIT(src, TRAIT_CAN_THROW_ITEMS, INNATE_TRAIT) // same here
+	add_traits(list(TRAIT_FENCE_CLIMBER, TRAIT_CAN_THROW_ITEMS), INNATE_TRAIT)
 	breathing_loop = new(src, _direct = TRUE)
 
 /mob/living/carbon/Destroy()
@@ -128,6 +127,16 @@
 		usr.put_in_hands(tourniquet)
 		return
 
+	if(href_list["gauze_limb"])
+		var/obj/item/bodypart/gauzed = locate(href_list["gauze_limb"]) in bodyparts
+		var/mob/living/patient = gauzed?.owner
+		var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(gauzed?.applied_items, LIMB_ITEM_GAUZE)
+		if(QDELETED(gauzed) || QDELETED(patient) || QDELETED(current_gauze))
+			return
+		// rest of the sanity is handled in the proc itself
+		gauzed.help_remove_gauze(usr)
+		return
+
 	if(href_list["show_paper_note"])
 		var/obj/item/paper/paper_note = locate(href_list["show_paper_note"])
 		if(!paper_note)
@@ -154,7 +163,7 @@
 				span_notice("You attempt to unbuckle yourself... \
 				(This will take around [DisplayTimeText(buckle_cd)] and you must stay still.)"))
 
-	if(!do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM, cog_icon = null))
+	if(!do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM|HIDE_INTERACTION))
 		if(buckled)
 			to_chat(src, span_warning("You fail to unbuckle yourself!"))
 		return
@@ -206,7 +215,7 @@
 	if(!cuff_break)
 		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
 		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM, cog_icon = null, interaction_key = REF(cuffs) ))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM|HIDE_INTERACTION, interaction_key = REF(cuffs) ))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to remove [cuffs]!"))
@@ -437,73 +446,6 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/carbon_softcrit)
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
-/mob/living/carbon/update_sight()
-	if(!client)
-		return
-	if(stat == DEAD && !HAS_TRAIT(src, TRAIT_CORPSELOCKED))
-		if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-			set_sight(null)
-		else if(is_secret_level(z))
-			set_sight(initial(sight))
-		else
-			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		set_invis_see(SEE_INVISIBLE_OBSERVER)
-		return
-
-	var/new_sight = initial(sight)
-	lighting_cutoff = initial(lighting_cutoff)
-	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
-
-	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
-	if(eyes)
-		set_invis_see(eyes.see_invisible)
-		new_sight |= eyes.sight_flags
-		if(!isnull(eyes.lighting_cutoff))
-			lighting_cutoff = eyes.lighting_cutoff
-		if(!isnull(eyes.color_cutoffs))
-			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, eyes.color_cutoffs)
-
-	if(client.eye && client.eye != src)
-		var/atom/A = client.eye
-		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
-			return
-
-	new_sight |= get_sight_and_cutoffs()
-
-	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		new_sight = NONE
-
-	set_sight(new_sight)
-	return ..()
-
-/// Modifies lighting_cutoff/lighting_color_cutoffs/see_invisible and returns additional sight flags to apply
-/mob/living/carbon/proc/get_sight_and_cutoffs()
-	var/new_sight = NONE
-	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_HIGH)
-
-	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
-		new_sight |= SEE_TURFS
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
-
-	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
-		new_sight |= SEE_MOBS
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM)
-
-	if(HAS_TRAIT(src, TRAIT_NIGHT_VISION))
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_LOW)
-
-	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
-		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-
-	if(HAS_TRAIT(src, TRAIT_ECHOLOCATOR))
-		new_sight |= SEE_MOBS|SEE_TURFS
-		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_FULLBRIGHT)
-
-	var/list/return_list = list(new_sight)
-	SEND_SIGNAL(src, COMSIG_CARBON_UPDATE_SIGHT_CUTOFFS, return_list)
-	return return_list[1]
-
 /**
  * Calculates how visually impaired the mob is by their equipment and other factors
  *
@@ -706,7 +648,9 @@
 
 			target_organ.apply_organ_damage(excess_healing * -1, required_organ_flag = ORGAN_ORGANIC) //1 excess = 5 organ damage healed
 
-	return ..()
+	. = ..()
+	if(.)
+		set_heartattack(FALSE)
 
 /mob/living/carbon/heal_and_revive(heal_to = 75, revive_message)
 	// We can't heal them if they're missing a heart
@@ -721,11 +665,7 @@
 	if(!HAS_TRAIT(src, TRAIT_LIVERLESS_METABOLISM) && !isnull(dna?.species.mutantliver) && !get_organ_slot(ORGAN_SLOT_LIVER))
 		return FALSE
 
-	. = ..()
-	if(.) // if revived successfully
-		set_heartattack(FALSE)
-
-	return .
+	return ..()
 
 /mob/living/carbon/fully_heal(heal_flags = HEAL_ALL)
 
@@ -760,10 +700,6 @@
 		QDEL_NULL(handcuffed)
 		QDEL_NULL(legcuffed)
 
-	return ..()
-
-/mob/living/carbon/do_strange_reagent_revival(healing_amount)
-	set_heartattack(FALSE)
 	return ..()
 
 /mob/living/carbon/can_be_revived()
@@ -870,7 +806,7 @@
 
 	new_bodypart.on_adding(src)
 	bodyparts += new_bodypart
-	if(!IS_STUMP(new_bodypart))
+	if(!IS_STUMP(new_bodypart) && !isnull(new_bodypart.body_zone))
 		real_bodypart_cache[new_bodypart.body_zone] = new_bodypart
 	new_bodypart.update_owner(src)
 
@@ -1081,7 +1017,7 @@
 /mob/living/carbon/wash(clean_types)
 	. = ..()
 	// Wash equipped stuff that cannot be covered
-	for(var/obj/item/held_thing in held_items)
+	for(var/obj/item/held_thing as anything in get_held_items())
 		. |= held_thing.wash(clean_types)
 
 	// Check and wash stuff that isn't covered

@@ -6,7 +6,6 @@
 	medical_record_text = "During physical examination, patient was found to have numerous low-budget prosthetic internal organs. \
 		<b>Removal of these organs is known to be dangerous to the patient as well as the practitioner.</b>"
 	hardcore_value = 6
-	mail_goodies = list(/obj/item/storage/organbox)
 
 /datum/quirk/tin_man/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder

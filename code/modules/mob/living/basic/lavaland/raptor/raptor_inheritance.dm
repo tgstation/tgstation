@@ -51,12 +51,21 @@
 	var/growth_mod = 0
 	var/amount_eaten = 0
 
-	for (var/food_type in foods_eaten)
-		var/list/stat_mods = foods_eaten[food_type]
+	var/list/total_foods = mom_stats.foods_eaten.Copy()
+	// Need to merge the lists but sum the amounts
+	for (var/food_type in dad_stats.foods_eaten)
+		var/list/food_stats = dad_stats.foods_eaten[food_type]
+		if (total_foods[food_type])
+			total_foods[food_type]["amount"] += food_stats["amount"]
+		else
+			total_foods[food_type] = food_stats.Copy()
+
+	for (var/food_type in total_foods)
+		var/list/stat_mods = total_foods[food_type]
 		amount_eaten += stat_mods["amount"]
 
-	for (var/food_type in foods_eaten)
-		var/list/stat_mods = foods_eaten[food_type]
+	for (var/food_type in total_foods)
+		var/list/stat_mods = total_foods[food_type]
 		// First multiply stats themselves, then multiply to get a proportion of this food from amount_eaten
 		var/amount = stat_mods["amount"] ** 2
 		// Eating other foods reduces the effects of a specific one

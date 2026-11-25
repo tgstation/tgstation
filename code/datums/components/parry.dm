@@ -103,7 +103,8 @@
 		return NONE
 
 	parried = TRUE
-	if (source.firer != user)
+	var/boosting = source.firer == user
+	if (!boosting)
 		if (abs(source.angle - dir2angle(user.dir)) < 15)
 			source.set_angle((source.angle + 180) % 360 + rand(-3, 3))
 		else
@@ -111,9 +112,9 @@
 		user.visible_message(span_warning("[user] expertly parries [source] with [user.p_their()] bare hand!"), span_warning("You parry [source] with your hand!"))
 	else
 		user.visible_message(span_warning("[user] boosts [source] with [user.p_their()] bare hand!"), span_warning("You boost [source] with your hand!"))
-	source.firer = user
-	source.speed *= (source.firer == user) ? boost_speed_mult : parry_speed_mult
-	source.damage *= (source.firer == user) ? boost_damage_mult : parry_damage_mult
+	source.set_firer(user)
+	source.speed *= boosting ? boost_speed_mult : parry_speed_mult
+	source.damage *= boosting ? boost_damage_mult : parry_damage_mult
 	source.add_atom_colour(COLOR_RED_LIGHT, TEMPORARY_COLOUR_PRIORITY)
 	if (!isnull(parry_callback))
 		parry_callback.Invoke(user)

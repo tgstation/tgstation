@@ -36,6 +36,7 @@
 
 /datum/storage_interface/Destroy(force)
 	QDEL_NULL(closer)
+	QDEL_NULL(upper)
 	QDEL_NULL(cells)
 	QDEL_NULL(corner_top_left)
 	QDEL_NULL(corner_top_right)
@@ -58,7 +59,7 @@
 	atom/real_location,
 	list/datum/numbered_display/numbered_contents,
 )
-	var/number_of_hands = user_looking.held_items.len
+	var/number_of_hands = user_looking.get_num_hand_slots()
 	while(number_of_hands > user_looking.default_hand_amount)
 		number_of_hands /= user_looking.default_hand_amount
 		screen_start_y++

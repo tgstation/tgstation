@@ -18,6 +18,8 @@
 	var/initial_reagent_flags = NONE
 	/// A list of what initial reagents this container should spawn with
 	var/list/list_reagents = null
+	/// The temperature of the initial reagents
+	var/reagents_temperature = DEFAULT_REAGENT_TEMPERATURE
 	/// The purity of the spawned reagents in list_reagents. Default purity if `null`
 	var/list_reagents_purity = null
 	/// If this container should spawn with a disease type inside of it
@@ -102,6 +104,8 @@
 /obj/item/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents, added_purity = list_reagents_purity)
+	if(reagents_temperature)
+		reagents.chem_temp = reagents_temperature
 
 /obj/item/reagent_containers/attack_self(mob/user)
 	if(reagents.flags & SEALED_CONTAINER)
@@ -403,7 +407,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-	playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
+	playsound(target.loc, /datum/sound_effect/liquid_pour, 50, TRUE)
 	if(trans)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
 	SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
@@ -420,7 +424,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-	playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
+	playsound(target.loc, /datum/sound_effect/liquid_pour, 50, TRUE)
 	to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 	SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
 	target.update_appearance()

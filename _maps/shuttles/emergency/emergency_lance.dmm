@@ -384,9 +384,7 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
-/turf/open/floor/mineral/plastitanium/red{
-	icon_state = "darkfull"
-	},
+/turf/open/floor/mineral/plastitanium/red/dark,
 /area/shuttle/escape/brig)
 "kN" = (
 /obj/structure/bed/medical/emergency,
@@ -459,9 +457,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/red/line,
-/turf/open/floor/mineral/plastitanium/red{
-	icon_state = "darkfull"
-	},
+/turf/open/floor/mineral/plastitanium/red/dark,
 /area/shuttle/escape/brig)
 "nd" = (
 /obj/machinery/shieldgen{
@@ -911,9 +907,7 @@
 /obj/effect/turf_decal/stripes/red/end{
 	dir = 4
 	},
-/turf/open/floor/mineral/plastitanium/red{
-	icon_state = "darkfull"
-	},
+/turf/open/floor/mineral/plastitanium/red/dark,
 /area/shuttle/escape/brig)
 "Ec" = (
 /obj/structure/table/reinforced,

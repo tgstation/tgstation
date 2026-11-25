@@ -32,15 +32,15 @@
 
 	// Adds up to 100, don't mess it up
 	mail_goodies = list(
-		/obj/item/storage/box/ingredients/random = 40,
-		/obj/item/reagent_containers/cup/bottle/caramel = 7,
-		/obj/item/reagent_containers/condiment/flour = 7,
-		/obj/item/reagent_containers/condiment/rice = 7,
-		/obj/item/reagent_containers/condiment/ketchup = 7,
-		/obj/item/reagent_containers/condiment/mustard = 7,
-		/obj/item/reagent_containers/condiment/enzyme = 7,
-		/obj/item/reagent_containers/condiment/soymilk = 7,
-		/obj/item/kitchen/spoon/soup_ladle = 6,
+		/obj/item/cooking_voucher = 10,
+		/obj/item/reagent_containers/cup/bottle/caramel = 10,
+		/obj/item/reagent_containers/condiment/flour = 10,
+		/obj/item/reagent_containers/condiment/rice = 10,
+		/obj/item/reagent_containers/condiment/ketchup = 10,
+		/obj/item/reagent_containers/condiment/mustard = 10,
+		/obj/item/reagent_containers/condiment/enzyme = 10,
+		/obj/item/reagent_containers/condiment/soymilk = 10,
+		/obj/item/kitchen/spoon/soup_ladle = 8,
 		/obj/item/kitchen/tongs = 6,
 		/obj/item/knife/kitchen = 4,
 		/obj/item/knife/butcher = 2,
@@ -72,13 +72,13 @@
 	uniform = /obj/item/clothing/under/costume/buttondown/slacks/service
 	suit = /obj/item/clothing/suit/toggle/chef
 	backpack_contents = list(
-		/obj/item/choice_beacon/ingredient = 1,
 		/obj/item/sharpener = 1,
 	)
 	belt = /obj/item/modular_computer/pda/crew/cook
 	ears = /obj/item/radio/headset/headset_srv
 	head = /obj/item/clothing/head/utility/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian
+	r_pocket = /obj/item/cooking_voucher
 
 	skillchips = list(/obj/item/skillchip/job/chef)
 

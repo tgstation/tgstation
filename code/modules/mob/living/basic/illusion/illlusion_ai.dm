@@ -2,9 +2,9 @@
 /// For the time being however, the AI is very simple and doesn't rely on any advanced tactics. Just go to thing it was assigned to attack and attack it (if assigned, else wander around)
 /// However, the action we undergo is based on the subtype of illusion we are and that's done on the mob subtype level.
 /datum/ai_controller/basic_controller/illusion
-	behavior_tree_json = "code/datums/ai/basic_mobs/simple_hostile.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/illusion/illusion.bt.json"
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/ignore_faction,
 	)
 
 	ai_traits = DEFAULT_AI_FLAGS

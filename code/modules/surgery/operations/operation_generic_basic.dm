@@ -137,11 +137,11 @@
 	)
 	time = 2.4 SECONDS
 	preop_sound = list(
-		/obj/item/stack/medical/suture = SFX_SUTURE_BEGIN,
+		/obj/item/stack/medical/suture = /datum/sound_effect/suture_begin,
 		/obj/item = 'sound/items/handling/surgery/cautery1.ogg',
 	)
 	success_sound = list(
-		/obj/item/stack/medical/suture = SFX_SUTURE_END,
+		/obj/item/stack/medical/suture = /datum/sound_effect/suture_end,
 		/obj/item = 'sound/items/handling/surgery/cautery2.ogg',
 	)
 	any_surgery_states_required = ALL_SURGERY_STATES_UNSET_ON_CLOSE // we're not picky

@@ -212,7 +212,28 @@
 		if(OVERLAY_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
+	if(NAV_RELEVANT(src))
+		var/turf/spawn_turf = get_turf(src)
+		if(spawn_turf)
+			spawn_turf.nav_dirty()
+
+/atom/movable/set_density(new_value)
+	. = ..()
+	if(isnull(.)) //no change
+		return
+
+	if(!(flags_1 & (NAV_IRRELEVANT_1 | NAV_ALWAYS_CONDITIONAL_1)))
+		if(isturf(loc))
+			var/turf/our_turf = loc
+			our_turf.nav_dirty()
+
 /atom/movable/Destroy(force)
+	//Update the navmap if the destroyed thing was nav relevant : )
+	if(NAV_RELEVANT(src))
+		var/turf/our_turf = get_turf(src)
+		if(our_turf)
+			our_turf.nav_dirty()
+
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
 	QDEL_NULL(drift_handler)
@@ -674,11 +695,21 @@
  * most of the time you want forceMove()
  */
 /atom/movable/proc/abstract_move(atom/new_loc)
-	RESOLVE_ACTIVE_MOVEMENT // This should NEVER happen, but, just in case...
+	RESOLVE_INTERRUPTED_MOVEMENT // This should NEVER happen, but, just in case...
 	var/atom/old_loc = loc
 	var/direction = get_dir(old_loc, new_loc)
 	loc = new_loc
 	Moved(old_loc, direction, TRUE, momentum_change = FALSE)
+
+/// Finishes a movement of ours that something in its callbacks interrupted with another one.
+/atom/movable/proc/finish_interrupted_movement()
+	var/list/movement = active_movement
+	active_movement = null
+	var/area/old_area = get_area(movement[ACTIVE_MOVEMENT_OLDLOC])
+	var/area/new_area = get_area(src)
+	if(old_area != new_area)
+		new_area?.Entered(src, old_area)
+	Moved(arglist(movement))
 
 ////////////////////////////////////////
 // Here's where we rewrite how byond handles movement except slightly different
@@ -690,7 +721,7 @@
 		return
 	SEND_SIGNAL(src, COMSIG_MOVABLE_ATTEMPTED_MOVE, newloc, direction)
 	// A mid-movement... movement... occurred, resolve that first.
-	RESOLVE_ACTIVE_MOVEMENT
+	RESOLVE_INTERRUPTED_MOVEMENT
 
 	if(!direction)
 		direction = get_dir(src, newloc)
@@ -740,23 +771,25 @@
 
 	. = TRUE
 
+	if(oldarea != newarea)
+		oldarea.Exited(src, direction)
+
 	if(old_locs) // This condition will only be true if it is a multi-tile object.
 		for(var/atom/exited_loc as anything in (old_locs - new_locs))
 			exited_loc.Exited(src, direction)
 	else // Else there's just one loc to be exited.
 		oldloc.Exited(src, direction)
-	if(oldarea != newarea)
-		oldarea.Exited(src, direction)
 
 	if(new_locs) // Same here, only if multi-tile.
 		for(var/atom/entered_loc as anything in (new_locs - old_locs))
 			entered_loc.Entered(src, oldloc, old_locs)
 	else
 		newloc.Entered(src, oldloc, old_locs)
-	if(oldarea != newarea)
-		newarea.Entered(src, oldarea)
 
-	RESOLVE_ACTIVE_MOVEMENT
+	if(oldarea != newarea)
+		RESOLVE_ACTIVE_AREA_MOVEMENT(newarea, oldarea)
+	else
+		RESOLVE_ACTIVE_MOVEMENT
 
 ////////////////////////////////////////
 
@@ -926,6 +959,13 @@
 
 		else if(new_turf && !old_turf)
 			SSspatial_grid.enter_cell(src, new_turf)
+
+	// Shit moving; mark em dirty if relevant
+	if(NAV_RELEVANT(src))
+		if(old_turf)
+			old_turf.nav_dirty()
+		if(new_turf && new_turf != old_turf)
+			new_turf.nav_dirty()
 
 	return TRUE
 
@@ -1168,7 +1208,7 @@
 
 /atom/movable/proc/doMove(atom/destination)
 	. = FALSE
-	RESOLVE_ACTIVE_MOVEMENT
+	RESOLVE_INTERRUPTED_MOVEMENT
 
 	var/atom/oldloc = loc
 	var/is_multi_tile = bound_width > ICON_SIZE_X || bound_height > ICON_SIZE_Y
@@ -1196,6 +1236,10 @@
 				stack_trace("Attempt to move [src] to [destination] was rejected by BYOND, possibly due to cyclic contents")
 				return FALSE
 
+			// The area exit goes out before the turfs hear anything, so a move they set off never leaves it pending
+			if(old_area && old_area != destarea)
+				old_area.Exited(src, movement_dir)
+
 			if(is_multi_tile && isturf(destination))
 				var/dx = destination.x
 				var/dy = destination.y
@@ -1204,8 +1248,6 @@
 					dx, dy, dz,
 					dx + ROUND_UP(bound_width / ICON_SIZE_X), dy + ROUND_UP(bound_height / ICON_SIZE_Y), dz
 				)
-				if(old_area && old_area != destarea)
-					old_area.Exited(src, movement_dir)
 				for(var/atom/left_loc as anything in locs - new_locs)
 					left_loc.Exited(src, movement_dir)
 
@@ -1213,15 +1255,12 @@
 					entering_loc.Entered(src, movement_dir)
 
 				if(old_area && old_area != destarea)
-					destarea.Entered(src, movement_dir)
+					RESOLVE_ACTIVE_AREA_MOVEMENT(destarea, movement_dir)
 			else
-				if(oldloc)
-					oldloc.Exited(src, movement_dir)
-					if(old_area && old_area != destarea)
-						old_area.Exited(src, movement_dir)
+				oldloc?.Exited(src, movement_dir)
 				destination.Entered(src, oldloc)
 				if(destarea && old_area != destarea)
-					destarea.Entered(src, old_area)
+					RESOLVE_ACTIVE_AREA_MOVEMENT(destarea, old_area)
 
 		. = TRUE
 
@@ -1232,14 +1271,12 @@
 		if (oldloc)
 			loc = null
 			var/area/old_area = get_area(oldloc)
+			old_area?.Exited(src, NONE)
 			if(is_multi_tile && isturf(oldloc))
 				for(var/atom/old_loc as anything in locs)
 					old_loc.Exited(src, NONE)
 			else
 				oldloc.Exited(src, NONE)
-
-			if(old_area)
-				old_area.Exited(src, NONE)
 
 	RESOLVE_ACTIVE_MOVEMENT
 
@@ -1857,35 +1894,13 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_USED_IN_CRAFT, result)
 
-/*
- * Compare two lists of factions, returning true if any match
- *
- * If exact match is passed through we only return true if both faction lists match equally
- */
-/proc/faction_check(list/faction_A, list/faction_B, list/allies_A, list/allies_B, exact_match)
-	if(!exact_match)
-		return LAZYLEN(faction_A & faction_B) || LAZYLEN(allies_A & allies_B)
-	else
-		if(LAZYLEN(faction_A&faction_B) != LAZYLEN(faction_A))
-			return FALSE //if they're not the same len(gth) or we don't have a len, then this isn't an exact match.
-		return LAZYLEN(allies_A & allies_B)
-
 /**
  * Check if the other atom/movable has any factions the same as us. Defined at the atom/movable level so it can be defined for just about anything.
  *
  * If exact match is set, then all our factions must match exactly
  */
-/atom/movable/proc/faction_check_atom(atom/movable/target, exact_match)
-	if(exact_match)
-		var/list/allies_src = LAZYCOPY(allies)
-		var/list/allies_target = LAZYCOPY(target.allies)
-		if(!("[REF(src)]" in allies_target)) //if they don't have our ref faction, remove it from our factions list.
-			allies_src -= "[REF(src)]" //if we don't do this, we'll never have an exact match.
-		if(!("[REF(target)]" in allies_src))
-			allies_target -= "[REF(target)]" //same thing here.
-		return FAST_FACTION_CHECK(faction, target.faction, allies, target.allies, TRUE)
-	else
-		return FAST_FACTION_CHECK(faction, target.faction, allies, target.allies, FALSE)
+/atom/movable/proc/faction_check_atom(atom/movable/target, exact_match = FALSE)
+	return FACTION_CHECK(faction, target.faction, allies, target.allies, exact_match)
 
 /*
  * Sets atom's allies list to be the provided list of faction strings. Returns TRUE if successful.
@@ -1935,22 +1950,20 @@
 /*
  * Returns TRUE if the ally or allies in list are in our allies list
  * If match_all is set, we have to match everything in the provided list arg.
+ *
+ * NB: match_all will VERY OFTEN fail for allies as mobs are allied to themselves.
+ * Only use it if you know what you're doing, you will almost certainly want to do a faction check instead.
  */
 /atom/movable/proc/has_ally(ally_or_allies, match_all)
 	if (!LAZYLEN(allies))
 		return FALSE
 
 	if (islist(ally_or_allies))
-		if(match_all)
-			var/match_count = FAST_FACTION_CHECK(null, null, allies, ally_or_allies, TRUE)
-			return (match_count == LAZYLEN(ally_or_allies))
-		else
-			return FAST_FACTION_CHECK(null, null, allies, ally_or_allies, FALSE)
-
-	else if(isatom(ally_or_allies))
+		return ALLY_CHECK(allies, ally_or_allies, match_all)
+	if(isatom(ally_or_allies))
 		return "[REF(ally_or_allies)]" in allies
-	else
-		return ally_or_allies in allies
+	return ally_or_allies in allies
+
 /**
  * Returns the faction list of this atom/movable
  */
@@ -2022,31 +2035,13 @@
 
 	if (islist(faction_or_factions))
 		if(match_all)
-			var/match_count = FAST_FACTION_CHECK(faction, faction_or_factions, null, null, TRUE)
+			var/match_count = FACTION_CHECK(faction, faction_or_factions, null, null, TRUE)
 			return (match_count == LAZYLEN(faction_or_factions))
 		else
-			return FAST_FACTION_CHECK(faction, faction_or_factions, null, null, FALSE)
+			return FACTION_CHECK(faction, faction_or_factions, null, null, FALSE)
 
 	else
 		return faction_or_factions in faction
-
-/**
- * Returns TRUE if any of the factions or allies are in our faction list.
- * If match_all is set, we have to match everything in the provided list arg.
- */
-/atom/movable/proc/has_faction_or_allies(faction_or_factions, allies_list, match_all)
-	if (!LAZYLEN(faction_or_factions))
-		return FALSE
-
-	if (islist(faction_or_factions))
-		if (match_all)
-			var/match_count = FAST_FACTION_CHECK(faction, faction_or_factions, allies, allies_list, TRUE)
-			return (match_count == LAZYLEN(faction_or_factions) + LAZYLEN(allies_list))
-		else
-			return FAST_FACTION_CHECK(faction, faction_or_factions, allies, allies_list, FALSE)
-
-	else
-		return (faction_or_factions in faction) && FAST_FACTION_CHECK(null, null, allies, allies_list, match_all)
 
 /**
  * Opens the modify faction ui.

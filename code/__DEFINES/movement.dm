@@ -59,6 +59,8 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 //Index defines for movement bucket data packets
 #define MOVEMENT_BUCKET_TIME 1
 #define MOVEMENT_BUCKET_LIST 2
+/// Key for a movement bucket's time. "[time]" only keeps 6 significant digits, which merges different times once world.time reaches 100000
+#define MOVEMENT_BUCKET_KEY(time) num2text(time, 12)
 
 /**
  * currently_z_moving defines. Higher numbers mean higher priority.

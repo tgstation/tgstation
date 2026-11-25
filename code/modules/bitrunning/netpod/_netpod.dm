@@ -45,13 +45,6 @@
 	register_context()
 	update_appearance()
 
-
-/obj/machinery/netpod/Destroy()
-	. = ..()
-
-	QDEL_LIST(cached_outfits)
-
-
 /obj/machinery/netpod/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 

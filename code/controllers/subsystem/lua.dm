@@ -23,7 +23,7 @@ SUBSYSTEM_DEF(lua)
 /datum/controller/subsystem/lua/Initialize()
 	DREAMLUAU_SET_EXECUTION_LIMIT_SECS(5)
 	// Set wrappers to ensure that lua scripts are subject to the same safety restrictions as other admin tooling
-	DREAMLUAU_SET_NEW_WRAPPER("/proc/_new")
+	DREAMLUAU_SET_NEW_WRAPPER("/proc/wrap_lua_new")
 	DREAMLUAU_SET_VAR_GET_WRAPPER("/proc/wrap_lua_get_var")
 	DREAMLUAU_SET_VAR_SET_WRAPPER("/proc/wrap_lua_set_var")
 	DREAMLUAU_SET_OBJECT_CALL_WRAPPER("/proc/wrap_lua_datum_proc_call")

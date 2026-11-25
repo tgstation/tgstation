@@ -1,52 +1,55 @@
 ///List of all vars that will not be copied over when using duplicate_object()
 GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
-	"AIStatus",
-	"actions",
-	"active_hud_list",
-	"_active_timers",
-	"appearance",
-	"area",
-	"atmos_adjacent_turfs",
-	"bodyparts",
-	"ckey",
-	"_listen_lookup",
-	"computer_id",
-	"contents",
-	"cooldowns",
-	"_datum_components",
-	"group",
-	"hand_bodyparts",
-	"held_items",
-	"hud_list",
-	"implants",
-	"important_recursive_contents",
-	"organs",
-	"organs_slot",
-	"key",
-	"lastKnownIP",
-	"loc",
-	"locs",
-	"managed_overlays",
-	"managed_vis_overlays",
-	"overlays",
-	"overlays_standing",
-	"parent",
-	"parent_type",
-	"power_supply",
-	"pixloc",
-	"quirks",
-	"reagents",
-	"_signal_procs",
-	"stat",
-	"status_effects",
-	"_status_traits",
-	"tag",
-	"tgui_shared_states",
-	"type",
-	"update_on_z",
-	"vars",
-	"verbs",
-	"x", "y", "z",
+	// these are grandfathered in, i'm too afraid to remove them
+	"area", // unknown (possibly /obj/machinery/power/apc?)
+	"group", // unknown
+	"parent", // unknown
+	nameof(/atom/movable::important_recursive_contents),
+	nameof(/atom/movable::locs),
+	nameof(/atom::active_hud_list),
+	nameof(/atom::appearance),
+	nameof(/atom::contents),
+	nameof(/atom::hud_list),
+	nameof(/atom::loc),
+	nameof(/atom::managed_overlays),
+	nameof(/atom::managed_vis_overlays),
+	nameof(/atom::overlays),
+	nameof(/atom::pixloc),
+	nameof(/atom::reagents),
+	nameof(/atom::update_on_z),
+	nameof(/atom::verbs),
+	nameof(/atom::x),
+	nameof(/atom::y),
+	nameof(/atom::z),
+	nameof(/datum::_active_timers),
+	nameof(/datum::_datum_components),
+	nameof(/datum::_listen_lookup),
+	nameof(/datum::_signal_procs),
+	nameof(/datum::_status_traits),
+	nameof(/datum::cooldowns),
+	nameof(/datum::parent_type),
+	nameof(/datum::tag),
+	nameof(/datum::tgui_shared_states),
+	nameof(/datum::type),
+	nameof(/datum::vars),
+	nameof(/mob/living/carbon::bodyparts),
+	nameof(/mob/living/carbon::hand_bodyparts),
+	nameof(/mob/living/carbon::implants),
+	nameof(/mob/living/carbon::organs),
+	nameof(/mob/living/carbon::organs_slot),
+	nameof(/mob/living/carbon::overlays_standing),
+	nameof(/mob/living/carbon::real_bodypart_cache),
+	nameof(/mob/living/simple_animal::AIStatus),
+	nameof(/mob/living::quirks),
+	nameof(/mob/living::status_effects),
+	nameof(/mob::actions),
+	nameof(/mob::ckey),
+	nameof(/mob::computer_id),
+	nameof(/mob::held_items),
+	nameof(/mob::key),
+	nameof(/mob::lastKnownIP),
+	nameof(/mob::stat),
+	nameof(/turf::atmos_adjacent_turfs),
 ))
 GLOBAL_PROTECT(duplicate_forbidden_vars)
 
@@ -63,6 +66,10 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 	if(!original)
 		return
 
+	if(ishuman(original))
+		var/mob/living/carbon/human/original_human = original
+		return original_human.make_full_human_copy(spawning_location)
+
 	var/atom/made_copy = new original.type(spawning_location)
 
 	for(var/atom_vars in (original.vars - GLOB.duplicate_forbidden_vars))
@@ -75,23 +82,5 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 			var_value = var_list.Copy()
 
 		made_copy.vars[atom_vars] = var_value
-
-	if(isliving(made_copy))
-		if(iscarbon(made_copy))
-			var/mob/living/carbon/original_carbon = original
-			var/mob/living/carbon/copied_carbon = made_copy
-			//transfer DNA over (also body features), then update skin color.
-			original_carbon.dna.copy_dna(copied_carbon.dna)
-			copied_carbon.updateappearance(mutcolor_update = TRUE)
-
-		var/mob/living/original_living = original
-		var/mob/living/copied_living = made_copy
-		//transfer implants, we do this so the original's implants being removed won't destroy ours.
-		for(var/obj/item/implant/original_implants as anything in original_living.implants)
-			var/obj/item/implant/copied_implant = new original_implants.type
-			copied_implant.implant(made_copy, silent = TRUE, force = TRUE)
-		//transfer quirks, we do this because transfering the original's quirks keeps the 'owner' as the original.
-		for(var/datum/quirk/original_quirks as anything in original_living.quirks)
-			copied_living.add_quirk(original_quirks.type, announce = FALSE)
 
 	return made_copy

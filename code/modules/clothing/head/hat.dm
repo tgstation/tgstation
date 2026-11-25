@@ -136,7 +136,7 @@
 	victim.visible_message(span_warning("\The [bullet] sends [victim]'s hat flying!"))
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
 	throw_at(get_edge_target_turf(loc, pick(GLOB.alldirs)), range = 3, speed = 3)
-	playsound(victim, SFX_RICOCHET, 100, TRUE)
+	playsound(victim, /datum/sound_effect/ricochet, 100, TRUE)
 
 /datum/armor/head_cowboy
 	melee = 5
@@ -283,6 +283,7 @@
 	name = "delinquent hat"
 	desc = "Good grief."
 	icon_state = "delinquent"
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/hats/intern
 	name = "\improper CentCom Head Intern beancap"
@@ -391,6 +392,7 @@
 
 /obj/item/clothing/head/costume/nightcap
 	abstract_type = /obj/item/clothing/head/costume/nightcap
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/costume/nightcap/blue
 	name = "blue nightcap"
@@ -409,6 +411,7 @@
 	worn_icon_state = "paper"
 	dog_fashion = /datum/dog_fashion/head
 	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/costume/paper_hat/savior
 	name = "ancient paper hat"

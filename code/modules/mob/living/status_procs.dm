@@ -507,6 +507,8 @@
 	for(var/datum/quirk/candidate as anything in quirks)
 		if(from_scan && (candidate.quirk_flags & QUIRK_HIDE_FROM_SCAN))
 			continue
+		if(medical && (candidate.quirk_flags & QUIRK_NO_RECORD))
+			continue
 		switch(category)
 			if(CAT_QUIRK_MAJOR_DISABILITY)
 				if(candidate.value >= -4)
@@ -539,6 +541,8 @@
 
 /// Helper to easily add a personality by a typepath
 /mob/living/proc/add_personality(personality_type)
+	if(HAS_PERSONALITY(src, personality_type))
+		return
 	var/datum/personality/personality = SSpersonalities.personalities_by_type[personality_type]
 	personality.apply_to_mob(src)
 

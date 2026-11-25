@@ -32,7 +32,8 @@
 	. = ..()
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
-	AddElement(/datum/element/raptor_food, ability_modifier = 0.05, attack_modifier = 0.5, color_chances = string_list(list(/datum/raptor_color/black = 1)))
+	var/static/list/raptor_food_chances = list(/datum/raptor_color/black = 1)
+	AddElement(/datum/element/raptor_food, ability_modifier = 0.05, attack_modifier = 0.5, color_chances = raptor_food_chances)
 
 /obj/item/stack/ore/bluespace_crystal/get_part_rating()
 	return 1
@@ -41,7 +42,7 @@
 	SEND_SIGNAL(user, COMSIG_MOB_CRUSHED_BLUESPACE_CRYSTAL, src)
 	user.visible_message(span_warning("[user] crushes [src]!"), span_danger("You crush [src]!"))
 	new /obj/effect/particle_effect/sparks(loc)
-	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, /datum/sound_effect/portal_enter, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	blink_mob(user)
 	use(1)
 
@@ -53,7 +54,7 @@
 		visible_message(span_notice("[src] fizzles and disappears upon impact!"))
 		var/turf/T = get_turf(hit_atom)
 		new /obj/effect/particle_effect/sparks(T)
-		playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, /datum/sound_effect/portal_enter, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		if(isliving(hit_atom))
 			blink_mob(hit_atom)
 		use(1)

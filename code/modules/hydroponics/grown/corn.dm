@@ -26,6 +26,8 @@
 	foodtypes = VEGETABLES
 	tastes = list("corn" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/whiskey
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 
 /obj/item/food/grown/corn/grind_results()
 	return list(/datum/reagent/consumable/cornmeal = 0, /datum/reagent/consumable/nutriment/fat/oil/corn = 0)

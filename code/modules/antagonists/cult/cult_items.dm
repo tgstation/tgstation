@@ -798,9 +798,9 @@ Striking a noncultist, however, will tear their flesh."}
 	new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, user_cultist.dir)
 	new /obj/effect/temp_visual/dir_setting/cult/phase(destination, user_cultist.dir)
 
-	playsound(mobloc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(mobloc, /datum/sound_effect/portal_enter, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, /datum/sound_effect/portal_enter, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/melee/cultblade/halberd
 	name = "bloody halberd"
@@ -833,16 +833,11 @@ Striking a noncultist, however, will tear their flesh."}
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 17, \
 		force_wielded = 24, \
+		update_icon_state = TRUE, \
 	)
 
-/obj/item/melee/cultblade/halberd/update_icon_state()
-	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "[base_icon_state]1" : "[base_icon_state]0"
-	inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "[base_icon_state]1" : "[base_icon_state]0"
-	return ..()
-
 /obj/item/melee/cultblade/halberd/Destroy()
-	if(halberd_act)
-		QDEL_NULL(halberd_act)
+	QDEL_NULL(halberd_act)
 	return ..()
 
 /obj/item/melee/cultblade/halberd/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

@@ -153,9 +153,7 @@
 /datum/bodypart_overlay/simple/golem_overlay
 	icon = 'icons/mob/human/species/golems.dmi'
 	layers = list(
-		EXTERNAL_FRONT = BODY_FRONT_LAYER,
-		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
-		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		"" = BODY_FRONT_LAYER
 	)
 	offset_location = ENTIRE_BODY
 	///The bodypart that the overlay is currently applied to

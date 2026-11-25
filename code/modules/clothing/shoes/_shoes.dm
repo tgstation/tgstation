@@ -16,6 +16,7 @@
 	slowdown = SHOES_SLOWDOWN
 	strip_delay = 1 SECONDS
 	article = "a pair of"
+	item_flags = CAN_BE_OVERSLOT
 
 	var/offset = 0
 	var/equipped_before_drop = FALSE
@@ -58,7 +59,7 @@
 			left.dismember()
 		if(right)
 			right.dismember()
-		playsound(user, SFX_DESECRATION, 50, TRUE, -1)
+		playsound(user, /datum/sound_effect/desecration, 50, TRUE, -1)
 		return BRUTELOSS
 	else//didnt realize this suicide act existed (was in miscellaneous.dm) and didnt want to remove it, so made it a 50/50 chance. Why not!
 		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))
@@ -105,7 +106,23 @@
 	. = ..()
 	if(fastening_type != SHOES_SLIPON && tied == SHOES_UNTIED)
 		our_alert_ref = WEAKREF(user.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied))
-		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override=TRUE)
+		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override = TRUE)
+	if(astype(user, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN)
+		slot_flags |= ITEM_SLOT_HEAD
+
+/obj/item/clothing/shoes/give_clothing_traits(mob/living/wearer, slot)
+	if((astype(wearer, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN) && (slot & ITEM_SLOT_HEAD))
+		return
+
+	return ..()
+
+/obj/item/clothing/shoes/get_worn_offsets(hand_index, bodyshape)
+	var/vector/offsets = ..()
+	if(!hand_index && (bodyshape & BODYSHAPE_CERULEAN))
+		// offsets up to head
+		offsets.y = 28
+
+	return offsets
 
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
 	equipped_before_drop = FALSE
@@ -121,6 +138,8 @@
 	if(offset && equipped_before_drop)
 		restore_offsets(user)
 	. = ..()
+	if(astype(user, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN)
+		slot_flags &= ~ITEM_SLOT_HEAD
 
 /obj/item/clothing/shoes/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -158,7 +177,7 @@
 	else
 		if(tied == SHOES_UNTIED && our_guy && user == our_guy)
 			our_alert_ref = WEAKREF(our_guy.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied)) // if we're the ones unknotting our own laces, of course we know they're untied
-		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override=TRUE)
+		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override = TRUE)
 
 /**
  * handle_tying deals with all the actual tying/untying/knotting, inferring your intent from who you are in relation to the state of the laces
@@ -211,7 +230,7 @@
 		if(HAS_TRAIT(user, TRAIT_CLUMSY)) // based clowns trained their whole lives for this
 			mod_time *= 0.75
 
-		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy), cog_icon = null))
+		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy), timed_action_flags = HIDE_INTERACTION))
 			to_chat(user, span_notice("You [tied ? "un[fasten_verb()]" : "knot"] the [fastening_type] on [loc]'s [src.name]."))
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_KNOTTED, user)
@@ -234,6 +253,8 @@
 	SIGNAL_HANDLER
 	var/mob/living/carbon/human/our_guy = loc
 	if(!istype(our_guy)) // are they REALLY /our guy/?
+		return
+	if(our_guy.head == src) //a cerulean couldnt even fathom creating a triphazard by putting shoes on your feet
 		return
 
 	if(tied == SHOES_KNOTTED)
@@ -258,9 +279,9 @@
 
 			if(6 to 13) // .7% chance to stumble and fling what we're holding
 				var/have_anything = FALSE
-				for(var/obj/item/I in our_guy.held_items)
+				for(var/obj/item/item as anything in our_guy.get_held_items())
 					have_anything = TRUE
-					our_guy.accident(I)
+					our_guy.accident(item)
 				to_chat(our_guy, span_danger("You trip on your [fastening_type] a bit[have_anything ? ", flinging what you were holding" : ""]!"))
 
 			if(14 to 25) // 1.3ish% chance to stumble and be a bit off balance (like being disarmed)
@@ -341,3 +362,14 @@
 			return "fastening"
 
 	return "doing something mysterious to"
+
+/// when the shoes are worn on the headslot we have to override the overlay's icon to look for the correct file
+/obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
+	. = ..()
+	if(isinhands || !(bodyshape & BODYSHAPE_CERULEAN))
+		return
+	var/list/current_overlays = .
+	var/icon_to_use = worn_icon || DEFAULT_SHOES_FILE
+	var/mutable_appearance/standing_overlay = current_overlays[1]
+	standing_overlay.icon = icon_to_use
+	standing.icon = icon_to_use

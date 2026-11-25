@@ -740,6 +740,48 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	return TRUE
 
 /**
+ * Adds a number of moles of a specific gas to this gas mixture
+ * If adding the gas would exceed a target pressure, the difference will be removed from the mixture
+ * The excess gas that would cause the pressure to exceed the target will be removed and returned
+ *
+ * * gas_type - the typepath of gas to add.
+ * * mol_count - the number of moles of the gas to add.
+ * * target_pressure - the maximum pressure allowed in the mixture.
+ */
+/datum/gas_mixture/proc/add_gas_up_to_pressure(gas_type, mol_count, max_pressure = ONE_ATMOSPHERE)
+	assert_gas(gas_type)
+	adjust_gas(gas_type, mol_count)
+	return remove_moles_beyond_excess_pressure(max_pressure)
+
+/**
+ * Adds multiple gases to the mixture, ensuring the total pressure does not exceed the specified maximum pressure.
+ *
+ * * gas_list - a list of gases to add, where each entry is a pair of gas type and mole count.
+ * * max_pressure - the maximum pressure allowed in the mixture.
+ */
+/datum/gas_mixture/proc/add_gases_up_to_pressure(gas_list, max_pressure = ONE_ATMOSPHERE)
+	assert_gases(arglist(gas_list))
+	adjust_multiple_gases(gas_list)
+	return remove_moles_beyond_excess_pressure(max_pressure)
+
+/**
+ * When given a target pressure, removes an amount of moles from the gas mixture to return to that pressure.
+ *
+ * * max_pressure - the target pressure to return to.
+ *
+ * Returns a gas mixture containing the excess moles that were removed to achieve the target pressure.
+ * Returns null if the current pressure is already less than or equal to the target pressure.
+ */
+/datum/gas_mixture/proc/remove_moles_beyond_excess_pressure(max_pressure = ONE_ATMOSPHERE)
+	if(return_pressure() <= max_pressure)
+		return null
+
+	var/expected_mols = (max_pressure * return_volume()) / (R_IDEAL_GAS_EQUATION  * return_temperature())
+	var/datum/gas_mixture/excess_air = remove(total_moles() - expected_mols)
+	garbage_collect()
+	return excess_air
+
+/**
  * Calls for electrolyzer_reaction reactions on the gas_mixture.
  * Arguments:
  * * working_power - working_power to use for the electrolyzer_reaction reactions.

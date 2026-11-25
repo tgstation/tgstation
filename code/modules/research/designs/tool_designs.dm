@@ -197,7 +197,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rld_mini
-	name = "Mini Rapid Light Device (MRLD)"
+	name = "Mini Rapid Lighting Device (MRLD)"
 	desc = "A tool that can deploy portable and standing lighting orbs and glowsticks."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*10, /datum/material/glass =SHEET_MATERIAL_AMOUNT*5, /datum/material/plastic =SHEET_MATERIAL_AMOUNT*4, /datum/material/gold =SHEET_MATERIAL_AMOUNT)

@@ -62,7 +62,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/Initialize(mapload)
 	. = ..()
 
-	check_on_table()
+	if(anchored_tabletop_offset)
+		check_on_table()
 
 	if (id_tag)
 		GLOB.objects_by_id_tag[id_tag] = src
@@ -307,7 +308,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return CANT_UNFASTEN
 	to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 	set_anchored(!anchored)
-	check_on_table()
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	return SUCCESSFUL_UNFASTEN
 
@@ -321,15 +321,19 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// Adjusts the vertical pixel_z offset when the object is anchored on a tile with table
 /obj/proc/check_on_table()
-	if(anchored_tabletop_offset == 0)
-		return
-	if(istype(src, /obj/structure/table))
-		return
-
 	if(anchored && locate(/obj/structure/table) in loc)
 		pixel_z = anchored_tabletop_offset
 	else
 		pixel_z = initial(pixel_z)
+
+/obj/structure/table/check_on_table()
+	return
+
+/obj/set_anchored(anchorvalue)
+	. = ..()
+	if(isnull(.) || !anchored_tabletop_offset)
+		return
+	check_on_table()
 
 /obj/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
@@ -388,21 +392,26 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
  *
  * * shocking - who are we zapping
  * * chance - probability the shock succeeds
- * defaults to 100 (guaranteed to shock)
+ * can be modified by traits/quirks, so passing > 100 is allowed
+ * defaults to 1000 (guaranteed to shock, likely even with modifiers)
  * * shock_source - used for determining where to get the power to zap them.
  * can be an apc, a cable, an area, a cell, or even a powernet datum
  * subtypes may override this proc to pass this up to the parent
  * defaults to our cell or our current area/apc
  * * siemens_coeff - multiplier to how much shock is delivered
  * default to a 1x modifier
+ * * allow_modifiers - whether to apply modifiers to shock chance
+ * default to TRUE
  *
  * Returns TRUE if the shock was successfully delivered
  * Returns FALSE if the shock failed for any reason
  */
-/obj/proc/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1)
+/obj/proc/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1, allow_modifiers = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!isliving(shocking))
 		return FALSE
+	if(allow_modifiers && shocking.has_quirk(/datum/quirk/shock_reflex))
+		chance *= 0.66
 	if(!prob(chance))
 		return FALSE // you lucked out, no shock for you
 

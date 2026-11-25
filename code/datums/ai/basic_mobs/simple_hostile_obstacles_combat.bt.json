@@ -12,6 +12,10 @@
 		"bqul7l8t": {
 			"label": "speech_subtree",
 			"default": "/datum/bt_node/subtree"
+		},
+		"bu3vxfi5": {
+			"label": "walk_chance",
+			"default": "25"
 		}
 	},
 	"type": "parallel",
@@ -88,7 +92,10 @@
 				},
 				{
 					"type": "subtree",
-					"subtype": "/datum/bt_node/subtree/random_walk"
+					"subtype": "/datum/bt_node/subtree/random_walk",
+					"bindings": {
+						"bf07i8ep": "$bu3vxfi5"
+					}
 				}
 			]
 		},

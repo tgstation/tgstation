@@ -5670,9 +5670,7 @@
 /area/mine/laborcamp/production)
 "Gi" = (
 /obj/item/stack/cable_coil/cut,
-/turf/open/misc/asteroid/basalt/lava_land_surface{
-	icon_state = "basalt_dug"
-	},
+/turf/open/misc/asteroid/basalt/lava_land_surface/crater,
 /area/lavaland/surface/outdoors)
 "Gl" = (
 /obj/item/reagent_containers/cup/glass/colocup,

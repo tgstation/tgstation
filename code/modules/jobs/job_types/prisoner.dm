@@ -16,13 +16,13 @@
 	department_for_prefs = /datum/job_department/security
 
 	exclusive_mail_goodies = TRUE
-	mail_goodies = list (
+	mail_goodies = list(
 		/obj/effect/spawner/random/contraband/prison = 1
 	)
 
 	family_heirlooms = list(/obj/item/pen/blue)
 	rpg_title = "Defeated Miniboss"
-	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_OPEN_SLOTS | JOB_ANTAG_PROTECTED & ~JOB_REOPEN_ON_ROUNDSTART_LOSS
+	job_flags = (STATION_JOB_FLAGS | JOB_CANNOT_OPEN_SLOTS | JOB_ANTAG_PROTECTED) & ~JOB_REOPEN_ON_ROUNDSTART_LOSS
 	tgui_icon = FA_ICON_LOCK
 
 /datum/job/prisoner/New()

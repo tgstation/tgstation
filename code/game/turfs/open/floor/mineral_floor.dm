@@ -215,6 +215,9 @@
 /turf/open/floor/mineral/plastitanium/red/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/mineral/plastitanium/red/dark
+	icon_state = "darkfull"
+
 /turf/open/floor/mineral/plastitanium/pod
 	name = "pod floor"
 	icon_state = "podfloor"
@@ -296,7 +299,7 @@
 
 /turf/open/floor/mineral/bananium/proc/squeak()
 	if(sound_cooldown < world.time)
-		playsound(src, SFX_CLOWN_STEP, 50, TRUE)
+		playsound(src, /datum/sound_effect/clown_step, 50, TRUE)
 		sound_cooldown = world.time + 10
 
 /turf/open/floor/mineral/bananium/airless

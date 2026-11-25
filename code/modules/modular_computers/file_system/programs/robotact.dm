@@ -65,6 +65,7 @@
 	data["lampIntensity"] = cyborg.lamp_intensity //lamp power setting
 	data["lampConsumption"] = cyborg.lamp_power_consumption //Power consumption of the lamp per lamp intensity.
 	data["sensors"] = "[cyborg.sensors_on?"ACTIVE":"DISABLED"]"
+	data["eyeLights"] = "[cyborg.eye_lights_enabled ? "ACTIVE" : "DISABLED"]"
 	data["printerPictures"] = cyborg.connected_ai? cyborg.connected_ai.aicamera.stored.len : cyborg.aicamera.stored.len //Number of pictures taken, synced to AI if available
 	data["printerToner"] = cyborg.toner //amount of toner
 	data["printerTonerMax"] = cyborg.tonermax //It's a variable, might as well use it
@@ -154,6 +155,9 @@
 
 		if("toggleSensors")
 			cyborg.toggle_sensors()
+
+		if("toggleEyeLights")
+			cyborg.toggle_eye_lights()
 
 		if("viewImage")
 			if(cyborg.connected_ai)

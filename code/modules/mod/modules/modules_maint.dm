@@ -264,7 +264,7 @@
 
 	// Up to a 30% chance to set the sheet on fire, +2% per sheet made
 	if(prob(min(num_sheets_dispensed * 2, 30)))
-		if(crisp_paper in mod.wearer.held_items)
+		if(mod.wearer.is_holding(crisp_paper))
 			mod.wearer.dropItemToGround(crisp_paper, force = TRUE)
 		crisp_paper.balloon_alert(mod.wearer, UNLINT("PC LOAD LETTER!"))
 		crisp_paper.visible_message(span_warning("[crisp_paper] bursts into flames, it's too crisp!"))

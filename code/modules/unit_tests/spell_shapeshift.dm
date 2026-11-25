@@ -5,7 +5,7 @@
 
 /datum/unit_test/shapeshift_spell_validity/Run()
 
-	var/list/types_to_test = subtypesof(/datum/action/cooldown/spell/shapeshift)
+	var/list/types_to_test = valid_subtypesof(/datum/action/cooldown/spell/shapeshift)
 
 	for(var/spell_type in types_to_test)
 		var/datum/action/cooldown/spell/shapeshift/shift = new spell_type()
@@ -30,7 +30,7 @@
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
 	dummy.mind_initialize()
 
-	for(var/spell_type in subtypesof(/datum/action/cooldown/spell/shapeshift))
+	for(var/spell_type in valid_subtypesof(/datum/action/cooldown/spell/shapeshift))
 		// Test all shapeshifts as if they were on the mob's body
 		var/datum/action/cooldown/spell/shapeshift/bodybound_shift = new spell_type(dummy)
 		bodybound_shift.Grant(dummy)
@@ -66,7 +66,7 @@
 			([dummy] was located within [dummy.loc], which is a [dummy.loc?.type || "null"]).")
 
 	var/mob/living/shape = dummy.loc
-	if(!(shift in shape.actions))
+	if(!(shift in shape.actions) && shift.owner_has_control)
 		return TEST_FAIL("Shapeshift spell: [shift.name] failed to grant the spell to the dummy's shape.")
 
 	TRIGGER_RESET_COOLDOWN(shift)
@@ -111,7 +111,7 @@
 /datum/unit_test/shapeshift_health
 
 /datum/unit_test/shapeshift_health/Run()
-	for(var/spell_type in subtypesof(/datum/action/cooldown/spell/shapeshift))
+	for(var/spell_type in valid_subtypesof(/datum/action/cooldown/spell/shapeshift))
 		var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent, run_loc_floor_bottom_left)
 		var/datum/action/cooldown/spell/shapeshift/shift_spell = new spell_type(dummy)
 		shift_spell.Grant(dummy)

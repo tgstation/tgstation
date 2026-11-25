@@ -97,9 +97,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Store body marking defines. See mobs.dm for bitflags
 	var/list/body_markings = list()
 
-	/// Flat modifier on all damage taken via [apply_damage][/mob/living/proc/apply_damage] (so being punched, shot, etc.)
-	/// IE: 10 = 10% less damage taken.
-	var/damage_modifier = 0
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
 	///multiplier for damage from hot temperature
@@ -156,11 +153,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Should we preload this species's organs?
 	var/preload = TRUE
 
-	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
-	var/prevent_perspective_change = FALSE
-
-	///Was the species changed from its original type at the start of the round?
-	var/roundstart_changed = FALSE
+	/// Should the character preview dummy load all organs? Required for i.e organ_set_bonus visual effects
+	var/character_preview_load_all_organs = FALSE
 
 	/// This supresses the "dosen't appear to be himself" examine text for if the mob is run by an AI controller. Should be used on any NPC human subtypes. Monkeys are the prime example.
 	var/ai_controlled_species = FALSE
@@ -296,7 +290,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// if we have an extra organ that before changing that the species didnt have, remove it
 		else if(!new_organ)
 			if(existing_organ)
-				existing_organ.Remove(organ_holder)
+				existing_organ.Remove(organ_holder, special = TRUE)
 				qdel(existing_organ)
 			continue
 
@@ -376,7 +370,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		doll.update_body_zones()
 
 	if(old_species.type != type)
-		replace_body(human_who_gained_species, src)
+		replace_body(human_who_gained_species, src, old_species)
 
 	if(!human_who_gained_species.get_bloodtype()?.is_species_universal) // Clown blood is forever.
 		//Assigns exotic blood type if the species has one
@@ -385,6 +379,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
 		else if(old_species.exotic_bloodtype && isnull(exotic_bloodtype))
 			human_who_gained_species.set_blood_type(random_human_blood_type())
+
+	if(character_preview_load_all_organs)
+		human_who_gained_species.visual_only_organs = FALSE
 
 	regenerate_organs(human_who_gained_species, old_species, replace_current = FALSE, visual_only = human_who_gained_species.visual_only_organs, replace_missing = replace_missing)
 	// Update locked slots AFTER all organ and body stuff is handled
@@ -551,7 +548,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(ITEM_SLOT_HANDS)
 			if(!(H.mobility_flags & MOBILITY_PICKUP))
 				return FALSE
-			if(H.get_empty_held_indexes())
+			if(length(H.get_empty_held_indexes()))
 				return TRUE
 			return FALSE
 		if(ITEM_SLOT_MASK)
@@ -675,6 +672,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /// Equips the necessary species-relevant gear before putting on the rest of the uniform.
 /datum/species/proc/pre_equip_species_outfit(datum/job/job, mob/living/carbon/human/equipping, visuals_only = FALSE)
+	return
+
+/// Equips species-relevant gear after putting on an outfit.
+/datum/species/proc/post_equip_species_outfit(mob/living/carbon/human/equipping, visuals_only = FALSE)
 	return
 
 /**
@@ -1042,6 +1043,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS) && !HAS_TRAIT(humi, TRAIT_COLD_BLOODED))
 		body_temperature_core(humi, seconds_per_tick)
 
+	// Dead bodies cool down to the room no matter what they wear, like other carbons do.
+	// Without this the core of an insulated corpse never loses heat, the skin just gets it back from the core every tick.
+	else if(humi.stat == DEAD && !humi.on_fire)
+		var/area_temp = humi.get_temperature(humi.loc?.return_air())
+		if(area_temp < humi.bodytemperature)
+			humi.adjust_bodytemperature(area_temp - humi.bodytemperature, use_insulation = FALSE, use_steps = TRUE)
+		if(area_temp < humi.coretemperature)
+			humi.adjust_coretemperature(max((area_temp - humi.coretemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX), area_temp)
+
 	// These do run in statis
 	body_temperature_skin(humi, seconds_per_tick)
 	body_temperature_alerts(humi, seconds_per_tick)
@@ -1286,51 +1296,51 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	humi.apply_damage(burn_damage * seconds_per_tick, BURN, bodypart, wound_clothing = FALSE)
 
 /// Handle the air pressure of the environment
-/datum/species/proc/handle_environment_pressure(mob/living/carbon/human/H, datum/gas_mixture/environment, seconds_per_tick)
+/datum/species/proc/handle_environment_pressure(mob/living/carbon/human/human, datum/gas_mixture/environment, seconds_per_tick)
 	var/pressure = environment.return_pressure()
-	var/adjusted_pressure = H.calculate_affecting_pressure(pressure)
+	var/adjusted_pressure = human.calculate_affecting_pressure(pressure)
 
 	// Set alerts and apply damage based on the amount of pressure
 	switch(adjusted_pressure)
 		// Very high pressure, show an alert and take damage
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			if(HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
-				H.clear_alert(ALERT_PRESSURE)
+			if(HAS_TRAIT(human, TRAIT_RESISTHIGHPRESSURE))
+				human.clear_alert(ALERT_PRESSURE)
 			else
 				var/pressure_damage = min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) - 1) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * seconds_per_tick
-				pressure_damage *= GET_PHYSIOLOGY(H, BRUTE) * GET_PHYSIOLOGY(H, PHYS_COEFF_PRESSURE)
-				H.adjust_brute_loss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
-				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
+				pressure_damage *= GET_PHYSIOLOGY(human, PHYS_COEFF_PRESSURE)
+				human.adjust_brute_loss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
+				human.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
 
 		// High pressure, show an alert
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 1)
+			human.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 1)
 
 		// No pressure issues here clear pressure alerts
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-			H.clear_alert(ALERT_PRESSURE)
-			H.seconds_in_low_pressure = 0
+			human.clear_alert(ALERT_PRESSURE)
+			human.seconds_in_low_pressure = 0
 
 		// Low pressure here, show an alert
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			// We have low pressure resit trait, clear alerts
-			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
-				H.clear_alert(ALERT_PRESSURE)
+			if(HAS_TRAIT(human, TRAIT_RESISTLOWPRESSURE))
+				human.clear_alert(ALERT_PRESSURE)
 			else
-				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 1)
-			H.seconds_in_low_pressure = 0
+				human.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 1)
+			human.seconds_in_low_pressure = 0
 
 		// Very low pressure, show an alert and take damage
 		else
 			// We have low pressure resit trait, clear alerts
-			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
-				H.clear_alert(ALERT_PRESSURE)
+			if(HAS_TRAIT(human, TRAIT_RESISTLOWPRESSURE))
+				human.clear_alert(ALERT_PRESSURE)
 			else
-				var/pressure_damage = min(round(1 + (H.seconds_in_low_pressure / 80 SECONDS), 0.05) * BASE_LOW_PRESSURE_DAMAGE, MAX_LOW_PRESSURE_DAMAGE) * seconds_per_tick
-				pressure_damage *= GET_PHYSIOLOGY(H, BRUTE) * GET_PHYSIOLOGY(H, PHYS_COEFF_PRESSURE)
-				H.adjust_brute_loss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
-				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
-			H.seconds_in_low_pressure += seconds_per_tick
+				var/pressure_damage = min(round(1 + (human.seconds_in_low_pressure / 80 SECONDS), 0.05) * BASE_LOW_PRESSURE_DAMAGE, MAX_LOW_PRESSURE_DAMAGE) * seconds_per_tick
+				pressure_damage *= GET_PHYSIOLOGY(human, PHYS_COEFF_PRESSURE)
+				human.adjust_brute_loss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
+				human.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
+			human.seconds_in_low_pressure += seconds_per_tick
 
 /**
  *	Handles exposure to the skin of various gases.
@@ -1907,20 +1917,20 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return to_add
 
 ///Handles replacing all of the bodyparts with their species version during set_species()
-/datum/species/proc/replace_body(mob/living/carbon/target, datum/species/new_species)
+/datum/species/proc/replace_body(mob/living/carbon/target, datum/species/new_species, datum/species/old_species)
 	new_species ||= target.dna.species //If no new species is provided, assume its src.
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
-	var/list/final_bodypart_overrides = new_species.bodypart_overrides.Copy()
+	var/list/new_bodypart_overrides = new_species.bodypart_overrides.Copy()
 	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
-		final_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
-		final_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+		new_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
+		new_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
 
 	for(var/obj/item/bodypart/old_part as anything in target.get_bodyparts())
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
 			continue
-
-		var/path = final_bodypart_overrides?[old_part.body_zone]
+		// update all our existing limbs
+		var/path = new_bodypart_overrides?[old_part.body_zone]
 		var/obj/item/bodypart/new_part
 		if(path)
 			new_part = new path()
@@ -1928,6 +1938,22 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			new_part.update_limb(is_creating = TRUE)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)
+
+	var/list/old_bodypart_overrides = old_species.bodypart_overrides.Copy()
+	if(length(new_bodypart_overrides) <= length(old_bodypart_overrides))
+		return // we updated all the limbs the character deserves
+	// but there are cases where the old species naturally lacked limbs
+	for(var/zone in new_bodypart_overrides)
+		// find a limb that the character doesn't have because of their old species
+		if(new_bodypart_overrides.Find(zone) && old_bodypart_overrides.Find(zone))
+			continue
+		var/path = new_bodypart_overrides[zone]
+		if(!path)
+			return
+
+		var/obj/item/bodypart/new_part = new path()
+		new_part.replace_limb(target, TRUE)
+		new_part.update_limb(is_creating = TRUE)
 
 /// Creates body parts for the target completely from scratch based on the species
 /datum/species/proc/create_fresh_body(mob/living/carbon/target)

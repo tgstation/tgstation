@@ -114,7 +114,7 @@
 	if(visuals_only || !special_charter)
 		return
 
-	var/obj/item/station_charter/banner/celestial_charter = locate() in equipped.held_items
+	var/obj/item/station_charter/banner/celestial_charter = equipped.is_holding_item_of_type(__IMPLIED_TYPE__)
 	if(isnull(celestial_charter))
 		// failed to give out the unique charter, plop on the ground
 		celestial_charter = new(get_turf(equipped))

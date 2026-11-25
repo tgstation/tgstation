@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 	CRASH("[hud] attempted to call create_element on a behavior-only hands inventory slot datum!")
 
 /datum/inventory_slot/hands/get_slot_item(mob/owner, hand_index = 1)
-	return owner.held_items[hand_index]
+	return owner.get_item_for_held_index(hand_index)
 
 /datum/inventory_slot/hands/get_screen_slot(datum/hud/hud, hand_index = 1)
 	return hud.screen_objects[HUD_KEY_HAND_SLOT(hand_index)]
@@ -82,7 +82,7 @@ GLOBAL_LIST_INIT(inventory_slot_datums, initialize_inventory_slots())
 /datum/inventory_slot/hands/update_inventory_slot(datum/hud/hud, mob/owner, hand_index = null)
 	// If no index was passed, update all hand slots
 	if (isnull(hand_index))
-		for (var/i in 1 to length(owner.held_items))
+		for (var/i in 1 to owner.get_num_hand_slots())
 			update_inventory_slot(hud, owner, i)
 		return
 

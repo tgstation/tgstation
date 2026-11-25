@@ -231,6 +231,9 @@
 	/// Whether or not this client has the combo HUD enabled
 	var/combo_hud_enabled = FALSE
 
+	/// Whether New() has started. BYOND can call Del() before client initialization begins.
+	var/new_started = FALSE
+
 	/// If this client has been fully initialized or not
 	var/fully_created = FALSE
 
@@ -244,6 +247,9 @@
 
 	///Which ambient sound this client is currently being provided.
 	var/current_ambient_sound
+
+	/// Is this client currently playing admin internet music?
+	var/web_music_playing = FALSE
 
 	/// The DPI scale of the client. 1 is equivalent to 100% window scaling, 2 will be 200% window scaling
 	var/window_scaling

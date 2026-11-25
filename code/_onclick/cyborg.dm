@@ -160,6 +160,24 @@
 	else
 		..()
 
+/obj/machinery/airalarm/BorgCtrlClick(mob/living/silicon/robot/user) // cycles air alarm modes. Forwards to AI code
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
+		AICtrlClick(user)
+	else
+		..()
+
+/obj/machinery/airalarm/BorgShiftClick(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
+		AIShiftClick(user)
+	else
+		..()
+
+/obj/machinery/airalarm/borg_click_alt(mob/living/silicon/robot/user)
+	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
+		ai_click_alt(user)
+	else
+		..()
+
 /obj/machinery/turretid/BorgCtrlClick(mob/living/silicon/robot/user) //turret control on/off. Forwards to AI code.
 	if(get_dist(src, user) <= user.interaction_range && !(user.control_disabled))
 		AICtrlClick(user)

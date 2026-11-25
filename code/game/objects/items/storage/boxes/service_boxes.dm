@@ -178,8 +178,9 @@
 	custom_price = PAYCHECK_COMMAND * 1.25
 
 /obj/item/storage/box/tail_pin/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/poster/tail_board(src)
+	new /obj/item/poster/tail_board(src)
+	new /obj/item/clothing/glasses/blindfold(src)
+	for(var/i in 1 to 4)
 		new /obj/item/tail_pin(src)
 
 /obj/item/storage/box/party_poppers

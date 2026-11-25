@@ -82,7 +82,7 @@
 /// Destroy the lighter when it's shot by a bullet
 /obj/item/lighter/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.visible_message(span_warning("\The [bullet] shatters on [victim]'s lighter!"))
-	playsound(victim, SFX_RICOCHET, 100, TRUE)
+	playsound(victim, /datum/sound_effect/ricochet, 100, TRUE)
 	new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 	do_sparks(1, TRUE, src)
 	victim.dropItemToGround(src, force = TRUE, silent = TRUE)
@@ -140,7 +140,7 @@
 			if(male_model.fire_stacks && !(male_model.on_fire))
 				male_model.ignite_mob()
 	else
-		hitsound = SFX_SWING_HIT
+		hitsound = /datum/sound_effect/swing_hit
 		force = 0
 		heat = 0
 		attack_verb_continuous = null //human_defense.dm takes care of it

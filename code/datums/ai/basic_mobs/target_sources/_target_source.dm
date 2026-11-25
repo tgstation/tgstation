@@ -63,7 +63,7 @@
 /datum/target_source/held_items
 
 /datum/target_source/held_items/collect_candidates(mob/living/pawn, datum/ai_controller/controller, range)
-	return pawn.held_items || list()
+	return pawn.get_held_items()
 
 /// Reads a typecache from BB_BASIC_FOODS and filters oview candidates by it.
 /// For mobs whose food list varies by species (set in Initialize via set_blackboard_key).

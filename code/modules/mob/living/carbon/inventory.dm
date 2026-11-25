@@ -77,30 +77,10 @@
 		qdel(equipping)
 	return null
 
-//This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
-/mob/living/carbon/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
-	if(!slot)
+/mob/living/carbon/handle_set_item_in_slot(obj/item/equipping, slot)
+	. = ..()
+	if(.)
 		return
-
-	if(!istype(equipping))
-		return
-
-	var/index = get_held_index_of_item(equipping)
-	if(index)
-		held_items[index] = null
-
-	if(equipping.pulledby)
-		equipping.pulledby.stop_pulling()
-
-	hud_used?.update_inventory_slot(slot)
-
-	for(var/mob/dead/observe as anything in observers)
-		observe.client?.screen -= equipping
-
-	equipping.forceMove(src) //This has to come before has_equipped is called.
-	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
-	equipping.appearance_flags |= NO_CLIENT_COLOR
-	var/not_handled = FALSE
 
 	switch(slot)
 		if(ITEM_SLOT_HANDCUFFED)
@@ -108,19 +88,10 @@
 		if(ITEM_SLOT_LEGCUFFED)
 			legcuffed = equipping
 			update_worn_legcuffs()
-		if(ITEM_SLOT_HANDS)
-			put_in_hands(equipping)
-			update_held_items()
 		else
-			not_handled = TRUE
+			return FALSE
 
-	//Item has been handled at this point and equipped callback can be safely called
-	//We cannot call it for items that have not been handled as they are not yet correctly
-	//in a slot (handled further down inheritance chain, probably living/carbon/human/equip_to_slot
-	if(!not_handled && slot != ITEM_SLOT_HANDS) // put in hands calls equipped on its own, annoyingly
-		has_equipped(equipping, slot, initial)
-
-	return not_handled
+	return TRUE
 
 /mob/living/carbon/has_equipped(obj/item/item, slot, initial = FALSE)
 	. = ..()
@@ -176,6 +147,16 @@
 	if(pre_coverage != obscured_slots)
 		item_coverage_changed(obscured_slots & ~pre_coverage, pre_coverage & ~obscured_slots)
 
+	if(astype(item, /obj/item/clothing)?.clothing_flags & STOPSPRESSUREDAMAGE)
+		if(item.body_parts_covered & CHEST)
+			pressure_protected_bodyparts |= PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT
+		if(item.body_parts_covered & HEAD)
+			pressure_protected_bodyparts |= PRESSURE_HEAD_PROTECTED_BY_EQUIPMENT
+		if(item.body_parts_covered & (HANDS|ARMS)) // yes, you *just* need arms OR hands protected, not both. very odd isn't it
+			pressure_protected_bodyparts |= PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT
+		if(item.body_parts_covered & (FEET|LEGS)) // yes, you *just* need feet OR legs protected, not both. very odd isn't it
+			pressure_protected_bodyparts |= PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT
+
 /// Removes the passed item's coverage from the mob's coverage related flags
 /mob/living/carbon/proc/remove_item_coverage(obj/item/item)
 	refresh_obscured() // No way to remove a single item's coverage without recalculating everything
@@ -185,9 +166,20 @@
 
 	obscured_slots = NONE
 	covered_slots = NONE
+	pressure_protected_bodyparts &= ~PRESSURE_EQUIPMENT_FLAGS
 	for(var/obj/item/other_equipped_item as anything in get_equipped_items())
 		obscured_slots |= other_equipped_item.flags_inv
 		covered_slots |= other_equipped_item.flags_inv | other_equipped_item.transparent_protection
+
+		if(astype(other_equipped_item, /obj/item/clothing)?.clothing_flags & STOPSPRESSUREDAMAGE)
+			if(other_equipped_item.body_parts_covered & CHEST)
+				pressure_protected_bodyparts |= PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT
+			if(other_equipped_item.body_parts_covered & HEAD)
+				pressure_protected_bodyparts |= PRESSURE_HEAD_PROTECTED_BY_EQUIPMENT
+			if(other_equipped_item.body_parts_covered & (HANDS|ARMS))
+				pressure_protected_bodyparts |= PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT
+			if(other_equipped_item.body_parts_covered & (FEET|LEGS))
+				pressure_protected_bodyparts |= PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT
 
 	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN))
 		obscured_slots |= HIDEHAIR|HIDEFACIALHAIR

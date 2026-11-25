@@ -23,7 +23,7 @@
 	/// The sound we make when our shot actually "hits" "someone".
 	var/hit_person_sound = 'sound/items/weapons/pierce.ogg'
 	/// The sound we make when our shot misses someone and "hits" a "wall".
-	var/hit_wall_sound = SFX_RICOCHET
+	var/hit_wall_sound = /datum/sound_effect/ricochet
 	/// The number of successful hits required to "down" the "someone" we're firing at.
 	var/number_of_hits_to_end = 2
 	/// The probability chance we have to make our "hit" person fall down after we pass the number_of_hits_to_end.
@@ -54,7 +54,7 @@
 
 	// If we scored enough hits, we have a chance to knock them down and stop the hallucination early.
 	if(hits >= number_of_hits_to_end && prob(chance_to_fall))
-		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob/, playsound_local), source, SFX_BODYFALL, 25, TRUE), next_hit_sound)
+		addtimer(CALLBACK(hallucinator, TYPE_PROC_REF(/mob/, playsound_local), source, /datum/sound_effect/bodyfall, 25, TRUE), next_hit_sound)
 		qdel(src)
 
 	// Or, if we do have shots left, keep it going.
@@ -98,7 +98,7 @@
 	var/turf/source = random_far_turf()
 
 	hallucinator.playsound_local(source, 'sound/items/weapons/egloves.ogg', 40, TRUE)
-	hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
+	hallucinator.playsound_local(source, /datum/sound_effect/bodyfall, 25, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(fake_cuff), source), 2 SECONDS)
 
 /// Plays a fake cable-cuff sound and deletes the hallucination.
@@ -120,7 +120,7 @@
 	var/turf/source = random_far_turf()
 
 	hallucinator.playsound_local(source, 'sound/items/weapons/egloves.ogg', 40, TRUE)
-	hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
+	hallucinator.playsound_local(source, /datum/sound_effect/bodyfall, 25, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(harmbaton_loop), source, rand(5, 12)), 2 SECONDS)
 
@@ -129,7 +129,7 @@
 	if(QDELETED(src) || QDELETED(hallucinator) || !source)
 		return
 
-	hallucinator.playsound_local(source, SFX_SWING_HIT, 50, TRUE)
+	hallucinator.playsound_local(source, /datum/sound_effect/swing_hit, 50, TRUE)
 	hits_remaing--
 	if(hits_remaing <= 0)
 		qdel(src)
@@ -164,7 +164,7 @@
 		return
 
 	if(stabs_remaining == 4)
-		hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
+		hallucinator.playsound_local(source, /datum/sound_effect/bodyfall, 25, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(stab_loop), source, stabs_remaining - 1), rand(CLICK_CD_MELEE, CLICK_CD_MELEE + 6))
 

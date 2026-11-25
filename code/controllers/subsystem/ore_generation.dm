@@ -7,6 +7,9 @@ SUBSYSTEM_DEF(ore_generation)
 	)
 	runlevels = RUNLEVEL_GAME
 
+	/// Set once startup vents have their sizes and minerals, before the rest of Initialize (which can sleep).
+	var/vent_distribution_complete = FALSE
+
 	/// All ore vents that are currently producing boulders.
 	var/list/obj/structure/ore_vent/processed_vents = list()
 	/// All the ore vents that are currently in the game, not just the ones that are producing boulders.
@@ -40,23 +43,23 @@ SUBSYSTEM_DEF(ore_generation)
 
 		if(!landmark_anchor) //We're missing a mining epicenter landmark, but it's not crash-worthy.
 			vent.vent_size_setup(random = TRUE, force_size = null, map_loading = TRUE)
+			vent.generate_mineral_breakdown(map_loading = FALSE)
 			continue
 
 		sort_vents.Insert(length(sort_vents), vent)
 		sort_vents[vent] = get_dist(get_turf(vent),get_turf(landmark_anchor))
 
 	sortTim(sort_vents, GLOBAL_PROC_REF(cmp_numeric_asc), associative = TRUE) // Should sort list from closest to farthest.
-	possible_vents = sort_vents // Now we can work with the main list
 
-	var/cutoff = round((length(possible_vents) / 3))
+	var/cutoff = round((length(sort_vents) / 3))
 	var/vent_size_level = SMALL_VENT_TYPE
 
-	for(var/obj/structure/ore_vent/vent as anything in possible_vents)
+	for(var/obj/structure/ore_vent/vent as anything in sort_vents)
 		vent.vent_size_setup(random = FALSE, force_size = vent_size_level, map_loading = TRUE)
 		cutoff--
 		if(cutoff > 0 || vent_size_level == LARGE_VENT_TYPE)
 			continue
-		cutoff = round((length(possible_vents) / 3))
+		cutoff = round((length(sort_vents) / 3))
 		switch(vent_size_level)
 			if(SMALL_VENT_TYPE)
 				vent_size_level = MEDIUM_VENT_TYPE
@@ -65,10 +68,12 @@ SUBSYSTEM_DEF(ore_generation)
 
 	//Finally, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
 	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
-	for(var/obj/structure/ore_vent/vent as anything in possible_vents)
+	for(var/obj/structure/ore_vent/vent as anything in sort_vents)
 		if(vent.unique_vent)
 			continue //Ya'll already got your minerals.
 		vent.generate_mineral_breakdown(map_loading = TRUE)
+
+	vent_distribution_complete = TRUE
 
 	logger.Log(
 		LOG_CATEGORY_CAVE_GENERATION,

@@ -7,6 +7,7 @@
 /turf/open/lava
 	name = "lava"
 	icon_state = "lava"
+	nav_cost_flags = NAV_COST_LAVA
 	desc = "Looks painful to step in. Don't mine down."
 	gender = PLURAL //"That's some lava."
 	baseturfs = /turf/open/lava //lava all the way down
@@ -542,3 +543,10 @@
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	slowdown = 0
 	fish_source_type = null
+
+//Fishing portal plasma with station atmos
+/turf/open/lava/plasma/station
+	desc = "A pool of chilled liquid plasma.  Only the most extreme fish live here."
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
+	baseturfs = /turf/open/lava/plasma/station

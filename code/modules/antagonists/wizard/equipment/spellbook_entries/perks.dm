@@ -31,15 +31,6 @@
 	perk.name = name
 	perk.icon_state = hud_icon
 
-/datum/spellbook_entry/perks/fourhands
-	name = "Four Hands"
-	desc = "Gives you even more hands to perform magic"
-	hud_icon = "fourhands"
-
-/datum/spellbook_entry/perks/fourhands/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)
-	. = ..()
-	user.change_number_of_hands(4)
-
 /datum/spellbook_entry/perks/wormborn
 	name = "Worm Born"
 	desc = "Your soul is infested with mana worms. When you die, you will be reborn as a large worm. \
@@ -170,6 +161,8 @@
 
 /obj/effect/wizard_magnetism/orbit(atom/new_owner, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	. = ..()
+	if(QDELETED(src))
+		return null
 	if(!isliving(new_owner))
 		return
 	owner = WEAKREF(new_owner)

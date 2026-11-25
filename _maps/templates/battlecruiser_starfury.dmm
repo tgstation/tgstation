@@ -2185,7 +2185,8 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/machinery/door/airlock/highsecurity/syndicate{
-	name = "Starfury Armory"
+	name = "Starfury Armory";
+	id_tag = "syndie_battlecruiser_armory"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
@@ -2353,11 +2354,11 @@
 /obj/structure/rack{
 	dir = 8
 	},
-/obj/item/gun/ballistic/revolver/badass{
+/obj/item/gun/ballistic/revolver/syndicate/badass{
 	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/item/gun/ballistic/revolver/badass{
+/obj/item/gun/ballistic/revolver/syndicate/badass{
 	pixel_x = -1;
 	pixel_y = 2
 	},
@@ -5816,7 +5817,8 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/machinery/door/airlock/highsecurity/syndicate{
-	name = "Starfury Armory"
+	name = "Starfury Armory";
+	id_tag = "syndie_battlecruiser_armory"
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)

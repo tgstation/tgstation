@@ -106,9 +106,10 @@ function setupWebsocket(force = false) {
     }
   }
 
+  let socket: WebSocket;
   try {
     manuallyClosed = false;
-    websocket = new WebSocket(`ws://${websocketServer}`);
+    socket = new WebSocket(`ws://${websocketServer}`);
   } catch (e: any) {
     if (e.name === 'SyntaxError') {
       sendWSNotice(
@@ -121,21 +122,28 @@ function setupWebsocket(force = false) {
     startReconnectLoop();
     return;
   }
+  websocket = socket;
+  // A socket that a forced reconnect replaced still fires its close/error
+  // events afterwards; those must not touch its successor.
+  const isCurrent = () => socket === websocket;
 
-  websocket.addEventListener('open', () => {
+  socket.addEventListener('open', () => {
+    if (!isCurrent()) return;
     clearReconnectTimer();
     sendWSNotice('Websocket connected!', true);
     Byond.sendMessage('requestMetadata'); // let's be nice and request metadata
     retryCount = 0;
   });
 
-  websocket.addEventListener('message', (event) => {
+  socket.addEventListener('message', (event) => {
+    if (!isCurrent()) return;
     if (event.data === 'requestMetadata') {
       Byond.sendMessage('requestMetadata');
     }
   });
 
-  websocket.addEventListener('close', (ev) => {
+  socket.addEventListener('close', (ev) => {
+    if (!isCurrent()) return;
     websocket = null;
 
     if (manuallyClosed || ev.code === WEBSOCKET_DISABLED) return;
@@ -148,7 +156,8 @@ function setupWebsocket(force = false) {
     startReconnectLoop();
   });
 
-  websocket.addEventListener('error', (ev) => {
+  socket.addEventListener('error', (ev) => {
+    if (!isCurrent()) return;
     logger.error('got websocket error', ev);
     safeClose(WEBSOCKET_REATTEMPT, 'got error from server');
   });

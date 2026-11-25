@@ -12,8 +12,8 @@
 	dog_fashion = /datum/dog_fashion/back
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_ALLOW_USER_LOCATION | INTERACT_ATOM_IGNORE_MOBILITY
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
@@ -43,6 +43,8 @@
 
 	/// Both the range around the radio in which mobs can hear what it receives and the range the radio can hear
 	var/canhear_range = 3
+	/// Runechat above the radio
+	var/runechat_on_receive = FALSE
 	/// Tracks the number of EMPs currently stacked.
 	var/emped = 0
 
@@ -725,6 +727,7 @@
 /obj/item/radio/entertainment/speakers // Used inside of the entertainment monitors, not to be used as a actual item
 	should_be_listening = TRUE
 	should_be_broadcasting = FALSE
+	runechat_on_receive = TRUE
 
 /obj/item/radio/entertainment/speakers/proc/toggle_mute()
 	should_be_listening = !should_be_listening
@@ -736,7 +739,7 @@
 	wires?.cut(WIRE_TX)
 
 /obj/item/radio/entertainment/speakers/on_receive_message(list/data)
-	playsound(src, SFX_MUFFLED_SPEECH, 60, TRUE, -4, ignore_walls = FALSE, volume_preference = /datum/preference/numeric/volume/sound_radio_noise)
+	playsound(src, /datum/sound_effect/muffled_speech, 60, TRUE, -4, ignore_walls = FALSE, volume_preference = /datum/preference/numeric/volume/sound_radio_noise)
 
 	return ..()
 
@@ -749,6 +752,7 @@
 	overlay_speaker_idle = "radio_s_idle"
 	overlay_mic_idle = "radio_m_idle"
 	overlay_mic_active = "radio_m_active"
+	runechat_on_receive = FALSE
 
 /obj/item/radio/entertainment/microphone // Used inside of a broadcast camera, not to be used as a actual item
 	should_be_listening = FALSE

@@ -25,7 +25,7 @@
 
 /// Takes a plane to offset, and the multiplier to use, and well, does the offsetting
 /// Respects a blacklist we use to remove redundant plane masters, such as hud objects
-#define GET_NEW_PLANE(new_value, multiplier) (SSmapping.plane_offset_blacklist?["[new_value]"] ? new_value : (new_value) - (PLANE_RANGE * (multiplier)))
+#define GET_NEW_PLANE(new_value, multiplier) (SSmapping.plane_offset_blacklist?[new_value] ? new_value : (new_value) - (PLANE_RANGE * (multiplier)))
 
 // Now for the more niche things
 
@@ -68,13 +68,13 @@
 /// Takes a z level, gets the lowest plane offset in its "stack"
 #define GET_LOWEST_STACK_OFFSET(z) ((SSmapping.max_plane_offset) ? SSmapping.z_level_to_lowest_plane_offset[z] : 0)
 /// Takes a plane, returns the canonical, unoffset plane it represents
-#define PLANE_TO_TRUE(plane) ((SSmapping.plane_offset_to_true) ? SSmapping.plane_offset_to_true["[plane]"] : plane)
+#define PLANE_TO_TRUE(plane) ((SSmapping.plane_offset_to_true) ? SSmapping.plane_offset_to_true[plane] : plane)
 /// Takes a plane, returns the offset it uses
-#define PLANE_TO_OFFSET(plane) ((SSmapping.plane_to_offset) ? SSmapping.plane_to_offset["[plane]"] : plane)
+#define PLANE_TO_OFFSET(plane) ((SSmapping.plane_to_offset) ? SSmapping.plane_to_offset[plane] : plane)
 /// Takes a plane, returns TRUE if it is of critical priority, FALSE otherwise
-#define PLANE_IS_CRITICAL(plane) ((SSmapping.plane_to_offset) ? !!SSmapping.critical_planes["[plane]"] : FALSE)
+#define PLANE_IS_CRITICAL(plane) ((SSmapping.plane_to_offset) ? !!SSmapping.critical_planes[plane] : FALSE)
 /// Takes a true plane, returns the offset planes that would canonically represent it
-#define TRUE_PLANE_TO_OFFSETS(plane) ((SSmapping.true_to_offset_planes) ? SSmapping.true_to_offset_planes["[plane]"] : list(plane))
+#define TRUE_PLANE_TO_OFFSETS(plane) ((SSmapping.true_to_offset_planes) ? SSmapping.true_to_offset_planes[plane] : list(plane))
 /// Takes a render target and an offset, returns a canonical render target string for it
 #define OFFSET_RENDER_TARGET(render_target, offset) (_OFFSET_RENDER_TARGET(render_target, SSmapping.render_offset_blacklist?["[render_target]"] ? 0 : offset))
 /// Helper macro for the above
@@ -88,11 +88,11 @@
 // I think overlay lights can render on the wrong z layer. s fucked
 
 /// Whitelist of planes allowed to use TOPDOWN_LAYER
-GLOBAL_LIST_INIT(topdown_planes, list(
-		"[FLOOR_PLANE]" = TRUE,
-	))
+GLOBAL_ALIST_INIT(topdown_planes, alist(
+	FLOOR_PLANE = TRUE,
+))
 
-#define IS_TOPDOWN_PLANE(plane) GLOB.topdown_planes["[PLANE_TO_TRUE(plane)]"]
+#define IS_TOPDOWN_PLANE(plane) GLOB.topdown_planes[PLANE_TO_TRUE(plane)]
 
 /// Checks if a passed in MA or atom is allowed to have its current plane/layer matchup
 /proc/check_topdown_validity(mutable_appearance/thing_to_check)

@@ -39,7 +39,8 @@
 
 	soup_sound = new(parent)
 
-/datum/component/stove/Destroy()
+/datum/component/stove/Destroy(force)
+	STOP_PROCESSING(SSmachines, src)
 	QDEL_NULL(soup_sound)
 	return ..()
 
@@ -56,16 +57,20 @@
 	var/obj/machinery/real_parent = parent
 	real_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
+	parent.AddComponent(/datum/component/touch_the_stove, is_active = CALLBACK(src, PROC_REF(is_active)), temperature = SOUP_BURN_TEMP + 80)
+
 /datum/component/stove/UnregisterFromParent()
 	var/obj/machinery/real_parent = parent
 	if(container && !QDELING(parent))
 		container.forceMove(real_parent.drop_location())
+	container = null
 
 	if (particle_type)
 		real_parent.remove_shared_particles("[particle_type]_stove_[container_x]")
 
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
+		COMSIG_ATOM_ATTACK_ROBOT_SECONDARY,
 		COMSIG_ATOM_EXITED,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
@@ -73,6 +78,11 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_MACHINERY_REFRESH_PARTS,
 	))
+
+	qdel(parent.GetComponent(/datum/component/touch_the_stove))
+
+/datum/component/stove/proc/is_active()
+	return on
 
 /datum/component/stove/process(seconds_per_tick)
 	var/obj/machinery/real_parent = parent

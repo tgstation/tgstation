@@ -178,11 +178,11 @@ DEFINE_BITFIELD(surgery_state, list(
 #define BIO_METAL (1<<2)
 /// Has wood - should probably be able to catch on fire, or something
 #define BIO_WOOD (1<<3)
-/// Is wired internally - allows the victim to suffer electrical wounds (robotic T1-T3 slash/pierce)
+/// Is wired internally - allows the victim to suffer electrical wounds (robotic T1-T3 slash/pierce), relevant wounds currently unimplemented
 #define BIO_WIRED (1<<4)
 /// Has bloodflow - can suffer bleeding wounds and can bleed
 #define BIO_BLOODED (1<<5)
-/// Is connected by a joint - can suffer T1 bone blunt wounds (dislocation)
+/// Is connected by a joint - can suffer T1 bone blunt wounds (dislocation) and T1 robotic blunt (loosened screws) if METAL as well
 #define BIO_JOINTED (1<<6)
 /// Skin is covered in thick chitin and is resistant to cutting
 #define BIO_CHITIN (1<<7)
@@ -190,7 +190,7 @@ DEFINE_BITFIELD(surgery_state, list(
 #define BIO_STONE (1<<8)
 /// Limb is comprised entirely of slime jelly - can be cannibalized by any jelly person with the ability to eat their own limbs to replenish their own slime (blood)
 #define BIO_JELLY (1<<9)
-/// Robotic - can suffer all metal/wired wounds, such as: UNIMPLEMENTED PLEASE UPDATE ONCE SYNTH WOUNDS 9/5/2023 ~Niko
+/// Robotic - can suffer all metal/wired wounds, such as: T1-3 burn/brute, except loosened screws. slash/pierce wounds currently unimplemented.
 #define BIO_ROBOTIC (BIO_METAL|BIO_WIRED)
 /// Has flesh and bone - See BIO_BONE and BIO_FLESH
 #define BIO_FLESH_BONE (BIO_BONE|BIO_FLESH)
@@ -234,3 +234,16 @@ DEFINE_BITFIELD(surgery_state, list(
 
 /// For scaling the effectiveness of certain effects to the total bodypart count
 #define GET_BODYPART_COEFFICIENT(X) round(X.len / BODYPARTS_DEFAULT_MAXIMUM , 0.1)
+
+// Flag associatd with specific overlays on bodyparts
+// Used to determine how the overlay is handled in rendering
+/// Apply bodypart textures to this
+#define LIMB_OVERLAY_TEXTURED (1<<0)
+/// Contains meta-info used for rendering (i.e. emissives)
+#define LIMB_OVERLAY_META (1<<1)
+/// Overlay is chonky, at least 48 pixels wide
+#define LIMB_OVERLAY_WIDE_ICON (1<<2)
+/// Overlay is toll, at least 48 pixels tall
+#define LIMB_OVERLAY_TALL_ICON (1<<3)
+/// Core part of the bodypart, like the actual bodypart icon
+#define LIMB_OVERLAY_CORE (1<<4)

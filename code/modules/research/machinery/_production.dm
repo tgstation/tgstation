@@ -427,7 +427,7 @@
 			number_to_make -= max_stack_amount
 
 	created = design.create_result(target, design.materials, amount = number_to_make)
-	if(design.inherit_materials != DESIGN_DONT_INHERIT_MATS)
+	if(!is_stack && design.inherit_materials != DESIGN_DONT_INHERIT_MATS)
 		design.transfer_materials(design.materials, material_cost_coefficient, created)
 
 	if(isitem(created))

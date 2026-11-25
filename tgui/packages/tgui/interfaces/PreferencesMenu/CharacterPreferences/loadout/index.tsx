@@ -207,7 +207,7 @@ function LoadoutSelectedItem(props: LoadoutSelectedItemProps) {
         <ItemIcon item={item} scale={1} />
       </Stack.Item>
       <Stack.Item width="55%">{item.name}</Stack.Item>
-      {item.buttons.length ? (
+      {item.buttons.length || item.reskins?.length ? (
         <Stack.Item>
           <Button
             color="none"

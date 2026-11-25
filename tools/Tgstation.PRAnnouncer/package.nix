@@ -14,10 +14,6 @@ pkgs.buildDotnetModule  {
     platforms = platforms.x86_64;
   };
 
-  nativeBuildInputs = with pkgs; [
-    versionParse
-  ];
-
   src = ./.;
 
   projectFile = "Tgstation.PRAnnouncer.csproj";

@@ -492,6 +492,17 @@
 
 	return ..()
 
+/obj/item/restraints/legcuffs/beartrap/on_found(mob/living/victim)
+	if(!armed)
+		return FALSE
+
+	if(victim)
+		var/hand_zone = victim.held_index_to_dir(victim.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
+		spring_trap(victim, def_zone = hand_zone, ignore_movetypes = TRUE)
+		return TRUE
+
+	return FALSE
+
 /**
  * Closes a bear trap
  *
@@ -609,7 +620,7 @@
 	///Reference of the mob we will attempt to snare
 	var/datum/weakref/ensnare_mob_ref
 
-/obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
+/obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	if(!..())
 		return
 	playsound(src.loc,'sound/items/weapons/bolathrow.ogg', 75, TRUE)

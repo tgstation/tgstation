@@ -71,9 +71,8 @@
 
 /obj/machinery/deployable_turret/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	playsound(src,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
-	for(var/obj/item/I in buckled_mob.held_items)
-		if(istype(I, /obj/item/gun_control))
-			qdel(I)
+	for(var/obj/item/gun_control/control as anything in buckled_mob.get_held_items_of_type(/obj/item/gun_control))
+		qdel(control)
 	if(istype(buckled_mob))
 		buckled_mob.pixel_x = buckled_mob.base_pixel_x
 		buckled_mob.pixel_y = buckled_mob.base_pixel_y
@@ -91,15 +90,11 @@
 	. = ..()
 	if(!.)
 		return
-	for(var/V in M.held_items)
-		var/obj/item/I = V
-		if(istype(I))
-			if(M.dropItemToGround(I))
-				var/obj/item/gun_control/TC = new(src)
-				M.put_in_hands(TC)
-		else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
-			var/obj/item/gun_control/TC = new(src)
-			M.put_in_hands(TC)
+	M.drop_all_held_items() // Some stuff might not be dropped here
+	for(var/empty_hand_index in M.get_empty_held_indexes())
+		var/obj/item/gun_control/control = new(src)
+		if(!M.put_in_hand(control, empty_hand_index)) // fuck.
+			qdel(control)
 	M.pixel_y = 14
 	layer = ABOVE_MOB_LAYER
 	setDir(SOUTH)

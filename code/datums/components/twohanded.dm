@@ -22,10 +22,12 @@
 	var/attacksound = FALSE
 	/// Boolean on whether it has to be held in both hands
 	var/require_twohands = FALSE
-	/// The icon that will be used when wielded
-	var/icon_wielded = FALSE
+	/// When wielding, change icon state and inhand icon state
+	var/update_icon_state = FALSE
 	/// Reference to the offhand created for the item
 	var/obj/item/offhand/offhand_item = null
+	/// The index of the offhand item.
+	var/offhand_index = 0
 	/// The amount of increase recived from sharpening the item
 	var/sharpened_increase = 0
 	/// A callback on the parent to be called when the item is wielded
@@ -45,7 +47,7 @@
  * * force_multiplier (optional) The force multiplier when wielded, do not use with force_wielded, and force_unwielded
  * * force_wielded (optional) The force setting when the item is wielded, do not use with force_multiplier
  * * force_unwielded (optional) The force setting when the item is unwielded, do not use with force_multiplier
- * * icon_wielded (optional) The icon to be used when wielded
+ * * update_icon_state (optional) When wielding, change the icon state and inhand icon state
  */
 /datum/component/two_handed/Initialize(
 	require_twohands = FALSE,
@@ -55,7 +57,7 @@
 	force_multiplier = 1,
 	force_wielded = 0,
 	force_unwielded = 0,
-	icon_wielded = FALSE,
+	update_icon_state = FALSE,
 	datum/callback/wield_callback,
 	datum/callback/unwield_callback,
 )
@@ -69,12 +71,21 @@
 	src.force_multiplier = force_multiplier
 	src.force_wielded = force_wielded
 	src.force_unwielded = force_unwielded
-	src.icon_wielded = icon_wielded
 	src.wield_callback = wield_callback
 	src.unwield_callback = unwield_callback
+	src.update_icon_state = update_icon_state
 
 	if(require_twohands)
 		ADD_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS, ABSTRACT_ITEM_TRAIT)
+
+	if(PERFORM_ALL_TESTS(focus_only/two_handed_icons) && update_icon_state)
+		var/obj/item/item_parent = parent
+		icon_exists_or_scream(item_parent.icon, "[BASE_OR_INITIAL_ICON_STATE(item_parent)]0")
+		icon_exists_or_scream(item_parent.righthand_file, "[BASE_OR_INITIAL_ICON_STATE(item_parent)]0")
+		icon_exists_or_scream(item_parent.lefthand_file, "[BASE_OR_INITIAL_ICON_STATE(item_parent)]0")
+		icon_exists_or_scream(item_parent.icon, "[BASE_OR_INITIAL_ICON_STATE(item_parent)]1")
+		icon_exists_or_scream(item_parent.righthand_file, "[BASE_OR_INITIAL_ICON_STATE(item_parent)]1")
+		icon_exists_or_scream(item_parent.lefthand_file, "[BASE_OR_INITIAL_ICON_STATE(item_parent)]1")
 
 /datum/component/two_handed/Destroy(force)
 	offhand_item = null
@@ -93,7 +104,7 @@
 	force_multiplier,
 	force_wielded,
 	force_unwielded,
-	icon_wielded,
+	update_icon_state,
 	datum/callback/wield_callback,
 	datum/callback/unwield_callback,
 )
@@ -121,8 +132,8 @@
 		src.force_wielded = force_wielded
 	if(!isnull(force_unwielded))
 		src.force_unwielded = force_unwielded
-	if(icon_wielded)
-		src.icon_wielded = icon_wielded
+	if(update_icon_state)
+		src.update_icon_state = update_icon_state
 	if(wield_callback)
 		src.wield_callback = wield_callback
 	if(unwield_callback)
@@ -241,6 +252,7 @@
 		return COMPONENT_EQUIPPED_FAILED // blocked wield from item
 	if (wield_callback?.Invoke(parent, user) & COMPONENT_TWOHANDED_BLOCK_WIELD)
 		return
+
 	wielded = TRUE
 	ADD_TRAIT(parent, TRAIT_WIELDED, REF(src))
 	RegisterSignal(user, COMSIG_MOB_SWAPPING_HANDS, PROC_REF(on_swapping_hands))
@@ -272,7 +284,9 @@
 	offhand_item.wielded = TRUE
 	RegisterSignal(offhand_item, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(offhand_item, COMSIG_QDELETING, PROC_REF(on_destroy))
-	user.put_in_inactive_hand(offhand_item)
+	offhand_index = user.get_inactive_hand_index()
+	user.put_in_hand(offhand_item, offhand_index)
+	RegisterSignal(user, COMSIG_MOB_CYCLE_HAND_INDEX(offhand_index), PROC_REF(on_cycling_hands))
 
 /**
  * Unwield the two handed item
@@ -341,6 +355,8 @@
 		qdel(offhand_item)
 	// Clear any old refrence to an item that should be gone now
 	offhand_item = null
+	UnregisterSignal(user, COMSIG_MOB_CYCLE_HAND_INDEX(offhand_index))
+	offhand_index = 0
 
 /**
  * on_attack triggers on attack with the parent item
@@ -353,17 +369,13 @@
 
 /**
  * on_update_icon triggers on call to update parent items icon
- *
- * Updates the icon using icon_wielded if set
  */
 /datum/component/two_handed/proc/on_update_icon(obj/item/source)
 	SIGNAL_HANDLER
-	if(!wielded)
-		return NONE
-	if(!icon_wielded)
-		return NONE
-	source.icon_state = icon_wielded
-	return COMSIG_ATOM_NO_UPDATE_ICON_STATE
+	if(update_icon_state)
+		source.icon_state = source.inhand_icon_state = "[BASE_OR_INITIAL_ICON_STATE(source)][wielded]"
+		return COMSIG_ATOM_NO_UPDATE_ICON_STATE
+	return NONE
 
 /**
  * on_moved Triggers on item moved
@@ -376,13 +388,18 @@
 /**
  * on_swap_hands Triggers on swapping hands, blocks swap if the other hand is busy
  */
-/datum/component/two_handed/proc/on_swapping_hands(mob/user, obj/item/held_item)
+/datum/component/two_handed/proc/on_swapping_hands(mob/user, held_index, silent)
 	SIGNAL_HANDLER
 
-	if(!held_item)
-		return
-	if(held_item == parent)
+	if(held_index == offhand_index)
+		if(!silent)
+			to_chat(user, span_warning("\The [user.get_held_index_name(held_index)] is too busy holding [parent]."))
 		return COMPONENT_BLOCK_SWAP
+
+/datum/component/two_handed/proc/on_cycling_hands(mob/source, cycle_dir, climb, silent)
+	SIGNAL_HANDLER
+
+	return COMPONENT_CONTINUE_CYCLE
 
 /**
  * on_sharpen Triggers on usage of a sharpening stone on the item

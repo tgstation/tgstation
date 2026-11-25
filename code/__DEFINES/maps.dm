@@ -64,7 +64,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define PATH_TO_NEXT_MAP_JSON "data/next_map.json"
 
 /// List of directories we can load map .json files from
-#define MAP_DIRECTORY_MAPS "_maps"
+#define MAP_DIRECTORY_MAPS "_maps/map_jsons"
 #define MAP_DIRECTORY_DATA "data"
 #define MAP_DIRECTORY_WHITELIST list(MAP_DIRECTORY_MAPS,MAP_DIRECTORY_DATA)
 

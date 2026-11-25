@@ -52,7 +52,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smoothbore)
 	shaded_charge = 1
 	charge_sections = 1
-	spread = 22.5
+	projectile_damage_multiplier = 1.5
+	projectile_speed_multiplier = 2
 	obj_flags = UNIQUE_RENAME
 	custom_materials = list(
 		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
@@ -89,7 +90,7 @@
 	icon_state = "smoothbore_prime"
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/smoothbore/prime)
 	charge_sections = 2
-	spread = 0 //could be like 5, but having just very tiny spread kinda feels like bullshit
+	projectile_damage_multiplier = 2
 	custom_materials = list(
 		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 8,
 		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5.15,

@@ -1,13 +1,22 @@
-import { useState } from 'react';
 import {
+  IMPL_HUB_STORAGE,
+  IMPL_IFRAME_INDEXED_DB,
+  type StorageImplementation,
+  storage,
+} from 'common/storage';
+import { useEffect, useState } from 'react';
+import {
+  Box,
   Button,
   Collapsible,
   Divider,
+  Icon,
   Input,
   LabeledList,
   Section,
   Slider,
   Stack,
+  Tooltip,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 import { capitalize } from 'tgui-core/string';
@@ -156,6 +165,23 @@ export function SettingsGeneral(props) {
             }
           />
         </LabeledList.Item>
+        <LabeledList.Item label="Command bar">
+          <Button.Checkbox
+            checked={settings.eagerCommandBarSuggestions}
+            color="transparent"
+            onClick={() =>
+              updateSettings({
+                eagerCommandBarSuggestions:
+                  !settings.eagerCommandBarSuggestions,
+              })
+            }
+          >
+            Show suggestions while typing
+          </Button.Checkbox>
+        </LabeledList.Item>
+        <LabeledList.Item label="Storage">
+          <StorageIndicator />
+        </LabeledList.Item>
       </LabeledList>
       <Divider />
       <Stack fill>
@@ -199,4 +225,39 @@ export function SettingsGeneral(props) {
       </Stack>
     </Section>
   );
+}
+
+function StorageIndicator() {
+  const [impl, setImpl] = useState<StorageImplementation | null>(null);
+
+  useEffect(() => {
+    storage.getImpl().then(setImpl);
+  }, []);
+
+  switch (impl) {
+    case IMPL_IFRAME_INDEXED_DB:
+      return (
+        <Tooltip content={`Saved to the storage CDN (${Byond.storageCdn}).`}>
+          <Box inline color="good">
+            <Icon mr={0.5} name="cloud" />
+            Storage CDN
+          </Box>
+        </Tooltip>
+      );
+    case IMPL_HUB_STORAGE:
+      return (
+        <Tooltip content="The storage CDN did not load, so settings are saved in BYOND's built-in storage instead.">
+          <Box inline color="average">
+            <Icon mr={0.5} name="hard-drive" />
+            byondstorage (fallback)
+          </Box>
+        </Tooltip>
+      );
+    default:
+      return (
+        <Box inline color="label">
+          Checking...
+        </Box>
+      );
+  }
 }

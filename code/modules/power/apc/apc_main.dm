@@ -124,8 +124,6 @@
 	var/datum/alarm_handler/alarm_manager
 	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
 	var/offset_old
-	/// Used for apc helper called cut_AI_wire to make apc's wore responsible for ai connectione mended.
-	var/cut_AI_wire = FALSE
 	/// Used for apc helper called unlocked to make apc unlocked.
 	var/unlocked = FALSE
 	/// Used for apc helper called syndicate_access to make apc's required access syndicate_access.
@@ -264,15 +262,19 @@
 		if(NORTH)
 			offset_old = pixel_y
 			pixel_y = APC_PIXEL_OFFSET
+			pixel_x = 0
 		if(SOUTH)
 			offset_old = pixel_y
 			pixel_y = -APC_PIXEL_OFFSET
+			pixel_x = 0
 		if(EAST)
 			offset_old = pixel_x
 			pixel_x = APC_PIXEL_OFFSET
+			pixel_y = 0
 		if(WEST)
 			offset_old = pixel_x
 			pixel_x = -APC_PIXEL_OFFSET
+			pixel_y = 0
 
 	var/image/hud_image = image(icon = DEFAULT_HUDS_DMI, icon_state = "apc_hacked")
 	hud_image.pixel_w = pixel_x

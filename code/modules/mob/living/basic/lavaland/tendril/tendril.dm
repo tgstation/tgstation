@@ -50,6 +50,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	. = ..()
 	GLOB.tendrils += src
 	AddElement(/datum/element/death_drops, /obj/structure/closet/crate/necropolis/tendril)
+	AddElement(/datum/element/block_mining_mob_respawns, 7)
 	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/gps, "Eerie Signal")
 	AddComponent(/datum/component/basic_mob_attack_telegraph, display_telegraph_overlay = FALSE, telegraph_duration = 0.4 SECONDS)
@@ -89,6 +90,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 /mob/living/basic/mining/tendril/Destroy()
 	GLOB.tendrils -= src
 	QDEL_NULL(soundloop)
+	QDEL_NULL(tendril_melee)
 	infected_turfs.Cut()
 
 	if(!SSachievements.achievements_enabled || (flags_1 & ADMIN_SPAWNED_1))
@@ -161,7 +163,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	duration = 0.4 SECONDS
 
 /mob/living/basic/mining/tendril/proc/snatch_react()
-	if (tendril_melee.IsAvailable())
+	if (tendril_melee?.IsAvailable())
 		tendril_melee.Activate(warning = FALSE)
 
 #undef HEARTBEAT_NORMAL

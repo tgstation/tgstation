@@ -145,6 +145,12 @@
 	damage_falloff_tile = -0.45
 	wound_falloff_tile = -2.5
 
+/obj/projectile/beam/scatter/weak
+	icon_state = "purple_laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
+	light_color = COLOR_STRONG_VIOLET
+	damage = 6
+
 /obj/projectile/beam/scatter/pathetic
 	name = "extremely weak laser pellet"
 	damage = 1
@@ -154,10 +160,10 @@
 	hitsound = 'sound/items/bikehorn.ogg' //honk
 	hitsound_wall = 'sound/items/bikehorn.ogg'
 
-/obj/projectile/beam/xray
+/obj/projectile/beam/laser/xray
 	name = "\improper X-ray beam"
 	icon_state = "xray"
-	damage = 15
+	damage = 20
 	range = 15
 	armour_penetration = 100
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE | PASSCLOSEDTURF | PASSMACHINE | PASSSTRUCTURE | PASSDOORS
@@ -205,10 +211,12 @@
 	weak_against_armour = FALSE
 	damage = 35 //slight increase in damage just for the hell of it
 
-/obj/projectile/beam/pulse
+/obj/projectile/beam/laser/pulse
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
+	armour_penetration = 50
+	speed = 2.5
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/pulse
@@ -216,7 +224,7 @@
 	impact_type = /obj/effect/projectile/impact/pulse
 	wound_bonus = 10
 
-/obj/projectile/beam/pulse/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/beam/laser/pulse/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if (!QDELETED(target) && (isturf(target) || isstructure(target)))
 		if(isobj(target))
@@ -224,16 +232,17 @@
 		else
 			SSexplosions.medturf += target
 
-/obj/projectile/beam/pulse/shotgun
-	damage = 30
+/obj/projectile/beam/laser/pulse/shotgun
+	damage = 40
+	armour_penetration = 30
 
-/obj/projectile/beam/pulse/heavy
+/obj/projectile/beam/laser/pulse/heavy
 	name = "heavy pulse laser"
 	icon_state = "pulse1_bl"
 	projectile_piercing = ALL
 	var/pierce_hits = 2
 
-/obj/projectile/beam/pulse/heavy/on_hit(atom/target, blocked = 0, pierce_hit)
+/obj/projectile/beam/laser/pulse/heavy/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(pierce_hits <= 0)
 		projectile_piercing = NONE
 	pierce_hits -= 1
@@ -284,7 +293,7 @@
 	muzzle_flash_color_override = COLOR_BLUE_LIGHT
 	impact_light_color_override = COLOR_BLUE_LIGHT
 	damage_type = STAMINA
-	integrity_heal = 0.25
+	integrity_heal = 1.2
 	energy_reduction = 60
 
 /obj/projectile/beam/emitter/hitscan/bioregen

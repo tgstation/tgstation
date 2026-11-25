@@ -14,18 +14,15 @@ import { player } from './handlers';
 export function NowPlayingWidget(props) {
   const { settings, updateSettings } = useSettings();
   const meta = useAtomValue(metaAtom);
-  const {
-    album = 'Unknown Album',
-    artist = 'Unknown Artist',
-    duration,
-    link,
-    title,
-    upload_date = 'Unknown Data',
-  } = meta || {};
+  const { duration, link, title } = meta || {};
+  // `||` and not destructuring defaults, the server sends null when yt-dlp has no value
+  const album = meta?.album || 'Unknown Album';
+  const artist = meta?.artist || 'Unknown Artist';
+  const upload_date = meta?.upload_date || 'Unknown Date';
 
   const playing = useAtomValue(playingAtom);
 
-  const date = !Number.isNaN(upload_date)
+  const date = !Number.isNaN(Number(upload_date))
     ? upload_date?.substring(0, 4) +
       '-' +
       upload_date?.substring(4, 6) +

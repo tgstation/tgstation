@@ -1,7 +1,7 @@
 //===============================HAND INTERACTION===================================
 /obj/machinery/vending/interact(mob/user)
 	if(seconds_electrified && !(machine_stat & NOPOWER))
-		if(shock(user, 100))
+		if(shock(user, 125))
 			return
 
 	if(tilted && !user.buckled)
@@ -81,10 +81,6 @@
 	for(var/datum/data/vending_product/product_datum in product_records + coin_records + hidden_records)
 		if(inserted_item.type != product_datum.product_path)
 			continue
-
-		if(product_datum.amount == product_datum.max_amount)
-			to_chat(user, span_warning("[src] can't accept any more [inserted_item.name][inserted_item.p_s()]!"))
-			return FALSE
 
 		if(!user.transferItemToLoc(inserted_item, src))
 			to_chat(user, span_warning("[inserted_item] is stuck in your hand!"))

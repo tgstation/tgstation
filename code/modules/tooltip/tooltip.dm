@@ -16,6 +16,8 @@ Notes:
 - You may have noticed 90% of the work is done via javascript on the client. Gotta save those cycles man.
 */
 
+#define TOOLTIP_TITLE 1
+#define TOOLTIP_DESCRIPTION 2
 
 /datum/tooltip
 	var/client/owner
@@ -24,7 +26,8 @@ Notes:
 	var/queueHide = 0
 	var/init = 0
 	var/atom/last_target
-
+	var/params
+	var/list/view_size
 
 /datum/tooltip/New(client/C)
 	if (C)
@@ -36,8 +39,8 @@ Notes:
 	..()
 
 
-/datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")
-	if (!thing || !params || (!title && !content) || !owner || !isnum(ICON_SIZE_ALL))
+/datum/tooltip/proc/show(atom/movable/thing, params = null, list/contents = null, theme = "default", special = "none")
+	if (!thing || !params || !length(contents) || !owner || !isnum(ICON_SIZE_ALL))
 		return FALSE
 
 	if (!isnull(last_target))
@@ -54,6 +57,44 @@ Notes:
 
 	showing = 1
 
+	set_title(contents)
+
+	//Make our dumb param object
+	src.params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
+
+	//Send stuff to the tooltip
+	view_size = getviewsize(owner.view)
+	owner << output(list2params(list(src.params, view_size[1] , view_size[2], "[contents[TOOLTIP_TITLE]][contents[TOOLTIP_DESCRIPTION]]", theme, special)), "[control]:tooltip.update")
+
+	//If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
+	showing = 0
+	if (queueHide)
+		hide()
+
+	return TRUE
+
+///Updates the user's tooltips given a new title/content, keeping everything else the same.
+/datum/tooltip/proc/update_text(list/contents)
+	if (!params || !length(contents) || !owner)
+		return FALSE
+	set_title(contents)
+	owner << output(list2params(list(src.params, view_size[1] , view_size[2], "[contents[TOOLTIP_TITLE]][contents[TOOLTIP_DESCRIPTION]]")), "[control]:tooltip.update")
+	return TRUE
+
+/datum/tooltip/proc/hide()
+	queueHide = showing ? TRUE : FALSE
+
+	if (queueHide)
+		addtimer(CALLBACK(src, PROC_REF(do_hide)), 0.1 SECONDS)
+	else
+		do_hide()
+
+	return TRUE
+
+/datum/tooltip/proc/set_title(list/contents)
+	var/title = contents[TOOLTIP_TITLE]
+	var/content = contents[TOOLTIP_DESCRIPTION]
+
 	if (title && content)
 		title = "<h1>[title]</h1>"
 		content = "<p>[content]</p>"
@@ -66,30 +107,8 @@ Notes:
 	title = replacetext(title, "\proper", "")
 	title = replacetext(title, "\improper", "")
 
-	//Make our dumb param object
-	params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
-
-	//Send stuff to the tooltip
-	var/view_size = getviewsize(owner.view)
-	owner << output(list2params(list(params, view_size[1] , view_size[2], "[title][content]", theme, special)), "[control]:tooltip.update")
-
-	//If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
-	showing = 0
-	if (queueHide)
-		hide()
-
-	return TRUE
-
-
-/datum/tooltip/proc/hide()
-	queueHide = showing ? TRUE : FALSE
-
-	if (queueHide)
-		addtimer(CALLBACK(src, PROC_REF(do_hide)), 0.1 SECONDS)
-	else
-		do_hide()
-
-	return TRUE
+	contents[TOOLTIP_TITLE] = title
+	contents[TOOLTIP_DESCRIPTION] = content
 
 /datum/tooltip/proc/on_target_qdel()
 	SIGNAL_HANDLER
@@ -115,7 +134,7 @@ Notes:
 		theme = LOWER_TEXT(ui_style)
 	if(!theme)
 		theme = "default"
-	user.client.tooltips.show(tip_src, params, title, content, theme)
+	user.client.tooltips.show(tip_src, params, list(title, content), theme)
 
 
 //Arbitrarily close a user's tooltip
@@ -125,4 +144,11 @@ Notes:
 		return
 	user.client.tooltips.hide()
 
+///Updates a user's tooltip to show new title/contents.
+/proc/updateToolTip(mob/user = null, title = "", content = "")
+	if(!istype(user) || !user.client?.tooltips)
+		return
+	user.client.tooltips.update_text(list(title, content))
 
+#undef TOOLTIP_TITLE
+#undef TOOLTIP_DESCRIPTION

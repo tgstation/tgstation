@@ -8,31 +8,35 @@ import {
   Stack,
   Tooltip,
 } from 'tgui-core/components';
-import type { BooleanLike } from 'tgui-core/react';
 
 import { GroupTitle } from '../GroupTitle';
 import { findIcon } from '../helpers';
-import { type CraftingData, type Diet, MODE, type Recipe } from '../types';
+import {
+  type AtomData,
+  type CraftingData,
+  type IconData,
+  MODE,
+  type Recipe,
+} from '../types';
 import { AtomContent } from './AtomContent';
 import { FoodtypeContent } from './FoodtypeContent';
 import { ToolContent } from './ToolContent';
 
 type Props = {
-  busy: BooleanLike;
-  craftable: boolean;
   item: Recipe;
-  mode: BooleanLike;
+  iconData: IconData;
+  atomData: AtomData[];
 };
 
 export function RecipeContentCompact(props: Props) {
-  const { item, craftable, busy, mode } = props;
-  const { act, data } = useBackend<CraftingData>();
+  const { item, iconData, atomData } = props;
+  const { data } = useBackend<CraftingData>();
 
   return (
     <Section>
       <Stack my={-0.75}>
         <Stack.Item>
-          <Box className={findIcon(item.id, data)} />
+          <Box className={findIcon(item.id, data, iconData)} />
         </Stack.Item>
         <Stack.Item grow>
           <Stack>
@@ -45,8 +49,8 @@ export function RecipeContentCompact(props: Props) {
                   Object.keys(item.reqs).map((id) => {
                     const atom_id = Number(id);
 
-                    const name = data.atom_data[atom_id - 1]?.name;
-                    const is_reagent = data.atom_data[atom_id - 1]?.is_reagent;
+                    const name = atomData[atom_id - 1]?.name;
+                    const is_reagent = atomData[atom_id - 1]?.is_reagent;
                     const amount = item.reqs[atom_id];
                     return is_reagent
                       ? `${name}\xa0${amount}u`
@@ -62,9 +66,8 @@ export function RecipeContentCompact(props: Props) {
                       .map((id) => {
                         const atom_id = Number(id);
 
-                        const name = data.atom_data[atom_id - 1]?.name;
-                        const is_reagent =
-                          data.atom_data[atom_id - 1]?.is_reagent;
+                        const name = atomData[atom_id - 1]?.name;
+                        const is_reagent = atomData[atom_id - 1]?.is_reagent;
                         const amount = item.chem_catalysts[atom_id];
                         return is_reagent
                           ? `${name}\xa0${amount}u`
@@ -77,17 +80,17 @@ export function RecipeContentCompact(props: Props) {
                 {item.tool_paths &&
                   ', ' +
                     item.tool_paths
-                      .map((item) => data.atom_data[Number(item) - 1]?.name)
+                      .map((item) => atomData[Number(item) - 1]?.name)
                       .join(', ')}
                 {item.machinery &&
                   ', ' +
                     item.machinery
-                      .map((item) => data.atom_data[Number(item) - 1]?.name)
+                      .map((item) => atomData[Number(item) - 1]?.name)
                       .join(', ')}
                 {item.structures &&
                   ', ' +
                     item.structures
-                      .map((item) => data.atom_data[Number(item) - 1]?.name)
+                      .map((item) => atomData[Number(item) - 1]?.name)
                       .join(', ')}
               </Box>
             </Stack.Item>
@@ -101,45 +104,7 @@ export function RecipeContentCompact(props: Props) {
                       <Icon p={1} name="screwdriver-wrench" />
                     </Tooltip>
                   )}
-                  <Button
-                    my={0.3}
-                    lineHeight={2.5}
-                    align="center"
-                    disabled={!craftable || busy}
-                    icon={
-                      busy
-                        ? 'circle-notch'
-                        : mode === MODE.cooking
-                          ? 'utensils'
-                          : 'hammer'
-                    }
-                    iconSpin={!!busy}
-                    onClick={() =>
-                      act('make', {
-                        recipe: item.ref,
-                      })
-                    }
-                  >
-                    Make
-                  </Button>
-                  {!!item.mass_craftable && (
-                    <Button
-                      my={0.3}
-                      lineHeight={2.5}
-                      width="32px"
-                      align="center"
-                      tooltip="Repeat this craft until you run out of ingredients."
-                      tooltipPosition="top"
-                      disabled={!craftable || busy}
-                      icon="repeat"
-                      iconSpin={!!busy}
-                      onClick={() =>
-                        act('make_mass', {
-                          recipe: item.ref,
-                        })
-                      }
-                    />
-                  )}
+                  <CraftButton item={item} />
                 </Box>
               ) : (
                 item.steps && (
@@ -163,34 +128,53 @@ export function RecipeContentCompact(props: Props) {
 }
 
 type FullProps = Props & {
-  diet: Diet;
+  nodesc?: boolean;
+  setParentForceFloating?: (state: boolean) => void;
+  showIcon?: boolean;
+  allRecipes: Recipe[];
+  iconData: Record<number, string>;
 };
 
 export function RecipeContent(props: FullProps) {
-  const { item, craftable, busy, mode, diet } = props;
-  const { act, data } = useBackend<CraftingData>();
+  const {
+    item,
+    nodesc = false,
+    setParentForceFloating,
+    showIcon = true,
+    allRecipes,
+    atomData,
+    iconData,
+  } = props;
+  const { data } = useBackend<CraftingData>();
+  const { mode, diet } = data;
 
   return (
     <Section>
       <Stack>
-        <Stack.Item>
-          <Box textAlign="center" minWidth="64px" minHeight="64px" mr={1}>
-            <Box
-              style={{
-                transform: 'scale(1.5)',
-              }}
-              m="16px"
-              className={findIcon(item.id, data)}
-            />
-          </Box>
-        </Stack.Item>
+        {showIcon && (
+          <Stack.Item>
+            <Box textAlign="center" minWidth="64px" minHeight="64px" mr={1}>
+              <Box
+                style={{
+                  transform: 'scale(1.5)',
+                }}
+                m="16px"
+                className={findIcon(item.id, data, iconData)}
+              />
+            </Box>
+          </Stack.Item>
+        )}
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow={5}>
               <Box mb={1} bold style={{ textTransform: 'capitalize' }}>
-                {item.name}
+                {!nodesc || item.non_craftable ? (
+                  item.name
+                ) : (
+                  <CraftButton item={item} buttonText={item.name} />
+                )}
               </Box>
-              {item.desc && <Box color="gray">{item.desc}</Box>}
+              {!nodesc && item.desc && <Box color="gray">{item.desc}</Box>}
               {!!item.has_food_effect && (
                 <Box my={2} color="pink">
                   <Icon name="wand-magic-sparkles" mr={1} />
@@ -198,7 +182,7 @@ export function RecipeContent(props: FullProps) {
                 </Box>
               )}
               <Box style={{ textTransform: 'capitalize' }}>
-                {item.reqs && (
+                {item.reqs && Object.keys(item.reqs).length > 0 && (
                   <Box>
                     <GroupTitle
                       title={
@@ -210,6 +194,10 @@ export function RecipeContent(props: FullProps) {
                         key={atom_id}
                         atom_id={atom_id}
                         amount={item.reqs[atom_id]}
+                        setParentForceFloating={setParentForceFloating}
+                        allRecipes={allRecipes}
+                        iconData={iconData}
+                        atomData={atomData}
                       />
                     ))}
                   </Box>
@@ -222,6 +210,10 @@ export function RecipeContent(props: FullProps) {
                         key={atom_id}
                         atom_id={atom_id}
                         amount={item.chem_catalysts[atom_id]}
+                        setParentForceFloating={setParentForceFloating}
+                        allRecipes={allRecipes}
+                        iconData={iconData}
+                        atomData={atomData}
                       />
                     ))}
                   </Box>
@@ -230,7 +222,15 @@ export function RecipeContent(props: FullProps) {
                   <Box>
                     <GroupTitle title="Tools" />
                     {item.tool_paths?.map((tool) => (
-                      <AtomContent key={tool} atom_id={tool} amount={1} />
+                      <AtomContent
+                        key={tool}
+                        atom_id={tool}
+                        amount={1}
+                        setParentForceFloating={setParentForceFloating}
+                        allRecipes={allRecipes}
+                        iconData={iconData}
+                        atomData={atomData}
+                      />
                     ))}
                     {item.tool_behaviors?.map((tool) => (
                       <ToolContent key={tool} tool={tool} />
@@ -241,7 +241,15 @@ export function RecipeContent(props: FullProps) {
                   <Box>
                     <GroupTitle title="Machinery" />
                     {item.machinery.map((atom_id) => (
-                      <AtomContent key={atom_id} atom_id={atom_id} amount={1} />
+                      <AtomContent
+                        key={atom_id}
+                        atom_id={atom_id}
+                        amount={1}
+                        setParentForceFloating={setParentForceFloating}
+                        allRecipes={allRecipes}
+                        iconData={iconData}
+                        atomData={atomData}
+                      />
                     ))}
                   </Box>
                 )}
@@ -249,7 +257,15 @@ export function RecipeContent(props: FullProps) {
                   <Box>
                     <GroupTitle title="Structures" />
                     {item.structures.map((atom_id) => (
-                      <AtomContent key={atom_id} atom_id={atom_id} amount={1} />
+                      <AtomContent
+                        key={atom_id}
+                        atom_id={atom_id}
+                        amount={1}
+                        setParentForceFloating={setParentForceFloating}
+                        allRecipes={allRecipes}
+                        iconData={iconData}
+                        atomData={atomData}
+                      />
                     ))}
                   </Box>
                 )}
@@ -265,80 +281,97 @@ export function RecipeContent(props: FullProps) {
                 </Box>
               )}
             </Stack.Item>
-            <Stack.Item pl={1} grow={2}>
-              <Stack vertical>
-                <Stack.Item>
-                  {!item.non_craftable && (
-                    <Stack>
-                      <Stack.Item grow>
-                        <Button
-                          lineHeight={2.5}
-                          align="center"
-                          fluid
-                          disabled={!craftable || busy}
-                          icon={
-                            busy
-                              ? 'circle-notch'
-                              : mode === MODE.cooking
-                                ? 'utensils'
-                                : 'hammer'
-                          }
-                          iconSpin={!!busy}
-                          onClick={() =>
-                            act('make', {
-                              recipe: item.ref,
-                            })
-                          }
-                        >
-                          Make
-                        </Button>
-                      </Stack.Item>
-                      <Stack.Item>
-                        {!!item.mass_craftable && (
-                          <Button
-                            minWidth="30px"
-                            lineHeight={2.5}
-                            align="center"
-                            tooltip="Repeat this craft until you run out of ingredients."
-                            tooltipPosition="top"
-                            disabled={!craftable || busy}
-                            icon="repeat"
-                            iconSpin={!!busy}
-                            onClick={() =>
-                              act('make_mass', {
-                                recipe: item.ref,
-                              })
-                            }
+            {!nodesc && (
+              <Stack.Item pl={1} grow={2}>
+                <Stack vertical>
+                  <Stack.Item>
+                    <CraftButton item={item} />
+                  </Stack.Item>
+                  <Stack.Item>
+                    {!!item.complexity && (
+                      <Box color="gray" width="104px" lineHeight={1.5} mt={1}>
+                        Complexity: {item.complexity}
+                      </Box>
+                    )}
+                    {!!item.foodtypes && item.foodtypes.length > 0 && (
+                      <Box color="gray" width="104px" lineHeight={1.5} mt={1}>
+                        <Divider />
+                        {item.foodtypes.map((foodtype) => (
+                          <FoodtypeContent
+                            key={item.ref + foodtype}
+                            type={foodtype}
+                            diet={diet}
                           />
-                        )}
-                      </Stack.Item>
-                    </Stack>
-                  )}
-                </Stack.Item>
-                <Stack.Item>
-                  {!!item.complexity && (
-                    <Box color="gray" width="104px" lineHeight={1.5} mt={1}>
-                      Complexity: {item.complexity}
-                    </Box>
-                  )}
-                  {!!item.foodtypes && item.foodtypes.length > 0 && (
-                    <Box color="gray" width="104px" lineHeight={1.5} mt={1}>
-                      <Divider />
-                      {item.foodtypes.map((foodtype) => (
-                        <FoodtypeContent
-                          key={item.ref + foodtype}
-                          type={foodtype}
-                          diet={diet}
-                        />
-                      ))}
-                    </Box>
-                  )}
-                </Stack.Item>
-              </Stack>
-            </Stack.Item>
+                        ))}
+                      </Box>
+                    )}
+                  </Stack.Item>
+                </Stack>
+              </Stack.Item>
+            )}
           </Stack>
         </Stack.Item>
       </Stack>
     </Section>
+  );
+}
+
+type CraftProps = {
+  item: Recipe;
+  buttonText?: string;
+};
+
+function CraftButton(props: CraftProps) {
+  const { act, data } = useBackend<CraftingData>();
+  const { item, buttonText } = props;
+  const { busy, mode, craftability } = data;
+  if (item.non_craftable) return null;
+  const craftable = !item.non_craftable && Boolean(craftability[item.ref]);
+
+  return (
+    <Stack>
+      <Stack.Item grow>
+        <Button
+          lineHeight={2.5}
+          align="center"
+          fluid
+          disabled={!craftable || busy}
+          icon={
+            busy
+              ? 'circle-notch'
+              : mode === MODE.cooking
+                ? 'utensils'
+                : 'hammer'
+          }
+          iconSpin={!!busy}
+          onClick={() =>
+            act('make', {
+              recipe: item.ref,
+            })
+          }
+        >
+          {buttonText ?? 'Make'}
+        </Button>
+      </Stack.Item>
+      <Stack.Item>
+        {!!item.mass_craftable && (
+          <Button
+            minWidth="30px"
+            lineHeight={2.5}
+            align="center"
+            tooltip="Repeat this craft until you run out of ingredients."
+            tooltipPosition="top"
+            disabled={!craftable || busy}
+            icon="repeat"
+            iconSpin={!!busy}
+            onClick={() =>
+              act('make_mass', {
+                recipe: item.ref,
+              })
+            }
+          />
+        )}
+      </Stack.Item>
+    </Stack>
   );
 }

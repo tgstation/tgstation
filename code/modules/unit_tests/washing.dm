@@ -12,31 +12,41 @@
 /datum/unit_test/washing/Run()
 	for(var/i in subtypesof(/obj/effect/decal/cleanable) + cleanable_bonus_list - uncreatables)
 		var/atom/movable/to_clean = allocate(i)
-		var/mopable = HAS_TRAIT(to_clean, TRAIT_MOPABLE)
-
-		clean_sig_caught = 0
-		RegisterSignal(to_clean, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_caught))
-		run_loc_floor_bottom_left.wash(CLEAN_ALL)
-		// mopables are cleaned when their turf is cleaned
-		if(mopable)
-			if(clean_sig_caught == 0)
-				TEST_FAIL("[i] was not cleaned when its turf was cleaned (cleaning only mopables)!")
-			if(clean_sig_caught > 1)
-				TEST_FAIL("[i] was cleaned more than once when its turf was cleaned (cleaning only mopables)!")
-		// non-mopables require the all_contents = TRUE flag to be cleaned
-		else
-			if(clean_sig_caught != 0)
-				TEST_FAIL("[i] was cleaned when its turf was cleaned (cleaning only mopables)!")
-			run_loc_floor_bottom_left.wash(CLEAN_ALL, TRUE)
-			if(clean_sig_caught == 0)
-				TEST_FAIL("[i] was not cleaned when its turf was cleaned (cleaning all contents)!")
-			if(clean_sig_caught > 1)
-				TEST_FAIL("[i] was cleaned more than once when its turf was cleaned (cleaning all contents)!")
+		try_clean(to_clean)
 
 		if(!QDELETED(to_clean))
 			if(istype(to_clean, /obj/effect/decal/cleanable))
 				TEST_FAIL("[i] was not deleted when its turf was cleaned!")
 			qdel(to_clean)
+
+	var/obj/item/clothing/shoes/sneakers/black/sneakers = allocate(__IMPLIED_TYPE__)
+	sneakers.add_atom_colour(COLOR_PINK, WASHABLE_COLOUR_PRIORITY)
+	if (!(try_clean(sneakers) & COMPONENT_CLEANED))
+		TEST_FAIL("Painted [sneakers] were not cleaned when washed")
+	if (length(sneakers.atom_colours) >= WASHABLE_COLOUR_PRIORITY && sneakers.atom_colours[WASHABLE_COLOUR_PRIORITY])
+		TEST_FAIL("Painted [sneakers] were not cleaned of their color when washed")
+
+/datum/unit_test/washing/proc/try_clean(atom/movable/to_clean)
+	var/mopable = HAS_TRAIT(to_clean, TRAIT_MOPABLE)
+	var/clean_type = to_clean.type
+	clean_sig_caught = 0
+	RegisterSignal(to_clean, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(clean_caught))
+	. = run_loc_floor_bottom_left.wash(CLEAN_ALL)
+	// mopables are cleaned when their turf is cleaned
+	if(mopable)
+		if(clean_sig_caught == 0)
+			TEST_FAIL("[clean_type] was not cleaned when its turf was cleaned (cleaning only mopables)!")
+		if(clean_sig_caught > 1)
+			TEST_FAIL("[clean_type] was cleaned more than once when its turf was cleaned (cleaning only mopables)!")
+	// non-mopables require the all_contents = TRUE flag to be cleaned
+	else
+		if(clean_sig_caught != 0)
+			TEST_FAIL("[clean_type] was cleaned when its turf was cleaned (cleaning only mopables)!")
+		. = run_loc_floor_bottom_left.wash(CLEAN_ALL, TRUE)
+		if(clean_sig_caught == 0)
+			TEST_FAIL("[clean_type] was not cleaned when its turf was cleaned (cleaning all contents)!")
+		if(clean_sig_caught > 1)
+			TEST_FAIL("[clean_type] was cleaned more than once when its turf was cleaned (cleaning all contents)!")
 
 /datum/unit_test/washing/proc/clean_caught(...)
 	SIGNAL_HANDLER

@@ -40,10 +40,6 @@
 	airlock_wires = /datum/wires/airlock/service
 	sound_environment = SOUND_AREA_WOODFLOOR
 
-/area/station/service/bar/Initialize(mapload)
-	. = ..()
-	GLOB.bar_areas += src
-
 /area/station/service/bar/atrium
 	name = "\improper Atrium"
 	icon_state = "bar"

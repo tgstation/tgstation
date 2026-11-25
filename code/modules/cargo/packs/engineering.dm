@@ -123,7 +123,7 @@
 	desc = "Did someone let the air out of the shuttle again? We've got you covered. \
 		Contains two portable air pumps."
 	cost = CARGO_CRATE_VALUE * 4.5
-	access_view = ACCESS_ATMOSPHERICS
+	access_view = ACCESS_ATMOS_EQUIP
 	contains = list(/obj/machinery/portable_atmospherics/pump = 2)
 	crate_name = "portable air pump crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
@@ -132,7 +132,7 @@
 	name = "Portable Scrubber Crate"
 	desc = "Clean up that pesky plasma leak with your very own set of two portable scrubbers."
 	cost = CARGO_CRATE_VALUE * 4.5
-	access_view = ACCESS_ATMOSPHERICS
+	access_view = ACCESS_ATMOS_EQUIP
 	contains = list(/obj/machinery/portable_atmospherics/scrubber = 2)
 	crate_name = "portable scrubber crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
@@ -141,7 +141,7 @@
 	name = "Huge Portable Scrubber Crate"
 	desc = "A huge portable scrubber for huge atmospherics mistakes."
 	cost = CARGO_CRATE_VALUE * 7.5
-	access_view = ACCESS_ATMOSPHERICS
+	access_view = ACCESS_ATMOS_EQUIP
 	contains = list(/obj/machinery/portable_atmospherics/scrubber/huge/movable/cargo)
 	crate_name = "huge portable scrubber crate"
 	crate_type = /obj/structure/closet/crate/large

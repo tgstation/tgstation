@@ -16,7 +16,10 @@
 	else
 		if(LAZYLEN(personalities) >= CONFIG_GET(number/max_personalities))
 			return TRUE
-		if(SSpersonalities.is_incompatible(personalities, personality_type))
+		var/list/selected_types
+		for(var/selected_key in personalities)
+			LAZYADD(selected_types, SSpersonalities.personalities_by_key[selected_key].type)
+		if(SSpersonalities.is_incompatible(selected_types, personality_type))
 			return TRUE
 		LAZYADD(personalities, personality_key)
 	preferences.update_preference(GLOB.preference_entries[/datum/preference/personality], personalities)

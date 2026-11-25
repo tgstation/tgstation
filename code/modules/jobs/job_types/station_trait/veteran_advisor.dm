@@ -34,7 +34,7 @@
 	)
 	rpg_title = "Royal Advisor"
 	allow_bureaucratic_error = FALSE
-	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS | JOB_ANTAG_PROTECTED
+	job_flags = (STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS | JOB_ANTAG_PROTECTED) & ~JOB_REOPEN_ON_ROUNDSTART_LOSS
 	tgui_icon = FA_ICON_RIBBON
 
 /datum/job/veteran_advisor/get_default_roundstart_spawn_point()

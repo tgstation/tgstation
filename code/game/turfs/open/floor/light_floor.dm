@@ -159,13 +159,13 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	currentcolor = pick(coloredlights)
 	if(state == LIGHTFLOOR_BROKEN)  /// he's dead, jim
 		return
-	if(prob(50))
-		state++
+
 	currentcolor = pick(coloredlights)
 	update_appearance()
+	if(prob(150 / severity))
+		break_tile()
 
 //Cycles through all of the colours
 /turf/open/floor/light/colour_cycle

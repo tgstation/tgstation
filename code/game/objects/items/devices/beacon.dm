@@ -30,6 +30,22 @@
 
 	return NONE
 
+/obj/item/beacon/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	if(prob(75 / severity))
+		if(enabled)
+			icon_state = "beacon-off"
+			GLOB.teleportbeacons -= src
+			SEND_SIGNAL(src, COMSIG_BEACON_DISABLED)
+		else
+			icon_state = "beacon"
+			GLOB.teleportbeacons += src
+
+		enabled = !enabled
+
 /obj/item/beacon/proc/turn_off()
 	icon_state = "beacon-off"
 	GLOB.teleportbeacons -= src

@@ -84,7 +84,7 @@
 
 	organ_owner.clear_mood_event("tail_regained")
 
-	if(type in organ_owner.dna?.species.mutant_organs)
+	if(!special && (type in organ_owner.dna?.species.mutant_organs))
 		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
 		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
 
@@ -179,6 +179,10 @@
 /datum/bodypart_overlay/mutant/tail/cat
 	feature_key = FEATURE_TAIL_CAT
 	color_source = ORGAN_COLOR_HAIR
+
+/obj/item/organ/tail/cat/fox
+	name = "fox tail"
+	sprite_accessory_override = /datum/sprite_accessory/tails/felinid/fox
 
 /obj/item/organ/tail/monkey
 	name = "monkey tail"

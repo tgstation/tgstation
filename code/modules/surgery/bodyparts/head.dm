@@ -153,10 +153,10 @@
 	return real_name
 
 /obj/item/bodypart/head/can_dismember(obj/item/item)
-	if (!can_dismember)
+	if (!can_dismember && !HAS_TRAIT(owner, TRAIT_ALWAYS_ALLOW_DECAPITATION))
 		return FALSE
 
-	if(!HAS_TRAIT(owner, TRAIT_CURSED) && owner.stat < HARD_CRIT)
+	if(!HAS_TRAIT(owner, TRAIT_CURSED) && owner.stat < HARD_CRIT && !HAS_TRAIT(owner, TRAIT_ALWAYS_ALLOW_DECAPITATION))
 		return FALSE
 
 	return ..()
@@ -213,3 +213,11 @@
 	if (ishuman(owner))
 		var/mob/living/carbon/human/as_human = owner
 		as_human?.update_visible_name()
+
+/obj/item/bodypart/head/clear_ownership(mob/living/carbon/old_owner)
+	. = ..()
+	old_owner.pressure_protected_bodyparts |= PRESSURE_HEAD_PROTECTED_NATIVELY
+
+/obj/item/bodypart/head/apply_ownership(mob/living/carbon/new_owner)
+	. = ..()
+	new_owner.pressure_protected_bodyparts &= ~PRESSURE_HEAD_PROTECTED_NATIVELY

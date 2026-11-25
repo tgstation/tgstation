@@ -159,8 +159,8 @@
  * * cap_at_start - capitalize the start of words. False is good for modular computer file names.
  */
 /proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE, cap_after_symbols = TRUE, cap_at_start = TRUE)
-	if(!t_in)
-		return //Rejects the input if it is null
+	if(!istext(t_in))
+		return //Rejects the input if it isn't text to begin with
 
 	var/number_of_alphanumeric = 0
 	var/last_char_group = NO_CHARS_DETECTED
@@ -252,28 +252,6 @@
 #undef NUMBERS_DETECTED
 #undef LETTERS_DETECTED
 
-
-/// Much more permissive version of reject_bad_name().
-/// Returns a trimmed string or null if the name is invalid.
-/// Allows most characters except for IC chat prohibited words.
-/proc/permissive_sanitize_name(value)
-	if(!istext(value)) // Not a string
-		return
-
-	var/name_length = length(value)
-	if(name_length < 3) // Too short
-		return
-
-	if(name_length > 3 * MAX_NAME_LEN) // Bad input
-		return
-
-	var/trimmed = trim(value, MAX_NAME_LEN)
-	if(!filter_name_ic(trimmed)) // Contains IC chat prohibited words
-		return
-
-	return trim(trimmed)
-
-
 /// Helper proc to check if a name is valid for the IC filter
 /proc/filter_name_ic(name)
 	for(var/bad_name in list("space", "floor", "wall", "r-wall", "monkey", "unknown", "inactive ai")) //prevents these common metagamey names
@@ -364,23 +342,26 @@
 		return copytext_char(text, 1, max_length)
 	return text
 
-//Returns a string with reserved characters and spaces before the first word and after the last word removed.
+/// Returns a string with reserved characters and spaces before the first word and after the last word removed.
 /proc/trim(text, max_length)
 	if(max_length)
 		text = copytext_char(text, 1, max_length)
 	return trimtext(text) || "" //users expect atleast an empty string
 
-//Returns a string with the first element of the string capitalized.
-/proc/capitalize(t)
+/// Returns a string with the first word of the string capitalized.
+/proc/capitalize(input)
+	return replacetext(input, regex(@"[^A-z]*?([A-z]*)"), /proc/capitalize_word)
+
+/// Returns a string with the first letter of each word capitialized
+/proc/full_capitalize(input)
+	return replacetext(input, regex(@"[^A-z]*?([A-z]*)", "g"), /proc/capitalize_word)
+
+/// Capitalizes the first symbol in a passed string. Unsafe when used with BYOND string macros, use capitalize() instead!
+/proc/capitalize_word(t)
 	. = t
 	if(t)
 		. = t[1]
 		return uppertext(.) + copytext(t, 1 + length(.))
-
-///Returns a string with the first letter of each word capitialized
-/proc/full_capitalize(input)
-	var/regex/first_letter = new(@"[^A-z]*?([A-z]*)", "g")
-	return replacetext(input, first_letter, /proc/capitalize)
 
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever

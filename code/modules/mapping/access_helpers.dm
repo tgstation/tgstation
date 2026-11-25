@@ -121,6 +121,11 @@
 	access_list += ACCESS_ATMOSPHERICS
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/any/engineering/atmos_equip/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_ATMOS_EQUIP
+	return access_list
+
 /obj/effect/mapping_helpers/airlock/access/any/engineering/tcoms/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_TCOMMS
@@ -615,6 +620,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_ATMOSPHERICS
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/engineering/atmos_equip/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_ATMOS_EQUIP
 	return access_list
 
 /obj/effect/mapping_helpers/airlock/access/all/engineering/tcoms/get_access()

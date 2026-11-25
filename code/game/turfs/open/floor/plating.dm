@@ -22,6 +22,15 @@
 	//Used for upgrading this into R-Plating
 	var/upgradable = TRUE
 
+// Ordinary plating with the foam pattern, without metal foam's fragility.
+/turf/open/floor/plating/foam_pattern
+	icon_state = "foam_plating"
+	base_icon_state = "foam_plating"
+
+/turf/open/floor/plating/melted
+	icon_state = "wall_thermite"
+	base_icon_state = "wall_thermite"
+
 /turf/open/floor/plating/broken_states()
 	return list("damaged1", "damaged2", "damaged4")
 

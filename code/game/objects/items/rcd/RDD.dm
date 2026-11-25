@@ -165,7 +165,7 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 ))
 
 /obj/item/construction/rdd
-	name = "rapid-decoration-device (RDD)"
+	name = "rapid decoration device (RDD)"
 	desc = "A device used to rapidly deploy plastic decorative flora. \
 		Internally synthesizes cheap plastic replicas of natural scenery."
 	icon = 'icons/obj/tools.dmi'
@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 					selected_decoration = design["path"]
 					selected_category = category
 					selected_design_name = design_name
-					playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+					playsound(src, /datum/sound_effect/tool_switch, 20, TRUE)
 					return TRUE
 
 	return TRUE

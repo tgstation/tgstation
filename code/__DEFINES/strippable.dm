@@ -16,10 +16,15 @@
 #define STRIPPABLE_ITEM_RPOCKET "right_pocket"
 #define STRIPPABLE_ITEM_LHAND "left_hand"
 #define STRIPPABLE_ITEM_RHAND "right_hand"
+#define STRIPPABLE_ITEM_UPPER_LHAND "upper_left_hand"
+#define STRIPPABLE_ITEM_UPPER_RHAND "upper_right_hand"
 #define STRIPPABLE_ITEM_HANDCUFFS "handcuffs"
 #define STRIPPABLE_ITEM_LEGCUFFS "legcuffs"
 #define STRIPPABLE_ITEM_PET_COLLAR "pet_collar"
 #define STRIPPABLE_ITEM_PARROT_HEADSET "parrot_headset"
+
+/// Alternate action on a hand slot that removes the handcuffs binding an item to that arm. Must be matched in StripMenu.tsx.
+#define STRIPPABLE_ALT_ACTION_REMOVE_ITEM_CUFFS "remove_item_cuffs"
 
 /// This slot is not obscured.
 #define STRIPPABLE_OBSCURING_NONE 0

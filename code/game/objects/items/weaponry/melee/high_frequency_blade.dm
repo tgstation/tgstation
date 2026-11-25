@@ -6,6 +6,7 @@
 	icon_state = "hfrequency0"
 	inhand_icon_state = "hfrequency0"
 	worn_icon_state = "hfrequency0"
+	base_icon_state = "hfrequency"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
@@ -38,18 +39,15 @@
 	AddComponent(/datum/component/two_handed, \
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
+		update_icon_state = TRUE, \
 	)
 	AddElement(/datum/element/update_icon_updates_onmob)
-
-/obj/item/highfrequencyblade/update_icon_state()
-	icon_state = "hfrequency[HAS_TRAIT(src, TRAIT_WIELDED)]"
-	return ..()
 
 /obj/item/highfrequencyblade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK)
 		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
 			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-			playsound(src, SFX_BULLET_MISS, 75, TRUE)
+			playsound(src, /datum/sound_effect/bullet_miss, 75, TRUE)
 			return TRUE
 		return FALSE
 	var/stop_that_blade = (final_block_chance + (attack_type == OVERWHELMING_ATTACK ? 25 : 0)) * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)

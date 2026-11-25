@@ -513,14 +513,16 @@
 /datum/component/butchering/recycler/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	SIGNAL_HANDLER
 
-	if (!isliving(arrived))
-		return
-	var/mob/living/victim = arrived
 	var/obj/machinery/recycler/eater = parent
-	if (eater.safety_mode || (eater.machine_stat & (BROKEN|NOPOWER))) //I'm so sorry.
+	if (eater.can_butcher(arrived))
+		addtimer(CALLBACK(src, PROC_REF(butcher_corpse), arrived), 0)
+
+/// Butchers the corpse a tick after it went in, once it has finished moving, if it's still there.
+/datum/component/butchering/recycler/proc/butcher_corpse(mob/living/victim)
+	var/obj/machinery/recycler/eater = parent
+	if (QDELETED(victim) || victim.loc != eater.loc || !eater.can_butcher(victim))
 		return
-	if (victim.stat == DEAD && (victim.butcher_results || victim.guaranteed_butcher_results))
-		on_butchering(parent, victim)
+	on_butchering(eater, victim)
 
 /datum/component/butchering/mecha
 

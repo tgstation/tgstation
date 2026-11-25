@@ -6,12 +6,12 @@
 #define ATTACK_SHATTER "Shatter"
 
 /obj/item/organ/cyberimp/arm/toolkit/shard
-	name = "dark spoon shard"
-	desc = "An eerie metal shard surrounded by dark energies...of soup drinking. You probably don't think you should have been able to find this."
+	abstract_type = /obj/item/organ/cyberimp/arm/toolkit/shard
+	name = "incoherent shard organ"
+	desc = "You feel like you shouldn't be seeing this."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "cursed_katana_organ"
 	organ_flags = ORGAN_ORGANIC | ORGAN_FROZEN | ORGAN_UNREMOVABLE
-	items_to_create = list(/obj/item/kitchen/spoon)
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
 
@@ -30,7 +30,9 @@
 /obj/item/organ/cyberimp/arm/toolkit/shard/katana
 	name = "dark shard"
 	desc = "An eerie metal shard surrounded by dark energies."
-	items_to_create = list(/obj/item/cursed_katana)
+
+/obj/item/organ/cyberimp/arm/toolkit/shard/katana/get_init_items()
+	return list(/obj/item/cursed_katana)
 
 /obj/item/organ/cyberimp/arm/toolkit/shard/katana/Retract()
 	var/obj/item/cursed_katana/katana = active_item
@@ -39,7 +41,7 @@
 	if(!katana.drew_blood)
 		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
 		playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
-		owner.apply_damage(25, BRUTE, hand, wound_bonus = 10, sharpness = SHARP_EDGED)
+		owner.apply_damage(25, BRUTE, bodypart_owner, wound_bonus = 10, sharpness = SHARP_EDGED)
 	katana.drew_blood = FALSE
 	katana.wash(CLEAN_TYPE_BLOOD)
 	return ..()
@@ -161,7 +163,8 @@
 /obj/item/cursed_katana/proc/cloak(mob/living/target, mob/user)
 	user.alpha = 150
 	user.SetInvisibility(INVISIBILITY_OBSERVER, id=type) // so hostile mobs cant see us or target us
-	user.add_sight(SEE_SELF) // so we can see us
+	RegisterSignal(user, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(on_update_sight))
+	user.update_sight()
 	user.visible_message(span_warning("[user] vanishes into thin air!"),
 		span_notice("You enter the dark cloak."))
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
@@ -172,10 +175,15 @@
 			hostile_target.LoseTarget()
 	addtimer(CALLBACK(src, PROC_REF(uncloak), user), 5 SECONDS, TIMER_UNIQUE)
 
+/obj/item/cursed_katana/proc/on_update_sight(mob/source)
+	SIGNAL_HANDLER
+	source.add_sight(SEE_SELF)
+
 /obj/item/cursed_katana/proc/uncloak(mob/user)
 	user.alpha = 255
 	user.RemoveInvisibility(type)
-	user.clear_sight(SEE_SELF)
+	UnregisterSignal(user, COMSIG_MOB_UPDATE_SIGHT)
+	user.update_sight()
 	user.visible_message(span_warning("[user] appears from thin air!"),
 		span_notice("You exit the dark cloak."))
 	playsound(src, 'sound/effects/magic/summonitems_generic.ogg', 50, TRUE)

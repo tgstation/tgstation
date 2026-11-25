@@ -4,10 +4,11 @@
 	if(!fexists(json_file))
 		return
 
-	var/list/json = json_decode(file2text(json_file))
-	if(!json)
+	var/json_text = file2text(json_file)
+	if(!rustg_json_is_valid(json_text))
 		return
 
+	var/list/json = json_decode(json_text)
 	if(json["version"] < ENGRAVING_PERSISTENCE_VERSION)
 		update_wall_engravings(json)
 
