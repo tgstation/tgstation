@@ -336,3 +336,6 @@
       the stat panel), download that file from FTP prompt you get from BYOND, and
       then re-upload it to the server to take effect on later rounds, but it does
       indeed feel a lot easier to edit. This measure is completely optional though.
+2026-11-25:
+  Melbert:
+  - bugfix: Blade and Cosmic heretic can recharge their spells properly
