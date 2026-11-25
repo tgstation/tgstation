@@ -48,7 +48,7 @@
 #define WRAP(val, min, max) clamp(( min == max ? min : (val) - (round(((val) - (min))/((max) - (min))) * ((max) - (min))) ),min,max)
 
 /// Wraps a number around a maximum and 0.
-#define WRAP0(val, max) (((val) % max) + max) % max
+#define WRAP0(val, max) (((val) % (max)) + (max)) % (max)
 
 /// Increments a value and wraps it if it exceeds some value. Can be used to circularly iterate through a list through `idx = WRAP_UP(idx, length_of_list)`.
 #define WRAP_UP(val, max) (((val) % (max)) + 1)
