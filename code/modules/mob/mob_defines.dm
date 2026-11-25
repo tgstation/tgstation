@@ -143,7 +143,8 @@
 	VAR_PROTECTED/list/held_items = list()
 	///How many hands this mob has by default, which we divide by to know what y offset to give open inventories.
 	var/default_hand_amount = 2
-
+	/// How many hands this mob has per hand "set"
+	var/hands_per_handset = 2
 	//HUD things
 
 	/// Storage component (for mob inventory)

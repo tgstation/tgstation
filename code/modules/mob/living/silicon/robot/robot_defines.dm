@@ -18,6 +18,7 @@
 	mouse_drop_zone = TRUE
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
 	default_hand_amount = 3
+	hands_per_handset = 3
 	examine_thats = "This is"
 
 	///Represents the cyborg's model (engineering, medical, etc.)

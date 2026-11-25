@@ -16,6 +16,11 @@
 	item_module.mouse_opacity = initial(item_module.mouse_opacity)
 	observer_screen_update(item_module)
 
+/mob/living/silicon/robot/can_cycle_to_hand(hand_index, cycle_dir, climb, silent)
+	if(!get_item_for_held_index(hand_index))
+		return COMPONENT_CONTINUE_CYCLE
+	return ..()
+
 /mob/living/silicon/robot/perform_hand_swap(held_index)
 	if(is_invalid_module_number(held_index))
 		return FALSE
