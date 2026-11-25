@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - admin: "Admins can Control+Alt+Click an atom to open VV on it"
