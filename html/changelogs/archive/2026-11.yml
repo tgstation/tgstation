@@ -340,3 +340,7 @@
   Melbert:
   - bugfix: Blade and Cosmic heretic can recharge their spells properly
   - qol: Revamps handheld gene scanner output
+  - bugfix: NTOS Chatroom checks names and messages more thoroughly
+  PapaMichael:
+  - admin: Admins can Control+Alt+Click an atom to open VV on it
+  - admin: Admins can set the next round's station traits in the postround
