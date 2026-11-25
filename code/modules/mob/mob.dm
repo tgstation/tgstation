@@ -421,11 +421,11 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
  * * blocked (optional): Whether the attack was blocked.
  */
 /proc/combat_message(atom/attacker, atom/defender, to_attacker, to_defender, to_blind_attacker = to_attacker, to_blind_defender = to_defender, to_viewers, to_blind_viewers, dangerous = FALSE, blocked = FALSE)
-	assert(istype(attacker), "combat_message: attacker must be an atom")
-	assert(istype(defender), "combat_message: defender must be an atom")
-	assert(istext(to_attacker), "combat_message: to_attacker must be a string")
-	assert(istext(to_defender), "combat_message: to_defender must be a string")
-	assert(istext(to_viewers), "combat_message: to_viewers must be a string")
+	ASSERT(istype(attacker), "combat_message: attacker must be an atom")
+	ASSERT(istype(defender), "combat_message: defender must be an atom")
+	ASSERT(istext(to_attacker), "combat_message: to_attacker must be a string")
+	ASSERT(istext(to_defender), "combat_message: to_defender must be a string")
+	ASSERT(istext(to_viewers), "combat_message: to_viewers must be a string")
 
 	var/gen_span = blocked ? "attack_blocked" : "attack_other"
 	attacker.visible_message(
