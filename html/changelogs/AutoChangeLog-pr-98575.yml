@@ -1,8 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - bugfix: "Fixed an exploit that allowed books to contain unsanitized HTML"
-  - bugfix: "Fixed an exploit that allowed the PDA camera app to print unsanitized photos"
-  - bugfix: "Fixed derpspeech not sanitizing messages after processing"
-  - bugfix: "Fixed admin pAI verb not sanitizing the new pAI's name"
-  - bugfix: "Fixed telecomms logging not sanitizing the name/network/id when being logged"
