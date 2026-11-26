@@ -14,7 +14,7 @@
 	var/pixel_z_offset
 	/// Which way a loose hat is offset
 	var/head_angle = 1
-
+	/// If our attached hat was created via the toggle_attached_clothing component, this is a weakref to that
 	var/datum/weakref/hat_deployable
 
 /datum/component/hat_stabilizer/Initialize(use_worn_icon = FALSE, pixel_z_offset = 0, loose_hat = FALSE)
