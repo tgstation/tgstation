@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	name = "Bald"
 	icon_state = SPRITE_ACCESSORY_NONE
 
-/datum/sprite_accessory/hair/bald/get_overlay_with_masks()
+/datum/sprite_accessory/hair/bald/get_overlays(list/hair_masks, image_dir)
 	return list()
 
 /datum/sprite_accessory/hair/balding
