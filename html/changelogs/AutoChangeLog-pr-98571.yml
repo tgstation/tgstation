@@ -1,4 +1,0 @@
-author: "tontyGH"
-delete-after: True
-changes:
-  - server: "Fixed a bug that caused jobs to fallback to the default config at roundstart"

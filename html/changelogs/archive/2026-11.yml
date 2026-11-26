@@ -377,3 +377,5 @@
   - refactor: Radiation has seen a few changes if you couldn't tell. Report any issues
       like mobs experiencing negative effects from irradiation when they otherwise
       shouldn't be.
+  tontyGH:
+  - server: Fixed a bug that caused jobs to fallback to the default config at roundstart
