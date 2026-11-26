@@ -344,3 +344,7 @@
   PapaMichael:
   - admin: Admins can Control+Alt+Click an atom to open VV on it
   - admin: Admins can set the next round's station traits in the postround
+2026-11-26:
+  Ghommie:
+  - refactor: Refactored digitigrade legs code a bit. Report any outstanding issue
+      that wasn't previously there.
