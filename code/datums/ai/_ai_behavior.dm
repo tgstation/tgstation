@@ -38,12 +38,12 @@
 	var/previous_ticking_execution_index = controller.ticking_execution_index
 	controller.ticking_execution_index = execution_index
 	if(next_perform_time > world.time)
-		if(running)
-			controller.active_execution_index = execution_index
+		if(!running)
 			controller.ticking_execution_index = previous_ticking_execution_index
-			return BT_RUNNING
+			return BT_FAILURE
+		controller.active_execution_index = execution_index
 		controller.ticking_execution_index = previous_ticking_execution_index
-		return BT_FAILURE
+		return BT_RUNNING
 
 	if(controller.bt_execution_log != null) // dont track if we're not  viewing
 		if(length(controller.bt_execution_log) < BT_EXECUTION_LOG_MAX)
