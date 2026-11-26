@@ -5,6 +5,7 @@
  */
 
 import { createLogger } from 'tgui/logging';
+import { defaultSettings } from '../settings/atoms';
 
 const logger = createLogger('AudioPlayer');
 
@@ -33,6 +34,7 @@ export class AudioPlayer {
 
   constructor() {
     this.element = null;
+    this.volume = defaultSettings.adminMusicVolume;
 
     this.onPlaySubscribers = [];
     this.onStopSubscribers = [];
@@ -58,6 +60,10 @@ export class AudioPlayer {
 
     audio.volume = this.volume;
     audio.playbackRate = this.options.pitch || 1;
+
+    if (this.options.start) {
+      audio.currentTime = this.options.start;
+    }
 
     logger.log('playing', url, options);
 

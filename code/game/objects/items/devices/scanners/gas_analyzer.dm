@@ -31,6 +31,7 @@
 	var/datum/weakref/last_scanned
 	/// Max scan distance
 	var/ranged_scan_distance = 1
+	COOLDOWN_DECLARE(next_air_alarm_scan)
 
 /obj/item/analyzer/Initialize(mapload)
 	. = ..()
@@ -44,6 +45,64 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+	register_context()
+
+/obj/item/analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(held_item != src)
+		return NONE
+
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Point to nearest air alarm in area"
+	context[SCREENTIP_CONTEXT_RMB] = "Open the gas reference"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Activate the barometer function"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/analyzer/click_alt_secondary(mob/user)
+	. = ..()
+
+	if(.)
+		return
+
+	if(user.get_active_held_item() == src)
+		scan_air_alarm(user)
+
+/obj/item/analyzer/proc/scan_air_alarm(mob/user)
+	if(!COOLDOWN_FINISHED(src, next_air_alarm_scan))
+		return
+
+	COOLDOWN_START(src, next_air_alarm_scan, 2 SECONDS)
+
+	var/obj/machinery/airalarm/target
+	var/area/local_area = get_area(src)
+
+	for(var/obj/machinery/airalarm/air_alarm in GLOB.air_alarms)
+		if(air_alarm.my_area != local_area)
+			continue
+
+		if(!target)
+			target = air_alarm
+			continue
+
+		if(get_dist_euclidean(air_alarm, user) > get_dist_euclidean(target, user))
+			continue
+
+		target = air_alarm
+
+	if(!target)
+		user.balloon_alert(user, "no air alarm in this area!")
+		return
+
+	var/datum/component/pinpointer/pinpointer = GetComponent(/datum/component/pinpointer)
+
+	if(!pinpointer)
+		pinpointer = AddComponent(/datum/component/pinpointer)
+
+	var/distance = pinpointer.point_to(user, target)
+
+	if(!distance)
+		user.balloon_alert(user, "found air alarm!")
 
 /obj/item/analyzer/grind_results()
 	return list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
@@ -66,6 +125,9 @@
 	return BRUTELOSS
 
 /obj/item/analyzer/click_alt(mob/user) //Barometer output for measuring when the next storm happens
+	if(user.get_active_held_item() != src)
+		return
+
 	if(cooldown)
 		to_chat(user, span_warning("[src]'s barometer function is preparing itself."))
 		return CLICK_ACTION_BLOCKING

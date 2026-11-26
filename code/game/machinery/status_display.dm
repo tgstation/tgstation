@@ -21,6 +21,7 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 	verb_exclaim = "beeps"
 	density = FALSE
 	layer = ABOVE_WINDOW_LAYER
+	integrity_failure = 0.5
 
 	// We store overlays as keys, so multiple displays can use the same object safely
 	/// String key we use to index the first effect overlay displayed on us
@@ -53,7 +54,19 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 //makes it go on the wall when built
 /obj/machinery/status_display/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/weld_repairable)
 	update_appearance()
+
+/obj/machinery/status_display/atom_break(damage_flag)
+	. = ..()
+	if(.)
+		playsound(src, 'sound/effects/glass/glassbr3.ogg', 75, TRUE)
+
+/// Otherwise a brig timer broken mid sentence never counts down again
+/obj/machinery/status_display/on_set_machine_stat(old_value)
+	. = ..()
+	if((old_value & BROKEN) && !(machine_stat & BROKEN))
+		update()
 
 /obj/machinery/status_display/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -64,21 +77,6 @@ GLOBAL_DATUM_INIT(status_font, /datum/font, new /datum/font/tiny_unicode/size_12
 		balloon_alert(user, "[anchored ? "un" : ""]secured")
 		deconstruct()
 		return TRUE
-
-/obj/machinery/status_display/welder_act(mob/living/user, obj/item/tool)
-	if(user.combat_mode)
-		return
-	if(atom_integrity >= max_integrity)
-		balloon_alert(user, "it doesn't need repairs!")
-		return TRUE
-	user.balloon_alert_to_viewers("repairing display...", "repairing...")
-	if(!tool.use_tool(src, user, 4 SECONDS, amount = 0, volume=50))
-		return TRUE
-	balloon_alert(user, "repaired")
-	atom_integrity = max_integrity
-	set_machine_stat(machine_stat & ~BROKEN)
-	update_appearance()
-	return TRUE
 
 /obj/machinery/status_display/on_deconstruction(disassembled)
 	if(!disassembled)
@@ -191,6 +189,8 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 
 	if(machine_stat & (NOPOWER|BROKEN))
 		clear_display()
+		if(machine_stat & BROKEN)
+			. += mutable_appearance(icon, "broken")
 		return
 
 	switch(current_mode)

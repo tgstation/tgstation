@@ -136,7 +136,7 @@
 	name = "Fiesta corn skillet"
 	reqs = list(
 		/obj/item/food/oven_baked_corn = 1,
-		/obj/item/food/cornchips = 1,
+		/obj/item/food/chips/corn = 1,
 		/obj/item/food/grown/chili = 2,
 		/obj/item/food/grown/tomato = 1,
 		/obj/item/food/onion_slice = 2,

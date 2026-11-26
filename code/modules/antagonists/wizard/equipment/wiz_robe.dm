@@ -300,6 +300,7 @@
 	playsound(src, 'sound/effects/magic/summon_magic.ogg', 50, TRUE, TRUE)
 
 	var/mob/living/stickman = new /mob/living/basic/stickman/lesser(get_turf(summoner))
-	stickman.remove_faction(FACTION_NEUTRAL) //These bad boys shouldn't inherit the neutral faction from the crew
+	SET_FACTION_AND_ALLIES_FROM(stickman, summoner)
+	stickman.remove_faction(FACTION_NEUTRAL)
 
 	COOLDOWN_START(src, summoning_cooldown, 3 SECONDS)

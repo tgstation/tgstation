@@ -27,6 +27,8 @@
 	wine_power = 20
 	///Which type of lantern this gourd produces when carved.
 	var/carved_type = /obj/item/clothing/head/utility/hardhat/pumpkinhead
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 
 /obj/item/food/grown/pumpkin/juice_typepath()
 	return /datum/reagent/consumable/pumpkinjuice

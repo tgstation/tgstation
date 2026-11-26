@@ -248,7 +248,7 @@
 // /Switches the welder on
 /obj/item/weldingtool/proc/switched_on(mob/user)
 	if(!status)
-		balloon_alert(user, "unsecured!")
+		balloon_alert(user, "screw the tank shut first!")
 		return
 	set_welding(!welding)
 	if(welding)
@@ -279,6 +279,8 @@
 /obj/item/weldingtool/examine(mob/user)
 	. = ..()
 	. += "It contains [get_fuel()] unit\s of fuel out of [max_fuel]."
+	if(!status)
+		. += span_notice("Its fuel tank is open and can be [EXAMINE_HINT("screwed")] shut.")
 
 /obj/item/weldingtool/get_temperature()
 	return welding * heat

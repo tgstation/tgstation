@@ -63,7 +63,7 @@
 			if(!mend)
 				A.locked = TRUE
 		if(WIRE_AI)
-			A.aidisabled = mend // Enable/disable AI control.
+			A.aidisabled = !mend // Enable/disable AI control.
 		if(WIRE_PANIC) // Force panic syphon on.
 			if(!mend && !A.shorted)
 				A.select_mode(usr, /datum/air_alarm_mode/panic_siphon)

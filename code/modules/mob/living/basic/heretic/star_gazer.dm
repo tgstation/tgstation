@@ -34,7 +34,7 @@
 	can_buckle_to = FALSE
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	lighting_cutoff_red = 12
 	lighting_cutoff_green = 15
 	lighting_cutoff_blue = 34
@@ -406,9 +406,16 @@
 
 /datum/pet_command/attack/star_gazer
 	speech_commands = list("attack", "sic", "kill", "slash them")
-	command_feedback = "stares!"
-	pointed_reaction = "stares intensely!"
-	refuse_reaction = "..."
+
+/datum/pet_command/attack/star_gazer/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	switch(feedback_type)
+		if(PET_COMMAND_FEEDBACK_ACTIVATED)
+			return "[parent] stares"
+		if(PET_COMMAND_FEEDBACK_REFUSED_TARGET)
+			return target ? "[parent] stares at [target]" : "[parent] stares"
+		if(PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+			return "[parent] stares at [target]"
+	return ..()
 
 //special interaction for giving Farstar Amrita, the cocktail that makes you hallucinate a fake gazer, to a real gazer.
 /mob/living/basic/heretic_summon/star_gazer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)

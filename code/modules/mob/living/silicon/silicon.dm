@@ -10,7 +10,7 @@
 	mob_biotypes = MOB_ROBOTIC
 	death_sound = 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	examine_cursor_icon = null
 	fire_stack_decay_rate = -0.55
 	tts_silicon_voice_effect = TRUE
@@ -81,6 +81,7 @@
 	ADD_TRAIT(src, TRAIT_ANOSMIA, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_silicon_shocked))
 	law_ui = new(src)
+	AddElement(/datum/element/damage_threshold, 8, UNARMED_ATTACK)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)

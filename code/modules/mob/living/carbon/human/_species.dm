@@ -156,12 +156,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Should the character preview dummy load all organs? Required for i.e organ_set_bonus visual effects
 	var/character_preview_load_all_organs = FALSE
 
-	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
-	var/prevent_perspective_change = FALSE
-
-	///Was the species changed from its original type at the start of the round?
-	var/roundstart_changed = FALSE
-
 	/// This supresses the "dosen't appear to be himself" examine text for if the mob is run by an AI controller. Should be used on any NPC human subtypes. Monkeys are the prime example.
 	var/ai_controlled_species = FALSE
 
@@ -296,7 +290,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// if we have an extra organ that before changing that the species didnt have, remove it
 		else if(!new_organ)
 			if(existing_organ)
-				existing_organ.Remove(organ_holder)
+				existing_organ.Remove(organ_holder, special = TRUE)
 				qdel(existing_organ)
 			continue
 
@@ -1006,6 +1000,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Only stabilise core temp when alive and not in statis
 	if(humi.stat != DEAD && !HAS_TRAIT(humi, TRAIT_STASIS) && !HAS_TRAIT(humi, TRAIT_COLD_BLOODED))
 		body_temperature_core(humi, seconds_per_tick)
+
+	// Dead bodies cool down to the room no matter what they wear, like other carbons do.
+	// Without this the core of an insulated corpse never loses heat, the skin just gets it back from the core every tick.
+	else if(humi.stat == DEAD && !humi.on_fire)
+		var/area_temp = humi.get_temperature(humi.loc?.return_air())
+		if(area_temp < humi.bodytemperature)
+			humi.adjust_bodytemperature(area_temp - humi.bodytemperature, use_insulation = FALSE, use_steps = TRUE)
+		if(area_temp < humi.coretemperature)
+			humi.adjust_coretemperature(max((area_temp - humi.coretemperature) / BODYTEMP_COLD_DIVISOR, BODYTEMP_COOLING_MAX), area_temp)
 
 	// These do run in statis
 	body_temperature_skin(humi, seconds_per_tick)
@@ -1877,30 +1880,29 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
 	var/list/new_bodypart_overrides = new_species.bodypart_overrides.Copy()
-	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
-		new_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
-		new_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
-
 	for(var/obj/item/bodypart/old_part as anything in target.get_bodyparts())
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
 			continue
-		// update all our existing limbs
-		var/path = new_bodypart_overrides?[old_part.body_zone]
-		var/obj/item/bodypart/new_part
+
+		var/path = new_bodypart_overrides[old_part.body_zone]
+		if(path == old_part.type) //Some species have the same bodyparts. (e.g. human and felinids, lizards and their subspecies), so just update the limb.
+			old_part.update_limb(is_creating = TRUE)
+			continue
+
 		if(path)
-			new_part = new path()
+			var/obj/item/bodypart/new_part = new path()
 			new_part.replace_limb(target)
 			new_part.update_limb(is_creating = TRUE)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)
 
-	var/list/old_bodypart_overrides = old_species.bodypart_overrides.Copy()
+	var/list/old_bodypart_overrides = old_species?.bodypart_overrides.Copy()
 	if(length(new_bodypart_overrides) <= length(old_bodypart_overrides))
 		return // we updated all the limbs the character deserves
 	// but there are cases where the old species naturally lacked limbs
 	for(var/zone in new_bodypart_overrides)
 		// find a limb that the character doesn't have because of their old species
-		if(new_bodypart_overrides.Find(zone) && old_bodypart_overrides.Find(zone))
+		if(new_bodypart_overrides.Find(zone) && old_bodypart_overrides?.Find(zone))
 			continue
 		var/path = new_bodypart_overrides[zone]
 		if(!path)

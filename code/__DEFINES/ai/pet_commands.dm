@@ -14,3 +14,13 @@
 /// List of strings we might say to encourage someone to make better choices.
 #define BB_OWNER_SELF_HARM_RESPONSES "BB_self_harm_responses"
 
+/// Pet command feedback event types
+#define PET_COMMAND_FEEDBACK_ACTIVATED 1
+#define PET_COMMAND_FEEDBACK_WAITING_FOR_TARGET 2
+#define PET_COMMAND_FEEDBACK_REFUSED_TARGET 3
+#define PET_COMMAND_FEEDBACK_ACCEPTED_TARGET 4
+#define PET_COMMAND_FEEDBACK_MISSING_HIVE 5
+#define PET_COMMAND_FEEDBACK_UNAVAILABLE 6
+#define PET_COMMAND_FEEDBACK_NO_WALLS 7
+#define PET_COMMAND_FEEDBACK_CANNOT_REPRODUCE 8
+

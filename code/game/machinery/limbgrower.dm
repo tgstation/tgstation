@@ -33,7 +33,6 @@
 		SPECIES_ETHEREAL,
 		SPECIES_CERULEAN,
 		RND_CATEGORY_LIMBS_OTHER,
-		RND_CATEGORY_LIMBS_DIGITIGRADE,
 	)
 
 /obj/machinery/limbgrower/Initialize(mapload)
@@ -230,7 +229,7 @@
 
 			for(var/required_reagent, required_amount in consumed_reagents_list)
 				consumed_reagents_list[required_reagent] *= production_coefficient
-				if(!reagents.has_reagent(required_reagent, required_amount))
+				if(!reagents.has_reagent(required_reagent, consumed_reagents_list[required_reagent]))
 					audible_message(span_notice("[src] buzzes."))
 					playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 					return
@@ -265,7 +264,9 @@
 
 	var/built_typepath = being_built.build_path
 	if(ispath(built_typepath, /obj/item/bodypart))
-		build_limb(create_buildpath())
+		if(astype(being_built, /datum/design/bodypart)?.build_limb_from_cat)
+			built_typepath = create_buildpath()
+		build_limb(built_typepath)
 	else
 		//Just build whatever it is
 		new built_typepath(loc)
@@ -286,7 +287,7 @@
 	/// The limb we're making with our buildpath, so we can edit it.
 	//i need to create a body part manually using a set icon (otherwise it doesn't appear)
 	var/obj/item/bodypart/limb = new buildpath(loc)
-	limb.name = "\improper synthetic [selected_category] [limb.plaintext_zone]"
+	limb.name = "synthetic [limb.name]"
 	limb.limb_id = selected_category
 	limb.species_color = "#62A262"
 	limb.update_icon_dropped()

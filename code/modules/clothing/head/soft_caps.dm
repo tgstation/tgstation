@@ -1,3 +1,81 @@
+/datum/atom_skin/cap
+	abstract_type = /datum/atom_skin/cap
+	var/soft_type
+
+/datum/atom_skin/cap/apply(atom/apply_to, mob/user)
+	. = ..()
+	if(!istype(apply_to, /obj/item/clothing/head/soft))
+		return
+
+	var/obj/item/clothing/head/soft/soft_cap = apply_to
+	soft_cap.soft_type = soft_type
+
+/datum/atom_skin/cap/brown
+	preview_name = "Brown"
+	new_name = "brown cap"
+	new_icon_state = "cargosoft"
+	soft_type = "cargo"
+
+/datum/atom_skin/cap/red
+	preview_name = "Red"
+	new_name = "red cap"
+	new_icon_state = "redsoft"
+	soft_type = "red"
+
+/datum/atom_skin/cap/blue
+	preview_name = "Blue"
+	new_name = "blue cap"
+	new_icon_state = "bluesoft"
+	soft_type = "blue"
+
+/datum/atom_skin/cap/green
+	preview_name = "Green"
+	new_name = "green cap"
+	new_icon_state = "greensoft"
+	soft_type = "green"
+
+/datum/atom_skin/cap/yellow
+	preview_name = "Yellow"
+	new_name = "yellow cap"
+	new_icon_state = "yellowsoft"
+	soft_type = "yellow"
+
+/datum/atom_skin/cap/grey
+	preview_name = "Grey"
+	new_name = "grey cap"
+	new_icon_state = "greysoft"
+	soft_type = "grey"
+
+/datum/atom_skin/cap/orange
+	preview_name = "Orange"
+	new_name = "orange cap"
+	new_icon_state = "orangesoft"
+	soft_type = "orange"
+
+/datum/atom_skin/cap/white
+	preview_name = "White"
+	new_name = "white cap"
+	new_icon_state = "mimesoft"
+	soft_type = "mime"
+
+/datum/atom_skin/cap/purple
+	preview_name = "Purple"
+	new_name = "purple cap"
+	new_icon_state = "purplesoft"
+	soft_type = "purple"
+
+/datum/atom_skin/cap/black
+	preview_name = "Black"
+	new_name = "black cap"
+	new_icon_state = "blacksoft"
+	soft_type = "black"
+
+/datum/atom_skin/cap/rainbow
+	preview_name = "Rainbow"
+	new_name = "rainbow cap"
+	new_icon_state = "rainbowsoft"
+	soft_type = "rainbow"
+
 /obj/item/clothing/head/soft
 	name = "cargo cap"
 	desc = "It's a baseball hat in a tasteful brown colour."
@@ -18,6 +96,7 @@
 
 /obj/item/clothing/head/soft/dropped()
 	icon_state = "[soft_type][soft_suffix]"
+	worn_icon_state = icon_state
 	flipped = FALSE
 	..()
 
@@ -40,8 +119,9 @@ GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 		else
 			icon_state = "[soft_type][soft_suffix]"
 			to_chat(user, span_notice("You flip the hat back in normal position."))
+		worn_icon_state = icon_state
 		update_icon()
-		usr.update_worn_head() //so our mob-overlays update
+		user.update_worn_head()
 
 /obj/item/clothing/head/soft/examine(mob/user)
 	. = ..()

@@ -508,8 +508,8 @@
 	var/touch_protection_interference = (1 - touch_protection)
 	if(!touch_protection_interference)
 		return
-	var/harmies = clamp(carbies.adjust_brute_loss(-1.25 * reac_volume * touch_protection_interference, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_bruteloss)
-	var/burnies = clamp(carbies.adjust_fire_loss(-1.25 * reac_volume * touch_protection_interference, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_fireloss)
+	var/harmies = clamp(carbies.adjust_brute_loss(-2.5 * reac_volume * touch_protection_interference, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_bruteloss)
+	var/burnies = clamp(carbies.adjust_fire_loss(-2.5 * reac_volume * touch_protection_interference, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_fireloss)
 	for(var/i in carbies.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_synthflesh(reac_volume)

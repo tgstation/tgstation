@@ -748,6 +748,8 @@
 	. = ..()
 	if(affected_mob.adjust_stamina_loss(0.5 * data * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
+	// Keeps the mob from recharging stamina as long as it's present, otherwise stam_damage will hit a limit and mob stamina will recharge to full before slowly decreasing again
+	affected_mob.timed_stamina_reset()
 	data = max(data - 1, 3)
 
 /datum/reagent/toxin/polonium

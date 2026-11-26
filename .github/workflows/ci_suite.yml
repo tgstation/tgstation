@@ -33,6 +33,11 @@ jobs:
     needs: start_gate
     uses: ./.github/workflows/run_linters.yml
 
+  check_navmap_bakes:
+    name: Check generated navmaps
+    needs: start_gate
+    uses: ./.github/workflows/check_navmap_bakes.yml
+
   collect_data:
     name: Collect Data
     needs: start_gate
@@ -86,6 +91,7 @@ jobs:
         run_all_tests,
         run_alternate_tests,
         run_linters,
+        check_navmap_bakes,
       ]
     runs-on: ubuntu-24.04
     steps:

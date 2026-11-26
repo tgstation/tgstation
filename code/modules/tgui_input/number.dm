@@ -34,7 +34,7 @@
 		return clamp(round_value ? round(input_number) : input_number, min_value, max_value)
 	var/datum/tgui_input_number/number_input = new(user, message, title, default, max_value, min_value, timeout, round_value, ui_state)
 	number_input.ui_interact(user)
-	number_input.wait()
+	number_input.wait(user)
 	if (number_input)
 		. = number_input.entry
 		qdel(number_input)
@@ -101,8 +101,8 @@
  * Waits for a user's response to the tgui_input_number's prompt before returning. Returns early if
  * the window was closed by the user.
  */
-/datum/tgui_input_number/proc/wait()
-	while (!entry && !closed && !QDELETED(src))
+/datum/tgui_input_number/proc/wait(mob/user)
+	while (!entry && !closed && !QDELETED(src) && !QDELETED(user))
 		stoplag(1)
 
 /datum/tgui_input_number/ui_interact(mob/user, datum/tgui/ui)

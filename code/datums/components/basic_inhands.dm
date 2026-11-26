@@ -39,9 +39,10 @@
 	SIGNAL_HANDLER
 	var/list/held_overlays = list()
 	for(var/obj/item/held as anything in holding_mob.get_held_items())
-		var/is_right = IS_RIGHT_INDEX(holding_mob.get_held_index_of_item(held))
+		var/hand_index = holding_mob.get_held_index_of_item(held)
+		var/is_right = IS_RIGHT_INDEX(hand_index)
 		var/icon_file = is_right ? held.righthand_file : held.lefthand_file
-		var/mutable_appearance/held_overlay = held.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+		var/mutable_appearance/held_overlay = held.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = hand_index)
 		held_overlay.pixel_z += y_offset
 		held_overlay.pixel_w += x_offset * (is_right ? 1 : -1)
 		held_overlays += held_overlay
