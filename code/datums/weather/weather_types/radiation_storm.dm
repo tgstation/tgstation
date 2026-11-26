@@ -58,19 +58,17 @@
 	if(!prob(mutate_chance))
 		return
 
-	if(!ishuman(living) || HAS_TRAIT(living, TRAIT_GODMODE))
+	if(!astype(living, /mob/living/carbon/human)?.can_mutate())
 		return
 
+	if(!SSradiation.can_irradiate_human_basic(living))
+		return
+
+	if(HAS_TRAIT(living, TRAIT_NO_RADIATION_EFFECTS))
+		return
+
+	ASSERT(ishuman(living))
 	var/mob/living/carbon/human/human = living
-	if(!human.can_mutate())
-		return
-
-	if(HAS_TRAIT(human, TRAIT_RADIMMUNE))
-		return
-
-	if (SSradiation.wearing_rad_protected_clothing(human))
-		return
-
 	human.random_mutate_unique_identity()
 	human.random_mutate_unique_features()
 
@@ -117,7 +115,7 @@
 	if(!prob(radiation_chance))
 		return
 
-	if(!SSradiation.can_irradiate_basic(living) || SSradiation.wearing_rad_protected_clothing(living))
+	if(!SSradiation.can_irradiate_human_basic(living))
 		return
 
 	radiation_pulse(
