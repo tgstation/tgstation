@@ -1,0 +1,5 @@
+author: "ArrisFairburne"
+delete-after: True
+changes:
+  - sound: "sawable guns now make appropriate sawing noises when they are sawn-off"
+  - sound: "gave appropriate usesound and operating sounds to various saw items in the game"
