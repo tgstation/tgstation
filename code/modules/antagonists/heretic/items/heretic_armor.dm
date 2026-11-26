@@ -547,6 +547,7 @@
 		TRAIT_NOHUNGER
 	)
 	texture_type = /datum/bodypart_texture/mesh/firesuit
+	hair_mask = /datum/hair_mask/far_low
 	/// Boolean if you are brain dead so the sound doesn't spam during the delay
 	var/braindead = FALSE
 	//---- Messages that get sent when someone wearing the moon robes is attacked
@@ -803,6 +804,30 @@
 	icon_state = "moon_armor"
 	armor_type = /datum/armor/eldritch_armor/moon
 	texture_type = /datum/bodypart_texture/mesh/firesuit
+	hair_mask = /datum/hair_mask/far_low
+
+/obj/item/clothing/head/hooded/cult_hoodie/eldritch/moon/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/obj/item/clothing/head/hooded/cult_hoodie/eldritch/moon/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle Hair Visibility"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/clothing/head/hooded/cult_hoodie/eldritch/moon/click_alt(mob/user)
+	if(loc != user)
+		return NONE
+
+	if(flags_inv & HIDEHAIR)
+		flags_inv &= ~HIDEHAIR
+		alternate_worn_layer = BENEATH_HAIR_LAYER
+	else
+		flags_inv |= HIDEHAIR
+		alternate_worn_layer = initial(alternate_worn_layer)
+	balloon_alert(user, "hair [flags_inv & HIDEHAIR ? "hidden" : "revealed"]")
+	user.refresh_obscured()
+	return CLICK_ACTION_SUCCESS
 
 /datum/armor/eldritch_armor/moon
 	melee = 0

@@ -21,6 +21,10 @@
 	icon_state = "hide_hoodie"
 	strict_coverage_zones = HAIR_APPENDAGE_TOP | HAIR_APPENDAGE_LEFT | HAIR_APPENDAGE_RIGHT | HAIR_APPENDAGE_REAR | HAIR_APPENDAGE_HANGING_REAR
 
+/datum/hair_mask/far_low
+	icon_state = "hide_far_low"
+	strict_coverage_zones = HAIR_APPENDAGE_FRONT
+
 // Cache of each hairstyle's icon after being blended with the given masks
 // "joined mask types" is each mask's type as a string joined by commas (for no masks, it is the empty string)
 // /datum/sprite_accessory/hair path -> list(joined mask types -> icon)
