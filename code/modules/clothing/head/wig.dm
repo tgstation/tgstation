@@ -39,16 +39,15 @@
 		return
 
 	var/datum/sprite_accessory/hair/hair = SSaccessories.hairstyles_list[hairstyle]
-	if(!hair)
-		return
-
-	var/mutable_appearance/hair_overlay = mutable_appearance(hair.icon, hair.icon_state, layer = -HAIR_LAYER, appearance_flags = RESET_COLOR)
-	hair_overlay.color = color
-	hair_overlay.pixel_z = hair.y_offset
-	. += hair_overlay
-
-	// So that the wig actually blocks emissives.
-	hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, src, alpha = hair_overlay.alpha)
+	var/list/masks = LAZYCOPY(astype(loc, /mob/living/carbon/human)?.hair_masks)
+	if(hair_mask) // equip order shenanigans means we have to check this in addition to the wearer's hair masks
+		LAZYOR(masks, hair_mask)
+	for(var/image/hair_overlay, base_icon in hair?.get_overlays(masks))
+		hair_overlay.appearance_flags |= RESET_COLOR
+		hair_overlay.color = color
+		hair_overlay.pixel_z = hair.y_offset
+		hair_overlay.overlays += emissive_blocker(hair_overlay.icon, hair_overlay.icon_state, src, alpha = hair_overlay.alpha)
+		. += hair_overlay
 
 /obj/item/clothing/head/wig/attack_self(mob/user)
 	var/new_style = tgui_input_list(user, "Select a hairstyle", "Wig Styling", SSaccessories.hairstyles_list - "Bald")

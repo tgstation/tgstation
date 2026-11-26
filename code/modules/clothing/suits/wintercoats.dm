@@ -14,7 +14,7 @@
 	armor_type = /datum/armor/hooded_wintercoat
 	hood_down_overlay_suffix = "_hood"
 	/// How snug are we?
-	var/zipped = FALSE
+	var/zipped = TRUE
 	/// Whether alt-clicking this coat zips/unzips it
 	var/can_altclick_zip = TRUE
 	auto_deploy_hood_on_outfit_equip = FALSE
@@ -35,29 +35,24 @@
 		/obj/item/tank/internals/plasmaman,
 		/obj/item/toy,
 	)
-
-/obj/item/clothing/suit/hooded/wintercoat/on_hood_up(obj/item/clothing/head/hooded/hood)
-	. = ..()
-	zipped = TRUE
-
-/// Called when the hood is hidden
-/obj/item/clothing/suit/hooded/wintercoat/on_hood_down(obj/item/clothing/head/hooded/hood)
-	. = ..()
-	zipped = FALSE
+	update_appearance()
 
 /obj/item/clothing/suit/hooded/wintercoat/examine(mob/user)
 	. = ..()
 	if(can_altclick_zip)
 		. += span_notice("<b>Alt-click</b> to [zipped ? "un" : ""]zip.")
 
+/obj/item/clothing/suit/hooded/wintercoat/update_appearance(updates)
+	. = ..()
+	worn_icon_state = zipped ? "[INITIAL_ICON_STATE(src)]_t" : "[INITIAL_ICON_STATE(src)]"
 
 /obj/item/clothing/suit/hooded/wintercoat/click_alt(mob/user)
 	if(!can_altclick_zip)
 		return CLICK_ACTION_BLOCKING
 	zipped = !zipped
 	playsound(src, 'sound/items/zip/zip_up.ogg', 30, TRUE, -3)
-	worn_icon_state = "[INITIAL_ICON_STATE(src)][zipped ? "_t" : ""]"
 	balloon_alert(user, "[zipped ? "" : "un"]zipped")
+	update_appearance()
 
 	if(ishuman(loc))
 		var/mob/living/carbon/human/wearer = loc

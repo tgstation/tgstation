@@ -725,3 +725,8 @@
 #define COMSIG_MOVABLE_BLOCKING_AIRLOCK "movable_blocking_airlock"
 	/// Forces the airlock to crush whatever's blocking it even if it normally wouldn't
 	#define AIRLOCK_BLOCK_FORCE_CRUSH (1<<0)
+
+/// From /datum/component/toggle_attached_clothing/toggle_deployable(), to an item occupying the slot: (datum/component/toggle_attached_clothing/deployer, mob/living/wearer)
+#define COMSIG_ITEM_BLOCKING_DEPLOYABLE "item_blocking_deployable"
+	/// Returns to prevent "slot full!" popup
+	#define DEPLOYMENT_HANDLED (1<<0)

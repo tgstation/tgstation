@@ -129,22 +129,21 @@
 	if (wearer.is_holding(parent_gear))
 		parent_gear.balloon_alert(wearer, "wear it first!")
 		return
-	if (wearer.get_item_by_slot(equipped_slot))
-		parent_gear.balloon_alert(wearer, "slot occupied!")
+	var/obj/item/in_the_way = wearer.get_item_by_slot(equipped_slot)
+	var/sigreturn = in_the_way ? SEND_SIGNAL(in_the_way, COMSIG_ITEM_BLOCKING_DEPLOYABLE, src, wearer) : NONE
+	if (in_the_way)
+		if(!(sigreturn & DEPLOYMENT_HANDLED))
+			parent_gear.balloon_alert(wearer, "slot occupied!")
 		return
-	if (!deployable && !create_deployable())
-		return
-	if (!wearer.equip_to_slot_if_possible(deployable, slot = equipped_slot))
+	if (!wearer.equip_to_slot_if_possible(get_deployable(), slot = equipped_slot))
 		if(destroy_on_removal)
 			remove_deployable()
 		return
-	currently_deployed = TRUE
-	on_deployed?.Invoke(deployable)
-	if (parent_icon_state_suffix)
-		parent_gear.icon_state = "[INITIAL_ICON_STATE(parent_gear)][parent_icon_state_suffix]"
-		parent_gear.worn_icon_state = parent_gear.icon_state
-	parent_gear.update_slot_icon()
-	wearer.update_mob_action_buttons()
+	set_deployable()
+
+/datum/component/toggle_attached_clothing/proc/get_deployable()
+	deployable ||= create_deployable()
+	return deployable
 
 /// Undeploy gear if it moves slots somehow
 /datum/component/toggle_attached_clothing/proc/on_parent_equipped(obj/item/clothing/source, mob/equipper, slot)
@@ -158,7 +157,6 @@
 	SIGNAL_HANDLER
 	if (!auto_deploy_on_outfit_equip)
 		return
-	create_deployable()
 	toggle_deployable()
 
 /// Create our gear, returns true if we actually made anything
@@ -198,8 +196,26 @@
 /datum/component/toggle_attached_clothing/proc/remove_deployable()
 	SIGNAL_HANDLER
 	unequip_deployable()
+	clear_deployable()
+
+/datum/component/toggle_attached_clothing/proc/set_deployable()
+	if(currently_deployed)
+		return
+
+	var/obj/item/parent_gear = parent
+	currently_deployed = TRUE
+	on_deployed?.Invoke(deployable)
+	if (parent_icon_state_suffix)
+		parent_gear.icon_state = "[INITIAL_ICON_STATE(parent_gear)][parent_icon_state_suffix]"
+		parent_gear.worn_icon_state = parent_gear.icon_state
+	parent_gear.update_appearance()
+	parent_gear.update_slot_icon()
+	parent_gear.update_item_action_buttons()
+
+/datum/component/toggle_attached_clothing/proc/clear_deployable()
 	if (!currently_deployed)
 		return
+
 	currently_deployed = FALSE
 	on_removed?.Invoke(deployable)
 
@@ -209,6 +225,7 @@
 	if(parent_icon_state_suffix)
 		parent_gear.icon_state = INITIAL_ICON_STATE(parent_gear)
 		parent_gear.worn_icon_state = parent_gear.icon_state
+	parent_gear.update_appearance()
 	parent_gear.update_slot_icon()
 	parent_gear.update_item_action_buttons()
 
