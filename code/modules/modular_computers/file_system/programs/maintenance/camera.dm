@@ -102,9 +102,9 @@
 	if(!isnull(internal_picture))
 		data["photo"] = internal_picture_icon
 		data["canEditMetadata"] = can_edit_metadata
-		data["name"] = current_picture_name
-		data["desc"] = current_picture_desc
-		data["caption"] = current_picture_caption
+		data["name"] = html_decode(current_picture_name)
+		data["desc"] = html_decode(current_picture_desc)
+		data["caption"] = html_decode(current_picture_caption)
 		data["storedPaper"] = computer.stored_paper
 
 	data["width"] = internal_camera.picture_size_x
@@ -134,19 +134,19 @@
 		if("setName")
 			if(!(internal_picture && can_edit_metadata))
 				return FALSE
-			current_picture_name = trim(params["value"], PREVENT_CHARACTER_TRIM_LOSS(32))
+			current_picture_name = trim(sanitize(params["value"]), PREVENT_CHARACTER_TRIM_LOSS(32))
 			return TRUE
 
 		if("setDesc")
 			if(!(internal_picture && can_edit_metadata))
 				return
-			current_picture_desc = trim(params["value"], PREVENT_CHARACTER_TRIM_LOSS(128))
+			current_picture_desc = trim(sanitize(params["value"]), PREVENT_CHARACTER_TRIM_LOSS(128))
 			return TRUE
 
 		if("setCaption")
 			if(!(internal_picture && can_edit_metadata))
 				return
-			current_picture_caption = trim(params["value"], PREVENT_CHARACTER_TRIM_LOSS(256))
+			current_picture_caption = trim(sanitize(params["value"]), PREVENT_CHARACTER_TRIM_LOSS(256))
 			return TRUE
 
 		if("savePhoto")

@@ -100,7 +100,7 @@
 					return
 				else
 					id = params["value"]
-					current_user.log_message("has changed the ID for [src] to [id].", LOG_GAME)
+					current_user.log_message("has changed the ID for [src] to [sanitize(id)].", LOG_GAME)
 					. = TRUE
 		if("network")
 			if(params["value"])
@@ -113,7 +113,7 @@
 						remove_link(linked_machine)
 					network = params["value"]
 					links = list()
-					current_user.log_message("has changed the network for [src] to [network].", LOG_GAME)
+					current_user.log_message("has changed the network for [src] to [sanitize(network)].", LOG_GAME)
 					. = TRUE
 		if("tempfreq")
 			if(params["value"])
@@ -128,8 +128,8 @@
 					current_user.log_message("added frequency [tempfreq] for [src].", LOG_GAME)
 					. = TRUE
 		if("delete")
-			freq_listening.Remove(params["value"])
-			current_user.log_message("removed frequency [params["value"]] for [src].", LOG_GAME)
+			if(freq_listening.Remove(params["value"])) // this prevents arbitrary delete calls allowing XSS in logs
+				current_user.log_message("removed frequency [params["value"]] for [src].", LOG_GAME)
 			. = TRUE
 		if("unlink")
 			var/obj/machinery/telecomms/machine_to_unlink = links[text2num(params["value"])]
