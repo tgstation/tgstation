@@ -24,7 +24,7 @@ ADMIN_VERB(makepAI, R_FUN, "Make pAI", "Specify a location to spawn a pAI device
 	if(SSpai.candidates[user.key])
 		SSpai.candidates -= user.key
 
-	var/chosen_name = tgui_input_text(choice, "Enter your pAI name:", "pAI Name", "Personal AI", MAX_NAME_LEN)
+	var/chosen_name = tgui_input_text(pai, "Enter your pAI name:", "pAI Name", "Personal AI", MAX_NAME_LEN)
 	if(chosen_name)
 		pai.name = chosen_name
 		pai.real_name = pai.name
