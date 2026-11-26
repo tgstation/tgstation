@@ -275,7 +275,7 @@
 /datum/component/hat_stabilizer/proc/on_blocking_deployable(obj/item/source, datum/component/toggle_attached_clothing/deployer, mob/living/wearer)
 	SIGNAL_HANDLER
 
-	if(!QDELETED(attached_hat))
+	if(!QDELETED(attached_hat) || loose_hat)
 		return NONE
 
 	var/obj/item/to_deploy = deployer.get_deployable()
