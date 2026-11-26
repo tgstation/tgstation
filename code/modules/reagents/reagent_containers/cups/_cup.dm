@@ -378,6 +378,14 @@
 							span_hear("You hear fumbling."))
 
 		if(!do_after(user, 5 SECONDS, src))
+			if(has_lid && reagents.total_volume && prob(50)):
+				user.visible_message(span_notice("[user] gives [src]'s lid a final tug, but accidentally spills [p_their()] contents on [user.p_themselves()]!"),
+								span_danger("[src]'s lid comes flying off when you jostle it, but [p_their()] contents are soon to follow!"),
+								span_hear("You hear a loud POP, followed by a splash."))
+				toggle_lid()
+				splash_reagents(user)
+				return CLICK_ACTION_SUCCESS
+
 			user.visible_message(span_notice("[user] gives up on [has_lid ? "opening" : "closing"] [src]."),
 								span_notice("This must not be the right lid. Maybe there's another way [has_lid ? "inside" : "to cover"] [p_them()]."))
 			return CLICK_ACTION_BLOCKING
@@ -386,15 +394,6 @@
 			user.visible_message(span_notice("[user] gives up on [has_lid ? "opening" : "closing"] [src]."),
 								span_notice("You've twisted [src] every which way, but there's seemingly no way to [has_lid ? "open" : "close"] [p_them()]. Maybe if you turned [p_them()] the OTHER way..."))
 			return CLICK_ACTION_BLOCKING
-
-		if(has_lid && reagents.total_volume && prob(50))
-			user.visible_message(span_notice("[user] uses a bit too much force trying to open [src], and accidentally spills [p_their()] contents on [user.p_themselves()]!"),
-								span_danger("[src]'s lid comes flying off as you pry it free, but [p_their()] contents are soon to follow!"),
-								span_hear("You hear a loud POP, followed by a splash."))
-			toggle_lid()
-			splash_reagents(user)
-			return CLICK_ACTION_SUCCESS
-
 
 	toggle_lid()
 	balloon_alert(user, "lid [has_lid ? "sealed" : "unsealed"]")
