@@ -9,7 +9,7 @@
 export const IMPL_HUB_STORAGE = 1;
 export const IMPL_IFRAME_INDEXED_DB = 2;
 
-type StorageImplementation =
+export type StorageImplementation =
   | typeof IMPL_HUB_STORAGE
   | typeof IMPL_IFRAME_INDEXED_DB;
 
@@ -75,9 +75,13 @@ class IFrameIndexedDbBackend implements StorageBackend {
 
   private documentElement: HTMLIFrameElement;
   private iframeWindow: Window;
+  private onReadTimeout: (key: string) => void;
+  // keys we asked for but never heard back about. this is like, so we can differientate them from "keys that just had no value at all"
+  private unreadKeys = new Set<string>();
 
-  constructor() {
+  constructor(onReadTimeout: (key: string) => void) {
     this.impl = IMPL_IFRAME_INDEXED_DB;
+    this.onReadTimeout = onReadTimeout;
   }
 
   async ready(): Promise<boolean | null> {
@@ -138,11 +142,14 @@ class IFrameIndexedDbBackend implements StorageBackend {
         ) {
           clearTimeout(timeout);
           window.removeEventListener('message', listener);
+          this.unreadKeys.delete(key);
           resolve(message.data.value);
         }
       };
       const timeout = setTimeout(() => {
         window.removeEventListener('message', listener);
+        this.unreadKeys.add(key);
+        this.onReadTimeout(key);
         resolve(undefined);
       }, STORAGE_CDN_TIMEOUT);
 
@@ -154,6 +161,7 @@ class IFrameIndexedDbBackend implements StorageBackend {
   }
 
   async set(key: string, value: any): Promise<void> {
+    if (this.unreadKeys.has(key)) return;
     this.iframeWindow.postMessage({ type: 'set', key: key, value: value }, '*');
   }
 
@@ -174,13 +182,23 @@ class IFrameIndexedDbBackend implements StorageBackend {
  * Web Storage Proxy object, which selects the best backend available
  * depending on the environment.
  */
-class StorageProxy implements StorageBackend {
+class StorageProxy {
   private backendPromise: Promise<StorageBackend>;
-  public impl: StorageImplementation = IMPL_IFRAME_INDEXED_DB;
-  public diagnostics: StorageDiagnostic[] = [];
+  private diagnostics: StorageDiagnostic[] = [];
+  private listener?: (diagnostic: StorageDiagnostic) => void;
 
   private log(level: StorageDiagnostic['level'], message: string) {
-    this.diagnostics.push({ level, message });
+    const diagnostic = { level, message };
+    this.diagnostics.push(diagnostic);
+    this.listener?.(diagnostic);
+  }
+
+  /** Calls `listener` with every diagnostic logged so far, then with each new one as it happens. */
+  subscribe(listener: (diagnostic: StorageDiagnostic) => void): void {
+    this.listener = listener;
+    for (const diagnostic of this.diagnostics) {
+      listener(diagnostic);
+    }
   }
 
   constructor() {
@@ -189,7 +207,12 @@ class StorageProxy implements StorageBackend {
       // already be enabled by another window/server, but the iframe origin is
       // the server-configured storage boundary.
       if (Byond.storageCdn) {
-        const iframe = new IFrameIndexedDbBackend();
+        const iframe = new IFrameIndexedDbBackend((key) =>
+          this.log(
+            'warn',
+            `Timed out reading '${key}'. Using defaults for now, and not saving over what you had.`,
+          ),
+        );
 
         if ((await iframe.ready()) === true) {
           this.log('info', `Using iframe storage (${Byond.storageCdn})`);
@@ -203,7 +226,10 @@ class StorageProxy implements StorageBackend {
           ).some((settings) => settings !== undefined);
 
           if (!iframeHasPersistedStorage) {
-            this.log('info', 'No existing iframe data, migrating from byondstorage');
+            this.log(
+              'info',
+              'No existing iframe data, migrating from byondstorage',
+            );
             const hubStorageWasEnabled = testHubStorage();
             if (!hubStorageWasEnabled) {
               Byond.winset(null, 'browser-options', '+byondstorage');
@@ -235,7 +261,10 @@ class StorageProxy implements StorageBackend {
                     this.log('info', `Migrated '${setting}' from byondstorage`);
                   }
                 } catch {
-                  this.log('warn', `Failed to migrate '${setting}' from byondstorage`);
+                  this.log(
+                    'warn',
+                    `Failed to migrate '${setting}' from byondstorage`,
+                  );
                 }
               }),
             );
@@ -250,7 +279,10 @@ class StorageProxy implements StorageBackend {
           return iframe;
         }
 
-        this.log('warn', `Iframe storage failed to load from ${Byond.storageCdn}`);
+        this.log(
+          'warn',
+          `Iframe storage failed to load from ${Byond.storageCdn}`,
+        );
         iframe.destroy();
       } else {
         this.log('info', 'No storage CDN configured');
@@ -279,9 +311,22 @@ class StorageProxy implements StorageBackend {
     })();
   }
 
+  async getImpl(): Promise<StorageImplementation> {
+    return (await this.backendPromise).impl;
+  }
+
   async get(key: string): Promise<any> {
     const backend = await this.backendPromise;
-    return backend.get(key);
+    try {
+      return await backend.get(key);
+    } catch {
+      // usually a save that got cut off halfway, so it isn't valid json anymore. nothing in there to rescue, and letting it throw leaves chat dead on every join
+      this.log(
+        'warn',
+        `Your saved '${key}' was unreadable, so it's starting fresh.`,
+      );
+      return undefined;
+    }
   }
 
   async set(key: string, value: any): Promise<void> {

@@ -553,6 +553,7 @@
 			source = loc,
 			max_range = rad_pulse_size,
 			threshold = 0.05,
+			can_propogate = TRUE,
 		)
 
 	if(em_pulse)

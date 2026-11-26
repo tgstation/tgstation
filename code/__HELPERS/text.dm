@@ -159,8 +159,8 @@
  * * cap_at_start - capitalize the start of words. False is good for modular computer file names.
  */
 /proc/reject_bad_name(t_in, allow_numbers = FALSE, max_length = MAX_NAME_LEN, ascii_only = TRUE, strict = FALSE, cap_after_symbols = TRUE, cap_at_start = TRUE)
-	if(!t_in)
-		return //Rejects the input if it is null
+	if(!istext(t_in))
+		return //Rejects the input if it isn't text to begin with
 
 	var/number_of_alphanumeric = 0
 	var/last_char_group = NO_CHARS_DETECTED
@@ -251,28 +251,6 @@
 #undef SPACES_DETECTED
 #undef NUMBERS_DETECTED
 #undef LETTERS_DETECTED
-
-
-/// Much more permissive version of reject_bad_name().
-/// Returns a trimmed string or null if the name is invalid.
-/// Allows most characters except for IC chat prohibited words.
-/proc/permissive_sanitize_name(value)
-	if(!istext(value)) // Not a string
-		return
-
-	var/name_length = length(value)
-	if(name_length < 3) // Too short
-		return
-
-	if(name_length > 3 * MAX_NAME_LEN) // Bad input
-		return
-
-	var/trimmed = trim(value, MAX_NAME_LEN)
-	if(!filter_name_ic(trimmed)) // Contains IC chat prohibited words
-		return
-
-	return trim(trimmed)
-
 
 /// Helper proc to check if a name is valid for the IC filter
 /proc/filter_name_ic(name)
@@ -1159,30 +1137,6 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		return word + "ay"
 	//otherwise unmutated
 	return word
-
-/**
- * The procedure to check the text of the entered text on ntnrc_client.dm
- *
- * This procedure is designed to check the text you type into the chat client.
- * It checks for invalid characters and the size of the entered text.
- */
-/proc/reject_bad_chattext(text, max_length = 256)
-	var/non_whitespace = FALSE
-	var/char = ""
-	if (length(text) > max_length)
-		return
-	else
-		for(var/i = 1, i <= length(text), i += length(char))
-			char = text[i]
-			switch(text2ascii(char))
-				if(0 to 31)
-					return
-				if(32)
-					continue
-				else
-					non_whitespace = TRUE
-		if (non_whitespace)
-			return text
 
 ///Properly format a string of text by using replacetext()
 /proc/format_text(text)

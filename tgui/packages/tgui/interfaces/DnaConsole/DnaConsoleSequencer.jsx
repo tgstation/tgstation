@@ -1,4 +1,11 @@
-import { Box, Button, Image, Section, Stack } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Image,
+  NoticeBox,
+  Section,
+  Stack,
+} from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { resolveAsset } from '../../assets';
@@ -141,7 +148,12 @@ function buildGenomePairs(sequence, renderGene) {
 }
 
 const GenomeSequencer = (props) => {
-  const { mutation } = props;
+  const {
+    mutation,
+    clickable = true,
+    sequenceOverride,
+    disabledOverride,
+  } = props;
   if (!mutation) {
     return <Box color="average">No genome selected for sequencing.</Box>;
   }
@@ -152,15 +164,19 @@ const GenomeSequencer = (props) => {
       </Box>
     );
   }
-  const sequence = mutation.Sequence;
+  const sequence = sequenceOverride || mutation.Sequence;
   const defaultSeq = mutation.DefaultSeq;
   const pairs = buildGenomePairs(sequence, (i) => (
     <GeneCycler
       width="22px"
       textAlign="center"
-      disabled={!!mutation.Scrambled || mutation.Class !== MUT_NORMAL}
+      style={{ pointerEvents: clickable ? 'auto' : 'none' }}
+      disabled={
+        disabledOverride ??
+        (!!mutation.Scrambled || mutation.Class !== MUT_NORMAL)
+      }
       className={
-        defaultSeq?.charAt(i) === 'X' && !mutation.Active
+        defaultSeq?.charAt(i) === 'X' && !mutation.Active && clickable
           ? classes(['outline-solid', 'outline-color-orange'])
           : false
       }
@@ -172,32 +188,37 @@ const GenomeSequencer = (props) => {
   return (
     <>
       <Box m={-0.5}>{pairs}</Box>
-      <Box color="label" mt={1}>
-        <b>Tip:</b> Ctrl+Click on the gene to set it to X. Right Click to cycle
-        in reverse.
-      </Box>
+      {clickable && (
+        <Box color="label" mt={1}>
+          <b>Tip:</b> Ctrl+Click on the gene to set it to X. Right Click to
+          cycle in reverse.
+        </Box>
+      )}
     </>
   );
 };
 
-// Read only version of the genome sequencer.
-const GenomeSequencerReadOnly = (props) => {
-  const { sequence } = props;
-  const pairs = buildGenomePairs(sequence, (i) => {
-    const gene = sequence.charAt(i);
-    return (
-      <Button
-        key={i}
-        width="22px"
-        textAlign="center"
-        color={GENE_COLORS[gene] || GENE_COLORS.X}
-        style={{ pointerEvents: 'none' }} //Probably a better way but hehe >:)
-      >
-        {gene}
-      </Button>
-    );
-  });
-  return <Box m={-0.5}>{pairs}</Box>;
+// Used in chat
+export const GenomePreview = (props) => {
+  const { mutation_sequence, mutation_name } = props;
+  return (
+    <NoticeBox
+      mt={0.5}
+      backgroundColor="label"
+      style={{ borderRadius: '0.25rem' }}
+    >
+      <Box fontSize="125%" mb={1} italic>
+        {mutation_name}
+      </Box>
+      <Box style={{ fontStyle: 'normal' }}>
+        <GenomeSequencer
+          mutation={{ Sequence: mutation_sequence }} // no other data is needed
+          disabledOverride={false}
+          clickable={false}
+        />
+      </Box>
+    </NoticeBox>
+  );
 };
 
 export const DnaConsoleSequencer = (props) => {
@@ -301,11 +322,15 @@ export const DnaConsoleSequencer = (props) => {
                 )
               }
             >
-              <GenomeSequencer mutation={mutation} />
+              <GenomeSequencer mutation={mutation} clickable={true} />
             </Section>
             {!!scannerSequence && (
               <Section title="Held Scanner">
-                <GenomeSequencerReadOnly sequence={scannerSequence} />
+                <GenomeSequencer
+                  mutation={mutation}
+                  sequenceOverride={scannerSequence}
+                  clickable={false}
+                />
               </Section>
             )}
           </>

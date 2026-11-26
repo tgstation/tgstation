@@ -23,7 +23,11 @@
 
 /// Simply gets the value of the config type for a given job. There can be overrides for special instances on subtypes.
 /datum/job_config_type/proc/get_current_value(datum/job/occupation)
-	return occupation.vars[datum_var_name]
+	return normalize_value(occupation.vars[datum_var_name])
+
+/// Turns a raw value held in the job datum's variable into what config generation and loading should see (e.g. a null that means "off" becoming 0).
+/datum/job_config_type/proc/normalize_value(raw_value)
+	return raw_value
 
 /// Validate the value of the config type for a given job. There can be overrides for special instances on subtypes.
 /// Isn't meant for in-depth logic, just bare-bones sanity checks. Like: is this number a number? Is this string a string? Any sanity thing involving a specific job datum goes in set_current_value.
