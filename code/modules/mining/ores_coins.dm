@@ -282,7 +282,8 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 
 /obj/item/stack/ore/diamond/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/raptor_food, speed_modifier = 0.05, health_modifier = -1, color_chances = string_list(list(/datum/raptor_color/yellow = 3)))
+	var/static/list/raptor_food_chances = list(/datum/raptor_color/yellow = 3)
+	AddElement(/datum/element/raptor_food, speed_modifier = 0.05, health_modifier = -1, color_chances = raptor_food_chances)
 
 /obj/item/stack/ore/diamond/five
 	amount = 5

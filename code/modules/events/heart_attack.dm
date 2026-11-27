@@ -9,16 +9,17 @@
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/heart_attack, /datum/event_admin_setup/input_number/heart_attack)
-	///Candidates for receiving a healthy dose of heart disease
-	var/list/heart_attack_candidates = list()
+	/// Keeps a running list of weakrefs of potential candidates
+	/// Gets updated every time we check if the event can run
+	var/list/datum/weakref/heart_attack_candidates = list()
 
 /datum/round_event_control/heart_attack/can_spawn_event(players_amt, allow_magic = FALSE)
-	. = ..()
-	if(!.)
-		return .
-	generate_candidates() //generating candidates and checking in can_spawn_event prevents extreme edge case of there being the 40 minimum players, with all being ineligible for a heart attack, wasting the event
-	if(length(heart_attack_candidates))
-		return TRUE
+	return ..() && check_candidates() > 0
+
+/// Returns number of potential candidates
+/datum/round_event_control/heart_attack/proc/check_candidates()
+	heart_attack_candidates = get_candidates()
+	return length(heart_attack_candidates)
 
 /**
  * Performs initial analysis of which living players are eligible to be selected for a heart attack.
@@ -27,33 +28,36 @@
  * and at what weight should they be eligible to receive it. The check for whether or not a heart attack should be "blocked" by something is done
  * later, at the round_event level, so this proc mostly just checks users for whether or not a heart attack should be possible.
  */
-/datum/round_event_control/heart_attack/proc/generate_candidates()
-	heart_attack_candidates.Cut()
+/datum/round_event_control/heart_attack/proc/get_candidates()
+	var/list/new_candidates = list()
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
 		if(IS_UNCONSCIOUS_OR_CRIT(candidate) || !candidate.can_heartattack() || candidate.has_status_effect(/datum/status_effect/heart_attack) || candidate.undergoing_cardiac_arrest())
 			continue
 		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER))//only crewmembers can get one, a bit unfair for some ghost roles and it wastes the event
 			continue
 		if(candidate.satiety <= -60 && !candidate.has_status_effect(/datum/status_effect/exercised)) //Multiple junk food items recently //No foodmaxxing for the achievement
-			heart_attack_candidates[candidate] = 3
+			new_candidates[WEAKREF(candidate)] = 3
 		else
-			heart_attack_candidates[candidate] = 1
+			new_candidates[WEAKREF(candidate)] = 1
+	return new_candidates
 
 /datum/round_event/heart_attack
-	///A list of prime candidates for heart attacking
-	var/list/victims = list()
 	///Number of heart attacks to distribute
 	var/quantity = 1
 
-
 /datum/round_event/heart_attack/start()
 	var/datum/round_event_control/heart_attack/heart_control = control
-	victims += heart_control.heart_attack_candidates
-	heart_control.heart_attack_candidates.Cut()
+	var/list/victims = list()
+	for(var/datum/weakref/ref, weight in heart_control.heart_attack_candidates)
+		var/mob/candidate = ref.resolve()
+		if(!QDELETED(candidate))
+			victims[candidate] = weight
 
 	while(quantity > 0 && length(victims))
-		if(attack_heart())
+		var/mob/living/carbon/human/winner = pick_weight(victims)
+		if(attack_heart(winner))
 			quantity--
+		victims -= winner
 
 /**
  * Picks a victim from a list and attempts to give them a heart attack
@@ -62,8 +66,7 @@
  * will receive heart disease. Returns TRUE if a heart attack is successfully given, and
  * FALSE if something blocks it.
  */
-/datum/round_event/heart_attack/proc/attack_heart()
-	var/mob/living/carbon/human/winner = pick_weight(victims)
+/datum/round_event/heart_attack/proc/attack_heart(mob/living/carbon/human/winner)
 	// Our fitness level can potentially block a heart attack outright.
 	var/fitness_protection_probability = winner.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER)
 
@@ -75,21 +78,18 @@
 		if(winner.client)
 			winner.client.give_award(/datum/award/achievement/misc/healthy, winner)
 		message_admins("[winner] has just survived a random heart attack!") //time to spawn them a trophy :)
-		victims -= winner
-	else
-		winner.apply_status_effect(/datum/status_effect/heart_attack)
-		announce_to_ghosts(winner)
-		victims -= winner
-		return TRUE
-	return FALSE
+		return FALSE
+
+	winner.apply_status_effect(/datum/status_effect/heart_attack)
+	announce_to_ghosts(winner)
+	return TRUE
 
 /datum/event_admin_setup/minimum_candidate_requirement/heart_attack
 	output_text = "There are no candidates eligible to receive a heart attack!"
 
 /datum/event_admin_setup/minimum_candidate_requirement/heart_attack/count_candidates()
 	var/datum/round_event_control/heart_attack/heart_control = event_control
-	heart_control.generate_candidates() //can_spawn_event() is bypassed by admin_setup, so this makes sure that the candidates are still generated
-	return length(heart_control.heart_attack_candidates)
+	return heart_control.check_candidates()
 
 /datum/event_admin_setup/input_number/heart_attack
 	input_text = "Please select how many people's days you wish to ruin."
@@ -99,7 +99,7 @@
 
 /datum/event_admin_setup/input_number/heart_attack/prompt_admins()
 	var/datum/round_event_control/heart_attack/heart_control = event_control
-	max_value = length(heart_control.heart_attack_candidates)
+	max_value = heart_control.check_candidates()
 	return ..()
 
 /datum/event_admin_setup/input_number/heart_attack/apply_to_event(datum/round_event/heart_attack/event)

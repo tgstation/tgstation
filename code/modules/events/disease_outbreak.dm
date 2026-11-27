@@ -34,16 +34,17 @@
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak)
-	///Disease recipient candidates
-	var/list/disease_candidates = list()
+	/// Keeps a running list of weakrefs of potential candidates
+	/// Gets updated every time we check if the event can run
+	var/list/datum/weakref/disease_candidates = list()
 
 /datum/round_event_control/disease_outbreak/can_spawn_event(players_amt, allow_magic = FALSE)
-	. = ..()
-	if(!.)
-		return .
-	generate_candidates()
-	if(length(disease_candidates))
-		return TRUE
+	return ..() && check_candidates() > 0
+
+/// Returns number of potential candidates
+/datum/round_event_control/disease_outbreak/proc/check_candidates()
+	disease_candidates = get_candidates()
+	return length(disease_candidates)
 
 /**
  * Creates a list of people who are elligible to become disease carriers for the event
@@ -52,8 +53,8 @@
  * whether or not the candidate is alive, a crewmember, is able to receive a disease, and whether or not a disease is already present in them.
  * This proc needs to be run at some point to ensure the event has candidates to infect.
  */
-/datum/round_event_control/disease_outbreak/proc/generate_candidates()
-	disease_candidates.Cut() //We clear the list and rebuild it again.
+/datum/round_event_control/disease_outbreak/proc/get_candidates()
+	var/list/new_candidates = list()
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list)) //Player list is much more up to date and requires less checks(?)
 		if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
 			continue
@@ -63,7 +64,9 @@
 			continue
 		if(!is_station_level(candidate.z) && !is_mining_level(candidate.z)) //Diseases can't really spread if the vector is in deep space.
 			continue
-		disease_candidates += candidate
+		new_candidates += WEAKREF(candidate)
+
+	return new_candidates
 
 ///Handles checking and alerting admins about the number of valid candidates
 /datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak
@@ -71,9 +74,7 @@
 
 /datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak/count_candidates()
 	var/datum/round_event_control/disease_outbreak/disease_control = event_control
-	disease_control.generate_candidates() //can_spawn_event() is bypassed by admin_setup, so this makes sure that the candidates are still generated
-	return length(disease_control.disease_candidates)
-
+	return disease_control.check_candidates()
 
 ///Handles actually selecting whicch disease will spawn.
 /datum/event_admin_setup/listed_options/disease_outbreak
@@ -98,8 +99,6 @@
 	var/datum/disease/virus_type
 	///The preset (classic) or generated (advanced) illness name
 	var/illness_type = ""
-	///Disease recipient candidates, passed from the round_event_control object
-	var/list/afflicted = list()
 
 /datum/round_event/disease_outbreak/announce(fake)
 	if(!illness_type)
@@ -130,8 +129,8 @@
 
 /datum/round_event/disease_outbreak/start()
 	var/datum/round_event_control/disease_outbreak/disease_event = control
-	afflicted += disease_event.disease_candidates
-	disease_event.disease_candidates.Cut() //Clean the list after use
+	var/list/afflicted = recursive_list_resolve(disease_event.disease_candidates)
+
 	if(!virus_type)
 		var/list/virus_candidates = list()
 
@@ -263,8 +262,7 @@
  */
 /datum/round_event/disease_outbreak/advanced/start()
 	var/datum/round_event_control/disease_outbreak/advanced/disease_event = control
-	afflicted += disease_event.disease_candidates
-	disease_event.disease_candidates.Cut()
+	var/list/afflicted = recursive_list_resolve(disease_event.disease_candidates)
 
 	if(isnull(max_symptoms))
 		max_symptoms = rand(ADV_MIN_SYMPTOMS, ADV_MAX_SYMPTOMS)

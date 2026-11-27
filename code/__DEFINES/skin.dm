@@ -31,3 +31,10 @@
 
 #define OUTPUT_SELECTOR "output_selector"
 #define OUTPUT_SELECTOR_LEGACY_OUTPUT_SELECTOR "[OUTPUT_SELECTOR].legacy_output_selector"
+
+/// Output element parameter
+#define OUTPUT_ELEMENT_PARAM "left"
+/// Output to legacy / old chat
+#define OUTPUT_ELEMENT_VALUE_LEGACY "output_legacy"
+/// Output to browser / tgui chat
+#define OUTPUT_ELEMENT_VALUE_MODERN "output_browser"

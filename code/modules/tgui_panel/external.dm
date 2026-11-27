@@ -17,19 +17,19 @@ GAME_VERB(/client, fix_tgui_panel, "Fix chat", "OOC")
 	// Failed to fix, using tg_alert as fallback
 	action = tg_alert(src, "Did that work?", "", "Yes", "No, switch to old ui")
 	if (action == "No, switch to old ui")
-		winset(src, OUTPUT_SELECTOR_LEGACY_OUTPUT_SELECTOR, "left=output_legacy")
+		winset(src, OUTPUT_SELECTOR_LEGACY_OUTPUT_SELECTOR, "[OUTPUT_ELEMENT_PARAM]=[OUTPUT_ELEMENT_VALUE_LEGACY]")
 		log_tgui(src, "Failed to fix.", context = "verb/fix_tgui_panel")
 
 /client/proc/nuke_chat()
 	// Catch all solution (kick the whole thing in the pants)
-	winset(src, OUTPUT_SELECTOR_LEGACY_OUTPUT_SELECTOR, "left=output_legacy")
+	winset(src, OUTPUT_SELECTOR_LEGACY_OUTPUT_SELECTOR, "[OUTPUT_ELEMENT_PARAM]=[OUTPUT_ELEMENT_VALUE_LEGACY]")
 	if(!tgui_panel || !istype(tgui_panel))
 		log_tgui(src, "tgui_panel datum is missing",
 			context = "verb/fix_tgui_panel")
 		tgui_panel = new(src)
 	tgui_panel.initialize(force = TRUE)
 	// Force show the panel to see if there are any errors
-	winset(src, OUTPUT_SELECTOR_LEGACY_OUTPUT_SELECTOR, "left=output_browser")
+	winset(src, OUTPUT_SELECTOR_LEGACY_OUTPUT_SELECTOR, "[OUTPUT_ELEMENT_PARAM]=[OUTPUT_ELEMENT_VALUE_MODERN]")
 
 GAME_VERB(/client, refresh_tgui, "Refresh TGUI", "OOC")
 

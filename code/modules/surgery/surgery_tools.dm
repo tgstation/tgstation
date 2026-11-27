@@ -275,6 +275,8 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	hitsound = 'sound/items/weapons/circsawhit.ogg'
+	usesound = 'sound/items/weapons/circsawhit.ogg'
+	operating_sound = 'sound/items/handling/surgery/saw.ogg'
 	mob_throw_hit_sound = 'sound/items/weapons/pierce.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = SURGICAL_TOOL
@@ -423,6 +425,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/silver =SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/diamond =SMALL_MATERIAL_AMOUNT * 2, /datum/material/titanium = SHEET_MATERIAL_AMOUNT*2)
 	hitsound = 'sound/items/weapons/blade1.ogg'
+	usesound = 'sound/items/handling/surgery/scalpel1.ogg'
+	operating_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 	force = 16
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
@@ -461,9 +465,13 @@
 	if(active)
 		tool_behaviour = TOOL_SAW
 		set_light_color(LIGHT_COLOR_ORANGE)
+		usesound = 'sound/items/weapons/circsawhit.ogg'
+		operating_sound = 'sound/items/handling/surgery/saw.ogg'
 	else
 		tool_behaviour = TOOL_SCALPEL
 		set_light_color(LIGHT_COLOR_BLUE)
+		usesound = 'sound/items/handling/surgery/scalpel1.ogg'
+		operating_sound = 'sound/items/handling/surgery/scalpel1.ogg'
 
 	balloon_alert(user, "[active ? "enabled" : "disabled"] bone-cutting mode")
 	playsound(user ? user : src, 'sound/machines/click.ogg', 50, TRUE)
@@ -755,6 +763,8 @@
 	inhand_icon_state = "cruelsaw"
 	icon_angle = 0
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	usesound = 'sound/items/weapons/slash.ogg'
+	operating_sound = 'sound/items/weapons/slash.ogg'
 	surgical_tray_overlay = "saw_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
 

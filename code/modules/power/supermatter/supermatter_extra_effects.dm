@@ -52,6 +52,7 @@
 		max_range = 8,
 		threshold = threshold,
 		chance = chance * 100,
+		can_propogate = TRUE,
 	)
 
 /obj/machinery/power/supermatter_crystal/proc/processing_sound()

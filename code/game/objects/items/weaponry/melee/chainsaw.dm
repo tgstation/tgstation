@@ -10,6 +10,8 @@
 	icon_angle = 180
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
+	usesound = 'sound/items/weapons/drill.ogg'
+	operating_sound = 'sound/items/weapons/chainsawhit.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	force = 13
 	w_class = WEIGHT_CLASS_HUGE
