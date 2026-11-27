@@ -61,9 +61,13 @@
 /proc/considered_exiled(datum/mind/player_mind)
 	if(!ishuman(player_mind?.current))
 		return FALSE
-	for(var/obj/item/implant/implant_check in player_mind.current.implants)
-		if(istype(implant_check, /obj/item/implant/exile && player_mind.current.onAwayMission()))
+	for(var/obj/item/implant/exile/implant_check in player_mind.current.implants)
+		var/turf/player_turf = get_turf(player_mind.current)
+		if(player_turf.onAwayMission())
 			return TRUE
+		if(is_mining_level(player_turf.z))
+			return TRUE
+	return FALSE
 
 ///Checks if a player is considered AFK
 /proc/considered_afk(datum/mind/player_mind)
