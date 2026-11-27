@@ -1,0 +1,5 @@
+author: "Kurgis"
+delete-after: True
+changes:
+  - bugfix: "Metastation Robotics no longer has its old morgue tray decals that were left behind in its deletion."
+  - map: "Modified Metastation's Robotics to restore missing floor decals, and remove the loading bay decal from when it had a morgue tray."
