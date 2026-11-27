@@ -43,7 +43,11 @@
 			held_item = victim.get_inactive_held_item()
 
 		if(held_item && victim.dropItemToGround(held_item))
-			victim.visible_message(span_danger("[victim] drops [held_item] in shock!"), span_warning("<b>The force on your [limb.plaintext_zone] causes you to drop [held_item]!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message(
+				span_grey("[victim] drops [held_item] in shock!"),
+				span_grey("<b>The force on your [limb.plaintext_zone] causes you to drop [held_item]!</b>"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
 
 	update_inefficiencies()
 	return..()

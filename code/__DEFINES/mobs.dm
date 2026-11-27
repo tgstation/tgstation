@@ -1124,3 +1124,15 @@ GLOBAL_LIST_INIT(regal_rat_minion_commands, list(
 #define IS_UNCONSCIOUS_AND_ALIVE(mob) (IS_UNCONSCIOUS(mob) && mob.stat != DEAD)
 /// Checks if the mob is dead or faking death (via [TRAIT_FAKEDEATH])
 #define IS_DEAD_OR_FAKING(mob) (mob.stat == DEAD || HAS_TRAIT(mob, TRAIT_FAKEDEATH))
+
+// apply_damage flags
+/// If the damage afflicts a wound, don't show a chat message
+#define DAMAGE_SKIP_WOUND_MESSAGE (1<<0)
+/// Don't damage clothing
+#define DAMAGE_SKIP_CLOTHING_DAMAGE (1<<1)
+/// Damage applied is forced, bypassing godmode or biotype incompatibilities
+#define DAMAGE_FORCED (1<<2)
+/// No forms of multiplier (such as physiology) is applied to the damage
+#define DAMAGE_NO_MULTIPLIERS (1<<3)
+/// Spreads the damage across all bodyparts for carbons, does nothing special for other types of mobs
+#define DAMAGE_SPREAD (1<<4)

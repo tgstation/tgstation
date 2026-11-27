@@ -465,12 +465,12 @@
 							var/obj/item/stack/stack = item
 							var/sheets = min(count, amount) //minimum between sheets inserted vs sheets consumed(values differ for alloys)
 							if (sheets > 1)
-								to_chat(user, span_notice("[sheets] [stack.singular_name][plural_s(stack.singular_name)] were added to [parent]."))
+								to_chat(user, span_notice("[sheets] [PLURALIZE(stack.singular_name)] were added to [parent]."))
 							else
 								to_chat(user, span_notice("The [stack.singular_name] was added to [parent]."))
 						else
 							if (count > 1)
-								to_chat(user, span_notice("[count] [item.name][plural_s(item.name)], worth [amount] sheet\s, were added to [parent]."))
+								to_chat(user, span_notice("[count] [PLURALIZE(item.name)], worth [amount] sheet\s, were added to [parent]."))
 							else
 								to_chat(user, span_notice("\The [item], worth [amount] sheet\s, [item.p_were()] added to [parent]."))
 					if(MATERIAL_INSERT_ITEM_NO_SPACE) //no space

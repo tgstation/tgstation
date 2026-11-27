@@ -19,14 +19,17 @@
 		return
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	defender.visible_message(
-		span_danger("[attacker] [atk_verb]ed [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"), \
-		span_userdanger("You're [atk_verb]ed by [attacker] with such inhuman strength that it sends you flying backwards!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		null,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You [atk_verb] [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!",
+		to_defender = "[attacker] [PRESENT_TENSE(atk_verb)] you with such inhuman strength that it sends you flying backwards!",
+		to_blind_attacker = "You [atk_verb] someone with such inhuman strength that it sends them flying backwards!",
+		to_blind_defender = "Something [PRESENT_TENSE(atk_verb)] you with such inhuman strength that it sends you flying backwards!",
+		to_viewers = "[attacker] [PRESENT_TENSE(atk_verb)] [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+		dangerous = TRUE,
 	)
-	to_chat(attacker, span_danger("You [atk_verb] [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"))
 	defender.apply_damage(final_damage, attacker.get_attack_type())
 	playsound(defender, 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 	var/throwtarget = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))

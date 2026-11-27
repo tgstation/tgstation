@@ -436,6 +436,32 @@ em {
   font-size: 85%;
 }
 
+.attack_blocked {
+  color: hsl(30, 100%, 40%);
+}
+
+.attack_blocked_major {
+  color: hsl(30, 100%, 40%);
+  font-weight: bold;
+  font-size: 125%;
+}
+
+.attack_other {
+  color: hsl(0, 73.6%, 44.5%);
+}
+
+.attack_self {
+  color: hsl(0, 73.6%, 44.5%);
+  font-weight: bold;
+  font-size: 125%;
+}
+
+.attack_self_major {
+  color: hsl(0, 73.6%, 44.5%);
+  font-weight: bold;
+  font-size: 150%;
+}
+
 .smalldanger {
   color: hsl(0, 73.6%, 44.5%);
   font-size: 90%;
@@ -573,6 +599,16 @@ em {
 
 .grey {
   color: hsl(0, 0%, 51.4%);
+}
+
+.grey_small {
+  color: hsl(0, 0%, 51.4%);
+  font-size: 90%;
+}
+
+.grey_tiny {
+  color: hsl(0, 0%, 51.4%);
+  font-size: 85%;
 }
 
 .red {

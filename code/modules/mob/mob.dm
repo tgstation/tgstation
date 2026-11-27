@@ -403,6 +403,47 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 	if(self_runechat && (audible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, audible_message_flags))
 		create_chat_message(src, raw_message = raw_self_message, runechat_flags = audible_message_flags)
 
+/**
+ * Used for generating a message about a combat encounter
+ *
+ * * attacker: Whoever incited the combat encounter.
+ * * defender: The target of the combat encounter.
+ * * to_attacker: Message sent to the attacker.
+ * * to_defender: Message sent to the defender.
+ * * to_blind_attacker (optional): Message sent to the attacker if they are blind.
+ * If null, to_attacker is used - if "", the attacker sees no message.
+ * * to_blind_defender (optional): Message sent to the defender if they are blind.
+ * If null, to_defender is used - if "", the defender sees no message.
+ * * to_viewers: Message visible to any other spectator
+ * * to_blind_viewers (optional): Message visible to other viewers if they are blind.
+ * If null or "", blind viewers do not see any message.
+ * * dangerous (optional): Whether the attack is considered dangerous.
+ * * blocked (optional): Whether the attack was blocked.
+ */
+/proc/combat_message(atom/attacker, atom/defender, to_attacker, to_defender, to_blind_attacker = to_attacker, to_blind_defender = to_defender, to_viewers, to_blind_viewers, dangerous = FALSE, blocked = FALSE)
+	ASSERT(istype(attacker), "combat_message: attacker must be an atom")
+	ASSERT(istype(defender), "combat_message: defender must be an atom")
+	ASSERT(istext(to_attacker), "combat_message: to_attacker must be a string")
+	ASSERT(istext(to_defender), "combat_message: to_defender must be a string")
+	ASSERT(istext(to_viewers), "combat_message: to_viewers must be a string")
+
+	var/gen_span = blocked ? "attack_blocked" : "attack_other"
+	attacker.visible_message(
+		message = "<span class='[gen_span]'>[to_viewers]</span>",
+		blind_message = to_blind_viewers ? span_hear(to_blind_viewers) : null,
+		vision_distance = COMBAT_MESSAGE_RANGE,
+		ignored_mobs = list(attacker, defender),
+	)
+	var/attacker_is_blind = astype(attacker, /mob)?.is_blind()
+	if(!attacker_is_blind || to_blind_attacker)
+		to_chat(attacker, "<span class='[gen_span]'>[attacker_is_blind ? to_blind_attacker : to_attacker]</span>")
+
+	if(attacker != defender)
+		var/defender_is_blind = astype(defender, /mob)?.is_blind()
+		if(!defender_is_blind || to_blind_defender)
+			var/self_span = dangerous ? (blocked ? "attack_self_major" : "attack_blocked_major") : (blocked ? "attack_blocked" : "attack_self")
+			to_chat(defender, "<span class='[self_span]'>[defender_is_blind ? to_blind_defender : to_defender]</span>")
+
 /// Gets a linked mob, letting atoms act as proxies for actions that rely on hearing sensitivity.
 /// For example, AIs hearing around their holopads, and dullahans hearing around their heads.
 /// Normal say messages are handled by Hear(), this is for other visible/audible messages

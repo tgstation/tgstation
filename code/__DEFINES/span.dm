@@ -4,11 +4,11 @@
 // Sorted alphabetically
 #define span_abductor(str) ("<span class='abductor'>" + str + "</span>")
 #define span_admin(str) ("<span class='admin'>" + str + "</span>")
-#define span_adminprefix(str) ("<span class='admin prefix'>" + str + "</span>")
 #define span_adminhelp(str) ("<span class='adminhelp'>" + str + "</span>")
 #define span_adminnotice(str) ("<span class='adminnotice'>" + str + "</span>")
 #define span_adminobserverooc(str) ("<span class='adminobserverooc'>" + str + "</span>")
 #define span_adminooc(str) ("<span class='adminooc'>" + str + "</span>")
+#define span_adminprefix(str) ("<span class='admin prefix'>" + str + "</span>")
 #define span_adminsay(str) ("<span class='adminsay'>" + str + "</span>")
 #define span_aiprivradio(str) ("<span class='aiprivradio'>" + str + "</span>")
 #define span_alert(str) ("<span class='alert'>" + str + "</span>")
@@ -18,6 +18,16 @@
 #define span_alien(str) ("<span class='alien'>" + str + "</span>")
 #define span_announce(str) ("<span class='announce'>" + str + "</span>")
 #define span_announcement_header(str) ("<span class='announcement_header'>" + str + "</span>")
+/// Used in attacks for blocked attacks.
+#define span_attack_blocked(str) ("<span class='attack_blocked'>" + str + "</span>")
+/// Used in attacks for blocked attacks that are considered "dangerous".
+#define span_attack_blocked_major(str) ("<span class='attack_blocked_major'>" + str + "</span>")
+/// Used in attacks for messages sent to people witnessing the attack.
+#define span_attack_other(str) ("<span class='attack_other'>" + str + "</span>")
+/// Used in attacks for messages sent to the guy being attacked.
+#define span_attack_self(str) ("<span class='attack_self'>" + str + "</span>")
+/// Used in attacks for messages sent to the guy being attacked that are considered "dangerous".
+#define span_attack_self_major(str) ("<span class='attack_self_major'>" + str + "</span>")
 #define span_average(str) ("<span class='average'>" + str + "</span>")
 #define span_bad(str) ("<span class='bad'>" + str + "</span>")
 #define span_big(str) ("<span class='big'>" + str + "</span>")
@@ -31,12 +41,13 @@
 /// This span outputs to OOC, it's meant for OOC announcements
 /// Use span_bolddanger for IC danger messages, it's identical to this
 #define span_boldannounce(str) ("<span class='boldannounce'>" + str + "</span>")
+#define span_boldbig(str) ("<span class='big bold'>" + str + "</span>")
 #define span_bolddanger(str) ("<span class='bolddanger'>" + str + "</span>")
+#define span_boldholoparasite(str) ("<span class='holoparasite bold'>" + str + "</span>")
 #define span_bolditalic(str) ("<span class='bolditalic'>" + str + "</span>")
 #define span_boldnicegreen(str) ("<span class='boldnicegreen'>" + str + "</span>")
 #define span_boldnotice(str) ("<span class='boldnotice'>" + str + "</span>")
 #define span_boldwarning(str) ("<span class='boldwarning'>" + str + "</span>")
-#define span_boldbig(str) ("<span class='big bold'>" + str + "</span>")
 #define span_captaincast(str) ("<span class='captaincast'>" + str + "</span>")
 #define span_centcomradio(str) ("<span class='centcomradio'>" + str + "</span>")
 #define span_changeling(str) ("<span class='changeling'>" + str + "</span>")
@@ -51,13 +62,14 @@
 #define span_cult_large(str) ("<span class='cult_large'>" + str + "</span>")
 #define span_cyan(str) ("<span class='cyan'>" + str + "</span>")
 #define span_danger(str) ("<span class='danger'>" + str + "</span>")
+#define span_danger_ml(text) "<span class='danger ml-1'>[text]</span>"
 #define span_deadsay(str) ("<span class='deadsay'>" + str + "</span>")
 #define span_deconversion_message(str) ("<span class='deconversion_message'>" + str + "</span>")
 #define span_drone(str) ("<span class='drone'>" + str + "</span>")
-#define span_engradio(str) ("<span class='engradio'>" + str + "</span>")
-#define span_extremelybig(str) ("<span class='extremelybig'>" + str + "</span>")
 #define span_emote(str) ("<span class='emote'>" + str + "</span>")
+#define span_engradio(str) ("<span class='engradio'>" + str + "</span>")
 #define span_enteradio(str) ("<span class='enteradio'>" + str + "</span>")
+#define span_extremelybig(str) ("<span class='extremelybig'>" + str + "</span>")
 #define span_game(str) ("<span class='game'>" + str + "</span>")
 #define span_game_say(str) ("<span class='game say'>" + str + "</span>")
 #define span_ghostalert(str) ("<span class='ghostalert'>" + str + "</span>")
@@ -67,6 +79,8 @@
 #define span_greenteamradio(str) ("<span class='greenteamradio'>" + str + "</span>")
 #define span_greentext(str) ("<span class='greentext'>" + str + "</span>")
 #define span_grey(str) ("<span class='grey'>" + str + "</span>")
+#define span_grey_small(str) ("<span class='grey_small'>" + str + "</span>")
+#define span_grey_tiny(str) ("<span class='grey_tiny'>" + str + "</span>")
 #define span_header(str) ("<span class='header'>" + str + "</span>")
 #define span_hear(str) ("<span class='hear'>" + str + "</span>")
 #define span_hidden(str) ("<span class='hidden'>" + str + "</span>")
@@ -75,10 +89,10 @@
 #define span_highlight(str) ("<span class='highlight'>" + str + "</span>")
 #define span_his_grace(str) ("<span class='his_grace'>" + str + "</span>")
 #define span_holoparasite(str) ("<span class='holoparasite'>" + str + "</span>")
-#define span_boldholoparasite(str) ("<span class='holoparasite bold'>" + str + "</span>")
 #define span_hypnophrase(str) ("<span class='hypnophrase'>" + str + "</span>")
 #define span_icon(str) ("<span class='icon'>" + str + "</span>")
 #define span_info(str) ("<span class='info'>" + str + "</span>")
+#define span_info_ml(text) "<span class='info ml-1'>[text]</span>"
 #define span_infoplain(str) ("<span class='infoplain'>" + str + "</span>")
 #define span_interface(str) ("<span class='interface'>" + str + "</span>")
 #define span_italics(str) ("<span class='italics'>" + str + "</span>")
@@ -101,6 +115,7 @@
 #define span_narsiesmall(str) ("<span class='narsiesmall'>" + str + "</span>")
 #define span_nicegreen(str) ("<span class='nicegreen'>" + str + "</span>")
 #define span_notice(str) ("<span class='notice'>" + str + "</span>")
+#define span_notice_ml(text) "<span class='notice ml-1'>[text]</span>"
 #define span_noticealien(str) ("<span class='noticealien'>" + str + "</span>")
 #define span_ooc(str) ("<span class='ooc'>" + str + "</span>")
 #define span_ooc_announcement_text(str) ("<span class='ooc_announcement_text'>" + str + "</span>")
@@ -147,17 +162,14 @@
 #define span_syndradio(str) ("<span class='syndradio'>" + str + "</span>")
 #define span_tape_recorder(str) ("<span class='tape_recorder'>" + str + "</span>")
 #define span_tinydanger(str) ("<span class='tinydanger'>" + str + "</span>")
+#define span_tinynicegreen(str)	("<span class='tinynicegreen'>" + str + "</span>")
 #define span_tinynotice(str) ("<span class='tinynotice'>" + str + "</span>")
 #define span_tinynoticeital(str) ("<span class='tinynoticeital'>" + str + "</span>")
-#define span_tinynicegreen(str)	("<span class='tinynicegreen'>" + str + "</span>")
 #define span_unconscious(str) ("<span class='unconscious'>" + str + "</span>")
 #define span_userdanger(str) ("<span class='userdanger'>" + str + "</span>")
 #define span_warning(str) ("<span class='warning'>" + str + "</span>")
 #define span_yell(str) ("<span class='yell'>" + str + "</span>")
 #define span_yellowteamradio(str) ("<span class='yellowteamradio'>" + str + "</span>")
-#define span_notice_ml(text) "<span class='notice ml-1'>[text]</span>"
-#define span_danger_ml(text) "<span class='danger ml-1'>[text]</span>"
-#define span_info_ml(text) "<span class='info ml-1'>[text]</span>"
 
 // Spans that use embedded tgui components:
 // Sorted alphabetically

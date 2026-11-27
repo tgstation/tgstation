@@ -156,14 +156,17 @@
 
 /datum/martial_art/kaza_ruk/proc/quick_choke(mob/living/attacker, mob/living/defender)//is actually lung punch
 	attacker.do_attack_animation(defender)
-	defender.visible_message(
-		span_warning("[attacker] pounds [defender] on the chest!"),
-		span_userdanger("Your chest is slammed by [attacker]! You can't breathe!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		COMBAT_MESSAGE_RANGE,
-		attacker,
-	)
 	to_chat(attacker, span_danger("You pound [defender] on the chest!"))
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You pound [defender] on the chest!",
+		to_defender = "[attacker] pounds you on the chest! You struggle to catch your breath!",
+		to_blind_attacker = "You hit someone, aiming for the chest!",
+		to_blind_defender = "Someone pounds on your chest! You struggle to catch your breath!",
+		to_viewers = "[attacker] pounds [defender] on the chest!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+	)
 	playsound(attacker, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	if(defender.losebreath <= 10)
 		defender.losebreath = clamp(defender.losebreath + 5, 0, 10)
@@ -175,14 +178,16 @@
 	if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
 		return MARTIAL_ATTACK_INVALID // Does 10 damage, so we can't let pacifists neck chop.
 	attacker.do_attack_animation(defender)
-	defender.visible_message(
-		span_warning("[attacker] karate chops [defender]'s neck!"),
-		span_userdanger("Your neck is karate chopped by [attacker], rendering you unable to speak!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		COMBAT_MESSAGE_RANGE,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You karate chop [defender]'s neck, rendering [defender.p_them()] unable to speak!",
+		to_defender = "[attacker] karate chops your neck, rendering you unable to speak!",
+		to_blind_attacker = "You karate chop someone, aiming for the neck!",
+		to_blind_defender = "Someone karate chops your neck, rendering you unable to speak!",
+		to_viewers = "[attacker] karate chops [defender]'s neck!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
 	)
-	to_chat(attacker, span_danger("You karate chop [defender]'s neck, rendering [defender.p_them()] unable to speak!"))
 	playsound(attacker, 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	defender.apply_damage(10, attacker.get_attack_type(), BODY_ZONE_HEAD)
 	defender.adjust_silence_up_to(20 SECONDS, 20 SECONDS)
@@ -206,14 +211,16 @@
 	var/obj/item/stuff_in_hand = defender.get_active_held_item()
 	if(prob(60) && stuff_in_hand && defender.temporarilyRemoveItemFromInventory(stuff_in_hand))
 		attacker.put_in_hands(stuff_in_hand)
-		defender.visible_message(
-			span_danger("[attacker] disarms [defender]!"),
-			span_userdanger("You're disarmed by [attacker]!"),
-			span_hear("You hear aggressive shuffling!"),
-			COMBAT_MESSAGE_RANGE,
-			attacker,
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You disarm [defender]!",
+			to_defender = "[attacker] disarms you!",
+			to_blind_attacker = "You disarm someone!",
+			to_blind_defender = "Someone disarms you!",
+			to_viewers = "[attacker] disarms [defender]!",
+			to_blind_viewers = "You hear aggressive shuffling!",
 		)
-		to_chat(attacker, span_danger("You disarm [defender]!"))
 		playsound(defender, 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 		log_combat(attacker, defender, "disarmed (Kaza Ruk)", addition = "(disarmed of [stuff_in_hand])")
 	return MARTIAL_ATTACK_INVALID // normal shove

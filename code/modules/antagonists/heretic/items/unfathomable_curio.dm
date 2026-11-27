@@ -60,7 +60,11 @@
 		/datum/brain_trauma/severe/paralysis,
 		/datum/brain_trauma/severe/monophobia
 	)
-	wearer.visible_message(span_danger("[wearer]'s veil makes [attack_text] miss, but the force behind the blow causes it to disperse!"))
+	wearer.visible_message(
+		span_attack_blocked("[wearer]'s veil makes [attack_text] miss, but the force behind the blow causes it to disperse!"),
+		span_attack_blocked("The veil around you deflects [attack_text], but the force behind causes it to disperse!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	if(IS_HERETIC(wearer))
 		return
 
@@ -77,5 +81,3 @@
 	user.adjust_organ_loss(ORGAN_SLOT_BRAIN, 10, 160)
 	user.adjust_temp_blindness(5 SECONDS)
 	. += span_notice("It. It looked. IT WRAPS ITSELF AROUND ME.")
-
-

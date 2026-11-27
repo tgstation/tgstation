@@ -808,9 +808,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	if(!damage || !affecting || prob(miss_chance))//future-proofing for species that have 0 damage/weird cases where no zone is targeted
 		playsound(target.loc, attacking_bodypart.unarmed_miss_sound, 25, TRUE, -1)
-		target.visible_message(span_danger("[user]'s [atk_verb] misses [target]!"), \
-						span_danger("You avoid [user]'s [atk_verb]!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_warning("Your [atk_verb] misses [target]!"))
+		combat_message(
+			attacker = user,
+			defender = target,
+			to_attacker = "Your [atk_verb] misses [target]!",
+			to_defender = "[user]'s [atk_verb] misses you!",
+			to_blind_attacker = "You throw out a [atk_verb] and miss!",
+			to_blind_defender = "You hear a swoosh!",
+			to_viewers = "[user] [atk_verb] and misses [target]!",
+			to_blind_viewers = "You hear a swoosh!",
+		)
 		log_combat(user, target, "attempted to punch")
 		return FALSE
 
@@ -836,9 +843,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		atk_verb = attacking_bodypart.grappled_attack_verb
 		atk_verb_continuous = attacking_bodypart.grappled_attack_verb_continuous
 
-	target.visible_message(span_danger("[user] [atk_verb_continuous] [target]!"), \
-					span_userdanger("[user] [atk_verb_continuous] you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, span_danger("You [atk_verb] [target]!"))
+	combat_message(
+		attacker = user,
+		defender = target,
+		to_attacker = "You [atk_verb] [target == user ? "yourself" : target]!",
+		to_defender = "[user] [atk_verb_continuous] you!",
+		to_blind_attacker = "You [atk_verb] [target == user ? "yourself" : "someone"]!",
+		to_blind_defender = "Someone [atk_verb_continuous] you!",
+		to_viewers = "[user] [atk_verb_continuous] [target == user ? "[target.p_themselves()]" : target]!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+	)
 
 	target.lastattacker = user.real_name
 	target.lastattackerckey = user.ckey
@@ -892,45 +906,72 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	switch(roll_them_bones)
 		if (-INFINITY to 0) //Mostly a gimmie, this one just keeps them staggered briefly
 			target.adjust_staggered_up_to(1 SECONDS, 10 SECONDS)
-			target.visible_message(span_warning("[user]'s [atk_verb] briefly winds [target]!"), \
-				span_warning("You are briefly winded by [user]'s [atk_verb]!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] briefly winds [target]!"))
+			target.visible_message(
+				span_grey("[user]'s [atk_verb] briefly winds [target]!"),
+				span_grey("You are briefly winded by [user]'s [atk_verb]!"),
+				null, COMBAT_MESSAGE_RANGE, user,
+			)
+			if(!user.is_blind())
+				to_chat(user, span_warning("Your [atk_verb] briefly winds [target]!"))
 
 		if (1 to 10)
 			target.adjust_eye_blur_up_to(5 SECONDS, 10 SECONDS)
-			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, their eyes water! Ouch!"), \
-				span_warning("You are hit viciously by [user]'s [atk_verb], and your eyes begin to water!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] causes [target] to tear up!"))
+			target.visible_message(
+				span_grey("[user]'s [atk_verb] hits [target] so hard, their eyes water! Ouch!"), \
+				span_grey("You are hit viciously by [user]'s [atk_verb], and your eyes begin to water!"),
+				null, COMBAT_MESSAGE_RANGE, user,
+			)
+			if(!user.is_blind())
+				to_chat(user, span_grey("Your [atk_verb] causes [target] to tear up!"))
 
 		if (11 to 30)
 			target.adjust_dizzy_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_eye_blur_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
-			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, they are sent reeling in agony! Damn!"), \
-				span_warning("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] causes [target] to go stumbling about in a confuzed daze!"))
+			target.visible_message(
+				span_grey("[user]'s [atk_verb] hits [target] so hard, they are sent reeling in agony! Damn!"),
+				span_grey("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying blur!"),
+				null, COMBAT_MESSAGE_RANGE, user,
+			)
+			if(!user.is_blind())
+				to_chat(user, span_grey("Your [atk_verb] causes [target] to go stumbling about in a confuzed daze!"))
 
 		if(31 to 40)
 			target.adjust_dizzy_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_temp_blindness_up_to(5 SECONDS, 10 SECONDS)
-			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, they are sent reeling blindly in agony! Goddamn!"), \
-				span_warning("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying, blinding blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] causes [target] to go stumbling about in a confuzed, blind daze!"))
+			target.visible_message(
+				span_grey("[user]'s [atk_verb] hits [target] so hard, they are sent reeling blindly in agony! Goddamn!"), \
+				span_grey("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying, blinding blur!"),
+				null, COMBAT_MESSAGE_RANGE, user,
+			)
+			if(!user.is_blind())
+				to_chat(user, span_grey("Your [atk_verb] causes [target] to go stumbling about in a confuzed, blind daze!"))
 
 		if (41 to 45)
 			target.apply_effect(4 SECONDS, EFFECT_KNOCKDOWN, armor_block)
-			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, you knock them off their feet! Holy shit!"), \
-				span_warning("You are hit viciously by [user]'s [atk_verb] and sent toppling head over heels!"), span_hear("You hear a sickening thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] lands, and you send [target] sailing off their feet!"))
+			target.visible_message(
+				span_grey("[user]'s [atk_verb] hits [target] so hard, you knock them off their feet! Holy shit!"),
+				span_grey("You are hit viciously by [user]'s [atk_verb] and sent toppling head over heels!"),
+				span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user,
+			)
+			if(user.is_blind())
+				user.show_message(span_hear("You hear a thud!"), MSG_AUDIBLE)
+			else
+				to_chat(user, span_grey("Your [atk_verb] lands, and you send [target] sailing off their feet!"))
 
 		if (46 to INFINITY)
 			target.apply_effect(4 SECONDS, EFFECT_KNOCKDOWN, armor_block)
-			var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
-			target.apply_damage(5, BRUTE, affecting, armor_block, wound_bonus = limb_accuracy * 2) //Mostly for the crunchy wounding effect than actually doing damage
-			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, you hit them off their feet with a loud crunch! Fucking hell!"), \
-				span_warning("You are hit viciously by [user]'s [atk_verb], and suddenly feel an overwhelming pain as you topple head over heels!"), span_hear("You hear a sickening crack and a loud thud!"), COMBAT_MESSAGE_RANGE, user)
-			to_chat(user, span_warning("Your [atk_verb] lands, and [target] is sent crashing to the floor with the immense force! Good god!"))
+			target.apply_damage(5, BRUTE, target.get_random_valid_zone(user.zone_selected), armor_block, wound_bonus = limb_accuracy * 2) //Mostly for the crunchy wounding effect than actually doing damage
+			target.visible_message(
+				span_grey("[user]'s [atk_verb] hits [target] so hard, you hit them off their feet with a loud crunch! Fucking hell!"),
+				span_grey("You are hit viciously by [user]'s [atk_verb], and suddenly feel an overwhelming pain as you topple head over heels!"),
+				span_hear("You hear a sickening crack and a loud thud!"), COMBAT_MESSAGE_RANGE, user,
+			)
+			if(user.is_blind())
+				user.show_message(span_hear("You hear a sickening crack and a loud thud!"), MSG_AUDIBLE)
+			else
+				to_chat(user, span_grey("Your [atk_verb] lands, and [target] is sent crashing to the floor with the immense force! Good god!"))
 
 
 /datum/species/proc/disarm(mob/living/carbon/human/user, mob/living/carbon/human/target, datum/martial_art/attacker_style)
@@ -1182,7 +1223,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			INVOKE_ASYNC(humi, TYPE_PROC_REF(/mob, emote), "scream")
 
 		// Apply the damage to all body parts
-		humi.apply_damage(burn_damage, BURN, spread_damage = TRUE, wound_clothing = FALSE)
+		humi.apply_damage(burn_damage, BURN, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE|DAMAGE_SPREAD)
 
 	// For cold damage, we cap at the threshold if you're dead
 	if(humi.get_fire_loss() >= abs(humi.dead_threshold) && humi.stat == DEAD)
@@ -1198,11 +1239,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/damage_mod = GET_PHYSIOLOGY(humi, PHYS_COEFF_COLD)
 		// Can't be a switch due to http://www.byond.com/forum/post/2750423
 		if(humi.coretemperature in 201 to cold_damage_limit)
-			humi.apply_damage(COLD_DAMAGE_LEVEL_1 * damage_mod * seconds_per_tick, damage_type, wound_clothing = FALSE)
+			humi.apply_damage(COLD_DAMAGE_LEVEL_1 * damage_mod * seconds_per_tick, damage_type, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 		else if(humi.coretemperature in 120 to 200)
-			humi.apply_damage(COLD_DAMAGE_LEVEL_2 * damage_mod * seconds_per_tick, damage_type, wound_clothing = FALSE)
+			humi.apply_damage(COLD_DAMAGE_LEVEL_2 * damage_mod * seconds_per_tick, damage_type, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 		else
-			humi.apply_damage(COLD_DAMAGE_LEVEL_3 * damage_mod * seconds_per_tick, damage_type, wound_clothing = FALSE)
+			humi.apply_damage(COLD_DAMAGE_LEVEL_3 * damage_mod * seconds_per_tick, damage_type, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 
 /**
  * Used to apply burn wounds on random limbs
@@ -1251,7 +1292,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 2800)
 		burn_damage = HEAT_DAMAGE_LEVEL_3
 
-	humi.apply_damage(burn_damage * seconds_per_tick, BURN, bodypart, wound_clothing = FALSE)
+	humi.apply_damage(burn_damage * seconds_per_tick, BURN, bodypart, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 
 /// Handle the air pressure of the environment
 /datum/species/proc/handle_environment_pressure(mob/living/carbon/human/human, datum/gas_mixture/environment, seconds_per_tick)

@@ -869,7 +869,7 @@
 		damagetype = BRUTE,
 		def_zone = risked_hand,
 		wound_bonus = 50,
-		wound_clothing = FALSE,
+		damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE ,
 	)
 
 
@@ -900,7 +900,7 @@
 			damagetype = BRUTE,
 			def_zone = worthless_hand,
 			wound_bonus = 50,
-			wound_clothing = FALSE,
+			damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE ,
 		)
 		return
 

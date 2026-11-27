@@ -414,7 +414,7 @@
 	target.apply_damage(
 		damage = bonus_damage,
 		damagetype = BRUTE,
-		spread_damage = TRUE,
+		damage_flags = DAMAGE_SPREAD,
 		wound_bonus = 5,
 		sharpness = SHARP_EDGED,
 		attack_direction = get_dir(source, target),

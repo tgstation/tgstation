@@ -128,16 +128,17 @@
 
 	if(victim == attacker || victim.body_position != LYING_DOWN)
 		return NONE
-	// downward strike, like a kick
-	var/attacker_name = (attacker in viewers(victim, null)) ? "[attacker]" : "Something"
-	victim.visible_message(
-		span_danger("[attacker_name] brings [src] down on [victim]!"),
-		span_userdanger("[attacker_name] brings [src] down on you!"),
-		span_hear("You hear a heavy thud!"),
-		vision_distance = COMBAT_MESSAGE_RANGE,
-		ignored_mobs = attacker,
+	combat_message(
+		attacker = attacker,
+		defender = victim,
+		to_attacker = "You bring [src] down on [victim]!",
+		to_defender = "[attacker] brings [src] down on you!",
+		to_blind_attacker = "You bring [src] down on something!",
+		to_blind_defender = "Something heavy gets brought down onto you!",
+		to_viewers = "[attacker] brings [src] down on [victim]!",
+		to_blind_viewers = "You hear a heavy thud!",
+		dangerous = TRUE
 	)
-	to_chat(attacker, span_danger("You bring [src] down on [victim]!"))
 	return SIGNAL_MESSAGE_MODIFIED
 
 /obj/item/sledgehammer/proc/play_heavy_hitsound(mob/living/target_mob, mob/living/user, list/attack_modifiers)

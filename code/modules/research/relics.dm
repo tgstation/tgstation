@@ -533,9 +533,18 @@
 /obj/item/assembly/relic/proc/shield_hit(obj/item/comp_parent, mob/living/owner, attack_text, current_charges)
 	playsound(comp_parent, 'sound/items/weapons/marauder.ogg', 20, TRUE, frequency = 1.25)
 	if(owner.is_holding(comp_parent))
-		owner.visible_message(span_danger("[owner] holds [comp_parent] up, blocking [attack_text] with a projected shield!"))
+		owner.visible_message(
+			span_attack_blocked("[owner] holds [comp_parent] up, blocking [attack_text] with a projected shield!"),
+			span_attack_blocked("You hold [comp_parent] up, blocking [attack_text] with a projected shield!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
 	else
-		owner.visible_message(span_danger("[owner]'s [comp_parent.name] blocks [attack_text] with a projected shield!"))
+		owner.visible_message(
+			span_attack_blocked("[owner]'s [comp_parent.name] blocks [attack_text] with a projected shield!"),
+			span_attack_blocked("Your [comp_parent.name] blocks [attack_text] with a projected shield!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+		)
 	if(current_charges <= 0)
 		comp_parent.set_light_on(FALSE)
 		relic_message(span_notice("[comp_parent] stops glowing."))

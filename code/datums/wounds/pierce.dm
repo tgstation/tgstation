@@ -66,22 +66,22 @@
 	switch(blood_bled)
 		if(8 to 12)
 			victim.visible_message(
-				span_smalldanger("Blood droplets fly from the hole in [victim]'s [limb.plaintext_zone]."),
-				span_danger("You cough up a bit of blood from the blow to your [limb.plaintext_zone]."),
+				span_grey_small("Blood droplets fly from the hole in [victim]'s [limb.plaintext_zone]."),
+				span_grey_small("You cough up a bit of blood from the blow to your [limb.plaintext_zone]."),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 		if(12 to 18)
 			victim.visible_message(
-				span_smalldanger("A small stream of blood spurts from the hole in [victim]'s [limb.plaintext_zone]!"),
-				span_danger("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"),
+				span_grey("A small stream of blood spurts from the hole in [victim]'s [limb.plaintext_zone]!"),
+				span_grey("You spit out a string of blood from the blow to your [limb.plaintext_zone]!"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
 		if(18 to INFINITY)
 			victim.visible_message(
-				span_danger("A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!"),
-				span_bolddanger("You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!"),
+				span_grey("<b>A spray of blood streams from the gash in [victim]'s [limb.plaintext_zone]!</b>"),
+				span_grey("<b>You choke up on a spray of blood from the blow to your [limb.plaintext_zone]!</b>"),
 				vision_distance = COMBAT_MESSAGE_RANGE,
 				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 			)
@@ -112,7 +112,7 @@
 			if(QDELETED(src))
 				return
 			if(SPT_PROB(2.5, seconds_per_tick))
-				to_chat(victim, span_notice("You feel the [LOWER_TEXT(undiagnosed_name || name)] in your [limb.plaintext_zone] firming up from the cold!"))
+				to_chat(victim, span_grey("You feel the [LOWER_TEXT(undiagnosed_name || name)] in your [limb.plaintext_zone] firming up from the cold!"))
 
 		if(HAS_TRAIT(victim, TRAIT_BLOOD_FOUNTAIN))
 			adjust_blood_flow(0.25 * seconds_per_tick) // old heparin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even stronger as long as you can cut them first
@@ -206,6 +206,7 @@
 	treat_text_short = "Apply bandaging or suturing."
 	examine_desc = "has a small, torn hole, gently bleeding"
 	occur_text = "spurts out a thin stream of blood"
+	attack_trigger_message = "drawing a thin stream of blood"
 	sound_effect = 'sound/effects/wounds/pierce1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 1.25
@@ -224,6 +225,7 @@
 	if(!limb.can_bleed())
 		examine_desc = "has a small, torn hole"
 		occur_text = "splits a small hole open"
+		attack_trigger_message = "opening a small hole"
 
 /datum/wound_pregen_data/flesh_pierce/breakage
 	abstract = FALSE
@@ -266,6 +268,7 @@
 	if(!limb.can_bleed())
 		examine_desc = "has a small, circular hole"
 		occur_text = "splits a small hole open"
+		attack_trigger_message = "opening a small hole"
 
 /datum/wound_pregen_data/flesh_pierce/breakage/projectile
 	wound_path_to_generate = /datum/wound/pierce/bleed/moderate/projectile
@@ -284,6 +287,7 @@
 	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
 	examine_desc = "is pierced clear through, with bits of tissue obscuring the open hole"
 	occur_text = "looses a violent spray of blood, revealing a pierced wound"
+	attack_trigger_message = "sending a violent spray of blood flying"
 	sound_effect = 'sound/effects/wounds/pierce2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 2
@@ -301,6 +305,7 @@
 /datum/wound/pierce/bleed/severe/update_descriptions()
 	if(!limb.can_bleed())
 		occur_text = "tears a hole open"
+		attack_trigger_message = "tearing a hole open"
 
 /datum/wound_pregen_data/flesh_pierce/open_puncture
 	abstract = FALSE
@@ -331,9 +336,10 @@
 	name = "Eyeball Puncture"
 	desc = "Patient's eye has sustained extreme damage, causing severe bleeding from the ocular cavity."
 	occur_text = "looses a violent spray of blood, revealing a crushed eyeball"
+	attack_trigger_message = "sending a violent spray of blood flying from the eye"
 	var/right_side = FALSE
 
-/datum/wound/pierce/bleed/severe/eye/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing, right_side)
+/datum/wound/pierce/bleed/severe/eye/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing, right_side, damage_flags)
 	var/obj/item/organ/eyes/eyes = locate() in limb
 	if (!istype(eyes))
 		return FALSE
@@ -382,7 +388,7 @@
 	viable_zones = list(BODY_ZONE_HEAD)
 	can_be_randomly_generated = FALSE
 
-/datum/wound/pierce/bleed/severe/magicalearpain/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing)
+/datum/wound/pierce/bleed/severe/magicalearpain/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing, damage_flags)
 	var/obj/item/organ/ears/ears = locate() in limb
 	if (!istype(ears))
 		return FALSE
@@ -397,6 +403,7 @@
 	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
 	examine_desc = "is ripped clear through, barely held together by exposed bone"
 	occur_text = "blasts apart, sending chunks of viscera flying in all directions"
+	attack_trigger_message = "blasting it apart, sending chunks of viscera flying in all directions"
 	sound_effect = 'sound/effects/wounds/pierce3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
 	initial_flow = 2.5

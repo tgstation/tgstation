@@ -227,7 +227,7 @@
 
 	// You are damp, that's bad when you're being tased
 	if(owner.fire_stacks < 0)
-		owner.apply_damage(max(1, owner.fire_stacks * -0.5 * seconds_between_ticks), FIRE, spread_damage = TRUE)
+		owner.apply_damage(max(1, owner.fire_stacks * -0.5 * seconds_between_ticks), FIRE, damage_flags = DAMAGE_SPREAD)
 		if(SPT_PROB(25, seconds_between_ticks))
 			do_sparks(1, FALSE, owner)
 

@@ -226,7 +226,7 @@
 		if (safe_explosion && owner.faction_check_atom(target))
 			continue
 		var/armor = target.run_armor_check(attack_flag = BOMB)
-		target.apply_damage(damage_dealt, damagetype = BURN, blocked = armor, spread_damage = TRUE)
+		target.apply_damage(damage_dealt, damagetype = BURN, blocked = armor, damage_flags = DAMAGE_SPREAD)
 
 	SEND_SIGNAL(owner, COMSIG_BRIMDUST_EXPLOSION)
 	add_stacks(-1)

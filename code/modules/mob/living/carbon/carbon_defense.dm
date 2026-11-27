@@ -79,64 +79,6 @@
 		return TRUE
 	return ..()
 
-/mob/living/carbon/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
-	// In the future replace these with parent call if the item attack message proc is ever unshittified
-	if(SEND_SIGNAL(weapon, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, src, user) & SIGNAL_MESSAGE_MODIFIED)
-		return TRUE
-	if(SEND_SIGNAL(src, COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON, weapon, user) & SIGNAL_MESSAGE_MODIFIED)
-		return TRUE
-
-	if(!weapon.force && !length(weapon.attack_verb_simple) && !length(weapon.attack_verb_continuous))
-		return
-	var/obj/item/bodypart/hit_bodypart = get_bodypart(def_zone)
-	if(isnull(hit_bodypart)) // ??
-		return ..()
-
-	// Sanity in case one is null for some reason
-	var/picked_index = rand(max(length(weapon.attack_verb_simple), length(weapon.attack_verb_continuous)))
-
-	var/message_verb_continuous = "attacks"
-	var/message_verb_simple = "attack"
-	var/message_hit_area = get_hit_area_message(hit_area)
-	// Sanity in case one is... longer than the other?
-	if (picked_index && length(weapon.attack_verb_continuous) >= picked_index)
-		message_verb_continuous = weapon.attack_verb_continuous[picked_index]
-	if (picked_index && length(weapon.attack_verb_simple) >= picked_index)
-		message_verb_simple = weapon.attack_verb_simple[picked_index]
-
-	var/extra_wound_details = ""
-
-	if(weapon.damtype == BRUTE && hit_bodypart.can_dismember())
-		var/has_exterior = (hit_bodypart.bio_status & ANATOMY_EXTERIOR)
-		var/has_interior = (hit_bodypart.bio_status & ANATOMY_INTERIOR)
-
-		var/exterior_ready_to_dismember = (!has_exterior || (hit_bodypart.mangled_state & BODYPART_MANGLED_EXTERIOR))
-		var/interior_ready_to_dismember = (!has_interior || (hit_bodypart.mangled_state & BODYPART_MANGLED_INTERIOR))
-
-		if ((exterior_ready_to_dismember && interior_ready_to_dismember) || hit_bodypart.dismemberable_by_total_damage())
-			extra_wound_details = ", threatening to sever it entirely"
-		else if((has_interior && (has_exterior && exterior_ready_to_dismember) && weapon.get_sharpness()))
-			var/bone_text = hit_bodypart.get_internal_description()
-			extra_wound_details = ", [weapon.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the [bone_text]"
-		else if(has_exterior && ((has_interior && interior_ready_to_dismember) && weapon.get_sharpness()))
-			var/tissue_text = hit_bodypart.get_external_description()
-			extra_wound_details = ", [weapon.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining [tissue_text]"
-
-	var/attack_message_spectator = "[src] [message_verb_continuous][message_hit_area] with [weapon][extra_wound_details]!"
-	var/attack_message_victim = "You're [message_verb_continuous][message_hit_area] with [weapon][extra_wound_details]!"
-	var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [weapon][extra_wound_details]!"
-	if(user in viewers(src, null))
-		attack_message_spectator = "[user] [message_verb_continuous] [src][message_hit_area] with [weapon][extra_wound_details]!"
-		attack_message_victim = "[user] [message_verb_continuous] you[message_hit_area] with [weapon][extra_wound_details]!"
-	if(user == src)
-		attack_message_victim = "You [message_verb_simple] yourself[message_hit_area] with [weapon][extra_wound_details]!"
-	visible_message(span_danger("[attack_message_spectator]"),\
-		span_userdanger("[attack_message_victim]"), null, COMBAT_MESSAGE_RANGE, user)
-	if(user != src)
-		to_chat(user, span_danger("[attack_message_attacker]"))
-	return TRUE
-
-
 /mob/living/carbon/attack_drone(mob/living/basic/drone/user)
 	return //so we don't call the carbon's attack_hand().
 
@@ -621,7 +563,11 @@
 
 	var/bleed_rate = grasped_part.cached_bleed_rate
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")
-	user.visible_message(span_danger("[user] grasps at [user.p_their()] [grasped_part.name][bleeding_text]."), span_notice("You grab hold of your [grasped_part.name] tightly."), vision_distance=COMBAT_MESSAGE_RANGE)
+	user.visible_message(
+		span_grey("[user] grasps at [user.p_their()] [grasped_part.name][bleeding_text]."),
+		span_notice("You grab hold of your [grasped_part.name] tightly."),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	playsound(get_turf(src), 'sound/items/weapons/thudswoosh.ogg', 50, TRUE, -1)
 	return TRUE
 

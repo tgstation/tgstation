@@ -624,9 +624,13 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 		return TRUE
 
 	if(prob(final_block_chance))
-		owner.visible_message(span_danger("[owner] blocks [attack_text] with [src]!"))
-		var/owner_turf = get_turf(owner)
-		new block_effect(owner_turf, COLOR_YELLOW)
+		owner.visible_message(
+			span_attack_blocked("[owner] blocks [attack_text] with [src]!"),
+			span_attack_blocked("You block [attack_text] with [src]!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+		new block_effect(get_turf(owner), COLOR_YELLOW)
 		playsound(src, block_sound, BLOCK_SOUND_VOLUME, vary = TRUE)
 		return TRUE
 
@@ -1373,10 +1377,10 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 		victim.visible_message(span_warning("[victim] looks like [victim.p_theyve()] just bit something they shouldn't have!"), \
 							span_boldwarning("OH GOD! Was that a crunch? That didn't feel good at all!!"))
 
-		victim.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = TRUE)
+		victim.apply_damage(max(15, force), BRUTE, BODY_ZONE_HEAD, wound_bonus = 10, sharpness = get_sharpness())
 		victim.losebreath += 2
 		if(force_embed(victim, BODY_ZONE_CHEST)) //and if it embeds successfully in their chest, cause a lot of pain
-			victim.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = TRUE)
+			victim.apply_damage(max(25, force*1.5), BRUTE, BODY_ZONE_CHEST, wound_bonus = 7, sharpness = get_sharpness())
 			victim.losebreath += 6
 			discover_after = FALSE
 		if(QDELETED(src)) // in case trying to embed it caused its deletion (say, if it's DROPDEL)
@@ -1484,7 +1488,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 		return TRUE
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
-		
+
 	return FALSE
 
 /**

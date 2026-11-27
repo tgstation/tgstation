@@ -48,10 +48,16 @@
 	var/obj/item/weapon = target.get_active_held_item()
 	if(isnull(weapon) || !target.dropItemToGround(weapon))
 		return
-	source.visible_message(
-		span_warning("[source] knocks [target]'s [weapon.name] out of [target.p_their()] hands with a kick!"),
-		span_notice("You channel the flow of gravity and knock [target]'s [weapon.name] out of [target.p_their()] hands with a kick!"),
-		span_hear("You hear a thud, followed by a clatter."),
+	combat_message(
+		attacker = source,
+		defender = target,
+		to_attacker = "You knock [target]'s [weapon.name] out of [target.p_their()] hands with a kick!",
+		to_defender = "[source] knocks your [weapon.name] out of your hands with a kick!",
+		to_blind_attacker = "", // no way of knowing if your kick disarm was successful
+		to_blind_defender = "Something knocks your [weapon.name] out of your hands!",
+		to_viewers = "[source] knocks [target]'s [weapon.name] out of [target.p_their()] hands with a kick!",
+		to_blind_viewers = "You hear a thud, followed by a clatter.",
+		dangerous = TRUE,
 	)
 
 /datum/martial_art/spiders_bite/get_prefered_attacking_limb(mob/living/martial_artist, mob/living/target)

@@ -58,7 +58,7 @@
 		var/dish_amount = dish_types[dish_path]
 		// Handles plurals
 		var/obj/dish = dish_path
-		var/dish_name = dish_amount == 1 ? initial(dish.name) : "[initial(dish.name)][plural_s(initial(dish.name))]"
+		var/dish_name = dish_amount == 1 ? initial(dish.name) : "[PLURALIZE(initial(dish.name))]"
 		dish_list += list("[dish_amount] [dish_name]")
 
 	. += span_info("It contains [english_list(dish_list)].\n[peek(dish_drive_contents)] is at the top of the pile.")

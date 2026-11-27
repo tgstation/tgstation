@@ -48,6 +48,8 @@
 	var/a_or_from = "a"
 	/// The visible message when this happens
 	var/occur_text = ""
+	/// Message appended to the attack that caused this wound
+	var/attack_trigger_message = ""
 	/// This sound will be played upon the wound being applied
 	var/sound_effect
 	/// The volume of [sound_effect]
@@ -190,7 +192,7 @@
  * * attack_direction: For bloodsplatters, if relevant
  * * wound_source: The source of the wound, such as a weapon.
  */
-/datum/wound/proc/apply_wound(obj/item/bodypart/limb, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown", replacing = FALSE)
+/datum/wound/proc/apply_wound(obj/item/bodypart/limb, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown", replacing = FALSE, damage_flags)
 	if (!limb.is_woundable() || !can_be_applied_to(limb, old_wound))
 		qdel(src)
 		return FALSE
@@ -221,7 +223,7 @@
 	if(severity == WOUND_SEVERITY_TRIVIAL)
 		return
 
-	if(!silent && !demoted)
+	if(!silent && !demoted && !(damage_flags & DAMAGE_SKIP_WOUND_MESSAGE))
 		var/msg = span_danger("[victim]'s [limb.plaintext_zone] [occur_text]!")
 		var/vis_dist = COMBAT_MESSAGE_RANGE
 
@@ -400,11 +402,11 @@
  * * new_wound- The wound instance you want to replace this
  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
  */
-/datum/wound/proc/replace_wound(datum/wound/new_wound, smited = FALSE, attack_direction = attack_direction)
+/datum/wound/proc/replace_wound(datum/wound/new_wound, smited = FALSE, attack_direction = attack_direction, damage_flags)
 	already_scarred = TRUE
 	var/obj/item/bodypart/cached_limb = limb // remove_wound() nulls limb so we have to track it locally
 	remove_wound(replaced=TRUE)
-	new_wound.apply_wound(cached_limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source, replacing = TRUE)
+	new_wound.apply_wound(cached_limb, old_wound = src, smited = smited, attack_direction = attack_direction, wound_source = wound_source, replacing = TRUE, damage_flags = damage_flags)
 	if(HAS_TRAIT(src, TRAIT_WOUND_SCANNED) && severity > new_wound.severity)
 		for(var/trait_source in GET_TRAIT_SOURCES(src, TRAIT_WOUND_SCANNED))
 			ADD_TRAIT(new_wound, TRAIT_WOUND_SCANNED, trait_source)

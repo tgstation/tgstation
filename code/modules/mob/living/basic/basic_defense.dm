@@ -23,16 +23,18 @@
 		return TRUE
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
 	var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
-	if(check_block(user, damage, "[user]'s punch", UNARMED_ATTACK, 0, BRUTE))
+	if(check_block(user, damage, "[user]'s [response_harm_simple]", UNARMED_ATTACK, 0, BRUTE))
 		return
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
-	visible_message(
-		span_danger("[user] [response_harm_continuous] [src]!"),
-		span_userdanger("[user] [response_harm_continuous] you!"),
-		vision_distance = COMBAT_MESSAGE_RANGE,
-		ignored_mobs = user,
+	combat_message(
+		attacker = user,
+		defender = src,
+		to_attacker = "You [response_harm_simple] [src]!",
+		to_defender = "[user] [response_harm_continuous] you!",
+		to_blind_attacker = "You [response_harm_simple] someone!",
+		to_blind_defender = "Someone [response_harm_continuous] you!",
+		to_viewers = "[user] [response_harm_continuous] [src]!",
 	)
-	to_chat(user, span_danger("You [response_harm_simple] [src]!"))
 	playsound(loc, attacked_sound, 25, TRUE, -1)
 	apply_damage(damage)
 	log_combat(user, src, "attacked")
@@ -43,23 +45,32 @@
 	if(weapon) // no "gently pushing aside" if you're pressing a shield at them.
 		return ..()
 	var/moved = !(shove_flags & SHOVE_BLOCKED)
-	shover.visible_message(
-		span_danger("[shover.name] [response_disarm_continuous] [src][moved ? ", pushing [p_them()]" : ""]!"),
-		span_danger("You [response_disarm_simple] [src][moved ? ", pushing [p_them()]" : ""]!"),
-		span_hear("You hear aggressive shuffling!"),
-		COMBAT_MESSAGE_RANGE,
-		list(src),
+	combat_message(
+		attacker = shover,
+		defender = src,
+		to_attacker = "You [response_disarm_continuous] [src][moved ? ", sending [p_them()] backwards" : ""]!",
+		to_defender = "[shover] [response_disarm_continuous] you[moved ? ", sending you backwards" : ""]!",
+		to_blind_attacker = "You [response_disarm_simple] someone[moved ? ", sending [p_them()] backwards" : ""]!",
+		to_blind_defender = "Someone [response_disarm_continuous] you[moved ? ", sending you backwards" : ""]!",
+		to_viewers = "[shover] [response_disarm_continuous] [src][moved ? ", sending [p_them()] backwards" : ""]!",
+		to_blind_viewers = "You hear aggressive shuffling!",
 	)
-	to_chat(src, span_userdanger("You're [moved ? "pushed" : "shoved"] by [shover.name]!"))
 
 /mob/living/basic/attack_hulk(mob/living/carbon/human/user)
 	. = ..()
 	if(!.)
 		return
 	playsound(loc, /datum/sound_effect/punch, 25, TRUE, -1)
-	visible_message(span_danger("[user] punches [src]!"), \
-					span_userdanger("You're punched by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, span_danger("You punch [src]!"))
+	combat_message(
+		attacker = user,
+		defender = src,
+		to_attacker = "You punch [src]!",
+		to_defender = "[user] punches you!",
+		to_blind_attacker = "You punch someone!",
+		to_blind_defender = "Someone punches you!",
+		to_viewers = "[user] punches [src]!",
+		to_blind_viewers = "You hear a thudding sound!",
+	)
 	apply_damage(15, damagetype = BRUTE)
 
 /mob/living/basic/attack_paw(mob/living/carbon/human/user, list/modifiers)
@@ -81,15 +92,29 @@
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		playsound(loc, 'sound/items/weapons/pierce.ogg', 25, TRUE, -1)
-		visible_message(span_danger("[user] [response_disarm_continuous] [name]!"), \
-			span_userdanger("[user] [response_disarm_continuous] you!"), null, COMBAT_MESSAGE_RANGE, user)
-		to_chat(user, span_danger("You [response_disarm_simple] [name]!"))
+		combat_message(
+			attacker = user,
+			defender = src,
+			to_attacker = "You [response_disarm_simple] [name]!",
+			to_defender = "[user] [response_disarm_continuous] you!",
+			to_blind_attacker = "You [response_disarm_simple] someone!",
+			to_blind_defender = "Someone [response_disarm_continuous] you!",
+			to_viewers = "[user] [response_disarm_continuous] [name]!",
+			to_blind_viewers = "You hear aggressive shuffling!",
+		)
 		log_combat(user, src, "disarmed")
 		return
 	var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
-	visible_message(span_danger("[user] slashes at [src]!"), \
-		span_userdanger("You're slashed at by [user]!"), null, COMBAT_MESSAGE_RANGE, user)
-	to_chat(user, span_danger("You slash at [src]!"))
+	combat_message(
+		attacker = user,
+		defender = src,
+		to_attacker = "You slash [name]!",
+		to_defender = "[user] slashes you!",
+		to_blind_attacker = "You slash at someone!",
+		to_blind_defender = "Someone slashes at you!",
+		to_viewers = "[user] slashes [name]!",
+		to_blind_viewers = "You hear a slicing sound!",
+	)
 	playsound(loc, 'sound/items/weapons/slice.ogg', 25, TRUE, -1)
 	apply_damage(damage)
 	log_combat(user, src, "attacked")

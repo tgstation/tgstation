@@ -42,7 +42,7 @@
 	do_attack_animation(healed, ATTACK_EFFECT_PUNCH)
 	healed.visible_message(
 		message = span_notice("[src] heals [healed]!"),
-		self_message = span_userdanger("[src] heals you!"),
+		self_message = span_boldnotice("[src] heals you!"),
 		vision_distance = COMBAT_MESSAGE_RANGE,
 		ignored_mobs = src,
 	)

@@ -270,7 +270,7 @@
 		return
 
 	var/ratio = (breath.moles[/datum/gas/oxygen] / safe_oxygen_max) * 10
-	breather.apply_damage(clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max), oxy_damage_type, spread_damage = TRUE)
+	breather.apply_damage(clamp(ratio, oxy_breath_dam_min, oxy_breath_dam_max), oxy_damage_type, damage_flags = DAMAGE_SPREAD)
 	if(!HAS_TRAIT(breather, TRAIT_ANOSMIA))
 		breather.throw_alert(ALERT_TOO_MUCH_OXYGEN, /atom/movable/screen/alert/too_much_oxy)
 
@@ -333,10 +333,10 @@
 			breather.throw_alert(ALERT_TOO_MUCH_CO2, /atom/movable/screen/alert/too_much_co2)
 		breather.Unconscious(6 SECONDS)
 		// Lets hurt em a little, let them know we mean business.
-		breather.apply_damage(3, co2_damage_type, spread_damage = TRUE)
+		breather.apply_damage(3, co2_damage_type, damage_flags = DAMAGE_SPREAD)
 		// They've been in here 30s now, start to kill them for their own good!
 		if((world.time - breather.co2overloadtime) > 30 SECONDS)
-			breather.apply_damage(8, co2_damage_type, spread_damage = TRUE)
+			breather.apply_damage(8, co2_damage_type, damage_flags = DAMAGE_SPREAD)
 
 /// Handles NOT having too much co2. only relevant if safe_co2_max has a value
 /obj/item/organ/lungs/proc/safe_co2(mob/living/carbon/breather, datum/gas_mixture/breath, old_co2_pp)
@@ -378,7 +378,7 @@
 			breather.throw_alert(ALERT_TOO_MUCH_PLASMA, /atom/movable/screen/alert/too_much_plas)
 
 	var/ratio = (breath.moles[/datum/gas/plasma] / safe_plasma_max) * 10
-	breather.apply_damage(clamp(ratio, plas_breath_dam_min, plas_breath_dam_max), plas_damage_type, spread_damage = TRUE)
+	breather.apply_damage(clamp(ratio, plas_breath_dam_min, plas_breath_dam_max), plas_damage_type, damage_flags = DAMAGE_SPREAD)
 	breather.adjust_organ_loss(ORGAN_SLOT_LUNGS, clamp(plasma_pp * 0.5, MIN_TOXIC_GAS_LUNG_DAMAGE, MAX_TOXIC_GAS_LUNG_DAMAGE))
 	if(prob(plasma_pp))
 		to_chat(breather, span_alert("You feel a burning sensation in your chest"))
@@ -802,14 +802,14 @@
 		var/cold_modifier = breather.dna.species.coldmod
 		var/breath_effect_prob = 0
 		if(breath_temperature <= cold_level_3_threshold)
-			breather.apply_damage(cold_level_3_damage * cold_modifier, cold_damage_type, spread_damage = TRUE)
+			breather.apply_damage(cold_level_3_damage * cold_modifier, cold_damage_type, damage_flags = DAMAGE_SPREAD)
 			breath_effect_prob = 100
 			breather.adjust_organ_loss(ORGAN_SLOT_LUNGS, TEMPERATURE_LUNG_DAMAGE)
 		else if(breath_temperature <= cold_level_2_threshold)
-			breather.apply_damage(cold_level_2_damage * cold_modifier, cold_damage_type, spread_damage = TRUE)
+			breather.apply_damage(cold_level_2_damage * cold_modifier, cold_damage_type, damage_flags = DAMAGE_SPREAD)
 			breath_effect_prob = 50
 		else if(breath_temperature <= cold_level_1_threshold)
-			breather.apply_damage(cold_level_1_damage * cold_modifier, cold_damage_type, spread_damage = TRUE)
+			breather.apply_damage(cold_level_1_damage * cold_modifier, cold_damage_type, damage_flags = DAMAGE_SPREAD)
 			breath_effect_prob = 25
 
 		if(breath_temperature <= cold_level_1_threshold)
@@ -830,14 +830,14 @@
 		var/heat_modifier = breather.dna.species.heatmod
 		var/heat_message_prob = 0
 		if(breath_temperature >= heat_level_3_threshold)
-			breather.apply_damage(heat_level_3_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
+			breather.apply_damage(heat_level_3_damage * heat_modifier, heat_damage_type, damage_flags = DAMAGE_SPREAD)
 			heat_message_prob = 100
 			breather.adjust_organ_loss(ORGAN_SLOT_LUNGS, TEMPERATURE_LUNG_DAMAGE)
 		else if(breath_temperature >= heat_level_2_threshold)
-			breather.apply_damage(heat_level_2_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
+			breather.apply_damage(heat_level_2_damage * heat_modifier, heat_damage_type, damage_flags = DAMAGE_SPREAD)
 			heat_message_prob = 50
 		else if(breath_temperature >= heat_level_1_threshold)
-			breather.apply_damage(heat_level_1_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
+			breather.apply_damage(heat_level_1_damage * heat_modifier, heat_damage_type, damage_flags = DAMAGE_SPREAD)
 			heat_message_prob = 25
 		if(breath_temperature >= heat_level_1_threshold)
 			if(prob(sqrt(heat_message_prob) * 4))

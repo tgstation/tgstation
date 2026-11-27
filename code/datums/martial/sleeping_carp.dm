@@ -81,14 +81,17 @@
 		return FALSE
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
-	defender.visible_message(
-		span_danger("[attacker] violently twists [defender]'s [affecting]!"),
-		span_userdanger("[attacker] violently twists your [affecting]!"),
-		span_hear("You hear a sickening sound of bone snapping!"),
-		null,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You violently twist [defender]'s [affecting.plaintext_zone]!",
+		to_defender = "[attacker] violently twists your [affecting.plaintext_zone]!",
+		to_blind_attacker = "You violently twist someone's' [affecting.plaintext_zone]!",
+		to_blind_defender = "Someone violently twists your [affecting.plaintext_zone]!",
+		to_viewers = "[attacker] violently twists [defender]'s [affecting.plaintext_zone]!",
+		to_blind_viewers = "You hear a sickening sound of bone snapping!",
+		dangerous = TRUE,
 	)
-	to_chat(attacker, span_danger("You violently twist [defender]'s [affecting]!"))
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "wrist wrenched (Sleeping Carp)")
 	defender.apply_damage(20, BRUTE, affecting, wound_bonus = 30)
@@ -98,12 +101,15 @@
 /// Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
 /datum/martial_art/the_sleeping_carp/proc/launch_kick(mob/living/attacker, mob/living/defender)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
-	defender.visible_message(
-		span_warning("[attacker] kicks [defender] square in the chest, sending them flying!"),
-		span_userdanger("You are kicked square in the chest by [attacker], sending you flying!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		COMBAT_MESSAGE_RANGE,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You kick [defender] square in the chest, sending them flying!",
+		to_defender = "[attacker] kicks you square in the chest, sending you flying!",
+		to_blind_attacker = "You kick someone square in the chest, sending them flying!",
+		to_blind_defender = "Someone kicks you square in the chest, sending you flying!",
+		to_viewers = "[attacker] kicks [defender] square in the chest, sending them flying!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
 	)
 	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
@@ -118,12 +124,30 @@
 	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	if(defender.body_position == STANDING_UP)
 		defender.Knockdown(4 SECONDS)
-		defender.visible_message(span_warning("[attacker] kicks [defender] in the head, sending them face first into the floor!"), \
-					span_userdanger("You are kicked in the head by [attacker], sending you crashing to the floor!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You kick [defender] in the head, sending [defender.p_them()] face first into the floor!",
+			to_defender = "[attacker] kicks you in the head, sending you face first into the floor!",
+			to_blind_attacker = "You kick someone, sending them into the floor!",
+			to_blind_defender = "Someone kicks you in the head, sending you face first into the floor!",
+			to_viewers = "[attacker] kicks [defender] in the head, sending [defender.p_them()] face first into the floor!",
+			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+			dangerous = TRUE,
+		)
 	else
 		defender.drop_all_held_items()
-		defender.visible_message(span_warning("[attacker] kicks [defender] in the head!"), \
-					span_userdanger("You are kicked in the head by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You kick [defender] in the head!",
+			to_defender = "[attacker] kicks you in the head!",
+			to_blind_attacker = "You kick someone!",
+			to_blind_defender = "Someone kicks you in the head!",
+			to_viewers = "[attacker] kicks [defender] in the head!",
+			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+			dangerous = TRUE,
+		)
 	defender.apply_damage(40, STAMINA)
 	defender.adjust_dizzy_up_to(10 SECONDS, 10 SECONDS)
 	defender.adjust_temp_blindness_up_to(2 SECONDS, 10 SECONDS)
@@ -134,12 +158,16 @@
 /datum/martial_art/the_sleeping_carp/proc/knee_stomach(mob/living/attacker, mob/living/defender)
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
 	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-	defender.visible_message(
-		span_warning("[attacker] violently slams [attacker.p_their()] knee into [defender]!"),
-		span_userdanger("You slam your knee straight into [defender]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		COMBAT_MESSAGE_RANGE,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You slam your knee into [defender]'s stomach!",
+		to_defender = "[attacker] slams you in the stomach with [attacker.p_their()] knee!",
+		to_blind_attacker = "You slam your knee into someone!",
+		to_blind_defender = "Someone slam you in the stomach!",
+		to_viewers = "[attacker] slams [defender]'s stomach with [attacker.p_their()] knee!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+		dangerous = TRUE,
 	)
 	defender.apply_damage(20, STAMINA)
 	defender.Paralyze(1 SECONDS)
@@ -164,9 +192,15 @@
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	if(!IS_UNCONSCIOUS(defender) && defender.get_stamina_loss() >= 80) //We put our target to sleep.
-		defender.visible_message(
-			span_danger("[attacker] carefully pinch a nerve in [defender]'s neck, knocking them out cold!"),
-			span_userdanger("[attacker] pinches something in your neck, and you fall unconscious!"),
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You carefully pinch a nerve in [defender]'s neck, knocking them out cold!",
+			to_defender = "[attacker] pinches something in your neck, and you fall unconscious!",
+			to_blind_attacker = "You carefully pinch someone's neck!",
+			to_blind_defender = "Someone pinches something in your neck, and you fall unconscious!",
+			to_viewers = "[attacker] pinches [defender]'s neck, knocking [defender.p_them()] unconscious!",
+			dangerous = TRUE,
 		)
 		grab_log_description = "grabbed and nerve pinched"
 		defender.Unconscious(10 SECONDS)
@@ -183,13 +217,17 @@
 		var/obj/item/bodypart/head = defender.get_bodypart(BODY_ZONE_HEAD)
 		if(!isnull(head))
 			playsound(defender, 'sound/effects/wounds/crack1.ogg', 100)
-			defender.visible_message(
-				span_danger("[attacker] snaps the neck of [defender]!"),
-				span_userdanger("Your neck is snapped by [attacker]!"),
-				span_hear("You hear a sickening snap!"),
-				ignored_mobs = attacker
+			combat_message(
+				attacker = attacker,
+				defender = defender,
+				to_attacker = "In a swift motion, you snap the neck of [defender]!",
+				to_defender = "[attacker] snaps your neck!",
+				to_blind_attacker = "In a swift motion, you snap someone's neck!",
+				to_blind_defender = "Someone snaps your neck!",
+				to_viewers = "[attacker] snaps [defender]'s neck!",
+				to_blind_viewers = "You hear a sickening snap!",
+				dangerous = TRUE,
 			)
-			to_chat(attacker, span_danger("In a swift motion, you snap the neck of [defender]!"))
 			log_combat(attacker, defender, "snapped neck")
 			defender.apply_damage(100, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND)
 			if(!HAS_TRAIT(defender, TRAIT_NODEATH))
@@ -255,11 +293,9 @@
 	if(!prob(determine_avoidance))
 		return NONE
 
-
-
 	carp_user.visible_message(
-		span_danger("[carp_user] effortlessly swats [hitting_projectile] aside! [carp_user.p_They()] can block bullets with [carp_user.p_their()] bare hands!"),
-		span_userdanger("You deflect [hitting_projectile]!"),
+		span_attack_blocked("[carp_user] effortlessly swats [hitting_projectile] aside! [carp_user.p_They()] can block bullets with [carp_user.p_their()] bare hands!"),
+		span_attack_blocked("You deflect [hitting_projectile]!"),
 	)
 	playsound(carp_user, /datum/sound_effect/bullet_miss, 75, TRUE)
 	hitting_projectile.set_firer(carp_user)
@@ -276,8 +312,8 @@
 		return
 	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
 	carp_user.visible_message(
-		span_danger("[carp_user] carefully dodges [attacker]'s [touch_weapon]!"),
-		span_userdanger("You take great care to remain untouched by [attacker]'s [touch_weapon]!"),
+		span_attack_blocked("[carp_user] carefully dodges [attacker]'s [touch_weapon]!"),
+		span_attack_blocked("You take great care to remain untouched by [attacker]'s [touch_weapon]!"),
 	)
 	return COMPONENT_NO_AFTERATTACK
 
@@ -297,8 +333,9 @@
 		return NONE
 
 	carp_user.visible_message(
-		span_danger("[carp_user] cleanly avoids [attack_text] with incredible speed!"),
-		span_userdanger("You dodge [attack_text]"),
+		span_attack_blocked("[carp_user] cleanly avoids [attack_text] with incredible speed!"),
+		span_attack_blocked("You dodge [attack_text]!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 	playsound(carp_user.loc, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 	return SUCCESSFUL_BLOCK
@@ -444,21 +481,39 @@
 			return ..()
 		var/mob/living/carbon/human/H = target
 		var/list/fluffmessages = list("club", "smack", "broadside", "beat", "slam")
-		H.visible_message(span_warning("[user] [pick(fluffmessages)]s [H] with [src]!"), \
-						span_userdanger("[user] [pick(fluffmessages)]s you with [src]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
-		to_chat(user, span_danger("You [pick(fluffmessages)] [H] with [src]!"))
-		playsound(get_turf(user), 'sound/effects/woodhit.ogg', 75, TRUE, -1)
+		var/picked_fluff_message = pick(fluffmessages)
+		combat_message(
+			attacker = user,
+			defender = H,
+			to_attacker = "You [picked_fluff_message] [H] with [src]!",
+			to_defender = "[user] [PRESENT_TENSE(picked_fluff_message)] you with [src]!",
+			to_blind_attacker = "You [picked_fluff_message] someone with [src]!",
+			to_blind_defender = "Someone [PRESENT_TENSE(picked_fluff_message)] you with [src]!",
+			to_viewers = "[user] [PRESENT_TENSE(picked_fluff_message)] [H] with [src]!",
+			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+		)
+		playsound(user, 'sound/effects/woodhit.ogg', 75, TRUE, -1)
 		H.adjust_stamina_loss(rand(13,20))
 		if(prob(10))
-			H.visible_message(span_warning("[H] collapses!"), \
-							span_userdanger("Your legs give out!"))
+			H.visible_message(
+				span_attack_other("[H] collapses!"),
+				span_userdanger("Your legs give out!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+			)
 			H.Paralyze(8 SECONDS)
 		if(H.staminaloss && !H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= H.crit_threshold && !IS_UNCONSCIOUS_OR_CRIT(H))
-				H.visible_message(span_warning("[user] delivers a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"), \
-								span_userdanger("You're knocked unconscious by [user]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, user)
-				to_chat(user, span_danger("You deliver a heavy hit to [H]'s head, knocking [H.p_them()] out cold!"))
+				combat_message(
+					attacker = user,
+					defender = H,
+					to_attacker = "You deliver a heavy hit to [H]'s head, knocking [H.p_them()] out cold!",
+					to_defender = "[user] knocks you unconscious!",
+					to_blind_attacker = "You deliver a heavy hit to someone's head!",
+					to_blind_defender = "Someone knocks you unconscious!",
+					to_viewers = "[user] delivers a heavy hit to [H]'s head, knocking [H.p_them()] out cold!",
+					to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+				)
 				H.SetSleeping(60 SECONDS)
 				H.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15, 150)
 	else

@@ -313,6 +313,7 @@
 	treat_text_short = "Apply bandaging or suturing."
 	examine_desc = "has an open cut"
 	occur_text = "is cut open, slowly leaking blood"
+	attack_trigger_message = "drawing blood with a cut"
 	sound_effect = 'sound/effects/wounds/blood1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 1.75
@@ -328,6 +329,7 @@
 /datum/wound/slash/flesh/moderate/update_descriptions()
 	if(!limb.can_bleed())
 		occur_text = "is cut open"
+		attack_trigger_message = "opening a cut"
 
 /datum/wound_pregen_data/flesh_slash/abrasion
 	abstract = FALSE
@@ -345,6 +347,7 @@
 	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
 	examine_desc = "has a severe cut"
 	occur_text = "is ripped open, veins spurting blood"
+	attack_trigger_message = "ripping open a cut, veins spurting blood"
 	sound_effect = 'sound/effects/wounds/blood2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 2.75
@@ -369,6 +372,7 @@
 /datum/wound/slash/flesh/severe/update_descriptions()
 	if(!limb.can_bleed())
 		occur_text = "is ripped open"
+		attack_trigger_message = "ripping open a cut"
 
 /datum/wound/slash/flesh/critical
 	name = "Weeping Avulsion"
@@ -379,6 +383,7 @@
 	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
 	examine_desc = "is carved down to the bone, spraying blood wildly"
 	occur_text = "is torn open, spraying blood wildly"
+	attack_trigger_message = "tearing open a cut, spraying blood wildly"
 	sound_effect = 'sound/effects/wounds/blood3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
 	initial_flow = 3.75
@@ -396,6 +401,7 @@
 /datum/wound/slash/flesh/critical/update_descriptions()
 	if (!limb.can_bleed())
 		occur_text = "is torn open"
+		attack_trigger_message = "tearing open a cut"
 
 /datum/wound_pregen_data/flesh_slash/avulsion
 	abstract = FALSE
@@ -424,6 +430,7 @@
 /datum/wound/slash/flesh/critical/cleave/update_descriptions()
 	if(!limb.can_bleed())
 		occur_text = "is ruptured"
+		attack_trigger_message = "rupturing a cut, spraying blood wildly"
 
 /datum/wound_pregen_data/flesh_slash/avulsion/clear
 	abstract = FALSE

@@ -52,16 +52,16 @@ Striking a noncultist, however, will tear their flesh."}
 	return ..()
 
 /obj/item/melee/cultblade/dagger/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	var/block_message = "[owner] parries [attack_text] with [src]"
-	if(owner.get_active_held_item() != src)
-		block_message = "[owner] parries [attack_text] with [src] in their offhand"
-
 	if(IS_CULTIST(owner) && prob(final_block_chance) && (attack_type != PROJECTILE_ATTACK || attack_type != OVERWHELMING_ATTACK))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
-		owner.visible_message(span_danger("[block_message]"))
+		owner.visible_message(
+			span_attack_blocked("[owner] parries [attack_text] with [src][owner.get_active_held_item() == src ? "" : " in their offhand"]!"),
+			span_attack_blocked("You parry [attack_text] with [src][owner.get_active_held_item() == src ? "" : " in your offhand"]!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
 		return TRUE
-	else
-		return FALSE
+	return FALSE
 
 /obj/item/melee/cultblade/dagger/on_thrown(mob/living/carbon/user, atom/target)
 	. = ..()
@@ -130,10 +130,14 @@ Striking a noncultist, however, will tear their flesh."}
 
 	if(IS_CULTIST(owner) && prob(final_block_chance))
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
-		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
+		owner.visible_message(
+			span_attack_blocked("[owner] parries [attack_text] with [src]!"),
+			span_attack_blocked("You parry [attack_text] with [src]!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
 		return TRUE
-	else
-		return FALSE
+	return FALSE
 
 /obj/item/melee/cultblade/attack(mob/living/target, mob/living/carbon/human/user)
 	if(!IS_CULTIST(user) && !free_use)
@@ -875,7 +879,12 @@ Striking a noncultist, however, will tear their flesh."}
 	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		final_block_chance *= 2
 	if(IS_CULTIST(owner) && prob(final_block_chance))
-		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
+		owner.visible_message(
+			span_attack_blocked("[owner] parries [attack_text] with [src]!"),
+			span_attack_blocked("You parry [attack_text] with [src]!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
 		new /obj/effect/temp_visual/cult/sparks(get_turf(owner))
 		return TRUE
 	else

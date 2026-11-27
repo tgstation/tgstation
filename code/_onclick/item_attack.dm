@@ -326,14 +326,11 @@
 		targeting = get_random_valid_zone(targeting, zone_hit_chance)
 	var/targeting_human_readable = parse_zone_with_bodypart(targeting)
 
-	if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
-		send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
-
 	var/armor_block = min(run_armor_check(
 			def_zone = targeting,
 			attack_flag = MELEE,
-			absorb_text = span_notice("Your armor has protected your [targeting_human_readable]!"),
-			soften_text = span_warning("Your armor has softened a hit to your [targeting_human_readable]!"),
+			absorb_text = "Your armor has protected your [targeting_human_readable]!",
+			soften_text = "Your armor has softened a hit to your [targeting_human_readable]!",
 			armour_penetration = attacking_item.armour_penetration,
 			weak_against_armour = attacking_item.weak_against_armour,
 		), ARMOR_MAX_BLOCK)
@@ -348,19 +345,23 @@
 
 	if(user != src)
 		// This doesn't factor in armor, or most damage modifiers (physiology). Your mileage may vary
-		if(check_block(attacking_item, final_force, "\the [attacking_item]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
+		if(check_block(attacking_item, final_force, "\the [user]'s [attacking_item.name]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
 			LAZYSET(attack_modifiers, DAMAGE_DONE, 0)
 			return ATTACK_FAILED
 
 	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
 
 	if(final_force <= 0)
+		if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
+			send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
 		LAZYSET(attack_modifiers, DAMAGE_DONE, 0)
 		return 0
 
 	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
 		SSblackbox.record_feedback("tally", "zone_targeted", 1, user.zone_selected)
+
+	var/list/pre_attack_wounds = LAZYCOPY(astype(src, /mob/living/carbon)?.all_wounds)
 
 	var/damage_done = apply_damage(
 		damage = final_force,
@@ -372,10 +373,16 @@
 		sharpness = attacking_item.get_sharpness(),
 		attack_direction = get_dir(user, src),
 		attacking_item = attacking_item,
+		damage_flags = DAMAGE_SKIP_WOUND_MESSAGE,
 	)
 
 	LAZYSET(attack_modifiers, DAMAGE_DONE, damage_done)
 	attack_effects(damage_done, targeting, armor_block, attacking_item, user)
+
+	var/list/new_wounds = LAZYCOPY(astype(src, /mob/living/carbon)?.all_wounds) - pre_attack_wounds
+
+	if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
+		send_item_attack_message(attacking_item, user, targeting_human_readable, targeting, new_wounds)
 
 	return damage_done
 
@@ -432,10 +439,7 @@
 				if(prob(damage_done))
 					adjust_organ_loss(ORGAN_SLOT_BRAIN, 20)
 					if(!IS_UNCONSCIOUS_OR_CRIT(src))
-						visible_message(
-							span_danger("[src] is knocked senseless!"),
-							span_userdanger("You're knocked senseless!"),
-						)
+						to_chat(src, span_userdanger("You're knocked senseless!"))
 						set_confusion_if_lower(20 SECONDS)
 						adjust_eye_blur(20 SECONDS)
 					if(prob(10))
@@ -456,8 +460,11 @@
 			if(!IS_UNCONSCIOUS_OR_CRIT(src) && !attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && attacking_item.damtype == BRUTE)
 				if(prob(damage_done))
 					visible_message(
-						span_danger("[src] is knocked down!"),
-						span_userdanger("You're knocked down!"),
+						span_attack_other("[src] is knocked down!"),
+						span_attack_self_major("You're knocked down!"),
+						span_hear("You hear a thud!"),
+						COMBAT_MESSAGE_RANGE,
+						ALWAYS_SHOW_SELF_MESSAGE,
 					)
 					apply_effect(6 SECONDS, EFFECT_KNOCKDOWN, armor_block)
 
@@ -487,41 +494,70 @@
 		else
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/mob/living/proc/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
+/mob/living/proc/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone, list/new_wounds)
 	if(SEND_SIGNAL(weapon, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, src, user) & SIGNAL_MESSAGE_MODIFIED)
 		return TRUE
 	if(SEND_SIGNAL(src, COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON, weapon, user) & SIGNAL_MESSAGE_MODIFIED)
 		return TRUE
 
 	if(!weapon.force && !length(weapon.attack_verb_simple) && !length(weapon.attack_verb_continuous))
-		return
+		return FALSE
 
+	var/obj/item/bodypart/hit_bodypart = get_bodypart(def_zone)
 	// Sanity in case one is null for some reason
 	var/picked_index = rand(max(length(weapon.attack_verb_simple), length(weapon.attack_verb_continuous)))
 
 	var/message_verb_continuous = "attacks"
 	var/message_verb_simple = "attack"
 	var/message_hit_area = get_hit_area_message(hit_area)
-	// Sanity in case one is... longer than the other?
-	if (picked_index && length(weapon.attack_verb_continuous) >= picked_index)
-		message_verb_continuous = weapon.attack_verb_continuous[picked_index]
-	if (picked_index && length(weapon.attack_verb_simple) >= picked_index)
-		message_verb_simple = weapon.attack_verb_simple[picked_index]
+	if(picked_index > 0)
+		message_verb_continuous = weapon.attack_verb_continuous[min(length(weapon.attack_verb_continuous), picked_index)]
+		message_verb_simple = weapon.attack_verb_simple[min(length(weapon.attack_verb_simple), picked_index)]
 
-	var/attack_message_spectator = "[src] [message_verb_continuous][message_hit_area] with [weapon]!"
-	var/attack_message_victim = "Something [message_verb_continuous] you[message_hit_area] with [weapon]!"
-	var/attack_message_attacker = "You [message_verb_simple] [src][message_hit_area] with [weapon]!"
-	if(user in viewers(src, null))
-		attack_message_spectator = "[user] [message_verb_continuous] [src][message_hit_area] with [weapon]!"
-		attack_message_victim = "[user] [message_verb_continuous] you[message_hit_area] with [weapon]!"
-	if(user == src)
-		attack_message_victim = "You [message_verb_simple] yourself[message_hit_area] with [weapon]."
-	visible_message(span_danger("[attack_message_spectator]"),\
-		span_userdanger("[attack_message_victim]"), null, COMBAT_MESSAGE_RANGE, user)
-	if(is_blind())
-		to_chat(src, span_danger("Someone hits you[message_hit_area]!"))
-	to_chat(user, span_danger("[attack_message_attacker]"))
-	return 1
+	var/extra_wound_details = ""
+
+	for(var/datum/wound/new_wound as anything in new_wounds)
+		if(new_wound.attack_trigger_message)
+			extra_wound_details += ", [new_wound.attack_trigger_message]"
+
+	if(weapon.damtype == BRUTE && hit_bodypart?.can_dismember())
+		var/has_exterior = (hit_bodypart.bio_status & ANATOMY_EXTERIOR)
+		var/has_interior = (hit_bodypart.bio_status & ANATOMY_INTERIOR)
+
+		var/exterior_ready_to_dismember = (!has_exterior || (hit_bodypart.mangled_state & BODYPART_MANGLED_EXTERIOR))
+		var/interior_ready_to_dismember = (!has_interior || (hit_bodypart.mangled_state & BODYPART_MANGLED_INTERIOR))
+
+		if ((exterior_ready_to_dismember && interior_ready_to_dismember) || hit_bodypart.dismemberable_by_total_damage())
+			extra_wound_details += (extra_wound_details ? " and" : ",") + " threatening to sever it entirely"
+		else if((has_interior && (has_exterior && exterior_ready_to_dismember) && weapon.get_sharpness()))
+			extra_wound_details += (extra_wound_details ? " and" : ",") + " [weapon.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the [hit_bodypart.get_internal_description()]"
+		else if(has_exterior && ((has_interior && interior_ready_to_dismember) && weapon.get_sharpness()))
+			extra_wound_details += (extra_wound_details ? " and" : ",") + " [weapon.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining [hit_bodypart.get_external_description()]"
+
+	if(get(weapon, /mob/living) == user)
+		combat_message(
+			attacker = user,
+			defender = src,
+			to_attacker = "You [message_verb_simple] [src == user ? "yourself" : src][message_hit_area] with [weapon][extra_wound_details]!",
+			to_defender = "[user] [message_verb_continuous] you[message_hit_area] with [weapon][extra_wound_details]!",
+			to_blind_attacker = "You [message_verb_simple] [src == user ? "yourself" : "someone"] with [weapon][extra_wound_details]!",
+			to_blind_defender = "Someone [message_verb_continuous] you[message_hit_area] with something[extra_wound_details]!",
+			to_viewers = "[user] [message_verb_continuous] [src == user ? p_themselves() : src][message_hit_area] with [weapon][extra_wound_details]!",
+			to_blind_viewers = "You hear a [message_verb_simple].",
+		)
+	// Telekinesis
+	else
+		weapon.visible_message(
+			message = span_attack_other("[src] [message_verb_continuous][message_hit_area] with [weapon][extra_wound_details]!"),
+			blind_message = span_hear("You hear a [message_verb_simple]."),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = list(src, user),
+		)
+		if(is_blind())
+			to_chat(src, span_attack_self("You're [message_verb_simple][message_hit_area] with something[extra_wound_details]!"))
+		else
+			to_chat(src, span_attack_self("You're [message_verb_simple][message_hit_area] with [weapon][extra_wound_details]!"))
+	return TRUE
 
 /// Overridable proc so subtypes can have unique targetted strike zone messages, return a string.
 /mob/living/proc/get_hit_area_message(input_area)

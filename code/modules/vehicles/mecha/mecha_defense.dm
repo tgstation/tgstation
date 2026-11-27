@@ -64,7 +64,15 @@
 	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/items/weapons/tap.ogg', 40, TRUE, -1)
-	user.visible_message(span_danger("[user] hits [src]. Nothing happens."), null, null, COMBAT_MESSAGE_RANGE)
+	combat_message(
+		attacker = user,
+		defender = src,
+		to_attacker = "You hit [src]. Nothing happens.",
+		to_defender = "[user] hits you. Nothing happens.",
+		to_blind_attacker = "You hit something. Nothing happens.",
+		to_blind_defender = "",
+		to_viewers = "[user] hits [src]. Nothing happens.",
+	)
 	log_message("Attack by hand/paw (no damage). Attacker - [user].", LOG_MECHA, color="red")
 
 /obj/vehicle/sealed/mecha/attack_paw(mob/user, list/modifiers)
@@ -357,11 +365,15 @@
 	try_damage_component(damage_taken, user.zone_selected)
 
 	var/hit_verb = length(attacking_item.attack_verb_simple) ? "[pick(attacking_item.attack_verb_simple)]" : "hit"
-	user.visible_message(
-		span_danger("[user] [hit_verb][plural_s(hit_verb)] [src] with [attacking_item][damage_taken ? "." : ", without leaving a mark!"]"),
-		span_danger("You [hit_verb] [src] with [attacking_item][damage_taken ? "." : ", without leaving a mark!"]"),
-		span_hear("You hear a [hit_verb]."),
-		COMBAT_MESSAGE_RANGE,
+	combat_message(
+		attacker = user,
+		defender = src,
+		to_attacker = "You [hit_verb] [src] with [attacking_item][damage_taken ? "" : ", without leaving a mark"]",
+		to_defender = "[user] [PRESENT_TENSE(hit_verb)] you with [attacking_item][damage_taken ? "" : ", without leaving a mark"]!",
+		to_blind_attacker = "You [hit_verb] something with [attacking_item][damage_taken ? "" : ", without leaving a mark"]!",
+		to_blind_defender = "Something [PRESENT_TENSE(hit_verb)] you[damage_taken ? "" : ", without leaving a mark"]!",
+		to_viewers = "[user] [PRESENT_TENSE(hit_verb)] [src] with [attacking_item][damage_taken ? "." : ", without leaving a mark!"]",
+		to_blind_viewers = "You hear a [hit_verb].",
 	)
 
 	log_combat(user, src, "attacked", attacking_item)

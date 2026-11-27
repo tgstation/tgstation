@@ -3,17 +3,15 @@
 	damagetype = BRUTE,
 	def_zone = null,
 	blocked = 0,
-	forced = FALSE,
-	spread_damage = FALSE,
 	wound_bonus = 0,
 	exposed_wound_bonus = 0,
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
-	wound_clothing = TRUE,
+	damage_flags = NONE,
 )
 	// Spread damage should always have def zone be null
-	if(spread_damage)
+	if(damage_flags & DAMAGE_SPREAD)
 		def_zone = null
 
 	// Otherwise if def zone is null, we'll get a random bodypart / zone to hit.

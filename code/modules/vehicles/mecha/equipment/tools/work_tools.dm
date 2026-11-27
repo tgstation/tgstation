@@ -136,7 +136,7 @@
 	var/final_damage = isalien(victim) ? clamp_damage * 3 : clamp_damage
 	chassis.do_attack_animation(victim)
 	playsound(chassis, clampsound, 30, FALSE, -6)
-	victim.apply_damage(final_damage, BRUTE, blocked = armor_check, spread_damage = TRUE)
+	victim.apply_damage(final_damage, BRUTE, blocked = armor_check, damage_flags = DAMAGE_SPREAD)
 	return ..()
 
 //This is pretty much just for the death-ripley

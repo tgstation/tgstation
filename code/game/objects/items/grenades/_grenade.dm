@@ -285,7 +285,10 @@
 
 /obj/item/grenade/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(damage && attack_type == PROJECTILE_ATTACK && damage_type != STAMINA && prob(15))
-		owner.visible_message(span_danger("[attack_text] hits [owner]'s [src], setting it off! What a shot!"))
+		owner.visible_message(
+			span_attack_blocked("[capitalize(attack_text)] hits [owner]'s [src], setting it off! What a shot!"),
+			span_attack_blocked("[capitalize(attack_text)] sets off your [src]! What a shot!")
+		)
 		var/turf/source_turf = get_turf(src)
 		var/logmsg = "held a grenade detonated by a projectile ([hitby]) at [COORD(source_turf)]"
 		owner.log_message(logmsg, LOG_GAME)

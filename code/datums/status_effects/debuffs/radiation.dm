@@ -115,7 +115,7 @@
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
 
-	owner.apply_damage(12, BURN, affected_limb, wound_clothing = FALSE)
+	owner.apply_damage(12, BURN, affected_limb, damage_flags = DAMAGE_SKIP_CLOTHING_DAMAGE)
 	playsound(owner, /datum/sound_effect/sizzle, 50, vary = TRUE)
 
 /datum/status_effect/irradiated/proc/random_effects(time_since_irradiated, seconds_per_tick)

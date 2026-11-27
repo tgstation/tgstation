@@ -98,7 +98,7 @@
 /datum/status_effect/lobster_rush/proc/smack_into(mob/living/target)
 	target.Knockdown(2 SECONDS)
 	target.apply_damage(30, STAMINA)
-	target.apply_damage(10, BRUTE, spread_damage = TRUE)
+	target.apply_damage(10, BRUTE, damage_flags = DAMAGE_SPREAD)
 
 /// You get a longer buff if you take the time to implant it in yourself
 /datum/status_effect/lobster_rush/extended

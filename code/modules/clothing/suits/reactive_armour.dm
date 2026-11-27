@@ -127,14 +127,22 @@
 	var/tele_range = 6
 
 /obj/item/clothing/suit/armor/reactive/teleport/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("The reactive teleport system flings [owner] clear of [attack_text]!"))
+	owner.visible_message(
+		span_attack_blocked("[src] flings [owner] clear of [attack_text]!"),
+		span_attack_blocked("You are flung clear of [attack_text] by your [name]!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	playsound(get_turf(owner),'sound/effects/magic/blink.ogg', 100, TRUE)
 	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/teleport/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("The reactive teleport system flings itself clear of [attack_text], leaving someone behind in the process!"))
+	owner.visible_message(
+		span_attack_blocked("[src] flings itself clear of [attack_text], leaving someone behind in the process!"),
+		span_attack_blocked("You are flung clear of [attack_text] by your [name], leaving someone behind in the process!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	owner.dropItemToGround(src, TRUE, TRUE)
 	playsound(get_turf(owner),'sound/machines/buzz/buzz-sigh.ogg', 50, TRUE)
 	playsound(get_turf(owner),'sound/effects/magic/blink.ogg', 100, TRUE)
@@ -151,7 +159,11 @@
 	emp_message = span_warning("The reactive incendiary armor's targeting system begins rebooting...")
 
 /obj/item/clothing/suit/armor/reactive/fire/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], sending out jets of flame!"))
+	owner.visible_message(
+		span_attack_blocked("[src] blocks [attack_text], sending out jets of flame!"),
+		span_attack_blocked("Your [name] blocks [attack_text], sending out jets of flame!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	playsound(get_turf(owner),'sound/effects/magic/fireball.ogg', 100, TRUE)
 	for(var/mob/living/carbon/carbon_victim in range(6, get_turf(src)))
 		if(carbon_victim != owner)
@@ -162,7 +174,11 @@
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/fire/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] just makes [attack_text] worse by spewing molten death on [owner]!"))
+	owner.visible_message(
+		span_attack_blocked("[src] just makes [attack_text] worse by spewing molten death on [owner]!"),
+		span_attack_blocked("Your [name] just makes [attack_text] worse by spewing molten death on you!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	playsound(get_turf(owner),'sound/effects/magic/fireball.ogg', 100, TRUE)
 	owner.adjust_fire_stacks(12)
 	owner.ignite_mob()
@@ -205,7 +221,20 @@
 	)
 	owner.alpha = 0
 	in_stealth = TRUE
-	owner.visible_message(span_danger("[owner] is hit by [attack_text] in the chest!")) //We pretend to be hit, since blocking it would stop the message otherwise
+	var/mob/living/attacker = GET_ASSAILANT(hitby)
+	// fakes an attack message, indicates to the wearer what really happened.
+	// imperfect: while we can piggyback off of send_item_attack_message for item attacks,
+	// unarmed attacks / grabs / bullet hits / etc. have no simliar proc (yet),
+	// so keen-eyed observers may notice the slightly nonsensical message ("John is hit by Joe's grab in the chest!")
+	if(isitem(hitby) && isliving(attacker))
+		decoy.send_item_attack_message(hitby, attacker, owner.parse_zone_with_bodypart(BODY_ZONE_CHEST), BODY_ZONE_CHEST)
+	else
+		owner.visible_message(
+			span_attack_other("[attacker] is hit by [attack_text] in the chest!"),
+			span_attack_blocked("Your [name] activates, rendering you invisible!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+		)
+	owner.show_message(span_attack_blocked("Your [name] activates, rendering you invisible!"), MSG_VISUAL)
 	addtimer(CALLBACK(src, PROC_REF(end_stealth), owner), stealth_time)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
@@ -218,7 +247,11 @@
 	if(!isliving(hitby))
 		return FALSE //it just doesn't activate
 	var/mob/living/attacker = hitby
-	owner.visible_message(span_danger("[src] activates, cloaking the wrong person!"))
+	owner.visible_message(
+		span_attack_blocked("[src] activates, cloaking the wrong person!"),
+		span_attack_blocked("Your [name] activates, cloaking the wrong person!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	attacker.alpha = 0
 	addtimer(VARSET_CALLBACK(attacker, alpha, initial(attacker.alpha)), 4 SECONDS)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
@@ -246,13 +279,21 @@
 	..()
 
 /obj/item/clothing/suit/armor/reactive/tesla/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], sending out arcs of lightning!"))
+	owner.visible_message(
+		span_attack_blocked("[src] blocks [attack_text], sending out arcs of lightning!"),
+		span_attack_blocked("Your [name] blocks [attack_text], sending out arcs of lightning!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	tesla_zap(source = owner, zap_range = zap_range, power = zap_power, cutoff = 1e3, zap_flags = zap_flags)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/tesla/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of energy into [owner] from the surrounding environment!"))
+	owner.visible_message(
+		span_attack_blocked("[src] blocks [attack_text], but pulls a massive charge of energy into [owner] from the surrounding environment!"),
+		span_attack_blocked("Your [name] blocks [attack_text], but pulls a massive charge of energy into you from the surrounding environment!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	REMOVE_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE) //oops! can't shock without this!
 	electrocute_mob(owner, get_area(src), src, 1)
 	ADD_CLOTHING_TRAIT(owner, TRAIT_TESLA_SHOCKIMMUNE)
@@ -270,7 +311,11 @@
 
 /obj/item/clothing/suit/armor/reactive/repulse/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(get_turf(owner),'sound/effects/magic/repulse.ogg', 100, TRUE)
-	owner.visible_message(span_danger("[src] blocks [attack_text], converting the attack into a wave of force!"))
+	owner.visible_message(
+		span_attack_blocked("[src] blocks [attack_text], converting the attack into a wave of force!"),
+		span_attack_blocked("Your [name] blocks [attack_text], converting the attack into a wave of force!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	var/turf/owner_turf = get_turf(owner)
 	var/list/thrown_items = list()
 	for(var/atom/movable/repulsed in range(owner_turf, 7))
@@ -285,7 +330,11 @@
 
 /obj/item/clothing/suit/armor/reactive/repulse/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	playsound(get_turf(owner),'sound/effects/magic/repulse.ogg', 100, TRUE)
-	owner.visible_message(span_danger("[src] does not block [attack_text], and instead generates an attracting force!"))
+	owner.visible_message(
+		span_attack_blocked("[src] does not block [attack_text], and instead generates an attracting force!"),
+		span_attack_blocked("Your [name] fails to block [attack_text], and instead generates an attracting force!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	var/turf/owner_turf = get_turf(owner)
 	var/list/thrown_items = list()
 	for(var/atom/movable/repulsed in range(owner_turf, 7))
@@ -305,8 +354,12 @@
 	var/tele_range = 10
 
 /obj/item/clothing/suit/armor/reactive/table/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("The reactive teleport system flings [owner] clear of [attack_text] and slams [owner.p_them()] into a fabricated table!"))
-	owner.visible_message("<font color='red' size='3'>[owner] GOES ON THE TABLE!!!</font>")
+	owner.visible_message(
+		span_attack_blocked("[src] flings [owner] clear of [attack_text] and slams [owner.p_them()] into a fabricated table!"),
+		span_attack_blocked("You are flung clear of [attack_text] by your [name] and slammed into a fabricated table!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
+	owner.visible_message(span_userdanger("[owner] GOES ON THE TABLE!!!"))
 	owner.Knockdown(30)
 	owner.apply_damage(10, BRUTE)
 	owner.apply_damage(40, STAMINA)
@@ -318,8 +371,12 @@
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/table/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("The reactive teleport system flings [owner] clear of [attack_text] and slams [owner.p_them()] into a fabricated glass table!"))
-	owner.visible_message("<font color='red' size='3'>[owner] GOES ON THE GLASS TABLE!!!</font>")
+	owner.visible_message(
+		span_attack_blocked("[src] flings [owner] clear of [attack_text] and slams [owner.p_them()] into a fabricated glass table!"),
+		span_attack_blocked("You are flung clear of [attack_text] by your [name] and slammed into a fabricated glass table!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
+	owner.visible_message(span_userdanger("[owner] GOES ON THE GLASS TABLE!!!"))
 	do_teleport(owner, get_turf(owner), tele_range, no_effects = TRUE, channel = TELEPORT_CHANNEL_BLUESPACE)
 	var/obj/structure/table/glass/shattering_table = new /obj/structure/table/glass(get_turf(owner))
 	shattering_table.table_shatter(owner)
@@ -341,7 +398,11 @@
 	return ..()
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], sending out mental pulses!"))
+	owner.visible_message(
+		span_attack_blocked("[src] blocks [attack_text], sending out mental pulses!"),
+		span_attack_blocked("Your [name] blocks [attack_text], sending out mental pulses!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	visible_hallucination_pulse(
 		center = get_turf(owner),
 		radius = 3,
@@ -352,7 +413,11 @@
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/hallucinating/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of mental energy into [owner] from the surrounding environment!"))
+	owner.visible_message(
+		span_attack_blocked("[src] blocks [attack_text], but pulls a massive charge of mental energy into [owner] from the surrounding environment!"),
+		span_attack_blocked("Your [name] blocks [attack_text], but pulls a massive charge of mental energy into you from the surrounding environment!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	owner.adjust_hallucinations_up_to(50 SECONDS, 240 SECONDS)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
@@ -394,13 +459,21 @@
 	..()
 
 /obj/item/clothing/suit/armor/reactive/bioscrambling/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], biohazard body scramble released!"))
+	owner.visible_message(
+		span_attack_blocked("[src] blocks [attack_text], biohazard body scramble released!"),
+		span_attack_blocked("Your [name] blocks [attack_text], biohazard body scramble released!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	bioscrambler_pulse(owner, FALSE)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
 
 /obj/item/clothing/suit/armor/reactive/bioscrambling/emp_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	owner.visible_message(span_danger("[src] blocks [attack_text], but pulls a massive charge of biohazard material into [owner] from the surrounding environment!"))
+	owner.visible_message(
+		span_attack_blocked("[src] blocks [attack_text], but pulls a massive charge of biohazard material into [owner] from the surrounding environment!"),
+		span_attack_blocked("Your [name] blocks [attack_text], but pulls a massive charge of biohazard material into you from the surrounding environment!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	bioscrambler_pulse(owner, TRUE)
 	reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 	return TRUE
@@ -420,8 +493,12 @@
 	reactivearmor_cooldown_duration = 10 SECONDS
 
 /obj/item/clothing/suit/armor/reactive/barricade/reactive_activation(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	playsound(get_turf(owner),'sound/effects/magic/repulse.ogg', 100, TRUE)
-	owner.visible_message(span_danger("The reactive armor interposes matter from another world between [src] and [attack_text]!"))
+	playsound(owner,'sound/effects/magic/repulse.ogg', 100, TRUE)
+	owner.visible_message(
+		span_attack_blocked("[src] interposes matter from another world between [src] and [attack_text]!"),
+		span_attack_blocked("Your [name] interposes matter from another world between [src] and [attack_text]!"),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
 	for (var/atom/movable/target in repulse_targets(owner))
 		repulse(target, owner)
 

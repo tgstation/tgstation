@@ -699,7 +699,7 @@
 			created_atom.pixel_x += rand(-8,8)
 			created_atom.pixel_y += rand(-8,8)
 		created_atoms.Add(created_atom)
-	to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[initial(atom_to_create.name)][plural_s(initial(atom_to_create.name))]"] from [src]."))
+	to_chat(user, span_notice("You manage to create [amount_to_create] [initial(atom_to_create.gender) == PLURAL ? "[initial(atom_to_create.name)]" : "[PLURALIZE(initial(atom_to_create.name))]"] from [src]."))
 	SEND_SIGNAL(src, COMSIG_ATOM_PROCESSED, user, process_item, created_atoms)
 	UsedforProcessing(user, process_item, chosen_option, created_atoms)
 

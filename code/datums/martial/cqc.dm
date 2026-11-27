@@ -32,9 +32,15 @@
 		return
 	if(!can_use(cqc_user))
 		return
-	cqc_user.visible_message(
-		span_danger("[cqc_user] twists [attacker]'s arm, sending their [attack_weapon] back towards them!"),
-		span_userdanger("Making sure to avoid [attacker]'s [attack_weapon], you twist their arm to send it right back at them!"),
+	combat_message(
+		attacker = cqc_user,
+		defender = attacker,
+		to_attacker = "You twist [attacker]'s arm, sending [attacker.p_their()] [attack_weapon] back towards them!",
+		to_blind_attacker = "You twist your assailant's arm, sending their hand back towards them!",
+		to_defender = "Making sure to avoid your [attack_weapon], [cqc_user] twists your arm to send it right back at you!",
+		to_blind_defender = "Making sure to avoid your [attack_weapon], your target twists your arm to send it right back at you!",
+		to_viewers = "[cqc_user] twists [attacker]'s arm, sending their [attack_weapon] back towards them!",
+		dangerous = TRUE,
 	)
 	var/obj/item/melee/touch_attack/touch_weapon = attack_weapon
 	var/datum/action/cooldown/spell/touch/touch_spell = touch_weapon.spell_which_made_us?.resolve()
@@ -65,15 +71,26 @@
 
 	var/mob/living/attacker = GET_ASSAILANT(hitby)
 	if(istype(attacker) && cqc_user.Adjacent(attacker))
-		cqc_user.visible_message(
-			span_danger("[cqc_user] [blocking_text_s] [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!"),
-			span_userdanger("You [blocking_text] [attack_text]!"),
+		combat_message(
+			attacker = cqc_user,
+			defender = attacker,
+			to_attacker = "You [blocking_text] [attack_text] and twist [attacker]'s arm behind [attacker.p_their()] back!",
+			to_defender = "[cqc_user] [blocking_text_s] [attack_text] and twists your arm behind your back!",
+			to_blind_attacker = "You [blocking_text] [attack_text] and twist your assailant's arm behind their back!",
+			to_blind_defender = "Something stops your attack, and wrests your arm behind your back!",
+			to_viewers = "[cqc_user] [blocking_text_s] [attack_text] and twists [attacker]'s arm behind [attacker.p_their()] back!",
+			dangerous = FALSE,
 		)
 		attacker.Stun(4 SECONDS)
 	else
-		cqc_user.visible_message(
-			span_danger("[cqc_user] [blocking_text_s] [attack_text]!"),
-			span_userdanger("You [blocking_text] [attack_text]!"),
+		combat_message(
+			attacker = cqc_user,
+			defender = attacker,
+			to_attacker = "You [blocking_text] [attack_text]!",
+			to_defender = "[cqc_user] [blocking_text_s] [attack_text]!",
+			to_blind_defender = "Something stops your attack!",
+			to_viewers = "[cqc_user] [blocking_text_s] [attack_text]!",
+			dangerous = FALSE,
 		)
 	return SUCCESSFUL_BLOCK
 
@@ -106,14 +123,17 @@
 		return FALSE
 
 	attacker.do_attack_animation(defender)
-	defender.visible_message(
-		span_danger("[attacker] slams [defender] into the ground!"),
-		span_userdanger("You're slammed into the ground by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		null,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You slam [defender] into the ground!",
+		to_defender = "[attacker] slams you into the ground!",
+		to_blind_attacker = "You slam someone to the ground!",
+		to_blind_defender = "Someone slams you into the ground!",
+		to_viewers = "[attacker] slams [defender] into the ground!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+		dangerous = TRUE,
 	)
-	to_chat(attacker, span_danger("You slam [defender] into the ground!"))
 	playsound(attacker, 'sound/items/weapons/slam.ogg', 50, TRUE, -1)
 	defender.apply_damage(10, BRUTE)
 	defender.Paralyze(12 SECONDS)
@@ -127,14 +147,17 @@
 	attacker.do_attack_animation(defender)
 	if(defender.body_position == LYING_DOWN && !IS_UNCONSCIOUS(defender) && defender.get_stamina_loss() >= 100)
 		log_combat(attacker, defender, "knocked out (Head kick)(CQC)")
-		defender.visible_message(
-			span_danger("[attacker] kicks [defender]'s head, knocking [defender.p_them()] out!"),
-			span_userdanger("You're knocked unconscious by [attacker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
-			null,
-			attacker,
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You kick [defender]'s head, knocking [defender.p_them()] out!",
+			to_defender = "[attacker] kicks you in the head, knocking you unconscious!",
+			to_blind_attacker = "You kick someone!",
+			to_blind_defender = "Someone kicks you in the head, knocking you unconscious!",
+			to_viewers = "[attacker] kicks [defender]'s head, knocking [defender.p_them()] out!",
+			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+			dangerous = TRUE,
 		)
-		to_chat(attacker, span_danger("You kick [defender]'s head, knocking [defender.p_them()] out!"))
 		playsound(attacker, 'sound/items/weapons/genhit1.ogg', 50, TRUE, -1)
 
 		var/helmet_protection = defender.run_armor_check(BODY_ZONE_HEAD, MELEE)
@@ -143,14 +166,16 @@
 		defender.adjust_organ_loss(ORGAN_SLOT_BRAIN, 15, 150)
 
 	else
-		defender.visible_message(
-			span_danger("[attacker] kicks [defender] back!"),
-			span_userdanger("You're kicked back by [attacker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
-			COMBAT_MESSAGE_RANGE,
-			attacker,
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You kick [defender] back!",
+			to_defender = "[attacker] kicks you back!",
+			to_blind_attacker = "You kick someone!",
+			to_blind_defender = "Someone kicks you back!",
+			to_viewers = "[attacker] kicks [defender] back!",
+			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
 		)
-		to_chat(attacker, span_danger("You kick [defender] back!"))
 		playsound(attacker, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 		var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 		defender.throw_at(throw_target, 1, 14, attacker)
@@ -164,14 +189,16 @@
 /datum/martial_art/cqc/proc/Pressure(mob/living/attacker, mob/living/defender)
 	attacker.do_attack_animation(defender)
 	log_combat(attacker, defender, "pressured (CQC)")
-	defender.visible_message(
-		span_danger("[attacker] punches [defender]'s neck!"),
-		span_userdanger("Your neck is punched by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		COMBAT_MESSAGE_RANGE,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You punch [defender]'s neck!",
+		to_defender = "[attacker] punches you in the neck!",
+		to_blind_attacker = "You strike out, aiming for the neck!",
+		to_blind_defender = "Someone punches you in the neck!",
+		to_viewers = "[attacker] punches [defender]'s neck!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
 	)
-	to_chat(attacker, span_danger("You punch [defender]'s neck!"))
 	defender.adjust_stamina_loss(60)
 	playsound(attacker, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 	return TRUE
@@ -183,14 +210,16 @@
 		return FALSE
 
 	log_combat(attacker, defender, "restrained (CQC)")
-	defender.visible_message(
-		span_warning("[attacker] locks [defender] into a restraining position!"),
-		span_userdanger("You're locked into a restraining position by [attacker]!"),
-		span_hear("You hear shuffling and a muffled groan!"),
-		null,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You lock [defender] into a restraining position!",
+		to_defender = "[attacker] locks you into a restraining position!",
+		to_blind_attacker = "You lock someone into a restraining position!",
+		to_blind_defender = "Someone locks you into a restraining position!",
+		to_viewers = "[attacker] locks [defender] into a restraining position!",
+		to_blind_viewers = "You hear shuffling and a muffled groan!",
 	)
-	to_chat(attacker, span_danger("You lock [defender] into a restraining position!"))
 	defender.adjust_stamina_loss(20)
 	defender.Stun(10 SECONDS)
 	restraining_mob = WEAKREF(defender)
@@ -203,14 +232,17 @@
 
 	attacker.do_attack_animation(defender)
 	log_combat(attacker, defender, "consecutive CQC'd (CQC)")
-	defender.visible_message(
-		span_danger("[attacker] strikes [defender]'s abdomen, neck and back consecutively"), \
-		span_userdanger("Your abdomen, neck and back are struck consecutively by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		COMBAT_MESSAGE_RANGE,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You strike [defender]'s abdomen, neck and back consecutively!",
+		to_defender = "[attacker] consecutively strikes your abdomen, neck and back!",
+		to_blind_attacker = "You strike out, aiming for the abdomen, neck, and back consecutively!",
+		to_blind_defender = "Someone consecutively strikes your abdomen, neck and back!",
+		to_viewers = "[attacker] strikes [defender]'s abdomen, neck and back consecutively!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+		dangerous = TRUE,
 	)
-	to_chat(attacker, span_danger("You strike [defender]'s abdomen, neck and back consecutively!"))
 	playsound(defender, 'sound/items/weapons/cqchit2.ogg', 50, TRUE, -1)
 	var/obj/item/held_item = defender.get_active_held_item()
 	if(held_item && defender.temporarilyRemoveItemFromInventory(held_item))
@@ -237,14 +269,17 @@
 		defender.drop_all_held_items()
 		attacker.setGrabState(GRAB_AGGRESSIVE) //Instant aggressive grab if on grab intent
 		log_combat(attacker, defender, "grabbed", addition="aggressively")
-		defender.visible_message(
-			span_warning("[attacker] violently grabs [defender]!"),
-			span_userdanger("You're grabbed violently by [attacker]!"),
-			span_hear("You hear sounds of aggressive fondling!"),
-			COMBAT_MESSAGE_RANGE,
-			attacker,
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You violently grab [defender]!",
+			to_defender = "[attacker] violently grabs you!",
+			to_blind_attacker = "You violently grab someone!",
+			to_blind_defender = "Someone violently grabs you!",
+			to_viewers = "[attacker] violently grabs [defender]!",
+			to_blind_viewers = "You hear sounds of aggressive fondling!",
+			dangerous = FALSE,
 		)
-		to_chat(attacker, span_danger("You violently grab [defender]!"))
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/cqc/harm_act(mob/living/attacker, mob/living/defender)
@@ -256,13 +291,17 @@
 		var/obj/item/bodypart/head = defender.get_bodypart(BODY_ZONE_HEAD)
 		if(!isnull(head))
 			playsound(defender, 'sound/effects/wounds/crack1.ogg', 100)
-			defender.visible_message(
-				span_danger("[attacker] snaps the neck of [defender]!"),
-				span_userdanger("Your neck is snapped by [attacker]!"),
-				span_hear("You hear a sickening snap!"),
-				ignored_mobs = attacker
+			combat_message(
+				attacker = attacker,
+				defender = defender,
+				to_attacker = "In a swift motion, you snap the neck of [defender]!",
+				to_defender = "[attacker] snaps your neck!",
+				to_blind_attacker = "In a swift motion, you snap the neck of someone!",
+				to_blind_defender = "Someone snaps your neck!",
+				to_viewers = "[attacker] snaps the neck of [defender]!",
+				to_blind_viewers = "You hear a sickening snap!",
+				dangerous = TRUE,
 			)
-			to_chat(attacker, span_danger("In a swift motion, you snap the neck of [defender]!"))
 			log_combat(attacker, defender, "snapped neck")
 			defender.apply_damage(100, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND)
 			if(!HAS_TRAIT(defender, TRAIT_NODEATH))
@@ -274,14 +313,17 @@
 		return MARTIAL_ATTACK_FAIL
 
 	if(attacker.resting && defender.stat != DEAD && defender.body_position == STANDING_UP)
-		defender.visible_message(
-			span_danger("[attacker] leg sweeps [defender]!"),
-			span_userdanger("Your legs are sweeped by [attacker]!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
-			null,
-			attacker,
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You leg sweep [defender]!",
+			to_defender = "[attacker] leg sweeps you!",
+			to_blind_attacker = "You leg sweep at someone!",
+			to_blind_defender = "Someone sweeps at you!",
+			to_viewers = "[attacker] leg sweeps [defender]!",
+			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+			dangerous = TRUE,
 		)
-		to_chat(attacker, span_danger("You leg sweep [defender]!"))
 		playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 		attacker.do_attack_animation(defender)
 		defender.apply_damage(10, BRUTE)
@@ -294,7 +336,7 @@
 	if(check_streak(attacker, defender))
 		return MARTIAL_ATTACK_SUCCESS
 	attacker.do_attack_animation(defender)
-	var/picked_hit_type = pick("CQC", "Big Boss")
+	var/picked_hit_type = pick("CQC", "big boss")
 	var/bonus_damage = 13
 	if(defender.body_position == LYING_DOWN)
 		bonus_damage += 5
@@ -303,14 +345,17 @@
 
 	playsound(defender, (picked_hit_type == "kick" || picked_hit_type == "stomp") ? 'sound/items/weapons/cqchit2.ogg' : 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 
-	defender.visible_message(
-		span_danger("[attacker] [picked_hit_type]ed [defender]!"),
-		span_userdanger("You're [picked_hit_type]ed by [attacker]!"),
-		span_hear("You hear a sickening sound of flesh hitting flesh!"),
-		COMBAT_MESSAGE_RANGE,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You [picked_hit_type] [defender]!",
+		to_defender = "[attacker] [PRESENT_TENSE(picked_hit_type)] you!",
+		to_blind_attacker = "You [picked_hit_type] someone!",
+		to_blind_defender = "Someone [PRESENT_TENSE(picked_hit_type)] you!",
+		to_viewers = "[attacker] [PRESENT_TENSE(picked_hit_type)] [defender]!",
+		to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+		dangerous = TRUE,
 	)
-	to_chat(attacker, span_danger("You [picked_hit_type] [defender]!"))
 	log_combat(attacker, defender, "attacked ([picked_hit_type]'d)(CQC)")
 	return MARTIAL_ATTACK_SUCCESS
 
@@ -324,14 +369,17 @@
 
 	if(IS_WEAKREF_OF(attacker.pulling, restraining_mob))
 		log_combat(attacker, defender, "disarmed (CQC)", addition = "knocked out (CQC Chokehold)")
-		defender.visible_message(
-			span_danger("[attacker] puts [defender] into a chokehold!"),
-			span_userdanger("You're put into a chokehold by [attacker]!"),
-			span_hear("You hear shuffling and a muffled groan!"),
-			null,
-			attacker,
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You put [defender] into a chokehold!",
+			to_defender = "[attacker] puts you into a chokehold!",
+			to_blind_attacker = "You put someone into a chokehold!",
+			to_blind_defender = "Someone puts you into a chokehold!",
+			to_viewers = "[attacker] puts [defender] into a chokehold!",
+			to_blind_viewers = "You hear shuffling and a muffled groan!",
+			dangerous = TRUE,
 		)
-		to_chat(attacker, span_danger("You put [defender] into a chokehold!"))
 		defender.SetSleeping(40 SECONDS)
 		restraining_mob = null
 		if(attacker.grab_state < GRAB_NECK && !HAS_TRAIT(attacker, TRAIT_PACIFISM))
@@ -350,28 +398,34 @@
 		else
 			disarmed_item = null
 
-		defender.visible_message(
-			span_danger("[attacker] strikes [defender]'s jaw with their hand[disarmed_item ? ", disarming [defender.p_them()] of [disarmed_item]" : ""]!"),
-			span_userdanger("[attacker] strikes your jaw,[disarmed_item ? " disarming you of [disarmed_item] and" : ""] leaving you disoriented!"),
-			span_hear("You hear a sickening sound of flesh hitting flesh!"),
-			COMBAT_MESSAGE_RANGE,
-			attacker,
+		combat_message(
+			attacker = attacker,
+			defender = defender,
+			to_attacker = "You strike [defender]'s jaw with your hand[disarmed_item ? ", disarming [defender.p_them()] of [disarmed_item]" : ""]!",
+			to_defender = "[attacker] strikes your jaw,[disarmed_item ? " disarming you of [disarmed_item] and" : ""] leaving you disoriented!",
+			to_blind_attacker = "You strike someone's jaw!", // no indication of if you disarmed successfully
+			to_blind_defender = "Someone strikes your jaw[disarmed_item ? " disarming you of [disarmed_item] and" : ""] leaving you disoriented!",
+			to_viewers = "[attacker] strikes [defender]'s jaw with their hand[disarmed_item ? ", disarming [defender.p_them()] of [disarmed_item]" : ""]!",
+			to_blind_viewers = "You hear a sickening sound of flesh hitting flesh!",
+			dangerous = TRUE,
 		)
-		to_chat(attacker, span_danger("You strike [defender]'s jaw,[disarmed_item ? " disarming [defender.p_them()] of [disarmed_item] and" : ""] leaving [defender.p_them()] disoriented!"))
 		playsound(defender, 'sound/items/weapons/cqchit1.ogg', 50, TRUE, -1)
 		defender.set_jitter_if_lower(4 SECONDS)
 		defender.apply_damage(5, attacker.get_attack_type())
 		log_combat(attacker, defender, "disarmed (CQC)", addition = disarmed_item ? "(disarmed of [disarmed_item])" : null)
 		return MARTIAL_ATTACK_SUCCESS
 
-	defender.visible_message(
-		span_danger("[attacker] fails to disarm [defender]!"), \
-		span_userdanger("You're nearly disarmed by [attacker]!"),
-		span_hear("You hear a swoosh!"),
-		COMBAT_MESSAGE_RANGE,
-		attacker,
+	combat_message(
+		attacker = attacker,
+		defender = defender,
+		to_attacker = "You fail to disarm [defender]!",
+		to_defender = "[attacker] nearly disarms you!",
+		to_blind_attacker = "You swipe at someone!",
+		to_blind_defender = "Someone swipes at you!",
+		to_viewers = "[attacker] fails to disarm [defender]!",
+		to_blind_viewers = "You hear a swoosh!",
+		dangerous = FALSE,
 	)
-	to_chat(attacker, span_warning("You fail to disarm [defender]!"))
 	playsound(defender, 'sound/items/weapons/punchmiss.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "failed to disarm (CQC)")
 	return MARTIAL_ATTACK_FAIL

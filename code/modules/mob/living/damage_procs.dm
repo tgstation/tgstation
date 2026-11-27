@@ -16,7 +16,7 @@
  * * sharpness - Sharpness of the weapon.
  * * attack_direction - Direction of the attack from the attacker to [src].
  * * attacking_item - Item that is attacking [src].
- * * wound_clothing - If this should cause damage to clothing.
+ * * damage_flags - additional flags pertaining to the damage instance (more things should be combined into this later)
  *
  * Returns the amount of damage dealt.
  */
@@ -25,26 +25,24 @@
 	damagetype = BRUTE,
 	def_zone = null,
 	blocked = 0,
-	forced = FALSE,
-	spread_damage = FALSE,
 	wound_bonus = 0,
 	exposed_wound_bonus = 0,
 	sharpness = NONE,
 	attack_direction = null,
 	attacking_item,
-	wound_clothing = TRUE,
+	damage_flags = NONE,
 )
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/damage_amount = damage
-	if(!forced)
+	if(!(damage_flags & DAMAGE_NO_MULTIPLIERS))
 		blocked += damage_resistance
 		damage_amount *= ((100 - blocked) / 100)
 		damage_amount *= get_incoming_damage_modifier(damage_amount, damagetype, def_zone, sharpness, attack_direction, attacking_item)
 	if(damage_amount <= 0)
 		return 0
 
-	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage_amount, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
+	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMAGE, damage_amount, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, damage_flags)
 
 	var/damage_dealt = 0
 	switch(damagetype)
@@ -55,18 +53,18 @@
 				if(actual_hit.receive_damage(
 					brute = damage_amount,
 					burn = 0,
-					forced = forced,
+					forced = (damage_flags & DAMAGE_FORCED),
 					wound_bonus = wound_bonus,
 					exposed_wound_bonus = exposed_wound_bonus,
 					sharpness = sharpness,
 					attack_direction = attack_direction,
 					damage_source = attacking_item,
-					wound_clothing = wound_clothing,
+					damage_flags = damage_flags,
 				))
 					update_damage_overlays()
 				damage_dealt = actual_hit.get_damage() - delta // Unfortunately bodypart receive_damage doesn't return damage dealt so we do it manually
 			else
-				damage_dealt = -1 * adjust_brute_loss(damage_amount, forced = forced)
+				damage_dealt = -1 * adjust_brute_loss(damage_amount, forced = (damage_flags & DAMAGE_FORCED))
 		if(BURN)
 			if(isbodypart(def_zone))
 				var/obj/item/bodypart/actual_hit = def_zone
@@ -74,28 +72,28 @@
 				if(actual_hit.receive_damage(
 					brute = 0,
 					burn = damage_amount,
-					forced = forced,
+					forced = (damage_flags & DAMAGE_FORCED),
 					wound_bonus = wound_bonus,
 					exposed_wound_bonus = exposed_wound_bonus,
 					sharpness = sharpness,
 					attack_direction = attack_direction,
 					damage_source = attacking_item,
-					wound_clothing = wound_clothing,
+					damage_flags = damage_flags,
 				))
 					update_damage_overlays()
 				damage_dealt = actual_hit.get_damage() - delta // See above
 			else
-				damage_dealt = -1 * adjust_fire_loss(damage_amount, forced = forced)
+				damage_dealt = -1 * adjust_fire_loss(damage_amount, forced = (damage_flags & DAMAGE_FORCED))
 		if(TOX)
-			damage_dealt = -1 * adjust_tox_loss(damage_amount, forced = forced)
+			damage_dealt = -1 * adjust_tox_loss(damage_amount, forced = (damage_flags & DAMAGE_FORCED))
 		if(OXY)
-			damage_dealt = -1 * adjust_oxy_loss(damage_amount, forced = forced)
+			damage_dealt = -1 * adjust_oxy_loss(damage_amount, forced = (damage_flags & DAMAGE_FORCED))
 		if(STAMINA)
-			damage_dealt = -1 * adjust_stamina_loss(damage_amount, forced = forced)
+			damage_dealt = -1 * adjust_stamina_loss(damage_amount, forced = (damage_flags & DAMAGE_FORCED))
 		if(BRAIN)
 			damage_dealt = -1 * adjust_organ_loss(ORGAN_SLOT_BRAIN, damage_amount)
 
-	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage_dealt, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
+	SEND_SIGNAL(src, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage_dealt, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, damage_flags)
 	return damage_dealt
 
 /**

@@ -324,13 +324,13 @@
 			bleeding_severity = "You feel a small stream of blood running across your body"
 			next_cooldown *= 2
 		if(3 to 5)
-			bleeding_severity = "You skin feels clammy from the flow of blood leaving your body"
+			bleeding_severity = "Your skin feels clammy from the flow of blood leaving your body"
 			next_cooldown *= 1.7
 		if(5 to 7)
-			bleeding_severity = "Your body grows more and more numb as blood streams out"
+			bleeding_severity = "<b>Your body grows more and more numb as blood streams out</b>"
 			next_cooldown *= 1.5
 		if(7 to INFINITY)
-			bleeding_severity = "Your heartbeat thrashes wildly trying to keep up with your bloodloss"
+			bleeding_severity = "<b>Your heartbeat thrashes wildly trying to keep up with your bloodloss</b>"
 
 	var/rate_of_change = ", but it's getting better." // if there's no wounds actively getting bloodier or maintaining the same flow, we must be getting better!
 	if(HAS_TRAIT(src, TRAIT_COAGULATING)) // if we have coagulant, we're getting better quick
@@ -343,14 +343,14 @@
 			var/iter_wound_roc = iter_wound.get_bleed_rate_of_change()
 			switch(iter_wound_roc)
 				if(BLOOD_FLOW_INCREASING) // assume the worst, if one wound is getting bloodier, we focus on that
-					rate_of_change = ", <b>and it's getting worse!</b>"
+					rate_of_change = ", <i>and it's getting worse!</i>"
 					break
 				if(BLOOD_FLOW_STEADY) // our best case now is that our bleeding isn't getting worse
-					rate_of_change = ", and it's holding steady."
+					rate_of_change = ", but it's holding steady."
 				if(BLOOD_FLOW_DECREASING) // this only matters if none of the wounds fit the above two cases, included here for completeness
 					continue
 
-	to_chat(src, span_warning("[bleeding_severity][rate_of_change]"))
+	to_chat(src, span_grey("[bleeding_severity][rate_of_change]"))
 	COOLDOWN_START(src, bleeding_message_cd, next_cooldown)
 
 /mob/living/proc/restore_blood()
