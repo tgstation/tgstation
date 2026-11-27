@@ -387,5 +387,28 @@
   - bugfix: Fixed telecomms logging not sanitizing the name/network/id when being
       logged
 2026-11-27:
+  Kurgis:
+  - bugfix: Metastation Robotics no longer has its old morgue tray decals that were
+      left behind in its deletion.
+  - map: Modified Metastation's Robotics to restore missing floor decals, and remove
+      the loading bay decal from when it had a morgue tray.
+  Melbert:
+  - image: Chaplain robes of all types no longer squash digitigrade legs, nor hide
+      lizard tails.
+  - image: Ablative trenchcoat no longer squashes digitigrade legs
+  - image: Riot armor now conforms to digitigrade legs, rather than squashing
+  - code_imp: Splits the code that checks "should the character's jumpsuit and tail
+      be hidden" in two (one for jumpsuit and one for tail). Report anything weird,
+      such as clothing not hiding your jumpsuit or tail when it should otherwise.
+  - code_imp: Tail/wing mesh effect can now exclude certain parts (in other words
+      some effects may cover tail, but not wings). Report anything that looks broken
+      with that.
+  - bugfix: Changing species while wearing a meshing piece of clothing no longer makes
+      all of your features meshed by it
+  - bugfix: Exiled players (exile implant, sent through the gateway) are now properly
+      considered exiled to objectives
+  - bugfix: Being exiled to Lavaland is also properly considered exiled to objectives
+  PapaMichael:
+  - bugfix: Cream Pies and Spraycans now properly mess up your face again
   UwUMacaroniTime:
   - rscadd: Added two pre-con decks for TGC, available now at vendors!
