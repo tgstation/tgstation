@@ -13,12 +13,10 @@
 /datum/controller/subsystem/job/proc/get_configurable_jobs()
 	PRIVATE_PROC(TRUE)
 	RETURN_TYPE(/list/datum/job)
-	var/static/list/configurable_jobs = null
-	if(isnull(configurable_jobs))
-		configurable_jobs = list()
-		for(var/datum/job/occupation as anything in all_occupations)
-			if(occupation.job_flags & JOB_NEW_PLAYER_JOINABLE) // some maps might disable this as being in the `joinable_occupations` list, but we still want it to be configurable. this flag means it meets criteria
-				configurable_jobs += occupation
+	var/list/configurable_jobs = list()
+	for(var/datum/job/occupation as anything in all_occupations)
+		if(occupation.job_flags & JOB_NEW_PLAYER_JOINABLE) // some maps might disable this as being in the `joinable_occupations` list, but we still want it to be configurable. this flag means it meets criteria
+			configurable_jobs += occupation
 
 	return configurable_jobs
 

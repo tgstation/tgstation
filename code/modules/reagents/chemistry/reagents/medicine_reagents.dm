@@ -163,7 +163,8 @@
 	need_mob_update = affected_mob.adjust_oxy_loss(-1.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	need_mob_update += affected_mob.adjust_brute_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjust_fire_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjust_tox_loss(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype) //heals TOXINLOVERs
+	// heals toxlovers and even reverses radiation damage.
+	need_mob_update += affected_mob.heal_radiation(-0.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype, organ_multiplier = 1.5)
 	for(var/i in affected_mob.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_xadone(0.5 * power * metabolization_ratio * seconds_per_tick)
@@ -521,13 +522,14 @@
 	ph = 12 //It's a reducing agent
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
-	metabolized_traits = list(TRAIT_HALT_RADIATION_EFFECTS)
+	metabolized_traits = list(TRAIT_NO_RADIATION_EFFECTS)
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
-		if(affected_mob.adjust_tox_loss(-0.25 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
-			return UPDATE_MOB_HEALTH
+	if(!HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
+		return
+	if(affected_mob.heal_radiation(-0.25 * metabolization_ratio * seconds_per_tick, organ_multiplier = 4, updating_health = FALSE, required_biotype = affected_biotype))
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/pen_acid
 	name = "Pentetic Acid"
@@ -539,15 +541,14 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.4
 	inverse_chem = /datum/reagent/inverse/pen_acid
-	metabolized_traits = list(TRAIT_HALT_RADIATION_EFFECTS)
+	metabolized_traits = list(TRAIT_NO_RADIATION_EFFECTS)
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_tox_loss(-2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
-		. = UPDATE_MOB_HEALTH
-	for(var/datum/reagent/reagent as anything in affected_mob.reagents.reagent_list)
-		if(reagent != src)
-			affected_mob.reagents.remove_reagent(reagent.type, 2 * reagent.purge_multiplier * metabolization_ratio * seconds_per_tick)
+	for(var/datum/reagent/purged in affected_mob.reagents.reagent_list - src)
+		affected_mob.reagents.remove_reagent(purged.type, 2 * purged.purge_multiplier * metabolization_ratio * seconds_per_tick)
+	if(affected_mob.heal_radiation(-2 * metabolization_ratio * seconds_per_tick, organ_multiplier = 5, updating_health = FALSE, required_biotype = affected_biotype))
+		return UPDATE_MOB_HEALTH
 
 /datum/reagent/medicine/sal_acid
 	name = "Salicylic Acid"

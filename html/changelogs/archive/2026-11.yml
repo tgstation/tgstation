@@ -339,3 +339,76 @@
 2026-11-25:
   Melbert:
   - bugfix: Blade and Cosmic heretic can recharge their spells properly
+  - qol: Revamps handheld gene scanner output
+  - bugfix: NTOS Chatroom checks names and messages more thoroughly
+  PapaMichael:
+  - admin: Admins can Control+Alt+Click an atom to open VV on it
+  - admin: Admins can set the next round's station traits in the postround
+2026-11-26:
+  ArrisFairburne:
+  - sound: sawable guns now make appropriate sawing noises when they are sawn-off
+  - sound: gave appropriate usesound and operating sounds to various saw items in
+      the game
+  Ghommie:
+  - refactor: Refactored digitigrade legs code a bit. Report any outstanding issue
+      that wasn't previously there.
+  Melbert:
+  - rscadd: Individuals irradiated from a powerful primary source (such as the Supermatter)
+      will spread radiation around them. This is denoted by their radiation glow being
+      brighter than normal. Importantly, this will not cascade further, meaning any
+      individual irradiated from them will NOT spread it further.
+  - rscadd: Plasmamen, Androids, and other radiation immune species can be irradiated
+      once again, though are still immune to the effects. Only methods of direct decontamination
+      (like showering) will clear it.
+  - rscadd: Slimepeople can now properly be affected by radiation. Like Plasmamen,
+      it can only be cleared via direct decontamination.
+  - rscadd: Showers will now heal irradiation very slowly in addition to pausing the
+      negative effects.
+  - rscadd: Untreated irradiation will eventually spread to your internal organs,
+      causing organ damage and further complications. While it can spread to robotic
+      organs, this has no effect (for now). And yes, inserting an irradiated organ
+      into an otherwise clean patient will cause the radiation to spread to the body
+      over time.
+  - rscadd: Anti-rad medication such as Pentetic Acid now reverses organ damage caused
+      by irradiation (and eventually clears irradiated organs entirely) - so long
+      as the affected organ hasn't failed entirely.
+  - rscadd: Radioactive chemicals like Uranium can now directly irradiate organs -
+      for example, breathing radioactive smoke may irradiate your lungs.
+  - refactor: Radiation has seen a few changes if you couldn't tell. Report any issues
+      like mobs experiencing negative effects from irradiation when they otherwise
+      shouldn't be.
+  tontyGH:
+  - server: Fixed a bug that caused jobs to fallback to the default config at roundstart
+  - bugfix: Fixed an exploit that allowed books to contain unsanitized HTML
+  - bugfix: Fixed an exploit that allowed the PDA camera app to print unsanitized
+      photos
+  - bugfix: Fixed derpspeech not sanitizing messages after processing
+  - bugfix: Fixed admin pAI verb not sanitizing the new pAI's name
+  - bugfix: Fixed telecomms logging not sanitizing the name/network/id when being
+      logged
+2026-11-27:
+  Kurgis:
+  - bugfix: Metastation Robotics no longer has its old morgue tray decals that were
+      left behind in its deletion.
+  - map: Modified Metastation's Robotics to restore missing floor decals, and remove
+      the loading bay decal from when it had a morgue tray.
+  Melbert:
+  - image: Chaplain robes of all types no longer squash digitigrade legs, nor hide
+      lizard tails.
+  - image: Ablative trenchcoat no longer squashes digitigrade legs
+  - image: Riot armor now conforms to digitigrade legs, rather than squashing
+  - code_imp: Splits the code that checks "should the character's jumpsuit and tail
+      be hidden" in two (one for jumpsuit and one for tail). Report anything weird,
+      such as clothing not hiding your jumpsuit or tail when it should otherwise.
+  - code_imp: Tail/wing mesh effect can now exclude certain parts (in other words
+      some effects may cover tail, but not wings). Report anything that looks broken
+      with that.
+  - bugfix: Changing species while wearing a meshing piece of clothing no longer makes
+      all of your features meshed by it
+  - bugfix: Exiled players (exile implant, sent through the gateway) are now properly
+      considered exiled to objectives
+  - bugfix: Being exiled to Lavaland is also properly considered exiled to objectives
+  PapaMichael:
+  - bugfix: Cream Pies and Spraycans now properly mess up your face again
+  UwUMacaroniTime:
+  - rscadd: Added two pre-con decks for TGC, available now at vendors!

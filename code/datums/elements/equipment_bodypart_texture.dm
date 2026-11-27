@@ -7,14 +7,22 @@
 	var/body_zone
 	/// Texture we apply to the bodypart
 	var/bodypart_overlay_type
+	/// Arguments to pass to the overlay when applied
+	var/list/overlay_args
 
-/datum/element/equipment_bodypart_texture/Attach(datum/target, body_zone, bodypart_overlay_type)
+/datum/element/equipment_bodypart_texture/Attach(datum/target, body_zone, bodypart_overlay_type, ...)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
+	if(!ispath(bodypart_overlay_type, /datum/bodypart_texture))
+		stack_trace("Invalid bodypart overlay type: [bodypart_overlay_type]")
+		return ELEMENT_INCOMPATIBLE
+
 	src.body_zone = body_zone
 	src.bodypart_overlay_type = bodypart_overlay_type
+	if(isnull(overlay_args))
+		src.overlay_args = length(args) >= 4 ? args.Copy(4) : list()
 
 	var/obj/item/target_item = target
 	RegisterSignal(target_item, COMSIG_ITEM_EQUIPPED, PROC_REF(item_equipped))
@@ -41,7 +49,11 @@
 		return
 
 	var/obj/item/bodypart/affected_bodypart = equipper.get_bodypart(body_zone)
-	affected_bodypart?.add_bodypart_texture(bodypart_overlay_type)
+	if(!isnull(affected_bodypart))
+		if(length(overlay_args)) // shouldn't be necessary
+			affected_bodypart.add_bodypart_texture(new bodypart_overlay_type(arglist(overlay_args)))
+		else
+			affected_bodypart.add_bodypart_texture(bodypart_overlay_type)
 	RegisterSignal(equipper, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(limb_removed))
 	RegisterSignal(equipper, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(limb_added))
 
@@ -59,12 +71,17 @@
 /datum/element/equipment_bodypart_texture/proc/limb_removed(mob/living/carbon/limb_owner, obj/item/bodypart/removed_limb)
 	SIGNAL_HANDLER
 
-	removed_limb.remove_bodypart_texture(bodypart_overlay_type)
+	if(removed_limb.body_zone == body_zone)
+		removed_limb.remove_bodypart_texture(bodypart_overlay_type)
 
 /datum/element/equipment_bodypart_texture/proc/limb_added(mob/living/carbon/limb_owner, obj/item/bodypart/added_limb)
 	SIGNAL_HANDLER
 
-	added_limb.add_bodypart_texture(bodypart_overlay_type)
+	if(added_limb.body_zone == body_zone)
+		if(length(overlay_args)) // shouldn't be necessary
+			added_limb.add_bodypart_texture(new bodypart_overlay_type(arglist(overlay_args)))
+		else
+			added_limb.add_bodypart_texture(bodypart_overlay_type)
 
 /datum/element/equipment_bodypart_texture/proc/check_ignored_bodyshapes(mob/living/carbon/human/equipper, obj/item/item_to_check)
 	if(equipper.bodyshape & BODYSHAPE_CERULEAN)

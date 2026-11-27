@@ -4,7 +4,7 @@
 	icon_state = "straight_jacket"
 	inhand_icon_state = "straight_jacket"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	equip_delay_self = 5 SECONDS
 	strip_delay = 6 SECONDS
 	breakouttime = 5 MINUTES

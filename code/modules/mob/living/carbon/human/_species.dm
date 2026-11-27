@@ -687,48 +687,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	human_to_equip.equipOutfit(outfit_important_for_life)
 
-/**
- * Species based handling for irradiation
- *
- * Arguments:
- * - [source][/mob/living/carbon/human]: The mob requesting handling
- * - time_since_irradiated: The amount of time since the mob was first irradiated
- * - seconds_per_tick: The amount of time that has passed since the last tick
- */
-/datum/species/proc/handle_radiation(mob/living/carbon/human/source, time_since_irradiated, seconds_per_tick)
-	if(time_since_irradiated > RAD_MOB_KNOCKDOWN && SPT_PROB(RAD_MOB_KNOCKDOWN_PROB, seconds_per_tick))
-		if(!source.IsParalyzed())
-			source.emote("collapse")
-		source.Paralyze(RAD_MOB_KNOCKDOWN_AMOUNT)
-		to_chat(source, span_danger("You feel weak."))
-
-	if(time_since_irradiated > RAD_MOB_VOMIT && SPT_PROB(RAD_MOB_VOMIT_PROB, seconds_per_tick))
-		source.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 10)
-
-	if(time_since_irradiated > RAD_MOB_MUTATE && SPT_PROB(RAD_MOB_MUTATE_PROB, seconds_per_tick))
-		to_chat(source, span_danger("You mutate!"))
-		source.easy_random_mutate(NEGATIVE + MINOR_NEGATIVE)
-		source.emote("gasp")
-		source.domutcheck()
-
-	if(time_since_irradiated > RAD_MOB_HAIRLOSS && SPT_PROB(RAD_MOB_HAIRLOSS_PROB, seconds_per_tick))
-		var/obj/item/bodypart/head/head = source.get_bodypart(BODY_ZONE_HEAD)
-		if(!(source.hairstyle == "Bald") && (head?.head_flags & (HEAD_HAIR|HEAD_FACIAL_HAIR)))
-			to_chat(source, span_danger("Your hair starts to fall out in clumps..."))
-			addtimer(CALLBACK(src, PROC_REF(go_bald), source), 5 SECONDS)
-
-/**
- * Makes the target human bald.
- *
- * Arguments:
- * - [target][/mob/living/carbon/human]: The mob to make go bald.
- */
-/datum/species/proc/go_bald(mob/living/carbon/human/target)
-	if(QDELETED(target)) //may be called from a timer
-		return
-	target.set_facial_hairstyle("Shaved", update = FALSE)
-	target.set_hairstyle("Bald") //This calls update_body_parts()
-
 //////////////////
 // ATTACK PROCS //
 //////////////////
@@ -1922,30 +1880,29 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
 	var/list/new_bodypart_overrides = new_species.bodypart_overrides.Copy()
-	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
-		new_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
-		new_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
-
 	for(var/obj/item/bodypart/old_part as anything in target.get_bodyparts())
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
 			continue
-		// update all our existing limbs
-		var/path = new_bodypart_overrides?[old_part.body_zone]
-		var/obj/item/bodypart/new_part
+
+		var/path = new_bodypart_overrides[old_part.body_zone]
+		if(path == old_part.type) //Some species have the same bodyparts. (e.g. human and felinids, lizards and their subspecies), so just update the limb.
+			old_part.update_limb(is_creating = TRUE)
+			continue
+
 		if(path)
-			new_part = new path()
+			var/obj/item/bodypart/new_part = new path()
 			new_part.replace_limb(target)
 			new_part.update_limb(is_creating = TRUE)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)
 
-	var/list/old_bodypart_overrides = old_species.bodypart_overrides.Copy()
+	var/list/old_bodypart_overrides = old_species?.bodypart_overrides.Copy()
 	if(length(new_bodypart_overrides) <= length(old_bodypart_overrides))
 		return // we updated all the limbs the character deserves
 	// but there are cases where the old species naturally lacked limbs
 	for(var/zone in new_bodypart_overrides)
 		// find a limb that the character doesn't have because of their old species
-		if(new_bodypart_overrides.Find(zone) && old_bodypart_overrides.Find(zone))
+		if(new_bodypart_overrides.Find(zone) && old_bodypart_overrides?.Find(zone))
 			continue
 		var/path = new_bodypart_overrides[zone]
 		if(!path)

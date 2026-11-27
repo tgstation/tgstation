@@ -557,7 +557,7 @@
 	item_flags = DROPDEL
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/armor_changeling
-	flags_inv = HIDEJUMPSUIT
+	flags_inv = HIDEJUMPSUIT|HIDETAIL
 	cold_protection = 0
 	heat_protection = 0
 	bodyshapes_with_variations = BODYSHAPE_CERULEAN

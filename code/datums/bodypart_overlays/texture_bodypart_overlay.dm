@@ -79,14 +79,21 @@
 
 	/// Color used for the outline filter
 	var/outline_color = "#080808"
+	/// These overlay flags will not be meshed (in addition to core parts)
+	var/skip_over_flags = NONE
 
-/datum/bodypart_texture/mesh/New()
+/datum/bodypart_texture/mesh/New(skip_over_flags = NONE)
 	. = ..()
 	cached_displacement_icon = icon(displacement_icon, displacement_icon_state)
 	cached_lighting_icon = icon(lighting_icon, lighting_icon_state)
+	// If you add more arguments, make sure to include it in the key
+	src.skip_over_flags = skip_over_flags
+
+/datum/bodypart_texture/mesh/icon_render_key()
+	return "[..()]-[skip_over_flags]"
 
 /datum/bodypart_texture/mesh/modify_bodypart_appearance(image/appearance, overlay_flags)
-	if(overlay_flags & LIMB_OVERLAY_CORE)
+	if(overlay_flags & (LIMB_OVERLAY_CORE|skip_over_flags))
 		return // the bodypart itself doesn't need mesh
 
 	. = ..()
@@ -106,9 +113,15 @@
 	texture_icon_state = "mesh_mask"
 	outline_color = "#080808"
 
+/datum/bodypart_texture/mesh/black/pure
+	texture_icon_state = "mesh_mask_pure"
+
 /datum/bodypart_texture/mesh/white
 	texture_icon_state = "mesh_mask_white"
 	outline_color = "#B2B2B2"
+
+/datum/bodypart_texture/mesh/white/pure
+	texture_icon_state = "mesh_mask_purewhite"
 
 /datum/bodypart_texture/mesh/biosuit
 	texture_icon_state = "mesh_mask_biosuit"
