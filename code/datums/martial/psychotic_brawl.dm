@@ -14,6 +14,7 @@
 
 /datum/martial_art/psychotic_brawling/proc/psycho_attack(mob/living/attacker, mob/living/defender, grab_attack)
 	var/atk_verb
+	var/attack_damage
 	switch(rand(1,8))
 		if(1)
 			if(iscarbon(defender) && iscarbon(attacker))
@@ -53,8 +54,13 @@
 						attacker.setGrabState(GRAB_PASSIVE)
 		if(4)
 			atk_verb = "headbutt"
-			var/defender_damage = rand(5, 10)
-			if(defender.check_block(attacker, defender_damage, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
+			attack_damage = determine_limb_damage(attacker, defender, MARTIAL_ART_MOVE_REQUIRES_HEAD)
+
+			if(!attack_damage)
+				attacker.balloon_alert(attacker, "no head!")
+				return MARTIAL_ATTACK_FAIL
+
+			if(defender.check_block(attacker, attack_damage, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
 				return MARTIAL_ATTACK_FAIL
 
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
@@ -68,18 +74,20 @@
 			)
 			to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
 			playsound(defender, 'sound/items/weapons/punch1.ogg', 40, TRUE, -1)
-			defender.apply_damage(defender_damage, attacker.get_attack_type(), BODY_ZONE_HEAD)
-			attacker.apply_damage(rand(5, 10), attacker.get_attack_type(), BODY_ZONE_HEAD)
+			defender.apply_damage(attack_damage * 3, attacker.get_attack_type(), BODY_ZONE_HEAD)
+			attacker.apply_damage(attack_damage, attacker.get_attack_type(), BODY_ZONE_HEAD)
 			if(iscarbon(defender))
 				var/mob/living/carbon/carbon_defender = defender
 				if(!istype(carbon_defender.get_item_by_slot(ITEM_SLOT_HEAD), /obj/item/clothing/head/helmet) && !istype(carbon_defender.get_item_by_slot(ITEM_SLOT_HEAD), /obj/item/clothing/head/utility/hardhat))
-					carbon_defender.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5)
+					carbon_defender.adjust_organ_loss(ORGAN_SLOT_BRAIN, attack_damage*0.5)
 			attacker.Stun(rand(1 SECONDS, 4.5 SECONDS))
 			defender.Stun(rand(0.5 SECONDS, 3 SECONDS))
 			if(HAS_TRAIT(attacker, TRAIT_PACIFISM))
 				attacker.add_mood_event("bypassed_pacifism", /datum/mood_event/pacifism_bypassed)
 		if(5,6)
-			atk_verb = pick("kick", "hit", "slam")
+			atk_verb = pick("smash", "hit", "slam")
+			attack_damage = determine_limb_damage(attacker, defender)
+
 			if(defender.check_block(attacker, 0, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
 				return MARTIAL_ATTACK_FAIL
 
@@ -92,7 +100,7 @@
 				attacker,
 			)
 			to_chat(attacker, span_danger("You [atk_verb] [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"))
-			defender.apply_damage(rand(15, 30), attacker.get_attack_type())
+			defender.apply_damage(attack_damage * 2, attacker.get_attack_type())
 			playsound(defender, 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 			var/throwtarget = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))
 			defender.throw_at(throwtarget, 4, 2, attacker)//So stuff gets tossed around at the same time.

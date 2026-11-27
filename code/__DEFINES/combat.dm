@@ -354,6 +354,11 @@ GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_
 /// Get what martial art will be used after cycling through the active martial art.
 #define GET_NEXT_MARTIAL_ART(goku) (LAZYACCESS(goku.martial_arts, 2))
 
+/// Defines to determine what kind of limb we're using during a martial art attack, used as part of _proc/determine_limb_damage()
+#define MARTIAL_ART_MOVE_REQUIRES_ARM "arm"
+#define MARTIAL_ART_MOVE_REQUIRES_LEG "leg"
+#define MARTIAL_ART_MOVE_REQUIRES_HEAD "head"
+
 /// IF an object is weak against armor, this is the value that any present armor is multiplied by
 #define ARMOR_WEAKENED_MULTIPLIER 2
 /// Armor can't block more than this as a percentage

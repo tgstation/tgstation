@@ -131,9 +131,9 @@
 	unarmed_attack_verbs_continuous = list("punches")
 	grappled_attack_verb = "pummel"
 	grappled_attack_verb_continuous = "pummels"
-	unarmed_damage_low = 5
-	unarmed_damage_high = 10
-	unarmed_pummeling_bonus = 1.5
+	unarmed_damage_low = LIMB_DEFAULT_UNARMED_DAMAGE_LOWER_PUNCH
+	unarmed_damage_high = LIMB_DEFAULT_UNARMED_DAMAGE_UPPER_PUNCH
+	unarmed_pummeling_bonus = LIMB_DEFAULT_UNARMED_PUMMELING_MULTIPLIER
 	body_zone = BODY_ZONE_L_ARM
 
 	/// Actionspeed modifier applied to doafters being done while this arm is active
@@ -387,9 +387,9 @@
 	body_zone = BODY_ZONE_L_LEG
 	unarmed_attack_verbs = list("kick") // The lovely kick, typically only accessable by attacking a grouded foe. 1.5 times better than the punch.
 	unarmed_attack_verbs_continuous = list("kicks")
-	unarmed_damage_low = 7
-	unarmed_damage_high = 15
-	unarmed_effectiveness = 15
+	unarmed_damage_low = LIMB_DEFAULT_UNARMED_DAMAGE_LOWER_KICK
+	unarmed_damage_high = LIMB_DEFAULT_UNARMED_DAMAGE_UPPER_KICK
+	unarmed_effectiveness = LIMB_DEFAULT_UNARMED_EFFECTIVENESS_KICK
 	biological_state = BIO_STANDARD_JOINTED
 	/// A speed modifier we apply to the owner when attached, if any. Positive numbers make it move slower, negative numbers make it move faster.
 	var/speed_modifier = 0

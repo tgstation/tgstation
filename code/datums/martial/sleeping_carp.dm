@@ -80,6 +80,11 @@
 	if(!affecting)
 		return FALSE
 
+	var/attack_damage = determine_limb_damage(attacker, defender)
+	if(!attack_damage)
+		attacker.balloon_alert(attacker, "no arm!")
+		return FALSE
+
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	defender.visible_message(
 		span_danger("[attacker] violently twists [defender]'s [affecting]!"),
@@ -91,12 +96,17 @@
 	to_chat(attacker, span_danger("You violently twist [defender]'s [affecting]!"))
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
 	log_combat(attacker, defender, "wrist wrenched (Sleeping Carp)")
-	defender.apply_damage(20, BRUTE, affecting, wound_bonus = 30)
+	defender.apply_damage(attack_damage * 2, BRUTE, affecting, wound_bonus = 30)
 	defender.drop_all_held_items()
 	return TRUE
 
 /// Crashing Wave Kick: Harm Disarm combo, throws people seven tiles backwards
 /datum/martial_art/the_sleeping_carp/proc/launch_kick(mob/living/attacker, mob/living/defender)
+	var/attack_damage = determine_limb_damage(attacker, defender, MARTIAL_ART_MOVE_REQUIRES_LEG)
+	if(!attack_damage)
+		attacker.balloon_alert(attacker, "no leg!")
+		return FALSE
+
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
 	defender.visible_message(
 		span_warning("[attacker] kicks [defender] square in the chest, sending them flying!"),
@@ -108,12 +118,17 @@
 	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 	defender.throw_at(throw_target, 7, 4, attacker)
-	defender.apply_damage(15, attacker.get_attack_type(), BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
+	defender.apply_damage(attack_damage * 1.5, attacker.get_attack_type(), BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
 	log_combat(attacker, defender, "launchkicked (Sleeping Carp)")
 	return TRUE
 
 /// Keelhaul: Disarm Disarm combo, knocks people down and deals substantial stamina damage, and also discombobulates them. Knocks objects out of their hands if they're already on the ground.
 /datum/martial_art/the_sleeping_carp/proc/drop_kick(mob/living/attacker, mob/living/defender)
+	var/attack_damage = determine_limb_damage(attacker, defender, MARTIAL_ART_MOVE_REQUIRES_LEG)
+	if(!attack_damage)
+		attacker.balloon_alert(attacker, "no leg!")
+		return FALSE
+
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
 	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	if(defender.body_position == STANDING_UP)
@@ -124,7 +139,7 @@
 		defender.drop_all_held_items()
 		defender.visible_message(span_warning("[attacker] kicks [defender] in the head!"), \
 					span_userdanger("You are kicked in the head by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
-	defender.apply_damage(40, STAMINA)
+	defender.apply_damage(attack_damage * 4, STAMINA)
 	defender.adjust_dizzy_up_to(10 SECONDS, 10 SECONDS)
 	defender.adjust_temp_blindness_up_to(2 SECONDS, 10 SECONDS)
 	log_combat(attacker, defender, "dropkicked (Sleeping Carp)")
@@ -132,6 +147,11 @@
 
 /// Kraken Wrack: Grab Harm combo, causes them to be silenced and briefly stunned, as well as doing a moderate amount of stamina damage.
 /datum/martial_art/the_sleeping_carp/proc/knee_stomach(mob/living/attacker, mob/living/defender)
+	var/attack_damage = determine_limb_damage(attacker, defender, MARTIAL_ART_MOVE_REQUIRES_LEG)
+	if(!attack_damage)
+		attacker.balloon_alert(attacker, "no leg!")
+		return FALSE
+
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
 	playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	defender.visible_message(
@@ -141,7 +161,7 @@
 		COMBAT_MESSAGE_RANGE,
 		attacker,
 	)
-	defender.apply_damage(20, STAMINA)
+	defender.apply_damage(attack_damage, STAMINA)
 	defender.Paralyze(1 SECONDS)
 	defender.adjust_silence_up_to(5 SECONDS, 5 SECONDS)
 	if(defender.losebreath <= 10)
@@ -170,7 +190,11 @@
 		)
 		grab_log_description = "grabbed and nerve pinched"
 		defender.Unconscious(10 SECONDS)
-	defender.apply_damage(20, STAMINA)
+
+	var/attack_damage = determine_limb_damage(attacker, defender)
+	if(!attack_damage) //False safe, since determine_limb_damage() can return a null value.
+		attack_damage = 10
+	defender.apply_damage(attack_damage*2, STAMINA)
 	log_combat(attacker, defender, "[grab_log_description] (Sleeping Carp)")
 	return MARTIAL_ATTACK_INVALID // normal grab
 
@@ -218,7 +242,11 @@
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
-	defender.apply_damage(20, STAMINA)
+
+	var/attack_damage = determine_limb_damage(attacker, defender)
+	if(!attack_damage) //False safe, since determine_limb_damage() can return a null value.
+		attack_damage = 10
+	defender.apply_damage(attack_damage*2, STAMINA)
 	log_combat(attacker, defender, "disarmed (Sleeping Carp)")
 	return MARTIAL_ATTACK_INVALID // normal disarm
 

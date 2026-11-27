@@ -108,18 +108,11 @@
 
 	var/obj/item/bodypart/arm/active_arm = attacker.get_active_hand()
 
-	//The values between which damage is rolled for punches
-	var/lower_force = active_arm.unarmed_damage_low
-	var/upper_force = active_arm.unarmed_damage_high
-
 	//Determines knockout potential and armor penetration (if that matters)
 	var/base_unarmed_effectiveness = active_arm.unarmed_effectiveness
 
 	//Determines attack sound based on attacker arm
 	var/attack_sound = active_arm.unarmed_attack_sound
-
-	// Out athletics skill is added as a damage bonus
-	var/athletics_skill =  attacker.mind?.get_skill_level(/datum/skill/athletics)
 
 	// If true, grants experience for punching; we only gain experience if we punch another boxer.
 	var/grant_experience = FALSE
@@ -132,18 +125,20 @@
 	// Our potential wound bonus on a punch. Only applies if we're dishonorable. Otherwise, we can't wound.
 	var/possible_wound_bonus = honorable_boxer ? 0 : CANT_WOUND
 
-	// Determines damage dealt on a punch. Against a boxing defender, we apply our skill bonus.
-	var/damage = rand(lower_force, upper_force)
+
 
 	// Attack verbs for our visible chat messages.
 	var/current_atk_verb = "punches"
 	var/current_atk_verbed = "punched"
 
+	// Determines damage dealt on a punch. Against a boxing defender, we later apply combo bonuses.
+	var/damage = determine_limb_damage(attacker, defender)
+
 	if(defender.check_block(attacker, damage, "[attacker]'s punch", UNARMED_ATTACK))
 		return FALSE
 
 	// Similar to a normal punch, should we have a value of 0 for our lower force, we simply miss outright.
-	if(!lower_force)
+	if(!damage)
 		playsound(defender.loc, active_arm.unarmed_miss_sound, 25, TRUE, -1)
 		defender.visible_message(span_warning("[attacker]'s punch misses [defender]!"), \
 			span_danger("You avoid [attacker]'s punch!"), span_hear("You hear a swoosh!"), COMBAT_MESSAGE_RANGE, attacker)
@@ -154,11 +149,11 @@
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 
 	if(honor_check(defender))
-		var/strength_bonus = HAS_TRAIT(attacker, TRAIT_STRENGTH) ? 2 : 0 //Investing into genetic strength improvements makes you a better boxer
+		var/strength_bonus = 0
 
 		var/obj/item/organ/cyberimp/chest/spine/potential_spine = attacker.get_organ_slot(ORGAN_SLOT_SPINE) //Getting a cyberspine also pushes you further than just mere meat
 		if(istype(potential_spine))
-			strength_bonus *= potential_spine.strength_bonus
+			strength_bonus += potential_spine.strength_bonus
 
 		var/streak_augmentation = check_streak(attacker, defender, active_arm)
 
@@ -217,7 +212,7 @@
 				affecting = defender.get_bodypart(defender.get_random_valid_zone(BODY_ZONE_HEAD))
 				defender.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS) //why yes, this could result in them being knocked out in one.
 
-		damage += round((athletics_skill + strength_bonus) * combo_multiplier, 1)
+		damage = round((strength_bonus + damage) * combo_multiplier, 1)
 
 		if(combo_multiplier >= 1)
 			perform_extra_effect(attacker, defender)
@@ -250,7 +245,7 @@
 		return TRUE
 
 	if(grant_experience)
-		skill_experience_adjustment(attacker, defender, (damage/lower_force))
+		skill_experience_adjustment(attacker, defender, (damage/3))
 
 	//Determine our attackers athletics level as a knockout probability bonus
 	var/attacker_athletics_skill =  (attacker.mind?.get_skill_modifier(/datum/skill/athletics, SKILL_RANDS_MODIFIER) + base_unarmed_effectiveness)
@@ -361,7 +356,7 @@
 		return NONE
 
 	if(istype(attacker) && boxer.Adjacent(attacker))
-		attacker.apply_damage(10, default_damage_type)
+		attacker.apply_damage((determine_limb_damage(boxer, attacker) * 0.5), default_damage_type)
 		boxer.apply_damage(5, STAMINA)
 		perform_extra_effect(boxer, attacker)
 
