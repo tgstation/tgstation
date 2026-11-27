@@ -38,8 +38,27 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 	var/list/hair_appendages_inner = null
 	var/list/hair_appendages_outer = null
 
+/datum/sprite_accessory/hair/proc/get_overlays(list/hair_masks, image_dir)
+	var/list/all_hair_overlays = list()
+	// Hair masks
+	var/icon/base_icon = icon(get_cached_icon(hair_masks))
+	// Overlay
+	all_hair_overlays += image(base_icon, layer = -HAIR_LAYER, dir = image_dir)
+	// If we have any hair appendages (ponytails, etc.) sticking out on a particular side,
+	// we need to add an additional hair layer to go above hats/helmets for the sides they stick out on
+	if(LAZYLEN(hair_appendages_outer))
+		var/strictly_masked_zones = NONE
+		for(var/datum/hair_mask/mask as anything in hair_masks)
+			strictly_masked_zones |= mask.strict_coverage_zones
+		for(var/appendage_icon_state in hair_appendages_outer)
+			var/appendage_zone = hair_appendages_outer[appendage_icon_state]
+			if(!(appendage_zone & strictly_masked_zones)) // if there are no strict masks in this zone
+				all_hair_overlays[image(icon, icon_state = appendage_icon_state, layer = -OUTER_HAIR_LAYER, dir = image_dir)] = base_icon
+
+	return all_hair_overlays
+
 /// Retrieve the base hair icon with all hair appendeges blended in, with hair masks applied, from the cache, or generate it if it doesn't exist
-/datum/sprite_accessory/hair/proc/getCachedIcon(list/hair_masks)
+/datum/sprite_accessory/hair/proc/get_cached_icon(list/hair_masks)
 	var/icon/cachedIcon
 	var/joinedMasks = LAZYLEN(hair_masks) ? jointext(hair_masks, ",") : ""
 	var/list/masks_to_icons = GLOB.blended_hair_icons_cache[type]
@@ -80,7 +99,7 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 						cachedIcon.Blend(appendage_icon, ICON_OVERLAY)
 				else
 					// No mask dodgers, so we can just mask the full (hopefully cached) icon
-					cachedIcon = icon(getCachedIcon())
+					cachedIcon = icon(get_cached_icon())
 					for(var/datum/hair_mask/mask as anything in hair_masks)
 						var/icon/mask_icon = icon('icons/mob/human/hair_masks.dmi', mask.icon_state)
 						mask_icon.Shift(SOUTH, y_offset)
@@ -151,7 +170,10 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 
 /datum/sprite_accessory/hair/bald
 	name = "Bald"
-	icon_state = null
+	icon_state = SPRITE_ACCESSORY_NONE
+
+/datum/sprite_accessory/hair/bald/get_overlays(list/hair_masks, image_dir)
+	return list()
 
 /datum/sprite_accessory/hair/balding
 	name = "Balding Hair"

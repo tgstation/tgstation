@@ -5,6 +5,7 @@
 	desc = "Hood hopefully belonging to an ablative trenchcoat. Includes a visor for cool-o-vision."
 	icon_state = "ablativehood"
 	flags_inv = HIDEHAIR|HIDEEARS
+	hair_mask = /datum/hair_mask/winterhood
 	armor_type = /datum/armor/hooded_ablative
 	strip_delay = 3 SECONDS
 	clothing_traits = list(TRAIT_SECURITY_HUD)

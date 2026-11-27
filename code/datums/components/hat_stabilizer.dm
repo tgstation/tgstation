@@ -14,6 +14,8 @@
 	var/pixel_z_offset
 	/// Which way a loose hat is offset
 	var/head_angle = 1
+	/// If our attached hat was created via the toggle_attached_clothing component, this is a weakref to that
+	var/datum/weakref/hat_deployable
 
 /datum/component/hat_stabilizer/Initialize(use_worn_icon = FALSE, pixel_z_offset = 0, loose_hat = FALSE)
 	if(!ismovable(parent))
@@ -42,6 +44,8 @@
 	RegisterSignal(source, COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS, PROC_REF(get_separate_worn_overlays))
 
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_qdel))
+
+	RegisterSignal(source, COMSIG_ITEM_BLOCKING_DEPLOYABLE, PROC_REF(on_blocking_deployable))
 
 // Inherit the new values passed to the component
 /datum/component/hat_stabilizer/InheritComponent(datum/component/hat_stabilizer/new_comp, original, use_worn_icon, pixel_z_offset, loose_hat)
@@ -80,6 +84,11 @@
 /datum/component/hat_stabilizer/proc/on_drop(datum/source, mob/dropper)
 	SIGNAL_HANDLER
 	UnregisterSignal(dropper, list(COMSIG_MOB_SLIPPED, COMSIG_LIVING_SLAPPED, COMSIG_MOVABLE_POST_THROW, COMSIG_LIVING_THUD))
+	// I could probably handle this via signal in some way but this feels simpler
+	var/datum/component/toggle_attached_clothing/deployer = hat_deployable?.resolve()
+	if(!QDELETED(deployer))
+		deployer.remove_deployable()
+		hat_deployable = null
 
 /datum/component/hat_stabilizer/proc/throw_hat(mob/hatless)
 	SIGNAL_HANDLER
@@ -187,6 +196,7 @@
 	former_flags = apparel.flags_cover
 	former_visor_flags = apparel.visor_flags_cover
 	apparel.flags_cover |= attached_hat.flags_cover
+	apparel.hair_mask = attached_hat.hair_mask
 	apparel.update_appearance()
 
 	if (ismob(apparel.loc))
@@ -208,8 +218,6 @@
 	else
 		movable_parent.balloon_alert_to_viewers("the hat falls to the floor!")
 
-/datum/component/hat_stabilizer/proc/on_retraction()
-
 /datum/component/hat_stabilizer/proc/remove_hat(mob/user)
 	if(QDELETED(attached_hat))
 		return
@@ -220,7 +228,12 @@
 	if (attached_hat.loc == parent)
 		attached_hat.forceMove(movable_parent.drop_location())
 
-	if(!isnull(user))
+	// I could probably handle this via signal in some way but this feels simpler
+	var/datum/component/toggle_attached_clothing/deployer = hat_deployable?.resolve()
+	if(!QDELETED(deployer))
+		deployer.remove_deployable()
+		hat_deployable = null
+	else if(!isnull(user))
 		. = user.put_in_active_hand(attached_hat)
 	else
 		movable_parent.balloon_alert_to_viewers("the hat falls to the floor!")
@@ -237,6 +250,7 @@
 		apparel.detach_clothing_traits(truehat.clothing_traits)
 	apparel.flags_cover = former_flags
 	apparel.visor_flags_cover = former_visor_flags
+	apparel.hair_mask = initial(apparel.hair_mask)
 	apparel.update_appearance()
 	attached_hat = null
 	if (ismob(apparel.loc))
@@ -257,3 +271,18 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
+
+/datum/component/hat_stabilizer/proc/on_blocking_deployable(obj/item/source, datum/component/toggle_attached_clothing/deployer, mob/living/wearer)
+	SIGNAL_HANDLER
+
+	if(!QDELETED(attached_hat) || loose_hat)
+		return NONE
+
+	var/obj/item/to_deploy = deployer.get_deployable()
+	if(QDELETED(to_deploy))
+		return NONE
+
+	attach_hat(to_deploy)
+	deployer.set_deployable()
+	hat_deployable = WEAKREF(deployer)
+	return DEPLOYMENT_HANDLED
