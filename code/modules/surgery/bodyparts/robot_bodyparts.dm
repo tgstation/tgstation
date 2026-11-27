@@ -29,8 +29,11 @@
 	dmg_overlay_type = "robotic"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
-	brute_modifier = 0.8
-	burn_modifier = 0.8
+	wound_resistance = 5
+	brute_modifier = 0.75
+	burn_modifier = 0.75
+	max_damage = LIMB_MAX_HP_ROBOTIC
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ROBOTIC
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -70,8 +73,11 @@
 	dmg_overlay_type = "robotic"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
-	brute_modifier = 0.8
-	burn_modifier = 0.8
+	wound_resistance = 5
+	brute_modifier = 0.75
+	burn_modifier = 0.75
+	max_damage = LIMB_MAX_HP_ROBOTIC
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ROBOTIC
 
 	disabling_threshold_percentage = 1
 
@@ -113,8 +119,11 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	footstep_type = FOOTSTEP_MOB_SYNTHETIC
 
-	brute_modifier = 0.8
-	burn_modifier = 0.8
+	wound_resistance = 5
+	brute_modifier = 0.75
+	burn_modifier = 0.75
+	max_damage = LIMB_MAX_HP_ROBOTIC
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ROBOTIC
 
 	disabling_threshold_percentage = 1
 
@@ -170,8 +179,11 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	footstep_type = FOOTSTEP_MOB_SYNTHETIC
 
-	brute_modifier = 0.8
-	burn_modifier = 0.8
+	wound_resistance = 5
+	brute_modifier = 0.75
+	burn_modifier = 0.75
+	max_damage = LIMB_MAX_HP_ROBOTIC
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ROBOTIC
 
 	disabling_threshold_percentage = 1
 
@@ -225,8 +237,8 @@
 	dmg_overlay_type = "robotic"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 20)
 
-	brute_modifier = 0.8
-	burn_modifier = 0.8
+	brute_modifier = 0.75
+	burn_modifier = 0.75
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -398,8 +410,8 @@
 	dmg_overlay_type = "robotic"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 
-	brute_modifier = 0.8
-	burn_modifier = 0.8
+	brute_modifier = 0.75
+	burn_modifier = 0.75
 
 	light_brute_msg = ROBOTIC_LIGHT_BRUTE_MSG
 	medium_brute_msg = ROBOTIC_MEDIUM_BRUTE_MSG
@@ -509,6 +521,7 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
+	wound_resistance = 0
 	burn_modifier = 1
 	brute_modifier = 1
 	unarmed_damage_low = 1
@@ -524,6 +537,7 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
+	wound_resistance = 0
 	burn_modifier = 1
 	brute_modifier = 1
 	unarmed_damage_low = 1
@@ -539,6 +553,7 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
+	wound_resistance = 0
 	brute_modifier = 1
 	burn_modifier = 1
 	unarmed_damage_low = 2
@@ -554,6 +569,7 @@
 	desc = "A skeletal, robotic limb. Outdated and fragile, but it's still better than nothing."
 	icon_static = 'icons/mob/augmentation/surplus_augments.dmi'
 	icon = 'icons/mob/augmentation/surplus_augments.dmi'
+	wound_resistance = 0
 	brute_modifier = 1
 	burn_modifier = 1
 	unarmed_damage_low = 2
@@ -566,57 +582,87 @@
 
 // Advanced Limbs: More durable, high punching force
 
-/obj/item/bodypart/arm/left/robot/advanced
-	name = "advanced robotic left arm"
-	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+/obj/item/bodypart/arm/left/robot/combat
+	name = "combat robotic left arm"
+	desc = "An advanced cybernetic arm, built for strength at the cost of durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 5
-	unarmed_damage_high = 13
+	brute_modifier = 0.8
+	burn_modifier = 0.8
+	unarmed_damage_low = 9
+	unarmed_damage_high = 14
 	unarmed_effectiveness = 20
-	max_damage = LIMB_MAX_HP_ADVANCED
-	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+	max_damage = LIMB_MAX_HP_DEFAULT
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
 	is_emissive = TRUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
-/obj/item/bodypart/arm/right/robot/advanced
-	name = "advanced robotic right arm"
-	desc = "An advanced cybernetic arm, capable of greater feats of strength and durability."
+/obj/item/bodypart/arm/right/robot/combat
+	name = "combat robotic right arm"
+	desc = "An advanced cybernetic arm, built for strength at the cost of durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 5
-	unarmed_damage_high = 13
+	brute_modifier = 0.8
+	burn_modifier = 0.8
+	unarmed_damage_low = 9
+	unarmed_damage_high = 14
 	unarmed_effectiveness = 20
-	max_damage = LIMB_MAX_HP_ADVANCED
-	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+	max_damage = LIMB_MAX_HP_DEFAULT
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
 	is_emissive = TRUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
-/obj/item/bodypart/leg/left/robot/advanced
-	name = "advanced robotic left leg"
+/obj/item/bodypart/leg/left/robot/combat
+	name = "combat robotic left leg"
+	desc = "An advanced cybernetic leg, built for strength at the cost of durability."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	brute_modifier = 0.8
+	burn_modifier = 0.8
+	unarmed_damage_low = 13
+	unarmed_damage_high = 21
+	unarmed_effectiveness = 30
+	max_damage = LIMB_MAX_HP_DEFAULT
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
+	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
+
+/obj/item/bodypart/leg/right/robot/combat
+	name = "combat robotic right leg"
 	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 7
-	unarmed_damage_high = 17
-	unarmed_effectiveness = 20
-	max_damage = LIMB_MAX_HP_ADVANCED
-	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+	brute_modifier = 0.8
+	burn_modifier = 0.8
+	unarmed_damage_low = 13
+	unarmed_damage_high = 21
+	unarmed_effectiveness = 30
+	max_damage = LIMB_MAX_HP_DEFAULT
+	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_DEFAULT
 	is_emissive = TRUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
-/obj/item/bodypart/leg/right/robot/advanced
-	name = "advanced robotic right leg"
-	desc = "An advanced cybernetic leg, capable of greater feats of strength and durability."
+/obj/item/bodypart/chest/robot/combat
+	name = "combat robotic torso"
+	desc = "An advanced cybernetic torso, built to easily slip out of grabs."
 	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
 	icon = 'icons/mob/augmentation/advanced_augments.dmi'
-	unarmed_damage_low = 7
-	unarmed_damage_high = 17
-	unarmed_effectiveness = 20
-	max_damage = LIMB_MAX_HP_ADVANCED
-	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
+	brute_modifier = 0.8
+	burn_modifier = 0.8
+	bodypart_traits = list(TRAIT_GRABRESISTANCE)
 	is_emissive = TRUE
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 40, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 12, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 12)
+
+/obj/item/bodypart/head/robot/combat
+	name = "combat robotic head"
+	desc = "An advanced cybernetic head, programmed to assist in aiming punches."
+	icon_static = 'icons/mob/augmentation/advanced_augments.dmi'
+	icon = 'icons/mob/augmentation/advanced_augments.dmi'
+	brute_modifier = 0.8
+	burn_modifier = 0.8
+	bodypart_traits = list(TRAIT_PERFECT_ATTACKER)
+	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.5)
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG
