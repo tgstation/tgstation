@@ -386,3 +386,6 @@
   - bugfix: Fixed admin pAI verb not sanitizing the new pAI's name
   - bugfix: Fixed telecomms logging not sanitizing the name/network/id when being
       logged
+2026-11-27:
+  UwUMacaroniTime:
+  - rscadd: Added two pre-con decks for TGC, available now at vendors!
