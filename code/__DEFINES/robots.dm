@@ -404,3 +404,8 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define MULEBOT_MOOD_CHIME "CHIME"
 #define MULEBOT_MOOD_DELIGHT "DELIGHT"
 #define MULEBOT_MOOD_SIGH "SIGH"
+
+/// If an attack does this or more damage it will slow a borg down on hit
+#define CYBORG_SLOWDOWN_THRESHOLD 10
+/// Multiplier applied to damage to calculate how much slowdown is applied
+#define CYBORG_SLOWDOWN_DAMAGE_SCALING 0.033
