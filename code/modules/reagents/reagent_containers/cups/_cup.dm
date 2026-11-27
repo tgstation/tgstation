@@ -378,7 +378,7 @@
 							span_hear("You hear fumbling."))
 
 		if(!do_after(user, 5 SECONDS, src))
-			if(has_lid && reagents.total_volume && prob(50)):
+			if(has_lid && reagents.total_volume && prob(50))
 				user.visible_message(span_notice("[user] gives [src]'s lid a final tug, but accidentally spills [p_their()] contents on [user.p_themselves()]!"),
 								span_danger("[src]'s lid comes flying off when you jostle it, but [p_their()] contents are soon to follow!"),
 								span_hear("You hear a loud POP, followed by a splash."))
