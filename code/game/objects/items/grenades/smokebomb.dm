@@ -58,6 +58,7 @@
 		"Brainrot",
 		"Mid",
 		"Slander",
+		"Verity",
 		"Clout",
 		"Ghost",
 		"Gaslight",
