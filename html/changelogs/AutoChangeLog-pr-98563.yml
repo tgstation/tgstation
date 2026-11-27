@@ -1,0 +1,7 @@
+author: "pebis36012"
+delete-after: True
+changes:
+  - bugfix: "Chameleon Module's Modsuit no longer becomes an error sign upon powering down"
+  - bugfix: "Chameleon Module will now will work after uninstalled while on, and reinstalled"
+  - bugfix: "Chameleon Module will now revert to its previous disguise when powered off"
+  - bugfix: "Chameleon Module will no longer drop disguise when clicked while disguised, but open up the menu to pick one"
