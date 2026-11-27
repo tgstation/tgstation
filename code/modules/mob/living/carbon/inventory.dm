@@ -205,7 +205,7 @@
 		update_eyes()
 	// HIDEJUMPSUIT is for digitigrade legs, HIDEEARS is for lizard frills, HIDEHAIR is for felinid ears and lizard horns, the others should be obvious
 	// future todo; we should collect a list of all bodypart overlays and what conceals/reveals them dynamically, rather than hardcoding this
-	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDEHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
+	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDETAIL|HIDEEARS|HIDEHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
 		update_body()
 
 /// Returns the tube if a breathing tube is equipped.

@@ -13,7 +13,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/melee/sickly_blade/cursed)
 	armor_type = /datum/armor/hooded_cultrobes
-	flags_inv = HIDEJUMPSUIT
+	flags_inv = HIDEJUMPSUIT|HIDETAIL
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|ARMS

@@ -42,6 +42,7 @@
 	inhand_icon_state = "w_suit"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT|HIDEBELT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/chaplainsuit/nun
 	name = "nun robe"
@@ -50,6 +51,7 @@
 	inhand_icon_state = "nun"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEJUMPSUIT|HIDEBELT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/chaplainsuit/habit
 	name = "religious tunic"
@@ -59,6 +61,7 @@
 	alternate_worn_layer = GLOVES_LAYER // since the sleeves cover a part of the hands, this way it looks better while retaining glove overlay correctly.
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEJUMPSUIT|HIDEBELT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/chaplainsuit/bishoprobe
 	name = "bishop's robes"
@@ -67,6 +70,7 @@
 	inhand_icon_state = "bishoprobe"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT|HIDEBELT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/chaplainsuit/armor/studentuni
 	name = "student robe"
@@ -82,6 +86,7 @@
 	icon_state = "witchhunter"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/hooded/chaplainsuit/monkhabit
 	name = "monk's habit"
@@ -93,6 +98,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/monkhabit
 	bodyshapes_with_variations = NONE
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/head/hooded/monkhabit
 	name = "monk's hood"
@@ -110,7 +116,7 @@
 	icon_state = "monkrobeeast"
 	inhand_icon_state = null
 	body_parts_covered = GROIN|LEGS
-	flags_inv = HIDEJUMPSUIT|HIDEBELT
+	flags_inv = HIDEBELT
 	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
 
 /obj/item/clothing/suit/chaplainsuit/whiterobe
@@ -120,15 +126,17 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT|HIDEBELT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/chaplainsuit/clownpriest
-	name = "Robes of the Honkmother"
+	name = "robes of the Honkmother"
 	desc = "Meant for a clown of the cloth."
 	icon_state = "clownpriest"
 	inhand_icon_state = "clownpriest"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT|HIDEBELT
 	allowed = list(/obj/item/megaphone/clown, /obj/item/soap, /obj/item/food/pie/cream, /obj/item/bikehorn, /obj/item/bikehorn/golden, /obj/item/bikehorn/airhorn, /obj/item/instrument/bikehorn, /obj/item/reagent_containers/cup/soda_cans/canned_laughter, /obj/item/toy/crayon, /obj/item/toy/crayon/spraycan, /obj/item/toy/crayon/spraycan/lubecan, /obj/item/grown/bananapeel, /obj/item/food/grown/banana)
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/head/helmet/chaplain/clock
 	name = "forgotten helmet"
@@ -228,6 +236,7 @@
 	icon_state = "crusader"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/suit/chaplainsuit/armor/crusader
 	name = "crusader's armour"
@@ -241,7 +250,6 @@
 /obj/item/clothing/suit/chaplainsuit/armor/crusader/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, /datum/sound_effect/assoc/plate_armor_rustle, 8)
-
 
 /datum/armor/armor_crusader
 	melee = 50
@@ -324,4 +332,9 @@
 	icon_state = "shrinehand"
 	inhand_icon_state = "shrinehand"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	flags_inv = HIDEJUMPSUIT|HIDEBELT
+	flags_inv = HIDEJUMPSUIT|HIDETAIL|HIDEBELT
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/chaplainsuit/shrinehand/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/white/pure, LIMB_OVERLAY_DRAPED)
