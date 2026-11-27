@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixes a niche bug where department orders (and perhaps more things) accidentally allowed any head of staff, rather than only a specific head of staff"
