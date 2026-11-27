@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Exiled players (exile implant, sent through the gateway) are now properly considered exiled to objectives"
+  - bugfix: "Being exiled to Lavaland is also properly considered exiled to objectives"
