@@ -52,10 +52,20 @@ GLOBAL_LIST_INIT(autodrobe_costumes_items, list(
 
 GLOBAL_LIST_INIT(autodrobe_supernatural_items, list(
 	/obj/item/clothing/suit/costume/imperium_monk = 3,
+	/obj/item/clothing/suit/chaplainsuit/whiterobe = 3,
+	/obj/item/clothing/suit/chaplainsuit/nun = 3,
+	/obj/item/clothing/head/chaplain/nun_hood = 3,
 	/obj/item/clothing/suit/chaplainsuit/holidaypriest = 3,
+	/obj/item/clothing/suit/hooded/chaplainsuit/monkhabit = 3,
+	/obj/item/clothing/head/chaplain/kippah = 3,
+	/obj/item/clothing/suit/chaplainsuit/whiterobe = 3,
+	/obj/item/clothing/head/chaplain/taqiyah/white = 3,
+	/obj/item/clothing/head/chaplain/taqiyah/red = 3,
+	/obj/item/clothing/suit/chaplainsuit/monkrobeeast = 3,
+	/obj/item/clothing/head/rasta = 3,
+	/obj/item/clothing/suit/chaplainsuit/shrinehand = 3,
 	/obj/item/clothing/suit/chaplainsuit/habit = 3,
 	/obj/item/clothing/head/chaplain/habit_veil = 3,
-	/obj/item/clothing/suit/chaplainsuit/whiterobe = 3,
 	/obj/item/clothing/head/wizard/marisa/fake = 3,
 	/obj/item/clothing/suit/wizrobe/marisa/fake = 3,
 	/obj/item/clothing/head/costume/witchwig = 3,
@@ -69,6 +79,7 @@ GLOBAL_LIST_INIT(autodrobe_supernatural_items, list(
 ))
 
 GLOBAL_LIST_INIT(autodrobe_entretainers_items, list(
+	/obj/item/clothing/under/rank/civilian/clown = 3,
 	/obj/item/clothing/under/rank/civilian/clown/blue = 3,
 	/obj/item/clothing/under/rank/civilian/clown/green = 3,
 	/obj/item/clothing/under/rank/civilian/clown/yellow = 3,
@@ -79,6 +90,7 @@ GLOBAL_LIST_INIT(autodrobe_entretainers_items, list(
 	/obj/item/clothing/head/beret = 6,
 	/obj/item/clothing/mask/gas/sexymime = 3,
 	/obj/item/clothing/under/rank/civilian/mime/sexy = 3,
+	/obj/item/clothing/under/rank/civilian/mime = 3,
 	/obj/item/clothing/under/rank/civilian/mime/skirt = 3,
 	/obj/item/clothing/under/rank/civilian/clown/jester = 3,
 	/obj/item/clothing/head/costume/jester = 3,
