@@ -1,0 +1,4 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - bugfix: "AI wont be held up from low priority behavior because of cooldowns on higher ones"
