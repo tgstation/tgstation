@@ -264,9 +264,9 @@ SUBSYSTEM_DEF(cameras)
 
 /// Returns list of available cameras, ready to use for UIs displaying list of them
 /// The format is: list("name" = "camera.c_tag", ref = REF(camera))
-/datum/controller/subsystem/cameras/proc/get_available_cameras_data(list/networks_available, list/z_levels_available)
+/datum/controller/subsystem/cameras/proc/get_available_cameras_data(list/networks_available, list/z_levels_available, list/custom_networks_available)
 	var/list/available_cameras_data = list()
-	for(var/obj/machinery/camera/camera as anything in get_filtered_and_sorted_cameras(networks_available, z_levels_available))
+	for(var/obj/machinery/camera/camera as anything in get_filtered_and_sorted_cameras(networks_available, z_levels_available, custom_networks_available))
 		available_cameras_data += list(list(
 			name = camera.c_tag,
 			ref = REF(camera),
@@ -292,12 +292,12 @@ SUBSYSTEM_DEF(cameras)
 	return available_cameras_by_tag
 
 /// Returns list of all cameras that passed `is_camera_available` filter and sorted by `cmp_camera_ctag_asc`
-/datum/controller/subsystem/cameras/proc/get_filtered_and_sorted_cameras(list/networks_available, list/z_levels_available)
+/datum/controller/subsystem/cameras/proc/get_filtered_and_sorted_cameras(list/networks_available, list/z_levels_available, list/custom_networks_available)
 	PRIVATE_PROC(TRUE)
 
 	var/list/filtered_cameras = list()
 	for(var/obj/machinery/camera/camera as anything in cameras)
-		if(!is_camera_available(camera, networks_available, z_levels_available))
+		if(!is_camera_available(camera, networks_available, z_levels_available, custom_networks_available))
 			continue
 
 		filtered_cameras += camera
@@ -305,7 +305,8 @@ SUBSYSTEM_DEF(cameras)
 	return sortTim(filtered_cameras, GLOBAL_PROC_REF(cmp_camera_ctag_asc))
 
 /// Checks if the `camera_to_check` meets the requirements of availability.
-/datum/controller/subsystem/cameras/proc/is_camera_available(obj/machinery/camera/camera_to_check, list/networks_available, list/z_levels_available)
+/// `custom_networks_available` only matches custom cameras made by players ingame
+/datum/controller/subsystem/cameras/proc/is_camera_available(obj/machinery/camera/camera_to_check, list/networks_available, list/z_levels_available, list/custom_networks_available)
 	PRIVATE_PROC(TRUE)
 
 	if(!camera_to_check.c_tag)
@@ -314,7 +315,10 @@ SUBSYSTEM_DEF(cameras)
 	if(length(z_levels_available) && !(camera_to_check.z in z_levels_available))
 		return FALSE
 
-	return length(camera_to_check.network & networks_available) > 0
+	if(length(camera_to_check.network & networks_available))
+		return TRUE
+
+	return camera_to_check.custom_network && length(custom_networks_available) && length(camera_to_check.network & custom_networks_available) > 0
 
 #undef ADD_CAMERA
 #undef REMOVE_CAMERA

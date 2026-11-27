@@ -61,6 +61,8 @@
 
 	///List of all networks that can see this camera through the security console.
 	var/list/network = list(CAMERANET_NETWORK_SS13)
+	///Boolean for if the camera's network was custom-set by a player
+	var/custom_network = FALSE
 	///The tag the camera has, which is essentially its name to security camera consoles.
 	var/c_tag = null
 	///Boolean on whether the camera is activated, so can be seen on camera consoles or will just be static.

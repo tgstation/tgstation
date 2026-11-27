@@ -1,3 +1,5 @@
+#define MAX_BOARD_CAMERA_NETWORKS 10
+
 /obj/item/circuitboard/computer
 	name = "Generic"
 	abstract_type = /obj/item/circuitboard/computer
@@ -596,6 +598,36 @@
 	name = "Security Cameras"
 	greyscale_colors = CIRCUIT_COLOR_SECURITY
 	build_path = /obj/machinery/computer/security
+	/// Custom camera networks this circuit board may have, null uses console defaults
+	var/list/networks
+
+/obj/item/circuitboard/computer/security/examine(mob/user)
+	. = ..()
+	. += span_notice("Camera networks: [length(networks) ? jointext(networks, ", ") : "default"]. They can be changed with a <b>multitool</b>.")
+
+/obj/item/circuitboard/computer/security/multitool_act(mob/living/user, obj/item/tool)
+	var/input = tgui_input_text(user, "Which networks should be visible to the console? Separate networks with a coma.", "Set Networks", length(networks) ? jointext(networks, ",") : "", max_length = MAX_MESSAGE_LEN)
+	if(isnull(input) || !user.can_perform_action(src))
+		return ITEM_INTERACT_BLOCKING
+	var/list/new_networks = list()
+	for(var/entry in splittext(input, ","))
+		var/network_name = LOWER_TEXT(trim(entry))
+		if(!network_name || length(network_name) > MAX_NAME_LEN)
+			continue
+		new_networks |= network_name
+		if(length(new_networks) >= MAX_BOARD_CAMERA_NETWORKS)
+			break
+	networks = length(new_networks) ? new_networks : null
+	tool.play_tool_sound(src)
+	balloon_alert(user, length(networks) ? "networks set" : "networks reset")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/circuitboard/computer/security/configure_machine(obj/machinery/computer/security/machine)
+	if(!istype(machine))
+		CRASH("Camera board attempted to configure incorrect machine type: [machine] ([machine?.type])")
+
+	if(length(networks))
+		machine.set_networks(networks)
 
 /obj/item/circuitboard/computer/advanced_camera
 	name = "Advanced Camera Console"
@@ -741,3 +773,5 @@
 /obj/item/circuitboard/computer/shuttle/docker
 	name = "Shuttle Navigation Computer"
 	build_path = /obj/machinery/computer/camera_advanced/shuttle_docker/custom
+
+#undef MAX_BOARD_CAMERA_NETWORKS
