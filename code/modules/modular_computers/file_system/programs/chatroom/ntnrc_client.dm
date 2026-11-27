@@ -65,7 +65,7 @@
 				return
 			if(src in channel.muted_clients) // Make sure we aren't muted
 				return
-			var/message = reject_bad_chattext(params["message"], MESSAGE_SIZE)
+			var/message = trim(sanitize(params["message"]), MESSAGE_SIZE)
 			if(!message)
 				return
 			if(channel.password && (!(src in channel.active_clients) && !(src in channel.offline_clients)))
@@ -97,7 +97,7 @@
 				active_channel = null
 				return TRUE
 		if("PRG_newchannel")
-			var/channel_title = reject_bad_chattext(params["new_channel_name"], CHANNELNAME_SIZE)
+			var/channel_title = reject_bad_name(params["new_channel_name"], allow_numbers = TRUE, max_length = CHANNELNAME_SIZE, cap_after_symbols = FALSE, cap_at_start = FALSE)
 			if(!channel_title)
 				return
 			create_new_channel(channel_title)
@@ -114,7 +114,7 @@
 				netadmin_mode = TRUE
 				return TRUE
 		if("PRG_changename")
-			var/newname = reject_bad_chattext(params["new_name"], USERNAME_SIZE)
+			var/newname = reject_bad_name(params["new_name"], allow_numbers = TRUE, max_length = USERNAME_SIZE, cap_after_symbols = FALSE, cap_at_start = FALSE)
 			newname = replacetext(newname, " ", "_")
 			if(!newname || newname == username)
 				return
@@ -146,7 +146,7 @@
 		if("PRG_renamechannel")
 			if(!authed)
 				return
-			var/newname = reject_bad_chattext(params["new_name"], CHANNELNAME_SIZE)
+			var/newname = reject_bad_name(params["new_name"], allow_numbers = TRUE, max_length = CHANNELNAME_SIZE, cap_after_symbols = FALSE, cap_at_start = FALSE)
 			if(!newname || !channel)
 				return
 			channel.add_status_message("Channel renamed from [channel.title] to [newname] by operator.")

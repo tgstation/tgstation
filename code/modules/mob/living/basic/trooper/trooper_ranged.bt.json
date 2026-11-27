@@ -77,14 +77,7 @@
 													},
 													{
 														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
-														"vars": {
-															"target_key": "BB_CURRENT_TARGET"
-														}
-													},
-													{
-														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack",
+														"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack/avoid_friendly_fire/los_check",
 														"vars": {
 															"target_key": "BB_CURRENT_TARGET",
 															"targeting_strategy": "BB_TARGETING_STRATEGY",
@@ -92,6 +85,13 @@
 															"time_between_perform": "$b4kar3zl",
 															"max_range": "$beslksyc",
 															"avoid_friendly_fire": "$bnr1aazo"
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET"
 														}
 													},
 													{

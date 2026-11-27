@@ -12,7 +12,7 @@
 	/// Determines what "slot" this attachment will try to attach to on a mech
 	var/equipment_slot = MECHA_WEAPON
 	///Cooldown in ticks required between activations of the equipment
-	var/equip_cooldown = 0
+	var/equip_cooldown = 0 SECONDS
 	///Whether you can turn this module on/off with a button
 	var/can_be_toggled = FALSE
 	///Whether you can trigger this module with a button (activation only)
@@ -276,4 +276,3 @@
 /// AI mech pilot: returns TRUE if the Ai should try to reload the mecha
 /obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
 	return FALSE
-

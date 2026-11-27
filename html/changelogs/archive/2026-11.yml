@@ -211,3 +211,181 @@
   - bugfix: Supply Pod "Launch Turf Ordered" and "Launch Random Turf" modes now work
       again
   - qol: Ambient game tracks will no longer play over admin web music
+2026-11-16:
+  Imaginos16 , mrmelbert , ben10omnitrix:
+  - rscadd: fox tails and ears are now available as customization options for felinids.
+  - rscadd: adds fox tails to fox infusion
+  Maia-J:
+  - bugfix: The Grey Tide spear illusions attack their target again.
+  - bugfix: Mirage grenades spawn mirages again.
+  Melbert:
+  - bugfix: Fixes several mobs taking damage from damage types they are intended to
+      be immune to
+  - code_imp: Tweaked bluespace interference code slightly to make it less laggy,
+      report any weird teleports you experience
+  - bugfix: The Reticence, Gygax, Clarke, Phazon, and Odysseus all mistakenly drained
+      10x less power to move than intended; this has been fixed
+  - bugfix: Some mecha equipment (Mounted sleeper, syringe gun, beam gun, wormhole
+      generator, teleporter, repair droid, punch-face, and paddy clamp) mistakenly
+      drained 10x less power on usage than intended; this has been fixed
+  Xander3359:
+  - bugfix: Fixed misplaced wallet runtiming on maps with no closets
+  btcbuster:
+  - balance: You no longer lose ore when smelting it.
+  scolastico:
+  - bugfix: Pressing "Force Reconnect" in the chat panel's websocket settings no longer
+      breaks the websock
+2026-11-17:
+  CabinetOnFire:
+  - bugfix: mulebots now use stairs and ladders wow
+  thegrb93:
+  - bugfix: Fix cyborg medical omni-tool from not having drapes at first.
+2026-11-18:
+  ArrisFairburne:
+  - code_imp: Improved ranged trooper AI to ignore destroying objects they can shoot
+      through
+  necromanceranne:
+  - balance: Lizardpeople are now so strong. They could bend steel. You could grate
+      cheese on those abdominals. It will get caught in their scales though, which
+      means they might get scalerot, so please don't actually do that. Just admire
+      them from a comfortable, although perhaps uncomfortable for the subject of admiration,
+      distance.
+2026-11-19:
+  san7890:
+  - rscdel: CatwalkStation has been removed from the game.
+2026-11-20:
+  Absolucy:
+  - bugfix: fixed lighting and night vision breaking after turning back from a shapeshift
+      (or getting put into a body) on an upper z-level, until you changed z-levels
+  Melbert:
+  - rscadd: Shoving someone who is on fire into someone who is not spreads fire now.
+  TheRyeGuyWhoWillNowDie:
+  - balance: Doubled the potency of synthflesh
+  btcbuster:
+  - spellcheck: fixed a typo on an icebox plant
+  moocowswag:
+  - qol: Ai's will no longer be punished for having high apm
+  - qol: Silicons can now rapidly cycle modes on air alarms
+  - bugfix: Air alarm ai wires are no longer inverted
+  - bugfix: Air alarm screwdriver context is no longer inverted
+2026-11-22:
+  Kurgis:
+  - bugfix: Exosuit drills no longer need to disabled and re-enabled again to properly
+      use their on_click functions... because now they just start disabled.
+  Melbert:
+  - bugfix: You can no longer examine things obscured by darkness (unless you have
+      night vision)
+  - bugfix: You no longer see messages of people obscured by darkness (unless you
+      have night vision)
+  PapaMichael:
+  - bugfix: AIs can now malfunction when piloting a shell
+  - bugfix: Ceruleans species-changed into humans no longer lose a third of their
+      blood nor zoom around super fast
+  SmArtKar:
+  - bugfix: Fixes hacker names not filtering out some invalid symbols
+  btcbuster:
+  - bugfix: Can't take pyrophobia and pyromania at once now.
+2026-11-23:
+  Absolucy:
+  - bugfix: chat no longer randomly stops autoscrolling when a big message (like an
+      examine) or a burst of messages comes in
+  - bugfix: Hopefully fixed most chat scrolling issues in general, tbh.
+  - bugfix: chat no longer stays blank for new players, or when chat settings are
+      slow to load
+  - bugfix: chat no longer breaks on every join if your saved chat data got corrupted
+  - qol: chat now tells you whenever something goes wrong with loading or saving your
+      chat data
+  - rscadd: You can now see which storage backend your chat settings use.
+  - bugfix: chat tooltips starting with a number no longer get cut down to just the
+      number
+  - bugfix: the music player no longer shows a garbage upload date when there isn't
+      one
+  - bugfix: new players with no saved chat settings can hear admin music again
+  - bugfix: chat highlights now work for terms with punctuation or accents
+  - bugfix: '"Exact" chat highlights now work with accented letters and terms ending
+      in punctuation'
+  - bugfix: chat highlights that mix /regex/ entries with plain words now match the
+      plain words too
+  - bugfix: the chat highlight list no longer reorders itself after you delete the
+      default highlight
+  CabinetOnFire:
+  - bugfix: Pets no longer get stuck in attack mode
+  - qol: Pet commands should be more clearly communicated now
+  Melbert:
+  - bugfix: Fix random loose "obj"s
+2026-11-24:
+  DeliciousPlushie:
+  - bugfix: Syndicate Battlecruiser Captain can unlock Starfury Armory airlocks normally
+      with pressing buttons.
+  Melbert:
+  - bugfix: Ethereals can't revive from changling husks
+  - bugfix: Some mechanics that differentiated being hit with a lethal vs non-lethal
+      ranged attack now properly differentiates again. For example, bots will spark
+      when shot now.
+  - code_imp: Updated code for heart attack and disease outbreak events, report anything
+      weird with it
+  - balance: Trace amounts of blood loss no longer causes infinite hyperdeath to moon
+      heretics
+  - bugfix: Fixes a niche issue where cooked goliath steak doesn't contribute to red
+      raptor breeding(?) more than raw goliath meat
+  - bugfix: Fix mystical snip cable X on Tramstation
+  san7890:
+  - server: The TOML Job Configuration system should now be a lot easier to edit.
+      You will have to regenerate the job configuration (downloading the file from
+      the server via the `Generate Job Configuration` verb of the `Server` tab of
+      the stat panel), download that file from FTP prompt you get from BYOND, and
+      then re-upload it to the server to take effect on later rounds, but it does
+      indeed feel a lot easier to edit. This measure is completely optional though.
+2026-11-25:
+  Melbert:
+  - bugfix: Blade and Cosmic heretic can recharge their spells properly
+  - qol: Revamps handheld gene scanner output
+  - bugfix: NTOS Chatroom checks names and messages more thoroughly
+  PapaMichael:
+  - admin: Admins can Control+Alt+Click an atom to open VV on it
+  - admin: Admins can set the next round's station traits in the postround
+2026-11-26:
+  ArrisFairburne:
+  - sound: sawable guns now make appropriate sawing noises when they are sawn-off
+  - sound: gave appropriate usesound and operating sounds to various saw items in
+      the game
+  Ghommie:
+  - refactor: Refactored digitigrade legs code a bit. Report any outstanding issue
+      that wasn't previously there.
+  Melbert:
+  - rscadd: Individuals irradiated from a powerful primary source (such as the Supermatter)
+      will spread radiation around them. This is denoted by their radiation glow being
+      brighter than normal. Importantly, this will not cascade further, meaning any
+      individual irradiated from them will NOT spread it further.
+  - rscadd: Plasmamen, Androids, and other radiation immune species can be irradiated
+      once again, though are still immune to the effects. Only methods of direct decontamination
+      (like showering) will clear it.
+  - rscadd: Slimepeople can now properly be affected by radiation. Like Plasmamen,
+      it can only be cleared via direct decontamination.
+  - rscadd: Showers will now heal irradiation very slowly in addition to pausing the
+      negative effects.
+  - rscadd: Untreated irradiation will eventually spread to your internal organs,
+      causing organ damage and further complications. While it can spread to robotic
+      organs, this has no effect (for now). And yes, inserting an irradiated organ
+      into an otherwise clean patient will cause the radiation to spread to the body
+      over time.
+  - rscadd: Anti-rad medication such as Pentetic Acid now reverses organ damage caused
+      by irradiation (and eventually clears irradiated organs entirely) - so long
+      as the affected organ hasn't failed entirely.
+  - rscadd: Radioactive chemicals like Uranium can now directly irradiate organs -
+      for example, breathing radioactive smoke may irradiate your lungs.
+  - refactor: Radiation has seen a few changes if you couldn't tell. Report any issues
+      like mobs experiencing negative effects from irradiation when they otherwise
+      shouldn't be.
+  tontyGH:
+  - server: Fixed a bug that caused jobs to fallback to the default config at roundstart
+  - bugfix: Fixed an exploit that allowed books to contain unsanitized HTML
+  - bugfix: Fixed an exploit that allowed the PDA camera app to print unsanitized
+      photos
+  - bugfix: Fixed derpspeech not sanitizing messages after processing
+  - bugfix: Fixed admin pAI verb not sanitizing the new pAI's name
+  - bugfix: Fixed telecomms logging not sanitizing the name/network/id when being
+      logged
+2026-11-27:
+  UwUMacaroniTime:
+  - rscadd: Added two pre-con decks for TGC, available now at vendors!

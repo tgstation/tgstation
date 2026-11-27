@@ -27,7 +27,7 @@ type MarkdownRendererProps = {
 };
 
 export const MarkdownRenderer = (props: MarkdownRendererProps) => {
-  let { content, sanitize } = props;
+  let { content, sanitize = true } = props;
 
   content = marked(content, { async: false });
   if (sanitize) {
@@ -35,8 +35,4 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
   }
 
   return <div dangerouslySetInnerHTML={{ __html: content }} />;
-};
-
-MarkdownRenderer.defaultProps = {
-  sanitize: true,
 };

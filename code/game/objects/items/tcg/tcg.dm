@@ -469,6 +469,63 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 			log_runtime("The index [rarity] of rarity_table does not exist in the global cache")
 	return toReturn
 
+/obj/item/tcg_precondeck
+	name = "abstract pre constructed deck"
+	desc = "Unfortunately, this deck is not ready for play yet."
+	icon = 'icons/obj/toys/tcgprecons.dmi'
+	icon_state = "template"
+	w_class = WEIGHT_CLASS_SMALL
+	custom_price = PAYCHECK_CREW * 1.6 // Set this higher when packs increase in price
+	/// ID of the deck that it grabs from the precons json
+	var/precon_id
+
+/obj/item/tcg_precondeck/command
+	name = "\improper 'Command' TGC Preconstructed Deck"
+	desc = "Control the battlefield and lead the station to victory with this awesome TGC pre-constructed deck, ready for play!"
+	icon_state = "command"
+	precon_id = "command"
+
+/obj/item/tcg_precondeck/crew
+	name = "\improper 'Crew' TGC Preconstructed Deck"
+	desc = "Rally with the common man and master the greytide with this awesome TGC pre-constructed deck, ready for play!"
+	icon_state = "crew"
+	precon_id = "crew"
+
+/obj/item/tcg_precondeck/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/item_scaling, 0.5, 1)
+
+/obj/item/tcg_precondeck/attack_self(mob/user)
+	. = ..()
+	var/turf/drop_loc = drop_location()
+	if(!user.temporarilyRemoveItemFromInventory(src, TRUE))
+		return
+
+	var/obj/item/tcgcard_deck/deck = new(drop_loc)
+	var/list/precon_list = SStrading_card_game.precons[precon_id]["list"]
+	for(var/card_path in precon_list)
+		var/list/split = splittext(card_path, "/")
+		for(var/i in 1 to precon_list[card_path])
+			new /obj/item/tcgcard(deck, split[1], split[2])
+	user.put_in_hands(deck)
+	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
+	playsound(loc, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
+	user.visible_message(
+		span_notice("[user] opens [src]'s' packaging."),
+		span_notice("You open [src]'s packaging."),
+		span_notice("You hear paper get ripped apart!")
+	)
+	qdel(src)
+
+/obj/item/tcg_precondeck/examine()
+	. = ..()
+	var/precon_list = SStrading_card_game.precons[precon_id]["list"]
+	. += span_notice("It contains the following cards:")
+
+	for (var/card_id in precon_list)
+		var/datum/card/card = SStrading_card_game.get_card_datum_from_path(card_id)
+		. += span_notice("x[precon_list[card_id]] [card.name]")
+
 //All of these values should be overridden by either a template or a card itself
 /datum/card
 	///Unique ID, for use in lookups and (eventually) for persistence. MAKE SURE THIS IS UNIQUE FOR EACH CARD IN AS SERIES, OR THE ENTIRE SYSTEM WILL BREAK, AND I WILL BE VERY DISAPPOINTED.

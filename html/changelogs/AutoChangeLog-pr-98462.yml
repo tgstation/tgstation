@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes several mobs taking damage from damage types they are intended to be immune to"

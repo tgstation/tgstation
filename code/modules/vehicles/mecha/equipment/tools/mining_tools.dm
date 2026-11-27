@@ -18,6 +18,7 @@
 	range = MECHA_MELEE
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 0.9
+	active = FALSE
 	mech_flags = EXOSUIT_MODULE_WORKING | EXOSUIT_MODULE_COMBAT
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 	var/drill_delay = 7
@@ -224,7 +225,7 @@
 	name = "diamond-tipped exosuit drill"
 	desc = "Equipment for engineering and combat exosuits. This is an upgraded version of the drill that'll pierce the heavens!"
 	icon_state = "mecha_diamond_drill"
-	equip_cooldown = 10
+	equip_cooldown = 1 SECONDS
 	drill_delay = 4
 	drill_level = DRILL_HARDENED
 	force = 15
