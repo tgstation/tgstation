@@ -220,12 +220,31 @@
 		hand += " #[num]"
 	return hand.Join()
 
+// Returns if a certain item can be equipped to a certain slot.
+/mob/proc/can_equip(obj/item/equip_target, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
+	if(SEND_SIGNAL(src, COMSIG_MOB_CAN_EQUIP, equip_target, slot) & COMPONENT_BLOCK_EQUIP)
+		return FALSE
 
+	if(HAS_TRAIT(equip_target, TRAIT_NODROP) && is_holding(equip_target))
+		if(!disable_warning)
+			to_chat(src, span_warning("[equip_target] won't budge, it's impossible to put it on!"))
+		return FALSE
 
-//Returns if a certain item can be equipped to a certain slot.
-// Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
-/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
-	return FALSE
+	// If there's an item in the slot we want, fail
+	if(!ignore_equipped && get_item_by_slot(slot) && get_item_by_slot(slot) != equip_target)
+		return FALSE
+
+	var/datum/inventory_slot/inv_slot = get_inventory_slot(slot)
+	// Dummies utilized during init spritesheet baking do not have slots as SSatoms is not yet online
+	// but as those outfits are premade and only exist for previews we do not need to check for slot validity
+	if (!inv_slot?.can_equip(equip_target, slot, disable_warning, src, bypass_equip_delay_self, ignore_equipped, indirect_action))
+		return FALSE
+
+	if(equip_target.equip_delay_self && inv_slot.has_equip_delay && !bypass_equip_delay_self)
+		visible_message(span_notice("[src] start putting on [equip_target]..."), span_notice("You start putting on [equip_target]..."))
+		if (!do_after(src, equip_target.equip_delay_self, target = src))
+			return FALSE
+	return TRUE
 
 /mob/proc/can_put_in_hand(I, hand_index)
 	if(hand_index > held_items.len)
@@ -827,3 +846,40 @@ GAME_VERB_HIDDEN(/mob, quick_equip, "quick-equip")
 		if(stored_cell && stored_cell.charge <= (stored_cell.maxcharge * max_percent))
 			cell_items[stored] = stored_cell
 	return cell_items
+
+/mob/proc/create_inventory_slots()
+	var/list/created_paths = default_inventory_slots
+	if (ispath(created_paths))
+		created_paths = valid_subtypesof(created_paths)
+
+	if (!length(created_paths))
+		return
+
+	inventory_slots = alist()
+	for (var/datum/inventory_slot/slot_type as anything in created_paths)
+		var/datum/inventory_slot/inv_slot = GLOB.inventory_slot_datums[slot_type]
+		if (!inv_slot)
+			stack_trace("[src] attempted to use an invalid inventory slot: [slot_type]")
+			continue
+		inventory_slots[inv_slot.slot_id] = inv_slot
+
+/// Returns a datum for an inventory slot corresponding to a slot_id
+/mob/proc/get_inventory_slot(slot_id)
+	if (slot_id == ITEM_SLOT_HANDS)
+		return GLOB.inventory_slot_datums[/datum/inventory_slot/hands]
+	if (slot_id == ITEM_SLOT_HANDCUFFED)
+		return GLOB.inventory_slot_datums[/datum/inventory_slot/handcuffs]
+	if (slot_id == ITEM_SLOT_LEGCUFFED)
+		return GLOB.inventory_slot_datums[/datum/inventory_slot/legcuffs]
+	return inventory_slots?[slot_id]
+
+/// Get all of our inventory slots + hands slot
+/mob/proc/get_inventory_slots()
+	var/static/alist/static_slots = alist()
+	if (!length(static_slots))
+		static_slots[ITEM_SLOT_HANDS] = GLOB.inventory_slot_datums[/datum/inventory_slot/hands]
+		static_slots[ITEM_SLOT_HANDCUFFED] = GLOB.inventory_slot_datums[/datum/inventory_slot/handcuffs]
+		static_slots[ITEM_SLOT_LEGCUFFED] = GLOB.inventory_slot_datums[/datum/inventory_slot/legcuffs]
+	if (!inventory_slots)
+		return static_slots.Copy() // So nobody accidentally dirties it
+	return inventory_slots + static_slots
