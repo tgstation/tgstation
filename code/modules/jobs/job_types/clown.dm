@@ -45,7 +45,15 @@
 			var/mob/living/carbon/human/human_clown = spawned
 			human_clown.set_blood_type(/datum/blood_type/clown)
 
+	RegisterSignal(spawned, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED, PROC_REF(sillify_pills))
 	return ..()
+
+/// Makes roundstart pills (like from quirks) child-unsafe
+/datum/job/clown/proc/sillify_pills(mob/living/origin)
+	for (var/obj/item/storage/pill_bottle/unsilly_pills in origin.get_all_gear())
+		unsilly_pills.icon_state = "silly_pills"
+		astype(unsilly_pills.atom_storage, /datum/storage/pillbottle).child_safe = FALSE
+	UnregisterSignal(origin, COMSIG_HUMAN_CHARACTER_SETUP_FINISHED)
 
 /datum/outfit/job/clown
 	name = "Clown"

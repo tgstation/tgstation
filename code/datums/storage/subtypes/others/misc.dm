@@ -170,12 +170,48 @@
 	open_sound = 'sound/items/handling/pill_bottle_open.ogg'
 	open_sound_vary = FALSE
 
+	///Whether the bottle poses a problem for morons
+	var/child_safe = TRUE
+
 /datum/storage/pillbottle/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
 	. = ..()
 	set_holdable(list(
 		/obj/item/reagent_containers/applicator,
 		/obj/item/food/bait/natural,
 	))
+
+/datum/storage/pillbottle/open_storage(mob/living/to_show)
+	if(!child_safe || (!HAS_TRAIT(to_show, TRAIT_DUMB) && !HAS_TRAIT(to_show, TRAIT_CLUMSY)))
+		return ..()
+
+	if(parent.loc != to_show)
+		to_chat(to_show, span_notice("You're not sure how [parent]'s cap works. You'd need to hold [parent.p_them()] to figure it out."))
+		return FALSE
+
+	to_show.visible_message(span_notice("It looks like [to_show] is struggling with [parent]'s cap..."),
+						span_notice("You try to force [parent]'s cap off..."),
+						span_hear("You hear fumbling and clicking."))
+
+	if(!do_after(to_show, 3 SECONDS, parent))
+		to_show.visible_message(span_notice("[to_show] gives up on opening [parent]."),
+								span_notice("Is this even the right cap? Maybe there's another way inside [parent.p_them()]."))
+		return FALSE
+
+	if(prob(50))
+		to_show.visible_message(span_notice("[to_show] gives up on opening [parent]."),
+								span_notice("You've twisted [parent] every which way, but there's seemingly no way to open [parent.p_them()]. Maybe if you turned [parent.p_them()] the OTHER way..."))
+		return FALSE
+
+	to_show.visible_message(span_notice("[to_show] finally succeeds in opening [parent]."),
+							span_notice("Eventually, the cap slides off. You're not sure why. Maybe you weren't twisting [parent.p_them()] fast enough before."))
+	return ..()
+
+/datum/storage/pillbottle/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
+	if(!child_safe || user.active_storage == src || (!HAS_TRAIT(user, TRAIT_DUMB) && !HAS_TRAIT(user, TRAIT_CLUMSY)))
+		return ..()
+
+	to_chat(user, span_notice("You try to insert [to_insert], but there's a cap in the way. Try opening it first."))
+	return FALSE
 
 ///Six pack beer
 /datum/storage/sixcan
