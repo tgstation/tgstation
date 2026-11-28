@@ -20,8 +20,9 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if(robot_owner.module_active && !LAZYACCESS(modifiers, RIGHT_CLICK) && !.)
-		robot_owner.uneq_active()
+	var/obj/item/held_item = robot_owner.get_active_held_item()
+	if(held_item && !LAZYACCESS(modifiers, RIGHT_CLICK) && !.)
+		robot_owner.deactivate_module(held_item)
 		return
 
 	// Observers can look at borg's inventories, so we ignore parent return value here, unlike everywhere else.
@@ -32,31 +33,31 @@
 	return TRUE
 
 /atom/movable/screen/robot/module_slot
-	name = "module"
+	name = "Module"
+	examine_thats = "This is your"
 	icon_state = "inv1"
 	base_icon_state = "inv1"
 	/// Slot number of the module
-	var/slot_num = 1
+	VAR_FINAL/slot_num = 1
+	VAR_PRIVATE/static/list/possible_text_colors = list("#ff0000", "#ff9900", "#00cc00")
 
 /atom/movable/screen/robot/module_slot/proc/set_slot(slot_num)
 	src.slot_num = slot_num
-	name = "module[slot_num]"
-	base_icon_state = "inv[slot_num]"
+	var/slot_column = ((slot_num - 1) % 3) + 1
+
+	name = "Module [slot_num]"
+	base_icon_state = "inv[slot_column]"
 	icon_state = base_icon_state
 
-	switch(slot_num)
-		if(BORG_CHOOSE_MODULE_ONE)
-			screen_loc = ui_inv1
-		if(BORG_CHOOSE_MODULE_TWO)
-			screen_loc = ui_inv2
-		if(BORG_CHOOSE_MODULE_THREE)
-			screen_loc = ui_inv3
+	maptext = MAPTEXT_SPESSFONT("<span style='color: [possible_text_colors[slot_column]]; -dm-text-outline: 0'>[slot_num]</span>")
+	maptext_x = 6
+	maptext_y = 19
 
 /atom/movable/screen/robot/module_slot/Click()
 	if(..())
 		return
-	var/mob/living/silicon/robot/R = usr
-	R.toggle_module(slot_num)
+	var/mob/living/silicon/robot/borg = usr
+	borg.swap_hand(slot_num)
 
 /atom/movable/screen/robot/radio
 	name = "radio"

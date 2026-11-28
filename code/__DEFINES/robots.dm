@@ -35,22 +35,6 @@
 /// The minimum power consumption of a cyborg.
 #define BORG_MINIMUM_POWER_CONSUMPTION (1 WATTS)
 
-//Module slot define
-///The third module slots is disabed.
-#define BORG_MODULE_THREE_DISABLED (1<<0)
-///The second module slots is disabed.
-#define BORG_MODULE_TWO_DISABLED (1<<1)
-///All modules slots are disabled.
-#define BORG_MODULE_ALL_DISABLED (1<<2)
-
-//Cyborg module selection
-///First Borg module slot.
-#define BORG_CHOOSE_MODULE_ONE 1
-///Second Borg module slot.
-#define BORG_CHOOSE_MODULE_TWO 2
-///Third Borg module slot.
-#define BORG_CHOOSE_MODULE_THREE 3
-
 #define SKIN_ICON "skin_icon"
 #define SKIN_ICON_STATE "skin_icon_state"
 #define SKIN_PIXEL_X "skin_pixel_x"

@@ -1227,7 +1227,7 @@
 
 /mob/living/carbon/dropItemToGround(obj/item/to_drop, force = FALSE, silent = FALSE, invdrop = TRUE, turf/newloc = null)
 	if(to_drop && (organs.Find(to_drop) || bodyparts.Find(to_drop))) //let's not do this, aight?
-		return FALSE
+		return null
 	return ..()
 
 /// Helper to cleanly trigger tail wagging

@@ -910,35 +910,36 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 	var/step = ((cycle_dir & NORTHWEST) != 0) ? 1 : -1
 	var/by_row = cycle_dir & (NORTH|SOUTH)
 
-	var/hand_count = held_items.len
-	var/num_rows = floor(hand_count / 2)
-	var/row = floor((initial_index - 1) / 2)
-	var/column = (initial_index - 1) % 2
+	var/hand_count = get_num_hand_slots()
+	var/num_columns = hands_per_handset
+	var/num_rows = floor(hand_count / num_columns)
+	var/row = floor((initial_index - 1) / num_columns)
+	var/column = (initial_index - 1) % num_columns
 
 	var/max_iterations // worst case, we iterate this many times up to our initial_index
 	if(climb)
 		max_iterations = hand_count
 	else if(!by_row)
-		max_iterations = 2
+		max_iterations = num_columns
 	else
 		max_iterations = num_rows
 	for(var/i in 1 to max_iterations)
 		if(by_row) // vertically
 			row += step
 			if(row < 0 || row >= num_rows)
-				row = ((row % num_rows) + num_rows) % num_rows
+				row = WRAP0(row, num_rows)
 				if(climb)
-					column = abs(column + step) % 2
+					column = WRAP0(column + step, num_columns)
 		else // horizontally
 			column += step
-			if(column < 0 || column >= 2)
-				column = abs(column) % 2
+			if(column < 0 || column >= num_columns)
+				column = WRAP0(column, num_columns)
 				if(climb)
-					row = (((row + step) % num_rows) + num_rows) % num_rows
+					row = WRAP0(row + step, num_rows)
 
-		var/desired_index = (row * 2 + column) + 1
+		var/desired_index = (row * num_columns + column) + 1
 
-		var/sigresult = SEND_SIGNAL(src, COMSIG_MOB_CYCLE_HAND_INDEX(desired_index), cycle_dir, climb, silent)
+		var/sigresult = can_cycle_to_hand(desired_index, cycle_dir, climb, silent)
 		if(sigresult & COMPONENT_BLOCK_CYCLE)
 			return FALSE
 		if(sigresult & COMPONENT_CONTINUE_CYCLE)
@@ -947,12 +948,18 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 		return swap_hand(desired_index, silent = silent)
 	return FALSE
 
+/// If a mob can cycle to this hand index while doing cycles.
+/// Returns COMPONENT_BLOCK_CYCLE if hand cycling should be explicitly forbidden.
+/// Returns COMPONENT_CONTINUE_CYCLE if hand cycling is not allowed in this case but is not forbidden.
+/mob/proc/can_cycle_to_hand(hand_index, cycle_dir, climb, silent) as num
+	return SEND_SIGNAL(src, COMSIG_MOB_CYCLE_HAND_INDEX(hand_index), cycle_dir, climb, silent)
+
 /// Swaps the mob's active hand to the specified held_index.
 /// If intending to swap to the "next" hand, use [/mob/proc/cycle_hand] instead.
 /mob/proc/swap_hand(held_index, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
 
-	if(!held_items.len)
+	if(!get_num_hand_slots())
 		return FALSE
 
 	if(!isnum(held_index))

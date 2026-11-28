@@ -211,6 +211,69 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	toggle_cover(user)
 	return ITEM_INTERACT_SUCCESS
 
+/mob/living/silicon/robot/proc/refresh_module_stats()
+	health_per_module = (maxHealth * 2) / (get_num_hand_slots() + 1)
+	last_working_module = get_num_hand_slots()
+	update_module_health()
+
+/mob/living/silicon/robot/proc/update_module_health()
+	PRIVATE_PROC(TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	if(!model.breakable_modules)
+		last_working_module = get_num_hand_slots()
+		return
+
+	if(!get_num_hand_slots())
+		return
+
+	var/effective_health = (health + maxHealth) - 1 // so that it breaks at 50 and not 49
+	var/new_module_index = floor((effective_health) / health_per_module)
+
+	if(new_module_index == last_working_module)
+		return
+
+	// We add 1 to the indexes just so that they look normal when displayed in chat
+	var/starting_module_index = last_working_module + 1
+	var/ending_module_index = new_module_index + 1
+
+	var/damaging = new_module_index < last_working_module
+	// for in loops are implicitly i <= end and not i < end
+	if(damaging)
+		starting_module_index--
+	else
+		ending_module_index--
+
+	for(var/module_index in starting_module_index to ending_module_index step (damaging ? -1 : 1))
+		if(damaging)
+			var/self_message = module_index > 1 ? span_userdanger("SYSTEM ERROR: module [module_index] OFFLINE.") : span_userdanger("CRITICAL ERROR: ALL modules OFFLINE.")
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 60, TRUE, TRUE)
+			audible_message(
+				span_warning("[src] sounds an alarm! \"SYSTEM ERROR: Module [module_index] OFFLINE.\""),
+				span_warning("You see [src]'s posture weaken considerably!"),
+				self_message = self_message,
+				audible_message_flags = ALWAYS_SHOW_SELF_MESSAGE
+			)
+			deactivate_module(get_item_for_held_index(module_index))
+			modules_activated = FALSE // Disorient the robot a little bit
+			if(module_index == 1 && builtInCamera)
+				builtInCamera.camera_enabled = FALSE
+				to_chat(src, span_userdanger("CRITICAL ERROR: [builtInCamera.name] OFFLINE."))
+		else
+			playsound(src, 'sound/machines/beep/twobeep.ogg', 40, TRUE)
+			audible_message(
+				span_notice("[src] beeps confidently! \"ERROR CLEARED: module [module_index] ONLINE.\""),
+				span_notice("You see [src]'s posture get stronger!"),
+				self_message = span_big(span_boldnotice("ERROR CLEARED: module [module_index] ONLINE.")),
+				audible_message_flags = ALWAYS_SHOW_SELF_MESSAGE
+			)
+			if(module_index == 1 && builtInCamera)
+				builtInCamera.camera_enabled = TRUE
+				to_chat(src, span_big(span_boldnotice("SYSTEM NOTICE: [builtInCamera.name] ONLINE.")))
+
+	last_working_module = new_module_index
+	update_held_items()
+
 #define LOW_DAMAGE_UPPER_BOUND 1/3
 #define MODERATE_DAMAGE_UPPER_BOUND 2/3
 
@@ -250,6 +313,10 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 #undef LOW_DAMAGE_UPPER_BOUND
 #undef MODERATE_DAMAGE_UPPER_BOUND
 
+/mob/living/silicon/robot/setMaxHealth(newMaxHealth)
+	. = ..()
+	refresh_module_stats()
+
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if (!LAZYACCESS(modifiers, RIGHT_CLICK))
 		return ..()
@@ -258,7 +325,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	user.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 	var/obj/item/I = get_active_held_item()
 	if(I)
-		uneq_active()
+		deactivate_module(I)
 		visible_message(span_danger("[user] disarmed [src]!"), \
 			span_userdanger("[user] has disabled [src]'s active module!"), null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "disarmed", "[I ? " removing \the [I]" : ""]")

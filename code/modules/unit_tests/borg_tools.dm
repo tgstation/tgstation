@@ -12,8 +12,8 @@
 	TEST_ASSERT_NOTNULL(rtd, "Engineering borg lacks an RTD module")
 	targetturf.ChangeTurf(/turf/open/floor/plating)
 	ourborg.activate_module(rtd)
-	ourborg.select_module(1)
-	TEST_ASSERT_NOTNULL(ourborg.module_active, "RTD module failed to activate")
+	ourborg.swap_hand(1)
+	TEST_ASSERT_NOTNULL(ourborg.get_active_held_item(), "RTD module failed to activate")
 	click_wrapper(ourborg, targetturf)
 	rtd.selected_design.cost = 0.01
 	sleep(0.02 SECONDS)
@@ -24,8 +24,8 @@
 	TEST_ASSERT_NOTNULL(rcd, "Engineering borg lacks an RCD module")
 	rcd.delay_mod = 0.01
 	ourborg.activate_module(rcd)
-	ourborg.select_module(1)
-	TEST_ASSERT_NOTNULL(ourborg.module_active, "RCD module failed to activate")
+	ourborg.swap_hand(1)
+	TEST_ASSERT_NOTNULL(ourborg.get_active_held_item(), "RCD module failed to activate")
 	click_wrapper(ourborg, targetturf)
 	sleep(0.02 SECONDS)
 	TEST_ASSERT(iswallturf(targetturf), "Borg RCD was unable to create wall")

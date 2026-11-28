@@ -5,65 +5,37 @@
 /datum/keybinding/robot/can_use(client/user)
 	return iscyborg(user.mob)
 
-/datum/keybinding/robot/moduleone
+/datum/keybinding/robot/select_module
+	var/module_index = NONE
+
+/datum/keybinding/robot/select_module/down(client/user, turf/target, mousepos_x, mousepos_y)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/silicon/robot/borgie = user.mob
+	borgie.swap_hand(module_index)
+	return TRUE
+
+/datum/keybinding/robot/select_module/one
 	hotkey_keys = list("1")
 	name = "module_one"
 	full_name = "Toggle module 1"
-	description = "Equips or unequips the first module"
 	keybind_signal = COMSIG_KB_SILICON_TOGGLEMODULEONE_DOWN
+	module_index = 1
 
-/datum/keybinding/robot/moduleone/down(client/user, turf/target, mousepos_x, mousepos_y)
-	. = ..()
-	if(.)
-		return
-	var/mob/living/silicon/robot/R = user.mob
-	R.toggle_module(1)
-	return TRUE
-
-/datum/keybinding/robot/moduletwo
+/datum/keybinding/robot/select_module/two
 	hotkey_keys = list("2")
 	name = "module_two"
 	full_name = "Toggle module 2"
-	description = "Equips or unequips the second module"
 	keybind_signal = COMSIG_KB_SILICON_TOGGLEMODULETWO_DOWN
+	module_index = 2
 
-/datum/keybinding/robot/moduletwo/down(client/user, turf/target, mousepos_x, mousepos_y)
-	. = ..()
-	if(.)
-		return
-	var/mob/living/silicon/robot/R = user.mob
-	R.toggle_module(2)
-	return TRUE
-
-/datum/keybinding/robot/modulethree
+/datum/keybinding/robot/select_module/three
 	hotkey_keys = list("3")
 	name = "module_three"
 	full_name = "Toggle module 3"
-	description = "Equips or unequips the third module"
 	keybind_signal = COMSIG_KB_SILICON_TOGGLEMODULETHREE_DOWN
-
-/datum/keybinding/robot/modulethree/down(client/user, turf/target, mousepos_x, mousepos_y)
-	. = ..()
-	if(.)
-		return
-	var/mob/living/silicon/robot/R = user.mob
-	R.toggle_module(3)
-	return TRUE
-
-/datum/keybinding/robot/unequip_module
-	hotkey_keys = list("Q")
-	name = "unequip_module"
-	full_name = "Unequip module"
-	description = "Unequips the active module"
-	keybind_signal = COMSIG_KB_SILICON_UNEQUIPMODULE_DOWN
-
-/datum/keybinding/robot/unequip_module/down(client/user, turf/target, mousepos_x, mousepos_y)
-	. = ..()
-	if(.)
-		return
-	var/mob/living/silicon/robot/R = user.mob
-	R.uneq_active()
-	return TRUE
+	module_index = 3
 
 /datum/keybinding/robot/undeploy
 	category = CATEGORY_AI

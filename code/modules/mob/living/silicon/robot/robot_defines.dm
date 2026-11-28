@@ -17,7 +17,7 @@
 	unique_name = TRUE
 	mouse_drop_zone = TRUE
 	held_items = list(null, null, null) //we use held_items for the module holding, because that makes sense to do!
-	default_hand_amount = 3
+	hands_per_handset = 3
 	examine_thats = "This is"
 
 	///Represents the cyborg's model (engineering, medical, etc.)
@@ -74,8 +74,8 @@
 
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
 
-	// Modules (tool slots)
-	var/obj/item/module_active = null
+	/// If we're currently using our modules. Setting to FALSE will treat cyborgs as if they have empty hands.
+	VAR_PRIVATE/modules_activated = FALSE
 
 	///For checking which modules are disabled or not.
 	var/disabled_modules
@@ -130,8 +130,12 @@
 	can_buckle = TRUE
 	buckle_lying = FALSE
 
-	/// the last health before updating - to check net change in health
-	var/previous_health
+	/// The last module
+	VAR_FINAL/tmp/last_working_module
+
+	/// How much damage the cyborg needs to take for each module to break
+	VAR_FINAL/tmp/health_per_module
+
 	/// Station alert datum for showing alerts UI
 	var/datum/station_alert/alert_control
 

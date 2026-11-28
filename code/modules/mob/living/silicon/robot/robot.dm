@@ -27,8 +27,6 @@
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GOT_DAMPENED), PROC_REF(on_dampen))
 
-	previous_health = health
-
 	if(ispath(cell))
 		cell = new cell(src)
 
@@ -64,6 +62,7 @@
 			builtInCamera.camera_enabled = FALSE
 	. = ..()
 	update_icons()
+	refresh_module_stats()
 
 	LoadComponent(/datum/component/bloodysoles/bot)
 
@@ -652,32 +651,7 @@
 /mob/living/silicon/robot/updatehealth()
 	..()
 	update_damage_particles()
-	if(!model.breakable_modules)
-		return
-
-	/// the current percent health of the robot (-1 to 1)
-	var/percent_hp = health/maxHealth
-	if(health <= previous_health) //if change in health is negative (we're losing hp)
-		if(percent_hp <= 0.5)
-			break_cyborg_slot(3)
-
-		if(percent_hp <= 0)
-			break_cyborg_slot(2)
-
-		if(percent_hp <= -0.5)
-			break_cyborg_slot(1)
-
-	else //if change in health is positive (we're gaining hp)
-		if(percent_hp >= 0.5)
-			repair_cyborg_slot(3)
-
-		if(percent_hp >= 0)
-			repair_cyborg_slot(2)
-
-		if(percent_hp >= -0.5)
-			repair_cyborg_slot(1)
-
-	previous_health = health
+	update_module_health()
 
 /mob/living/silicon/robot/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
