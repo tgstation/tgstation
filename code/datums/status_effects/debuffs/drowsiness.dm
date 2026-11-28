@@ -26,11 +26,12 @@
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(on_face_clean))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damaged))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(now_sleep_immune))
+	RegisterSignal(owner, COMSIG_LIVING_STATUS_SLEEP, PROC_REF(owner_sleeping))
 	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/drowsy)
 	return TRUE
 
 /datum/status_effect/drowsiness/on_remove()
-	UnregisterSignal(owner, list(COMSIG_COMPONENT_CLEAN_FACE_ACT, COMSIG_MOB_APPLY_DAMAGE, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE)))
+	UnregisterSignal(owner, list(COMSIG_COMPONENT_CLEAN_FACE_ACT, COMSIG_MOB_APPLY_DAMAGE, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), COMSIG_LIVING_STATUS_SLEEP))
 	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/drowsy)
 
 /// Signal proc for [COMSIG_COMPONENT_CLEAN_FACE_ACT]. When we wash our face, reduce drowsiness by a bit.
@@ -52,6 +53,12 @@
 	SIGNAL_HANDLER
 
 	qdel(src)
+
+/// Signal proc for [COMSIG_LIVING_STATUS_SLEEP]. When the owner falls asleep, reduce duration of our effect
+/datum/status_effect/drowsiness/proc/owner_sleeping(datum/source, amount)
+	SIGNAL_HANDLER
+
+	remove_duration(amount * 2)
 
 /datum/status_effect/drowsiness/tick(seconds_between_ticks)
 	// You do not feel drowsy while unconscious or in stasis
@@ -76,7 +83,6 @@
 	if((final_damage > owner.maxHealth || SPT_PROB((final_damage - 50) / 2, seconds_between_ticks)) && !owner.IsSleeping())
 		owner.Sleeping(max(owner.stamina_regen_time, rand(9, 13) SECONDS))
 		COOLDOWN_START(src, last_stam_damage, owner.stamina_regen_time)
-		remove_duration(20 SECONDS)
 
 /// Checks if we're considering to be in a restful state for the purposes of reducing drowsiness
 /datum/status_effect/drowsiness/proc/is_resting()
