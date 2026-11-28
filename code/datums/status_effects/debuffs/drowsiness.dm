@@ -26,10 +26,12 @@
 	RegisterSignal(owner, COMSIG_COMPONENT_CLEAN_FACE_ACT, PROC_REF(on_face_clean))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damaged))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE), PROC_REF(now_sleep_immune))
+	owner.add_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/drowsy)
 	return TRUE
 
 /datum/status_effect/drowsiness/on_remove()
 	UnregisterSignal(owner, list(COMSIG_COMPONENT_CLEAN_FACE_ACT, COMSIG_MOB_APPLY_DAMAGE, SIGNAL_ADDTRAIT(TRAIT_SLEEPIMMUNE)))
+	owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/status_effect/drowsy)
 
 /// Signal proc for [COMSIG_COMPONENT_CLEAN_FACE_ACT]. When we wash our face, reduce drowsiness by a bit.
 /datum/status_effect/drowsiness/proc/on_face_clean(datum/source)
