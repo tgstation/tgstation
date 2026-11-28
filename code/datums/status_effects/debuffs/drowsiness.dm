@@ -43,6 +43,7 @@
 /datum/status_effect/drowsiness/proc/damaged(datum/source, damage_amount, damage_type, ...)
 	SIGNAL_HANDLER
 
+	// This is done to try to avoid drowsy into stun baton true combos
 	if(damage_type == STAMINA)
 		COOLDOWN_START(src, last_stam_damage, owner.stamina_regen_time)
 
