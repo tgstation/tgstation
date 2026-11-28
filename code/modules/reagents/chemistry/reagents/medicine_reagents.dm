@@ -785,13 +785,13 @@
 
 		if(24 to 36) // 5u to 7.5u
 			if(SPT_PROB(66 * (2 - creation_purity), seconds_per_tick))
-				affected_mob.adjust_drowsiness_up_to(2 SECONDS * metabolization_ratio, 12 SECONDS)
+				affected_mob.adjust_drowsiness_up_to(3 SECONDS * metabolization_ratio, 12 SECONDS)
 
 		if(36 to 48) // 7.5u to 10u
-			affected_mob.adjust_drowsiness_up_to(2 SECONDS * metabolization_ratio * seconds_per_tick, 12 SECONDS)
+			affected_mob.adjust_drowsiness_up_to(3 SECONDS * metabolization_ratio * seconds_per_tick, 12 SECONDS)
 
 		if(48 to INFINITY) //10u onward
-			affected_mob.adjust_drowsiness_up_to(3 SECONDS * metabolization_ratio * seconds_per_tick, 20 SECONDS)
+			affected_mob.adjust_drowsiness_up_to(4 SECONDS * metabolization_ratio * seconds_per_tick, 20 SECONDS)
 			// doesn't scale from purity - at this point it tries to guarantee sleep
 			if(SPT_PROB(30 * (48 - current_cycle), seconds_per_tick))
 				affected_mob.Sleeping(4 SECONDS * metabolization_ratio)
@@ -1558,7 +1558,7 @@
 	. = ..()
 	for(var/datum/reagent/drug/reagent in affected_mob.reagents.reagent_list)
 		affected_mob.reagents.remove_reagent(reagent.type, 2.5 * reagent.purge_multiplier * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_drowsiness_up_to(3 SECONDS * metabolization_ratio * seconds_per_tick, 30 SECONDS)
+	affected_mob.adjust_drowsiness_up_to(2.5 SECONDS * metabolization_ratio * seconds_per_tick, 20 SECONDS)
 
 	if(affected_mob.get_timed_status_effect_duration(/datum/status_effect/jitter) >= 6 SECONDS)
 		affected_mob.adjust_jitter(-7.5 SECONDS * metabolization_ratio * seconds_per_tick)
