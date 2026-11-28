@@ -8,7 +8,7 @@
 	equip_delay_other = 4 SECONDS
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 	undyeable = TRUE
-	var/datum/weakref/pull_component_weakref
+	var/datum/autoref/pull_component_autoref
 
 /obj/item/clothing/gloves/cargo_gauntlet/Initialize(mapload)
 	. = ..()
@@ -16,21 +16,21 @@
 	RegisterSignal(src, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_glove_unequip))
 	AddElement(/datum/element/adjust_fishing_difficulty, 19)
 
-/// Called when the glove is equipped. Adds a component to the equipper and stores a weak reference to it.
+/// Called when the glove is equipped. Adds a component to the equipper and stores a auto reference to it.
 /obj/item/clothing/gloves/cargo_gauntlet/proc/on_glove_equip(datum/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
 	if(!(slot & ITEM_SLOT_GLOVES))
 		return
 
-	var/datum/component/strong_pull/pull_component = pull_component_weakref?.resolve()
+	var/datum/component/strong_pull/pull_component = pull_component_autoref?.resolve()
 	if(pull_component)
 		stack_trace("Gloves already have a pull component associated with \[[pull_component.parent]\] when \[[equipper]\] is trying to equip them.")
-		QDEL_NULL(pull_component_weakref)
+		QDEL_NULL(pull_component_autoref)
 
 	to_chat(equipper, span_notice("You feel the gauntlets activate as soon as you fit them on, making your pulls stronger!"))
 
-	pull_component_weakref = WEAKREF(equipper.AddComponent(/datum/component/strong_pull))
+	pull_component_autoref = AUTOREF(equipper.AddComponent(/datum/component/strong_pull))
 
 /*
  * Called when the glove is unequipped. Deletes the component if one exists.
@@ -41,14 +41,14 @@
 /obj/item/clothing/gloves/cargo_gauntlet/proc/on_glove_unequip(datum/source, force, atom/newloc, no_move, invdrop, silent)
 	SIGNAL_HANDLER
 
-	var/datum/component/strong_pull/pull_component = pull_component_weakref?.resolve()
+	var/datum/component/strong_pull/pull_component = pull_component_autoref?.resolve()
 
 	if(!pull_component)
 		return
 
 	to_chat(pull_component.parent, span_warning("You have lost the grip power of [src]!"))
 
-	QDEL_NULL(pull_component_weakref)
+	QDEL_NULL(pull_component_autoref)
 
 /obj/item/clothing/gloves/rapid
 	name = "Gloves of the North Star"

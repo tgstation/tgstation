@@ -6,12 +6,12 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "stargazer_menu"
 	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED | AB_CHECK_PHASED
-	/// Weakref for storing our stargazer
-	var/datum/weakref/our_mob
+	/// Autoref for storing our stargazer
+	var/datum/autoref/our_mob
 
 /datum/action/cooldown/open_mob_commands/Grant(mob/granted_to, mob/living/basic/heretic_summon/star_gazer/our_mob_input)
 	. = ..()
-	our_mob = WEAKREF(our_mob_input)
+	our_mob = AUTOREF(our_mob_input)
 
 /datum/action/cooldown/open_mob_commands/Activate(atom/target)
 	open_menu()

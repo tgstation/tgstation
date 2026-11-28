@@ -15,8 +15,8 @@
 	var/list/turfs_that_boost_us
 	/// A list of all shields surrounding us while drawing certain runes (Nar'sie).
 	var/list/obj/structure/emergency_shield/cult/narsie/shields
-	/// Weakref to an action added to our parent item that allows for quick drawing runes
-	var/datum/weakref/linked_action_ref
+	/// Autoref to an action added to our parent item that allows for quick drawing runes
+	var/datum/autoref/linked_action_ref
 
 /datum/component/cult_ritual_item/Initialize(
 	examine_message,
@@ -37,7 +37,7 @@
 	if(ispath(action))
 		var/obj/item/item_parent = parent
 		var/datum/action/added_action = item_parent.add_item_action(action)
-		linked_action_ref = WEAKREF(added_action)
+		linked_action_ref = AUTOREF(added_action)
 
 /datum/component/cult_ritual_item/Destroy(force)
 	cleanup_shields()

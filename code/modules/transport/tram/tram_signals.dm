@@ -22,7 +22,7 @@
 	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
 	var/signal_state = XING_STATE_MALF
 	/// the sensor we use
-	var/datum/weakref/sensor_ref
+	var/datum/autoref/sensor_ref
 	/// Inbound station
 	var/inbound
 	/// Outbound station
@@ -190,7 +190,7 @@
 
 
 /obj/machinery/transport/crossing_signal/proc/link_sensor()
-	sensor_ref = WEAKREF(find_closest_valid_sensor())
+	sensor_ref = AUTOREF(find_closest_valid_sensor())
 	update_appearance()
 
 /obj/machinery/transport/crossing_signal/proc/unlink_sensor()
@@ -471,7 +471,7 @@
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/guideway_sensor
 	/// Sensors work in a married pair
-	var/datum/weakref/paired_sensor
+	var/datum/autoref/paired_sensor
 	/// If us or anything else in the operation chain is broken
 	var/operating_status = TRANSPORT_SYSTEM_NORMAL
 
@@ -532,12 +532,12 @@
 		switch(potential_sensor.dir)
 			if(NORTH, SOUTH)
 				if(potential_sensor.x == src.x)
-					paired_sensor = WEAKREF(potential_sensor)
+					paired_sensor = AUTOREF(potential_sensor)
 					set_machine_stat(machine_stat & ~MAINT)
 					break
 			if(EAST, WEST)
 				if(potential_sensor.y == src.y)
-					paired_sensor = WEAKREF(potential_sensor)
+					paired_sensor = AUTOREF(potential_sensor)
 					set_machine_stat(machine_stat & ~MAINT)
 					break
 
@@ -547,7 +547,7 @@
 	if(isnull(new_partner))
 		return
 
-	new_partner.paired_sensor = WEAKREF(src)
+	new_partner.paired_sensor = AUTOREF(src)
 	new_partner.set_machine_stat(machine_stat & ~MAINT)
 	new_partner.update_appearance()
 	playsound(src, 'sound/machines/synth/synth_yes.ogg', 75, vary = FALSE, use_reverb = TRUE)

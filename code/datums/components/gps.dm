@@ -2,6 +2,8 @@
 GLOBAL_LIST_EMPTY(GPS_list)
 ///GPS component. Atoms that have this show up on gps. Pretty simple stuff.
 /datum/component/gps
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	var/gpstag = "COM0"
 	var/tracking = TRUE
 	var/emped = FALSE

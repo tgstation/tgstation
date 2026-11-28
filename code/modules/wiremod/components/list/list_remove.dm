@@ -28,5 +28,5 @@
 	var/value_to_remove = to_remove.value
 
 	if(isdatum(value_to_remove))
-		value_to_remove = WEAKREF(value_to_remove)
+		value_to_remove = AUTOREF(value_to_remove)
 	info -= value_to_remove

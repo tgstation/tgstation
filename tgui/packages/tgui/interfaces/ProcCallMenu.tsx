@@ -22,7 +22,7 @@ type ProcCallMenuData = {
   possible_types: string[];
   expected_output: string;
   expected_output_color: string;
-  resolve_weakref: BooleanLike;
+  resolve_autoref: BooleanLike;
 };
 
 export const ProcCallMenu = (props) => {
@@ -32,7 +32,7 @@ export const ProcCallMenu = (props) => {
     possible_types,
     expected_output,
     expected_output_color,
-    resolve_weakref,
+    resolve_autoref,
   } = data;
   return (
     <Window width={500} height={400}>
@@ -56,17 +56,17 @@ export const ProcCallMenu = (props) => {
                 <Stack.Divider />
                 <Stack.Item>
                   <Button.Checkbox
-                    content="Resolve Weakref"
+                    content="Resolve Autoref"
                     textAlign="center"
-                    checked={resolve_weakref}
-                    onClick={() => act('resolve_weakref')}
+                    checked={resolve_autoref}
+                    onClick={() => act('resolve_autoref')}
                     fluid
                   />
                 </Stack.Item>
                 <Stack.Item>
                   <NoticeBox info width="100%">
                     This determines whether we automatically resolve any
-                    weakrefs in lists.
+                    autorefs in lists.
                   </NoticeBox>
                 </Stack.Item>
               </Stack>

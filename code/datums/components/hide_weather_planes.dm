@@ -100,7 +100,7 @@
 	var/list/connected_levels = SSmapping.get_connected_levels(new_turf)
 	for(var/datum/weather/active as anything in SSweather.processing)
 		if(length(connected_levels & active.impacted_z_levels))
-			active_weather += WEAKREF(active)
+			active_weather += AUTOREF(active)
 
 	if(length(active_weather))
 		display_planes()
@@ -117,7 +117,7 @@
 
 	var/list/connected_levels = SSmapping.get_connected_levels(viewing_from)
 	if(length(connected_levels & starting.impacted_z_levels))
-		active_weather += WEAKREF(starting)
+		active_weather += AUTOREF(starting)
 
 	if(!length(active_weather))
 		return
@@ -125,7 +125,7 @@
 
 /datum/component/hide_weather_planes/proc/weather_finished(datum/source, datum/weather/stopping)
 	SIGNAL_HANDLER
-	active_weather -= WEAKREF(stopping)
+	active_weather -= AUTOREF(stopping)
 
 	if(length(active_weather))
 		return

@@ -308,7 +308,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	///Should we load our inventory from the bookselves in our area?
 	var/dynamic_inv_load = FALSE
 	///Book scanner that will be used when uploading books to the Archive
-	var/datum/weakref/scanner
+	var/datum/autoref/scanner
 	///Name of the book we're checking out, given by barcodes or the UI.
 	var/datum/book_info/checking_out_book
 	///Our cooldown on using the printer
@@ -424,7 +424,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		scanner = null
 
 	for(var/obj/machinery/libraryscanner/foundya in range(viewrange, get_turf(src)))
-		scanner = WEAKREF(foundya)
+		scanner = AUTOREF(foundya)
 		return foundya
 
 /obj/machinery/computer/libraryconsole/bookmanagement/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -556,7 +556,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 		balloon_alert(user, "already connected!")
 		return ITEM_INTERACT_BLOCKING
 
-	scanner.computer_ref = WEAKREF(src)
+	scanner.computer_ref = AUTOREF(src)
 	balloon_alert(user, "scanner connected")
 	audible_message(span_hear("[src] lets out a low, short blip."))
 	return ITEM_INTERACT_SUCCESS

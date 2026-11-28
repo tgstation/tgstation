@@ -246,15 +246,15 @@
 			var/log_entry_index = params["entryIndex"]
 			var/list/log_entry = current_state.log[log_entry_index]
 			var/thing_to_debug = traverse_list(params["indices"], log_entry["return_values"])
-			if(isweakref(thing_to_debug))
-				var/datum/weakref/ref = thing_to_debug
+			if(isautoref(thing_to_debug))
+				var/datum/autoref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()
 			INVOKE_ASYNC(user.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
 			return FALSE
 		if("vvGlobal")
 			var/thing_to_debug = traverse_list(params["indices"], current_state.globals["values"])
-			if(isweakref(thing_to_debug))
-				var/datum/weakref/ref = thing_to_debug
+			if(isautoref(thing_to_debug))
+				var/datum/autoref/ref = thing_to_debug
 				thing_to_debug = ref.resolve()
 			INVOKE_ASYNC(user.client, TYPE_PROC_REF(/client, debug_variables), thing_to_debug)
 			return FALSE

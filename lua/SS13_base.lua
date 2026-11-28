@@ -123,7 +123,7 @@ local function create_qdeleting_callback(datum)
 	callback:RegisterSignal(datum, "parent_qdeleting", "Invoke")
 	local path = {
 		"__SS13_signal_handlers",
-		dm.global_procs.WEAKREF(datum),
+		dm.global_procs.AUTOREF(datum),
 		"parent_qdeleting",
 		"handler",
 	}
@@ -164,7 +164,7 @@ function SS13.register_signal(datum, signal, func)
 		callback:RegisterSignal(datum, signal, "Invoke")
 		local path = {
 			"__SS13_signal_handlers",
-			dm.global_procs.WEAKREF(datum),
+			dm.global_procs.AUTOREF(datum),
 			signal,
 			"handler",
 		}

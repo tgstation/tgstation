@@ -47,7 +47,7 @@ ADMIN_VERB(radio_report, R_DEBUG, "Radio Report", "Shows a report of all radio d
 				output += "&nbsp;&nbsp;[filter]: ERROR<br>"
 				continue
 			output += "&nbsp;&nbsp;[filter]: [filtered.len]<br>"
-			for(var/datum/weakref/device_ref as anything in filtered)
+			for(var/datum/autoref/device_ref as anything in filtered)
 				var/atom/device = device_ref.resolve()
 				if(!device)
 					filtered -= device_ref

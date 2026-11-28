@@ -26,7 +26,7 @@
 	/// If we give warnings before base is launched
 	var/launch_warning = TRUE
 	/// List of connected turrets
-	var/list/datum/weakref/turrets
+	var/list/datum/autoref/turrets
 	/// List of all possible destinations
 	var/possible_destinations
 	/// ID of the currently selected destination of the attached base
@@ -65,7 +65,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 	data["destination"] = destination
 	data["blind_drop"] = blind_drop_ready
 	data["turrets"] = list()
-	for(var/datum/weakref/turret_ref as anything in turrets)
+	for(var/datum/autoref/turret_ref as anything in turrets)
 		var/obj/machinery/porta_turret/aux_base/base_turret = turret_ref.resolve()
 		if(!istype(base_turret)) // null or invalid in turrets list? axe it
 			LAZYREMOVE(turrets, turret_ref)
@@ -181,7 +181,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 			destination = target_destination
 			return TRUE
 		if("turrets_power")
-			for(var/datum/weakref/turret_ref as anything in turrets)
+			for(var/datum/autoref/turret_ref as anything in turrets)
 				var/obj/machinery/porta_turret/aux_base/base_turret = turret_ref.resolve()
 				if(!istype(base_turret)) // null or invalid in turrets list
 					LAZYREMOVE(turrets, turret_ref)
@@ -191,7 +191,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/auxiliary_base, 32)
 			return TRUE
 		if("single_turret_power")
 			var/obj/machinery/porta_turret/aux_base/base_turret = locate(params["single_turret_power"])
-			if(!istype(base_turret) || !(WEAKREF(base_turret) in turrets))
+			if(!istype(base_turret) || !(AUTOREF(base_turret) in turrets))
 				return
 
 			base_turret.toggle_on()

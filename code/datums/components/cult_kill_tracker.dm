@@ -1,6 +1,6 @@
 /// Component to handle the behavior of a nullrod keeping track of cultists it has crit or killed, and converting the item into a cult weapon when sacrificed
 /datum/component/cult_kill_tracker
-	/// Lazylist, tracks weakrefs()s to all cultists which have been crit or killed by this nullrod.
+	/// Lazylist, tracks autorefs()s to all cultists which have been crit or killed by this nullrod.
 	var/list/cultists_slain
 	/// Ref to the last mob hit with this rod.
 	var/last_ref
@@ -31,7 +31,7 @@
 		return
 	if(!IS_CULTIST(target) || istype(target, /mob/living/carbon/human/cult_ghost))
 		return
-	last_ref = WEAKREF(target)
+	last_ref = AUTOREF(target)
 	last_stat = target.stat
 
 /datum/component/cult_kill_tracker/proc/post_hit(source, mob/living/target)
@@ -81,5 +81,5 @@
 		return
 	if(!IS_CULTIST(target_mob) || istype(target_mob, /mob/living/carbon/human/cult_ghost))
 		return
-	last_ref = WEAKREF(target_mob)
+	last_ref = AUTOREF(target_mob)
 	last_stat = target_mob.stat

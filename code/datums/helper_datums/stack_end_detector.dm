@@ -4,12 +4,12 @@
 
  **/
 /datum/stack_end_detector
-	var/datum/weakref/_WF
+	var/datum/autoref/_WF
 	var/datum/stack_canary/_canary
 
 /datum/stack_end_detector/New()
 	_canary = new()
-	_WF = WEAKREF(_canary)
+	_WF = AUTOREF(_canary)
 
 /** Prime the stack overflow detector.
 	Store the return value of this proc call in a proc level var.

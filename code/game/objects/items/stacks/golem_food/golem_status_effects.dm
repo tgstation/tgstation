@@ -157,11 +157,11 @@
 	)
 	offset_location = ENTIRE_BODY
 	///The bodypart that the overlay is currently applied to
-	var/datum/weakref/attached_bodypart
+	var/datum/autoref/attached_bodypart
 
 /datum/bodypart_overlay/simple/golem_overlay/proc/add_to_bodypart(prefix, obj/item/bodypart/part)
 	icon_state = "[prefix]_[part.body_zone]"
-	attached_bodypart = WEAKREF(part)
+	attached_bodypart = AUTOREF(part)
 	part.add_bodypart_overlay(src, update = FALSE)
 
 /datum/bodypart_overlay/simple/golem_overlay/Destroy(force)

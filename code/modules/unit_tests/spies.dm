@@ -7,7 +7,7 @@
 	james_bond.equipOutfit(/datum/outfit/job/assistant/consistent)
 	var/datum/antagonist/spy/spy = james_bond.mind.add_antag_datum(/datum/antagonist/spy)
 
-	var/datum/component/spy_uplink/uplink = spy.uplink_weakref?.resolve()
+	var/datum/component/spy_uplink/uplink = spy.uplink_autoref?.resolve()
 	TEST_ASSERT_NOTNULL(uplink, "Spy failed to be given an uplink!")
 
 	var/datum/spy_bounty_handler/handler = uplink.handler

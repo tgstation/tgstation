@@ -6,7 +6,7 @@
 	var/disallow_soul_imbue = TRUE
 	/// If FALSE, prevents parent from being qdel'd unless it's a force = TRUE qdel.
 	var/allow_item_destruction = FALSE
-	var/datum/weakref/connect_ref
+	var/datum/autoref/connect_ref
 
 /datum/component/stationloving/Initialize(inform_admins = FALSE, allow_item_destruction = FALSE)
 	if(!ismovable(parent))
@@ -29,7 +29,7 @@
 		COMSIG_MOVABLE_MOVED = PROC_REF(on_parent_moved),
 		SIGNAL_ADDTRAIT(TRAIT_SECLUDED_LOCATION) = PROC_REF(on_loc_secluded),
 	)
-	connect_ref = WEAKREF(AddComponent(/datum/component/connect_containers, parent, loc_connections))
+	connect_ref = AUTOREF(AddComponent(/datum/component/connect_containers, parent, loc_connections))
 
 /datum/component/stationloving/UnregisterFromParent()
 	UnregisterSignal(parent, list(

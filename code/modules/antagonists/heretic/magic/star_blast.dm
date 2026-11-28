@@ -19,18 +19,18 @@
 	deactive_msg = "You stop swirling cosmic energies from the palm of your hand... for now."
 	cast_range = 12
 	projectile_type = /obj/projectile/magic/star_ball
-	/// Weakref to the projectile we fire, so that we can recast our ability to teleport to its location
-	var/datum/weakref/projectile_weakref
-	/// Weakref to our summoner, only relevant if we are a stargazer. Prevents us from harming our master
-	var/datum/weakref/summoner
+	/// Autoref to the projectile we fire, so that we can recast our ability to teleport to its location
+	var/datum/autoref/projectile_autoref
+	/// Autoref to our summoner, only relevant if we are a stargazer. Prevents us from harming our master
+	var/datum/autoref/summoner
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	. = ..()
-	projectile_weakref = WEAKREF(to_fire)
+	projectile_autoref = AUTOREF(to_fire)
 	to_fire.AddElement(cosmic_trail_based_on_passive(user), /obj/effect/forcefield/cosmic_field/fast)
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/apply_button_overlay(atom/movable/screen/movable/action_button/current_button, force)
-	var/obj/projectile/magic/star_ball/active_ball = projectile_weakref?.resolve()
+	var/obj/projectile/magic/star_ball/active_ball = projectile_autoref?.resolve()
 	if(!active_ball)
 		return ..()
 
@@ -40,7 +40,7 @@
 	current_button.add_overlay(current_button.button_overlay)
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/set_click_ability(mob/on_who)
-	var/obj/projectile/magic/star_ball/active_ball = projectile_weakref?.resolve()
+	var/obj/projectile/magic/star_ball/active_ball = projectile_autoref?.resolve()
 	if(!active_ball)
 		build_all_button_icons(UPDATE_OVERLAYS)
 		return ..()

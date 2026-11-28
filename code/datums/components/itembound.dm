@@ -1,7 +1,7 @@
 /// When a movable has this component AND they are in the contents of a container, they will no longer be able to use their hands and be immobilized until they are removed from the container. So far, this is only useful for smites.
 /datum/component/itembound
-	/// Weak reference to the container that the movable is inside of.
-	var/datum/weakref/containerref
+	/// Auto reference to the container that the movable is inside of.
+	var/datum/autoref/containerref
 	/// Detect any movement of the container
 	var/datum/movement_detector/move_tracker
 
@@ -10,7 +10,7 @@
 		return COMPONENT_INCOMPATIBLE
 	if(QDELETED(passed_container))
 		return
-	containerref = WEAKREF(passed_container)
+	containerref = AUTOREF(passed_container)
 	RegisterSignal(passed_container, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(on_examined))
 	move_tracker = new(parent, CALLBACK(src, PROC_REF(verify_containment)))
 

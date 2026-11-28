@@ -116,7 +116,7 @@
 	/// techweb linked to the medbot
 	var/datum/techweb/linked_techweb
 	///our tipper
-	var/datum/weakref/tipper
+	var/datum/autoref/tipper
 
 /mob/living/basic/bot/medbot/proc/set_speech_keys()
 	if(isnull(ai_controller))
@@ -309,7 +309,7 @@
  */
 /mob/living/basic/bot/medbot/proc/after_tip_over(mob/user)
 	medical_mode_flags |= MEDBOT_TIPPED_MODE
-	tipper = WEAKREF(user)
+	tipper = AUTOREF(user)
 	playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
 	if(prob(10))
 		speak("PSYCH ALERT: Crewmember [user.name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", radio_channel)

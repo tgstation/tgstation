@@ -31,7 +31,7 @@
 	inhand_icon_state = "silencer"
 	icon_angle = -45
 	var/mode = GIZMO_SCAN
-	var/datum/weakref/marked_target_weakref
+	var/datum/autoref/marked_target_autoref
 	var/obj/machinery/abductor/console/console
 
 /obj/item/abductor/gizmo/attack_self(mob/user)
@@ -75,12 +75,12 @@
 		to_chat(user, span_notice("You scan [target] and add [target.p_them()] to the database."))
 
 /obj/item/abductor/gizmo/proc/mark(atom/target, mob/living/user)
-	var/mob/living/marked = marked_target_weakref?.resolve()
+	var/mob/living/marked = marked_target_autoref?.resolve()
 	if(marked == target)
 		to_chat(user, span_warning("This specimen is already marked!"))
 		return
 	if(HAS_TRAIT(target, TRAIT_ABDUCTOR_QUICK_SCAN))
-		marked_target_weakref = WEAKREF(target)
+		marked_target_autoref = AUTOREF(target)
 		to_chat(user, span_notice("You mark [target] for future retrieval."))
 	else
 		prepare(target,user)
@@ -91,7 +91,7 @@
 		return
 	to_chat(user, span_notice("You begin preparing [target] for transport..."))
 	if(do_after(user, 10 SECONDS, target = target))
-		marked_target_weakref = WEAKREF(target)
+		marked_target_autoref = AUTOREF(target)
 		to_chat(user, span_notice("You finish preparing [target] for transport."))
 
 /obj/item/abductor/gizmo/Destroy()

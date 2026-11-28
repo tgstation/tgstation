@@ -42,6 +42,8 @@ GLOBAL_LIST_INIT(trait_blockers_to_hud, list(
 ))
 
 /datum/atom_hud
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	///associative list of the form: list(z level = list(hud atom)).
 	///tracks what hud atoms for this hud exists in what z level so we can only give users
 	///the hud images that they can actually see.

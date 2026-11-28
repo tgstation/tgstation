@@ -21,8 +21,8 @@
 	basic_mob_flags = DEL_ON_DEATH
 	death_message = "vanishes into thin air! It was a fake!"
 	ai_controller = /datum/ai_controller/basic_controller/illusion
-	/// Weakref to what we're copying
-	var/datum/weakref/parent_mob_ref
+	/// Autoref to what we're copying
+	var/datum/autoref/parent_mob_ref
 	/// Prob of getting a clone on attack
 	var/multiply_chance = 0
 	/// The blackboard key we want to set for our target
@@ -68,7 +68,7 @@
 	if(QDELETED(original))
 		return
 
-	parent_mob_ref = WEAKREF(original)
+	parent_mob_ref = AUTOREF(original)
 	appearance = original.appearance
 	setDir(original.dir)
 

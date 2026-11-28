@@ -13,7 +13,7 @@
 		"I don't think anyone will be happy when I cast this spell...",
 	)
 	/// Mob used in book recoils to store an identity for mindswaps
-	var/datum/weakref/stored_swap_ref
+	var/datum/autoref/stored_swap_ref
 
 /obj/item/book/granter/action/spell/mindswap/on_reading_finished()
 	. = ..()
@@ -34,7 +34,7 @@
 	. = ..()
 	var/mob/living/real_stored_swap = stored_swap_ref?.resolve()
 	if(QDELETED(real_stored_swap))
-		stored_swap_ref = WEAKREF(user)
+		stored_swap_ref = AUTOREF(user)
 		to_chat(user, span_warning("For a moment you feel like you don't even know who you are anymore."))
 		return
 	if(real_stored_swap.stat == DEAD)

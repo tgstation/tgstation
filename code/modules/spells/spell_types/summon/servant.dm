@@ -16,8 +16,8 @@
 	smoke_type = /datum/effect_system/fluid_spread/smoke
 	smoke_amt = 0
 
-	///Weakref to the summonable mob.
-	var/datum/weakref/summon_weakref
+	///Autoref to the summonable mob.
+	var/datum/autoref/summon_autoref
 	///Are we already summoning a mob?
 	var/summoning_servant = FALSE
 	///Have we selected a mob to be our servant?
@@ -40,7 +40,7 @@
 		find_servant()
 		return SPELL_CANCEL_CAST
 
-	var/mob/living/to_summon = summon_weakref?.resolve()
+	var/mob/living/to_summon = summon_autoref?.resolve()
 
 	if(QDELETED(to_summon))
 		to_chat(owner, span_warning("You can't seem to summon your [servant_title] - it seems they've vanished from reality, or never existed in the first place..."))
@@ -49,7 +49,7 @@
 /datum/action/cooldown/spell/summon_mob/cast()
 	. = ..()
 
-	var/mob/living/to_summon = summon_weakref?.resolve()
+	var/mob/living/to_summon = summon_autoref?.resolve()
 
 	to_summon.visible_message(span_alert("[to_summon] suddenly vanishes into thin air!"), span_alert("You have been summoned to serve!"), span_hear("You hear something teleport away from nearby, off to serve..."))
 
@@ -81,7 +81,7 @@
 	human_servant.equipOutfit(/datum/outfit/butler)
 	do_smoke(0, src, spawn_location)
 	human_servant.PossessByPlayer(chosen_one.key)
-	summon_weakref = WEAKREF(human_servant)
+	summon_autoref = AUTOREF(human_servant)
 
 	var/datum/mind/servant_mind = new /datum/mind()
 	var/datum/antagonist/magic_servant/servant_antagonist = new

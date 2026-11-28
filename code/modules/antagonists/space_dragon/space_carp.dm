@@ -6,11 +6,11 @@
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
 	/// The rift to protect
-	var/datum/weakref/rift
+	var/datum/autoref/rift
 
 /datum/antagonist/space_carp/New(obj/structure/carp_rift/rift)
 	. = ..()
-	src.rift = WEAKREF(rift)
+	src.rift = AUTOREF(rift)
 
 /datum/antagonist/space_carp/on_gain()
 	forge_objectives()
@@ -22,7 +22,7 @@
 
 /datum/objective/space_carp
 	explanation_text = "Protect the rift to summon more carps."
-	var/datum/weakref/rift
+	var/datum/autoref/rift
 
 /datum/objective/space_carp/check_completion()
 	if(!rift.resolve())

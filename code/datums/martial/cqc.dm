@@ -10,8 +10,8 @@
 	help_verb = "Remember The Basics"
 	smashes_tables = TRUE
 	display_combos = TRUE
-	/// Weakref to a mob we're currently restraining (with grab-grab combo)
-	VAR_PRIVATE/datum/weakref/restraining_mob
+	/// Autoref to a mob we're currently restraining (with grab-grab combo)
+	VAR_PRIVATE/datum/autoref/restraining_mob
 	/// Probability of successfully blocking attacks while on throw mode
 	var/block_chance = 75
 
@@ -79,7 +79,7 @@
 
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
-	if(!IS_WEAKREF_OF(new_target, restraining_mob))
+	if(!IS_AUTOREF_OF(new_target, restraining_mob))
 		restraining_mob = null
 	return ..()
 
@@ -193,7 +193,7 @@
 	to_chat(attacker, span_danger("You lock [defender] into a restraining position!"))
 	defender.adjust_stamina_loss(20)
 	defender.Stun(10 SECONDS)
-	restraining_mob = WEAKREF(defender)
+	restraining_mob = AUTOREF(defender)
 	addtimer(VARSET_CALLBACK(src, restraining_mob, null), 5 SECONDS, TIMER_UNIQUE)
 	return TRUE
 
@@ -322,7 +322,7 @@
 	if(check_streak(attacker, defender))
 		return MARTIAL_ATTACK_SUCCESS
 
-	if(IS_WEAKREF_OF(attacker.pulling, restraining_mob))
+	if(IS_AUTOREF_OF(attacker.pulling, restraining_mob))
 		log_combat(attacker, defender, "disarmed (CQC)", addition = "knocked out (CQC Chokehold)")
 		defender.visible_message(
 			span_danger("[attacker] puts [defender] into a chokehold!"),

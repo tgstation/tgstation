@@ -166,8 +166,8 @@
 /datum/terror_handler/simple_source/pyrophobia
 	/// Tracks the last fire size to avoid spamming mood events
 	VAR_PRIVATE/last_fire_size = -1
-	/// Weakref to active fire hallucinations
-	VAR_PRIVATE/datum/weakref/fire_hallucination_weakref
+	/// Autoref to active fire hallucinations
+	VAR_PRIVATE/datum/autoref/fire_hallucination_autoref
 
 /datum/terror_handler/simple_source/pyrophobia/New(mob/living/new_owner, datum/component/fearful/new_component)
 	. = ..()
@@ -178,7 +178,7 @@
 	return ..()
 
 /datum/terror_handler/simple_source/pyrophobia/check_condition(seconds_per_tick, terror_buildup)
-	var/datum/hallucination/fire/fire_hallucination = fire_hallucination_weakref?.resolve()
+	var/datum/hallucination/fire/fire_hallucination = fire_hallucination_autoref?.resolve()
 	if(owner.on_fire || !QDELETED(fire_hallucination))
 		owner.clear_mood_event("pyrophobia") // they have the "ON FIRE" moodlet
 		return max(owner.fire_stacks, fire_hallucination?.fake_firestacks) * 2
@@ -197,7 +197,7 @@
 	SIGNAL_HANDLER
 
 	if(istype(hallucination, /datum/hallucination/fire))
-		fire_hallucination_weakref = WEAKREF(hallucination)
+		fire_hallucination_autoref = AUTOREF(hallucination)
 
 /// While stop drop and rolling you lose a tiny bit of terror
 /datum/terror_handler/is_stop_drop_rolling

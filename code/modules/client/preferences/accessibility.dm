@@ -40,6 +40,6 @@
 	if(value || !isliving(client.mob)) // only hide, showing is more trouble than it's worth
 		return
 
-	var/datum/weakref/climber_ref = WEAKREF(client.mob)
+	var/datum/autoref/climber_ref = AUTOREF(client.mob)
 	for(var/obj/structure/stairs/stair as anything in GLOB.stairs)
 		stair.clear_climber_image(climber_ref)

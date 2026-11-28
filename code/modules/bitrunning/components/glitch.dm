@@ -1,7 +1,7 @@
 /datum/component/glitch
 	/// Ref of the spawning forge
-	var/datum/weakref/forge_ref
-	var/datum/weakref/distort_component
+	var/datum/autoref/forge_ref
+	var/datum/autoref/distort_component
 
 /datum/component/glitch/Initialize(obj/machinery/quantum_server/server, obj/machinery/byteforge/forge)
 	if(!isliving(parent))
@@ -13,7 +13,7 @@
 	if (forge)
 		RegisterSignal(forge, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(on_forge_power_restored))
 		RegisterSignals(forge, list(COMSIG_MACHINERY_BROKEN, COMSIG_MACHINERY_POWER_LOST), PROC_REF(on_forge_broken))
-		forge_ref = WEAKREF(forge)
+		forge_ref = AUTOREF(forge)
 		server.remove_threat(owner) // so the server doesn't dust us
 		health_boost = ROUND_UP(server.threat * 0.2)
 
@@ -25,7 +25,7 @@
 
 /datum/component/glitch/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
-	distort_component = WEAKREF(parent.AddComponent(/datum/component/holographic_nature))
+	distort_component = AUTOREF(parent.AddComponent(/datum/component/holographic_nature))
 
 /datum/component/glitch/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_LIVING_DEATH)

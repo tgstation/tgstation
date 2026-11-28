@@ -118,7 +118,7 @@
 	else
 		return "<a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(src)]'>[type] [REF(src)]</a>"
 
-/datum/weakref/debug_variable_value(name, level, datum/owner, sanitize, display_flags)
+/datum/autoref/debug_variable_value(name, level, datum/owner, sanitize, display_flags)
 	. = ..()
 	return "[.] <a href='byond://?_src_=vars;[HrefToken()];Vars=[reference]'>(Resolve)</a>"
 

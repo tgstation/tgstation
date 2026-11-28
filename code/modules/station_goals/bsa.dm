@@ -80,8 +80,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	name = "Bluespace Artillery Fusor"
 	desc = "Contents classified by Nanotrasen Naval Command. Needs to be linked with the other BSA parts using a multitool."
 	icon_state = "fuel_chamber"
-	var/datum/weakref/back_ref
-	var/datum/weakref/front_ref
+	var/datum/autoref/back_ref
+	var/datum/autoref/front_ref
 
 /obj/machinery/bsa/middle/Initialize(mapload)
 	. = ..()
@@ -91,12 +91,12 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	. = NONE
 
 	if(istype(tool.buffer, /obj/machinery/bsa/back))
-		back_ref = WEAKREF(tool.buffer)
+		back_ref = AUTOREF(tool.buffer)
 		to_chat(user, span_notice("You link [src] with [tool.buffer]."))
 		tool.set_buffer(null)
 		return ITEM_INTERACT_SUCCESS
 	else if(istype(tool.buffer, /obj/machinery/bsa/front))
-		front_ref = WEAKREF(tool.buffer)
+		front_ref = AUTOREF(tool.buffer)
 		to_chat(user, span_notice("You link [src] with [tool.buffer]."))
 		tool.set_buffer(null)
 		return ITEM_INTERACT_SUCCESS
@@ -280,7 +280,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	icon_keyboard = null
 	icon_screen = null
 
-	var/datum/weakref/cannon_ref
+	var/datum/autoref/cannon_ref
 	var/notice
 	var/target
 	var/area_aim = FALSE //should also show areas for targeting
@@ -337,7 +337,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 
 	switch(action)
 		if("build")
-			cannon_ref = WEAKREF(deploy())
+			cannon_ref = AUTOREF(deploy())
 			stop_visualizing()
 			. = TRUE
 		if("visualize")
@@ -421,7 +421,7 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 /obj/machinery/computer/bsa_control/proc/start_visualizing()
 	var/obj/machinery/bsa/full/prebuilt = locate() in range(7) //In case of adminspawn
 	if(prebuilt)
-		cannon_ref = WEAKREF(prebuilt)
+		cannon_ref = AUTOREF(prebuilt)
 		return
 
 	var/obj/machinery/bsa/middle/centerpiece = check_completion()

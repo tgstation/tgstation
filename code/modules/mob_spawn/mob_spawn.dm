@@ -31,8 +31,8 @@
 	var/facial_haircolor
 	///sets a human's skin tone
 	var/skin_tone
-	/// Weakref to the mob this spawner created - just if you needed to do something with it.
-	var/datum/weakref/spawned_mob_ref
+	/// Autoref to the mob this spawner created - just if you needed to do something with it.
+	var/datum/autoref/spawned_mob_ref
 
 /obj/effect/mob_spawn/Initialize(mapload)
 	. = ..()
@@ -68,7 +68,7 @@
 	special(spawned_mob, mob_possessor, apply_prefs)
 	name_mob(spawned_mob, newname)
 	equip(spawned_mob)
-	spawned_mob_ref = WEAKREF(spawned_mob)
+	spawned_mob_ref = AUTOREF(spawned_mob)
 	return spawned_mob
 
 /// Returns the species typepath a human spawned by this spawner should be initialized with.

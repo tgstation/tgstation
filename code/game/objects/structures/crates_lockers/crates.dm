@@ -26,7 +26,7 @@
 	/// The time spent to climb this crate.
 	var/crate_climb_time = 2 SECONDS
 	/// The reference of the manifest paper attached to the cargo crate.
-	var/datum/weakref/manifest
+	var/datum/autoref/manifest
 	/// Where the Icons for lids are located.
 	var/lid_icon = 'icons/obj/storage/crates.dmi'
 	/// Icon state to use for lid to display when opened. Leave undefined if there isn't one.

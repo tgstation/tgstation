@@ -135,6 +135,8 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
  * who is betting, and also takes care of paying out at the end.
  */
 /datum/active_bet
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	///The person owning the bet, who will choose which option has won.
 	var/bet_owner
 	///The name of the bet

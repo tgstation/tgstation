@@ -342,14 +342,14 @@
 	throwforce = 0
 	throw_range = 0
 	throw_speed = 0
-	/// A weakref to what spell made us.
-	var/datum/weakref/spell_which_made_us
+	/// A autoref to what spell made us.
+	var/datum/autoref/spell_which_made_us
 
 /obj/item/melee/touch_attack/Initialize(mapload, datum/action/cooldown/spell/spell)
 	. = ..()
 
 	if(spell)
-		spell_which_made_us = WEAKREF(spell)
+		spell_which_made_us = AUTOREF(spell)
 
 /**
  * When the hand component of a touch spell is qdel'd, (the hand is dropped or otherwise lost),

@@ -6,7 +6,7 @@
 	var/obj/item/vacuum_item/hose
 	var/deployed = FALSE
 	var/locked = FALSE
-	var/datum/weakref/module_list
+	var/datum/autoref/module_list
 
 /obj/item/borg/cleaner_box/Initialize(mapload)
 	. = ..()
@@ -14,11 +14,11 @@
 	if(!istype(robot))
 		return INITIALIZE_HINT_QDEL
 	var/obj/item/robot_model/janitor/model = locate() in robot.get_contents()
-	module_list = WEAKREF(model)
+	module_list = AUTOREF(model)
 	AddComponent(/datum/component/borg_item_offered_when_pulled, robot)
 	ADD_TRAIT(src, TRAIT_BORG_GIVE, TRAIT_BORG_GIVE)
 	hose = new(src)
-	hose.cleaner_box = WEAKREF(src)
+	hose.cleaner_box = AUTOREF(src)
 	hose.AddComponent( \
 		/datum/component/transforming, \
 		force_on = hose.force, \
@@ -121,7 +121,7 @@
 	force = 12
 
 	var/datum/beam/held/vacuum/borg_hose
-	var/datum/weakref/cleaner_box
+	var/datum/autoref/cleaner_box
 	var/obj/item/storage/bag/trash/bag
 	var/cleaning = FALSE
 

@@ -1,10 +1,10 @@
 /datum/hallucination/bolts
 	random_hallucination_weight = 7
 	hallucination_tier = HALLUCINATION_TIER_COMMON
-	/// A list of weakrefs to airlocks we bolt down around us
-	var/list/datum/weakref/airlocks_to_hit
-	/// A list of weakrefs to fake lock hallucinations we've created
-	var/list/datum/weakref/locks
+	/// A list of autorefs to airlocks we bolt down around us
+	var/list/datum/autoref/airlocks_to_hit
+	/// A list of autorefs to fake lock hallucinations we've created
+	var/list/datum/autoref/locks
 	/// A number relating to the number of ssfastprocessing ticks (x 10) until the next action
 	var/next_action = 0
 	/// Whether we're currently locking, or unlocking
@@ -19,7 +19,7 @@
 			break
 		if(!nearby_airlock.density)
 			continue
-		LAZYADD(airlocks_to_hit, WEAKREF(nearby_airlock))
+		LAZYADD(airlocks_to_hit, AUTOREF(nearby_airlock))
 
 	if(!LAZYLEN(airlocks_to_hit)) // Not an airlock in sight
 		return FALSE
@@ -36,11 +36,11 @@
 		return
 
 	if(locking)
-		var/datum/weakref/next_airlock = pop(airlocks_to_hit)
+		var/datum/autoref/next_airlock = pop(airlocks_to_hit)
 		var/obj/machinery/door/airlock/to_lock = next_airlock?.resolve()
 		if(to_lock)
 			var/obj/effect/client_image_holder/hallucination/fake_door_lock/lock = new(to_lock.loc, hallucinator, src, to_lock)
-			LAZYADD(locks, WEAKREF(lock))
+			LAZYADD(locks, AUTOREF(lock))
 
 		if(!LAZYLEN(airlocks_to_hit))
 			locking = FALSE
@@ -48,7 +48,7 @@
 			return
 
 	else
-		var/datum/weakref/next_unlock = popleft(locks)
+		var/datum/autoref/next_unlock = popleft(locks)
 		var/obj/effect/client_image_holder/hallucination/fake_door_lock/to_unlock = next_unlock?.resolve()
 		if(to_unlock)
 			to_unlock.unlock()
@@ -63,7 +63,7 @@
 /datum/hallucination/bolts/Destroy()
 	// Clean up any locks we happen to have remaining on qdel.
 	// Hypothetically this shouldn't delete anything. But just in case.
-	for(var/datum/weakref/leftover_lock_ref as anything in locks)
+	for(var/datum/autoref/leftover_lock_ref as anything in locks)
 		var/obj/effect/client_image_holder/hallucination/fake_door_lock/leftover_lock = leftover_lock_ref.resolve()
 		if(!QDELETED(leftover_lock))
 			qdel(leftover_lock)

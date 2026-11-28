@@ -92,7 +92,7 @@
 	/// A copy of the last paper object that was shown to this camera.
 	var/obj/item/paper/last_shown_paper
 
-	var/list/datum/weakref/localMotionTargets = list()
+	var/list/datum/autoref/localMotionTargets = list()
 	var/detectTime = 0
 	var/datum/motion_group/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()

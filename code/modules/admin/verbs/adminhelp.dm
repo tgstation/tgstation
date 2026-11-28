@@ -167,6 +167,8 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
  * # Adminhelp Ticket
  */
 /datum/admin_help
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	/// Unique ID of the ticket
 	var/id
 	/// The current name of the ticket

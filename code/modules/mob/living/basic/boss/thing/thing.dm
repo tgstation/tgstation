@@ -213,8 +213,8 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	/// is this not broken yet
 	var/functional = TRUE
-	/// boss weakref
-	var/datum/weakref/boss_weakref
+	/// boss autoref
+	var/datum/autoref/boss_autoref
 
 /obj/structure/thing_boss_phase_depleter/Initialize(mapload)
 	. = ..()
@@ -228,7 +228,7 @@
 	if(isnull(thing))
 		qdel(src)
 		return
-	boss_weakref = WEAKREF(thing)
+	boss_autoref = AUTOREF(thing)
 	RegisterSignal(thing, COMSIG_MEGAFAUNA_THETHING_PHASEUPDATED, PROC_REF(thing_phaseupdated))
 
 /obj/structure/thing_boss_phase_depleter/proc/thing_phaseupdated(mob/living/basic/boss/thing/source)
@@ -269,7 +269,7 @@
 	new /obj/effect/temp_visual/mook_dust(loc)
 
 /obj/structure/thing_boss_phase_depleter/interact(mob/user, list/modifiers)
-	var/mob/living/basic/boss/thing/the_thing = boss_weakref?.resolve()
+	var/mob/living/basic/boss/thing/the_thing = boss_autoref?.resolve()
 	if(!the_thing || !functional || !density)
 		return
 	if(!user.can_perform_action(src) || !user.can_interact_with(src))

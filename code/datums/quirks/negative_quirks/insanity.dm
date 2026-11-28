@@ -10,8 +10,8 @@
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations, and may have trouble speaking."
 	hardcore_value = 6
 	mail_goodies = list(/obj/item/storage/pill_bottle/lsdpsych)
-	/// Weakref to the trauma we give out
-	var/datum/weakref/added_trama_ref
+	/// Autoref to the trauma we give out
+	var/datum/autoref/added_trama_ref
 
 /datum/quirk/insanity/add(client/client_source)
 	if(!iscarbon(quirk_holder))
@@ -31,7 +31,7 @@
 	added_trauma.uncapped = client_source?.prefs?.read_preference(/datum/preference/toggle/rds_limit)
 
 	carbon_quirk_holder.gain_trauma(added_trauma)
-	added_trama_ref = WEAKREF(added_trauma)
+	added_trama_ref = AUTOREF(added_trauma)
 
 /datum/quirk/insanity/post_add()
 	var/rds_policy = get_policy("[type]") || "Please note that your [LOWER_TEXT(name)] does NOT give you any additional right to attack people or cause chaos."

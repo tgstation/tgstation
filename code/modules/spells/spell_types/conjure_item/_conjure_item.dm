@@ -6,8 +6,8 @@
 	var/obj/item_type
 	/// If TRUE, we delete any previously created items when we cast the spell
 	var/delete_old = TRUE
-	/// List of weakrefs to items summoned
-	var/list/datum/weakref/item_refs
+	/// List of autorefs to items summoned
+	var/list/datum/autoref/item_refs
 	/// If TRUE, deletes the item if no mob picks it up on cast
 	var/delete_on_failure = TRUE
 	/// If TRUE, requires the caster be able to pick it up afterwards
@@ -80,7 +80,7 @@
 /// Item is made in at the caster's.
 /datum/action/cooldown/spell/conjure_item/proc/make_item(atom/caster)
 	var/obj/item/made_item = new item_type(caster.loc)
-	LAZYADD(item_refs, WEAKREF(made_item))
+	LAZYADD(item_refs, AUTOREF(made_item))
 	return made_item
 
 /// Called after item has been handed to the caster, for any additional presentation

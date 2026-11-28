@@ -41,7 +41,7 @@
 	if(data["enc_key"] != enc_key.value)
 		return
 
-	var/datum/weakref/ref = data["port"]
+	var/datum/autoref/ref = data["port"]
 	var/datum/port/input/port = ref?.resolve()
 	if(!port)
 		return

@@ -5,7 +5,7 @@
 	///Datum that owns us, such as an AI or camera program.
 	var/datum/tracking_holder
 	///The mob requesting the current tracking session, used for permission checks and feedback.
-	var/datum/weakref/tracking_user_ref
+	var/datum/autoref/tracking_user_ref
 
 	///What mob are we currently tracking, if any
 	var/mob/living/tracked_mob
@@ -57,9 +57,9 @@
 		namecounts[name] = 1
 
 		if(ishuman(living_mob))
-			humans[name] = WEAKREF(living_mob)
+			humans[name] = AUTOREF(living_mob)
 		else
-			others[name] = WEAKREF(living_mob)
+			others[name] = AUTOREF(living_mob)
 
 	var/list/targets = sort_list(humans) + sort_list(others)
 	return targets
@@ -76,7 +76,7 @@
 		return
 	tracked_mob = track
 	if(tracked_mob)
-		tracking_user_ref = WEAKREF(tracker)
+		tracking_user_ref = AUTOREF(tracker)
 		SEND_SIGNAL(src, COMSIG_TRACKABLE_TRACKING_STARTED, tracked_mob)
 		RegisterSignal(tracked_mob, COMSIG_QDELETING, PROC_REF(target_deleted))
 		RegisterSignal(tracked_mob, COMSIG_MOVABLE_MOVED, PROC_REF(target_moved))
@@ -172,7 +172,7 @@
 	var/target_name = tgui_input_list(tracker, "Select a target", "Tracking", find_trackable_mobs(tracker))
 	if(!target_name || isnull(target_name))
 		return
-	var/datum/weakref/mob_ref = isnull(humans[target_name]) ? others[target_name] : humans[target_name]
+	var/datum/autoref/mob_ref = isnull(humans[target_name]) ? others[target_name] : humans[target_name]
 	if(isnull(mob_ref))
 		to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 		return
@@ -191,7 +191,7 @@
 		return
 
 	find_trackable_mobs(tracker) //this is in case the tracked mob is newly/no-longer in camera field of view.
-	var/datum/weakref/mob_ref = isnull(humans[tracked_mob_name]) ? others[tracked_mob_name] : humans[tracked_mob_name]
+	var/datum/autoref/mob_ref = isnull(humans[tracked_mob_name]) ? others[tracked_mob_name] : humans[tracked_mob_name]
 	if(isnull(mob_ref))
 		to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 		return

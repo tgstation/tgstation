@@ -138,12 +138,12 @@
 
 /// Callback for the ghoul status effect - what effects are applied to the ghoul.
 /datum/heretic_knowledge/limited_amount/risen_corpse/proc/apply_to_risen(mob/living/risen)
-	LAZYADD(created_items, WEAKREF(risen))
+	LAZYADD(created_items, AUTOREF(risen))
 	risen.AddComponent(/datum/component/mutant_hands, mutant_hand_path = /obj/item/mutant_hand/shattered_risen)
 
 /// Callback for the ghoul status effect - cleaning up effects after the ghoul status is removed.
 /datum/heretic_knowledge/limited_amount/risen_corpse/proc/remove_from_risen(mob/living/risen)
-	LAZYREMOVE(created_items, WEAKREF(risen))
+	LAZYREMOVE(created_items, AUTOREF(risen))
 	qdel(risen.GetComponent(/datum/component/mutant_hands))
 
 #undef RISEN_MAX_HEALTH

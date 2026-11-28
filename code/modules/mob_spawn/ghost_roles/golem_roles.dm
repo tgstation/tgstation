@@ -87,14 +87,14 @@
 	you_are_text = "You are a golem."
 	flavour_text = "You are highly resistant to heat and cold as well as blunt trauma. You must consume minerals to maintain motion. You are unable to wear clothes, but can still use most tools."
 	spawner_job_path = /datum/job/servant_golem
-	/// Weakref to the creator of this golem shell.
-	var/datum/weakref/owner_ref
+	/// Autoref to the creator of this golem shell.
+	var/datum/autoref/owner_ref
 
 /obj/effect/mob_spawn/ghost_role/human/golem/servant/Initialize(mapload, mob/living/creator, made_of)
 	. = ..()
 	if (!creator)
 		return
-	owner_ref = WEAKREF(creator)
+	owner_ref = AUTOREF(creator)
 
 /obj/effect/mob_spawn/ghost_role/human/golem/servant/give_directive(mob/living/new_spawn)
 	var/mob/living/real_owner = owner_ref?.resolve()

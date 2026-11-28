@@ -403,8 +403,8 @@
 	abstract_type = /datum/heretic_knowledge/limited_amount
 	/// The limit to how many items we can create at once.
 	var/limit = 1
-	/// A list of weakrefs to all items we've created.
-	var/list/datum/weakref/created_items
+	/// A list of autorefs to all items we've created.
+	var/list/datum/autoref/created_items
 	/// If TRUE items we create can be tracked with the living heart
 	var/trackable_items = FALSE
 
@@ -418,7 +418,7 @@
 		if(length(result_atoms & typesof(/obj/item/melee/sickly_blade)))
 			return TRUE
 
-	for(var/datum/weakref/ref as anything in created_items)
+	for(var/datum/autoref/ref as anything in created_items)
 		var/atom/real_thing = ref.resolve()
 		if(QDELETED(real_thing))
 			LAZYREMOVE(created_items, ref)
@@ -433,9 +433,9 @@
 	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	for(var/result in result_atoms)
 		var/atom/created_thing = new result(loc)
-		LAZYADD(created_items, WEAKREF(created_thing))
+		LAZYADD(created_items, AUTOREF(created_thing))
 		if(trackable_items && our_heretic)
-			LAZYADD(our_heretic.tracked_items, WEAKREF(created_thing))
+			LAZYADD(our_heretic.tracked_items, AUTOREF(created_thing))
 
 	return TRUE
 

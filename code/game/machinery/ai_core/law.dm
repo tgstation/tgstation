@@ -190,7 +190,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	var/obj/structure/ai_core/to_link = tool.buffer
-	to_link.default_link_ref = WEAKREF(src)
+	to_link.default_link_ref = AUTOREF(src)
 	tool.play_tool_sound(src, 20)
 	balloon_alert(user, "linked core to rack")
 	return ITEM_INTERACT_SUCCESS

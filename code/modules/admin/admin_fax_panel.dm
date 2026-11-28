@@ -22,7 +22,7 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 	for(var/obj/machinery/fax/fax as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/fax))
 		if(istype(fax, /obj/machinery/fax/admin))
 			continue
-		available_faxes += WEAKREF(fax)
+		available_faxes += AUTOREF(fax)
 
 	//Get all stamps
 	for(var/stamp in valid_subtypesof(/obj/item/stamp))
@@ -43,8 +43,8 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 	if(!length(available_faxes))
 		return null
 
-	for(var/datum/weakref/weakrefed_fax as anything in available_faxes)
-		var/obj/machinery/fax/potential_fax = weakrefed_fax.resolve()
+	for(var/datum/autoref/autorefed_fax as anything in available_faxes)
+		var/obj/machinery/fax/potential_fax = autorefed_fax.resolve()
 		if(potential_fax && istype(potential_fax))
 			if(potential_fax.fax_name == name)
 				return potential_fax
@@ -68,8 +68,8 @@ ADMIN_VERB(fax_panel, R_ADMIN, "Fax Panel", "View and respond to faxes sent to C
 	for(var/stamp in stamp_list)
 		data["stamps"] += list(stamp[1]) // send only names.
 
-	for(var/datum/weakref/weakrefed_fax as anything in available_faxes)
-		var/obj/machinery/fax/another_fax = weakrefed_fax.resolve()
+	for(var/datum/autoref/autorefed_fax as anything in available_faxes)
+		var/obj/machinery/fax/another_fax = autorefed_fax.resolve()
 		if(another_fax && istype(another_fax))
 			data["faxes"] += list(another_fax.fax_name)
 

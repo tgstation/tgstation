@@ -7,7 +7,7 @@
 	icon_screen = "bitrunning"
 	req_access = list(ACCESS_MINING)
 	/// The server this console is connected to.
-	var/datum/weakref/server_ref
+	var/datum/autoref/server_ref
 	keyboard_change_icon = FALSE
 
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/circuit)
@@ -104,5 +104,5 @@
 	for(var/direction in GLOB.cardinals)
 		var/obj/machinery/quantum_server/nearby_server = locate(/obj/machinery/quantum_server, get_step(src, direction))
 		if(nearby_server)
-			server_ref = WEAKREF(nearby_server)
+			server_ref = AUTOREF(nearby_server)
 			return nearby_server

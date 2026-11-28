@@ -12,7 +12,7 @@
 	var/revive_time_max = 70 SECONDS
 	var/timer_id
 
-	var/datum/weakref/ghost_poll
+	var/datum/autoref/ghost_poll
 
 /obj/item/organ/zombie_infection/Initialize(mapload)
 	. = ..()
@@ -88,7 +88,7 @@
 			target.get_up()
 		return
 
-	ghost_poll = WEAKREF(target.AddComponent( \
+	ghost_poll = AUTOREF(target.AddComponent( \
 		/datum/component/ghost_direct_control, \
 		ban_type = NONE, \
 		poll_ignore_key = POLL_IGNORE_RECOVERED_CREW, \

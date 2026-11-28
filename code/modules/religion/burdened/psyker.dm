@@ -11,14 +11,14 @@
 	shade_color = "blue"
 	variant_traits_added = list(TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	/// Echolocation component we assigned
-	VAR_FINAL/datum/weakref/echolocation_component
+	VAR_FINAL/datum/autoref/echolocation_component
 	/// Antimagic component we assigned
-	VAR_FINAL/datum/weakref/antimagic_component
+	VAR_FINAL/datum/autoref/antimagic_component
 
 /obj/item/organ/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
-	echolocation_component = WEAKREF(inserted_into.AddComponent(/datum/component/echolocation, echo_icon = "psyker"))
-	antimagic_component = WEAKREF(inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND))
+	echolocation_component = AUTOREF(inserted_into.AddComponent(/datum/component/echolocation, echo_icon = "psyker"))
+	antimagic_component = AUTOREF(inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND))
 
 /obj/item/organ/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
 	. = ..()

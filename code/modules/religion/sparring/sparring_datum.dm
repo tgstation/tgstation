@@ -267,7 +267,7 @@
 					to_chat(winner, span_nicegreen("You've won favor with [GLOB.deity]!"))
 				var/datum/religion_sect/spar/sect = GLOB.religious_sect
 				sect.adjust_favor(1, winner)
-				sect.past_opponents += WEAKREF(loser)
+				sect.past_opponents += AUTOREF(loser)
 		if(STAKES_MONEY_MATCH)
 			to_chat(winner, span_nicegreen("You've won all of [loser]'s money!"))
 		if(STAKES_YOUR_SOUL)

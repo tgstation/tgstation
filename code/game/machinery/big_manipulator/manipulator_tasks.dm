@@ -322,7 +322,7 @@
 			return
 
 	selected.forceMove(manipulator)
-	manipulator.held_object = WEAKREF(selected)
+	manipulator.held_object = AUTOREF(selected)
 	manipulator.manipulator_arm.update_claw(manipulator.held_object)
 	manipulator.schedule_next_cycle()
 

@@ -9,10 +9,10 @@
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/telecomms/monitor")
 	icon_screen = "comm_monitor"
 
-	/// Weakref of the currently selected tcomms machine
-	var/datum/weakref/selected_machine_ref = null
-	/// Weakrefs of the machines located by the computer
-	var/list/datum/weakref/machine_refs
+	/// Autoref of the currently selected tcomms machine
+	var/datum/autoref/selected_machine_ref = null
+	/// Autorefs of the machines located by the computer
+	var/list/datum/autoref/machine_refs
 
 	/// Currently displayed "tab"
 	var/screen = MAIN_VIEW
@@ -49,7 +49,7 @@
 			data["network"] = network
 
 			data["machines"] = list()
-			for(var/datum/weakref/machine_ref in machine_refs)
+			for(var/datum/autoref/machine_ref in machine_refs)
 				var/obj/machinery/telecomms/machine = machine_ref.resolve()
 				if(isnull(machine))
 					machine_refs -= machine_ref
@@ -104,7 +104,7 @@
 			if(isnull(machine_id))
 				return
 
-			for(var/datum/weakref/machine_ref as anything in machine_refs)
+			for(var/datum/autoref/machine_ref as anything in machine_refs)
 				var/obj/machinery/telecomms/machine = machine_ref.resolve()
 				if(isnull(machine))
 					machine_refs -= machine_ref
@@ -127,7 +127,7 @@
 				status_message = "OPERATION FAILED: NETWORK ID TOO LONG."
 				return TRUE
 
-			list_clear_empty_weakrefs(machine_refs)
+			list_clear_empty_autorefs(machine_refs)
 
 			if(length(machine_refs) > 0)
 				status_message = "OPERATION FAILED: CANNOT PROBE WHEN BUFFER FULL."
@@ -140,7 +140,7 @@
 				if(machine.network != network)
 					continue
 
-				machine_refs += WEAKREF(machine)
+				machine_refs += AUTOREF(machine)
 
 			if(length(machine_refs) == 0)
 				status_message = "OPERATION FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN [network]."

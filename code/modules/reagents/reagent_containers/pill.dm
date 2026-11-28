@@ -123,8 +123,8 @@
 
 	// SSmobs.wait is 2 seconds (as of writing this), so we can end up with a delay of 1 second. In this case, use a timer
 	if (layers_remaining > 0)
-		// Using weakrefs because the mob can get deleted in the meanwhile and leave the pill behind
-		addtimer(CALLBACK(src, PROC_REF(finish_digesting), WEAKREF(stomach), WEAKREF(owner)), layers_remaining SECONDS)
+		// Using autorefs because the mob can get deleted in the meanwhile and leave the pill behind
+		addtimer(CALLBACK(src, PROC_REF(finish_digesting), AUTOREF(stomach), AUTOREF(owner)), layers_remaining SECONDS)
 		return COMPONENT_CANCEL_DIGESTION
 
 	// I think we should log this in case of horrible shenanigans
@@ -134,7 +134,7 @@
 	qdel(src)
 	return COMPONENT_CANCEL_DIGESTION
 
-/obj/item/reagent_containers/applicator/pill/proc/finish_digesting(datum/weakref/stomach_ref, datum/weakref/owner_ref)
+/obj/item/reagent_containers/applicator/pill/proc/finish_digesting(datum/autoref/stomach_ref, datum/autoref/owner_ref)
 	var/obj/item/organ/stomach/stomach = stomach_ref.resolve()
 	var/mob/living/carbon/owner = owner_ref.resolve()
 	if (!owner || !stomach)
