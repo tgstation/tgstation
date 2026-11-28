@@ -478,15 +478,22 @@
 
 /// Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand
 /datum/wound/proc/second_wind()
+	var/amount = 0
 	switch(severity)
 		if(WOUND_SEVERITY_MODERATE)
-			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_MODERATE)
+			amount = WOUND_DETERMINATION_MODERATE
 		if(WOUND_SEVERITY_SEVERE)
-			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_SEVERE)
+			amount = WOUND_DETERMINATION_SEVERE
 		if(WOUND_SEVERITY_CRITICAL)
-			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_CRITICAL)
+			amount = WOUND_DETERMINATION_CRITICAL
 		if(WOUND_SEVERITY_LOSS)
-			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_LOSS)
+			amount = WOUND_DETERMINATION_LOSS
+
+	if(HAS_TRAIT(victim, TRAIT_MORE_ADRENALINE))
+		amount *= 1.5
+
+	if(amount > 0)
+		victim.reagents.add_reagent(/datum/reagent/determination, amount)
 
 /datum/wound/proc/interact_try_treating(datum/source, mob/living/user, obj/item/tool, ...)
 	SIGNAL_HANDLER

@@ -2,6 +2,7 @@
 	name = "\improper Cerulean"
 	id = SPECIES_CERULEAN
 	mutant_organs = list(/obj/item/organ/tail/fish/cerulean = /datum/sprite_accessory/tails/fish/cerulean::name)
+	mutantbrain = /obj/item/organ/brain
 	mutanttongue = /obj/item/organ/tongue/fish
 	mutantlungs = /obj/item/organ/lungs/fish
 	mutantstomach = /obj/item/organ/stomach/fish
