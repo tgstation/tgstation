@@ -70,6 +70,8 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 				printed_paper.color = "#deebff"
 				printed_paper.update_appearance()
 
+#define NO_ANTAGS_PREDICTED(...) (SSdynamic.current_tier.tier == 0 && !length(SSdynamic.executed_rulesets))
+
 // Called AFTER everyone is equipped with their job
 /datum/communciations_controller/proc/queue_roundstart_report()
 	addtimer(CALLBACK(src, PROC_REF(send_roundstart_report)), rand(waittime_l, waittime_h))
@@ -85,11 +87,11 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	. += command_report_main_content || get_main_report_content()
 	if(CONFIG_GET(flag/no_dynamic_report))
 		if(isnull(greenshift))
-			greenshift = SSdynamic.current_tier.tier == 0
+			greenshift = NO_ANTAGS_PREDICTED()
 	else
 		var/dynamic_report = SSdynamic.get_advisory_report()
 		if(isnull(greenshift)) // if we're not forced to be greenshift or not - check if we are an actual greenshift
-			greenshift = SSdynamic.current_tier.tier == 0 && dynamic_report == /datum/dynamic_tier/greenshift::advisory_report
+			greenshift = NO_ANTAGS_PREDICTED() && dynamic_report == /datum/dynamic_tier/greenshift::advisory_report
 
 		. += "<hr><h3>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector:</h3>"
 		. += dynamic_report
@@ -102,9 +104,9 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 			Feel free to pick one your crew wishes to specialize in - you are not expected to complete them all."
 		announced_greenshift = TRUE
 
-	else
-		for(var/datum/station_goal/station_goal as anything in SSstation.get_station_goals())
-			station_goal.on_report()
+	for(var/datum/station_goal/station_goal as anything in SSstation.get_station_goals())
+		station_goal.on_report()
+		if(!greenshift)
 			station_goal_strings += station_goal.get_report()
 
 	if(length(station_goal_strings) > 0) // if we have any special orders to report, add them in
@@ -166,6 +168,8 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	if(istype(SSstation.announcer, /datum/centcom_announcer/intern))
 		return pick_list_replacements("flavor_reports.json", "intern_reports")
 	return pick_list_replacements("flavor_reports.json", "reports")
+
+#undef NO_ANTAGS_PREDICTED
 
 #undef COMMUNICATION_COOLDOWN
 #undef COMMUNICATION_COOLDOWN_AI
