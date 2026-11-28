@@ -58,7 +58,7 @@
 /datum/status_effect/drowsiness/proc/owner_sleeping(datum/source, amount)
 	SIGNAL_HANDLER
 
-	remove_duration(amount * 2)
+	remove_duration((amount * 2) / (1 SECONDS))
 
 /datum/status_effect/drowsiness/tick(seconds_between_ticks)
 	// You do not feel drowsy while unconscious or in stasis
