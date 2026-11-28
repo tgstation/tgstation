@@ -44,6 +44,10 @@
 		dir = selected_dir,
 	)
 
+	var/list/existing_decals = list()
+	SEND_SIGNAL(target, COMSIG_OPEN_TURF_PAINTED, existing_decals)
+	target.base_decals ||= string_list(existing_decals, TRUE)
+
 	target.AddElement( \
 		/datum/element/decal, \
 		_icon = 'icons/turf/decals.dmi', \

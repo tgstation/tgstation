@@ -90,7 +90,7 @@
 				return ITEM_INTERACT_BLOCKING
 
 		var/obj/item/stack/tile/tile = tool
-		tile.place_tile(src, user)
+		tile.place_tile(src, user, modifiers)
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/cautery/prt)) //plating repair tool

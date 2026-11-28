@@ -20,7 +20,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 
-/obj/item/stack/tile/light/place_tile(turf/open/target_plating, mob/user)
+/obj/item/stack/tile/light/place_tile(turf/open/target_plating, mob/user, list/modifiers)
 	. = ..()
 	var/turf/open/floor/light/floor = .
 	floor?.state = state

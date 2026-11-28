@@ -44,11 +44,12 @@
 			values += dir2text(set_dir)
 		tile_rotate_dirs = tile_dir_list(values, turf_type)
 
-
 /obj/item/stack/tile/examine(mob/user)
 	. = ..()
+	. += span_info("[EXAMINE_HINT("Left-click")] on <i>plating</i> to place.\
+		<br>[EXAMINE_HINT("Right-click")] instead to place with the previous tile's appearance.")
 	if(tile_reskin_types || tile_rotate_dirs)
-		. += span_notice("Use while in your hand to change what type of [src] you want.")
+		. += span_info("[EXAMINE_HINT("Use in hand")] to change what type of [src] you want.")
 	if(throwforce && !is_cyborg) //do not want to divide by zero or show the message to borgs who can't throw
 		var/damage_value
 		switch(ceil(MAX_LIVING_HEALTH / throwforce)) //throws to crit a human
@@ -64,7 +65,7 @@
 				damage_value = "mediocre"
 		if(!damage_value)
 			return
-		. += span_notice("Those could work as a [damage_value] throwing weapon.")
+		. += span_notice("These could work as a [damage_value] throwing weapon.")
 
 /**
  * Place our tile on a plating, or replace it.
@@ -73,7 +74,7 @@
  * * target_plating - Instance of the plating we want to place on. Replaced during successful executions.
  * * user - The mob doing the placing.
  */
-/obj/item/stack/tile/proc/place_tile(turf/open/floor/plating/target_plating, mob/user)
+/obj/item/stack/tile/proc/place_tile(turf/open/floor/plating/target_plating, mob/user, list/modifiers)
 	var/turf/placed_turf_path = turf_type
 	if(!ispath(placed_turf_path))
 		return
@@ -84,6 +85,9 @@
 		return
 	target_plating = target_plating.place_on_top(placed_turf_path, flags = CHANGETURF_INHERIT_AIR)
 	target_plating.setDir(turf_dir)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		for(var/datum/element/decal/decal as anything in target_plating.base_decals)
+			target_plating.AddElement(/datum/element/decal, _icon_state = decal.base_icon_state, _dir = decal.directional, _pic = decal.pic)
 	playsound(target_plating, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 	return target_plating
 
@@ -1235,7 +1239,7 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	merge_type = /obj/item/stack/tile/material
 
-/obj/item/stack/tile/material/place_tile(turf/open/target_plating, mob/user)
+/obj/item/stack/tile/material/place_tile(turf/open/target_plating, mob/user, list/modifiers)
 	// Save refernce to the materials for the case when we place last tile in the stack
 	var/list/saved_mats_per_unit = mats_per_unit
 	. = ..()

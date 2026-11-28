@@ -60,3 +60,8 @@
 
 ///from /turf/proc/afterShuttleMove() : (/turf/old_turf)
 #define COMSIG_TURF_AFTER_SHUTTLE_MOVE "turf_after_shuttle_move"
+
+/// /obj/item/airlock_painter/decal/paint_floor: (list/decal_list)
+#define COMSIG_OPEN_TURF_PAINTED "open_turf_painted"
+/// /turf/open/changeturf: (list/decal_list)
+#define COMSIG_OPEN_TURF_CHANGE "open_turf_change"

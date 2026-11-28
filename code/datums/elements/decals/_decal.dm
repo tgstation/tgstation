@@ -99,8 +99,9 @@
 	if(_description)
 		RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(examine),TRUE)
 
-	RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, PROC_REF(shuttle_move_react),TRUE)
-
+	RegisterSignal(target, COMSIG_TURF_ON_SHUTTLE_MOVE, PROC_REF(shuttle_move_react), TRUE)
+	RegisterSignal(target, COMSIG_OPEN_TURF_PAINTED, PROC_REF(decal_painted_react), TRUE)
+	RegisterSignal(target, COMSIG_OPEN_TURF_CHANGE, PROC_REF(turf_change_react), TRUE)
 /**
  * ## generate_appearance
  *
@@ -193,3 +194,13 @@
 		pic_color = string_list(pic_color)
 	source.AddElement(type, pic.icon, base_icon_state, directional, PLANE_TO_TRUE(pic.plane), pic.layer, pic.alpha, pic_color, smoothing_junction, cleanable, description)
 	return NONE
+
+/// When painted, pass this element back
+/datum/element/decal/proc/decal_painted_react(turf/source, list/existing_decals)
+	SIGNAL_HANDLER
+	existing_decals += src
+
+/// When changed, pass this element back
+/datum/element/decal/proc/turf_change_react(turf/source, list/existing_decals)
+	SIGNAL_HANDLER
+	existing_decals += src
