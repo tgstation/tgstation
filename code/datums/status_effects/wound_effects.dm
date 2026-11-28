@@ -52,6 +52,10 @@
 		wound_source += " an animal"
 	arm_bruises.apply_wound(arm, TRUE, wound_source = wound_source)
 
+/datum/status_effect/determined/tick(seconds_between_ticks)
+	. = ..()
+	owner.adjust_drowsiness(-5 SECONDS * seconds_between_ticks)
+
 /datum/status_effect/limp
 	id = "limp"
 	status_type = STATUS_EFFECT_REPLACE

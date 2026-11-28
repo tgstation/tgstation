@@ -744,7 +744,7 @@
 /datum/reagent/medicine/diphenhydramine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(SPT_PROB(5, seconds_per_tick))
-		affected_mob.adjust_drowsiness(2 SECONDS)
+		affected_mob.adjust_drowsiness(5 SECONDS)
 	affected_mob.adjust_jitter(-2 SECONDS * metabolization_ratio * seconds_per_tick)
 	holder.remove_reagent(/datum/reagent/toxin/histamine, 2 * metabolization_ratio * seconds_per_tick)
 
@@ -1558,7 +1558,7 @@
 	. = ..()
 	for(var/datum/reagent/drug/reagent in affected_mob.reagents.reagent_list)
 		affected_mob.reagents.remove_reagent(reagent.type, 2.5 * reagent.purge_multiplier * metabolization_ratio * seconds_per_tick)
-	affected_mob.adjust_drowsiness(5 SECONDS * metabolization_ratio * seconds_per_tick)
+	affected_mob.adjust_drowsiness_up_to(3 SECONDS * metabolization_ratio * seconds_per_tick, 30 SECONDS)
 
 	if(affected_mob.get_timed_status_effect_duration(/datum/status_effect/jitter) >= 6 SECONDS)
 		affected_mob.adjust_jitter(-7.5 SECONDS * metabolization_ratio * seconds_per_tick)
@@ -1967,7 +1967,7 @@
 /datum/reagent/medicine/ondansetron/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(SPT_PROB(8, seconds_per_tick))
-		affected_mob.adjust_drowsiness(2 SECONDS * metabolization_ratio)
+		affected_mob.adjust_drowsiness(3 SECONDS * metabolization_ratio)
 	if(SPT_PROB(15, seconds_per_tick) && !affected_mob.get_stamina_loss())
 		if(affected_mob.adjust_stamina_loss(10 * metabolization_ratio, updating_stamina = FALSE))
 			. = UPDATE_MOB_HEALTH

@@ -176,13 +176,13 @@
 
 		if(2 * LIVER_FAILURE_STAGE_SECONDS to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjust_tox_loss(0.4 * seconds_per_tick,forced = TRUE)
-			owner.adjust_drowsiness(0.5 SECONDS * seconds_per_tick)
+			owner.adjust_drowsiness(2 SECONDS * seconds_per_tick)
 			owner.adjust_disgust(0.3 * seconds_per_tick)
 
 		if(3 * LIVER_FAILURE_STAGE_SECONDS to 4 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			owner.adjust_tox_loss(0.6 * seconds_per_tick,forced = TRUE)
 			owner.adjust_organ_loss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.2 * seconds_per_tick)
-			owner.adjust_drowsiness(1 SECONDS * seconds_per_tick)
+			owner.adjust_drowsiness(4 SECONDS * seconds_per_tick)
 			owner.adjust_disgust(0.6 * seconds_per_tick)
 
 			if(SPT_PROB(1.5, seconds_per_tick))
@@ -191,7 +191,7 @@
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
 			owner.adjust_tox_loss(0.8 * seconds_per_tick,forced = TRUE)
 			owner.adjust_organ_loss(pick(ORGAN_SLOT_HEART,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_EYES,ORGAN_SLOT_EARS),0.5 * seconds_per_tick)
-			owner.adjust_drowsiness(1.6 SECONDS * seconds_per_tick)
+			owner.adjust_drowsiness(5 SECONDS * seconds_per_tick)
 			owner.adjust_disgust(1.2 * seconds_per_tick)
 
 			if(SPT_PROB(3, seconds_per_tick))
