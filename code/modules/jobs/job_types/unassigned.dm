@@ -8,3 +8,6 @@
 	title = "Unassigned Crewmember"
 	rpg_title = "Peasant"
 	paycheck = PAYCHECK_ZERO
+
+/datum/job/unassigned/get_lobby_icon()
+	return icon(DEFAULT_HUDS_DMI, SECHUD_UNKNOWN)

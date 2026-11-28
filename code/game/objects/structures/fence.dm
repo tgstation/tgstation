@@ -19,6 +19,7 @@
 	icon = 'icons/obj/fence.dmi'
 	icon_state = "straight"
 	tacmap_color = TACMAP_FENCE
+	obj_flags = parent_type::obj_flags | MINIMAP_ALT_DRAW_TARGET
 
 	var/cuttable = TRUE
 	var/hole_size= NO_HOLE

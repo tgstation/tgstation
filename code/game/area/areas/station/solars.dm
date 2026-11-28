@@ -11,6 +11,7 @@
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
 	default_gravity = ZERO_GRAVITY
+	skip_minimap_rendering = TRUE
 
 /area/station/solars/fore
 	name = "\improper Fore Solar Array"

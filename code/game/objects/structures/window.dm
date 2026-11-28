@@ -6,8 +6,6 @@
 	layer = ABOVE_OBJ_LAYER //Just above doors
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = TRUE //initially is 0 for tile smoothing
-	flags_1 = ON_BORDER_1
-	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION_DIR | IGNORE_DENSITY
 	max_integrity = 50
 	resistance_flags = ACID_PROOF
 	armor_type = /datum/armor/structure_window
@@ -59,9 +57,12 @@
 
 	if(fulltile)
 		setDir()
-		obj_flags &= ~BLOCKS_CONSTRUCTION_DIR
-		obj_flags &= ~IGNORE_DENSITY
+		obj_flags |= MINIMAP_ALT_DRAW_TARGET
+		flags_1 |= PREVENT_CLICK_UNDER_1
 		AddElement(/datum/element/can_barricade)
+	else
+		obj_flags |= BLOCKS_CONSTRUCTION_DIR|IGNORE_DENSITY
+		flags_1 |= ON_BORDER_1
 
 	//windows only block while reinforced and fulltile
 	if(!reinf || !fulltile)
@@ -747,8 +748,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	base_icon_state = "window"
 	max_integrity = 100
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
@@ -769,8 +768,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	base_icon_state = "plasma_window"
 	max_integrity = 400
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
@@ -787,8 +784,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	state = RWINDOW_SECURE
 	max_integrity = 1000
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
@@ -807,8 +802,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	base_icon_state = "reinforced_window"
 	max_integrity = 150
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	obj_flags = CAN_BE_HIT
 	state = RWINDOW_SECURE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
@@ -830,8 +823,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	icon_state = "tinted_window-0"
 	base_icon_state = "tinted_window"
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE
@@ -857,8 +848,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	wtype = "shuttle"
 	reinf = TRUE
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	obj_flags = CAN_BE_HIT
 	reinf = TRUE
 	heat_resistance = 1600
 	armor_type = /datum/armor/reinforced_shuttle
@@ -890,7 +879,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 
 /obj/structure/window/reinforced/shuttle/indestructible
 	name = "hardened shuttle window"
-	flags_1 = PREVENT_CLICK_UNDER_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/structure/window/reinforced/shuttle/indestructible/Initialize(mapload)
@@ -955,8 +943,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	max_integrity = 1200
 	wtype = "shuttle"
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	obj_flags = CAN_BE_HIT
 	heat_resistance = 1600
 	armor_type = /datum/armor/plasma_plastitanium
 	smoothing_flags = SMOOTH_BITMASK
@@ -982,8 +968,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	max_integrity = 1200
 	wtype = "shuttle"
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	obj_flags = CAN_BE_HIT
 	heat_resistance = 1600
 	armor_type = /datum/armor/plasma_plastitanium
 	smoothing_flags = SMOOTH_BITMASK
@@ -996,7 +980,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	rad_insulation = RAD_EXTREME_INSULATION
 	glass_material_datum = /datum/material/alloy/plastitaniumglass
 	name = "hardened shuttle window"
-	flags_1 = PREVENT_CLICK_UNDER_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /datum/armor/plasma_plastitanium
@@ -1018,8 +1001,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	opacity = TRUE
 	max_integrity = 15
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	obj_flags = CAN_BE_HIT
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_PAPERFRAME
 	canSmoothWith = SMOOTH_GROUP_PAPERFRAME
@@ -1115,8 +1096,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/bronze/spawner, 0)
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE + SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	obj_flags = CAN_BE_HIT
 	max_integrity = 50
 	glass_amount = 2
 	custom_materials = list(/datum/material/bronze = SHEET_MATERIAL_AMOUNT * 2)
@@ -1144,8 +1123,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/cult/spawner, 0)
 	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE_CULT + SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_CULT
 	fulltile = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
-	obj_flags = CAN_BE_HIT
 	max_integrity = 50
 	glass_amount = 2
 	custom_materials = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT * 2)
