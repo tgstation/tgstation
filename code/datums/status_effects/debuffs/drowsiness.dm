@@ -75,6 +75,7 @@
 	var/final_damage = owner.get_stamina_loss()
 	if((final_damage > owner.maxHealth || SPT_PROB((final_damage - 50) / 2, seconds_between_ticks)) && !owner.IsSleeping())
 		owner.Sleeping(max(owner.stamina_regen_time, rand(9, 13) SECONDS))
+		COOLDOWN_START(src, last_stam_damage, owner.stamina_regen_time)
 		remove_duration(20 SECONDS)
 
 /// Checks if we're considering to be in a restful state for the purposes of reducing drowsiness
