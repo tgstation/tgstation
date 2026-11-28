@@ -285,9 +285,10 @@ GLOBAL_LIST_EMPTY(tcgcard_radial_choices)
 	drawn_card.update_icon_state()
 	user.visible_message(span_notice("[user] draws a card from \the [src]!"), \
 					span_notice("You draw a card from \the [src]!"))
-	if(contents.len <= 1)
+	if(contents.len == 1)
 		var/obj/item/tcgcard/final_card = contents[1]
 		user.transferItemToLoc(final_card, drop_location())
+	if(!contents.len)
 		qdel(src)
 
 

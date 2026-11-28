@@ -301,9 +301,13 @@
 	var/list/possible_disguises = list()
 	/// The path of the item we're disguised as.
 	var/obj/item/current_disguise
+	/// The path of the last item we were disguised as, will be reverted to when powering off
+	var/obj/item/last_disguise
 
 /obj/item/mod/module/chameleon/on_install()
 	. = ..()
+	possible_disguises = list()
+	RegisterSignal(mod, COMSIG_MOD_TOGGLED, PROC_REF(on_mod_toggled))
 	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(mod.slot_flags)), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	for(var/clothing_path in all_disguises)
 		var/obj/item/clothing = clothing_path
@@ -314,9 +318,11 @@
 
 /obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
 	. = ..()
+	UnregisterSignal(mod, COMSIG_MOD_TOGGLED)
 	if(current_disguise)
 		return_look()
 	possible_disguises = null
+	last_disguise = null
 
 /obj/item/mod/module/chameleon/used(mob/activator)
 	if(mod.active || mod.activating)
@@ -325,13 +331,13 @@
 	return ..()
 
 /obj/item/mod/module/chameleon/on_use(mob/activator)
-	if(current_disguise)
-		return_look()
-		return
 	var/picked_name = tgui_input_list(activator, "Select look to change into", "Chameleon Settings", possible_disguises)
 	if(!possible_disguises[picked_name] || mod.active || mod.activating)
 		return
+	if(current_disguise)
+		UnregisterSignal(mod, COMSIG_MOD_ACTIVATE) //update_look() reregisters
 	current_disguise = possible_disguises[picked_name]
+	last_disguise = current_disguise
 	update_look()
 
 /obj/item/mod/module/chameleon/proc/update_look()
@@ -351,7 +357,6 @@
 /obj/item/mod/module/chameleon/proc/return_look()
 	mod.name = "[mod.theme.name] [initial(mod.name)]"
 	mod.desc = "[initial(mod.desc)] [mod.theme.desc]"
-	mod.icon_state = "[mod.skin]-[initial(mod.icon_state)]"
 	var/list/mod_skin = mod.theme.variants[mod.skin]
 	mod.icon = mod_skin[MOD_ICON_OVERRIDE] || 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	mod.worn_icon = mod_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'
@@ -359,9 +364,17 @@
 	mod.righthand_file = initial(mod.righthand_file)
 	mod.worn_icon_state = null
 	mod.inhand_icon_state = null
+	mod.update_icon_state()
 	update_clothing_slots()
 	current_disguise = null
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
+
+/obj/item/mod/module/chameleon/proc/on_mod_toggled(datum/source, mob/user)
+	SIGNAL_HANDLER
+	if(mod.active||mod.activating||current_disguise||!last_disguise||!mod.get_charge())// no power, no last disguise, currently is disguised, modsuit is deployed
+		return
+	current_disguise = last_disguise //load/update last disguise
+	update_look()
 
 ///Plate Compression - Compresses the suit to normal size
 /obj/item/mod/module/plate_compression

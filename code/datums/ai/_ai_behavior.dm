@@ -10,8 +10,6 @@
 	var/running = FALSE
 	/// world.time when perform() may next be called.
 	var/next_perform_time = 0
-	/// TRUE when the last perform() failed and we are waiting out next_perform_time to say we failed
-	var/failed_last_perform = FALSE
 	/// TRUE while an async perform kicked off by start_async() is going
 	VAR_PRIVATE/async_running = FALSE
 	/// TRUE once async finished and via finish_async
@@ -40,7 +38,7 @@
 	var/previous_ticking_execution_index = controller.ticking_execution_index
 	controller.ticking_execution_index = execution_index
 	if(next_perform_time > world.time)
-		if(!running && failed_last_perform)
+		if(!running)
 			controller.ticking_execution_index = previous_ticking_execution_index
 			return BT_FAILURE
 		controller.active_execution_index = execution_index
@@ -65,13 +63,11 @@
 		next_perform_time = world.time + get_cooldown(controller)
 	if(process_flags & AI_BEHAVIOR_SUCCEEDED)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: succeeded")
-		failed_last_perform = FALSE
 		finish_action(controller, TRUE)
 		controller.ticking_execution_index = previous_ticking_execution_index
 		return BT_SUCCESS
 	if(process_flags & AI_BEHAVIOR_FAILED)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: failed")
-		failed_last_perform = TRUE
 		finish_action(controller, FALSE)
 		controller.ticking_execution_index = previous_ticking_execution_index
 		return BT_FAILURE

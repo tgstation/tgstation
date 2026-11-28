@@ -412,3 +412,20 @@
   - bugfix: Cream Pies and Spraycans now properly mess up your face again
   UwUMacaroniTime:
   - rscadd: Added two pre-con decks for TGC, available now at vendors!
+2026-11-28:
+  FalloutFalcon:
+  - bugfix: AI wont be held up from low priority behavior because of cooldowns on
+      higher ones
+  Melbert:
+  - bugfix: Fixes a niche bug where department orders (and perhaps more things) accidentally
+      allowed any head of staff, rather than only a specific head of staff
+  lelandkemble:
+  - bugfix: fixed a method to create cardless TCG decks
+  pebis36012:
+  - bugfix: Chameleon Module's Modsuit no longer becomes an error sign upon powering
+      down
+  - bugfix: Chameleon Module will now will work after uninstalled while on, and reinstalled
+  - bugfix: Chameleon Module will now revert to its previous disguise when powered
+      off
+  - bugfix: Chameleon Module will no longer drop disguise when clicked while disguised,
+      but open up the menu to pick one

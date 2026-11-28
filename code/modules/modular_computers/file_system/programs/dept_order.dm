@@ -51,7 +51,7 @@ GLOBAL_VAR(department_cd_override)
 	if (isnull(linked_department_real))
 		return
 	// Heads of staff can download
-	LAZYOR(download_access, linked_department_real.head_of_staff_access)
+	download_access = string_list(list(ACCESS_COMMAND, linked_department_real.head_of_staff_access))
 	// Heads of staff + anyone in the dept can run it
 	use_access |= linked_department_real.head_of_staff_access
 	use_access |= linked_department_real.department_access
