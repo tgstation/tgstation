@@ -419,6 +419,8 @@
   Melbert:
   - bugfix: Fixes a niche bug where department orders (and perhaps more things) accidentally
       allowed any head of staff, rather than only a specific head of staff
+  dwinters99:
+  - rscadd: Updated bruh_moment list
   lelandkemble:
   - bugfix: fixed a method to create cardless TCG decks
   pebis36012:
