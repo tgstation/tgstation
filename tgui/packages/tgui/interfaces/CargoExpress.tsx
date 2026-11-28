@@ -13,6 +13,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { CargoCatalog } from './Cargo/CargoCatalog';
+import type { CargoData } from './Cargo/types';
 
 type Data = {
   locked: BooleanLike;
@@ -26,7 +27,7 @@ type Data = {
   canBeacon: BooleanLike;
   printMsg: string;
   message: string;
-};
+} & CargoData;
 
 export function CargoExpress(props) {
   const { data } = useBackend<Data>();
@@ -108,7 +109,7 @@ function CargoExpressContent(props) {
         </Section>
       </Stack.Item>
       <Stack.Item grow>
-        <CargoCatalog express />
+        <CargoCatalog act={act} data={data} express />
       </Stack.Item>
     </Stack>
   );

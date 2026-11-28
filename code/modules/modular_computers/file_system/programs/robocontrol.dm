@@ -23,12 +23,13 @@
 
 /datum/computer_file/program/robocontrol/ui_data(mob/user)
 	var/list/data = list()
-	var/turf/current_turf = get_turf(computer.ui_host())
+	var/turf/current_turf = get_turf(os.ui_host())
 	var/list/botlist = list()
 	var/list/mulelist = list()
 
+	var/datum/driver/id_card/driver = os.get_driver(/datum/driver/id_card)
 	if(computer)
-		data["id_owner"] = computer.stored_id || ""
+		data["id_owner"] = driver.get_stored_id() || ""
 
 	botcount = 0
 
@@ -86,13 +87,15 @@
 /datum/computer_file/program/robocontrol/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	var/mob/current_user = ui.user
-	var/obj/item/card/id/id_card = computer?.stored_id
+	var/datum/driver/id_card/driver = os.get_driver(/datum/driver/id_card)
+	var/obj/item/card/id/id_card = driver?.get_stored_id()
 
 	var/static/list/standard_actions = list(
 		"patroloff",
 		"patrolon",
 		"ejectpai",
 	)
+
 	var/static/list/MULE_actions = list(
 		"stop",
 		"go",
@@ -106,6 +109,7 @@
 		"report",
 		"ejectpai",
 	)
+
 	var/mob/living/basic/bot/basic_bot = locate(params["robot"]) in GLOB.bots_list
 	if (action in standard_actions)
 		basic_bot.bot_control(action, current_user, id_card?.GetAccess())
@@ -115,32 +119,46 @@
 	switch(action)
 		if("summon")
 			basic_bot.bot_control(action, current_user, id_card ? id_card.access : id_card?.GetAccess())
+			return TRUE
+
 		if("ejectcard")
-			if(!computer || !computer.stored_id)
-				return
-			if(id_card)
-				GLOB.manifest.modify(id_card.registered_name, id_card.assignment, id_card.get_trim_assignment())
-				computer.remove_id(usr)
-			else
-				playsound(get_turf(computer.ui_host()) , 'sound/machines/buzz/buzz-sigh.ogg', 25, FALSE)
+			if(!driver)
+				to_chat(current_user, "No ID card driver installed in the [os]!")
+				return FALSE
+
+			driver.eject_stored_id()
+			return TRUE
+
 		if("changedroneaccess")
-			if(!computer || !computer.stored_id || !id_card)
+			if(!driver)
+				to_chat(current_user, "No ID card driver installed in the [os]!")
+				return FALSE
+
+			if(!id_card)
 				to_chat(current_user, span_notice("No ID found, authorization failed."))
-				return
+				return FALSE
+
 			if(isdrone(current_user))
 				to_chat(current_user, span_notice("You can't free yourself."))
-				return
+				return FALSE
+
 			if(!(ACCESS_CE in id_card.access))
 				to_chat(current_user, span_notice("Required access not found on ID."))
-				return
+				return FALSE
+
 			GLOB.drone_machine_blacklist_enabled = !GLOB.drone_machine_blacklist_enabled
+			return TRUE
+
 		if("ping_drones")
 			if(!(params["ping_type"]) || !(params["ping_type"] in drone_ping_types))
-				return
+				return FALSE
+
 			var/area/current_area = get_area(current_user)
 			if(!current_area || QDELETED(current_user))
-				return
+				return FALSE
+
 			var/msg = span_boldnotice("NON-DRONE PING: [current_user.name]: [params["ping_type"]] priority alert in [current_area.name]!")
 			_alert_drones(msg, TRUE, current_user)
 			to_chat(current_user, msg)
 			playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)
+			return TRUE

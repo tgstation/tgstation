@@ -19,7 +19,7 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { LoadingScreen } from './common/LoadingScreen';
 
-type Data = {
+export type PowerMonitorData = {
   areas: Area[];
   history: PowerHistory;
 };
@@ -66,10 +66,12 @@ function nameSort(a: Area, b: Area): number {
 }
 
 export function PowerMonitor() {
+  const { data } = useBackend<PowerMonitorData>();
+
   return (
     <Window width={550} height={700}>
       <Window.Content>
-        <PowerMonitorContent />
+        <PowerMonitorContent data={data} />
       </Window.Content>
     </Window>
   );
@@ -78,7 +80,7 @@ export function PowerMonitor() {
 const PEAK_DRAW = 500000;
 
 export function PowerMonitorContent(props) {
-  const { data } = useBackend<Data>();
+  const { data } = props;
   const { history } = data;
 
   if (!history) {
@@ -150,14 +152,14 @@ export function PowerMonitorContent(props) {
         </Flex>
       </Stack.Item>
       <Stack.Item grow>
-        <StationAreas />
+        <StationAreas data={data} />
       </Stack.Item>
     </Stack>
   );
 }
 
 function StationAreas(props) {
-  const { data } = useBackend<Data>();
+  const { data } = props;
 
   const [sortByField, setSortByField] = useState('');
 

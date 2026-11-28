@@ -1,4 +1,3 @@
-import { sendAct as act } from 'tgui/events/act';
 import { colorToHexString } from '../../colorSpaces';
 import { bresenhamLine, constrainToIconGrid, copyLayer } from '../../helpers';
 import { Tool } from '../Tool';
@@ -15,12 +14,14 @@ class PencilTransaction implements LayerTransaction {
   color: string;
   layer: number;
   dir: Dir;
+  act: any;
   points: Map<string, [number, number]> = new Map();
 
-  constructor(dir: Dir, layer: number, color: string) {
+  constructor(dir: Dir, layer: number, color: string, act: any) {
     this.dir = dir;
     this.layer = layer;
     this.color = color;
+    this.act = act;
   }
 
   addPoint(x: number, y: number) {
@@ -38,7 +39,7 @@ class PencilTransaction implements LayerTransaction {
   }
 
   commit() {
-    act('spriteEditorCommand', {
+    this.act('spriteEditorCommand', {
       command: 'transaction',
       transaction: {
         type: 'pencil',
@@ -66,6 +67,7 @@ export class Pencil extends Tool {
     isRightClick: boolean,
   ) {
     const {
+      act,
       selectedDir,
       selectedLayer,
       currentColor,
@@ -79,6 +81,7 @@ export class Pencil extends Tool {
       selectedDir,
       selectedLayer,
       colorToHexString(currentColor),
+      act,
     );
     if (inBounds) {
       this.currentTransaction.addPoint(px, py);

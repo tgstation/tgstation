@@ -1,4 +1,3 @@
-import { sendAct as act } from 'tgui/events/act';
 import { parseHexColorString } from '../../colorSpaces';
 import {
   bresenhamLine,
@@ -20,11 +19,13 @@ class EraserTransaction implements LayerTransaction {
   name = 'Eraser';
   layer: number;
   dir: Dir;
+  act: any;
   points: Map<string, [number, number]> = new Map();
 
-  constructor(dir: Dir, layer: number) {
+  constructor(dir: Dir, layer: number, act: any) {
     this.dir = dir;
     this.layer = layer;
+    this.act = act;
   }
 
   addPoint(x: number, y: number, color: string) {
@@ -43,7 +44,7 @@ class EraserTransaction implements LayerTransaction {
   }
 
   commit() {
-    act('spriteEditorCommand', {
+    this.act('spriteEditorCommand', {
       command: 'transaction',
       transaction: {
         type: 'eraser',
@@ -69,12 +70,16 @@ export class Eraser extends Tool {
     y: number,
     isRightClick: boolean,
   ) {
-    const { selectedDir, selectedLayer, setPreviewLayer, setPreviewData } =
+    const { act, selectedDir, selectedLayer, setPreviewLayer, setPreviewData } =
       context;
     const { width, height, layers } = data;
     const [px, py, inBounds] = constrainToIconGrid(x, y, width, height);
     if (isRightClick) return;
-    this.currentTransaction = new EraserTransaction(selectedDir, selectedLayer);
+    this.currentTransaction = new EraserTransaction(
+      selectedDir,
+      selectedLayer,
+      act,
+    );
     if (inBounds) {
       this.currentTransaction.addPoint(
         px,

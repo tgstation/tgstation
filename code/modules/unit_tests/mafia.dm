@@ -20,7 +20,7 @@
 	//make the laptop run Mafia app.
 	var/datum/computer_file/program/mafia/mafia_program = locate() in modpc_player.stored_files
 	TEST_ASSERT(mafia_program, "Mafia program was unable to be found on [modpc_player].")
-	modpc_player.active_program = mafia_program
+	modpc_player.os.activate_program(mafia_program)
 
 	//Spawn a ghost and make them eligible to use the Mafia UI (just to be safe).
 	var/mob/dead/observer/ghost_player = allocate(/mob/dead/observer)

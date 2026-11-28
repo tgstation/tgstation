@@ -6,13 +6,31 @@ import {
   Section,
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
-
-import { useBackend } from '../../backend';
 import type { CargoData } from './types';
 
-export function CargoStatus(props) {
-  const { act, data } = useBackend<CargoData>();
+type CargoStatusProps = {
+  act: any;
+} & CargoStatusData;
+
+type CargoStatusData = Pick<
+  CargoData,
+  | 'department'
+  | 'grocery'
+  | 'away'
+  | 'docked'
+  | 'loan'
+  | 'loan_dispatched'
+  | 'location'
+  | 'message'
+  | 'points'
+  | 'requestonly'
+  | 'can_send'
+  | 'displayed_currency_full_name'
+>;
+
+export function CargoStatus(props: CargoStatusProps) {
   const {
+    act,
     department,
     grocery,
     away,
@@ -24,7 +42,8 @@ export function CargoStatus(props) {
     points,
     requestonly,
     can_send,
-  } = data;
+    displayed_currency_full_name,
+  } = props;
 
   return (
     <Section
@@ -35,7 +54,7 @@ export function CargoStatus(props) {
             value={points}
             format={(value) => formatMoney(value)}
           />
-          {data.displayed_currency_full_name}
+          {displayed_currency_full_name}
         </Box>
       }
     >

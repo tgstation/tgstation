@@ -1,11 +1,11 @@
 import type { Dispatch, SetStateAction } from 'react';
-import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, Input, Section, Stack } from 'tgui-core/components';
 import type { BooleanStyleMap, StringStyleMap } from 'tgui-core/ui';
 import { Dir, type InlineStyle, type SpriteData } from '../Types/types';
 import { AdvancedCanvas } from './AdvancedCanvas';
 
 export type LayerManagerProps = {
+  act: any;
   data: SpriteData;
   selectedDir: Dir;
   setSelectedDir: Dispatch<SetStateAction<Dir>>;
@@ -18,7 +18,7 @@ const dirCellPrefixes = ['south', 'north', 'east', 'west'];
 const dirIcons = ['arrow-down', 'arrow-up', 'arrow-right', 'arrow-left'];
 
 export const LayerManager = (props: LayerManagerProps) => {
-  const { act } = useBackend();
+  const { act } = props;
   const {
     data,
     selectedDir,

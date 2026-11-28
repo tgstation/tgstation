@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { sendAct as act } from 'tgui/events/act';
 import {
   Box,
   Button,
@@ -12,13 +11,14 @@ import {
 } from 'tgui-core/components';
 
 type NanopaintNewDialogProps = {
+  act: any;
   minSize: number;
   maxSize: number;
   templateSizes: Record<string, [number, number]>;
 };
 
 export const NanopaintNewDialog = (props: NanopaintNewDialogProps) => {
-  const { minSize, maxSize, templateSizes } = props;
+  const { act, minSize, maxSize, templateSizes } = props;
   const [width, setWidth] = useState(32);
   const [height, setHeight] = useState(32);
   const [templatesOpen, setTemplatesOpen] = useState(false);
